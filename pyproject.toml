@@ -1,0 +1,57 @@
+[build-system]
+requires = ["setuptools==75.8.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "foundry-post-training"
+version = "0.1.0"
+description = "Reproducible evaluation foundation for the Foundry post-training loop"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+license = { text = "Apache-2.0" }
+authors = [{ name = "Kavin Sivaharan" }]
+dependencies = [
+  "PyYAML==6.0.2",
+]
+
+[project.optional-dependencies]
+dev = [
+  "mypy==1.15.0",
+  "pip-tools==7.4.1",
+  "pytest==8.3.5",
+  "ruff==0.9.10",
+  "types-PyYAML==6.0.12.20260518",
+]
+smoke = [
+  "accelerate==1.2.1",
+  "datasets==3.2.0",
+  "torch==2.5.1",
+  "transformers==4.46.3",
+]
+
+[project.scripts]
+foundry = "foundry.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["B", "E", "F", "I", "UP"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+files = ["src"]
+warn_unreachable = true

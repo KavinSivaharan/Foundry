@@ -173,3 +173,36 @@ The paired view is important. We need to know how many failures were fixed and h
 Reproducibility also includes training randomness. Data order, dropout, CUDA kernels, and adapter initialization can change a result. Foundry will record all seeds and run at least two approved SFT seeds before claiming the training procedure is reproducible. Complete bit-for-bit determinism may reduce performance or remain unavailable on some CUDA operations, so any nondeterminism will be documented rather than hidden.
 
 Each experiment record will pin model and dataset commits, code commit, package versions, configuration, prompt hash, split manifest, hardware, seeds, runtime, cost, outputs, and checkpoint. Estimates and measured values will always be labeled separately.
+
+## Identifier-only manifests
+
+A manifest is a list that says which benchmark records belong to a run. Foundry's GSM1K manifests deliberately do not contain the questions or answers. Each entry contains:
+
+- the row position inside one exact dataset revision; and
+- a SHA-256 identifier derived from the dataset name, immutable revision, configuration, split, and row position.
+
+The partition is created by hashing every identity together with the fixed seed `foundry-gsm1k-v1`, ranking those hashes, and assigning exactly 301 rows to the sealed-final portion. The other 904 rows become development data. Running the algorithm again produces byte-for-byte equivalent semantic manifests.
+
+Each manifest also includes its own digest and the evaluation-config digest. Loading code recomputes those values and rejects edited, overlapping, incomplete, or wrong-revision files. This is not encryption: somebody can still see row positions. The purpose is reproducibility and accidental-use prevention, not hiding a public benchmark.
+
+The sealed-final loader requires an explicit override. The real-model smoke command refuses the final manifest entirely. This guard cannot replace project discipline, but it makes accidental final-set evaluation harder.
+
+## Why Foundry uses a strict final-answer contract
+
+Math responses often contain many intermediate numbers. A parser that simply takes the last number can score the wrong thing and is easy to exploit. Foundry's prompt therefore requires one exact last line:
+
+```text
+Final answer: <integer>
+```
+
+The parser accepts signs, valid thousands separators, integral decimal spellings such as `42.0`, and a LaTeX boxed integer. It rejects `42.5`, malformed commas, appended units, multiple final-answer lines, or commentary after the answer. Earlier reasoning numbers are ignored.
+
+This means a mathematically correct answer in the wrong format can be marked invalid. Foundry reports that invalid rate separately. Keeping the rule narrow is preferable to silently guessing what the model meant, especially when the same parser will compare the base and fine-tuned models.
+
+## Dependency locks and machine portability
+
+`pyproject.toml` describes the direct project dependencies and their exact versions. The lock files record the transitive versions selected by `pip-compile` under Python 3.12. Together they prevent a later install from silently pulling a different YAML parser, test runner, Transformers release, or dataset library.
+
+The current machine is an Apple M2 Mac, not the intended NVIDIA desktop. A CUDA-enabled PyTorch wheel is hardware-specific, so the Mac could validate the framework and lock resolution but could not validate CUDA execution. On the RTX machine, PyTorch 2.5.1 must first come from PyTorch's official CUDA 12.1 wheel index. The remaining exact smoke dependencies then come from `requirements-smoke.lock.txt`.
+
+A lock narrows software variation; it does not prove hardware compatibility. The RTX run must still record the GPU, VRAM, driver, CUDA runtime, peak allocation, and any out-of-memory failure.

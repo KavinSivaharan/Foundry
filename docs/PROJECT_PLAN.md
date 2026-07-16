@@ -142,7 +142,7 @@ Status: complete, awaiting approval of the recommendation.
 
 ### Milestone 1 — Reproducible evaluation foundation
 
-Status: proposed next milestone; not approved.
+Status: complete on the available machine; real CUDA smoke deferred because this is not the RTX 3080 desktop.
 
 **What it would build:** a small typed CLI that loads a validated experiment configuration, creates a stable benchmark development/final manifest, formats prompts, extracts and scores exact integer answers, and writes auditable prediction records. It would include a fake-model integration path and, if the local GPU environment is compatible, a maximum 10-example Qwen smoke evaluation.
 
@@ -182,11 +182,30 @@ The names may change only with an explanation and approval if environment inspec
 
 **Costs, risks, assumptions, and unresolved decisions:** no API or cloud cost is planned. A real-model smoke run would download roughly a few gigabytes and consume local GPU time and electricity. CUDA, `bitsandbytes`, PyTorch, and the GPU driver may be incompatible; the card may have 10 or 12 GB; the host OS is unknown; and `uv` versus another lock mechanism is not approved. The milestone must stop after environment inspection if the real smoke run is unsafe, while unit/fake-model verification can still complete.
 
-- Confirm OS, CUDA, Python, exact RTX 3080 VRAM, free disk, and package compatibility.
-- Pin model and dataset commits.
-- Implement configuration validation, benchmark splitting, final-answer parsing/scoring, and a fake-model test harness.
-- Run unit tests and, only if the environment supports it, a 10-example base-model smoke evaluation.
-- Do not run a full benchmark or train.
+**Completion result:**
+
+- Detected macOS 15.6.1 on Apple M2 with 8 GB unified memory, no NVIDIA GPU, no `nvidia-smi`, no CUDA toolkit, Python 3.9.6 as the system Python, Python 3.12.11 available separately, no `uv`, and approximately 14 GiB free disk.
+- Used an isolated Python 3.12 `.venv`, exact direct pins in `pyproject.toml`, and pip-compiled development/smoke lock files.
+- Pinned the Qwen model to `989aa7980e4cf806f80c7fef2b1adb7bc71aa306`.
+- Pinned GSM1K to `bc09569d09a614b9b530edc7f076fb214ac10493`.
+- Created a deterministic 904-example development manifest and 301-example sealed-final manifest. Both contain identifiers and row indices only.
+- Added config validation, prompt hashing/rendering, strict integer scoring, benchmark loading, fake and CUDA model backends, auditable raw/summary output, and sealed-final access controls.
+- Passed formatting, linting, strict type checking, 29 unit/integration tests, and deterministic manifest validation.
+- Invoked the smoke command only to exercise its preflight. It refused before model or dataset download because the CUDA dependencies/environment were unavailable. Therefore no benchmark score, throughput, or VRAM result exists.
+
+**Exact deferred RTX smoke command:**
+
+After creating the locked environment on a CUDA-capable RTX machine, run:
+
+```text
+HF_HOME=data/huggingface .venv/bin/foundry smoke \
+  --config configs/eval/gsm1k_qwen2_5_1_5b_smoke.yaml \
+  --manifest configs/eval/manifests/gsm1k_development.json \
+  --output-dir results/smoke/qwen2_5_1_5b \
+  --limit 10
+```
+
+On Windows PowerShell, replace `.venv/bin/foundry` with `.venv\Scripts\foundry.exe` and set `$env:HF_HOME = "data/huggingface"` first. Before either command, `nvidia-smi` must confirm the RTX 3080 and PyTorch must report `torch.cuda.is_available() == True`. The pinned PyTorch 2.5.1 CUDA 12.1 wheel is installed from the [official PyTorch wheel index](https://pytorch.org/get-started/previous-versions/).
 
 ### Milestone 2 — Base development benchmark
 
@@ -261,19 +280,22 @@ Measured baseline and candidate scores: **not yet available; no experiment has r
 
 ## Current project phase
 
-Initial discovery and documentation are complete. The task/model/benchmark recommendation remains pending user approval. No environment has been created, no package installed, no model or dataset downloaded by Foundry, no evaluation run, and no training performed.
+Milestone 1 is complete for the GPU-independent evaluation foundation. The repository now has pinned configurations, identifier-only manifests, stable prompting, strict scoring, fake-model integration coverage, an optional CUDA backend, and reproducible development/smoke dependency locks.
+
+No model or benchmark was downloaded, no real-model evaluation ran, and no training occurred. The approved 10-example CUDA smoke remains deferred until the repository is opened on the RTX 3080 desktop.
 
 ## Unresolved questions
 
 1. Is the target RTX 3080 the 10 GB or 12 GB model, and what OS/CUDA/driver versions are available?
 2. Is local disk sufficient for model cache, quantized runtime, adapters, and raw predictions?
-3. Which exact Qwen and GSM1K repository commits should be pinned after integrity inspection?
-4. Does the public GSM1K revision include stable example IDs, and what split rule gives adequate development and final sample sizes?
-5. What maximum sequence length and generation limit fit the observed prompt/solution distribution?
-6. Should the first synthetic generator use templates only, or later allow an approved local/paid paraphraser behind the same verifier?
-7. Which small embedding model and threshold should implement semantic-overlap rejection without introducing an excessive dependency or false positives?
-8. Is a 3-point final improvement statistically realistic after the baseline, or should the success threshold be revised before training?
+3. Does PyTorch 2.5.1 with its CUDA 12.1 wheel work with the target driver, and what peak VRAM does the 10-example float16 smoke consume?
+4. What generation throughput and invalid-answer rate does the pinned base model produce on the RTX 3080?
+5. Should the Milestone 2 development benchmark process all 904 examples in one approved run or begin with a staged subset after the smoke measurement?
+6. What maximum sequence length and generation limit fit the observed prompt/solution distribution?
+7. Should the first synthetic generator use templates only, or later allow an approved local/paid paraphraser behind the same verifier?
+8. Which small embedding model and threshold should implement semantic-overlap rejection without introducing an excessive dependency or false positives?
+9. Is a 3-point final improvement statistically realistic after the development baseline, or should the success threshold be revised before training?
 
 ## Next approved milestone
 
-None yet. The proposed next milestone is **Milestone 1 — Reproducible evaluation foundation**. Work must not begin until the user explicitly approves it.
+None. Before Milestone 2, the recommended next action is to open this repository on the RTX 3080 desktop and explicitly authorize the already-defined 10-example deferred CUDA smoke. After that result is reviewed, Milestone 2 would run the pinned base model over the approved development scope, record the untouched baseline predictions and performance, and create the first evidence-backed failure inventory. No Milestone 2 work is authorized yet.
