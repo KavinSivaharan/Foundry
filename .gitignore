@@ -150,7 +150,7 @@ activemq-data/
 # Environments
 .env
 .envrc
-.venv
+.venv/
 env/
 venv/
 ENV/
@@ -216,3 +216,11 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Foundry local data, generated artifacts, and experiment tracking
+data/
+datasets/
+checkpoints/
+outputs/
+results/raw/
+wandb/

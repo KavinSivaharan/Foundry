@@ -1,0 +1,175 @@
+# Foundry Learning Notes
+
+Last updated: 2026-07-16
+
+These notes explain the ideas in the context of Foundry's proposed first experiment. They describe the plan, not completed implementation or measured results.
+
+## Open-weight models
+
+An open-weight model lets us download the learned numerical weights and run the model ourselves. This is different from calling a hosted model through an API, where the provider keeps the weights and training system private. "Open-weight" also does not automatically mean that every training example, training script, or design decision is public.
+
+For Foundry, local weights are essential because SFT and GRPO change model parameters. The proposed `Qwen/Qwen2.5-1.5B-Instruct` checkpoint is distributed under Apache-2.0 according to its [model card](https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct). Before an experiment, Foundry will record an immutable model revision rather than downloading whatever `main` points to that day.
+
+## Parameters and VRAM
+
+A parameter is one learned number in a neural network. A 1.54-billion-parameter model has about 1.54 billion such numbers. Parameter count matters because weights, activations, gradients, and optimizer state all consume memory.
+
+Storing 1.54 billion weights at 16 bits takes roughly 3.08 GB before file/runtime overhead. Full fine-tuning would also keep gradients and optimizer states for essentially all of those weights, quickly exceeding a 10 or 12 GB RTX 3080. QLoRA instead stores the frozen base model in 4-bit form and trains a comparatively small adapter. The raw 4-bit weight calculation is about 0.77 GB, but that is not the total training footprint. Quantization metadata, temporary buffers, adapter and optimizer state, CUDA kernels, and especially activations still consume VRAM.
+
+Foundry therefore treats 6–9 GB peak VRAM for a short-sequence 1.5B QLoRA run as an estimate, not a promise. The first smoke run must measure actual peak memory on the user's exact card. Sequence length, micro-batch size, gradient checkpointing, and software versions can move the result substantially.
+
+## Quantization
+
+Quantization stores weights with fewer bits. Moving from 16-bit weights to 4-bit weights cuts their raw storage by about four times. The arithmetic used by the GPU is not simply "4-bit training" end to end: weights are dequantized into a higher-precision compute type for matrix operations.
+
+For Foundry, the planned QLoRA configuration uses a 4-bit format such as NF4 for the frozen Qwen base model while adapter calculations use a supported higher precision. This makes local training feasible but introduces another variable that must be pinned and tested. Quantization can affect numerical behavior, and a model evaluated in one representation must not be silently compared with a different base representation.
+
+The [Transformers bitsandbytes documentation](https://huggingface.co/docs/transformers/quantization/bitsandbytes) describes 4-bit QLoRA loading and supported hardware. Foundry will pin known-compatible versions instead of assuming current documentation matches the installed environment.
+
+## LoRA and QLoRA
+
+LoRA, or Low-Rank Adaptation, freezes the original model and inserts small trainable matrices into selected layers. During inference, those matrices adjust the base model's behavior. Because only the adapters are trained, gradient and optimizer memory are far smaller than in full fine-tuning.
+
+QLoRA combines LoRA with a quantized frozen base model. In Foundry's proposed SFT run:
+
+1. Qwen's base weights are loaded in 4-bit form and remain frozen.
+2. LoRA adapter weights are attached to selected linear layers.
+3. SFT updates only those adapter weights.
+4. The saved artifact is an adapter plus configuration, not a second full copy of the base model.
+
+This is appropriate for an RTX 3080 and makes experiments cheaper to store and compare. It does not guarantee improvement; data quality, objective, prompt formatting, and hyperparameters still determine what the adapter learns. [TRL's PEFT integration](https://huggingface.co/docs/trl/peft_integration) and [PEFT's LoRA reference](https://huggingface.co/docs/peft/main/package_reference/lora) provide the intended library path, subject to version pinning and smoke tests.
+
+## Supervised fine-tuning
+
+Supervised fine-tuning teaches a model to produce a desired response for an input. Each Foundry arithmetic example would contain a new word problem plus a verified solution and final answer. The training loss rewards the model for assigning higher probability to the verified target tokens.
+
+SFT is the right first intervention because it directly tests the project's main premise: can failures tell us what verified examples to create, and can those examples improve held-out behavior? If SFT cannot produce a controlled improvement, adding reinforcement learning would make debugging harder rather than fix the underlying evidence problem.
+
+Foundry will not use GSM1K examples or answers as SFT targets. The benchmark is for measurement. SFT data will be generated from independent structured arithmetic programs aimed at aggregate failure categories.
+
+## Synthetic data generation
+
+Synthetic data is created by software or a model rather than copied from a human-authored corpus. Synthetic does not mean automatically correct.
+
+For Foundry, a safe first generator starts with an executable specification such as:
+
+- entities and units;
+- integer or rational variables with allowed ranges;
+- a sequence of arithmetic operations;
+- constraints that guarantee a valid positive-integer answer;
+- a language template that renders the specification as a word problem.
+
+If the base model struggles with rates, the generator samples new rate programs and renders new stories. It does not take a failed benchmark question and swap names or numbers. The distinction matters: close rewrites would teach the test rather than the underlying skill.
+
+Template generation is less linguistically diverse than API-based paraphrasing, but it is cheap, reproducible, and easier to verify. A future paraphrasing stage would need separate approval and would remain behind the same correctness and overlap filters.
+
+## Automatic data verification
+
+Automatic verification decides whether a generated example is safe enough to train on. A single model saying "looks correct" is not strong verification.
+
+The proposed arithmetic verifier uses several independent checks:
+
+1. Recompute the expected result from the structured specification using exact arithmetic, not floating-point approximations.
+2. Independently validate every constraint, intermediate value, unit conversion, and final positive-integer requirement.
+3. Confirm the rendered problem exposes all required quantities and does not accidentally reveal or contradict the answer.
+4. Require the generated rationale's intermediate calculations and final answer to agree with the independent solver.
+5. Reject malformed, ambiguous, duplicate, or suspiciously similar examples.
+6. Record an explicit acceptance or rejection reason for audit.
+
+Verification reduces label noise; it cannot prove that every natural-language problem has only one reasonable interpretation. Foundry should reject uncertain examples instead of maximizing dataset size.
+
+## Hard-negative mining
+
+A hard negative is an example that looks plausible to the model but exposes a specific mistake. In arithmetic, a model may consistently add before applying a percentage, mishandle "twice as many," or convert feet to inches in the wrong direction.
+
+Foundry's first SFT loop will use hard-negative mining as a targeting idea, not by training incorrect answers as correct. A failure category causes the generator to produce more valid examples near that decision boundary, including carefully chosen distractors and operation orders. The verified correct solution remains the SFT label.
+
+Later preference or GRPO work could compare a correct solution against a plausible wrong one, but only if the reward and data format are explicitly designed and approved.
+
+## Benchmark contamination
+
+Benchmark contamination occurs when evaluation questions or close variants appear in model training data. A contaminated model may score well because it remembers examples, not because it learned the intended capability.
+
+This is particularly important to Foundry because its loop deliberately reacts to benchmark failures. If generated training examples are close rewrites of the benchmark, the system can optimize the score without becoming generally better. The GSM1K paper was created to examine overfitting on the older GSM8K benchmark, but GSM1K's current public availability means it is not permanently immune to future contamination.
+
+Foundry's safeguards are:
+
+- pin the model and dataset revisions;
+- never train on benchmark examples or labels;
+- keep benchmark examples out of the synthesis input;
+- generate from independent program families;
+- reject exact normalized overlap;
+- reject high lexical and semantic similarity;
+- group related synthetic templates before train/validation splitting;
+- keep a final benchmark portion sealed from all tuning decisions.
+
+An overlap checker may inspect benchmark prompts only to reject a generated example. It must not return those prompts to the generator.
+
+## Train, development, and test splits
+
+The three splits answer different questions:
+
+- **Training data** updates the LoRA adapter. In Phase 1 it consists only of independently generated and verified examples.
+- **Development data** guides engineering decisions. Foundry evaluates base and candidate models on this benchmark portion, studies failure categories, and chooses what to improve. It is never used as SFT text, but repeated decisions can still overfit to it.
+- **Final test data** is sealed until the candidate and evaluation settings are frozen. It answers whether the improvement transfers to examples that did not guide development.
+
+The GSM1K public dataset presents one test collection. Foundry proposes creating a deterministic development/final partition before any model result is seen. The split seed or stable-hash rule and example IDs will be recorded. Exact counts will be chosen only after the pinned revision is inspected.
+
+Synthetic data needs its own train/validation split. Closely related variants must be grouped by generator template or program family before splitting; otherwise a validation example can be almost identical to training and give a misleadingly optimistic signal.
+
+## Evaluation methodology
+
+A fair base-versus-adapter comparison changes one main variable: the adapter. Both models must use:
+
+- the same pinned base weights and quantization path;
+- the same benchmark revision and example IDs;
+- the same system/user prompt and chat template;
+- the same deterministic decoding and maximum output length;
+- the same final-answer parser and exact-match normalization;
+- the same evaluator code and preferably the same hardware/software environment.
+
+Every per-example prediction is stored before aggregate scoring. This makes parser errors, invalid outputs, wins, losses, and category regressions auditable. The final report must state sample counts and uncertainty, not only a rounded percentage.
+
+A score seen during development is not the final proof. The primary claim comes from a paired comparison on the sealed final split after the adapter and checkpoint rule are frozen.
+
+## Reward functions
+
+A reward function converts model behavior into a number used by reinforcement learning. For a later arithmetic GRPO experiment, the simplest reward might grant 1 for an exact verified final answer and 0 otherwise. Additional rewards could target valid answer formatting or internally consistent executable steps.
+
+The reward defines what the optimizer will pursue, not necessarily what the developer intended. Before GRPO, Foundry must state which behavior is desired and demonstrate that the reward measures it. If SFT is still improving, a more complex optimizer is not justified.
+
+## Reward hacking
+
+Reward hacking happens when the model earns reward through a shortcut that violates the spirit of the task. Arithmetic examples include:
+
+- exploiting a permissive parser so any output is interpreted as the expected number;
+- printing many numbers and hoping one is selected;
+- copying a number exposed accidentally in tool output or metadata;
+- producing an exact final answer with nonsensical reasoning if the reward claims to value reasoning;
+- learning quirks of generated templates rather than general arithmetic.
+
+Foundry would test the reward with adversarial outputs, strict single-answer parsing, hidden verifier cases, length limits, and separate final evaluation. Reward code must be unit-tested independently from training. A reward that cannot survive these tests is not ready for GRPO.
+
+## GRPO
+
+Group Relative Policy Optimization samples a group of responses for the same prompt, scores each response, and increases the relative probability of higher-reward responses. It avoids training a separate value model in the way some other reinforcement-learning methods require, but it still needs multiple generations and backpropagation, making it substantially more expensive than one SFT target per prompt.
+
+For Foundry, GRPO is useful only if:
+
+1. SFT has already produced a reproducible gain.
+2. SFT then plateaus on a behavior that benefits from outcome exploration rather than more verified demonstrations.
+3. The reward is objective, tested, and difficult to exploit.
+4. The RTX 3080 memory/runtime estimate and any cloud cost are approved.
+5. A predeclared result threshold justifies the added complexity.
+
+Exact arithmetic answers offer a possible future reward, but they do not automatically validate reasoning quality. GRPO should not be added for branding or novelty.
+
+## Statistical uncertainty and reproducibility
+
+If a model gets 620 of 1,000 examples correct, 62% is an estimate from a finite sample, not the model's exact universal ability. A few examples changing outcome can move the score by several points. Foundry will report a confidence interval and use paired analysis because base and candidate answer the same examples.
+
+The paired view is important. We need to know how many failures were fixed and how many previously correct answers regressed. A bootstrap over example-level paired outcomes estimates uncertainty in the improvement; McNemar's test provides another check on asymmetric wins and losses.
+
+Reproducibility also includes training randomness. Data order, dropout, CUDA kernels, and adapter initialization can change a result. Foundry will record all seeds and run at least two approved SFT seeds before claiming the training procedure is reproducible. Complete bit-for-bit determinism may reduce performance or remain unavailable on some CUDA operations, so any nondeterminism will be documented rather than hidden.
+
+Each experiment record will pin model and dataset commits, code commit, package versions, configuration, prompt hash, split manifest, hardware, seeds, runtime, cost, outputs, and checkpoint. Estimates and measured values will always be labeled separately.
