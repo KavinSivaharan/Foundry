@@ -1,0 +1,43 @@
+schema_version: 1
+
+model:
+  repo_id: Qwen/Qwen2.5-1.5B-Instruct
+  revision: 989aa7980e4cf806f80c7fef2b1adb7bc71aa306
+  dtype: float16
+  device: cuda
+
+dataset:
+  repo_id: ScaleAI/gsm1k
+  revision: bc09569d09a614b9b530edc7f076fb214ac10493
+  config_name: default
+  source_split: test
+  expected_examples: 1205
+
+partition:
+  seed: foundry-gsm1k-v1
+  sealed_final_size: 301
+  development_manifest: configs/eval/manifests/gsm1k_development.json
+  sealed_final_manifest: configs/eval/manifests/gsm1k_sealed_final.json
+
+prompt:
+  system: >-
+    You solve grade-school arithmetic word problems carefully. Use the information
+    in the problem and show concise reasoning. The exact final-answer line required
+    by the user is mandatory.
+  user_template: |-
+    Solve this problem.
+
+    {question}
+
+    You may show concise reasoning.
+    Before you finish, output exactly one final line in this exact format:
+    Final answer: <integer>
+    Replace <integer> with the integer answer.
+    Do not use a boxed answer, units, currency symbols, Markdown, or any other words on the final line.
+    Do not write anything after the final line.
+
+generation:
+  do_sample: false
+  temperature: 0.0
+  top_p: 1.0
+  max_new_tokens: 512

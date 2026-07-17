@@ -1,6 +1,6 @@
 # Foundry Experiment Log
 
-One real-model experiment has completed: the approved ten-example Milestone 1 CUDA smoke recorded below. It is software/hardware integration evidence, not a full benchmark result or a training experiment.
+Two bounded real-model experiment groups have completed: the ten-example Milestone 1 CUDA smoke and the 30-example/three-prompt Milestone 1.5 format calibration recorded below. They are software, hardware, and format-control evidence—not a full benchmark result or a training experiment.
 
 Every future experiment must be registered here before a costly run begins. Its machine-readable configuration must be saved under `configs/`, raw evaluation outputs under `results/raw/`, and reviewable summaries under `results/`.
 
@@ -51,3 +51,26 @@ Every future experiment must be registered here before a costly run begins. Its 
 - **Hypothesis supported:** yes for the narrow smoke hypothesis: all ten approved development examples completed on the RTX 3080 and runtime, tokens, failures, and peak VRAM were recorded without OOM.
 - **Failures/blockers:** no blocking failure. Non-fatal warnings: Hugging Face could not use cache symlinks on Windows; Transformers reported sampling defaults that were ignored because `do_sample=False`; the macOS-generated lock omitted Windows-only `colorama==0.4.6` and `tzdata==2026.3`, which pip resolved without changing a pinned package. Seven responses were invalid because they did not contain exactly one `Final answer:` line.
 - **Next experiment:** Milestone 2 would evaluate the approved development scope and establish a base failure inventory, but it remains unapproved and must not begin without explicit user authorization.
+
+## EXP-20260717-002 — Qwen GSM1K 30-example prompt-format calibration
+
+- **Status:** completed; admission hypothesis not supported and no prompt selected
+- **Date:** 2026-07-17
+- **Hypothesis:** At least one of the current prompt and at most two minimal format-only revisions will produce at least 90% valid outputs on 30 predeclared development calibration identifiers, with zero generation failures and no unreasonable output-length increase.
+- **Model:** `Qwen/Qwen2.5-1.5B-Instruct`
+- **Exact model revision:** `989aa7980e4cf806f80c7fef2b1adb7bc71aa306`
+- **Dataset:** `ScaleAI/gsm1k`, configuration `default`, source split `test`
+- **Exact dataset revision:** `bc09569d09a614b9b530edc7f076fb214ac10493`
+- **Training configuration:** none; prompt-format evaluation only.
+- **Evaluation configuration:** fixed 30-ID calibration manifest SHA-256 `a020b74b626e75c1197abc35942e85d929463cfe2bfaac1364806bcab1743ee4`, selected deterministically with seed `foundry-gsm1k-prompt-format-calibration-v1` from canonical development manifest `d2c895f43a1e76a12796d6a263b60dc230a9abab58f9624674ec925f37319fae`. The disjoint future-baseline manifest contains 874 IDs and has SHA-256 `d6bb412367a44b6c9fc1695bfa856650c42f90a8ee942223c010511c10f7e1eb`. All variants used greedy decoding, 512 maximum new tokens, and the unchanged strict parser. Prompt hashes: current `738ea5a3b94e7c75ac0bd50a229bbf04f3fc5d773e14658bc6728bc7a4b18350`; `format_v1` `de85fb299156e284d34f51f74983a19b564fd5725d000bc0dac10186e274fcbc`; `format_v2` `a17f10b85f491b865b2c9cc8e4b0b9f2550eae13259f308502591023f1fa9324`.
+- **Hardware:** Windows 11 Pro build 26200; AMD Ryzen 7 9700X; 31.11 GiB RAM; NVIDIA GeForce RTX 3080 with 10,240 MiB; driver 610.47; CPython 3.12.10; PyTorch 2.5.1+cu121 reporting CUDA runtime 12.1.
+- **Random seed:** deterministic greedy generation; calibration selection seed `foundry-gsm1k-prompt-format-calibration-v1`.
+- **Baseline score:** current prompt: 5/30 valid (16.67%), 25/30 invalid (83.33%), 1/30 correct (3.33%), 305.97 average output tokens, 124.190 seconds, 0.2416 examples/second, 2,983.43 MiB peak allocated and 3,192 MiB peak reserved VRAM.
+- **Resulting score:** `format_v1`: 3/30 valid (10.00%), 27/30 invalid (90.00%), 2/30 correct (6.67%), 287.37 average output tokens, 114.161 seconds, 0.2628 examples/second, 2,983.60 MiB allocated and 3,192 MiB reserved. `format_v2`: 13/30 valid (43.33%), 17/30 invalid (56.67%), 3/30 correct (10.00%), 230.60 average output tokens, 91.467 seconds, 0.3280 examples/second, 2,990.10 MiB allocated and 3,192 MiB reserved. Every run had zero generation failures.
+- **Cost and runtime:** $0 API/cloud cost. Exactly 90 real-model generations; 14,637 total input tokens and 24,718 total output tokens. Aggregate recorded evaluation time was 329.817 seconds and load-plus-evaluation time was 335.402 seconds. Maximum observed CUDA reservation was 3,192 MiB.
+- **Artifacts/checkpoint:** aggregate summaries under `results/calibration/{current,format_v1,format_v2}/summary.json`; ignored raw predictions under `results/raw/calibration/{current,format_v1,format_v2}/predictions.jsonl`; identifier-only manifests under `configs/eval/manifests/`. No checkpoint.
+- **Code commit:** runs began from published commit `c1ef561`; Milestone 1.5 adds only bounded calibration selection/evaluation plumbing, prompt alternatives, tests, summaries, and documentation.
+- **Interpretation:** `format_v2` materially improved validity and reduced average output length, but 43.33% remains far below the predeclared 90% gate. The result does not justify selecting a prompt, loosening the parser, or beginning the main baseline. Accuracy was secondary and did not determine selection.
+- **Hypothesis supported:** no; none of the three prompts reached 90% valid output. No generation failure occurred, but compliance remained inadequate.
+- **Failures/blockers:** current failure categories: 7 boxed, 15 prose/inline, 1 alternate label, 1 alternate wording, 1 incomplete at 512 tokens. `format_v1`: 4 boxed, 15 prose/inline, 4 alternate labels, 3 alternate wording, 1 incomplete. `format_v2`: 1 boxed, 10 prose/inline, 2 alternate labels, 4 alternate wording, no token-limit hit. One read-only PowerShell categorization command had a syntax error and was corrected without affecting artifacts.
+- **Next experiment:** none approved. A new format-control proposal is required before Milestone 2; it must preserve the strict parser and the 30/874 calibration/baseline separation.

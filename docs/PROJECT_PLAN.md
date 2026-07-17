@@ -1,6 +1,6 @@
 # Foundry Project Plan
 
-Last updated: 2026-07-16
+Last updated: 2026-07-17
 
 ## Project objective
 
@@ -142,7 +142,7 @@ Status: complete, awaiting approval of the recommendation.
 
 ### Milestone 1 — Reproducible evaluation foundation
 
-Status: complete on the available machine; real CUDA smoke deferred because this is not the RTX 3080 desktop.
+Status: complete, including the deferred real CUDA smoke on the RTX 3080 desktop.
 
 **What it would build:** a small typed CLI that loads a validated experiment configuration, creates a stable benchmark development/final manifest, formats prompts, extracts and scores exact integer answers, and writes auditable prediction records. It would include a fake-model integration path and, if the local GPU environment is compatible, a maximum 10-example Qwen smoke evaluation.
 
@@ -192,6 +192,7 @@ The names may change only with an explanation and approval if environment inspec
 - Added config validation, prompt hashing/rendering, strict integer scoring, benchmark loading, fake and CUDA model backends, auditable raw/summary output, and sealed-final access controls.
 - Passed formatting, linting, strict type checking, 29 unit/integration tests, and deterministic manifest validation.
 - Invoked the smoke command only to exercise its preflight. It refused before model or dataset download because the CUDA dependencies/environment were unavailable. Therefore no benchmark score, throughput, or VRAM result exists.
+- Later completed the deferred Windows RTX 3080 smoke in commit `c1ef561`: 10 development examples, 2 correct, 7 invalid-format outputs, no generation/OOM failure, 36.900 seconds evaluation time, 0.271 examples/second, and 3.088 GiB peak reserved VRAM.
 
 **Exact deferred RTX smoke command:**
 
@@ -206,6 +207,19 @@ HF_HOME=data/huggingface .venv/bin/foundry smoke \
 ```
 
 On Windows PowerShell, replace `.venv/bin/foundry` with `.venv\Scripts\foundry.exe` and set `$env:HF_HOME = "data/huggingface"` first. Before either command, `nvidia-smi` must confirm the RTX 3080 and PyTorch must report `torch.cuda.is_available() == True`. The pinned PyTorch 2.5.1 CUDA 12.1 wheel is installed from the [official PyTorch wheel index](https://pytorch.org/get-started/previous-versions/).
+
+### Milestone 1.5 — Output-format diagnosis and calibration
+
+Status: complete; the 90% valid-output admission gate was not met, so no prompt was selected and Milestone 2 remains blocked.
+
+- Diagnosed the seven original smoke invalids: all omitted the literal `Final answer:` line and instead used boxed, prose, unit/currency, inline-LaTeX, or bold conclusions. The chat template preserved the instruction, the responses were not truncated, and the strict parser behaved as designed.
+- Deterministically reserved 30 identifiers from the 904-example development partition for prompt-format calibration using seed `foundry-gsm1k-prompt-format-calibration-v1`.
+- Reserved the remaining 874 identifiers as the disjoint future main-development baseline. The calibration and future-baseline manifests contain only stable IDs and row indices; the sealed-final manifest was not read or modified.
+- Evaluated three prompt variants on the identical 30 calibration IDs with the same pinned model/dataset, strict parser, greedy decoding, 512-token limit, and RTX 3080. Exactly 90 generations ran.
+- Current prompt: 16.67% valid, 83.33% invalid, 305.97 average output tokens, 124.190 seconds.
+- Minimal `format_v1`: 10.00% valid, 90.00% invalid, 287.37 average output tokens, 114.161 seconds.
+- Explicit-contract `format_v2`: 43.33% valid, 56.67% invalid, 230.60 average output tokens, 91.467 seconds.
+- No prompt reached the predeclared 90% validity threshold. No parser, model, dataset, generation setting, or research direction was changed, and no prompt was frozen.
 
 ### Milestone 2 — Base development benchmark
 
@@ -276,26 +290,26 @@ Secondary metrics:
 - Exact and semantic dedup rejection rates.
 - Regression rate on categories not targeted by training.
 
-Measured baseline and candidate scores: **not yet available; no experiment has run.**
+Measured main-development baseline and candidate scores: **not yet available.** The completed 10-example smoke and 30-example prompt-calibration runs are diagnostic subsets, not the Milestone 2 baseline.
 
 ## Current project phase
 
-Milestone 1 is complete for the GPU-independent evaluation foundation. The repository now has pinned configurations, identifier-only manifests, stable prompting, strict scoring, fake-model integration coverage, an optional CUDA backend, and reproducible development/smoke dependency locks.
+Milestone 1 and its deferred RTX smoke are complete. Milestone 1.5 also completed its bounded diagnosis and 90-generation prompt calibration, but no tested prompt reached the required 90% valid-output rate.
 
-No model or benchmark was downloaded, no real-model evaluation ran, and no training occurred. The approved 10-example CUDA smoke remains deferred until the repository is opened on the RTX 3080 desktop.
+The repository now has a deterministic 30-ID prompt-format calibration manifest and an explicitly disjoint 874-ID future-baseline manifest. No prompt is frozen for Milestone 2, so the larger base-model development evaluation is not ready to begin. No training, synthetic-data generation, SFT, GRPO, paid service, or sealed-final evaluation occurred.
 
 ## Unresolved questions
 
-1. Is the target RTX 3080 the 10 GB or 12 GB model, and what OS/CUDA/driver versions are available?
-2. Is local disk sufficient for model cache, quantized runtime, adapters, and raw predictions?
-3. Does PyTorch 2.5.1 with its CUDA 12.1 wheel work with the target driver, and what peak VRAM does the 10-example float16 smoke consume?
-4. What generation throughput and invalid-answer rate does the pinned base model produce on the RTX 3080?
-5. Should the Milestone 2 development benchmark process all 904 examples in one approved run or begin with a staged subset after the smoke measurement?
-6. What maximum sequence length and generation limit fit the observed prompt/solution distribution?
+1. What separately approved format-control change can raise valid output from the best measured 43.33% to at least 90% without weakening the strict parser or optimizing on math accuracy?
+2. Should a future format experiment test a more material prompt/system change, a constrained-decoding mechanism, or another non-training control? This is not approved by Milestone 1.5.
+3. Should the single current/`format_v1` 512-token completion be studied separately, given that `format_v2` eliminated token-limit hits while still missing the format gate?
+4. Should the cross-platform dependency locks explicitly pin Windows-only `colorama` and `tzdata` in a separately approved lock-maintenance task?
+5. If format compliance is eventually admitted, Milestone 2 must use the 874-ID `main_development_baseline` manifest, not the original 904-ID development superset.
+6. What maximum sequence length and generation limit fit the eventual frozen prompt's observed solution distribution?
 7. Should the first synthetic generator use templates only, or later allow an approved local/paid paraphraser behind the same verifier?
 8. Which small embedding model and threshold should implement semantic-overlap rejection without introducing an excessive dependency or false positives?
 9. Is a 3-point final improvement statistically realistic after the development baseline, or should the success threshold be revised before training?
 
 ## Next approved milestone
 
-None. Before Milestone 2, the recommended next action is to open this repository on the RTX 3080 desktop and explicitly authorize the already-defined 10-example deferred CUDA smoke. After that result is reviewed, Milestone 2 would run the pinned base model over the approved development scope, record the untouched baseline predictions and performance, and create the first evidence-backed failure inventory. No Milestone 2 work is authorized yet.
+None. The next decision is whether to authorize a new, explicitly scoped format-control investigation or revise the admission strategy. Milestone 2 must not begin until a prompt/output control reaches the predeclared validity gate and is frozen before touching the 874-ID main-development baseline. No Milestone 2 work is authorized.

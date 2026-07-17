@@ -1,6 +1,6 @@
 # Foundry Learning Notes
 
-Last updated: 2026-07-16
+Last updated: 2026-07-17
 
 These notes explain the ideas in the context of Foundry's proposed first experiment. They describe the plan, not completed implementation or measured results.
 
@@ -216,3 +216,15 @@ Float16 inference for the pinned 1.5B Qwen model peaked at 2,972.14 MiB allocate
 The ten-example run produced 2 exact correct answers, one validly parsed incorrect answer, and seven invalid-format outputs. All seven invalid outputs failed to include exactly one required `Final answer:` line. This is useful software and behavior evidence: CUDA generation, token accounting, scoring, and failure recording worked, while the fixed general-purpose model followed the strict response contract inconsistently. The 20% accuracy and 70% invalid rate from only ten examples are not reliable estimates of full-development performance and must not be treated as a benchmark conclusion.
 
 The first-run model download/local cache occupied about 2.886 GiB, while the pinned GSM1K Hub and materialized dataset caches totaled about 0.74 MiB. Windows could not use Hugging Face's preferred cache symlinks, so the cache may consume more space than an equivalent Developer Mode or administrator-enabled setup. Foundry did not change Windows security or developer settings to remove that warning.
+
+## Prompt-format calibration is separate from benchmark measurement
+
+The RTX smoke showed that many model responses contained a plausible terminal answer but did not use Foundry's exact `Final answer: <integer>` line. Inspection confirmed the instruction survived Qwen's chat template and the parser accepted a compliant sanitized response. The seven original invalids were therefore model-format failures, not hidden prompt truncation or a parser implementation bug.
+
+Changing a prompt after seeing development behavior is a form of tuning. Foundry reserved 30 development identifiers solely for prompt-format calibration and removed them from the 874 identifiers that could later report the main development baseline. This prevents the headline baseline from including the same examples used to choose its format instructions. Both subsets are deterministic, identifier-only, and tied to the canonical development-manifest digest.
+
+Three greedy prompt runs illustrated why an absolute admission rule matters. The current prompt produced 16.67% valid outputs, a minimal wording revision produced 10.00%, and a stronger explicit contract produced 43.33%. The strongest prompt was better relative to the others and shorter on average, but a majority of its responses were still invalid. Selecting it merely because it was best would convert a failed calibration into a post-hoc success.
+
+Strict parsing and prompt compliance answer different questions. The parser asks whether output satisfies a predeclared machine-readable contract. The prompt asks the model to produce that contract. Accepting every boxed, prose, unit, currency, or Markdown ending would raise the apparent valid rate by changing the scorer rather than improving compliance. No parser change was justified by this diagnosis.
+
+Format compliance also differs from mathematical accuracy. Calibration recorded accuracy only to detect gross anomalies; it did not choose prompts based on correct-answer count. A future format-control proposal must reach at least 90% validity with no generation failures and reasonable output length before the 874-ID main baseline can begin.

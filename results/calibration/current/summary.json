@@ -1,0 +1,28 @@
+{
+  "accuracy": 0.03333333333333333,
+  "backend": "hf-cuda:Qwen/Qwen2.5-1.5B-Instruct@989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+  "backend_metrics": {
+    "backend_load_seconds": 1.8409810000002835,
+    "gpu_name": "NVIDIA GeForce RTX 3080",
+    "peak_vram_allocated_bytes": 3128352768,
+    "peak_vram_reserved_bytes": 3347054592
+  },
+  "config_sha256": "2a6e737cf3376ae081fd17600e31937824830ecdbb624644e729f6b5752f8eba",
+  "correct_examples": 1,
+  "dataset_id": "ScaleAI/gsm1k",
+  "dataset_revision": "bc09569d09a614b9b530edc7f076fb214ac10493",
+  "evaluation_seconds": 124.18989729999976,
+  "examples_per_second": 0.24156554319012274,
+  "generation_failures": 0,
+  "invalid_examples": 25,
+  "manifest_partition": "development",
+  "manifest_sha256": "a020b74b626e75c1197abc35942e85d929463cfe2bfaac1364806bcab1743ee4",
+  "model_id": "Qwen/Qwen2.5-1.5B-Instruct",
+  "model_revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+  "processed_examples": 30,
+  "prompt_sha256": "738ea5a3b94e7c75ac0bd50a229bbf04f3fc5d773e14658bc6728bc7a4b18350",
+  "schema_version": 1,
+  "total_input_tokens": 4299,
+  "total_output_tokens": 9179,
+  "total_runtime_seconds": 126.03087830000004
+}

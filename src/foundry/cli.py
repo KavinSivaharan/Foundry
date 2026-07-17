@@ -20,6 +20,16 @@ from foundry.evaluation.benchmark import (
     load_fixture_examples,
     load_huggingface_examples,
 )
+from foundry.evaluation.calibration import (
+    PROMPT_FORMAT_CALIBRATION,
+    CalibrationError,
+    as_development_benchmark_manifest,
+    assert_prompt_only_variant,
+    build_format_calibration_manifests,
+    load_development_subset,
+    save_development_subset,
+    validate_format_calibration_pair,
+)
 from foundry.evaluation.manifests import (
     ManifestError,
     build_manifests,
@@ -66,6 +76,27 @@ def _parser() -> argparse.ArgumentParser:
     smoke.add_argument("--manifest", required=True, type=_path)
     smoke.add_argument("--output-dir", required=True, type=_path)
     smoke.add_argument("--limit", required=True, type=int)
+
+    calibration_manifests = subparsers.add_parser(
+        "build-format-calibration",
+        help="build deterministic prompt-calibration and future-baseline ID manifests",
+    )
+    calibration_manifests.add_argument("--config", required=True, type=_path)
+    calibration_manifests.add_argument("--development-manifest", required=True, type=_path)
+    calibration_manifests.add_argument("--calibration-manifest", required=True, type=_path)
+    calibration_manifests.add_argument("--baseline-manifest", required=True, type=_path)
+    calibration_manifests.add_argument("--size", required=True, type=int)
+    calibration_manifests.add_argument("--seed", required=True)
+
+    calibrate = subparsers.add_parser(
+        "format-calibrate",
+        help="evaluate exactly 30 prompt-format calibration development identifiers",
+    )
+    calibrate.add_argument("--base-config", required=True, type=_path)
+    calibrate.add_argument("--config", required=True, type=_path)
+    calibrate.add_argument("--development-manifest", required=True, type=_path)
+    calibrate.add_argument("--calibration-manifest", required=True, type=_path)
+    calibrate.add_argument("--output-dir", required=True, type=_path)
     return parser
 
 
@@ -149,6 +180,60 @@ def _run_smoke(args: argparse.Namespace) -> int:
     return 0
 
 
+def _run_build_format_calibration(args: argparse.Namespace) -> int:
+    if args.size != 30:
+        raise CalibrationError("the approved prompt-format calibration size is exactly 30")
+    config = load_config(args.config)
+    development = load_manifest(args.development_manifest, config)
+    calibration, baseline = build_format_calibration_manifests(
+        development,
+        calibration_size=args.size,
+        selection_seed=args.seed,
+    )
+    save_development_subset(calibration, args.calibration_manifest)
+    save_development_subset(baseline, args.baseline_manifest)
+    reloaded_calibration = load_development_subset(args.calibration_manifest, development)
+    reloaded_baseline = load_development_subset(args.baseline_manifest, development)
+    validate_format_calibration_pair(reloaded_calibration, reloaded_baseline, development)
+    print(
+        json.dumps(
+            {
+                "baseline_examples": len(baseline.entries),
+                "baseline_manifest_sha256": baseline.manifest_sha256,
+                "calibration_examples": len(calibration.entries),
+                "calibration_manifest_sha256": calibration.manifest_sha256,
+                "selection_seed": args.seed,
+            },
+            sort_keys=True,
+        )
+    )
+    return 0
+
+
+def _run_format_calibrate(args: argparse.Namespace) -> int:
+    base_config = load_config(args.base_config)
+    variant_config = load_config(args.config)
+    assert_prompt_only_variant(base_config, variant_config)
+    development = load_manifest(args.development_manifest, base_config)
+    calibration = load_development_subset(args.calibration_manifest, development)
+    if calibration.purpose != PROMPT_FORMAT_CALIBRATION:
+        raise CalibrationError("format-calibrate requires the prompt-format calibration manifest")
+    if len(calibration.entries) != 30:
+        raise CalibrationError("the approved prompt-format calibration requires exactly 30 IDs")
+    manifest = as_development_benchmark_manifest(calibration, development, variant_config)
+    backend = HuggingFaceCudaBackend(variant_config)
+    examples = load_huggingface_examples(variant_config, manifest)
+    summary = run_evaluation(
+        config=variant_config,
+        manifest=manifest,
+        examples=examples,
+        backend=backend,
+        output_dir=args.output_dir,
+    )
+    print(json.dumps(asdict(summary), sort_keys=True))
+    return 0
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     """Run one Foundry evaluation-foundation command."""
 
@@ -163,8 +248,19 @@ def main(argv: Sequence[str] | None = None) -> int:
             return _run_fixture(args)
         if args.command == "smoke":
             return _run_smoke(args)
+        if args.command == "build-format-calibration":
+            return _run_build_format_calibration(args)
+        if args.command == "format-calibrate":
+            return _run_format_calibrate(args)
         parser.error(f"unsupported command {args.command}")
-    except (BackendError, BenchmarkError, ConfigError, ManifestError, ValueError) as error:
+    except (
+        BackendError,
+        BenchmarkError,
+        CalibrationError,
+        ConfigError,
+        ManifestError,
+        ValueError,
+    ) as error:
         print(f"error: {error}", file=sys.stderr)
         return 2
 

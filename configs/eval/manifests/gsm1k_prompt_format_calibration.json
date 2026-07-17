@@ -1,0 +1,133 @@
+{
+  "config_name": "default",
+  "dataset_id": "ScaleAI/gsm1k",
+  "dataset_revision": "bc09569d09a614b9b530edc7f076fb214ac10493",
+  "entries": [
+    {
+      "row_index": 12,
+      "stable_id": "8469fdc7cdc9b09df368d4e84e9f6071c899c755c5ac99b4c03761fc3565ccd9"
+    },
+    {
+      "row_index": 48,
+      "stable_id": "61f3e788185dafa58a8a519ee2551575d1e1c28711082ac78b54d5247d3330cd"
+    },
+    {
+      "row_index": 91,
+      "stable_id": "41a04464acbe5e92db75d983e025f75aeb068d2b1072d4d069b32f62401f2853"
+    },
+    {
+      "row_index": 97,
+      "stable_id": "0f53a7cd8bf485fea20d25a8b2c3c3e005bc2b7722748af39ddf8fa4c1e44c9f"
+    },
+    {
+      "row_index": 117,
+      "stable_id": "2bb03f9fd41d0353945b419ec181f53732921ef2a3dd46e5ba80433a6fb2ef15"
+    },
+    {
+      "row_index": 194,
+      "stable_id": "c238d806a8f4aa079e00709d722517ca0afc9a2aaa4eef1c0f48951a950409ba"
+    },
+    {
+      "row_index": 224,
+      "stable_id": "ed589842efb05ffe8ce85721f326f5061f85cdf50e2a1a987c0f3c9969419043"
+    },
+    {
+      "row_index": 239,
+      "stable_id": "e70f980246646dc4c3df1168332fd096c36b70192be3d22e26e1c98f437441ba"
+    },
+    {
+      "row_index": 252,
+      "stable_id": "da9d338a8ce81a62ba4eed04139728248855f6bbd7ce9c3aa5e070f8574ceb33"
+    },
+    {
+      "row_index": 299,
+      "stable_id": "f7add4b6520c774c7af809ff89a436fb78b14173cf247718841e623612a24c39"
+    },
+    {
+      "row_index": 318,
+      "stable_id": "619521b12f674e58526c71011a6bb8470e50a56c355f9a7ee2c83cef0a45663a"
+    },
+    {
+      "row_index": 338,
+      "stable_id": "a1eded8c67b2ae2d72482a92ff824d7a9b1212d907682bc30b9ff40ebce2cb1d"
+    },
+    {
+      "row_index": 425,
+      "stable_id": "c0e4648bfb454cea3e1887144c84861f0afb4d0cce886bcbe563939b3f16f89a"
+    },
+    {
+      "row_index": 457,
+      "stable_id": "f52871626aac67c8406073ebca92f74a8276d56bb527cc48983cfc5e511f6577"
+    },
+    {
+      "row_index": 557,
+      "stable_id": "49c876d6ec327d4c1e3d4f615dc537c76d0f65ca3ac1940d1a7962b2e0658416"
+    },
+    {
+      "row_index": 577,
+      "stable_id": "2b8aa6e735f3807626c28717c259ea3b27ddafdeddbc43aee23c2d800790797e"
+    },
+    {
+      "row_index": 608,
+      "stable_id": "82772b46f951f33229c0247e197ecdc24737bd1bcedabca4fac47c863f90c23a"
+    },
+    {
+      "row_index": 741,
+      "stable_id": "f15b59d2dd6b2f54acb766ec65cd197be1112be00b7a820c4a3f059d410f165d"
+    },
+    {
+      "row_index": 779,
+      "stable_id": "915e14513c1861def931e870ba9718cf4fb23ac48f4afcb269ed8dc0ce0d8d10"
+    },
+    {
+      "row_index": 822,
+      "stable_id": "9eaee5419eb08b02840097add1dcfb0e9e0d597f60a52cd9a5bf54fe647be31a"
+    },
+    {
+      "row_index": 893,
+      "stable_id": "e468b844a411d2c7723b96feaf7e08293e5c3fffbf9569e23c4f0f57e613e739"
+    },
+    {
+      "row_index": 907,
+      "stable_id": "ee28aeef851ba61cdb9e1ef60b598af2cccc20a6b6176fb6cea09a1640b17607"
+    },
+    {
+      "row_index": 990,
+      "stable_id": "06b042150eb57693c45d72ba88ad5b2aad70e902cca54f2132699a9ef8f51804"
+    },
+    {
+      "row_index": 1034,
+      "stable_id": "225c27040d803b3c752bde90c0056b76548a2da02b1fb0d826e2afd609426903"
+    },
+    {
+      "row_index": 1077,
+      "stable_id": "cd1af97242db2cd381e23aa309a8e20b9278458d5588ffbccf3219f8e0433815"
+    },
+    {
+      "row_index": 1096,
+      "stable_id": "ad3af311450c9f223d8af6740bf727c6ab24ec9b84953803186a58dcbaf70fb6"
+    },
+    {
+      "row_index": 1133,
+      "stable_id": "f382c8a72c0be26496a766f1d1aacde6cfcefe216c4083d5ecbb28388da8e768"
+    },
+    {
+      "row_index": 1139,
+      "stable_id": "6b12b16b223a6bae9a4ac896fa0c374bf9da95e07e316689d2fb8e6feee42c70"
+    },
+    {
+      "row_index": 1149,
+      "stable_id": "65287563b402c97165ac2e9f67c21945ed6d8208064d59364766d082a8c957d3"
+    },
+    {
+      "row_index": 1181,
+      "stable_id": "f093e1547e2efbafe32eac16d8d1860505f041b74ec573fd7baca47d19960d56"
+    }
+  ],
+  "manifest_sha256": "a020b74b626e75c1197abc35942e85d929463cfe2bfaac1364806bcab1743ee4",
+  "purpose": "prompt_format_calibration",
+  "schema_version": 1,
+  "selection_seed": "foundry-gsm1k-prompt-format-calibration-v1",
+  "source_development_manifest_sha256": "d2c895f43a1e76a12796d6a263b60dc230a9abab58f9624674ec925f37319fae",
+  "source_split": "test"
+}
