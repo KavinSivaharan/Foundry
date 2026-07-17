@@ -120,7 +120,7 @@ def load_huggingface_examples(
 
     require_partition_access(manifest, allow_sealed_final=allow_sealed_final)
     try:
-        from datasets import load_dataset  # type: ignore[import-not-found]
+        from datasets import load_dataset
     except ImportError as error:
         raise BenchmarkError(
             "real benchmark loading requires the pinned 'smoke' optional dependencies"
