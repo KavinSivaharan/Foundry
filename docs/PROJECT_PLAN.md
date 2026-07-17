@@ -221,6 +221,18 @@ Status: complete; the 90% valid-output admission gate was not met, so no prompt 
 - Explicit-contract `format_v2`: 43.33% valid, 56.67% invalid, 230.60 average output tokens, 91.467 seconds.
 - No prompt reached the predeclared 90% validity threshold. No parser, model, dataset, generation setting, or research direction was changed, and no prompt was frozen.
 
+### Milestone 1.6 — Deterministic answer-extraction calibration
+
+Status: complete; the fresh 90% extractability gate was not met, so no evaluator/prompt configuration is admitted for Milestone 2.
+
+- Preserved the strict `Final answer:` parser as an exact-format compliance metric and added separate deterministic terminal-integer extraction for benchmark accuracy.
+- Re-scored the existing 90 outputs without generation. Current prompt: 96.67% extractable, 16.67% exact compliant, 50.00% correct. `format_v1`: 93.33% extractable, 10.00% exact compliant, 50.00% correct. `format_v2`: 90.00% extractable, 43.33% exact compliant, 43.33% correct.
+- Manually audited all 63 calibration outputs newly accepted beyond the strict parser and found zero false extractions.
+- Selected the current prompt for fresh validation because it led the primary calibration extraction metric; math accuracy did not drive selection.
+- Deterministically reserved 30 fresh IDs from the 874-ID pool and left 844 IDs as a disjoint candidate main baseline. Both new manifests are identifier-only and parent-hashed.
+- Fresh validation reached 23/30 extractable (76.67%), 3/30 exact compliant (10.00%), and 14/30 correct (46.67%), with zero generation failures and zero audited false extractions. Three outputs hit the 512-token limit, two ended in non-integral decimals, and two clear integer conclusions were conservatively rejected.
+- The gate failed even under the post-hoc upper bound of 25/30 (83.33%) that would accept both conservative false rejections. No validation-driven extractor change, second run, prompt freeze, or Milestone 2 work occurred.
+
 ### Milestone 2 — Base development benchmark
 
 - Freeze prompt and decoding settings.
@@ -268,7 +280,11 @@ GRPO is not automatically approved. It is considered only if SFT produces a repr
 
 Primary metric:
 
-- Exact normalized final-integer accuracy on the locked GSM1K final split.
+- Canonical deterministic terminal-integer accuracy on the locked GSM1K final split, using an evaluator frozen before final access.
+
+Required separately reported format metric:
+
+- Exact compliance with the literal terminal `Final answer: <integer>` contract.
 
 Required comparison controls:
 
@@ -290,21 +306,21 @@ Secondary metrics:
 - Exact and semantic dedup rejection rates.
 - Regression rate on categories not targeted by training.
 
-Measured main-development baseline and candidate scores: **not yet available.** The completed 10-example smoke and 30-example prompt-calibration runs are diagnostic subsets, not the Milestone 2 baseline.
+Measured main-development baseline and candidate scores: **not yet available.** The completed 10-example smoke, 90-output re-score, and 30-example fresh extraction validation are diagnostic subsets, not the Milestone 2 baseline.
 
 ## Current project phase
 
-Milestone 1 and its deferred RTX smoke are complete. Milestone 1.5 also completed its bounded diagnosis and 90-generation prompt calibration, but no tested prompt reached the required 90% valid-output rate.
+Milestone 1 and its deferred RTX smoke are complete. Milestones 1.5 and 1.6 completed bounded format and deterministic extraction calibration. The extractor generalized to only 76.67% extractability on 30 fresh IDs, below the required 90% gate.
 
-The repository now has a deterministic 30-ID prompt-format calibration manifest and an explicitly disjoint 874-ID future-baseline manifest. No prompt is frozen for Milestone 2, so the larger base-model development evaluation is not ready to begin. No training, synthetic-data generation, SFT, GRPO, paid service, or sealed-final evaluation occurred.
+The repository now records a deterministic 30-ID prompt-calibration set, a disjoint 30-ID fresh answer-validation set, and a remaining 844-ID candidate baseline set. These manifests preserve the development-only lineage, but the 844-ID set is not admitted for evaluation because no prompt/extractor configuration passed the fresh gate. No training, synthetic-data generation, SFT, GRPO, paid service, or sealed-final evaluation occurred.
 
 ## Unresolved questions
 
-1. What separately approved format-control change can raise valid output from the best measured 43.33% to at least 90% without weakening the strict parser or optimizing on math accuracy?
-2. Should a future format experiment test a more material prompt/system change, a constrained-decoding mechanism, or another non-training control? This is not approved by Milestone 1.5.
-3. Should the single current/`format_v1` 512-token completion be studied separately, given that `format_v2` eliminated token-limit hits while still missing the format gate?
+1. What separately approved blocker-resolution experiment can raise fresh extractability from 76.67% to at least 90% without tuning on the now-observed 30-ID validation set?
+2. Should a future experiment introduce a second untouched validation set, deterministic constrained decoding, a predeclared broader terminal grammar, or a generation-limit change? None is approved.
+3. How should generation truncation be controlled, given three of 30 fresh current-prompt outputs reached 512 tokens?
 4. Should the cross-platform dependency locks explicitly pin Windows-only `colorama` and `tzdata` in a separately approved lock-maintenance task?
-5. If format compliance is eventually admitted, Milestone 2 must use the 874-ID `main_development_baseline` manifest, not the original 904-ID development superset.
+5. If a future evaluator is admitted, Milestone 2 must use the 844-ID candidate main-baseline manifest, not the original 904-ID development superset, 874-ID source pool, or either 30-ID calibration/validation set.
 6. What maximum sequence length and generation limit fit the eventual frozen prompt's observed solution distribution?
 7. Should the first synthetic generator use templates only, or later allow an approved local/paid paraphraser behind the same verifier?
 8. Which small embedding model and threshold should implement semantic-overlap rejection without introducing an excessive dependency or false positives?
@@ -312,4 +328,4 @@ The repository now has a deterministic 30-ID prompt-format calibration manifest 
 
 ## Next approved milestone
 
-None. The next decision is whether to authorize a new, explicitly scoped format-control investigation or revise the admission strategy. Milestone 2 must not begin until a prompt/output control reaches the predeclared validity gate and is frozen before touching the 874-ID main-development baseline. No Milestone 2 work is authorized.
+None. The next decision is whether to authorize a new, explicitly scoped blocker-resolution experiment with a new untouched admission set and predeclared extractor/generation rules. Milestone 2 must not begin until that evaluator reaches the 90% fresh extractability gate with zero false extractions and is frozen before touching the 844-ID candidate main-development baseline. No Milestone 2 work is authorized.

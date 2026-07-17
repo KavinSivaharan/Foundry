@@ -37,7 +37,17 @@ from foundry.evaluation.manifests import (
     save_manifest,
     validate_manifest_pair,
 )
+from foundry.evaluation.rescoring import RescoringError, rescore_predictions
 from foundry.evaluation.runner import run_evaluation
+from foundry.evaluation.validation import (
+    ANSWER_EXTRACTION_VALIDATION,
+    ValidationManifestError,
+    as_benchmark_manifest,
+    build_answer_validation_manifests,
+    load_answer_validation_manifest,
+    save_answer_validation_manifest,
+    validate_answer_validation_pair,
+)
 
 
 def _path(value: str) -> Path:
@@ -97,6 +107,36 @@ def _parser() -> argparse.ArgumentParser:
     calibrate.add_argument("--development-manifest", required=True, type=_path)
     calibrate.add_argument("--calibration-manifest", required=True, type=_path)
     calibrate.add_argument("--output-dir", required=True, type=_path)
+
+    rescore = subparsers.add_parser(
+        "rescore-answers",
+        help="re-score an existing ignored prediction file without generation",
+    )
+    rescore.add_argument("--predictions", required=True, type=_path)
+    rescore.add_argument("--output", required=True, type=_path)
+    rescore.add_argument("--max-new-tokens", required=True, type=int)
+
+    validation_manifests = subparsers.add_parser(
+        "build-answer-validation",
+        help="reserve 30 fresh answer-validation IDs and leave a main-baseline pool",
+    )
+    validation_manifests.add_argument("--config", required=True, type=_path)
+    validation_manifests.add_argument("--development-manifest", required=True, type=_path)
+    validation_manifests.add_argument("--source-pool-manifest", required=True, type=_path)
+    validation_manifests.add_argument("--validation-manifest", required=True, type=_path)
+    validation_manifests.add_argument("--baseline-manifest", required=True, type=_path)
+    validation_manifests.add_argument("--size", required=True, type=int)
+    validation_manifests.add_argument("--seed", required=True)
+
+    answer_validate = subparsers.add_parser(
+        "answer-validate",
+        help="run one prompt on exactly 30 fresh answer-validation IDs",
+    )
+    answer_validate.add_argument("--config", required=True, type=_path)
+    answer_validate.add_argument("--development-manifest", required=True, type=_path)
+    answer_validate.add_argument("--source-pool-manifest", required=True, type=_path)
+    answer_validate.add_argument("--validation-manifest", required=True, type=_path)
+    answer_validate.add_argument("--output-dir", required=True, type=_path)
     return parser
 
 
@@ -234,6 +274,88 @@ def _run_format_calibrate(args: argparse.Namespace) -> int:
     return 0
 
 
+def _run_rescore_answers(args: argparse.Namespace) -> int:
+    summary = rescore_predictions(
+        args.predictions,
+        args.output,
+        max_new_tokens=args.max_new_tokens,
+    )
+    print(json.dumps(asdict(summary), sort_keys=True))
+    return 0
+
+
+def _run_build_answer_validation(args: argparse.Namespace) -> int:
+    if args.size != 30:
+        raise ValidationManifestError("the approved answer-validation size is exactly 30")
+    config = load_config(args.config)
+    development = load_manifest(args.development_manifest, config)
+    source_pool = load_development_subset(args.source_pool_manifest, development)
+    if len(source_pool.entries) != 874:
+        raise ValidationManifestError("answer validation requires the reserved 874-ID pool")
+    validation, baseline = build_answer_validation_manifests(
+        source_pool,
+        development,
+        validation_size=args.size,
+        selection_seed=args.seed,
+    )
+    save_answer_validation_manifest(validation, args.validation_manifest)
+    save_answer_validation_manifest(baseline, args.baseline_manifest)
+    reloaded_validation = load_answer_validation_manifest(
+        args.validation_manifest,
+        source_pool,
+        development,
+    )
+    reloaded_baseline = load_answer_validation_manifest(
+        args.baseline_manifest,
+        source_pool,
+        development,
+    )
+    validate_answer_validation_pair(
+        reloaded_validation,
+        reloaded_baseline,
+        source_pool,
+        development,
+    )
+    print(
+        json.dumps(
+            {
+                "baseline_examples": len(baseline.entries),
+                "baseline_manifest_sha256": baseline.manifest_sha256,
+                "selection_seed": args.seed,
+                "validation_examples": len(validation.entries),
+                "validation_manifest_sha256": validation.manifest_sha256,
+            },
+            sort_keys=True,
+        )
+    )
+    return 0
+
+
+def _run_answer_validate(args: argparse.Namespace) -> int:
+    config = load_config(args.config)
+    development = load_manifest(args.development_manifest, config)
+    source_pool = load_development_subset(args.source_pool_manifest, development)
+    validation = load_answer_validation_manifest(
+        args.validation_manifest,
+        source_pool,
+        development,
+    )
+    if validation.purpose != ANSWER_EXTRACTION_VALIDATION or len(validation.entries) != 30:
+        raise ValidationManifestError("answer-validate requires exactly 30 fresh validation IDs")
+    manifest = as_benchmark_manifest(validation, source_pool, development, config)
+    backend = HuggingFaceCudaBackend(config)
+    examples = load_huggingface_examples(config, manifest)
+    summary = run_evaluation(
+        config=config,
+        manifest=manifest,
+        examples=examples,
+        backend=backend,
+        output_dir=args.output_dir,
+    )
+    print(json.dumps(asdict(summary), sort_keys=True))
+    return 0
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     """Run one Foundry evaluation-foundation command."""
 
@@ -252,6 +374,12 @@ def main(argv: Sequence[str] | None = None) -> int:
             return _run_build_format_calibration(args)
         if args.command == "format-calibrate":
             return _run_format_calibrate(args)
+        if args.command == "rescore-answers":
+            return _run_rescore_answers(args)
+        if args.command == "build-answer-validation":
+            return _run_build_answer_validation(args)
+        if args.command == "answer-validate":
+            return _run_answer_validate(args)
         parser.error(f"unsupported command {args.command}")
     except (
         BackendError,
@@ -259,6 +387,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         CalibrationError,
         ConfigError,
         ManifestError,
+        RescoringError,
+        ValidationManifestError,
         ValueError,
     ) as error:
         print(f"error: {error}", file=sys.stderr)

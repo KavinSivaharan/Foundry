@@ -1,0 +1,134 @@
+{
+  "canonical_development_manifest_sha256": "d2c895f43a1e76a12796d6a263b60dc230a9abab58f9624674ec925f37319fae",
+  "config_name": "default",
+  "dataset_id": "ScaleAI/gsm1k",
+  "dataset_revision": "bc09569d09a614b9b530edc7f076fb214ac10493",
+  "entries": [
+    {
+      "row_index": 68,
+      "stable_id": "2ce9a783c06ddeede6bd0e4942a04771ec17052d94850163b948edc4838e6a14"
+    },
+    {
+      "row_index": 88,
+      "stable_id": "6f0e8121a6e366c2eaf53bbe8ef05acdbd85e06740b9d42176825466ae3e91e8"
+    },
+    {
+      "row_index": 98,
+      "stable_id": "89f5f4748aedb9fd6a2cf242657c452fb2acd73a52384498c2b87927337c1cdf"
+    },
+    {
+      "row_index": 108,
+      "stable_id": "83eacc2519fd8b64fe3c08087e3ae246c419b7e7a1369b10a74a3534c8968aef"
+    },
+    {
+      "row_index": 132,
+      "stable_id": "801ceeead0f443cfe1b7b3266f3e42840e894c6c2dfbbc131b6908cb18b4865a"
+    },
+    {
+      "row_index": 185,
+      "stable_id": "dca99c3d02ab5538405229e31bb585812b85cf0f81fc43e8c00f3c62717e5140"
+    },
+    {
+      "row_index": 208,
+      "stable_id": "acb2cefd01818fbccdd79703f781be534fc59095f42f990cad04961072aa3844"
+    },
+    {
+      "row_index": 251,
+      "stable_id": "ed4dddc8aa8f3c9e99ddd55dfdd7e9dca32a8ffdfc60b620e5c108230e4d7677"
+    },
+    {
+      "row_index": 302,
+      "stable_id": "8e71b9b60195110fe00f61decb62c3f559afe796ad1cdf2ff6a0719c77dae45f"
+    },
+    {
+      "row_index": 308,
+      "stable_id": "279116dce9a0a234ac720eeea108f8ddd316e009ded833cbef94e37e684c34f3"
+    },
+    {
+      "row_index": 355,
+      "stable_id": "e49cd952bd1edde4b32ed8fc74691513b80699c30f35ceb38a2e98acea4a00ce"
+    },
+    {
+      "row_index": 372,
+      "stable_id": "4d29fd1c9ef7a1e0467300e11e832dfd0ecd647fc36e9884e4d738336f176dcd"
+    },
+    {
+      "row_index": 407,
+      "stable_id": "c7a4d6c27eba3ea96ab7a3778e17769fd0a58152688e9a6d787308c2fd75948c"
+    },
+    {
+      "row_index": 414,
+      "stable_id": "b757be70e7722d2b2958c14e4f4d7dc0d5bc8d512604fb9dbd992a85b645c081"
+    },
+    {
+      "row_index": 437,
+      "stable_id": "7bb78824eafd7966556ba9d7ce60a31205f7ab54bdc3de53d258f584bb68cb7d"
+    },
+    {
+      "row_index": 461,
+      "stable_id": "f494e8796f5ed3431b78cd6eb6dad399567063e4cc67cbaa4041715673d0bd44"
+    },
+    {
+      "row_index": 509,
+      "stable_id": "90493d6328a0478e7716fd453f32e1f0142252c749e97f48d897ac4bf0d2def0"
+    },
+    {
+      "row_index": 555,
+      "stable_id": "cd489242249fadfec66ee2c571ea1d3f57cd13d1ceb78a6d6110ea8be9c3eda8"
+    },
+    {
+      "row_index": 622,
+      "stable_id": "6ad3747a6eafda066c97172b562f8c38bb2d991ef256fb97fc51309e658bb683"
+    },
+    {
+      "row_index": 670,
+      "stable_id": "8681c35448485ab7ecd108db34693d63669113fc1a790b0f0dbfe6377a3cc60a"
+    },
+    {
+      "row_index": 730,
+      "stable_id": "c8bfd6a044a2012e766d8de8a4137066d391dda7f519a56083bf43045ccc786c"
+    },
+    {
+      "row_index": 739,
+      "stable_id": "9ddd09e3aa191b4eabe83b86410669a884742d564f9a02e0fc293fc86419f645"
+    },
+    {
+      "row_index": 754,
+      "stable_id": "bfac9d9041522b3fe1f0d29095ac09b0705e25fe3cfc51b0b8779170f50d5ad7"
+    },
+    {
+      "row_index": 773,
+      "stable_id": "37c7ae885eaa2f498d6f5902ea7b2734e2c8b0bfbf960240880bcd1d8003821f"
+    },
+    {
+      "row_index": 816,
+      "stable_id": "46eacefa6107c9cd45a8e04a69c0a66baf40d071df2b18145837560655d3e90b"
+    },
+    {
+      "row_index": 839,
+      "stable_id": "dbdadbba594dd6604783769e3d9a82ac26f0bfe9c47529670000cc2ed4c1a6d0"
+    },
+    {
+      "row_index": 892,
+      "stable_id": "71a9da473d88f330e728106e5f039807fcbdd7e2d72b79ce57c09570650f2575"
+    },
+    {
+      "row_index": 900,
+      "stable_id": "7605a69c3f90bfc7f80337a25408c623bdef210f071aab00773c697eaeb4a680"
+    },
+    {
+      "row_index": 1058,
+      "stable_id": "f19901e7ed28fa14e8e89c4dfcb98a4f34f54ceee739f7d6b5ced20dd42404bb"
+    },
+    {
+      "row_index": 1076,
+      "stable_id": "4f6c6715b39675543cfe20b1d1454319348a300ab03cdfc47570f9348b24639e"
+    }
+  ],
+  "manifest_sha256": "9582e4b07706a391f00dcfa0d9c68ee86a70cebca6c35f10daa3f3f66c9063f6",
+  "purpose": "answer_extraction_validation",
+  "schema_version": 1,
+  "selection_seed": "foundry-gsm1k-answer-extraction-validation-v1",
+  "source_pool_manifest_sha256": "d6bb412367a44b6c9fc1695bfa856650c42f90a8ee942223c010511c10f7e1eb",
+  "source_split": "test"
+}

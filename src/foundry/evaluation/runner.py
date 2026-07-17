@@ -8,6 +8,11 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 
 from foundry.config import EvaluationConfig
+from foundry.evaluation.answer_extraction import (
+    CANONICAL_EXTRACTOR_ID,
+    canonical_extractor_sha256,
+    score_canonical_answer,
+)
 from foundry.evaluation.backends import MetricValue, ModelBackend
 from foundry.evaluation.benchmark import BenchmarkExample
 from foundry.evaluation.manifests import BenchmarkManifest
@@ -23,9 +28,14 @@ class EvaluationRecord:
     row_index: int
     response: str | None
     predicted_answer: int | None
+    exact_format_compliant: bool
+    exact_format_predicted_answer: int | None
+    exact_format_error: str | None
     reference_answer: int | None
     correct: bool
     error: str | None
+    extraction_failure_category: str | None
+    generation_truncated: bool
     input_tokens: int | None
     output_tokens: int | None
     generation_seconds: float
@@ -45,11 +55,19 @@ class EvaluationSummary:
     manifest_sha256: str
     config_sha256: str
     prompt_sha256: str
+    canonical_extractor_id: str
+    canonical_extractor_sha256: str
     processed_examples: int
+    exact_format_compliant_examples: int
+    exact_format_compliance_rate: float
+    extractable_examples: int
+    extractable_answer_rate: float
     correct_examples: int
     invalid_examples: int
+    ambiguous_or_rejected_examples: int
     generation_failures: int
     accuracy: float
+    extraction_failure_categories: dict[str, int]
     evaluation_seconds: float
     total_runtime_seconds: float
     examples_per_second: float
@@ -84,16 +102,30 @@ def run_evaluation(
         try:
             result = backend.generate(example.stable_id, messages, config.generation)
             generation_seconds = time.perf_counter() - generation_started
-            score = score_response(result.text, example.reference_answer)
+            exact_score = score_response(result.text, example.reference_answer)
+            generation_truncated = (
+                result.output_tokens is not None
+                and result.output_tokens >= config.generation.max_new_tokens
+            )
+            canonical_score = score_canonical_answer(
+                result.text,
+                example.reference_answer,
+                generation_truncated=generation_truncated,
+            )
             records.append(
                 EvaluationRecord(
                     stable_id=example.stable_id,
                     row_index=example.row_index,
                     response=result.text,
-                    predicted_answer=score.predicted,
-                    reference_answer=score.expected,
-                    correct=score.correct,
-                    error=score.error,
+                    predicted_answer=canonical_score.predicted,
+                    exact_format_compliant=exact_score.error is None,
+                    exact_format_predicted_answer=exact_score.predicted,
+                    exact_format_error=exact_score.error,
+                    reference_answer=canonical_score.expected,
+                    correct=canonical_score.correct,
+                    error=canonical_score.error,
+                    extraction_failure_category=canonical_score.failure_category,
+                    generation_truncated=generation_truncated,
                     input_tokens=result.input_tokens,
                     output_tokens=result.output_tokens,
                     generation_seconds=generation_seconds,
@@ -110,9 +142,14 @@ def run_evaluation(
                     row_index=example.row_index,
                     response=None,
                     predicted_answer=None,
+                    exact_format_compliant=False,
+                    exact_format_predicted_answer=None,
+                    exact_format_error="generation failure",
                     reference_answer=None,
                     correct=False,
                     error=f"generation failure: {type(error).__name__}: {error}",
+                    extraction_failure_category="generation_failure",
+                    generation_truncated=False,
                     input_tokens=None,
                     output_tokens=None,
                     generation_seconds=time.perf_counter() - generation_started,
@@ -124,6 +161,8 @@ def run_evaluation(
     load_seconds_raw = backend_metrics.get("backend_load_seconds")
     load_seconds = float(load_seconds_raw) if isinstance(load_seconds_raw, int | float) else 0.0
     processed = len(records)
+    exact_format_compliant = sum(record.exact_format_compliant for record in records)
+    extractable = sum(record.predicted_answer is not None for record in records)
     correct = sum(record.correct for record in records)
     generation_failures = sum(
         record.error is not None and record.error.startswith("generation failure:")
@@ -133,6 +172,11 @@ def run_evaluation(
         record.error is not None and not record.error.startswith("generation failure:")
         for record in records
     )
+    failure_categories: dict[str, int] = {}
+    for record in records:
+        if record.extraction_failure_category is not None:
+            category = record.extraction_failure_category
+            failure_categories[category] = failure_categories.get(category, 0) + 1
     input_token_values = [
         record.input_tokens for record in records if record.input_tokens is not None
     ]
@@ -141,7 +185,7 @@ def run_evaluation(
     ]
     total_runtime = evaluation_seconds + load_seconds
     summary = EvaluationSummary(
-        schema_version=1,
+        schema_version=2,
         backend=backend.name,
         model_id=config.model.repo_id,
         model_revision=config.model.revision,
@@ -151,11 +195,19 @@ def run_evaluation(
         manifest_sha256=manifest.manifest_sha256,
         config_sha256=config.sha256,
         prompt_sha256=prompt_sha256(config.prompt),
+        canonical_extractor_id=CANONICAL_EXTRACTOR_ID,
+        canonical_extractor_sha256=canonical_extractor_sha256(),
         processed_examples=processed,
+        exact_format_compliant_examples=exact_format_compliant,
+        exact_format_compliance_rate=exact_format_compliant / processed,
+        extractable_examples=extractable,
+        extractable_answer_rate=extractable / processed,
         correct_examples=correct,
         invalid_examples=invalid,
+        ambiguous_or_rejected_examples=invalid,
         generation_failures=generation_failures,
         accuracy=correct / processed,
+        extraction_failure_categories=failure_categories,
         evaluation_seconds=evaluation_seconds,
         total_runtime_seconds=total_runtime,
         examples_per_second=processed / evaluation_seconds,

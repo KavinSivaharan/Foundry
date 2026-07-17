@@ -1,6 +1,6 @@
 # Foundry Experiment Log
 
-Two bounded real-model experiment groups have completed: the ten-example Milestone 1 CUDA smoke and the 30-example/three-prompt Milestone 1.5 format calibration recorded below. They are software, hardware, and format-control evidence—not a full benchmark result or a training experiment.
+Three bounded real-model experiment groups have completed: the ten-example Milestone 1 CUDA smoke, the 30-example/three-prompt Milestone 1.5 format calibration, and the 30-example fresh Milestone 1.6 answer-validation run recorded below. They are software, hardware, and evaluator-calibration evidence—not a full benchmark result or a training experiment.
 
 Every future experiment must be registered here before a costly run begins. Its machine-readable configuration must be saved under `configs/`, raw evaluation outputs under `results/raw/`, and reviewable summaries under `results/`.
 
@@ -74,3 +74,26 @@ Every future experiment must be registered here before a costly run begins. Its 
 - **Hypothesis supported:** no; none of the three prompts reached 90% valid output. No generation failure occurred, but compliance remained inadequate.
 - **Failures/blockers:** current failure categories: 7 boxed, 15 prose/inline, 1 alternate label, 1 alternate wording, 1 incomplete at 512 tokens. `format_v1`: 4 boxed, 15 prose/inline, 4 alternate labels, 3 alternate wording, 1 incomplete. `format_v2`: 1 boxed, 10 prose/inline, 2 alternate labels, 4 alternate wording, no token-limit hit. One read-only PowerShell categorization command had a syntax error and was corrected without affecting artifacts.
 - **Next experiment:** none approved. A new format-control proposal is required before Milestone 2; it must preserve the strict parser and the 30/874 calibration/baseline separation.
+
+## EXP-20260717-003 — Deterministic answer extraction and fresh validation
+
+- **Status:** completed; fresh admission hypothesis not supported and evaluator not frozen
+- **Date:** 2026-07-17
+- **Hypothesis:** A deterministic generic terminal-integer extractor, calibrated on the existing 90 outputs and manually audited, will produce at least 90% extractable answers with zero false extractions and zero generation failures when the best existing prompt is run on 30 fresh development identifiers.
+- **Model:** `Qwen/Qwen2.5-1.5B-Instruct`
+- **Exact model revision:** `989aa7980e4cf806f80c7fef2b1adb7bc71aa306`
+- **Dataset:** `ScaleAI/gsm1k`, configuration `default`, source split `test`
+- **Exact dataset revision:** `bc09569d09a614b9b530edc7f076fb214ac10493`
+- **Training configuration:** none; deterministic re-scoring plus one bounded fresh evaluation.
+- **Evaluation configuration:** strict parser retained for exact compliance; canonical extractor `foundry-terminal-integer-v1` SHA-256 `ffce6538526f9aa21e05ce4d9d6830ec71d3a6334a23fa1e9c7beef3c2053946`; selected current prompt SHA-256 `738ea5a3b94e7c75ac0bd50a229bbf04f3fc5d773e14658bc6728bc7a4b18350`; config SHA-256 `2a6e737cf3376ae081fd17600e31937824830ecdbb624644e729f6b5752f8eba`; greedy decoding; 512 maximum new tokens. Fresh validation manifest: 30 IDs, SHA-256 `9582e4b07706a391f00dcfa0d9c68ee86a70cebca6c35f10daa3f3f66c9063f6`, seed `foundry-gsm1k-answer-extraction-validation-v1`. Candidate main-baseline manifest: 844 IDs, SHA-256 `4f80bbe2f6de4fb33e57ed5463a1c393716a3b64d3b98a08767a7f8056648d79`.
+- **Hardware:** Windows 11 Pro build 26200; AMD Ryzen 7 9700X; 31.11 GiB RAM; NVIDIA GeForce RTX 3080 with 10,240 MiB; driver 610.47; CPython 3.12.10; PyTorch 2.5.1+cu121 with CUDA runtime 12.1.
+- **Random seed:** deterministic greedy generation; validation selection seed `foundry-gsm1k-answer-extraction-validation-v1`.
+- **Baseline score:** Existing-output re-score: current 29/30 extractable (96.67%), 5/30 exact compliant (16.67%), 15/30 correct (50.00%); `format_v1` 28/30 extractable (93.33%), 3/30 exact compliant (10.00%), 15/30 correct (50.00%); `format_v2` 27/30 extractable (90.00%), 13/30 exact compliant (43.33%), 13/30 correct (43.33%). All 63 newly accepted calibration outputs were audited with zero false extractions.
+- **Resulting score:** Fresh current-prompt validation: 23/30 extractable (76.67%), 3/30 exact compliant (10.00%), 14/30 correct (46.67%), 7 rejected, zero generation failures, and zero false extractions after auditing all 30 outputs. Rejections: 3 token-limit, 2 non-integral decimal, and 2 clear-but-unsupported terminal phrasings.
+- **Cost and runtime:** $0 API/cloud cost. Exactly 30 new generations; 3,948 input tokens and 8,159 output tokens. Evaluation time 107.996 seconds; total load-plus-evaluation time 110.269 seconds; 0.2778 examples/second; 271.97 average output tokens. Peak CUDA memory: 2,978.35 MiB allocated and 3,172 MiB reserved.
+- **Artifacts/checkpoint:** aggregate re-score summaries under `results/extraction_calibration/`; aggregate fresh summary and content-free audit under `results/answer_validation/current/`; ignored fresh raw predictions under `results/raw/answer_validation/current/predictions.jsonl`; identifier-only validation/baseline manifests under `configs/eval/manifests/`. No checkpoint.
+- **Code commit:** re-scoring used predictions generated from published commit `5e873f1`; fresh validation ran in the Milestone 1.6 worktree before the final local commit, with prompt/model/dataset/generation configuration unchanged.
+- **Interpretation:** The extractor correctly separates exact-format compliance from intended integer extraction and made no audited false extraction, but its calibrated 96.67% rate did not generalize. Three truncations and two non-integral outputs mean accepting the two unsupported clear integer phrasings would still reach only 83.33%. The evaluator is not reliable enough for the 844-ID baseline.
+- **Hypothesis supported:** no; fresh extractability was 76.67%, below 90%, despite zero false extractions and generation failures.
+- **Failures/blockers:** three outputs reached the 512-token limit; two produced non-integral decimals; two clear integer conclusions were outside the frozen grammar. Transformers emitted non-fatal warnings for sampling defaults ignored under greedy decoding. No CUDA, OOM, dependency, backend, or raw-artifact containment failure occurred.
+- **Next experiment:** none approved. A blocker-resolution proposal would need predeclared grammar/generation changes and a new untouched admission set before Milestone 2 can be reconsidered.

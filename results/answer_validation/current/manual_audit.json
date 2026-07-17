@@ -1,0 +1,11 @@
+{
+  "audit_scope": "all 30 fresh answer-validation outputs",
+  "audited_extracted_outputs": 23,
+  "audited_rejected_outputs": 7,
+  "canonical_extractor_id": "foundry-terminal-integer-v1",
+  "canonical_extractor_sha256": "ffce6538526f9aa21e05ce4d9d6830ec71d3a6334a23fa1e9c7beef3c2053946",
+  "clear_but_unsupported_rejections": 2,
+  "false_extractions": 0,
+  "non_integral_decimal_rejections": 2,
+  "token_limit_rejections": 3
+}

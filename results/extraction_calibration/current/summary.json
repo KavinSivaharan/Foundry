@@ -1,0 +1,19 @@
+{
+  "ambiguous_or_rejected_examples": 1,
+  "benchmark_accuracy": 0.5,
+  "canonical_extractor_id": "foundry-terminal-integer-v1",
+  "canonical_extractor_sha256": "ffce6538526f9aa21e05ce4d9d6830ec71d3a6334a23fa1e9c7beef3c2053946",
+  "correct_examples": 15,
+  "exact_format_compliance_rate": 0.16666666666666666,
+  "exact_format_compliant_examples": 5,
+  "extractable_answer_rate": 0.9666666666666667,
+  "extractable_examples": 29,
+  "extraction_failure_categories": {
+    "generation_truncated": 1
+  },
+  "generation_failures": 0,
+  "max_new_tokens": 512,
+  "processed_examples": 30,
+  "schema_version": 2,
+  "source_predictions_sha256": "be5f4fd505b309998acf72d9b6ade612d8be87a4e9e57a489dfa7f9f526578ae"
+}

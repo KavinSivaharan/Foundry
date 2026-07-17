@@ -1,0 +1,21 @@
+{
+  "audit_scope": "all outputs newly accepted beyond the strict exact-format parser",
+  "audited_newly_accepted_outputs": 63,
+  "canonical_extractor_id": "foundry-terminal-integer-v1",
+  "canonical_extractor_sha256": "ffce6538526f9aa21e05ce4d9d6830ec71d3a6334a23fa1e9c7beef3c2053946",
+  "false_extractions": 0,
+  "variants": {
+    "current": {
+      "audited_newly_accepted_outputs": 24,
+      "false_extractions": 0
+    },
+    "format_v1": {
+      "audited_newly_accepted_outputs": 25,
+      "false_extractions": 0
+    },
+    "format_v2": {
+      "audited_newly_accepted_outputs": 14,
+      "false_extractions": 0
+    }
+  }
+}
