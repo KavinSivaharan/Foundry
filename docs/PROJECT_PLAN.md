@@ -289,6 +289,30 @@ blocked.
   or begin training until a separately approved rendering/diversity blocker-resolution smoke
   passes the unchanged gates.
 
+### Milestone 4.1 — Generator rendering and diversity blocker resolution
+
+Status: complete; the fresh bounded smoke still failed the unchanged readiness gate, so full pilot
+generation remains blocked.
+
+- Added typed object, unit, location, quantity, and ledger-operation contracts and a deterministic
+  rule-based post-render quality stage. The five sanitized Milestone 4 defects now fail explicit
+  tests.
+- Expanded bookkeeping to two mathematical families, eight renderers, and 24 scenario domains;
+  rate/ratio to five families, six renderers, and 20 domains; and discrete reasoning to four
+  families, six renderers, and 20 domains. All 120 fresh attempts had distinct number-neutral and
+  latent-structure hashes.
+- Processed exactly 120 fresh attempts under a new seed and unchanged semantic artifact and
+  thresholds. Accepted 86 and rejected 34: 19 automatic semantic, nine manual semantic, and six
+  five-token-overlap rejections. Accepted counts were 30 bookkeeping, 29 rate/ratio, and 27
+  discrete.
+- Deterministic replay matched exactly and every arithmetic label/verifier decision was correct.
+  Manual review nevertheless found 11 invalid accepted renderings across residual noun grammar,
+  weighted-average rendering/target consistency, one omitted rate denominator, and discrete noun
+  or plural rendering.
+- The gate failed because acceptance was 86/120 rather than at least 90, invalid acceptances were
+  nonzero, and systematic renderer defects remained. No threshold was lowered, no candidate was
+  replaced, and no second smoke, full dataset, or training run followed.
+
 ### Milestone 5 — SFT smoke train
 
 - Train a tiny QLoRA adapter for a few steps.
@@ -349,19 +373,19 @@ Measured base main-development baseline: **521/814 correct (64.00% end-to-end)**
 
 ## Current project phase
 
-Milestone 1 and its deferred RTX smoke, Milestones 1.5–1.7, the frozen Milestone 2 base-development baseline, the bounded Milestone 2.1 correct-response audit, the design-only Milestone 3, and the bounded Milestone 4 generator smoke are complete. The one approved 814-example run used the D-011 exception without changing the frozen evaluation stack.
+Milestone 1 and its deferred RTX smoke, Milestones 1.5–1.7, the frozen Milestone 2 base-development baseline, the bounded Milestone 2.1 correct-response audit, the design-only Milestone 3, and bounded Milestones 4 and 4.1 are complete. The one approved 814-example run used the D-011 exception without changing the frozen evaluation stack.
 
-The repository records deterministic, pairwise-disjoint development partitions of 30 prompt-calibration IDs, 30 answer-extraction-validation IDs, 30 final-evaluator-validation IDs, and 814 baseline IDs. The completed baseline counts every unextractable output wrong and reports coverage separately. Milestone 2.1 audited all 521 correct-scored responses label-blind: 521 intended answers, zero false acceptances, and zero ambiguity. Milestone 3 classified all 293 failures and froze the content-free generator design. Milestone 4 then tested that design on 120 procedural candidates. Exact labels and dual verification were sound, but only 24 candidates passed and five accepted renderings were invalid. Full dataset generation and every training stage remain blocked; no complete synthetic dataset or adapter exists.
+The repository records deterministic, pairwise-disjoint development partitions of 30 prompt-calibration IDs, 30 answer-extraction-validation IDs, 30 final-evaluator-validation IDs, and 814 baseline IDs. The completed baseline counts every unextractable output wrong and reports coverage separately. Milestone 2.1 audited all 521 correct-scored responses label-blind: 521 intended answers, zero false acceptances, and zero ambiguity. Milestone 3 classified all 293 failures and froze the content-free generator design. Milestone 4.1 improved bounded-smoke yield from 24/120 to 86/120 and preserved perfect arithmetic verification, but it still found 11 invalid accepted renderings and missed the 90/120 gate. Full dataset generation and every training stage remain blocked; no complete synthetic dataset or adapter exists.
 
 ## Unresolved questions
 
-1. Should a bounded generator blocker-resolution milestone be approved to repair only rendering correctness and controlled-template diversity, then run one fresh 120-attempt smoke under the unchanged contamination thresholds and readiness gates?
+1. Should the project stop the current procedural lineage, or separately approve one narrowly specified renderer-quality blocker decision addressing the 11 audited defects without lowering contamination or readiness gates?
 2. Should the cross-platform dependency locks explicitly pin Windows-only `colorama` and `tzdata` in a separately approved lock-maintenance task?
 3. Any future comparison must preserve the exact 814-ID manifest and frozen prompt/extractor/generation configuration unless the user explicitly authorizes a new evaluator lineage and complete reruns.
-4. Can expanded hand-authored controlled templates provide enough diversity, or should a local paraphraser be considered only after another procedural smoke and a separate architectural approval?
+4. Expanded hand-authored templates raised yield substantially but did not pass. A local paraphraser remains an unapproved architectural change and must not be inferred from this result.
 5. The pinned MiniLM encoder behaved acceptably on original fixtures; future work must retain its exact revision/configuration unless a separate design decision replaces the semantic lineage.
 6. Is a 3-point final improvement statistically realistic after the development baseline, or should the success threshold be revised before training?
 
 ## Next approved milestone
 
-No further milestone is approved. Milestone 4 ends after its verified commit is pushed. The next user decision is whether to authorize a bounded blocker-resolution milestone that fixes the observed bookkeeping/discrete rendering defects, expands only hand-authored controlled-template diversity, and runs one fresh 120-attempt smoke under the same encoder, thresholds, curriculum, dual-verifier contract, and gates. It would not authorize the full 4,000 + 4,000 pilot, training, SFT, QLoRA, GRPO, paid services, or sealed-final access.
+No further milestone is approved. Milestone 4.1 ends after its verified negative-result commit is pushed. The next user decision is whether to stop the current procedural-generator lineage or separately discuss a narrowly bounded response to the 11 audited renderer-quality defects. The 4,000 + 4,000 pilot, training, SFT, QLoRA, GRPO, paid services, model inference, and sealed-final access remain unapproved.

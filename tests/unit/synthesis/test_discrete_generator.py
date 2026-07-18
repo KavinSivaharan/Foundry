@@ -50,6 +50,41 @@ def test_hard_discrete_candidate_expands_the_domain() -> None:
     assert hard.verifier_payload["total"] > easy.verifier_payload["total"]  # type: ignore[operator]
 
 
+def test_every_discrete_mode_meets_documented_difficulty_ranges() -> None:
+    expected = {
+        DifficultyLevel.EASY: (9, 35),
+        DifficultyLevel.MEDIUM: (36, 80),
+        DifficultyLevel.HARD: (81, 200),
+    }
+    for difficulty, (low, high) in expected.items():
+        for variant in range(4):
+            draft = generate_discrete(
+                seed=400 + variant,
+                difficulty=difficulty,
+                variant=variant,
+                output_contract_enabled=False,
+            )
+            evidence = draft.verifier_payload["difficulty_evidence"]
+            assert isinstance(evidence, dict)
+            assert low <= evidence["domain_size"] <= high  # type: ignore[operator]
+            assert evidence["independent_constraints"] in {1, 2}
+            assert evidence["dependency_depth"] >= 1  # type: ignore[operator]
+
+
+def test_dual_capacity_constraints_are_not_tied() -> None:
+    for difficulty in DifficultyLevel:
+        draft = generate_discrete(
+            seed=515,
+            difficulty=difficulty,
+            variant=3,
+            output_contract_enabled=False,
+        )
+        payload = draft.verifier_payload
+        first = payload["first_resource"] // payload["first_per"]  # type: ignore[operator]
+        second = payload["second_resource"] // payload["second_per"]  # type: ignore[operator]
+        assert first != second
+
+
 def test_output_track_has_one_canonical_terminal_line() -> None:
     draft = generate_discrete(
         seed=111,

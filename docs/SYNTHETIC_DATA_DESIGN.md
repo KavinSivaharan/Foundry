@@ -416,3 +416,37 @@ contracts, and 120-attempt limit while changing only the generator version, fres
 entity/unit-consistent rendering, grammar, genuinely discriminating discrete constraints, and
 hand-authored template diversity. Local-model paraphrasing remains an architectural change and is
 not implied by this result.
+
+## Milestone 4.1 measured blocker-resolution result
+
+The approved repair introduced explicit object families, countability, units, compatible
+locations, typed quantities and transfers, singular/plural forms, supported verbs, renderer
+quality metadata, and pre/post-render checks. Bookkeeping now exposes two mathematical families,
+eight rendering variants per family, and 24 scenario domains. Rate/ratio retains five mathematical
+families with six rendering variants and 20 domains. Discrete reasoning exposes four families,
+six rendering variants, 20 domains, untied capacity constraints, and measured search-space bands
+of 9–35 (easy), 36–80 (medium), and 81–200 (hard).
+
+The fresh master seed was
+`foundry-phase1-procedural-smoke-master-v2-rendering-diversity`. Exactly 120 attempts were
+processed with the original 60/60 curriculum and 12 output-contract attempts per group. The
+pipeline accepted 86 and rejected 34. Targeted yield was 52/60 and generic yield was 34/60;
+family yield was 30/53 bookkeeping, 29/34 rate/ratio, and 27/33 discrete. Exact normalized-text,
+number-neutral-template, and latent-structure rejections were all zero. Six candidates failed the
+unchanged five-token threshold, 19 failed the unchanged 0.82 semantic threshold, and nine
+same-scenario/same-family cases in the 0.75–0.82 review band were conservatively rejected. No
+candidate was replaced.
+
+Replay matched decision SHA-256
+`84bd6c622b30034a5932a4098c166b8710e39bbf4756e74b1c7c51cf54ce84a3` and aggregate SHA-256
+`0e2e20a3516beacb651dfafea96be9b3e95760fbede8804ae6bea76eb6657ed6`. All exact labels and
+dual-verifier decisions were correct, all 24 output contracts were valid, and no unresolved
+contamination or benchmark resemblance remained.
+
+Manual audit rejected production readiness. Eleven accepted renderings had residual grammar,
+duplicate-group, target-consistency, or unit-expression defects. Consequently the unchanged gate
+failed both the minimum 90/120 yield and zero-invalid-acceptance requirements. The current
+generator version must not produce the full pilot. A new milestone is not implied: the user must
+choose whether to stop this procedural lineage or explicitly approve another narrowly scoped
+renderer-quality decision. Threshold changes, model paraphrasing, full generation, and training
+remain outside the frozen design.

@@ -1,8 +1,11 @@
 """Exact rate, ratio, percentage, and weighted-average generation."""
 
+# ruff: noqa: E501  # controlled natural-language templates are kept readable as full clauses
+
 from __future__ import annotations
 
 import random
+from dataclasses import dataclass
 from fractions import Fraction
 
 from foundry.synthesis.generators import (
@@ -13,6 +16,17 @@ from foundry.synthesis.generators import (
     training_completion,
     verification_result,
 )
+from foundry.synthesis.object_units import (
+    Countability,
+    ObjectKind,
+    QuantityUnit,
+    validate_combination,
+)
+from foundry.synthesis.quality import (
+    NounFormEvidence,
+    RenderQualityMetadata,
+    UnitTransitionEvidence,
+)
 from foundry.synthesis.schema import (
     DifficultyLevel,
     LatentProgramSpec,
@@ -22,35 +36,394 @@ from foundry.synthesis.schema import (
 from foundry.synthesis.taxonomy import FailureCategory
 
 GENERATOR_ID = "exact-rate-ratio-relations"
-GENERATOR_VERSION = "1"
+GENERATOR_VERSION = "2"
 
-_CONTEXTS = (
-    "a solar ink printer",
-    "a deep-ocean beacon lab",
-    "an alpine lens workshop",
-    "a floating algae nursery",
-    "a desert acoustics station",
-    "an orbital fabric loom",
-    "a polar battery archive",
-    "a volcanic crystal kiln",
+
+def _kind(family: str, singular: str, plural: str) -> ObjectKind:
+    return ObjectKind(
+        family=family,
+        singular=singular,
+        plural=plural,
+        countability=Countability.DISCRETE,
+        unit=QuantityUnit.ITEM,
+        combination_key=f"{family}:count",
+        transferable=False,
+        supported_verbs=("produce", "inspect", "prepare", "deliver", "carry"),
+        supported_containers=("batch",),
+    )
+
+
+@dataclass(frozen=True)
+class _RateScenario:
+    scenario_id: str
+    setting: str
+    operator: str
+    object_kind: ObjectKind
+    safe_context: str
+
+
+_SCENARIOS = (
+    _RateScenario(
+        "print",
+        "solar print room",
+        "Ari",
+        _kind("signal_card", "signal card", "signal cards"),
+        "Color calibration is handled before production.",
+    ),
+    _RateScenario(
+        "beacon",
+        "coastal beacon lab",
+        "Bea",
+        _kind("culture_panel", "culture panel", "culture panels"),
+        "A separate sensor logs room temperature.",
+    ),
+    _RateScenario(
+        "lens",
+        "mountain lens shop",
+        "Chen",
+        _kind("lens_blank", "lens blank", "lens blanks"),
+        "Packaging occurs after the measured run.",
+    ),
+    _RateScenario(
+        "nursery",
+        "floating plant nursery",
+        "Dina",
+        _kind("sample_capsule", "sample capsule", "sample capsules"),
+        "Water testing uses an independent schedule.",
+    ),
+    _RateScenario(
+        "acoustics",
+        "desert acoustics station",
+        "Eli",
+        _kind("echo_tag", "echo tag", "echo tags"),
+        "The microphone check does not alter output.",
+    ),
+    _RateScenario(
+        "loom",
+        "orbital fabric loom",
+        "Farah",
+        _kind("woven_strip", "woven strip", "woven strips"),
+        "Thread tension is recorded separately.",
+    ),
+    _RateScenario(
+        "battery",
+        "polar battery archive",
+        "Gus",
+        _kind("power_cell", "power cell", "power cells"),
+        "Charging tests happen after counting.",
+    ),
+    _RateScenario(
+        "kiln",
+        "volcanic crystal kiln",
+        "Hui",
+        _kind("crystal_plate", "crystal plate", "crystal plates"),
+        "Cooling time is outside this calculation.",
+    ),
+    _RateScenario(
+        "greenhouse",
+        "urban greenhouse",
+        "Inez",
+        _kind("plant_label", "plant label", "plant labels"),
+        "Seed trays follow another workflow.",
+    ),
+    _RateScenario(
+        "robot",
+        "robot assembly bay",
+        "Jamal",
+        _kind("control_chip", "control chip", "control chips"),
+        "Diagnostic cables use another counter.",
+    ),
+    _RateScenario(
+        "bakery",
+        "automated bakery",
+        "Kira",
+        _kind("bread_token", "bread token", "bread tokens"),
+        "Oven cleaning is scheduled separately.",
+    ),
+    _RateScenario(
+        "harbor",
+        "harbor dispatch office",
+        "Luis",
+        _kind("cargo_tag", "cargo tag", "cargo tags"),
+        "Vessel logs do not affect tag totals.",
+    ),
+    _RateScenario(
+        "museum",
+        "museum catalog room",
+        "Mei",
+        _kind("archive_card", "archive card", "archive cards"),
+        "Exhibit labels use a separate batch.",
+    ),
+    _RateScenario(
+        "clinic",
+        "mobile clinic",
+        "Noor",
+        _kind("test_strip", "test strip", "test strips"),
+        "Patient scheduling is not part of the count.",
+    ),
+    _RateScenario(
+        "weather",
+        "weather balloon workshop",
+        "Omar",
+        _kind("sensor_tab", "sensor tab", "sensor tabs"),
+        "Forecast data is processed elsewhere.",
+    ),
+    _RateScenario(
+        "library",
+        "digital library lab",
+        "Pia",
+        _kind("scan_ticket", "scan ticket", "scan tickets"),
+        "Book returns follow another queue.",
+    ),
+    _RateScenario(
+        "aquarium",
+        "aquarium food station",
+        "Quin",
+        _kind("feed_pouch", "feed pouch", "feed pouches"),
+        "Tank inspection uses an independent form.",
+    ),
+    _RateScenario(
+        "rail",
+        "rail maintenance depot",
+        "Rosa",
+        _kind("inspection_clip", "inspection clip", "inspection clips"),
+        "Tool checkout is logged separately.",
+    ),
+    _RateScenario(
+        "studio",
+        "animation studio",
+        "Sami",
+        _kind("render_tile", "render tile", "render tiles"),
+        "Audio processing uses another system.",
+    ),
+    _RateScenario(
+        "orchard",
+        "orchard sorting shed",
+        "Tala",
+        _kind("grade_sticker", "grade sticker", "grade stickers"),
+        "Crate washing is not part of the run.",
+    ),
 )
-_OBJECTS = (
-    "signal cards",
-    "sample capsules",
-    "lens blanks",
-    "culture panels",
-    "echo tags",
-    "woven strips",
-    "power cells",
-    "crystal plates",
+
+_RENDERER_FAMILIES = (
+    "process_first",
+    "operator_report",
+    "result_request_first",
+    "passive_measurement",
+    "shift_summary",
+    "comparison_note",
 )
 _PERCENTS = (10, 20, 25, 40, 50, 60, 75, 80)
+TEMPLATE_FAMILIES = (
+    "rate_total",
+    "ratio_scale",
+    "percentage",
+    "weighted_average",
+    "combined_rate",
+)
+RENDERING_VARIANTS_PER_FAMILY = len(_RENDERER_FAMILIES)
+SCENARIO_DOMAIN_COUNT = len(_SCENARIOS)
 
 
 def _mode(variant: int) -> str:
     return ("rate_total", "ratio_scale", "percentage", "weighted_average", "combined_rate")[
         variant % 5
     ]
+
+
+def _render_rate_question(
+    *, mode: str, family: str, scenario: _RateScenario, values: dict[str, object]
+) -> tuple[str, tuple[str, ...], str]:
+    plural = scenario.object_kind.plural
+    setting = scenario.setting
+    actor = scenario.operator
+    if mode == "rate_total":
+        rate = _payload_int(values, "rate")
+        intervals = _payload_int(values, "intervals")
+        forms = (
+            (
+                f"A calibrated process at the {setting} produces {rate} {plural} per cycle.",
+                f"It completes {intervals} cycles.",
+                f"How many {plural} are produced in total?",
+            ),
+            (
+                f"{actor} reports {intervals} completed cycles at the {setting}.",
+                f"Each cycle yields {rate} {plural}.",
+                f"What is the combined output of {plural}?",
+            ),
+            (
+                f"What total number of {plural} results from {intervals} cycles?",
+                f"The {setting} makes {rate} {plural} during every cycle.",
+                "Calculate the full production count.",
+            ),
+            (
+                f"At the {setting}, {rate} {plural} are produced during each calibrated cycle.",
+                f"Exactly {intervals} cycles are completed.",
+                f"Determine how many {plural} leave the process.",
+            ),
+            (
+                f"The shift summary lists a rate of {rate} {plural} for one cycle and {intervals} cycles run.",
+                scenario.safe_context,
+                f"How many {plural} belong in the output total?",
+            ),
+            (
+                f"{actor} compares identical cycles at the {setting}.",
+                f"There are {intervals} cycles, each contributing {rate} {plural}.",
+                f"Find the total contribution of {plural}.",
+            ),
+        )
+    elif mode == "ratio_scale":
+        first = _payload_int(values, "first_part")
+        second = _payload_int(values, "second_part")
+        known = _payload_int(values, "known")
+        forms = (
+            (
+                f"The {setting} prepares amber and cobalt {plural} in the ratio {first}:{second}.",
+                f"The amber portion contains {known} {plural}.",
+                f"How many {plural} are in the cobalt portion?",
+            ),
+            (
+                f"{actor} records {known} amber {plural} in a batch whose amber-to-cobalt ratio is {first}:{second}.",
+                "The ratio is exact.",
+                "Determine the cobalt count.",
+            ),
+            (
+                f"How large is the cobalt share of {plural}?",
+                f"At the {setting}, amber and cobalt shares follow {first}:{second}, and the amber share is {known}.",
+                "Compute the corresponding cobalt quantity.",
+            ),
+            (
+                f"At the {setting}, {plural} are divided between amber and cobalt groups in an exact {first}:{second} ratio.",
+                f"An amber group of {known} is observed.",
+                "What cobalt group size matches it?",
+            ),
+            (
+                f"The shift note gives {known} amber {plural} and the proportion {first} amber parts to {second} cobalt parts.",
+                scenario.safe_context,
+                f"Find the number of cobalt {plural}.",
+            ),
+            (
+                f"{actor} scales two matched collections of {plural}.",
+                f"The first-to-second ratio is {first}:{second}, with {known} in the first collection.",
+                "What count belongs in the second collection?",
+            ),
+        )
+    elif mode == "percentage":
+        percent = _payload_int(values, "percent")
+        base = _payload_int(values, "base")
+        forms = (
+            (
+                f"A quality check at the {setting} examines {percent}% of a batch containing {base} {plural}.",
+                "The percentage is applied exactly.",
+                f"How many {plural} are examined?",
+            ),
+            (
+                f"{actor} selects exactly {percent}% from {base} prepared {plural}.",
+                "The rest remain untouched.",
+                "What is the selected count?",
+            ),
+            (
+                f"How many {plural} make up {percent}% of a batch of {base}?",
+                f"The batch was independently prepared at the {setting}.",
+                "Calculate the exact subset size.",
+            ),
+            (
+                f"From {base} {plural} at the {setting}, a fraction of {percent}% is marked for inspection.",
+                "No rounding is permitted.",
+                "Determine the number marked.",
+            ),
+            (
+                f"The shift summary lists {base} total {plural} and an inspection share of {percent}%.",
+                scenario.safe_context,
+                "Find the exact inspection total.",
+            ),
+            (
+                f"{actor} compares the full batch with a {percent}% sample.",
+                f"The full batch contains {base} {plural}.",
+                f"What number of {plural} belongs to the sample?",
+            ),
+        )
+    elif mode == "weighted_average":
+        weights_raw = values["weights"]
+        marks_raw = values["values"]
+        if not isinstance(weights_raw, list) or not isinstance(marks_raw, list):
+            raise ValueError("weighted rendering requires integer lists")
+        weights = [int(item) for item in weights_raw]
+        marks = [int(item) for item in marks_raw]
+        joined = "; ".join(
+            f"{weight} panels with {mark} marks each"
+            for weight, mark in zip(weights, marks, strict=True)
+        )
+        forms = (
+            (
+                f"At the {setting}, a report lists {joined}.",
+                "Every panel has equal weight within its group.",
+                "What is the exact average number of marks per panel?",
+            ),
+            (
+                f"{actor} combines panel groups: {joined}.",
+                "The group sizes must weight their mark counts.",
+                "Calculate the weighted mean of marks per panel.",
+            ),
+            (
+                "What exact weighted average describes the panels?",
+                f"The {setting} records {joined}.",
+                "Report the mean marks per panel.",
+            ),
+            (
+                f"At the {setting}, mark counts are measured across groups containing {joined}.",
+                "The observations are pooled by panel count.",
+                "Determine the weighted average.",
+            ),
+            (
+                f"The shift summary contains {joined}.",
+                scenario.safe_context,
+                "Find the exact panel-weighted mark count.",
+            ),
+            (
+                f"{actor} compares several unequal panel groups.",
+                f"Their measurements are {joined}.",
+                "What weighted mean gives marks per panel?",
+            ),
+        )
+    else:
+        first = _payload_int(values, "first_rate")
+        second = _payload_int(values, "second_rate")
+        intervals = _payload_int(values, "intervals")
+        forms = (
+            (
+                f"Two channels at the {setting} deliver {first} and {second} {plural} per interval.",
+                f"Both operate for {intervals} intervals.",
+                f"How many {plural} arrive altogether?",
+            ),
+            (
+                f"{actor} monitors two simultaneous streams for {intervals} intervals.",
+                f"Their rates are {first} and {second} {plural} per interval.",
+                "What combined total is delivered?",
+            ),
+            (
+                f"What is the total delivery of {plural} from two channels over {intervals} intervals?",
+                f"One channel contributes {first} per interval and the other contributes {second}.",
+                "Calculate their shared output.",
+            ),
+            (
+                f"At the {setting}, {plural} are delivered by two independent channels at rates {first} and {second} per interval.",
+                f"Each channel runs for {intervals} intervals.",
+                "Determine the aggregate arrival count.",
+            ),
+            (
+                f"The shift summary lists {intervals} intervals and channel rates of {first} and {second} {plural}.",
+                scenario.safe_context,
+                "Find the total received from both channels.",
+            ),
+            (
+                f"{actor} compares two equal-duration streams at the {setting}.",
+                f"Across {intervals} intervals they provide {first} and {second} {plural} per interval.",
+                f"How many {plural} do the streams provide together?",
+            ),
+        )
+    selected = forms[_RENDERER_FAMILIES.index(family)]
+    return " ".join(selected), selected[:-1], selected[-1]
 
 
 def generate_rates(
@@ -66,8 +439,11 @@ def generate_rates(
         raise ValueError("rate seed and variant must be non-negative")
     rng = random.Random(seed)
     mode = _mode(variant)
-    context = _CONTEXTS[variant % len(_CONTEXTS)]
-    item = _OBJECTS[(variant * 3) % len(_OBJECTS)]
+    occurrence = variant // 5
+    scenario = _SCENARIOS[(variant * 7 + occurrence) % len(_SCENARIOS)]
+    renderer_family = _RENDERER_FAMILIES[occurrence % len(_RENDERER_FAMILIES)]
+    context = scenario.setting
+    item = scenario.object_kind.plural
     parameters: list[ProgramParameter] = []
     steps: list[ProgramStep] = []
     trace: list[str] = []
@@ -262,6 +638,54 @@ def generate_rates(
         payload.update(first_rate=first_rate, second_rate=second_rate, intervals=intervals)
         answer_symbol = "combined_total"
 
+    question, rendered_clauses, conclusion = _render_rate_question(
+        mode=mode,
+        family=renderer_family,
+        scenario=scenario,
+        values=payload,
+    )
+    compatibility_errors = validate_combination((scenario.object_kind, scenario.object_kind))
+    if compatibility_errors:
+        raise ValueError("incompatible rate scenario: " + "; ".join(compatibility_errors))
+
+    unit_transitions: tuple[UnitTransitionEvidence, ...]
+    if mode in {"rate_total", "combined_rate"}:
+        unit_transitions = (
+            UnitTransitionEvidence(
+                source_unit="items/interval",
+                target_unit=QuantityUnit.ITEM,
+                conversion_explicit=True,
+            ),
+        )
+    elif mode == "percentage":
+        unit_transitions = (
+            UnitTransitionEvidence(
+                source_unit="percent",
+                target_unit=QuantityUnit.ITEM,
+                conversion_explicit=True,
+            ),
+        )
+    elif mode == "weighted_average":
+        unit_transitions = (
+            UnitTransitionEvidence(
+                source_unit="marks/panel",
+                target_unit="marks/panel",
+                conversion_explicit=True,
+            ),
+        )
+    else:
+        unit_transitions = ()
+
+    noun_forms: tuple[NounFormEvidence, ...] = ()
+    if mode != "weighted_average":
+        noun_forms = (
+            NounFormEvidence(
+                quantity=2,
+                rendered_noun=scenario.object_kind.plural,
+                object_kind=scenario.object_kind,
+            ),
+        )
+
     answer = exact_value(answer_fraction)
     trace_tuple = tuple(trace)
     program = LatentProgramSpec(
@@ -290,11 +714,29 @@ def generate_rates(
         training_completion=training_completion(
             trace_tuple, answer, output_contract_enabled=output_contract_enabled
         ),
+        quality_metadata=RenderQualityMetadata(
+            scenario_id=scenario.scenario_id,
+            renderer_family=renderer_family,
+            clauses=rendered_clauses,
+            declared_entity_ids=("operator", "process", "batch"),
+            referenced_entity_ids=("process",),
+            pronoun_referent_ids=("process",),
+            noun_forms=noun_forms,
+            combination_groups=((scenario.object_kind, scenario.object_kind),),
+            operations=(),
+            unit_transitions=unit_transitions,
+            target_symbol=answer_symbol,
+            target_mentions=1,
+            conclusion=conclusion,
+            constraints_tied=False,
+            grammar_complete=True,
+        ),
         structure_signature={
             "generator": GENERATOR_ID,
             "mode": mode,
             "difficulty": difficulty,
-            "template_variant": variant,
+            "scenario_family": scenario.scenario_id,
+            "renderer_family": renderer_family,
             "step_operations": [step.operation for step in steps],
             "answer_symbol": answer_symbol,
         },

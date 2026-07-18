@@ -1,8 +1,11 @@
 """Independent multi-step state-transition generator and verifier pair."""
 
+# ruff: noqa: E501  # controlled natural-language templates are kept readable as full clauses
+
 from __future__ import annotations
 
 import random
+from dataclasses import dataclass
 from fractions import Fraction
 
 from foundry.synthesis.generators import (
@@ -13,6 +16,21 @@ from foundry.synthesis.generators import (
     training_completion,
     verification_result,
 )
+from foundry.synthesis.object_units import (
+    Countability,
+    LedgerOperationKind,
+    LocationSpec,
+    ObjectKind,
+    QuantityUnit,
+    TypedLedgerOperation,
+    TypedQuantity,
+    validate_ledger_plan,
+)
+from foundry.synthesis.quality import (
+    NounFormEvidence,
+    RenderQualityMetadata,
+    UnitTransitionEvidence,
+)
 from foundry.synthesis.schema import (
     DifficultyLevel,
     LatentProgramSpec,
@@ -22,41 +40,291 @@ from foundry.synthesis.schema import (
 from foundry.synthesis.taxonomy import FailureCategory
 
 GENERATOR_ID = "bookkeeping-state-transitions"
-GENERATOR_VERSION = "1"
+GENERATOR_VERSION = "2"
 
-_LOCATIONS = (
-    "orbital herbarium",
-    "deep-sea archive",
-    "volcanic glass studio",
-    "polar observatory",
-    "desert seed vault",
-    "floating repair dock",
-    "mountain signal station",
-    "underground map library",
-    "tidal research garden",
-    "solar instrument workshop",
+
+def _kind(family: str, singular: str, plural: str) -> ObjectKind:
+    return ObjectKind(
+        family=family,
+        singular=singular,
+        plural=plural,
+        countability=Countability.DISCRETE,
+        unit=QuantityUnit.ITEM,
+        combination_key=f"{family}:count",
+        transferable=True,
+        supported_verbs=("move", "place", "deliver", "remove", "send", "return"),
+        supported_containers=("inventory",),
+    )
+
+
+@dataclass(frozen=True)
+class _Scenario:
+    scenario_id: str
+    setting: str
+    actor: str
+    object_kind: ObjectKind
+    ledger: str
+    source: str
+    destination: str
+    safe_context: str
+
+
+_SCENARIOS = (
+    _Scenario(
+        "botanical",
+        "botanical station",
+        "Mara",
+        _kind("seed_packet", "seed packet", "seed packets"),
+        "sorting cabinet",
+        "dry-storage shelf",
+        "planting cart",
+        "The humidity log is kept separately.",
+    ),
+    _Scenario(
+        "lunar_shop",
+        "lunar repair shop",
+        "Ilan",
+        _kind("bearing", "bearing", "bearings"),
+        "parts bin",
+        "inspection bench",
+        "assembly trolley",
+        "The calibration tools stay on another bench.",
+    ),
+    _Scenario(
+        "marine_lab",
+        "marine field lab",
+        "Nia",
+        _kind("sample_vial", "sample vial", "sample vials"),
+        "cold locker",
+        "intake cooler",
+        "analysis rack",
+        "The temperature record does not alter the vial count.",
+    ),
+    _Scenario(
+        "map_archive",
+        "map archive",
+        "Oren",
+        _kind("map_tube", "map tube", "map tubes"),
+        "catalog rack",
+        "return desk",
+        "scanning room",
+        "The reading tables remain outside the storage count.",
+    ),
+    _Scenario(
+        "bakery",
+        "bakery store room",
+        "Priya",
+        _kind("flour_sack", "flour sack", "flour sacks"),
+        "supply bay",
+        "delivery pallet",
+        "mixing station",
+        "A separate cleaning check occurs after the count.",
+    ),
+    _Scenario(
+        "theater",
+        "theater wardrobe",
+        "Ravi",
+        _kind("costume", "costume", "costumes"),
+        "costume rail",
+        "laundry return",
+        "rehearsal room",
+        "Props are cataloged in a different collection.",
+    ),
+    _Scenario(
+        "observatory",
+        "hilltop observatory",
+        "Sora",
+        _kind("lens_cap", "lens cap", "lens caps"),
+        "equipment drawer",
+        "maintenance tray",
+        "telescope deck",
+        "The weather instruments use a separate register.",
+    ),
+    _Scenario(
+        "apiary",
+        "apiary workshop",
+        "Tomas",
+        _kind("hive_frame", "hive frame", "hive frames"),
+        "drying rack",
+        "repair table",
+        "field wagon",
+        "Protective clothing is stored elsewhere.",
+    ),
+    _Scenario(
+        "rescue",
+        "rescue depot",
+        "Uma",
+        _kind("blanket", "blanket", "blankets"),
+        "supply cage",
+        "wash station",
+        "dispatch van",
+        "Medical kits follow an independent inventory.",
+    ),
+    _Scenario(
+        "ceramics",
+        "ceramics studio",
+        "Vik",
+        _kind("clay_block", "clay block", "clay blocks"),
+        "material shelf",
+        "delivery bench",
+        "throwing room",
+        "Glaze containers are counted on another sheet.",
+    ),
+    _Scenario(
+        "robotics",
+        "robotics laboratory",
+        "Wren",
+        _kind("sensor_module", "sensor module", "sensor modules"),
+        "component cabinet",
+        "testing table",
+        "prototype cart",
+        "Power cables are excluded from this ledger.",
+    ),
+    _Scenario(
+        "vineyard",
+        "vineyard cellar",
+        "Xena",
+        _kind("bottle_crate", "bottle crate", "bottle crates"),
+        "cellar bay",
+        "loading dock",
+        "tasting room",
+        "Empty barrels use a separate storage list.",
+    ),
+    _Scenario(
+        "museum",
+        "museum restoration room",
+        "Yara",
+        _kind("display_hook", "display hook", "display hooks"),
+        "hardware cabinet",
+        "receiving tray",
+        "gallery cart",
+        "Lighting equipment is not part of this count.",
+    ),
+    _Scenario(
+        "radio",
+        "community radio station",
+        "Zane",
+        _kind("cable_reel", "cable reel", "cable reels"),
+        "storage wall",
+        "recording booth",
+        "outside-broadcast case",
+        "Microphones have their own checkout record.",
+    ),
+    _Scenario(
+        "clinic",
+        "field clinic",
+        "Asha",
+        _kind("bandage_roll", "bandage roll", "bandage rolls"),
+        "medical cabinet",
+        "supply tent",
+        "treatment cart",
+        "Medication is tracked by another system.",
+    ),
+    _Scenario(
+        "harbor",
+        "harbor workshop",
+        "Bram",
+        _kind("mooring_rope", "mooring rope", "mooring ropes"),
+        "gear locker",
+        "inspection dock",
+        "service boat",
+        "Safety flags are stored in a separate locker.",
+    ),
+    _Scenario(
+        "print_shop",
+        "print shop",
+        "Cleo",
+        _kind("paper_ream", "paper ream", "paper reams"),
+        "stock room",
+        "delivery platform",
+        "press floor",
+        "Ink supplies are excluded from this paper ledger.",
+    ),
+    _Scenario(
+        "geology",
+        "geology laboratory",
+        "Dara",
+        _kind("specimen_tray", "specimen tray", "specimen trays"),
+        "collection rack",
+        "intake counter",
+        "study room",
+        "Field notebooks remain in the archive.",
+    ),
+    _Scenario(
+        "aviation",
+        "aviation workshop",
+        "Enzo",
+        _kind("filter_cartridge", "filter cartridge", "filter cartridges"),
+        "service cabinet",
+        "inspection cart",
+        "engine bay",
+        "Fasteners are counted in another inventory.",
+    ),
+    _Scenario(
+        "aquarium",
+        "public aquarium",
+        "Faye",
+        _kind("feed_bucket", "feed bucket", "feed buckets"),
+        "food locker",
+        "preparation room",
+        "habitat cart",
+        "Water-testing supplies are tracked separately.",
+    ),
+    _Scenario(
+        "library",
+        "neighborhood library",
+        "Galen",
+        _kind("book_crate", "book crate", "book crates"),
+        "receiving alcove",
+        "return desk",
+        "branch van",
+        "Loose books are cataloged outside this crate ledger.",
+    ),
+    _Scenario(
+        "solar_farm",
+        "solar farm workshop",
+        "Hana",
+        _kind("junction_box", "junction box", "junction boxes"),
+        "parts cage",
+        "test bench",
+        "maintenance truck",
+        "Cable bundles use a separate stock record.",
+    ),
+    _Scenario(
+        "textile",
+        "textile cooperative",
+        "Idris",
+        _kind("thread_spool", "thread spool", "thread spools"),
+        "dye-room shelf",
+        "drying table",
+        "loom cart",
+        "Fabric rolls are recorded elsewhere.",
+    ),
+    _Scenario(
+        "weather",
+        "weather station",
+        "Juno",
+        _kind("battery_pack", "battery pack", "battery packs"),
+        "power cabinet",
+        "charging rack",
+        "sensor hut",
+        "Data cards do not share this inventory.",
+    ),
 )
-_ITEMS = (
-    "silverleaf trays",
-    "ceramic markers",
-    "cobalt tiles",
-    "calibration rings",
-    "sealed specimen tubes",
-    "navigation prisms",
-    "etched index plates",
-    "thermal sensor clips",
-    "woven sample sleeves",
-    "quartz alignment blocks",
+
+_RENDERER_FAMILIES = (
+    "active_chronology",
+    "ledger_report",
+    "location_first",
+    "passive_inventory",
+    "audit_entries",
+    "shift_narrative",
+    "before_after",
+    "custodian_report",
 )
-_ADD_PHRASES = ("receives", "recovers", "assembles", "adds from reserve", "accepts")
-_SUBTRACT_PHRASES = ("ships away", "retires", "transfers out", "uses", "sets aside")
-_QUESTION_PHRASES = (
-    "What exact quantity is left in the active inventory?",
-    "How many units does the final ledger show?",
-    "What is the resulting stored quantity?",
-    "How large is the inventory after every recorded change?",
-    "What final amount remains available?",
-)
+TEMPLATE_FAMILIES = ("inventory", "grouping")
+RENDERING_VARIANTS_PER_FAMILY = len(_RENDERER_FAMILIES)
+SCENARIO_DOMAIN_COUNT = len(_SCENARIOS)
 
 
 def _update_count(difficulty: DifficultyLevel) -> int:
@@ -65,6 +333,83 @@ def _update_count(difficulty: DifficultyLevel) -> int:
         DifficultyLevel.MEDIUM: 3,
         DifficultyLevel.HARD: 4,
     }[difficulty]
+
+
+def _operation_sentence(
+    *,
+    family: str,
+    add: bool,
+    actor: str,
+    amount: int,
+    noun: str,
+    ledger: str,
+    source: str,
+    destination: str,
+    ordinal: int,
+) -> str:
+    if add:
+        forms = {
+            "active_chronology": f"{actor} moved {amount} {noun} from the {source} into the {ledger}.",
+            "ledger_report": f"The {source} supplied {amount} {noun}, which {actor} placed in the {ledger}.",
+            "location_first": f"Into the {ledger}, {actor} delivered {amount} {noun} from the {source}.",
+            "passive_inventory": f"From the {source}, {amount} {noun} were delivered to the {ledger}.",
+            "audit_entries": f"Entry {ordinal} records an increase of {amount} {noun} from the {source}.",
+            "shift_narrative": f"During update {ordinal}, {actor} returned {amount} {noun} from the {source} to the {ledger}.",
+            "before_after": f"The next change added {amount} {noun} from the {source} to the {ledger}.",
+            "custodian_report": f"According to {actor}'s report, the {ledger} received {amount} {noun} from the {source}.",
+        }
+    else:
+        forms = {
+            "active_chronology": f"{actor} sent {amount} {noun} from the {ledger} to the {destination}.",
+            "ledger_report": f"The {ledger} released {amount} {noun} for the {destination} under {actor}'s record.",
+            "location_first": f"Out of the {ledger}, {actor} moved {amount} {noun} to the {destination}.",
+            "passive_inventory": f"From the {ledger}, {amount} {noun} were transferred to the {destination}.",
+            "audit_entries": f"Entry {ordinal} records a decrease of {amount} {noun} sent to the {destination}.",
+            "shift_narrative": f"During update {ordinal}, {actor} removed {amount} {noun} for the {destination}.",
+            "before_after": f"The next change removed {amount} {noun} from the {ledger} for the {destination}.",
+            "custodian_report": f"According to {actor}'s report, {amount} {noun} left the {ledger} for the {destination}.",
+        }
+    return f"Update {ordinal}: {forms[family]}"
+
+
+def _opening_sentence(family: str, scenario: _Scenario, start: int, noun: str) -> str:
+    forms = {
+        "active_chronology": f"At the {scenario.setting}, {scenario.actor} counted {start} {noun} in the {scenario.ledger}.",
+        "ledger_report": f"The opening ledger for the {scenario.ledger} at the {scenario.setting} listed {start} {noun}.",
+        "location_first": f"Inside the {scenario.ledger} were {start} {noun} when work began at the {scenario.setting}.",
+        "passive_inventory": f"At the start of the shift, {start} {noun} were stored in the {scenario.ledger}.",
+        "audit_entries": f"An inventory audit at the {scenario.setting} starts with {start} {noun} assigned to the {scenario.ledger}.",
+        "shift_narrative": f"When {scenario.actor}'s shift began, the {scenario.ledger} held {start} {noun}.",
+        "before_after": f"Before any movement occurred at the {scenario.setting}, the {scenario.ledger} contained {start} {noun}.",
+        "custodian_report": f"{scenario.actor}, the custodian of the {scenario.ledger}, reported an initial balance of {start} {noun}.",
+    }
+    return forms[family]
+
+
+def _question_sentence(
+    *, scenario: _Scenario, family: str, grouping: bool, group_size: int, noun: str
+) -> str:
+    inventory_forms = (
+        f"How many {noun} remain in the {scenario.ledger}?",
+        f"What final count of {noun} should the {scenario.ledger} report?",
+        f"After every recorded movement, how many {noun} does the {scenario.ledger} hold?",
+        f"Determine the closing number of {noun} in the {scenario.ledger}.",
+        f"What is the {scenario.ledger}'s final {noun} balance?",
+        f"At the end of the shift, how many {noun} are stored in the {scenario.ledger}?",
+        f"What number of {noun} should {scenario.actor} record for the {scenario.ledger}?",
+        f"Once all updates are applied, how many {noun} are left in the {scenario.ledger}?",
+    )
+    grouping_forms = (
+        f"How many complete groups of {group_size} {noun} can {scenario.actor} make from the final balance?",
+        f"The remaining {noun} are grouped {group_size} at a time; how many full groups result?",
+        f"After the ledger updates, what number of complete {group_size}-{noun} groups can be formed?",
+        f"How many full sets, each containing {group_size} {noun}, come from the closing inventory?",
+        f"Using every final {noun} in equal sets of {group_size}, how many sets are available?",
+        f"What is the number of complete groups when the closing {noun} count is divided into {group_size}s?",
+        f"How many complete batches of {group_size} {noun} does the final ledger support?",
+        f"From the ending balance, how many whole groups containing {group_size} {noun} can {scenario.actor} prepare?",
+    )
+    return (grouping_forms if grouping else inventory_forms)[_RENDERER_FAMILIES.index(family)]
 
 
 def generate_bookkeeping(
@@ -79,19 +424,31 @@ def generate_bookkeeping(
     if seed < 0 or variant < 0:
         raise ValueError("bookkeeping seed and variant must be non-negative")
     rng = random.Random(seed)
-    grouping = variant % 4 == 3
-    transfer_mode = variant % 4 in {1, 2}
+    grouping = variant % 5 == 4
+    scenario = _SCENARIOS[variant % len(_SCENARIOS)]
+    renderer_family = _RENDERER_FAMILIES[
+        (variant // len(_SCENARIOS) + variant) % len(_RENDERER_FAMILIES)
+    ]
     update_count = _update_count(difficulty)
     group_size = rng.randint(2, 6) if grouping else 1
     start = rng.randint(70, 150) * group_size
-    parameters = [ProgramParameter("start", exact_value(start), "items")]
+    item_kind = scenario.object_kind
+    parameters = [ProgramParameter("start", exact_value(start), item_kind.plural)]
     steps: list[ProgramStep] = []
-    trace: list[str] = [f"Begin with {start} items in the active ledger."]
-    clauses: list[str] = []
+    trace: list[str] = [f"The typed ledger starts with {start} {item_kind.plural}."]
+    sentences: list[str] = [
+        _opening_sentence(renderer_family, scenario, start, item_kind.render_noun(start))
+    ]
+    clause_metadata: list[str] = [sentences[0]]
     operations: list[str] = []
     current = Fraction(start)
     current_symbol = "start"
     signed_updates: list[int] = []
+    quantities: list[TypedQuantity] = [TypedQuantity("start", start, item_kind, "ledger")]
+    typed_operations: list[TypedLedgerOperation] = []
+    noun_forms: list[NounFormEvidence] = [
+        NounFormEvidence(start, item_kind.render_noun(start), item_kind)
+    ]
     for index in range(update_count):
         magnitude = rng.randint(3, 18) * group_size
         add = ((variant >> index) & 1) == 0
@@ -101,7 +458,7 @@ def generate_bookkeeping(
             add = True
         parameter = f"change_{index + 1}"
         output = f"state_{index + 1}"
-        parameters.append(ProgramParameter(parameter, exact_value(magnitude), "items"))
+        parameters.append(ProgramParameter(parameter, exact_value(magnitude), item_kind.plural))
         current = current + signed
         operation = "add" if add else "subtract"
         steps.append(
@@ -112,19 +469,45 @@ def generate_bookkeeping(
                 exact_result=exact_value(current),
             )
         )
-        phrase_pool = _ADD_PHRASES if add else _SUBTRACT_PHRASES
-        phrase = phrase_pool[(variant + index) % len(phrase_pool)]
-        if transfer_mode and add:
-            phrase = "receives by transfer"
-        clauses.append(f"it {phrase} {magnitude} {_ITEMS[(variant + index) % len(_ITEMS)]}")
-        trace.append(f"Apply {operation} {magnitude}; the exact state becomes {current}.")
+        noun = item_kind.render_noun(magnitude)
+        sentence = _operation_sentence(
+            family=renderer_family,
+            add=add,
+            actor=scenario.actor,
+            amount=magnitude,
+            noun=noun,
+            ledger=scenario.ledger,
+            source=scenario.source,
+            destination=scenario.destination,
+            ordinal=index + 1,
+        )
+        sentences.append(sentence)
+        clause_metadata.append(sentence)
+        trace.append(
+            f"Update {index + 1} changes the {item_kind.singular} balance by {signed:+d}, "
+            f"giving {int(current)}."
+        )
         operations.append(operation)
         signed_updates.append(signed)
+        quantity_location = "source" if add else "ledger"
+        quantities.append(TypedQuantity(parameter, magnitude, item_kind, quantity_location))
+        typed_operations.append(
+            TypedLedgerOperation(
+                LedgerOperationKind.TRANSFER_IN if add else LedgerOperationKind.TRANSFER_OUT,
+                parameter,
+                "move",
+                "source" if add else "ledger",
+                "ledger" if add else "destination",
+            )
+        )
+        noun_forms.append(NounFormEvidence(magnitude, noun, item_kind))
         current_symbol = output
 
     target_kind = "items"
     if grouping:
-        parameters.append(ProgramParameter("group_size", exact_value(group_size), "items/group"))
+        parameters.append(
+            ProgramParameter("group_size", exact_value(group_size), f"{item_kind.plural}/group")
+        )
         groups = current / group_size
         steps.append(
             ProgramStep(
@@ -135,23 +518,37 @@ def generate_bookkeeping(
             )
         )
         trace.append(
-            f"Divide {current} items into groups of {group_size}; this gives {groups} groups."
+            f"Partition the closing balance of {int(current)} into groups of {group_size}; "
+            f"this gives {int(groups)} complete groups."
         )
-        clauses.append(f"the final stock is packed into equal groups of {group_size}")
         current = groups
         current_symbol = "group_count"
         target_kind = "groups"
-        question = "How many complete equal groups are formed after every change?"
-    else:
-        question = _QUESTION_PHRASES[variant % len(_QUESTION_PHRASES)]
-
-    location = _LOCATIONS[variant % len(_LOCATIONS)]
-    item = _ITEMS[(variant * 3) % len(_ITEMS)]
-    rendered = (
-        f"At the {location}, the active ledger begins with {start} {item}. "
-        + "; then ".join(clauses)
-        + f". {question}"
+    locations = (
+        LocationSpec("ledger", scenario.ledger, "inventory", (item_kind.family,)),
+        LocationSpec("source", scenario.source, "inventory", (item_kind.family,)),
+        LocationSpec("destination", scenario.destination, "inventory", (item_kind.family,)),
     )
+    plan_rejections = validate_ledger_plan(
+        ledger_kind=item_kind,
+        quantities=tuple(quantities),
+        operations=tuple(typed_operations),
+        locations=locations,
+    )
+    if plan_rejections:
+        raise ValueError(f"typed bookkeeping plan is invalid: {plan_rejections[0]}")
+    if variant % 3 == 2:
+        sentences.insert(1, scenario.safe_context)
+        clause_metadata.insert(1, scenario.safe_context)
+    question = _question_sentence(
+        scenario=scenario,
+        family=renderer_family,
+        grouping=grouping,
+        group_size=group_size,
+        noun=item_kind.plural,
+    )
+    sentences.append(question)
+    rendered = " ".join(sentences)
     answer = exact_value(current)
     program = LatentProgramSpec(
         program_family=f"{GENERATOR_ID}:{'grouping' if grouping else 'inventory'}",
@@ -177,14 +574,41 @@ def generate_bookkeeping(
         training_completion=training_completion(
             trace_tuple, answer, output_contract_enabled=output_contract_enabled
         ),
+        quality_metadata=RenderQualityMetadata(
+            scenario_id=scenario.scenario_id,
+            renderer_family=renderer_family,
+            clauses=tuple(clause_metadata),
+            declared_entity_ids=("actor", "ledger", "source", "destination"),
+            referenced_entity_ids=("actor", "ledger", "source", "destination"),
+            pronoun_referent_ids=(),
+            noun_forms=tuple(noun_forms),
+            combination_groups=((item_kind, *(item_kind for _ in signed_updates)),),
+            unit_transitions=(
+                UnitTransitionEvidence(
+                    QuantityUnit.ITEM,
+                    QuantityUnit.PACKAGE if grouping else QuantityUnit.ITEM,
+                    grouping,
+                ),
+            ),
+            target_symbol=current_symbol,
+            target_mentions=1,
+            conclusion=question,
+            constraints_tied=False,
+            grammar_complete=True,
+            quantities=tuple(quantities),
+            operations=tuple(typed_operations),
+        ),
         structure_signature={
             "generator": GENERATOR_ID,
+            "version": GENERATOR_VERSION,
             "mode": "grouping" if grouping else "inventory",
             "difficulty": difficulty,
-            "template_variant": variant,
+            "scenario_family": scenario.scenario_id,
+            "renderer_family": renderer_family,
             "operations": operations + (["divide"] if grouping else []),
             "topology": "linear_state_chain",
             "target_kind": target_kind,
+            "object_family": item_kind.family,
         },
         verifier_payload={
             "start": start,

@@ -7,6 +7,7 @@ import json
 from dataclasses import dataclass
 from fractions import Fraction
 
+from foundry.synthesis.quality import RenderQualityMetadata
 from foundry.synthesis.schema import DifficultyLevel, ExactValue, LatentProgramSpec
 
 
@@ -27,6 +28,7 @@ class CandidateDraft:
     deterministic_solution_trace: tuple[str, ...]
     canonical_final_answer: ExactValue
     training_completion: str
+    quality_metadata: RenderQualityMetadata
     structure_signature: dict[str, object]
     verifier_payload: dict[str, object]
     ambiguity_flags: tuple[str, ...] = ()

@@ -340,3 +340,26 @@ The semantic encoder behaved acceptably and the contamination pipeline rejected 
 than hiding it. The right response is not to lower thresholds; it is to repair rendering semantics,
 grammar, constraint construction, and template diversity, then test a fresh fixed sample. Full
 generation remains blocked until that new evidence passes the original gates.
+
+## Typed metadata improves safety, but controlled prose still needs adversarial auditing
+
+Milestone 4.1 showed a large, real improvement: one explicit object family and unit now flows
+through every bookkeeping ledger, transfers name compatible endpoints, discrete capacities are
+untied, all 120 number-neutral templates are distinct, and acceptance rose from 24/120 to 86/120
+without changing contamination thresholds. Exact labels and independent verifiers remained
+correct for every candidate.
+
+The fresh audit also showed why typed metadata is not a complete grammar model. Eleven accepted
+questions still contained defects the deterministic rules did not represent: plural nouns used as
+awkward attributive modifiers, a grouping phrase with incorrect noun form, a duplicated weighted
+average group, a conclusion asking for a count when the latent target was a mean, a rate missing
+its explicit interval denominator, an elided discrete object noun, and the irregular plural
+`shelfs`. All were understandable to a human, but training-data admission requires faithful,
+natural text rather than merely recoverable intent.
+
+The negative result is informative. Template diversity eliminated exact number-neutral and latent
+structure rejections, but semantic screening still identified 28 same-scenario/same-family near
+matches and five-token screening found six more. A finite renderer inventory can therefore satisfy
+hash diversity while remaining semantically repetitive. The project must keep content quality,
+contamination diversity, and exact label verification as separate gates; success on one cannot
+substitute for another.

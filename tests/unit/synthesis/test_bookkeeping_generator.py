@@ -52,7 +52,7 @@ def test_bookkeeping_grouping_is_exact_and_uses_distinct_verifiers() -> None:
     draft = generate_bookkeeping(
         seed=29,
         difficulty=DifficultyLevel.HARD,
-        variant=3,
+        variant=4,
         output_contract_enabled=True,
     )
     primary = verify_bookkeeping_dag(draft)

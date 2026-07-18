@@ -42,6 +42,7 @@ from foundry.synthesis.generators.rates import (
     verify_rate_equation,
     verify_rate_inverse,
 )
+from foundry.synthesis.quality import validate_rendered_candidate
 from foundry.synthesis.schema import (
     DifficultyLevel,
     ProvenanceMetadata,
@@ -537,7 +538,15 @@ def _process_attempt(
     schema_seconds = time.perf_counter() - schema_start
 
     verification_start = time.perf_counter()
-    primary, independent, constraint_rejections = _verify(draft)
+    primary, independent, generator_rejections = _verify(draft)
+    quality_rejections = validate_rendered_candidate(
+        question=draft.rendered_question,
+        completion=draft.training_completion,
+        answer=draft.canonical_final_answer,
+        output_contract_enabled=draft.output_contract_enabled,
+        metadata=draft.quality_metadata,
+    )
+    constraint_rejections = generator_rejections + quality_rejections
     agreement = (
         primary.success
         and independent.success
