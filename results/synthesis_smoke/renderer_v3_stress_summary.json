@@ -1,0 +1,64 @@
+{
+  "attempted": 900,
+  "attempted_by_family": {
+    "constraint_distribution_or_discrete_reasoning": 300,
+    "multi_step_bookkeeping_or_omission": 300,
+    "rate_ratio_percentage_or_average": 300
+  },
+  "benchmark_comparison_performed": false,
+  "compiler_capacity": {
+    "semantic_frames_bookkeeping": 2,
+    "semantic_frames_discrete": 4,
+    "semantic_frames_rates": 5,
+    "sentence_plans_per_family": 18432,
+    "static_incompatible_combinations": 0
+  },
+  "distinct_render_signatures": 900,
+  "duplicated_node_failures": 0,
+  "exact_duplicate_count": 0,
+  "grammar_metadata_failures": 0,
+  "manual_audit": {
+    "false_mathematical_labels": 0,
+    "invalid_rendered_questions": 13,
+    "sample_count": 60,
+    "systematic_issue": "imperative request clauses were punctuated as direct questions"
+  },
+  "master_seed": "foundry-m4.2-typed-renderer-stress-v1",
+  "missing_node_failures": 0,
+  "morphology_failures": 0,
+  "number_neutral_template_duplicate_count": 99,
+  "persisted_question_corpus": false,
+  "readiness": {
+    "fresh_120_candidate_smoke_run": false,
+    "gate_passed": false,
+    "reasons": [
+      "manual audit found systematic unnatural request punctuation",
+      "99 number-neutral template collisions remain",
+      "899 of 900 nearest generated neighbors met the frozen automatic semantic-rejection threshold"
+    ],
+    "required_next_action": "separately approve constrained local-model surface realization with exact round-trip semantic validation"
+  },
+  "run_id": "typed-realizer-stress-v1",
+  "runtime_seconds": 4.058455,
+  "schema_version": 1,
+  "semantic_model_id": "sentence-transformers/all-MiniLM-L6-v2",
+  "semantic_model_revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+  "semantic_neighbor_distribution": {
+    "bins": {
+      "0_50_to_0_60": 0,
+      "0_60_to_0_70": 0,
+      "0_70_to_0_75": 0,
+      "0_75_to_0_82": 1,
+      "at_or_above_0_82": 899,
+      "below_0_50": 0
+    },
+    "maximum": 0.996438,
+    "median": 0.936379,
+    "minimum": 0.814113,
+    "p90": 0.973762
+  },
+  "structural_duplicate_count": 0,
+  "successful_renders": 900,
+  "target_type_failures": 0,
+  "typed_validation_failures": {}
+}

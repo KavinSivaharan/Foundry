@@ -450,3 +450,35 @@ generator version must not produce the full pilot. A new milestone is not implie
 choose whether to stop this procedural lineage or explicitly approve another narrowly scoped
 renderer-quality decision. Threshold changes, model paraphrasing, full generation, and training
 remain outside the frozen design.
+
+## Milestone 4.2 typed-realizer stress result and procedural stop
+
+The live generator path now emits `ProblemIR` rather than final prose. Typed entities, lexemes,
+quantities, units, rates, groups, constraints, and answer targets feed a centralized realization
+compiler. The compiler emits sentence plans, explicit morphology evidence, a stable
+`RenderSignature`, and exact semantic-node-to-clause coverage. Irregular forms are explicit; unknown
+morphology rejects deterministically. Weighted means, rates, capacities, counts, and grouping
+targets have distinct question contracts.
+
+All eleven Milestone 4.1 defect classes have sanitized regression coverage. The bounded in-memory
+stress used 300 deterministic attempts per mathematical family and persisted no question corpus.
+All 900 passed typed checks with zero exact or latent-structure duplicates and 900 distinct render
+signatures. Nevertheless, 99 number-neutral templates repeated, and MiniLM nearest-neighbor scores
+placed 899/900 successful renders at or above the unchanged 0.82 automatic-rejection threshold
+(median 0.936379). Manual audit of 60 renders found 13 unnatural imperative-question surfaces and
+zero false mathematical labels.
+
+The renderer stress gate therefore failed. The fresh 120-candidate contamination smoke was not
+authorized by the gate and did not run. The pure procedural-renderer lineage is closed; thresholds
+must not be changed and a Milestone 4.3 must not be created.
+
+### Separately approvable architectural pivot
+
+Retain the typed latent programs, exact labels, deterministic traces, independent verifiers,
+target/unit contracts, and contamination pipeline. Replace only the final surface realization with
+a pinned local model operating under a constrained interface. The model must never generate or
+choose the label. Each surface must round-trip into the typed semantics with exact recovery of all
+entities, quantities, units, relations, targets, and required nodes; disagreement or missing
+evidence rejects. A bounded design milestone must pin the model/revision/license, quantify local
+compute and dependency impact, freeze the constrained prompt/schema and round-trip verifier, and
+define a new smoke before any realization generation.

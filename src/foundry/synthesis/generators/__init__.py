@@ -8,6 +8,7 @@ from dataclasses import dataclass
 from fractions import Fraction
 
 from foundry.synthesis.quality import RenderQualityMetadata
+from foundry.synthesis.realization.ir import CompiledRealization, ProblemIR, problem_ir_sha256
 from foundry.synthesis.schema import DifficultyLevel, ExactValue, LatentProgramSpec
 
 
@@ -29,6 +30,8 @@ class CandidateDraft:
     canonical_final_answer: ExactValue
     training_completion: str
     quality_metadata: RenderQualityMetadata
+    problem_ir: ProblemIR
+    realization: CompiledRealization
     structure_signature: dict[str, object]
     verifier_payload: dict[str, object]
     ambiguity_flags: tuple[str, ...] = ()
@@ -38,6 +41,8 @@ class CandidateDraft:
             raise ValueError("candidate seed and rendered question are required")
         if not self.deterministic_solution_trace or not self.training_completion.strip():
             raise ValueError("candidate solution trace and completion are required")
+        if self.rendered_question != self.realization.text:
+            raise ValueError("rendered question must come from the typed realization compiler")
         expected_line = f"Final answer: {self.canonical_final_answer.render()}"
         if self.output_contract_enabled:
             if self.training_completion.strip().splitlines()[-1] != expected_line:
@@ -53,6 +58,18 @@ class CandidateDraft:
 
         rendered = json.dumps(self.structure_signature, sort_keys=True, separators=(",", ":"))
         return hashlib.sha256(rendered.encode("utf-8")).hexdigest()
+
+    @property
+    def semantic_ir_sha256(self) -> str:
+        """Hash semantic content independently of English realization."""
+
+        return problem_ir_sha256(self.problem_ir)
+
+    @property
+    def render_signature_sha256(self) -> str:
+        """Hash meaningful compiler choices independently of numbers."""
+
+        return self.realization.signature.sha256
 
 
 @dataclass(frozen=True)

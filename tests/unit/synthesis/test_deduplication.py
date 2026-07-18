@@ -35,8 +35,12 @@ def test_generated_structural_copy_is_rejected() -> None:
     draft = _draft()
     index = DeduplicationIndex(())
     index.add_candidate(draft)
+    rewritten_text = "Entirely rewritten wording."
     rewritten = replace(
-        draft, candidate_id="syn-other", rendered_question="Entirely rewritten wording."
+        draft,
+        candidate_id="syn-other",
+        rendered_question=rewritten_text,
+        realization=replace(draft.realization, text=rewritten_text),
     )
 
     assert index.screen(rewritten).rejection_reason == "latent_structure_copy"

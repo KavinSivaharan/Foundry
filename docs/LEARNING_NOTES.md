@@ -363,3 +363,23 @@ matches and five-token screening found six more. A finite renderer inventory can
 hash diversity while remaining semantically repetitive. The project must keep content quality,
 contamination diversity, and exact label verification as separate gates; success on one cannot
 substitute for another.
+
+## A typed grammar can preserve semantics without providing natural or scalable language
+
+Milestone 4.2 made the semantic boundary substantially stronger. Generators now emit typed problem
+IR, and a centralized compiler records explicit noun morphology, answer-target kinds, rate
+denominators, and a one-to-one map from semantic nodes to clauses. That architecture rejected all
+eleven prior defect classes and produced 900/900 internally valid renders with no false labels.
+
+The stress audit exposed the remaining distinction: internal well-formedness is not the same as
+natural English. Normalizing every request into a question mark turned imperative requests such as
+`Determine ...` into unnatural direct questions. More importantly, distinct render signatures did
+not imply diverse language: 99 number-neutral templates repeated and nearly every render's closest
+generated neighbor exceeded the semantic rejection threshold. A finite rule system can multiply
+choice metadata faster than it creates meaningfully different surface language.
+
+The evidence supports an architectural boundary rather than more patches. Exact procedural programs
+and dual verifiers remain the trustworthy label source. A future surface-realization model, if
+approved, should receive only typed synthetic semantics, produce wording rather than labels, and be
+accepted only after deterministic round-trip recovery of every semantic node, target, quantity,
+unit, and relation. The existing contamination scanner then remains the final diversity firewall.

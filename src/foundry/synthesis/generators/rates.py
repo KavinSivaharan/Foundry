@@ -27,6 +27,18 @@ from foundry.synthesis.quality import (
     RenderQualityMetadata,
     UnitTransitionEvidence,
 )
+from foundry.synthesis.realization import compile_problem, select_plan
+from foundry.synthesis.realization.domains import make_domain
+from foundry.synthesis.realization.ir import (
+    RateProblemIR,
+    RateRelationKind,
+    ScalarSpec,
+    TargetKind,
+    TargetSpec,
+    UnitSpec,
+    WeightedGroupSpec,
+)
+from foundry.synthesis.realization.morphology import INTERVAL, MARK, PANEL, PART, count_lexeme
 from foundry.synthesis.schema import (
     DifficultyLevel,
     LatentProgramSpec,
@@ -36,7 +48,7 @@ from foundry.synthesis.schema import (
 from foundry.synthesis.taxonomy import FailureCategory
 
 GENERATOR_ID = "exact-rate-ratio-relations"
-GENERATOR_VERSION = "2"
+GENERATOR_VERSION = "3"
 
 
 def _kind(family: str, singular: str, plural: str) -> ObjectKind:
@@ -441,9 +453,6 @@ def generate_rates(
     mode = _mode(variant)
     occurrence = variant // 5
     scenario = _SCENARIOS[(variant * 7 + occurrence) % len(_SCENARIOS)]
-    renderer_family = _RENDERER_FAMILIES[occurrence % len(_RENDERER_FAMILIES)]
-    context = scenario.setting
-    item = scenario.object_kind.plural
     parameters: list[ProgramParameter] = []
     steps: list[ProgramStep] = []
     trace: list[str] = []
@@ -461,11 +470,6 @@ def generate_rates(
         )
         steps.append(
             ProgramStep("total", "multiply", ("rate", "intervals"), exact_value(answer_fraction))
-        )
-        question = (
-            f"At {context}, one calibrated cycle produces {rate} {item}. "
-            f"The device completes exactly {intervals} cycles. What total number of {item} "
-            "does it produce?"
         )
         trace.append(f"Multiply the exact per-cycle rate {rate} by {intervals} cycles.")
         payload.update(rate=rate, intervals=intervals)
@@ -495,11 +499,6 @@ def generate_rates(
                     exact_value(answer_fraction),
                 ),
             )
-        )
-        question = (
-            f"At {context}, amber and cobalt {item} are prepared in the exact ratio "
-            f"{first_part}:{second_part}. If the amber share contains {known}, how many "
-            "belong to the cobalt share?"
         )
         trace.extend(
             (
@@ -531,10 +530,6 @@ def generate_rates(
                 ),
             )
         )
-        question = (
-            f"At {context}, a quality scan examines {percent}% of an independently prepared "
-            f"batch of {base} {item}. How many {item} are examined?"
-        )
         trace.extend(
             (
                 f"Represent {percent}% exactly as {percent}/100.",
@@ -547,6 +542,8 @@ def generate_rates(
         group_count = 3 if difficulty is DifficultyLevel.HARD else 2
         weights = [rng.randint(2, 7) for _ in range(group_count)]
         values = [rng.randint(4, 18) for _ in range(group_count)]
+        while len(set(zip(weights, values, strict=True))) != group_count:
+            values = [rng.randint(4, 18) for _ in range(group_count)]
         weighted_total = sum(weight * value for weight, value in zip(weights, values, strict=True))
         total_weight = sum(weights)
         answer_fraction = Fraction(weighted_total, total_weight)
@@ -581,13 +578,6 @@ def generate_rates(
                 ("weighted_total", "total_weight"),
                 exact_value(answer_fraction),
             )
-        )
-        groups = "; ".join(
-            f"{weight} panels carry {value} marks each"
-            for weight, value in zip(weights, values, strict=True)
-        )
-        question = (
-            f"At {context}, {groups}. What is the exact weighted average number of marks per panel?"
         )
         trace.extend(
             (
@@ -625,10 +615,6 @@ def generate_rates(
                 ),
             )
         )
-        question = (
-            f"At {context}, two independent channels deliver {first_rate} and {second_rate} "
-            f"{item} per interval. Both run for {intervals} intervals. How many arrive altogether?"
-        )
         trace.extend(
             (
                 f"Add the two compatible rates to obtain {first_rate + second_rate} per interval.",
@@ -638,12 +624,6 @@ def generate_rates(
         payload.update(first_rate=first_rate, second_rate=second_rate, intervals=intervals)
         answer_symbol = "combined_total"
 
-    question, rendered_clauses, conclusion = _render_rate_question(
-        mode=mode,
-        family=renderer_family,
-        scenario=scenario,
-        values=payload,
-    )
     compatibility_errors = validate_combination((scenario.object_kind, scenario.object_kind))
     if compatibility_errors:
         raise ValueError("incompatible rate scenario: " + "; ".join(compatibility_errors))
@@ -698,6 +678,92 @@ def generate_rates(
         ),
         answer_symbol=answer_symbol,
     )
+    domain = make_domain(
+        domain_id=scenario.scenario_id,
+        setting=scenario.setting,
+        actor=scenario.operator,
+        item_id=scenario.object_kind.family,
+        item_singular=scenario.object_kind.singular,
+        item_plural=scenario.object_kind.plural,
+        primary_location="process floor",
+        secondary_location="input station",
+        destination_location="output station",
+        container_singular="batch",
+        container_plural="batches",
+        safe_context=scenario.safe_context,
+    )
+    item_unit = UnitSpec(f"{scenario.object_kind.family}:count", domain.item.lexeme)
+    interval_unit = UnitSpec("interval:count", INTERVAL)
+    rate_unit = UnitSpec(f"{scenario.object_kind.family}:rate", domain.item.lexeme, INTERVAL)
+    part_unit = UnitSpec("ratio:part", PART)
+    percent_unit = UnitSpec("percentage", count_lexeme("percentage", "percent", "percentages"))
+    scalar_specs: tuple[ScalarSpec, ...]
+    group_specs: tuple[WeightedGroupSpec, ...] = ()
+    relation_kind = RateRelationKind(mode)
+    target_kind_ir = {
+        "rate_total": TargetKind.TOTAL_QUANTITY,
+        "ratio_scale": TargetKind.RATIO,
+        "percentage": TargetKind.PERCENTAGE,
+        "weighted_average": TargetKind.WEIGHTED_MEAN,
+        "combined_rate": TargetKind.TOTAL_QUANTITY,
+    }[mode]
+    target_unit = item_unit
+    if mode == "rate_total":
+        scalar_specs = (
+            ScalarSpec("rate", "rate", _payload_int(payload, "rate"), rate_unit),
+            ScalarSpec("intervals", "intervals", _payload_int(payload, "intervals"), interval_unit),
+        )
+    elif mode == "ratio_scale":
+        scalar_specs = (
+            ScalarSpec("first_part", "first_part", _payload_int(payload, "first_part"), part_unit),
+            ScalarSpec(
+                "second_part", "second_part", _payload_int(payload, "second_part"), part_unit
+            ),
+            ScalarSpec("known", "known", _payload_int(payload, "known"), item_unit),
+        )
+    elif mode == "percentage":
+        scalar_specs = (
+            ScalarSpec("base", "base", _payload_int(payload, "base"), item_unit),
+            ScalarSpec("percent", "percent", _payload_int(payload, "percent"), percent_unit),
+        )
+    elif mode == "weighted_average":
+        scalar_specs = ()
+        weights_ir = _payload_int_list(payload, "weights")
+        values_ir = _payload_int_list(payload, "values")
+        group_specs = tuple(
+            WeightedGroupSpec(f"group_{index}", weight, value)
+            for index, (weight, value) in enumerate(
+                zip(weights_ir, values_ir, strict=True), start=1
+            )
+        )
+        target_unit = UnitSpec("marks_per_panel", MARK, PANEL)
+    else:
+        scalar_specs = (
+            ScalarSpec("first_rate", "first_rate", _payload_int(payload, "first_rate"), rate_unit),
+            ScalarSpec(
+                "second_rate", "second_rate", _payload_int(payload, "second_rate"), rate_unit
+            ),
+            ScalarSpec("intervals", "intervals", _payload_int(payload, "intervals"), interval_unit),
+        )
+    problem_ir = RateProblemIR(
+        problem_id=candidate_id(GENERATOR_ID, seed, variant),
+        domain=domain,
+        relation_kind=relation_kind,
+        scalars=scalar_specs,
+        groups=group_specs,
+        target=TargetSpec(
+            "target", target_kind_ir, answer_symbol, domain.item.entity_id, target_unit
+        ),
+        context_node_id="safe_context" if occurrence % 3 == 2 else None,
+    )
+    realization = compile_problem(
+        problem_ir, select_plan(seed=seed, variant=variant, family="rates")
+    )
+    question = realization.text
+    rendered_clauses = tuple(
+        clause for clause in realization.clauses if clause != realization.question_clause
+    )
+    conclusion = realization.question_clause
     return CandidateDraft(
         candidate_id=candidate_id(GENERATOR_ID, seed, variant),
         generator_id=GENERATOR_ID,
@@ -716,7 +782,7 @@ def generate_rates(
         ),
         quality_metadata=RenderQualityMetadata(
             scenario_id=scenario.scenario_id,
-            renderer_family=renderer_family,
+            renderer_family=realization.signature.sha256,
             clauses=rendered_clauses,
             declared_entity_ids=("operator", "process", "batch"),
             referenced_entity_ids=("process",),
@@ -731,12 +797,14 @@ def generate_rates(
             constraints_tied=False,
             grammar_complete=True,
         ),
+        problem_ir=problem_ir,
+        realization=realization,
         structure_signature={
             "generator": GENERATOR_ID,
             "mode": mode,
             "difficulty": difficulty,
             "scenario_family": scenario.scenario_id,
-            "renderer_family": renderer_family,
+            "renderer_family": realization.signature.sha256,
             "step_operations": [step.operation for step in steps],
             "answer_symbol": answer_symbol,
         },

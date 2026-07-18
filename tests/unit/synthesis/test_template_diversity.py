@@ -6,7 +6,6 @@ from collections.abc import Callable
 
 import pytest
 
-from foundry.synthesis.contamination import numeric_template_sha256
 from foundry.synthesis.generators import CandidateDraft
 from foundry.synthesis.generators.bookkeeping import (
     RENDERING_VARIANTS_PER_FAMILY as BOOKKEEPING_RENDERERS,
@@ -32,7 +31,7 @@ from foundry.synthesis.generators.rates import (
 from foundry.synthesis.generators.rates import SCENARIO_DOMAIN_COUNT as RATE_SCENARIOS
 from foundry.synthesis.generators.rates import TEMPLATE_FAMILIES as RATE_FAMILIES
 from foundry.synthesis.generators.rates import generate_rates
-from foundry.synthesis.quality import validate_rendered_candidate
+from foundry.synthesis.realization import validate_realization
 from foundry.synthesis.schema import DifficultyLevel
 
 Generator = Callable[..., CandidateDraft]
@@ -63,7 +62,7 @@ def test_template_inventory_is_explicit_and_broad(
     ("generator", "attempts"),
     ((generate_bookkeeping, 53), (generate_rates, 34), (generate_discrete, 33)),
 )
-def test_fresh_smoke_scale_has_distinct_number_neutral_renderings(
+def test_fresh_smoke_scale_has_distinct_typed_render_signatures(
     generator: Generator, attempts: int
 ) -> None:
     hashes: list[str] = []
@@ -74,7 +73,7 @@ def test_fresh_smoke_scale_has_distinct_number_neutral_renderings(
             variant=variant,
             output_contract_enabled=variant % 5 == 0,
         )
-        hashes.append(numeric_template_sha256(draft.rendered_question))
+        hashes.append(draft.render_signature_sha256)
     assert len(set(hashes)) == attempts
 
 
@@ -82,7 +81,7 @@ def test_fresh_smoke_scale_has_distinct_number_neutral_renderings(
     ("generator", "attempts"),
     ((generate_bookkeeping, 53), (generate_rates, 34), (generate_discrete, 33)),
 )
-def test_every_fresh_smoke_scale_rendering_passes_rule_based_quality(
+def test_every_fresh_smoke_scale_rendering_passes_typed_realization_contracts(
     generator: Generator, attempts: int
 ) -> None:
     for variant in range(attempts):
@@ -92,13 +91,8 @@ def test_every_fresh_smoke_scale_rendering_passes_rule_based_quality(
             variant=variant,
             output_contract_enabled=variant % 5 == 0,
         )
-        assert (
-            validate_rendered_candidate(
-                question=draft.rendered_question,
-                completion=draft.training_completion,
-                answer=draft.canonical_final_answer,
-                output_contract_enabled=draft.output_contract_enabled,
-                metadata=draft.quality_metadata,
-            )
-            == ()
+        assert not validate_realization(
+            problem=draft.problem_ir,
+            realization=draft.realization,
+            answer=draft.canonical_final_answer,
         )

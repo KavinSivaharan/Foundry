@@ -42,7 +42,7 @@ from foundry.synthesis.generators.rates import (
     verify_rate_equation,
     verify_rate_inverse,
 )
-from foundry.synthesis.quality import validate_rendered_candidate
+from foundry.synthesis.realization import validate_realization
 from foundry.synthesis.schema import (
     DifficultyLevel,
     ProvenanceMetadata,
@@ -538,15 +538,13 @@ def _process_attempt(
     schema_seconds = time.perf_counter() - schema_start
 
     verification_start = time.perf_counter()
-    primary, independent, generator_rejections = _verify(draft)
-    quality_rejections = validate_rendered_candidate(
-        question=draft.rendered_question,
-        completion=draft.training_completion,
+    typed_rejections = validate_realization(
+        problem=draft.problem_ir,
+        realization=draft.realization,
         answer=draft.canonical_final_answer,
-        output_contract_enabled=draft.output_contract_enabled,
-        metadata=draft.quality_metadata,
     )
-    constraint_rejections = generator_rejections + quality_rejections
+    primary, independent, generator_rejections = _verify(draft)
+    constraint_rejections = typed_rejections + generator_rejections
     agreement = (
         primary.success
         and independent.success
@@ -567,14 +565,16 @@ def _process_attempt(
     rejection_reason: str | None = None
     if not schema_valid:
         rejection_reason = "schema_validation_failure"
+    elif typed_rejections:
+        rejection_reason = typed_rejections[0]
     elif not primary.success:
         rejection_reason = f"primary_verifier_failure:{primary.failure_reason}"
     elif not independent.success:
         rejection_reason = f"independent_verifier_failure:{independent.failure_reason}"
     elif not agreement:
         rejection_reason = "verifier_disagreement"
-    elif constraint_rejections:
-        rejection_reason = constraint_rejections[0]
+    elif generator_rejections:
+        rejection_reason = generator_rejections[0]
     elif not output_valid:
         rejection_reason = "output_contract_failure"
 
@@ -681,6 +681,8 @@ def _deterministic_record(record: AttemptRecord) -> dict[str, object]:
     return {
         "plan": asdict(record.plan),
         "candidate_id": None if draft is None else draft.candidate_id,
+        "semantic_ir_sha256": None if draft is None else draft.semantic_ir_sha256,
+        "render_signature_sha256": None if draft is None else draft.render_signature_sha256,
         "text_sha256": None if draft is None else normalized_text_sha256(draft.rendered_question),
         "latent_program_sha256": None if draft is None else draft.structure_sha256,
         "primary": None

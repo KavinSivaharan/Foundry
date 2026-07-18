@@ -31,6 +31,18 @@ from foundry.synthesis.quality import (
     RenderQualityMetadata,
     UnitTransitionEvidence,
 )
+from foundry.synthesis.realization import compile_problem, select_plan
+from foundry.synthesis.realization.domains import make_domain
+from foundry.synthesis.realization.ir import (
+    BookkeepingProblemIR,
+    LedgerChangeKind,
+    LedgerChangeSpec,
+    QuantitySpec,
+    TargetKind,
+    TargetSpec,
+    UnitSpec,
+)
+from foundry.synthesis.realization.morphology import GROUP, TRANSFER
 from foundry.synthesis.schema import (
     DifficultyLevel,
     LatentProgramSpec,
@@ -40,7 +52,7 @@ from foundry.synthesis.schema import (
 from foundry.synthesis.taxonomy import FailureCategory
 
 GENERATOR_ID = "bookkeeping-state-transitions"
-GENERATOR_VERSION = "2"
+GENERATOR_VERSION = "3"
 
 
 def _kind(family: str, singular: str, plural: str) -> ObjectKind:
@@ -426,9 +438,6 @@ def generate_bookkeeping(
     rng = random.Random(seed)
     grouping = variant % 5 == 4
     scenario = _SCENARIOS[variant % len(_SCENARIOS)]
-    renderer_family = _RENDERER_FAMILIES[
-        (variant // len(_SCENARIOS) + variant) % len(_RENDERER_FAMILIES)
-    ]
     update_count = _update_count(difficulty)
     group_size = rng.randint(2, 6) if grouping else 1
     start = rng.randint(70, 150) * group_size
@@ -436,10 +445,6 @@ def generate_bookkeeping(
     parameters = [ProgramParameter("start", exact_value(start), item_kind.plural)]
     steps: list[ProgramStep] = []
     trace: list[str] = [f"The typed ledger starts with {start} {item_kind.plural}."]
-    sentences: list[str] = [
-        _opening_sentence(renderer_family, scenario, start, item_kind.render_noun(start))
-    ]
-    clause_metadata: list[str] = [sentences[0]]
     operations: list[str] = []
     current = Fraction(start)
     current_symbol = "start"
@@ -470,19 +475,6 @@ def generate_bookkeeping(
             )
         )
         noun = item_kind.render_noun(magnitude)
-        sentence = _operation_sentence(
-            family=renderer_family,
-            add=add,
-            actor=scenario.actor,
-            amount=magnitude,
-            noun=noun,
-            ledger=scenario.ledger,
-            source=scenario.source,
-            destination=scenario.destination,
-            ordinal=index + 1,
-        )
-        sentences.append(sentence)
-        clause_metadata.append(sentence)
         trace.append(
             f"Update {index + 1} changes the {item_kind.singular} balance by {signed:+d}, "
             f"giving {int(current)}."
@@ -537,18 +529,6 @@ def generate_bookkeeping(
     )
     if plan_rejections:
         raise ValueError(f"typed bookkeeping plan is invalid: {plan_rejections[0]}")
-    if variant % 3 == 2:
-        sentences.insert(1, scenario.safe_context)
-        clause_metadata.insert(1, scenario.safe_context)
-    question = _question_sentence(
-        scenario=scenario,
-        family=renderer_family,
-        grouping=grouping,
-        group_size=group_size,
-        noun=item_kind.plural,
-    )
-    sentences.append(question)
-    rendered = " ".join(sentences)
     answer = exact_value(current)
     program = LatentProgramSpec(
         program_family=f"{GENERATOR_ID}:{'grouping' if grouping else 'inventory'}",
@@ -557,6 +537,64 @@ def generate_bookkeeping(
         constraints=("all ledger states remain positive", "all grouping is exact"),
         answer_symbol=current_symbol,
     )
+    domain = make_domain(
+        domain_id=scenario.scenario_id,
+        setting=scenario.setting,
+        actor=scenario.actor,
+        item_id=scenario.object_kind.family,
+        item_singular=scenario.object_kind.singular,
+        item_plural=scenario.object_kind.plural,
+        primary_location=scenario.ledger,
+        secondary_location=scenario.source,
+        destination_location=scenario.destination,
+        container_singular="group",
+        container_plural="groups",
+        safe_context=scenario.safe_context,
+    )
+    item_unit = UnitSpec(f"{scenario.object_kind.family}:count", domain.item.lexeme)
+    initial_ir = QuantitySpec("initial", start, domain.item.entity_id, item_unit)
+    change_nodes: list[LedgerChangeSpec] = []
+    for index, signed in enumerate(signed_updates, start=1):
+        amount = abs(signed)
+        quantity_ir = QuantitySpec(
+            f"change_quantity_{index}", amount, domain.item.entity_id, item_unit
+        )
+        incoming = signed > 0
+        change_nodes.append(
+            LedgerChangeSpec(
+                f"change_{index}",
+                LedgerChangeKind.TRANSFER_IN if incoming else LedgerChangeKind.TRANSFER_OUT,
+                quantity_ir,
+                domain.secondary_location.entity_id
+                if incoming
+                else domain.primary_location.entity_id,
+                domain.primary_location.entity_id
+                if incoming
+                else domain.destination_location.entity_id,
+                TRANSFER,
+            )
+        )
+    target_kind_ir = TargetKind.GROUP_COUNT if grouping else TargetKind.REMAINING_QUANTITY
+    target_unit = UnitSpec("group:count", GROUP) if grouping else item_unit
+    problem_ir = BookkeepingProblemIR(
+        problem_id=candidate_id(GENERATOR_ID, seed, variant),
+        domain=domain,
+        initial=initial_ir,
+        changes=tuple(change_nodes),
+        target=TargetSpec(
+            "target", target_kind_ir, current_symbol, domain.item.entity_id, target_unit
+        ),
+        group_size=group_size if grouping else None,
+        context_node_id="safe_context" if variant % 3 == 2 else None,
+    )
+    realization = compile_problem(
+        problem_ir, select_plan(seed=seed, variant=variant, family="bookkeeping")
+    )
+    question = realization.text
+    rendered_clauses = tuple(
+        clause for clause in realization.clauses if clause != realization.question_clause
+    )
+    conclusion = realization.question_clause
     trace_tuple = tuple(trace)
     return CandidateDraft(
         candidate_id=candidate_id(GENERATOR_ID, seed, variant),
@@ -568,7 +606,7 @@ def generate_bookkeeping(
         difficulty_level=difficulty,
         output_contract_enabled=output_contract_enabled,
         latent_program=program,
-        rendered_question=rendered,
+        rendered_question=question,
         deterministic_solution_trace=trace_tuple,
         canonical_final_answer=answer,
         training_completion=training_completion(
@@ -576,8 +614,8 @@ def generate_bookkeeping(
         ),
         quality_metadata=RenderQualityMetadata(
             scenario_id=scenario.scenario_id,
-            renderer_family=renderer_family,
-            clauses=tuple(clause_metadata),
+            renderer_family=realization.signature.sha256,
+            clauses=rendered_clauses,
             declared_entity_ids=("actor", "ledger", "source", "destination"),
             referenced_entity_ids=("actor", "ledger", "source", "destination"),
             pronoun_referent_ids=(),
@@ -592,19 +630,21 @@ def generate_bookkeeping(
             ),
             target_symbol=current_symbol,
             target_mentions=1,
-            conclusion=question,
+            conclusion=conclusion,
             constraints_tied=False,
             grammar_complete=True,
             quantities=tuple(quantities),
             operations=tuple(typed_operations),
         ),
+        problem_ir=problem_ir,
+        realization=realization,
         structure_signature={
             "generator": GENERATOR_ID,
             "version": GENERATOR_VERSION,
             "mode": "grouping" if grouping else "inventory",
             "difficulty": difficulty,
             "scenario_family": scenario.scenario_id,
-            "renderer_family": renderer_family,
+            "renderer_family": realization.signature.sha256,
             "operations": operations + (["divide"] if grouping else []),
             "topology": "linear_state_chain",
             "target_kind": target_kind,

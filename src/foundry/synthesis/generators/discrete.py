@@ -18,6 +18,17 @@ from foundry.synthesis.generators import (
 )
 from foundry.synthesis.object_units import Countability, ObjectKind, QuantityUnit
 from foundry.synthesis.quality import NounFormEvidence, RenderQualityMetadata
+from foundry.synthesis.realization import compile_problem, select_plan
+from foundry.synthesis.realization.domains import make_domain
+from foundry.synthesis.realization.ir import (
+    DiscreteProblemIR,
+    DiscreteRelationKind,
+    ScalarSpec,
+    TargetKind,
+    TargetSpec,
+    UnitSpec,
+)
+from foundry.synthesis.realization.morphology import PART
 from foundry.synthesis.schema import (
     DifficultyLevel,
     LatentProgramSpec,
@@ -27,7 +38,7 @@ from foundry.synthesis.schema import (
 from foundry.synthesis.taxonomy import FailureCategory
 
 GENERATOR_ID = "bounded-discrete-allocation"
-GENERATOR_VERSION = "2"
+GENERATOR_VERSION = "3"
 
 
 def _kind(family: str, singular: str, plural: str) -> ObjectKind:
@@ -427,7 +438,6 @@ def generate_discrete(
     mode = _mode(variant)
     occurrence = variant // 4
     scenario = _SCENARIOS[(variant * 7 + occurrence) % len(_SCENARIOS)]
-    renderer_family = _RENDERER_FAMILIES[occurrence % len(_RENDERER_FAMILIES)]
     search_space_target = _difficulty_search_space(rng, difficulty)
     parameters: list[ProgramParameter] = []
     steps: list[ProgramStep] = []
@@ -602,12 +612,6 @@ def generate_discrete(
         )
         answer_symbol = "assembly_capacity"
 
-    question, rendered_clauses, conclusion = _render_discrete_question(
-        mode=mode,
-        family=renderer_family,
-        scenario=scenario,
-        values=payload,
-    )
     if mode in {"two_type_allocation", "complete_packages", "equal_distribution"}:
         actual_search_space = _payload_int(payload, "total") + 1
     else:
@@ -652,6 +656,118 @@ def generate_discrete(
         ),
         answer_symbol=answer_symbol,
     )
+    container_plurals = {
+        "vault": "vaults",
+        "rack": "racks",
+        "bay": "bays",
+        "crate": "crates",
+        "room": "rooms",
+        "pallet": "pallets",
+        "locker": "lockers",
+        "cabinet": "cabinets",
+        "shelf": "shelves",
+        "alcove": "alcoves",
+        "closet": "closets",
+        "stall": "stalls",
+        "drawer": "drawers",
+        "bench": "benches",
+        "pen": "pens",
+        "case": "cases",
+        "cage": "cages",
+        "bin": "bins",
+        "station": "stations",
+        "greenhouse": "greenhouses",
+    }
+    domain = make_domain(
+        domain_id=scenario.scenario_id,
+        setting=scenario.setting,
+        actor=scenario.actor,
+        item_id=scenario.object_kind.family,
+        item_singular=scenario.object_kind.singular,
+        item_plural=scenario.object_kind.plural,
+        primary_location=scenario.container,
+        secondary_location="supply area",
+        destination_location="work area",
+        container_singular=scenario.container,
+        container_plural=container_plurals[scenario.container],
+        safe_context=scenario.safe_context,
+    )
+    item_unit = UnitSpec(f"{scenario.object_kind.family}:count", domain.item.lexeme)
+    container_unit = UnitSpec("container:count", domain.container.lexeme)
+    part_unit = UnitSpec("part:count", PART)
+    per_item_unit = UnitSpec("parts_per_item", PART, domain.item.lexeme)
+    scalars_ir: tuple[ScalarSpec, ...]
+    if mode == "two_type_allocation":
+        scalars_ir = (
+            ScalarSpec("total", "total", _payload_int(payload, "total"), item_unit),
+            ScalarSpec(
+                "resource_total",
+                "resource_total",
+                _payload_int(payload, "resource_total"),
+                part_unit,
+            ),
+            ScalarSpec(
+                "first_cost", "first_cost", _payload_int(payload, "first_cost"), per_item_unit
+            ),
+            ScalarSpec(
+                "second_cost", "second_cost", _payload_int(payload, "second_cost"), per_item_unit
+            ),
+        )
+        target_kind_ir = TargetKind.COUNT
+    elif mode == "complete_packages":
+        scalars_ir = (
+            ScalarSpec("total", "total", _payload_int(payload, "total"), item_unit),
+            ScalarSpec(
+                "package_size", "package_size", _payload_int(payload, "package_size"), item_unit
+            ),
+        )
+        target_kind_ir = TargetKind.GROUP_COUNT
+    elif mode == "equal_distribution":
+        scalars_ir = (
+            ScalarSpec("total", "total", _payload_int(payload, "total"), item_unit),
+            ScalarSpec(
+                "containers", "containers", _payload_int(payload, "containers"), container_unit
+            ),
+        )
+        target_kind_ir = TargetKind.COUNT
+    else:
+        scalars_ir = (
+            ScalarSpec(
+                "first_resource",
+                "first_resource",
+                _payload_int(payload, "first_resource"),
+                part_unit,
+            ),
+            ScalarSpec(
+                "second_resource",
+                "second_resource",
+                _payload_int(payload, "second_resource"),
+                part_unit,
+            ),
+            ScalarSpec("first_per", "first_per", _payload_int(payload, "first_per"), per_item_unit),
+            ScalarSpec(
+                "second_per", "second_per", _payload_int(payload, "second_per"), per_item_unit
+            ),
+        )
+        target_kind_ir = TargetKind.CAPACITY
+    problem_ir = DiscreteProblemIR(
+        problem_id=candidate_id(GENERATOR_ID, seed, variant),
+        domain=domain,
+        relation_kind=DiscreteRelationKind(mode),
+        scalars=scalars_ir,
+        target=TargetSpec(
+            "target", target_kind_ir, answer_symbol, domain.item.entity_id, item_unit
+        ),
+        context_node_id="safe_context" if occurrence % 3 == 2 else None,
+    )
+    realization = compile_problem(
+        problem_ir, select_plan(seed=seed, variant=variant, family="discrete")
+    )
+    question = realization.text
+    rendered_clauses = tuple(
+        clause for clause in realization.clauses if clause != realization.question_clause
+    )
+    conclusion = realization.question_clause
     return CandidateDraft(
         candidate_id=candidate_id(GENERATOR_ID, seed, variant),
         generator_id=GENERATOR_ID,
@@ -670,7 +786,7 @@ def generate_discrete(
         ),
         quality_metadata=RenderQualityMetadata(
             scenario_id=scenario.scenario_id,
-            renderer_family=renderer_family,
+            renderer_family=realization.signature.sha256,
             clauses=rendered_clauses,
             declared_entity_ids=("actor", "inventory", "target"),
             referenced_entity_ids=("inventory", "target"),
@@ -691,12 +807,14 @@ def generate_discrete(
             constraints_tied=not constraints_independent,
             grammar_complete=True,
         ),
+        problem_ir=problem_ir,
+        realization=realization,
         structure_signature={
             "generator": GENERATOR_ID,
             "mode": mode,
             "difficulty": difficulty,
             "scenario_family": scenario.scenario_id,
-            "renderer_family": renderer_family,
+            "renderer_family": realization.signature.sha256,
             "constraint_topology": [step.operation for step in steps],
             "answer_symbol": answer_symbol,
         },

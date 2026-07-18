@@ -209,3 +209,16 @@ Every future experiment must be registered here before a costly run begins. Its 
 - **Hypothesis supported:** no. Yield improved from 20% to 71.67% and every family exceeded 15 accepts, but 86 < 90 and 11 invalid acceptances plus systematic renderer defects violate unchanged gates.
 - **Safety:** The generator received no benchmark content. The contamination scanner returned only the approved 904 development questions and no answers; no benchmark text, raw candidate, embedding weights, cache, dataset, model output, or sealed-final artifact is tracked. Qwen inference, full generation, paid/cloud services, and training did not occur.
 - **Next experiment:** none approved. The user must decide whether to stop this procedural lineage or explicitly scope another response to the 11 audited renderer defects. Full pilot generation and every training stage remain blocked.
+
+## EXP-20260718-010 — Typed natural-language realizer stress
+
+- **Status:** completed; renderer stress gate failed; fresh full-pipeline smoke not run
+- **Date:** 2026-07-18
+- **Hypothesis:** Typed semantic/sentence representations, centralized explicit morphology, target contracts, and exact semantic coverage can eliminate the eleven audited defects while providing natural, sufficiently diverse procedural surfaces for a final 120-candidate readiness smoke.
+- **Implementation:** Added typed problem/entity/lexeme/quantity/unit/group/rate/target/clause/render-signature/coverage representations and one compiler consumed by all three mathematical generators. All eleven defect classes have sanitized regressions. Generator/verifier mathematics, curriculum, MiniLM artifact, and contamination thresholds were unchanged.
+- **Stress execution:** Exactly 900 in-memory render attempts under master seed `foundry-m4.2-typed-renderer-stress-v1`: 300 bookkeeping, 300 rate/ratio, and 300 discrete. No benchmark comparison, question-corpus persistence, model text generation, full dataset, or training occurred.
+- **Automated result:** 900/900 passed typed validation; zero morphology, target, missing-node, duplicated-node, grammar-metadata, exact-duplicate, or latent-structure failures; 900 distinct render signatures. There were 99 number-neutral template duplicates. Nearest generated semantic neighbor was at or above 0.82 for 899 renders, in 0.75–0.82 for one, with median 0.936379 and maximum 0.996438.
+- **Manual audit:** A deterministic 20-render sample per family found zero false mathematical labels and 13 unnatural questions. The systematic defect was imperative request clauses normalized with question punctuation; two of those also used awkward hyphenated count compounds.
+- **Gate decision:** failed. Naturalness and scale-diversity requirements were not met, so the prompt-authorized fresh 120-candidate smoke did not run. No acceptance-by-group/category/output-track result exists for Milestone 4.2.
+- **Safety:** No sealed-final access, benchmark inference, benchmark generator input, paid/cloud service, LLM-generated question/label, full synthetic dataset, SFT, QLoRA, or GRPO occurred.
+- **Next experiment:** none approved. The pure procedural-renderer lineage is closed. The exact next decision is whether to approve a design-only pivot to constrained local-model surface realization with exact typed round-trip validation and the unchanged contamination pipeline.
