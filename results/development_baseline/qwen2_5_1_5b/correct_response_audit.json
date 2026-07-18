@@ -1,0 +1,72 @@
+{
+  "accuracy": {
+    "adjusted_exact_accuracy": 0.64004914004914,
+    "audited_lower_bound_accuracy": 0.64004914004914,
+    "audited_upper_bound_accuracy": 0.64004914004914,
+    "confirmed_false_positive_rate": 0.0,
+    "frozen_evaluator_accuracy": 0.64004914004914,
+    "frozen_evaluator_correct": 521
+  },
+  "counts": {
+    "ambiguous_requires_review": 0,
+    "canonical_only_correct": 431,
+    "confirmed_false_acceptance": 0,
+    "confirmed_intended_correct": 521,
+    "development_population": 814,
+    "strict_parser_correct": 90,
+    "total_audited": 521
+  },
+  "decision": "BASELINE TRUSTED",
+  "extraction_rule_counts": {
+    "conclusion_decorated_value": 16,
+    "conclusion_terminal_prose": 24,
+    "conclusion_verb_prose": 158,
+    "direct_conclusion_statement": 139,
+    "explicit_answer_cue": 28,
+    "literal_final_answer_line": 107,
+    "standalone_decorated_value": 49
+  },
+  "failure_taxonomy_assessment": {
+    "extractable_but_incorrect_population": 231,
+    "remains_useful": true,
+    "scope": "provisional development-only taxonomy with overlapping secondary causes",
+    "unextractable_population": 62
+  },
+  "limitations": [
+    "Intent was audited from completions and extraction evidence, not by independently solving benchmark questions.",
+    "The audit establishes precision only for the 521 development responses scored correct by the frozen evaluator.",
+    "The mathematical failure taxonomy remains provisional and is not a claim about sealed-final performance."
+  ],
+  "previous_false_acceptance_pattern_review": {
+    "percentage_currency_terminal_collision": {
+      "confirmed_false_acceptances": 0,
+      "correct_scored_occurrences": 0
+    },
+    "unsigned_magnitude_in_negative_intent_language": {
+      "confirmed_false_acceptances": 0,
+      "correct_scored_occurrences": 4
+    }
+  },
+  "provenance": {
+    "audit_configuration_sha256": "e50df38364b88d4900dfecc948cd56d0d552e050971ca47a7a21264699ee4122",
+    "canonical_extractor_id": "foundry-terminal-number-v2",
+    "canonical_extractor_sha256": "e099d1c247968fed982cb849022ec3137b1694c15f23a65663a127b8158c06df",
+    "config_sha256": "5f315d5de645f9563b8d1e61bc8e02c3513c453238ad9e1d6f9473489b5a622b",
+    "dataset_id": "ScaleAI/gsm1k",
+    "dataset_revision": "bc09569d09a614b9b530edc7f076fb214ac10493",
+    "frozen_classifications_sha256": "669a866e984c35908bdb9e5443cb989733fd762d11bf62456387a25a5c12e14c",
+    "label_blind_views_sha256": "b0fa85ffa26413137e05992a2b368ba4e059d04a649b47605fb70cbbe7e63dee",
+    "manifest_sha256": "5e810d3ab644bef1d43c598a14a6164ba6464b27fde50e92a2f241816ce87897",
+    "model_id": "Qwen/Qwen2.5-1.5B-Instruct",
+    "model_revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+    "prompt_sha256": "738ea5a3b94e7c75ac0bd50a229bbf04f3fc5d773e14658bc6728bc7a4b18350",
+    "raw_predictions_sha256": "73d52dace0f27577b1177bdfa81dfbb4c88252107c9b04e2ff49dbbd93da6cc0"
+  },
+  "schema_version": 1,
+  "suspicious_pattern_counts": {
+    "canonical_only": 431,
+    "loose_conclusion_rule": 337,
+    "multiple_values_in_terminal_context": 41,
+    "negative_intent_without_negative_value": 4
+  }
+}

@@ -737,3 +737,122 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
 - **Files changed:** this final DEVLOG entry only; it will be restaged into the same 14-file atomic scope.
 - **Errors or uncertainty:** No staged check failed. Expected Windows line-ending warnings remain non-blocking. The scientific extraction limitation is unchanged and fully disclosed.
 - **Next action:** Restage this DEVLOG entry, repeat final staged whitespace/scope/safety checks, create exactly one local commit, verify a clean branch one ahead and zero behind `origin/main`, do not push, and stop.
+
+## 2026-07-18 16:12:31 -04:00 — Milestone 2.1 Step 1: synchronized frozen audit source verified
+
+- **Current step:** Step 1 — verify the published Milestone 2 checkpoint and exact ignored raw source before beginning the label-blind correct-response audit.
+- **Action performed:** Temporarily prepended `C:\\Program Files\\Git\\cmd` to the process PATH; verified repository root, branch, local/remote refs, divergence, and cleanliness; checked the ignored raw prediction file, record/correct counts, raw hash, frozen model/dataset/prompt/extractor/config/manifest identities, development-only manifest chain, raw tracking, and sealed-path status without opening the sealed-final manifest.
+- **Reason:** The audit must use the exact existing 814-record Milestone 2 output and must stop rather than regenerate if it is missing or altered. Starting from synchronized published history also prevents an audit commit from accidentally absorbing unpublished work.
+- **Important commands run:** `git rev-parse`, `git rev-list --left-right --count`, `git status`, `git check-ignore`, `git ls-files results/raw`, SHA-256 calculation, typed config/manifest loaders and split validators, and content-free JSON record counts.
+- **Result:** Local `main` and `origin/main` both point to `f4ac19f4e89917d3fee1e2831daad4757cee5f84`; 0 ahead/0 behind; worktree initially clean. Raw predictions exist with exactly 814 development records, 521 currently correct, 90 strict-parser correct and 431 canonical-only correct. Raw SHA-256 is `73d52dace0f27577b1177bdfa81dfbb4c88252107c9b04e2ff49dbbd93da6cc0`. Frozen prompt `738ea5a3...b18350`, extractor `e099d1c2...c06df`, config `5f315d5d...a622b`, and 814-ID manifest `5e810d3a...7897` match the published summary.
+- **Files changed:** `docs/DEVLOG.md` only, after all clean-state and integrity checks passed.
+- **Errors or uncertainty:** No verification error occurred. The raw records contain no sealed-final marker; the sealed-final manifest was not opened, hashed, or modified. No raw artifact is tracked. An initial memory-registry search returned no relevant project-memory entry and did not affect the repository.
+- **Next action:** Build a deterministic label-blind audit view for only the 521 currently correct-scored records, exposing response/extraction evidence but withholding reference answers; add tests and keep detailed audit records under ignored `results/raw/`.
+
+## 2026-07-18 16:15:39 -04:00 — Milestone 2.1 Step 2: label-blind audit view created
+
+- **Current step:** Step 2 — construct a reproducible audit view that exposes extraction evidence for the 521 correct-scored responses while withholding benchmark scoring information.
+- **Action performed:** Added a typed audit-view module with immutable raw-source expectations, exact extraction-rule/source-span tracing, completion/token metadata, terminal-context value enumeration, generic suspicion flags, and stable configuration/view hashes. Added six focused unit tests. Built and saved the complete detailed view plus content-free view summary under ignored `results/raw/correct_response_audit/current/`.
+- **Reason:** Intent must be classified from the model completion and extraction evidence alone. A label-free, hash-bound view prevents benchmark agreement from influencing that judgment and makes the freeze point independently auditable.
+- **Important commands run:** targeted Ruff formatting/lint, strict Mypy, Pytest, audit-configuration hashing, `build_label_blind_views`, `save_label_blind_views`, forbidden-field assertions, and `git check-ignore` for both generated audit files.
+- **Result:** Exactly 521 label-blind views were created: 90 strict-parser accepted and 431 canonical-only. Extraction rules: 107 literal final-answer lines, 49 standalone decorated values, 28 explicit answer cues, 139 direct conclusion statements, 158 conclusion-verb prose, 16 decorated conclusions, and 24 terminal-prose conclusions. The raw-source hash remains `73d52dac...a6cc0`; audit configuration hash is `e50df38364b88d4900dfecc948cd56d0d552e050971ca47a7a21264699ee4122`; view hash is `b0fa85ffa26413137e05992a2b368ba4e059d04a649b47605fb70cbbe7e63dee`. Detailed JSONL is ignored and contains no `reference_answer` or `correct` field.
+- **Files changed:** `src/foundry/evaluation/correct_audit.py`, `tests/unit/test_correct_audit.py`, `docs/DEVLOG.md`, and ignored `results/raw/correct_response_audit/current/{label_blind_views.jsonl,view_summary.json}`.
+- **Errors or uncertainty:** No build, trace, hash, type, test, or ignore failure occurred. Generic flags identify 41 terminal contexts with multiple values and four with negative-intent language; 337 canonical-only records use broad conclusion rules. Flags prioritize review but are not classifications.
+- **Next action:** Audit every view sequentially without labels, recording confirmed intent, false acceptance, or ambiguity. Report progress after approximately 100, 200, 300, 400, and all 521 records before freezing classifications.
+
+## 2026-07-18 16:16:23 -04:00 — Milestone 2.1 Step 3 progress: 100/521 audited
+
+- **Current step:** Step 3 — label-blind review of correct-scored responses 1–100.
+- **Action performed:** Reviewed the extraction rule, exact source span, terminal context, response tail where flagged, strict/canonical status, completion metadata, and competing-value indicators for the first 100 views. Wrote 100 working classifications under ignored raw results without benchmark labels.
+- **Reason:** Sequential checkpoints make the full 521-record audit observable and prevent a partial review from being presented as complete.
+- **Result:** 100 confirmed intended answers; zero confirmed false acceptances; zero ambiguous cases. Seven multiple-value terminal contexts were benign: the extracted value was explicitly identified by the final conclusion while other values were supporting calculations or constraints. Common patterns were boxed/bold values, explicit answer cues, terminal equations, and direct prose conclusions.
+- **Files changed:** ignored `results/raw/correct_response_audit/current/working_classifications.jsonl` and `docs/DEVLOG.md`.
+- **Errors or uncertainty:** No classification remained unresolved in this batch. Reference answers and questions were not consulted or present in the audit view.
+- **Next action:** Audit views 101–200 using the same frozen label-blind evidence and update the ignored working classification file.
+
+## 2026-07-18 16:17:18 -04:00 — Milestone 2.1 Step 3 progress: 200/521 audited
+
+- **Current step:** Step 3 — label-blind review of correct-scored responses 101–200.
+- **Action performed:** Reviewed the next 100 extraction traces and extended the ignored working classification file to 200 records.
+- **Result:** 200 cumulative confirmed intended answers; zero false acceptances; zero ambiguous cases. Five additional multi-value terminal contexts clearly separated goals, operands, or intermediate calculations from an explicit final extracted result. No percentage/currency miscapture, lost-sign pattern, truncation, or contradictory conclusion was found.
+- **Files changed:** ignored working classifications and `docs/DEVLOG.md`.
+- **Errors or uncertainty:** No unresolved record. Benchmark labels/questions remained hidden.
+- **Next action:** Audit views 201–300 and preserve the same label-blind classification boundary.
+
+## 2026-07-18 16:18:05 -04:00 — Milestone 2.1 Step 3 progress: 300/521 audited
+
+- **Current step:** Step 3 — label-blind review of correct-scored responses 201–300.
+- **Action performed:** Reviewed the next 100 traces and extended ignored working classifications to 300.
+- **Result:** 300 cumulative confirmed intended answers; zero false acceptances; zero ambiguous cases. Eight multi-value contexts clearly named the extracted terminal result. One generic negative-intent flag described a positive magnitude (“short by” an amount); the unsigned extracted magnitude matched the model's explicit intent.
+- **Files changed:** ignored working classifications and `docs/DEVLOG.md`.
+- **Errors or uncertainty:** No unresolved case and no occurrence of either previously observed false-acceptance mechanism among this batch's correct-scored records.
+- **Next action:** Audit views 301–400 label-blind.
+
+## 2026-07-18 16:18:28 -04:00 — Milestone 2.1 Step 3 progress: 400/521 audited
+
+- **Current step:** Step 3 — label-blind review of correct-scored responses 301–400.
+- **Action performed:** Reviewed the next 100 extraction traces and extended the ignored working classifications to 400 records.
+- **Result:** 400 cumulative confirmed intended answers; zero confirmed false acceptances; zero ambiguous cases. Seven additional multiple-value contexts clearly separated intermediate calculations or stated goals from the terminal result. Two generic negative-intent flags described positive magnitudes (an amount lost and a weight lost), so the unsigned extracted values faithfully represented the model's explicit intent.
+- **Files changed:** ignored `results/raw/correct_response_audit/current/working_classifications.jsonl` and `docs/DEVLOG.md`.
+- **Errors or uncertainty:** No unresolved record. No percentage/currency miscapture, truncation, contradictory terminal answer, or generic last-number acceptance was found. Benchmark labels/questions remained hidden.
+- **Next action:** Audit the final views 401–521 using the same label-blind evidence, then freeze all classifications before any score join.
+
+## 2026-07-18 16:19:26 -04:00 — Milestone 2.1 Step 3 complete: 521/521 audited label-blind
+
+- **Current step:** Step 3 — complete label-blind classification of every correct-scored response.
+- **Action performed:** Reviewed views 401–521 sequentially and completed the ignored working classification file for all 521 responses. Each decision used only the completion, extraction rule, exact source span, terminal context, completion/token metadata, and generic suspicion flags.
+- **Result:** 521 confirmed intended answers; zero confirmed false acceptances; zero ambiguous cases. Across the full population, all 41 multi-value terminal contexts explicitly distinguished the extracted conclusion from calculations or constraints. All four negative-intent flags expressed an unsigned positive magnitude (for example, an amount or weight lost), consistent with the model's written intent. No correct-scored response exhibited the prior percentage/currency false-match pattern.
+- **Files changed:** ignored `results/raw/correct_response_audit/current/working_classifications.jsonl` and `docs/DEVLOG.md`.
+- **Errors or uncertainty:** No record remained unresolved; no output was incomplete. This is an intent audit, not an independent re-solution of benchmark questions, and no question, reference label, or `correct` flag was visible during classification.
+- **Next action:** Validate completeness and freeze the 521 classifications with a stable hash. Only after that immutable freeze will benchmark scoring metadata be joined.
+
+## 2026-07-18 16:23:01 -04:00 — Milestone 2.1 Step 4: label-blind classifications frozen
+
+- **Current step:** Step 4 — validate completeness, internal consistency, evidence fidelity, and immutable classification provenance before score joining.
+- **Action performed:** Added typed freeze/load validation and tests, normalized all 521 working decisions into a stable ignored JSONL schema, verified every identifier and extraction-evidence field against its label-blind view, saved a content-free freeze summary, and independently recomputed the classification hash.
+- **Reason:** Freezing the intent decisions before benchmark labels are joined prevents score agreement from influencing or silently changing the audit classifications.
+- **Important commands run:** targeted Ruff, strict Mypy, and eight audit unit tests; `freeze_label_blind_classifications`; SHA-256 recomputation; line-count and `git check-ignore` verification.
+- **Result:** Freeze status is `frozen_before_score_join`; 521/521 records are present and unique; counts are 521 confirmed intended, zero false acceptance, zero ambiguous. Frozen classification SHA-256 is `669a866e984c35908bdb9e5443cb989733fd762d11bf62456387a25a5c12e14c`; label-blind view SHA-256 remains `b0fa85ffa26413137e05992a2b368ba4e059d04a649b47605fb70cbbe7e63dee`; audit configuration SHA-256 remains `e50df38364b88d4900dfecc948cd56d0d552e050971ca47a7a21264699ee4122`.
+- **Files changed:** `src/foundry/evaluation/correct_audit.py`, `tests/unit/test_correct_audit.py`, `docs/DEVLOG.md`, and ignored `results/raw/correct_response_audit/current/{classifications.jsonl,freeze_summary.json}`.
+- **Errors or uncertainty:** Initial targeted verification exposed three Ruff line-length errors and one strict-Mypy construction issue; both were fixed before freezing. All repeated targeted checks passed, and detailed audit artifacts remain ignored.
+- **Next action:** Load only the hash-verified frozen classification file, join it with the unchanged existing score records, and write a content-free aggregate audit summary.
+
+## 2026-07-18 16:23:28 -04:00 — Milestone 2.1 Steps 5–9: score join and trust decision complete
+
+- **Current step:** Join frozen intent classifications to existing scores, review known failure patterns, reassess the provisional taxonomy, and apply the predeclared decision rule.
+- **Action performed:** Loaded the detailed classification file only after verifying its frozen SHA-256, matched all 521 identifiers to the unchanged 814-record scoring artifact, calculated the audited accuracy bounds, compared the two prior generic false-acceptance mechanisms, and wrote a 3.2 KB content-free aggregate summary.
+- **Reason:** The join determines whether any correct score was a coincidental extractor match while preserving the original evaluator result and keeping label information out of the intent judgments.
+- **Important commands run:** `load_frozen_classifications`, `build_content_free_audit_summary`, raw-source hash and population checks, identifier-set equality, pattern/classification intersections, and aggregate JSON serialization.
+- **Result:** Frozen evaluator score remains 521/814 = 64.0049%. Audited counts are 521 intended correct, zero false-positive correct, and zero ambiguous; lower bound, upper bound, and adjusted exact accuracy therefore all equal 521/814 = 64.0049%, with a 0/521 = 0% confirmed false-positive rate. The strict/canonical-only correct split is 90/431. The percentage-plus-currency terminal-collision pattern occurs zero times. Four closely related unsigned negative-language cases occur, but every one explicitly states a positive magnitude and none is a false acceptance. Decision-rule outcome: `BASELINE TRUSTED`.
+- **Files changed:** `results/development_baseline/qwen2_5_1_5b/correct_response_audit.json` and `docs/DEVLOG.md`; detailed joins/classifications remain ignored.
+- **Errors or uncertainty:** No join, hash, count, or consistency error occurred. The result establishes extractor intent precision for the 521 correct-scored development outputs; it does not independently re-solve questions, expand the provisional 100-record failure taxonomy, or make a sealed-final claim.
+- **Next action:** Document the audit method, trust decision, taxonomy implications, limitations, and next proposed milestone across the five required project records, then run the full safety and verification suite.
+
+## 2026-07-18 16:25:27 -04:00 — Milestone 2.1 Step 8: aggregate evidence and project records updated
+
+- **Current step:** Make the bounded audit independently reviewable without committing benchmark content or detailed completions.
+- **Action performed:** Added decision D-013, registered experiment EXP-20260718-006, updated the current phase and next proposed milestone, and documented label blindness, freeze ordering, suspicious-pattern findings, taxonomy implications, limitations, and the `BASELINE TRUSTED` decision across all five required project records.
+- **Reason:** Future work must be able to distinguish the immutable frozen evaluator score from the exhaustive intent audit, understand why the score is now trusted, and retain the limits of the provisional development taxonomy.
+- **Result:** Documentation consistently reports 521/521 intended answers, zero false-positive correct answers, zero ambiguity, a 90/431 strict/canonical-only split, and identical 64.0049% frozen/lower/upper/adjusted accuracy. It preserves the two known wrong-output false extractions, states that the 231 extractable-wrong and 62 unextractable populations remain useful with caveats, and proposes only a separately approved Milestone 3 targeted synthetic-data design.
+- **Files changed:** `docs/PROJECT_PLAN.md`, `docs/DECISIONS.md`, `docs/DEVLOG.md`, `docs/LEARNING_NOTES.md`, `experiments/EXPERIMENTS.md`, and aggregate-only `results/development_baseline/qwen2_5_1_5b/correct_response_audit.json`.
+- **Errors or uncertainty:** No documentation or aggregate-generation error occurred. Windows Git reports expected future LF-to-CRLF normalization warnings. No raw output, question, reference answer, dataset row, model artifact, or identifier list is included in the tracked summary.
+- **Next action:** Run the complete format, lint, type, unit/integration, dependency, whitespace, secret, benchmark-leak, raw-ignore, aggregate-consistency, size, sealed-path, diff, and repository-status verification suite; fix only Milestone 2.1 issues.
+
+## 2026-07-18 16:27:14 -04:00 — Milestone 2.1 Step 10: full verification passed
+
+- **Current step:** Verify code quality, audit reproducibility, aggregate correctness, content containment, and final commit scope.
+- **Action performed:** Ran Ruff format/check, Ruff lint, strict Mypy, all unit and integration tests, `pip check`, `git diff --check`, exact cached development-question leakage and credential-pattern scans, independent raw/classification hash and count checks, aggregate arithmetic/provenance/schema checks, detailed-raw ignore and tracking checks, frozen evaluator/config/manifest diff checks, candidate-size review, and repository status/diff review.
+- **Reason:** The pushed milestone must be reproducible from unchanged raw evidence, contain no benchmark content or secrets, leave the evaluator frozen, and add only the bounded audit implementation, tests, aggregate result, and documentation.
+- **Important commands run:** `ruff format .`; `ruff format --check .`; `ruff check .`; `mypy --strict src`; separate `pytest tests/unit` and `pytest tests/integration`; `python -m pip check`; `git diff --check`; offline development-only dataset leak scan; SHA-256/count scripts; `git check-ignore`; `git ls-files results/raw`; frozen-path diff and file-size checks.
+- **Result:** Ruff reports 27 files formatted and lint clean. Strict Mypy found no issues in 16 source files. All 103 unit tests and one integration test passed. `pip check`, whitespace, exact 904-development-question leak, secret, raw hash/count, 521-classification hash/count, aggregate arithmetic/provenance, forbidden-field, raw ignore/tracking, frozen-stack diff, and tracked-size checks passed. No candidate exceeds 1 MB; no detailed raw artifact is tracked.
+- **Files changed:** No additional project artifact changed during verification; this DEVLOG checkpoint records the completed checks.
+- **Errors or uncertainty:** The first targeted implementation pass found and corrected three Ruff line-length errors and one Mypy type-construction error before the freeze. The full suite had no failure. The offline dataset loader emitted an expected cache-use notice, and Git emitted expected LF-to-CRLF warnings.
+- **Next action:** Stage exactly the eight reviewed Milestone 2.1 paths, repeat staged scope/content/whitespace/size checks, create one atomic `eval:` commit with process-local published identity if required, verify `origin/main` has not moved, push without force, and confirm a clean synchronized branch.
+
+## 2026-07-18 16:28:02 -04:00 — Milestone 2.1 Step 10: remote and staged scope verified
+
+- **Current step:** Confirm published history is unchanged and stage only the reviewed milestone artifacts.
+- **Action performed:** Fetched `origin/main` without merging, confirmed local and remote both remain at `f4ac19f4e89917d3fee1e2831daad4757cee5f84` with zero ahead/behind, staged the exact five documentation files plus audit aggregate, module, and unit test, and repeated staged whitespace, raw/sealed-path, scope, and size checks.
+- **Result:** Exactly eight approved files are staged; no raw or sealed path is staged; no staged file exceeds 1 MB; `git diff --cached --check` passes. The complete candidate is 1,069 inserted and 12 removed lines, primarily the typed audit/freeze/aggregate implementation and live DEVLOG checkpoints.
+- **Errors or uncertainty:** The first read-only divergence assertion compared Git's tab-delimited `0 0` output to a space-delimited string and raised after already printing the correct zero/zero state. It did not change repository or remote state; the corrected staged verification passed. Expected LF-to-CRLF warnings remain non-fatal.
+- **Next action:** Restage this final DEVLOG entry, repeat staged content and scope checks, create one atomic Milestone 2.1 commit, then push only if the remote tip still equals `f4ac19f`.
