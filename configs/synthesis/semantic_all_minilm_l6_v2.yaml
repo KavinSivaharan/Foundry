@@ -1,0 +1,36 @@
+schema_version: 1
+artifact_id: foundry-semantic-all-minilm-l6-v2-v1
+model_id: sentence-transformers/all-MiniLM-L6-v2
+revision: 1110a243fdf4706b3f48f1d95db1a4f5529b4d41
+license: apache-2.0
+source_url: https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2
+expected_download_bytes: 91577897
+embedding_dimension: 384
+pooling: attention_mask_weighted_mean
+normalization: l2
+similarity: cosine_via_normalized_dot_product
+max_length: 256
+device: cpu
+dtype: float32
+batch_size: 32
+trust_remote_code: false
+local_files_only_after_download: true
+required_files:
+  - 1_Pooling/config.json
+  - README.md
+  - config.json
+  - model.safetensors
+  - special_tokens_map.json
+  - tokenizer.json
+  - tokenizer_config.json
+  - vocab.txt
+required_packages:
+  torch: 2.5.1+cu121
+  transformers: 4.46.3
+  huggingface_hub: 0.36.2
+  safetensors: 0.8.0
+semantic_thresholds:
+  automatic_pass_below: 0.75
+  manual_review_at_or_above: 0.75
+  automatic_reject_at_or_above: 0.82
+cache_root: data/huggingface/synthesis-semantic

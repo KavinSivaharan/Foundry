@@ -1,0 +1,45 @@
+schema_version: 1
+run_id: foundry-phase1-procedural-smoke-v1
+master_seed: foundry-phase1-procedural-smoke-master-v1
+attempts: 120
+groups:
+  targeted:
+    attempts: 60
+    category_counts:
+      multi_step_bookkeeping_or_omission: 33
+      rate_ratio_percentage_or_average: 14
+      constraint_distribution_or_discrete_reasoning: 13
+    output_contract_counts:
+      multi_step_bookkeeping_or_omission: 7
+      rate_ratio_percentage_or_average: 3
+      constraint_distribution_or_discrete_reasoning: 2
+  generic_control:
+    attempts: 60
+    category_counts:
+      multi_step_bookkeeping_or_omission: 20
+      rate_ratio_percentage_or_average: 20
+      constraint_distribution_or_discrete_reasoning: 20
+    output_contract_counts:
+      multi_step_bookkeeping_or_omission: 4
+      rate_ratio_percentage_or_average: 4
+      constraint_distribution_or_discrete_reasoning: 4
+difficulty_cycle:
+  - easy
+  - medium
+  - hard
+output_contract:
+  id: terminal-final-answer-contract-v1
+  required_last_line: "Final answer: <canonical-number>"
+  fraction_per_group: 0.20
+semantic_config: configs/synthesis/semantic_all_minilm_l6_v2.yaml
+development_manifest: configs/eval/manifests/gsm1k_development.json
+evaluation_config: configs/eval/gsm1k_qwen2_5_1_5b_final_evaluator.yaml
+raw_directory: results/raw/synthesis_smoke/procedural_v1
+summary_path: results/synthesis_smoke/procedural_v1_summary.json
+manual_audit_path: results/raw/synthesis_smoke/procedural_v1/manual_audit.jsonl
+rules:
+  replace_rejected_candidates: false
+  benchmark_answers_allowed: false
+  sealed_final_allowed: false
+  llm_generation_allowed: false
+  llm_judge_allowed: false

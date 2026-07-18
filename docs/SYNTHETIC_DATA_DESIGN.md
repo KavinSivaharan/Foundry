@@ -213,6 +213,32 @@ the candidate; the system never guesses or asks a model to break a tie.
 
 ## Deduplication and contamination controls
 
+### Milestone 4 semantic-artifact selection
+
+Exactly three open-weight, Transformers-compatible candidates were compared before any model
+download. Reported download sizes cover only the safetensors/tokenizer/config files needed by the
+fixed Transformers path, not alternate ONNX, OpenVINO, TensorFlow, or duplicate PyTorch weights.
+
+| Candidate | Immutable revision | License | Required size | Dimension | Frozen pooling/normalization | Decision |
+| --- | --- | --- | ---: | ---: | --- | --- |
+| `sentence-transformers/all-MiniLM-L6-v2` | `1110a243fdf4706b3f48f1d95db1a4f5529b4d41` | Apache-2.0 | 91,577,897 bytes | 384 | Attention-mask mean, L2 | **Selected** |
+| `intfloat/e5-small-v2` | `ffb93f3bd4047442299a41ebb6fa998a38507c52` | MIT | 134,410,262 bytes | 384 | Attention-mask mean, L2, symmetric `query:` prefix | Not selected |
+| `BAAI/bge-small-en-v1.5` | `5c38ec7c405ec4b44b94cc5a9bb96e735b38267a` | MIT | 134,410,442 bytes | 384 | CLS token, L2 | Not selected |
+
+All three fit the 500 MB, CPU, open-license, no-paid-API, and standard-Transformers constraints.
+MiniLM was selected because it is the smallest, is intended directly for symmetric sentence and
+short-paragraph similarity, requires no task prefix, and has an official plain-Transformers recipe
+for attention-mask-aware mean pooling plus L2 normalization. Foundry uses the existing PyTorch,
+Transformers, Hugging Face Hub, and safetensors installations; `sentence-transformers` is not
+required and no dependency lock changes are needed.
+
+The exact operational pin is
+`configs/synthesis/semantic_all_minilm_l6_v2.yaml`. It requires CPU float32 inference, batch size
+32, maximum length 256, `trust_remote_code=False`, safetensors, local-only loading after the one
+approved download, and cosine similarity through normalized dot products. The frozen thresholds
+remain pass below 0.75, manual review from 0.75 to below 0.82, and rejection at or above 0.82.
+Original fixtures must pass this policy before procedural generation may begin.
+
 Checks are staged from cheapest to most semantic. Benchmark content may be loaded locally only by
 this comparison stage. It is never generator input, never included in an LLM prompt, and never
 committed.
@@ -355,3 +381,38 @@ Milestone 4 should be separately scoped to:
 
 The user must explicitly approve that milestone and the local semantic artifact before any
 synthetic example generation begins.
+
+## Milestone 4 measured smoke result
+
+The approved bounded implementation selected
+`sentence-transformers/all-MiniLM-L6-v2@1110a243fdf4706b3f48f1d95db1a4f5529b4d41`
+under Apache-2.0. Its eight required files occupy 91,577,897 bytes, use 384-dimensional CPU float32
+attention-mask mean pooling plus L2 normalization, and require no dependency beyond the existing
+PyTorch/Transformers stack. Original fixtures separated exact/number-swapped/semantic paraphrases
+from related and unrelated questions under the unchanged 0.75/0.82 policy. Deterministic fixture
+output SHA-256 is `4998fa509da71f7e1f681059d8fd68ea91deae0e3e6a3b38a912c6341cd73ba0`.
+
+Exactly 120 fixed candidates were processed: 60 targeted and 60 generic, with 12 output-contract
+attempts in each group. The pipeline accepted 24 and rejected 96. Accepted counts were four
+bookkeeping, 16 rate/ratio, and four discrete. Rejections were 25 numeric-template copies, 50
+five-token overlaps, seven semantic automatic rejections, and 14 manually confirmed
+generated-to-generated near-template rejections. There were zero verifier failures, verifier
+disagreements, ambiguous targets, generator exceptions, unresolved contamination cases, or false
+labels. Final decision SHA-256 is
+`661410933e90680d34a06c1836c7aca6fecfd5bba507c2dfaf3d8ecd5340c8b9`; aggregate SHA-256 is
+`eb85cf9efe130d34164bca20badb9b3dce8f050493abf0e014614332b68f8771`, and dry replay matched both.
+
+Manual review covered all 120 attempts. Five accepted examples were invalid: four bookkeeping
+renderings failed to define a common unit before combining heterogeneous object counts, and one
+discrete capacity rendering had grammar and tied-constraint difficulty defects. Other systematic
+weaknesses were lowercase continuation pronouns and insufficient hand-authored template diversity.
+The readiness gate therefore failed at 20% acceptance, with fewer than 15 accepted bookkeeping and
+discrete examples and nonzero invalid acceptances. Thresholds were not changed and rejected attempts
+were not replaced.
+
+Full pilot generation is blocked. A future separately approved blocker-resolution smoke should
+retain the same semantic artifact, thresholds, curriculum, output-track proportion, verifier
+contracts, and 120-attempt limit while changing only the generator version, fresh master seed,
+entity/unit-consistent rendering, grammar, genuinely discriminating discrete constraints, and
+hand-authored template diversity. Local-model paraphrasing remains an architectural change and is
+not implied by this result.

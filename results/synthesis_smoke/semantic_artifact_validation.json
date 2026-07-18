@@ -1,0 +1,70 @@
+{
+  "artifact": {
+    "artifact_id": "foundry-semantic-all-minilm-l6-v2-v1",
+    "artifact_manifest_sha256": "2754d14e196cdd11da43a01af8bfd43b479344265102daeae2f7dffab61eda5c",
+    "batch_size": 32,
+    "device": "cpu",
+    "dtype": "float32",
+    "embedding_dimension": 384,
+    "license": "apache-2.0",
+    "local_cache_disk_bytes": 91578751,
+    "local_files_only": true,
+    "max_length": 256,
+    "model_id": "sentence-transformers/all-MiniLM-L6-v2",
+    "normalization": "l2",
+    "pooling": "attention_mask_weighted_mean",
+    "required_bytes": 91577897,
+    "required_file_count": 8,
+    "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "trust_remote_code": false
+  },
+  "deterministic_output_sha256": "4998fa509da71f7e1f681059d8fd68ea91deae0e3e6a3b38a912c6341cd73ba0",
+  "deterministic_replay_passed": true,
+  "fixture_count": 6,
+  "fixture_expectations_passed": true,
+  "fixtures": [
+    {
+      "category": "exact_duplicate",
+      "fixture_id": "exact-duplicate",
+      "outcome": "reject",
+      "similarity": 0.99999988
+    },
+    {
+      "category": "number_swapped_copy",
+      "fixture_id": "number-swap",
+      "outcome": "reject",
+      "similarity": 0.9575333
+    },
+    {
+      "category": "structurally_equivalent_copy",
+      "fixture_id": "structural-copy",
+      "outcome": "pass",
+      "similarity": 0.57151735
+    },
+    {
+      "category": "close_semantic_paraphrase",
+      "fixture_id": "close-paraphrase",
+      "outcome": "reject",
+      "similarity": 0.93767148
+    },
+    {
+      "category": "related_but_meaningfully_different",
+      "fixture_id": "related-different",
+      "outcome": "pass",
+      "similarity": 0.50201571
+    },
+    {
+      "category": "unrelated",
+      "fixture_id": "unrelated",
+      "outcome": "pass",
+      "similarity": -0.01185362
+    }
+  ],
+  "schema_version": 1,
+  "structural_fixture_note": "semantic pass is expected; latent-structure screening rejects it earlier",
+  "thresholds": {
+    "automatic_pass_below": 0.75,
+    "automatic_reject_at_or_above": 0.82,
+    "manual_review_at_or_above": 0.75
+  }
+}

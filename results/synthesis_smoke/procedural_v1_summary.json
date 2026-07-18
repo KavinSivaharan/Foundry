@@ -1,0 +1,101 @@
+{
+  "accepted": 24,
+  "accepted_by_category": {
+    "constraint_distribution_or_discrete_reasoning": 4,
+    "multi_step_bookkeeping_or_omission": 4,
+    "rate_ratio_percentage_or_average": 16
+  },
+  "ambiguous_target_rejections": 0,
+  "attempted": 120,
+  "benchmark_boundary": {
+    "benchmark_answers_loaded": false,
+    "benchmark_content_in_generator_inputs": false,
+    "development_questions_compared": 904,
+    "sealed_final_accessed": false
+  },
+  "config_sha256": "2fd1c4dfde7b9b404187e97225138c86d1f09cfd7e817bca7bd7940b2f0aad1a",
+  "counts_by_category": {
+    "constraint_distribution_or_discrete_reasoning": 33,
+    "multi_step_bookkeeping_or_omission": 53,
+    "rate_ratio_percentage_or_average": 34
+  },
+  "counts_by_difficulty": {
+    "easy": 40,
+    "hard": 40,
+    "medium": 40
+  },
+  "counts_by_group": {
+    "generic_control": 60,
+    "targeted": 60
+  },
+  "deterministic_aggregate_sha256": "eb85cf9efe130d34164bca20badb9b3dce8f050493abf0e014614332b68f8771",
+  "deterministic_decision_sha256": "661410933e90680d34a06c1836c7aca6fecfd5bba507c2dfaf3d8ecd5340c8b9",
+  "deterministic_replay_passed": true,
+  "exact_duplicate_rejections": 0,
+  "generator_exceptions": 0,
+  "independent_verifier_failures": 0,
+  "latent_structure_rejections": 0,
+  "manual_audit": {
+    "completed": true,
+    "false_labels": 0,
+    "incorrect_rejections": 0,
+    "invalid_acceptances": 5,
+    "reviewed": 120,
+    "systematic_weaknesses": [
+      "bookkeeping_rendering_combines_heterogeneous_objects_without_a_common_inventory_unit",
+      "controlled_template_diversity_is_too_small_for_frozen_duplicate_gates",
+      "bookkeeping_sentences_begin_with_a_lowercase_pronoun_after_periods",
+      "dual_capacity_template_has_singular_plural_and_tied_constraint_defects"
+    ],
+    "unresolved_contamination": 0
+  },
+  "master_seed": "foundry-phase1-procedural-smoke-master-v1",
+  "ngram_rejections": 50,
+  "numeric_template_rejections": 25,
+  "output_contract_by_group": {
+    "generic_control": 12,
+    "targeted": 12
+  },
+  "output_contract_total": 24,
+  "primary_verifier_failures": 0,
+  "readiness_gate": {
+    "passed": false,
+    "reasons": [
+      "invalid_accepted_examples_present",
+      "acceptance_rate_below_75_percent",
+      "accepted_below_15:constraint_distribution_or_discrete_reasoning",
+      "accepted_below_15:multi_step_bookkeeping_or_omission",
+      "systematic_generator_weaknesses_present"
+    ]
+  },
+  "rejected": 96,
+  "rejection_reasons": {
+    "manual_contamination_rejection": 14,
+    "numeric_template_copy": 25,
+    "semantic_similarity": 7,
+    "token_ngram_overlap": 50
+  },
+  "resources": {
+    "gpu_peak_allocated_bytes": 0,
+    "gpu_used": false,
+    "peak_system_ram_bytes": 927363072,
+    "raw_artifact_disk_bytes": 1690598,
+    "semantic_artifact_disk_bytes": 91578751
+  },
+  "run_id": "foundry-phase1-procedural-smoke-v1",
+  "runtime": {
+    "counted_process_wall_seconds_including_progress_pause": 34.356173,
+    "deduplication_seconds": 0.790083,
+    "generation_seconds": 0.008822,
+    "manual_audit_seconds": 194.0,
+    "schema_seconds": 0.000834,
+    "semantic_screening_seconds": 8.827879,
+    "total_runtime_seconds": 9.692683,
+    "verification_seconds": 0.004676
+  },
+  "schema_version": 1,
+  "semantic_rejections": 7,
+  "semantic_review_cases": 14,
+  "unresolved_contamination_cases": 0,
+  "verifier_disagreements": 0
+}

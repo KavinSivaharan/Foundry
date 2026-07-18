@@ -271,9 +271,23 @@ Status: complete as a design-only milestone; no synthetic examples or training a
 
 ### Milestone 4 — Synthetic data and verification
 
-- Generate a small targeted batch from structured arithmetic programs.
-- Add independent solution verification, constraint checks, labeling, exact deduplication, semantic overlap checks, and benchmark-overlap rejection.
-- Audit acceptance/rejection reasons.
+Status: complete; the bounded smoke failed its readiness gate, so full pilot generation remains
+blocked.
+
+- Pinned `sentence-transformers/all-MiniLM-L6-v2` at immutable revision
+  `1110a243fdf4706b3f48f1d95db1a4f5529b4d41` for CPU-only local semantic screening without a new
+  dependency.
+- Implemented the three approved procedural families, the shared 20% terminal-answer track,
+  distinct exact verifiers, ordered duplicate/contamination gates, stable raw records, and dry
+  deterministic replay.
+- Processed exactly 120 candidates: 60 targeted and 60 generic. Accepted 24 and rejected 96;
+  accepted by category was 4 bookkeeping, 16 rate/ratio, and 4 discrete.
+- All 120 were manually audited. Labels and verifier agreement were correct in every case, but five
+  accepted renderings were invalid and controlled-template diversity caused 75 early duplicate
+  rejections. The finalized replay matched exactly and left zero unresolved contamination cases.
+- The fixed 75% acceptance and 15-per-family gates failed. Do not generate the 4,000 + 4,000 pilots
+  or begin training until a separately approved rendering/diversity blocker-resolution smoke
+  passes the unchanged gates.
 
 ### Milestone 5 — SFT smoke train
 
@@ -335,19 +349,19 @@ Measured base main-development baseline: **521/814 correct (64.00% end-to-end)**
 
 ## Current project phase
 
-Milestone 1 and its deferred RTX smoke, Milestones 1.5–1.7, the frozen Milestone 2 base-development baseline, the bounded Milestone 2.1 correct-response audit, and the design-only Milestone 3 are complete. The one approved 814-example run used the D-011 exception without changing the frozen evaluation stack.
+Milestone 1 and its deferred RTX smoke, Milestones 1.5–1.7, the frozen Milestone 2 base-development baseline, the bounded Milestone 2.1 correct-response audit, the design-only Milestone 3, and the bounded Milestone 4 generator smoke are complete. The one approved 814-example run used the D-011 exception without changing the frozen evaluation stack.
 
-The repository records deterministic, pairwise-disjoint development partitions of 30 prompt-calibration IDs, 30 answer-extraction-validation IDs, 30 final-evaluator-validation IDs, and 814 baseline IDs. The completed baseline counts every unextractable output wrong and reports coverage separately. Milestone 2.1 audited all 521 correct-scored responses label-blind: 521 intended answers, zero false acceptances, and zero ambiguity. Milestone 3 then classified all 293 failures and froze the content-free generator design, exact schema, dual-verification rules, contamination policy, matched control, pilot sizes, and gates. The baseline is trusted for development guidance, but no synthetic example or trained adapter exists.
+The repository records deterministic, pairwise-disjoint development partitions of 30 prompt-calibration IDs, 30 answer-extraction-validation IDs, 30 final-evaluator-validation IDs, and 814 baseline IDs. The completed baseline counts every unextractable output wrong and reports coverage separately. Milestone 2.1 audited all 521 correct-scored responses label-blind: 521 intended answers, zero false acceptances, and zero ambiguity. Milestone 3 classified all 293 failures and froze the content-free generator design. Milestone 4 then tested that design on 120 procedural candidates. Exact labels and dual verification were sound, but only 24 candidates passed and five accepted renderings were invalid. Full dataset generation and every training stage remain blocked; no complete synthetic dataset or adapter exists.
 
 ## Unresolved questions
 
-1. Should Milestone 4 be approved to pin a local semantic-similarity artifact, implement only the three frozen procedural families, and run at most a 120-candidate generator smoke without producing the full pilot datasets or training?
+1. Should a bounded generator blocker-resolution milestone be approved to repair only rendering correctness and controlled-template diversity, then run one fresh 120-attempt smoke under the unchanged contamination thresholds and readiness gates?
 2. Should the cross-platform dependency locks explicitly pin Windows-only `colorama` and `tzdata` in a separately approved lock-maintenance task?
 3. Any future comparison must preserve the exact 814-ID manifest and frozen prompt/extractor/generation configuration unless the user explicitly authorizes a new evaluator lineage and complete reruns.
-4. Should a local paraphraser ever be considered after the fully procedural pilot, or should controlled templates remain the permanent rendering boundary?
-5. Which small local embedding artifact and exact revision should implement the already frozen semantic-overlap thresholds without excessive false positives?
+4. Can expanded hand-authored controlled templates provide enough diversity, or should a local paraphraser be considered only after another procedural smoke and a separate architectural approval?
+5. The pinned MiniLM encoder behaved acceptably on original fixtures; future work must retain its exact revision/configuration unless a separate design decision replaces the semantic lineage.
 6. Is a 3-point final improvement statistically realistic after the development baseline, or should the success threshold be revised before training?
 
 ## Next approved milestone
 
-No further milestone is approved. Milestone 3 ends after its verified commit is pushed. The next user decision is whether to authorize the narrowly scoped Milestone 4 in `docs/SYNTHETIC_DATA_DESIGN.md`: pin one local semantic-screening artifact, implement only the three approved procedural families and output track, and run at most a 120-candidate generator smoke. It would still require separate approval and would not authorize the full 4,000 + 4,000 pilot, training, SFT, QLoRA, GRPO, paid services, or sealed-final access.
+No further milestone is approved. Milestone 4 ends after its verified commit is pushed. The next user decision is whether to authorize a bounded blocker-resolution milestone that fixes the observed bookkeeping/discrete rendering defects, expands only hand-authored controlled-template diversity, and runs one fresh 120-attempt smoke under the same encoder, thresholds, curriculum, dual-verifier contract, and gates. It would not authorize the full 4,000 + 4,000 pilot, training, SFT, QLoRA, GRPO, paid services, or sealed-final access.

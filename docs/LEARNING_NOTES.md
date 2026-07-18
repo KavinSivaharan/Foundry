@@ -319,3 +319,24 @@ difficulty ranges, output-format examples, verifier rules, and training steps is
 scientific variable Foundry cares about: whether choosing data from measured failures is better
 than generating broad arithmetic practice. Without that control, an improvement could come from
 additional training tokens rather than the failure-targeting loop.
+
+## Exact labels do not rescue weak rendered training examples
+
+Milestone 4 confirmed that independent exact verification can work while the overall data pipeline
+still fails. All 120 candidates had agreeing verifier evidence and the manual audit found zero false
+labels, yet only 24 passed the frozen contamination gates. Limited controlled-template diversity
+caused 25 number-neutral template rejections and 50 five-token-overlap rejections. Fourteen more
+generated-to-generated near matches were conservatively rejected after manual review.
+
+The audit also exposed a separate source-of-truth boundary. The bookkeeping arithmetic programs
+were correct, but four accepted questions named one inventory object initially and different
+objects in later updates without establishing that the number represented a common total. A human
+can infer the intended addition, but the prose does not faithfully establish the latent state.
+One accepted discrete-capacity item also had singular/plural and tied-constraint difficulty defects.
+Those are invalid training examples even though their numeric labels are right.
+
+This is why a generator readiness gate needs both label correctness and rendered-example validity.
+The semantic encoder behaved acceptably and the contamination pipeline rejected repetition rather
+than hiding it. The right response is not to lower thresholds; it is to repair rendering semantics,
+grammar, constraint construction, and template diversity, then test a fresh fixed sample. Full
+generation remains blocked until that new evidence passes the original gates.

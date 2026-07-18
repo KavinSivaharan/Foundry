@@ -8,6 +8,10 @@ import re
 import unicodedata
 from dataclasses import dataclass
 from enum import StrEnum
+from pathlib import Path
+from typing import Any, cast
+
+from foundry.config import load_config
 
 _NUMBER = re.compile(r"(?<!\w)[+-]?(?:\d+/\d+|\d+(?:,\d{3})*(?:\.\d+)?)")
 _TOKEN = re.compile(r"[a-z0-9]+|<num>")
@@ -40,6 +44,15 @@ class ContaminationDecision:
     reason: str
     ngram_jaccard: float
     semantic_similarity: float | None
+
+
+@dataclass(frozen=True)
+class DevelopmentQuestion:
+    """Development-only question exposed solely to contamination screening."""
+
+    stable_id: str
+    row_index: int
+    question: str
 
 
 FROZEN_CONTAMINATION_POLICY = ContaminationPolicy()
@@ -146,3 +159,92 @@ def assess_pair(
     return ContaminationDecision(
         ContaminationOutcome.PASS, "all_pairwise_checks_passed", similarity, semantic_similarity
     )
+
+
+def _development_manifest_entries(path: Path) -> tuple[tuple[str, int], ...]:
+    """Validate the identifier-only 904-row development manifest without sealed access."""
+
+    try:
+        raw: object = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as error:
+        raise ValueError(f"could not load development manifest: {error}") from error
+    if not isinstance(raw, dict):
+        raise ValueError("development manifest must be an object")
+    manifest = cast(dict[str, object], raw)
+    if manifest.get("partition") != "development":
+        raise ValueError("contamination loading requires the development partition")
+    if manifest.get("dataset_id") != "ScaleAI/gsm1k" or manifest.get("dataset_revision") != (
+        "bc09569d09a614b9b530edc7f076fb214ac10493"
+    ):
+        raise ValueError("development manifest dataset pin changed")
+    entries_raw = manifest.get("entries")
+    if not isinstance(entries_raw, list) or len(entries_raw) != 904:
+        raise ValueError("development manifest must contain exactly 904 identifiers")
+    unsigned = dict(manifest)
+    digest = unsigned.pop("manifest_sha256", None)
+    recomputed = hashlib.sha256(
+        json.dumps(unsigned, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    ).hexdigest()
+    if digest != recomputed:
+        raise ValueError("development manifest hash is invalid")
+    entries: list[tuple[str, int]] = []
+    for raw_entry in entries_raw:
+        if not isinstance(raw_entry, dict):
+            raise ValueError("development manifest entry must be an object")
+        entry = cast(dict[str, object], raw_entry)
+        stable_id = entry.get("stable_id")
+        row_index = entry.get("row_index")
+        if (
+            not isinstance(stable_id, str)
+            or isinstance(row_index, bool)
+            or not isinstance(row_index, int)
+        ):
+            raise ValueError("development manifest entry has invalid fields")
+        identity = (
+            f"ScaleAI/gsm1k@bc09569d09a614b9b530edc7f076fb214ac10493:default:test:{row_index}"
+        )
+        if hashlib.sha256(identity.encode("utf-8")).hexdigest() != stable_id:
+            raise ValueError("development stable identifier mismatch")
+        entries.append((stable_id, row_index))
+    if len({row for _, row in entries}) != 904 or len({item for item, _ in entries}) != 904:
+        raise ValueError("development manifest identifiers must be unique")
+    return tuple(entries)
+
+
+def load_development_questions_for_contamination(
+    *,
+    evaluation_config_path: Path,
+    development_manifest_path: Path,
+) -> tuple[DevelopmentQuestion, ...]:
+    """Load only 904 development questions; never return labels or sealed rows."""
+
+    config = load_config(evaluation_config_path)
+    if config.dataset.repo_id != "ScaleAI/gsm1k" or config.dataset.revision != (
+        "bc09569d09a614b9b530edc7f076fb214ac10493"
+    ):
+        raise ValueError("evaluation dataset differs from the frozen contamination source")
+    entries = _development_manifest_entries(development_manifest_path)
+    try:
+        from datasets import load_dataset
+    except ImportError as error:
+        raise RuntimeError("development contamination loading requires datasets") from error
+    dataset: Any = load_dataset(
+        config.dataset.repo_id,
+        config.dataset.config_name,
+        split=config.dataset.source_split,
+        revision=config.dataset.revision,
+    )
+    if len(dataset) != config.dataset.expected_examples:
+        raise ValueError("pinned development source length changed")
+    selected: Any = dataset.select([row for _, row in entries]).select_columns(["question"])
+    questions: list[DevelopmentQuestion] = []
+    for (stable_id, row_index), raw_row in zip(entries, selected, strict=True):
+        if not isinstance(raw_row, dict):
+            raise ValueError("selected development row is not a mapping")
+        question = raw_row.get("question")
+        if not isinstance(question, str) or not question.strip():
+            raise ValueError("selected development question is invalid")
+        questions.append(DevelopmentQuestion(stable_id, row_index, question))
+    if len(questions) != 904:
+        raise ValueError("contamination loader did not return exactly 904 development questions")
+    return tuple(questions)

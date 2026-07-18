@@ -1,0 +1,44 @@
+[
+  {
+    "fixture_id": "exact-duplicate",
+    "category": "exact_duplicate",
+    "left": "A lunar greenhouse stores 18 silverleaf trays. How many trays are stored?",
+    "right": "A lunar greenhouse stores 18 silverleaf trays. How many trays are stored?",
+    "expected_semantic_outcome": "reject"
+  },
+  {
+    "fixture_id": "number-swap",
+    "category": "number_swapped_copy",
+    "left": "A lunar greenhouse stores 18 silverleaf trays. How many trays are stored?",
+    "right": "A lunar greenhouse stores 47 silverleaf trays. How many trays are stored?",
+    "expected_semantic_outcome": "reject"
+  },
+  {
+    "fixture_id": "structural-copy",
+    "category": "structurally_equivalent_copy",
+    "left": "An orbital depot starts with 18 crates, receives 7, then ships 3. How many crates remain?",
+    "right": "A lunar warehouse begins with 42 boxes, adds 9, then removes 5. How many boxes are left?",
+    "expected_semantic_outcome": "pass"
+  },
+  {
+    "fixture_id": "close-paraphrase",
+    "category": "close_semantic_paraphrase",
+    "left": "A rover travels 12 kilometers each hour for 4 hours. What total distance does it travel?",
+    "right": "A rover moves at 12 kilometers per hour during 4 hours. How far does it go altogether?",
+    "expected_semantic_outcome": "reject"
+  },
+  {
+    "fixture_id": "related-different",
+    "category": "related_but_meaningfully_different",
+    "left": "A lunar greenhouse stores trays after a delivery. How many trays are now in storage?",
+    "right": "A lunar greenhouse schedules watering cycles. How many minutes pass between each watering?",
+    "expected_semantic_outcome": "pass"
+  },
+  {
+    "fixture_id": "unrelated",
+    "category": "unrelated",
+    "left": "A ceramic studio counts glazed bowls after firing. How many bowls are ready?",
+    "right": "A weather station records the direction of the strongest wind gust.",
+    "expected_semantic_outcome": "pass"
+  }
+]
