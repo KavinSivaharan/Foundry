@@ -12,6 +12,7 @@ from foundry.evaluation.answer_extraction import (
     CANONICAL_EXTRACTOR_ID,
     canonical_extractor_sha256,
     score_canonical_answer,
+    serialize_canonical_number,
 )
 from foundry.evaluation.backends import MetricValue, ModelBackend
 from foundry.evaluation.benchmark import BenchmarkExample
@@ -27,7 +28,7 @@ class EvaluationRecord:
     stable_id: str
     row_index: int
     response: str | None
-    predicted_answer: int | None
+    predicted_answer: int | str | None
     exact_format_compliant: bool
     exact_format_predicted_answer: int | None
     exact_format_error: str | None
@@ -117,7 +118,11 @@ def run_evaluation(
                     stable_id=example.stable_id,
                     row_index=example.row_index,
                     response=result.text,
-                    predicted_answer=canonical_score.predicted,
+                    predicted_answer=(
+                        serialize_canonical_number(canonical_score.predicted)
+                        if canonical_score.predicted is not None
+                        else None
+                    ),
                     exact_format_compliant=exact_score.error is None,
                     exact_format_predicted_answer=exact_score.predicted,
                     exact_format_error=exact_score.error,

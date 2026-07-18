@@ -1,6 +1,6 @@
 # Foundry Experiment Log
 
-Three bounded real-model experiment groups have completed: the ten-example Milestone 1 CUDA smoke, the 30-example/three-prompt Milestone 1.5 format calibration, and the 30-example fresh Milestone 1.6 answer-validation run recorded below. They are software, hardware, and evaluator-calibration evidence—not a full benchmark result or a training experiment.
+Four bounded real-model experiment groups have completed: the ten-example Milestone 1 CUDA smoke, the 30-example/three-prompt Milestone 1.5 format calibration, the 30-example fresh Milestone 1.6 answer-validation run, and the final 30-example Milestone 1.7 evaluator validation recorded below. They are software, hardware, and evaluator-calibration evidence—not a full benchmark result or a training experiment.
 
 Every future experiment must be registered here before a costly run begins. Its machine-readable configuration must be saved under `configs/`, raw evaluation outputs under `results/raw/`, and reviewable summaries under `results/`.
 
@@ -97,3 +97,26 @@ Every future experiment must be registered here before a costly run begins. Its 
 - **Hypothesis supported:** no; fresh extractability was 76.67%, below 90%, despite zero false extractions and generation failures.
 - **Failures/blockers:** three outputs reached the 512-token limit; two produced non-integral decimals; two clear integer conclusions were outside the frozen grammar. Transformers emitted non-fatal warnings for sampling defaults ignored under greedy decoding. No CUDA, OOM, dependency, backend, or raw-artifact containment failure occurred.
 - **Next experiment:** none approved. A blocker-resolution proposal would need predeclared grammar/generation changes and a new untouched admission set before Milestone 2 can be reconsidered.
+
+## EXP-20260717-004 — Final deterministic evaluator blocker resolution
+
+- **Status:** completed; final fresh admission hypothesis not supported and evaluator not frozen
+- **Date:** 2026-07-17
+- **Hypothesis:** After narrowly supporting explicit terminal numeric formats and conservatively increasing the confirmed truncation limit from 512 to 768, the frozen current-prompt evaluator will extract at least 90% of answers on one final untouched 30-ID development set with zero false extractions, zero backend generation failures, and reasonable length/runtime.
+- **Model:** `Qwen/Qwen2.5-1.5B-Instruct`
+- **Exact model revision:** `989aa7980e4cf806f80c7fef2b1adb7bc71aa306`
+- **Dataset:** `ScaleAI/gsm1k`, configuration `default`, source split `test`
+- **Exact dataset revision:** `bc09569d09a614b9b530edc7f076fb214ac10493`
+- **Training configuration:** none; deterministic re-scoring, three truncation diagnostics, and one bounded final evaluation only.
+- **Evaluation configuration:** current prompt SHA-256 `738ea5a3b94e7c75ac0bd50a229bbf04f3fc5d773e14658bc6728bc7a4b18350`; unchanged strict parser for exact compliance; canonical extractor `foundry-terminal-number-v2` SHA-256 `e099d1c247968fed982cb849022ec3137b1694c15f23a65663a127b8158c06df`; final config `configs/eval/gsm1k_qwen2_5_1_5b_final_evaluator.yaml` SHA-256 `5f315d5de645f9563b8d1e61bc8e02c3513c453238ad9e1d6f9473489b5a622b`; greedy decoding; 768 maximum new tokens and no other generation change. Final validation manifest: 30 IDs, SHA-256 `2234e5ee82cf57e8fb74839a21f7f0ca0d2ff02ddd0fb0e42d93934415b2db93`. Candidate main baseline: 814 IDs, SHA-256 `5e810d3ab644bef1d43c598a14a6164ba6464b27fde50e92a2f241816ce87897`.
+- **Hardware:** Windows 11 Pro build 26200; AMD Ryzen 7 9700X; 31.11 GiB RAM; NVIDIA GeForce RTX 3080 with 10,240 MiB VRAM; driver 610.47; CPython 3.12.10; PyTorch 2.5.1+cu121 with CUDA runtime 12.1.
+- **Random seed:** deterministic greedy generation; final-set selection seed `foundry-gsm1k-final-evaluator-validation-v1`.
+- **Baseline score:** Re-score of the unchanged 30 Milestone 1.6 validation outputs: 27/30 extractable (90.00%), 3/30 exact compliant (10.00%), 15/30 correct (50.00%), three historical 512-token rejections, and zero false extractions after auditing all four newly accepted outputs.
+- **Resulting score:** Final untouched validation: 25/30 extractable (83.33%), 5/30 exact compliant (16.67%), 13/30 correct (43.33%), 12 extractable-but-wrong, five rejected, zero backend generation failures, and zero false extractions after manually auditing all 30 outputs. Rejections were four complete clear terminal prose answers outside the frozen grammar and one 768-token truncation.
+- **Cost and runtime:** $0 API/cloud cost. Exactly 30 final generations plus three separately labeled truncation diagnostics. Final run: 4,491 input tokens, 9,451 output tokens, 315.03 average output tokens, 125.095 seconds evaluation, 126.885 seconds including model load, 0.2398 examples/second, and 75.55 generated tokens/second. Peak CUDA memory was 2,985.59 MiB allocated and 3,196 MiB reserved. The three-record diagnostic generated 1,942 tokens in 27.129 seconds and is not part of the final result.
+- **Artifacts/checkpoint:** final aggregate summary and content-free manual audit under `results/final_evaluator_validation/current/`; old-output re-score/audit under `results/final_evaluator_calibration/`; ignored raw final predictions under `results/raw/final_evaluator_validation/current/`; ignored diagnostic outputs under `results/raw/truncation_diagnostic/current_768/`; identifier-only final manifests under `configs/eval/manifests/`. No checkpoint.
+- **Code commit:** run began from clean published commit `e1d0576`; Milestone 1.7 code, config, identifier manifests, tests, aggregate records, and documentation were uncommitted during the run and are intended for one local atomic commit.
+- **Interpretation:** Exact rational normalization and narrow wrappers safely separated clear wrong answers from unextractable responses, and 768 tokens resolved two known truncations. However, the final untouched 83.33% result failed the 90% coverage gate. Zero false extractions demonstrates conservative precision but does not compensate for four clear false rejections and one truncation. Post-hoc grammar changes are prohibited, so the evaluator and 814-ID baseline are not admitted for Milestone 2.
+- **Hypothesis supported:** no; fresh extractability was 83.33%, below 90%, despite zero false extractions and zero backend generation failures.
+- **Failures/blockers:** one final output reached 768 tokens and four complete clear answers used unsupported terminal prose. Transformers emitted non-fatal warnings for sampling defaults ignored under greedy decoding. No CUDA, OOM, dependency, dataset, backend, manifest, or raw-artifact containment failure occurred.
+- **Next experiment:** none approved. The user must choose either (1) proceed to Milestone 2 while scoring all unextractable outputs incorrect and reporting coverage/exact compliance separately, or (2) reconsider the base model or benchmark. No further evaluator-calibration milestone is proposed.

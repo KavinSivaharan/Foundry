@@ -6,6 +6,7 @@ import yaml
 from foundry.config import ConfigError, load_config
 
 CONFIG_PATH = Path("configs/eval/gsm1k_qwen2_5_1_5b_smoke.yaml")
+FINAL_EVALUATOR_CONFIG_PATH = Path("configs/eval/gsm1k_qwen2_5_1_5b_final_evaluator.yaml")
 
 
 def test_approved_config_is_fully_pinned() -> None:
@@ -16,6 +17,13 @@ def test_approved_config_is_fully_pinned() -> None:
     assert config.dataset.repo_id == "ScaleAI/gsm1k"
     assert config.dataset.revision == "bc09569d09a614b9b530edc7f076fb214ac10493"
     assert len(config.sha256) == 64
+
+
+def test_final_evaluator_config_has_exact_generation_limit_and_hash() -> None:
+    config = load_config(FINAL_EVALUATOR_CONFIG_PATH)
+
+    assert config.generation.max_new_tokens == 768
+    assert config.sha256 == "5f315d5de645f9563b8d1e61bc8e02c3513c453238ad9e1d6f9473489b5a622b"
 
 
 def test_unpinned_model_revision_is_rejected(tmp_path: Path) -> None:

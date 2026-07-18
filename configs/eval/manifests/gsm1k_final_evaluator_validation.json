@@ -1,0 +1,134 @@
+{
+  "canonical_development_manifest_sha256": "d2c895f43a1e76a12796d6a263b60dc230a9abab58f9624674ec925f37319fae",
+  "config_name": "default",
+  "dataset_id": "ScaleAI/gsm1k",
+  "dataset_revision": "bc09569d09a614b9b530edc7f076fb214ac10493",
+  "entries": [
+    {
+      "row_index": 44,
+      "stable_id": "a1038530a54a020b652480472c39abe706f6159e10c028ef1b93d617a7992829"
+    },
+    {
+      "row_index": 107,
+      "stable_id": "7fc11df136370179089ea8233d1313d7885013492e48ee8a2ef1eef951c89a17"
+    },
+    {
+      "row_index": 110,
+      "stable_id": "aae4b257082768cf21720913e5b96fcbc1f1d8ed6d3113a3b37ee4dae00029b2"
+    },
+    {
+      "row_index": 150,
+      "stable_id": "78afc4a3a20513e877ac8e62aeeafc9f82912fe6e54e40bc6643c20d22de9eab"
+    },
+    {
+      "row_index": 170,
+      "stable_id": "2ffd783058208c1ceafe2c5957252692c3880e85d20969cee042a684143203b2"
+    },
+    {
+      "row_index": 205,
+      "stable_id": "c21dc790903d4315a6dd12afeed4c86c025322f8a4aadd9c2d5d7395d2718fad"
+    },
+    {
+      "row_index": 259,
+      "stable_id": "762aeadd9c760ac4c26ebc5ebb9aee815d25ab9074fef9c7a25604642a0908ae"
+    },
+    {
+      "row_index": 309,
+      "stable_id": "80c4524ab2763a3b839004e5e443f04aaad56a1fc515e01a6531eca4185fceb2"
+    },
+    {
+      "row_index": 326,
+      "stable_id": "01fd9040f8302d7083fb54467f7060b79567b7e2d67207b5a60b6224bbfeab82"
+    },
+    {
+      "row_index": 357,
+      "stable_id": "0e8f6da88231b7259ad611896c88f9b737af32ff94b32edab25d7d00dfec3c4e"
+    },
+    {
+      "row_index": 384,
+      "stable_id": "8f42b41e8151c1efd752e65718fbe43811cd31553a9e885e9bb65ecedcde7cf1"
+    },
+    {
+      "row_index": 515,
+      "stable_id": "24365f6d49acbc65677c94b0e1d518711086508c936624229be132426a3d3c1c"
+    },
+    {
+      "row_index": 550,
+      "stable_id": "5e5e2fa6bf7c1c0c98a96e3d7a9b978bc86220ea58699cb2ecd387cb181c0b69"
+    },
+    {
+      "row_index": 566,
+      "stable_id": "286d8d207d3a54c315c81913d1eea5a1683820c43bf0baf411a5d60813071537"
+    },
+    {
+      "row_index": 570,
+      "stable_id": "3aacfce0d1190f7c6730cb00140ed21d910d2a7e27748ecd653ca92de1babc47"
+    },
+    {
+      "row_index": 611,
+      "stable_id": "b4104c94b81d5766d5e390f72f4c11724e3f4c97b13f300b053b9c1f0bcdae8a"
+    },
+    {
+      "row_index": 617,
+      "stable_id": "0d82a8afe121b3783ba09c34d4aa0781a70b87a12688f84f67e1fa95d930c978"
+    },
+    {
+      "row_index": 647,
+      "stable_id": "9eda13d85f1f070832f75949c9e70c938706af8b6c3e9359468ea47c886001e8"
+    },
+    {
+      "row_index": 678,
+      "stable_id": "76e7d44803ebad062c5b63c2e548627b75c76a565e7e6fe2db7d878b2e1396a9"
+    },
+    {
+      "row_index": 706,
+      "stable_id": "5e9106fc84044a7039d130d16b88696754589d0ab2cc91045f871656a835b2a3"
+    },
+    {
+      "row_index": 737,
+      "stable_id": "00da8d092bce6b1f444c7e9ff0b853d4e191cd44eed958bc574d61e7e4fd825b"
+    },
+    {
+      "row_index": 762,
+      "stable_id": "27cf00c5fcedd82945ed93a5cf898f41f77867849930a8998f634280c70774e5"
+    },
+    {
+      "row_index": 764,
+      "stable_id": "6fb9c5ae47a0116ff515a8744d9466a32eff301eb6cd13a6561038e039d8dd3c"
+    },
+    {
+      "row_index": 805,
+      "stable_id": "3d983577fbf5dcd7381be9676bbd4f08e669b1f95f46e89a28fd88bfc17ebc25"
+    },
+    {
+      "row_index": 819,
+      "stable_id": "09dc9cde60b63f39f9aa1d0a9da537e54e820dfdc74e0d933042f642e3189107"
+    },
+    {
+      "row_index": 845,
+      "stable_id": "189e722fe8fb13c17276768755b555f3fee01e6bae591bfc897e023d692a5dcd"
+    },
+    {
+      "row_index": 864,
+      "stable_id": "49ee91dc3ec25c9e8c88b4e74664b5414b5e671d8ee37a6882da60e67199e02d"
+    },
+    {
+      "row_index": 967,
+      "stable_id": "903c27c1667fc455ab9b7e60fb1e68281e0ee3dad86c713f7afa1732828b7dd7"
+    },
+    {
+      "row_index": 1120,
+      "stable_id": "019958d80f76518d7fc07deea9a75fc78ef6cbf1e47639bc5b1a21f1baf4d493"
+    },
+    {
+      "row_index": 1190,
+      "stable_id": "429dc24ea7ccb48de10c951c5472528836b1c67de9d90a3c7441ed9acaf10907"
+    }
+  ],
+  "manifest_sha256": "2234e5ee82cf57e8fb74839a21f7f0ca0d2ff02ddd0fb0e42d93934415b2db93",
+  "purpose": "final_evaluator_validation",
+  "schema_version": 1,
+  "selection_seed": "foundry-gsm1k-final-evaluator-validation-v1",
+  "source_baseline_manifest_sha256": "4f80bbe2f6de4fb33e57ed5463a1c393716a3b64d3b98a08767a7f8056648d79",
+  "source_split": "test"
+}

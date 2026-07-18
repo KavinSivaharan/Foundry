@@ -233,6 +233,18 @@ Status: complete; the fresh 90% extractability gate was not met, so no evaluator
 - Fresh validation reached 23/30 extractable (76.67%), 3/30 exact compliant (10.00%), and 14/30 correct (46.67%), with zero generation failures and zero audited false extractions. Three outputs hit the 512-token limit, two ended in non-integral decimals, and two clear integer conclusions were conservatively rejected.
 - The gate failed even under the post-hoc upper bound of 25/30 (83.33%) that would accept both conservative false rejections. No validation-driven extractor change, second run, prompt freeze, or Milestone 2 work occurred.
 
+### Milestone 1.7 — Final evaluator blocker resolution
+
+Status: complete; the final fresh 90% extractability gate failed at 83.33%, so the evaluator and 814-ID candidate baseline are not admitted for Milestone 2.
+
+- Diagnosed all seven Milestone 1.6 rejections: two explicit terminal non-integral decimals, two clear integers in unsupported terminal wrappers, and three confirmed 512-token truncations.
+- Preserved the strict `Final answer:` compliance parser unchanged. Versioned `foundry-terminal-number-v2` (SHA-256 `e099d1c247968fed982cb849022ec3137b1694c15f23a65663a127b8158c06df`) separately accepts explicit terminal decimals and fractions through exact `Fraction`/`Decimal` normalization, plus narrowly constrained currency, percentage, unit, boxed, bold, inline-LaTeX, text, conclusion, and equation wrappers. It rejects truncation, conflicting candidates, malformed values, unfinished expressions, arbitrary intermediate numbers, and ambiguous prose.
+- Re-scored the unchanged Milestone 1.6 validation outputs: 27/30 extractable (90.00%), 3/30 exact compliant (10.00%), and 15/30 correct (50.00%). Four newly accepted outputs were audited with zero false extractions; two explicit non-integral answers were valid-but-wrong.
+- Confirmed three original 512-token truncations and created a hash-guarded final configuration that changes only `max_new_tokens` to 768 (config SHA-256 `5f315d5de645f9563b8d1e61bc8e02c3513c453238ad9e1d6f9473489b5a622b`). A three-record diagnostic resolved two completions while one still reached 768; diagnostic results did not replace validation evidence.
+- Deterministically reserved one untouched 30-ID final evaluator set (SHA-256 `2234e5ee82cf57e8fb74839a21f7f0ca0d2ff02ddd0fb0e42d93934415b2db93`) from the 844-ID pool and left 814 candidate baseline IDs (SHA-256 `5e810d3ab644bef1d43c598a14a6164ba6464b27fde50e92a2f241816ce87897`). The 30/30/30/814 development partitions are pairwise disjoint and exhaustive.
+- Final fresh validation reached 25/30 extractable (83.33%), 5/30 exact compliant (16.67%), and 13/30 correct (43.33%). All 30 outputs were audited with zero false extractions and zero backend generation failures. Four complete human-clear answers remained outside the frozen grammar and one response reached 768 tokens.
+- The final gate failed. Per the approved stop rule, no additional prompt/parser iteration, evaluator freeze, main baseline, training, synthesis, or sealed-final access occurred.
+
 ### Milestone 2 — Base development benchmark
 
 - Freeze prompt and decoding settings.
@@ -280,7 +292,7 @@ GRPO is not automatically approved. It is considered only if SFT produces a repr
 
 Primary metric:
 
-- Canonical deterministic terminal-integer accuracy on the locked GSM1K final split, using an evaluator frozen before final access.
+- Canonical deterministic terminal-number accuracy on the locked GSM1K final split, using an evaluator frozen before final access.
 
 Required separately reported format metric:
 
@@ -306,26 +318,24 @@ Secondary metrics:
 - Exact and semantic dedup rejection rates.
 - Regression rate on categories not targeted by training.
 
-Measured main-development baseline and candidate scores: **not yet available.** The completed 10-example smoke, 90-output re-score, and 30-example fresh extraction validation are diagnostic subsets, not the Milestone 2 baseline.
+Measured main-development baseline and candidate scores: **not yet available.** The completed smoke and evaluator-calibration/validation subsets are bounded diagnostics, not the Milestone 2 baseline.
 
 ## Current project phase
 
-Milestone 1 and its deferred RTX smoke are complete. Milestones 1.5 and 1.6 completed bounded format and deterministic extraction calibration. The extractor generalized to only 76.67% extractability on 30 fresh IDs, below the required 90% gate.
+Milestone 1 and its deferred RTX smoke are complete. Milestones 1.5, 1.6, and the final planned Milestone 1.7 evaluator blocker resolution are complete. The final extractor generalized to only 83.33% extractability on the last untouched 30-ID gate, below the required 90% threshold.
 
-The repository now records a deterministic 30-ID prompt-calibration set, a disjoint 30-ID fresh answer-validation set, and a remaining 844-ID candidate baseline set. These manifests preserve the development-only lineage, but the 844-ID set is not admitted for evaluation because no prompt/extractor configuration passed the fresh gate. No training, synthetic-data generation, SFT, GRPO, paid service, or sealed-final evaluation occurred.
+The repository now records deterministic, pairwise-disjoint development partitions of 30 prompt-calibration IDs, 30 answer-extraction-validation IDs, 30 final-evaluator-validation IDs, and 814 candidate baseline IDs. The final extractor, prompt, generation config, and 814-ID set are recorded as evidence but are not admitted for Milestone 2 because the gate failed. No training, synthetic-data generation, SFT, QLoRA, GRPO, paid service, or sealed-final evaluation occurred.
 
 ## Unresolved questions
 
-1. What separately approved blocker-resolution experiment can raise fresh extractability from 76.67% to at least 90% without tuning on the now-observed 30-ID validation set?
-2. Should a future experiment introduce a second untouched validation set, deterministic constrained decoding, a predeclared broader terminal grammar, or a generation-limit change? None is approved.
-3. How should generation truncation be controlled, given three of 30 fresh current-prompt outputs reached 512 tokens?
-4. Should the cross-platform dependency locks explicitly pin Windows-only `colorama` and `tzdata` in a separately approved lock-maintenance task?
-5. If a future evaluator is admitted, Milestone 2 must use the 844-ID candidate main-baseline manifest, not the original 904-ID development superset, 874-ID source pool, or either 30-ID calibration/validation set.
-6. What maximum sequence length and generation limit fit the eventual frozen prompt's observed solution distribution?
-7. Should the first synthetic generator use templates only, or later allow an approved local/paid paraphraser behind the same verifier?
-8. Which small embedding model and threshold should implement semantic-overlap rejection without introducing an excessive dependency or false positives?
-9. Is a 3-point final improvement statistically realistic after the development baseline, or should the success threshold be revised before training?
+1. Should Milestone 2 proceed with unextractable outputs counted as incorrect while exact-format compliance and extraction coverage are reported separately?
+2. Alternatively, should the Phase 1 base model or benchmark be reconsidered because the final evaluator gate failed?
+3. Should the cross-platform dependency locks explicitly pin Windows-only `colorama` and `tzdata` in a separately approved lock-maintenance task?
+4. If the user chooses to proceed, Milestone 2 must use the 814-ID candidate main-baseline manifest—not the original 904-ID development superset, either parent pool, or any 30-ID calibration/validation set—and must preserve the recorded prompt/extractor/generation configuration without another calibration round.
+5. Should the first synthetic generator use templates only, or later allow an approved local/paid paraphraser behind the same verifier?
+6. Which small embedding model and threshold should implement semantic-overlap rejection without introducing excessive dependency or false positives?
+7. Is a 3-point final improvement statistically realistic after the development baseline, or should the success threshold be revised before training?
 
 ## Next approved milestone
 
-None. The next decision is whether to authorize a new, explicitly scoped blocker-resolution experiment with a new untouched admission set and predeclared extractor/generation rules. Milestone 2 must not begin until that evaluator reaches the 90% fresh extractability gate with zero false extractions and is frozen before touching the 844-ID candidate main-development baseline. No Milestone 2 work is authorized.
+None. The final planned evaluator-calibration milestone failed its 90% gate at 83.33% with zero false extractions. No further evaluator-calibration milestone is proposed. The user must choose between exactly two paths: (1) approve Milestone 2 with every unextractable output counted incorrect and extraction coverage reported separately, using the recorded evaluator and 814-ID candidate baseline; or (2) reconsider the base model or benchmark. No Milestone 2 work is authorized until that explicit decision.

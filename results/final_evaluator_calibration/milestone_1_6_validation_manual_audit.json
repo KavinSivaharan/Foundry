@@ -1,0 +1,11 @@
+{
+  "audit_scope": "all four outputs newly accepted from the original 30-example Milestone 1.6 validation artifact",
+  "audited_newly_accepted_outputs": 4,
+  "canonical_extractor_id": "foundry-terminal-number-v2",
+  "canonical_extractor_sha256": "e099d1c247968fed982cb849022ec3137b1694c15f23a65663a127b8158c06df",
+  "explicit_non_integral_valid_but_wrong_outputs": 2,
+  "false_extractions": 0,
+  "newly_accepted_correct_outputs": 1,
+  "newly_accepted_wrong_outputs": 3,
+  "remaining_generation_truncations": 3
+}

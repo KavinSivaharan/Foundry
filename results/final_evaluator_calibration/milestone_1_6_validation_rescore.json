@@ -1,0 +1,19 @@
+{
+  "ambiguous_or_rejected_examples": 3,
+  "benchmark_accuracy": 0.5,
+  "canonical_extractor_id": "foundry-terminal-number-v2",
+  "canonical_extractor_sha256": "e099d1c247968fed982cb849022ec3137b1694c15f23a65663a127b8158c06df",
+  "correct_examples": 15,
+  "exact_format_compliance_rate": 0.1,
+  "exact_format_compliant_examples": 3,
+  "extractable_answer_rate": 0.9,
+  "extractable_examples": 27,
+  "extraction_failure_categories": {
+    "generation_truncated": 3
+  },
+  "generation_failures": 0,
+  "max_new_tokens": 512,
+  "processed_examples": 30,
+  "schema_version": 2,
+  "source_predictions_sha256": "e8a8429c07e73e0992cc3b2016548363230950106946f239af2723a2c7448e3e"
+}

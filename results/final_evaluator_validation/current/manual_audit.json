@@ -1,0 +1,12 @@
+{
+  "accepted_outputs_audited": 25,
+  "audit_scope": "all 30 final evaluator validation outputs",
+  "canonical_extractor_id": "foundry-terminal-number-v2",
+  "canonical_extractor_sha256": "e099d1c247968fed982cb849022ec3137b1694c15f23a65663a127b8158c06df",
+  "clear_but_unsupported_rejections": 4,
+  "explicit_non_integral_valid_but_wrong_outputs": 2,
+  "false_extractions": 0,
+  "generation_truncation_rejections": 1,
+  "rejected_outputs_audited": 5,
+  "valid_but_wrong_outputs": 12
+}

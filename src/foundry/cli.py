@@ -41,12 +41,19 @@ from foundry.evaluation.rescoring import RescoringError, rescore_predictions
 from foundry.evaluation.runner import run_evaluation
 from foundry.evaluation.validation import (
     ANSWER_EXTRACTION_VALIDATION,
+    FINAL_EVALUATOR_VALIDATION,
     ValidationManifestError,
     as_benchmark_manifest,
+    as_final_benchmark_manifest,
+    assert_final_evaluator_config,
     build_answer_validation_manifests,
+    build_final_evaluator_manifests,
     load_answer_validation_manifest,
+    load_final_evaluator_manifest,
     save_answer_validation_manifest,
+    save_final_evaluator_manifest,
     validate_answer_validation_pair,
+    validate_final_evaluator_pair,
 )
 
 
@@ -132,11 +139,37 @@ def _parser() -> argparse.ArgumentParser:
         "answer-validate",
         help="run one prompt on exactly 30 fresh answer-validation IDs",
     )
+    answer_validate.add_argument("--base-config", required=True, type=_path)
     answer_validate.add_argument("--config", required=True, type=_path)
     answer_validate.add_argument("--development-manifest", required=True, type=_path)
     answer_validate.add_argument("--source-pool-manifest", required=True, type=_path)
     answer_validate.add_argument("--validation-manifest", required=True, type=_path)
     answer_validate.add_argument("--output-dir", required=True, type=_path)
+
+    final_manifests = subparsers.add_parser(
+        "build-final-evaluator-validation",
+        help="reserve the final 30 evaluator IDs and leave the 814-ID baseline",
+    )
+    final_manifests.add_argument("--config", required=True, type=_path)
+    final_manifests.add_argument("--development-manifest", required=True, type=_path)
+    final_manifests.add_argument("--source-pool-manifest", required=True, type=_path)
+    final_manifests.add_argument("--source-baseline-manifest", required=True, type=_path)
+    final_manifests.add_argument("--validation-manifest", required=True, type=_path)
+    final_manifests.add_argument("--baseline-manifest", required=True, type=_path)
+    final_manifests.add_argument("--size", required=True, type=int)
+    final_manifests.add_argument("--seed", required=True)
+
+    final_validate = subparsers.add_parser(
+        "final-evaluator-validate",
+        help="run the frozen evaluator on exactly 30 final fresh development IDs",
+    )
+    final_validate.add_argument("--base-config", required=True, type=_path)
+    final_validate.add_argument("--config", required=True, type=_path)
+    final_validate.add_argument("--development-manifest", required=True, type=_path)
+    final_validate.add_argument("--source-pool-manifest", required=True, type=_path)
+    final_validate.add_argument("--source-baseline-manifest", required=True, type=_path)
+    final_validate.add_argument("--validation-manifest", required=True, type=_path)
+    final_validate.add_argument("--output-dir", required=True, type=_path)
     return parser
 
 
@@ -332,8 +365,10 @@ def _run_build_answer_validation(args: argparse.Namespace) -> int:
 
 
 def _run_answer_validate(args: argparse.Namespace) -> int:
+    base_config = load_config(args.base_config)
     config = load_config(args.config)
-    development = load_manifest(args.development_manifest, config)
+    assert_final_evaluator_config(base_config, config)
+    development = load_manifest(args.development_manifest, base_config)
     source_pool = load_development_subset(args.source_pool_manifest, development)
     validation = load_answer_validation_manifest(
         args.validation_manifest,
@@ -343,6 +378,90 @@ def _run_answer_validate(args: argparse.Namespace) -> int:
     if validation.purpose != ANSWER_EXTRACTION_VALIDATION or len(validation.entries) != 30:
         raise ValidationManifestError("answer-validate requires exactly 30 fresh validation IDs")
     manifest = as_benchmark_manifest(validation, source_pool, development, config)
+    backend = HuggingFaceCudaBackend(config)
+    examples = load_huggingface_examples(config, manifest)
+    summary = run_evaluation(
+        config=config,
+        manifest=manifest,
+        examples=examples,
+        backend=backend,
+        output_dir=args.output_dir,
+    )
+    print(json.dumps(asdict(summary), sort_keys=True))
+    return 0
+
+
+def _run_build_final_evaluator_validation(args: argparse.Namespace) -> int:
+    if args.size != 30:
+        raise ValidationManifestError("the final evaluator validation size is exactly 30")
+    config = load_config(args.config)
+    development = load_manifest(args.development_manifest, config)
+    source_pool = load_development_subset(args.source_pool_manifest, development)
+    source_baseline = load_answer_validation_manifest(
+        args.source_baseline_manifest,
+        source_pool,
+        development,
+    )
+    if len(source_baseline.entries) != 844:
+        raise ValidationManifestError("final evaluator requires the reserved 844-ID pool")
+    validation, baseline = build_final_evaluator_manifests(
+        source_baseline,
+        development,
+        validation_size=args.size,
+        selection_seed=args.seed,
+    )
+    save_final_evaluator_manifest(validation, args.validation_manifest)
+    save_final_evaluator_manifest(baseline, args.baseline_manifest)
+    reloaded_validation = load_final_evaluator_manifest(
+        args.validation_manifest,
+        source_baseline,
+        development,
+    )
+    reloaded_baseline = load_final_evaluator_manifest(
+        args.baseline_manifest,
+        source_baseline,
+        development,
+    )
+    validate_final_evaluator_pair(
+        reloaded_validation,
+        reloaded_baseline,
+        source_baseline,
+        development,
+    )
+    print(
+        json.dumps(
+            {
+                "baseline_examples": len(baseline.entries),
+                "baseline_manifest_sha256": baseline.manifest_sha256,
+                "selection_seed": args.seed,
+                "validation_examples": len(validation.entries),
+                "validation_manifest_sha256": validation.manifest_sha256,
+            },
+            sort_keys=True,
+        )
+    )
+    return 0
+
+
+def _run_final_evaluator_validate(args: argparse.Namespace) -> int:
+    base_config = load_config(args.base_config)
+    config = load_config(args.config)
+    assert_final_evaluator_config(base_config, config)
+    development = load_manifest(args.development_manifest, base_config)
+    source_pool = load_development_subset(args.source_pool_manifest, development)
+    source_baseline = load_answer_validation_manifest(
+        args.source_baseline_manifest,
+        source_pool,
+        development,
+    )
+    validation = load_final_evaluator_manifest(
+        args.validation_manifest,
+        source_baseline,
+        development,
+    )
+    if validation.purpose != FINAL_EVALUATOR_VALIDATION or len(validation.entries) != 30:
+        raise ValidationManifestError("final-evaluator-validate requires exactly 30 fresh IDs")
+    manifest = as_final_benchmark_manifest(validation, source_baseline, development, config)
     backend = HuggingFaceCudaBackend(config)
     examples = load_huggingface_examples(config, manifest)
     summary = run_evaluation(
@@ -380,6 +499,10 @@ def main(argv: Sequence[str] | None = None) -> int:
             return _run_build_answer_validation(args)
         if args.command == "answer-validate":
             return _run_answer_validate(args)
+        if args.command == "build-final-evaluator-validation":
+            return _run_build_final_evaluator_validation(args)
+        if args.command == "final-evaluator-validate":
+            return _run_final_evaluator_validate(args)
         parser.error(f"unsupported command {args.command}")
     except (
         BackendError,

@@ -1,4 +1,4 @@
-"""Deterministic extraction of clear terminal integer answers."""
+"""Deterministic extraction of clear terminal numeric answers."""
 
 from __future__ import annotations
 
@@ -7,29 +7,33 @@ import json
 import re
 from dataclasses import dataclass
 from decimal import Decimal, InvalidOperation
+from fractions import Fraction
 from typing import Literal
 
 from foundry.evaluation.scoring import parse_reference_integer
 
-CANONICAL_EXTRACTOR_ID = "foundry-terminal-integer-v1"
+CANONICAL_EXTRACTOR_ID = "foundry-terminal-number-v2"
 
 ExtractionFailureCategory = Literal[
     "empty_response",
     "generation_truncated",
     "conflicting_answers",
-    "non_integral_decimal",
     "malformed_terminal_answer",
     "ambiguous_terminal_answer",
     "no_terminal_answer",
 ]
 
-_UNSIGNED_NUMBER = r"(?:\d{1,3}(?:,\d{3})+|\d+)(?:\.\d+)?"
+_GROUPED_INTEGER = r"(?:\d{1,3}(?:,\d{3})+|\d+)"
+_DECIMAL_NUMBER = rf"{_GROUPED_INTEGER}(?:\.\d+)?"
+_ASCII_FRACTION = rf"{_GROUPED_INTEGER}\s*/\s*{_GROUPED_INTEGER}"
+_LATEX_FRACTION = rf"\\frac\{{\s*{_GROUPED_INTEGER}\s*\}}\{{\s*{_GROUPED_INTEGER}\s*\}}"
+_UNSIGNED_NUMBER = rf"(?:{_LATEX_FRACTION}|{_ASCII_FRACTION}|{_DECIMAL_NUMBER})"
 _VALUE = rf"[+-]?\s*\$?\s*{_UNSIGNED_NUMBER}"
 _CAPTURE = (
     rf"(?:\$?\s*\\boxed\{{\s*(?P<boxed>{_VALUE})\s*\}}\s*\$?"
     rf"|\*\*\s*(?P<bold>{_VALUE})\s*\*\*"
     rf"|\\\(\s*(?P<latex>{_VALUE})\s*\\\)"
-    rf"|(?P<plain>{_VALUE})(?![\d,]))"
+    rf"|(?P<plain>{_VALUE})(?![\d,/]|\.\d))"
 )
 _DECORATED_CAPTURE = (
     rf"(?:\$?\s*\\boxed\{{\s*(?P<boxed>{_VALUE})\s*\}}\s*\$?"
@@ -41,13 +45,14 @@ _FORBIDDEN_UNIT_WORDS = (
     "since|so|therefore|thus|when|where|which"
 )
 _UNIT_WORD = rf"(?!(?:{_FORBIDDEN_UNIT_WORDS})\b)[A-Za-z%°]+(?:-[A-Za-z%°]+)?"
-_UNIT_SUFFIX = rf"(?:\s+{_UNIT_WORD}(?:\s+{_UNIT_WORD}){{0,3}})?"
+_UNIT_SUFFIX = rf"(?:\s*%|\s+{_UNIT_WORD}(?:\s+{_UNIT_WORD}){{0,3}})?"
 _TERMINAL_PUNCTUATION = r"\s*[.!]?\s*$"
 _CONCLUSION_VERBS = (
     r"are|averages|bought|buys?|contains?|costs?|earned|earns?|equals|gave|gives?|"
     r"has|have|had|is|lost|made|makes?|needs?|paid|pays?|should\s+buy|spends?|spent|"
     r"takes?|took|uses?|used|was|were|will\s+be|will\s+make|would\s+use"
 )
+_LEADING_RESULT_VERBS = r"are|can\s+fit|do|does|is|will\s+fit|would\s+fit"
 
 _TERMINAL_PATTERNS = (
     re.compile(
@@ -86,6 +91,24 @@ _TERMINAL_PATTERNS = (
         re.IGNORECASE,
     ),
     re.compile(
+        rf"\b(?:therefore|thus|hence|so|finally|consequently)[,:]?\s*"
+        rf"[^\n]{{0,240}}?{_DECORATED_CAPTURE}[^\n]{{0,160}}?"
+        rf"{_TERMINAL_PUNCTUATION}",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        rf"\b(?:therefore|thus|hence|so|finally|consequently)[,:]?\s*"
+        rf"{_CAPTURE}\s+{_UNIT_WORD}(?:\s+{_UNIT_WORD}){{0,5}}\s+"
+        rf"(?:{_LEADING_RESULT_VERBS})\b[^\n]{{0,180}}?{_TERMINAL_PUNCTUATION}",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        rf"\b(?:therefore|thus|hence|so|finally|consequently)[,:]?\s*"
+        rf"[^\n0-9$+\-]{{1,240}}?{_CAPTURE}{_UNIT_SUFFIX}"
+        rf"{_TERMINAL_PUNCTUATION}",
+        re.IGNORECASE,
+    ),
+    re.compile(
         rf"(?:^|\n)\s*(?:\*\*\s*)?Final answer\s*:\s*(?:\*\*\s*)?"
         rf"[^\n0-9$+\-]{{0,100}}?\b(?:is|are|equals|=)\s*{_CAPTURE}"
         rf"{_UNIT_SUFFIX}{_TERMINAL_PUNCTUATION}",
@@ -99,6 +122,13 @@ _TERMINAL_PATTERNS = (
     re.compile(
         rf"(?:^|\n)\s*[A-Za-z][A-Za-z0-9_ ]{{0,40}}\s*=\s*{_CAPTURE}"
         rf"{_UNIT_SUFFIX}{_TERMINAL_PUNCTUATION}",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        rf"(?:^|\n)\s*(?:\\\[\s*)?"
+        rf"(?:[A-Za-z][A-Za-z0-9_ ]{{0,40}}\s*=\s*)?"
+        rf"(?:{_VALUE}\s*[+\-*/]\s*)+{_VALUE}\s*=\s*{_CAPTURE}"
+        rf"{_UNIT_SUFFIX}(?:\s*\\\])?{_TERMINAL_PUNCTUATION}",
         re.IGNORECASE,
     ),
 )
@@ -123,11 +153,16 @@ _ANSWER_CUE = re.compile(
     r"\\boxed|\*\*",
     re.IGNORECASE,
 )
+_CONFLICTING_TERMINAL_LIST = re.compile(
+    rf"\b(?:answer|result|total|therefore|thus|hence|finally|consequently)\b"
+    rf"[^\n]{{0,240}}?{_VALUE}\s+(?:and|or)\s+{_VALUE}[^\n]*$",
+    re.IGNORECASE,
+)
 _UNFINISHED_END = re.compile(r"(?:[=:,+\-/]|(?<!\*)\*(?!\*)|\\boxed\{)\s*$")
 
 
 class CanonicalExtractionError(ValueError):
-    """Raised when no single clear terminal integer can be extracted."""
+    """Raised when no single clear terminal number can be extracted."""
 
     def __init__(self, category: ExtractionFailureCategory, message: str) -> None:
         super().__init__(message)
@@ -138,7 +173,7 @@ class CanonicalExtractionError(ValueError):
 class CanonicalAnswerScore:
     """Canonical benchmark-answer result for one model response."""
 
-    predicted: int | None
+    predicted: Fraction | None
     expected: int
     correct: bool
     error: str | None
@@ -156,8 +191,29 @@ def _captured_value(match: re.Match[str]) -> str:
     )
 
 
-def _normalize_value(value: str) -> int:
+def _normalize_value(value: str) -> Fraction:
     compact = value.replace(" ", "").replace("$", "").replace(",", "")
+    sign = 1
+    if compact.startswith(("+", "-")):
+        if compact[0] == "-":
+            sign = -1
+        compact = compact[1:]
+
+    latex_fraction = re.fullmatch(r"\\frac\{(?P<numerator>\d+)\}\{(?P<denominator>\d+)\}", compact)
+    ascii_fraction = re.fullmatch(r"(?P<numerator>\d+)/(?P<denominator>\d+)", compact)
+    fraction_match = latex_fraction or ascii_fraction
+    if fraction_match is not None:
+        try:
+            return sign * Fraction(
+                int(fraction_match.group("numerator")),
+                int(fraction_match.group("denominator")),
+            )
+        except ZeroDivisionError as error:
+            raise CanonicalExtractionError(
+                "malformed_terminal_answer",
+                "terminal fraction has a zero denominator",
+            ) from error
+
     try:
         decimal = Decimal(compact)
     except InvalidOperation as error:
@@ -165,17 +221,11 @@ def _normalize_value(value: str) -> int:
             "malformed_terminal_answer",
             "terminal answer is not a valid number",
         ) from error
-    integral = decimal.to_integral_value()
-    if decimal != integral:
-        raise CanonicalExtractionError(
-            "non_integral_decimal",
-            "terminal answer is a non-integral decimal",
-        )
-    return int(integral)
+    return sign * Fraction(decimal)
 
 
-def _strong_candidate_values(response: str) -> set[int]:
-    values: set[int] = set()
+def _strong_candidate_values(response: str) -> set[Fraction]:
+    values: set[Fraction] = set()
     for pattern in _GLOBAL_STRONG_PATTERNS:
         for match in pattern.finditer(response):
             try:
@@ -193,13 +243,17 @@ def _has_malformed_comma_number(text: str) -> bool:
     return False
 
 
-def extract_canonical_integer(response: str, *, generation_truncated: bool = False) -> int:
-    """Extract one clear terminal integer without guessing from arbitrary numbers.
+def extract_canonical_number(
+    response: str,
+    *,
+    generation_truncated: bool = False,
+) -> Fraction:
+    """Extract one clear terminal number without guessing from arbitrary numbers.
 
     Accepted answers must use an explicit answer cue, conclusion cue, standalone boxed
-    or bold terminal value, or a terminal assignment. Intermediate numbers are ignored.
-    Conflicting explicit candidates, non-integral values, and truncated generations are
-    rejected deterministically.
+    or bold terminal value, or a terminal equation/assignment. Intermediate numbers are
+    ignored. Conflicting explicit candidates and truncated generations are rejected.
+    Decimals and fractions are normalized exactly as :class:`fractions.Fraction` values.
     """
 
     if generation_truncated:
@@ -221,8 +275,13 @@ def extract_canonical_integer(response: str, *, generation_truncated: bool = Fal
             "malformed_terminal_answer",
             "response ends with an unfinished answer expression",
         )
+    if _CONFLICTING_TERMINAL_LIST.search(tail):
+        raise CanonicalExtractionError(
+            "conflicting_answers",
+            "response contains multiple terminal answer candidates",
+        )
 
-    terminal_values: set[int] = set()
+    terminal_values: set[Fraction] = set()
     terminal_error: CanonicalExtractionError | None = None
     for pattern in _TERMINAL_PATTERNS:
         match = pattern.search(stripped)
@@ -241,8 +300,7 @@ def extract_canonical_integer(response: str, *, generation_truncated: bool = Fal
     if not terminal_values:
         if terminal_error is not None:
             raise terminal_error
-        tail_numbers = _NUMBER_TOKEN.findall(tail)
-        if tail_numbers and _ANSWER_CUE.search(tail):
+        if _NUMBER_TOKEN.search(tail) and _ANSWER_CUE.search(tail):
             raise CanonicalExtractionError(
                 "ambiguous_terminal_answer",
                 "answer-like terminal prose is not unambiguous",
@@ -262,6 +320,14 @@ def extract_canonical_integer(response: str, *, generation_truncated: bool = Fal
     return terminal_value
 
 
+def serialize_canonical_number(value: Fraction) -> int | str:
+    """Return a JSON-safe exact representation of a normalized answer."""
+
+    if value.denominator == 1:
+        return value.numerator
+    return f"{value.numerator}/{value.denominator}"
+
+
 def score_canonical_answer(
     response: str,
     reference: str,
@@ -272,7 +338,7 @@ def score_canonical_answer(
 
     expected = parse_reference_integer(reference)
     try:
-        predicted = extract_canonical_integer(
+        predicted = extract_canonical_number(
             response,
             generation_truncated=generation_truncated,
         )
@@ -298,7 +364,10 @@ def canonical_extractor_sha256() -> str:
 
     specification = {
         "conflict_patterns": [pattern.pattern for pattern in _GLOBAL_STRONG_PATTERNS],
+        "conflicting_terminal_list_pattern": _CONFLICTING_TERMINAL_LIST.pattern,
         "extractor_id": CANONICAL_EXTRACTOR_ID,
+        "exact_normalization": "fractions.Fraction_decimal_and_fraction_v1",
+        "json_non_integral_representation": "reduced_numerator_slash_denominator",
         "malformed_comma_rejection": True,
         "number_grammar": _VALUE,
         "plain_number_requires_entire_response": True,
