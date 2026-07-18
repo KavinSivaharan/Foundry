@@ -270,3 +270,52 @@ The order of operations is an important research control. All 521 intent decisio
 The full audit found 521 clearly intended extracted answers, zero false-positive correct answers, and zero ambiguous cases. Ninety correct responses satisfied the strict parser; 431 were accepted only by the canonical extractor. All 41 terminal contexts containing multiple numeric values used an explicit conclusion that distinguished the extracted answer from supporting calculations. Four responses used negative-intent words such as “lost” or “short,” but each asked for and stated a positive magnitude; none repeated the earlier lost-sign failure. The earlier percentage-plus-currency collision did not occur among correct-scored responses.
 
 This makes the frozen 521/814 score trustworthy as a development baseline: the audited lower bound, upper bound, and exact adjusted accuracy all remain 64.0049%. It does not mean the extractor is perfect in general. The two false acceptances among sampled wrong responses remain real, the 62 unextractable responses still reflect conservative rejection, and the failure taxonomy still covers only a deterministic sample. The practical lesson is narrower: no accidental extractor match inflated the correct numerator, so the existing development taxonomy is reliable enough to inform a separately approved targeted synthetic-data design.
+
+## Exhaustive failure review changes the curriculum decision
+
+Milestone 3 expanded the provisional 100-record inventory to every one of the 293 development
+failures. The complete counts were 69 output-format/extraction, 68 bookkeeping/omission, 53
+target/language interpretation, 28 rate/ratio/percentage/average, 27 constraint/discrete, 24
+time/unit/sequence, 22 arithmetic execution, and two benchmark-risk cases. Secondary tags overlap,
+which is useful: a time problem can fail because one update was omitted, and a ratio problem can
+also have a target-interpretation error. One primary label supports aggregate planning without
+pretending root causes are always exclusive.
+
+The most frequent reasoning category is not automatically the best first generator target.
+Target/language interpretation was the second-largest reasoning group, but a template can silently
+change which quantity is requested. That creates ambiguous labels and benchmark-copy risk even
+when the arithmetic program is sound. Rate/ratio and discrete constraints were selected instead
+because they support exact equations, inverse checks, and bounded enumeration. Prevalence matters,
+but label trust and independent verification matter more.
+
+Seven wrong-output false extractions were found across the full failure review, including the two
+already known. They all remained scored wrong and therefore do not alter the audited correct
+numerator. Their broader lesson is that output-contract data should be a separate shared track,
+not folded into a reasoning category or used to change the frozen evaluator after results are
+known.
+
+## Executable structure is safer than synthetic prose as the source of truth
+
+The first generator design starts with a latent exact program, computes its result, renders a
+controlled question, and then checks the answer through a different method. This order is the
+opposite of asking a model to write a question and trusting its label. The natural-language text
+is a view of the program; it is never the authority.
+
+Calling the same solver twice is not independent verification. The bookkeeping track pairs DAG
+execution with a state ledger and conservation checks; rate/ratio pairs exact equation evaluation
+with cross-multiplication or inverse substitution; discrete constraints pair constructive solving
+with bounded brute force. Any disagreement rejects the candidate instead of using an LLM judge.
+Exact `Fraction`-style normalization also avoids binary floating-point label drift.
+
+Contamination is structural as well as lexical. Changing names and numbers does not make a copied
+problem independent, so screening must compare normalized text, number-neutral templates, latent
+program structure, n-grams, and semantic similarity. A missing semantic result cannot be treated
+as permission to accept. Milestone 3 freezes thresholds but intentionally leaves the local encoder
+unpinned; selecting and pinning that artifact is a necessary future decision, not a reason to
+download one during a design-only milestone.
+
+Finally, targeted data needs a matched generic control. Equal example counts, token budgets,
+difficulty ranges, output-format examples, verifier rules, and training steps isolate the one
+scientific variable Foundry cares about: whether choosing data from measured failures is better
+than generating broad arithmetic practice. Without that control, an improvement could come from
+additional training tokens rather than the failure-targeting loop.

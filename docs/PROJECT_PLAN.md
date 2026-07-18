@@ -1,6 +1,6 @@
 # Foundry Project Plan
 
-Last updated: 2026-07-17
+Last updated: 2026-07-18
 
 ## Project objective
 
@@ -260,9 +260,14 @@ Status: complete under the one-time D-011 exception; one frozen 814-example deve
 
 ### Milestone 3 — Failure taxonomy and targeted synthetic-data design
 
-- Implement deterministic, reviewable failure categories.
-- Audit a sample manually without exposing benchmark labels or examples to synthesis.
-- Freeze a bounded design for synthetic generators, independent verification, deduplication, and category-specific acceptance criteria before generating any examples.
+Status: complete as a design-only milestone; no synthetic examples or training artifacts were created.
+
+- Exhaustively reviewed all 293 development failures: 231 extractable-but-wrong and 62 unextractable. Complete primary counts are output format/extraction 69, multi-step bookkeeping/omission 68, target/language interpretation 53, rate/ratio/percentage/average 28, constraint/distribution/discrete 27, time/unit/sequence 24, arithmetic execution 22, and benchmark ambiguity/annotation risk 2.
+- Kept all questions, labels, and completions in ignored raw artifacts. The tracked aggregate contains only counts, content-free definitions, hashes, and stable identifier prefixes. No sealed-final content was accessed.
+- Selected exactly three first-pilot reasoning categories: multi-step bookkeeping/omission, rate/ratio/percentage/average, and constraint/distribution/discrete reasoning. A separate terminal-answer output-contract track is shared by targeted and generic curricula.
+- Selected fully procedural latent programs with controlled templates. Labels come from exact execution and must pass a different independent verifier; verifier disagreement always rejects.
+- Froze typed schema, contamination stages and thresholds, matched 4,000-example targeted/generic pilot budgets, a 120-candidate generator-smoke stage, compute estimates, and predeclared generation/training success gates in `docs/SYNTHETIC_DATA_DESIGN.md`.
+- Added only design scaffolding and original unit fixtures. No full generator, model paraphrasing, large semantic scan, synthetic dataset, training code execution, or evaluator change occurred.
 
 ### Milestone 4 — Synthetic data and verification
 
@@ -330,19 +335,19 @@ Measured base main-development baseline: **521/814 correct (64.00% end-to-end)**
 
 ## Current project phase
 
-Milestone 1 and its deferred RTX smoke, Milestones 1.5–1.7, the frozen Milestone 2 base-development baseline, and the bounded Milestone 2.1 correct-response audit are complete. The one approved 814-example run used the D-011 exception without changing the frozen evaluation stack.
+Milestone 1 and its deferred RTX smoke, Milestones 1.5–1.7, the frozen Milestone 2 base-development baseline, the bounded Milestone 2.1 correct-response audit, and the design-only Milestone 3 are complete. The one approved 814-example run used the D-011 exception without changing the frozen evaluation stack.
 
-The repository records deterministic, pairwise-disjoint development partitions of 30 prompt-calibration IDs, 30 answer-extraction-validation IDs, 30 final-evaluator-validation IDs, and 814 baseline IDs. The completed baseline counts every unextractable output wrong and reports coverage separately. A deterministic 100-record mathematical-failure sample exposed two false extractor acceptances that remained wrong. Milestone 2.1 resolved the corresponding score-inflation risk by auditing all 521 correct-scored responses label-blind: 521 intended answers, zero false acceptances, and zero ambiguity. The baseline is trusted for development guidance, while the failure taxonomy remains provisional and development-only. This milestone does not authorize training, synthetic-data generation, SFT, QLoRA, GRPO, paid services, or sealed-final evaluation.
+The repository records deterministic, pairwise-disjoint development partitions of 30 prompt-calibration IDs, 30 answer-extraction-validation IDs, 30 final-evaluator-validation IDs, and 814 baseline IDs. The completed baseline counts every unextractable output wrong and reports coverage separately. Milestone 2.1 audited all 521 correct-scored responses label-blind: 521 intended answers, zero false acceptances, and zero ambiguity. Milestone 3 then classified all 293 failures and froze the content-free generator design, exact schema, dual-verification rules, contamination policy, matched control, pilot sizes, and gates. The baseline is trusted for development guidance, but no synthetic example or trained adapter exists.
 
 ## Unresolved questions
 
-1. Should Milestone 3 be approved to freeze a targeted synthetic-data design from the provisional development failure taxonomy, without yet generating or training on examples?
+1. Should Milestone 4 be approved to pin a local semantic-similarity artifact, implement only the three frozen procedural families, and run at most a 120-candidate generator smoke without producing the full pilot datasets or training?
 2. Should the cross-platform dependency locks explicitly pin Windows-only `colorama` and `tzdata` in a separately approved lock-maintenance task?
 3. Any future comparison must preserve the exact 814-ID manifest and frozen prompt/extractor/generation configuration unless the user explicitly authorizes a new evaluator lineage and complete reruns.
-4. Should the first synthetic generator use templates only, or later allow an approved local/paid paraphraser behind the same verifier?
-5. Which small embedding model and threshold should implement semantic-overlap rejection without introducing excessive dependency or false positives?
+4. Should a local paraphraser ever be considered after the fully procedural pilot, or should controlled templates remain the permanent rendering boundary?
+5. Which small local embedding artifact and exact revision should implement the already frozen semantic-overlap thresholds without excessive false positives?
 6. Is a 3-point final improvement statistically realistic after the development baseline, or should the success threshold be revised before training?
 
 ## Next approved milestone
 
-No further milestone is approved. Milestone 2.1 ends after its verified commit is pushed. The next user decision is whether to authorize Milestone 3: a bounded targeted synthetic-data design based on the trusted development baseline and provisional failure taxonomy. This plan entry does not authorize generation, training, SFT, QLoRA, GRPO, or sealed-final access.
+No further milestone is approved. Milestone 3 ends after its verified commit is pushed. The next user decision is whether to authorize the narrowly scoped Milestone 4 in `docs/SYNTHETIC_DATA_DESIGN.md`: pin one local semantic-screening artifact, implement only the three approved procedural families and output track, and run at most a 120-candidate generator smoke. It would still require separate approval and would not authorize the full 4,000 + 4,000 pilot, training, SFT, QLoRA, GRPO, paid services, or sealed-final access.

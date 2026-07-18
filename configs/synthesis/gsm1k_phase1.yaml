@@ -1,0 +1,69 @@
+schema_version: 1
+contract_version: foundry-synthesis-design-v1
+
+source_policy:
+  generator_input: content_free_taxonomy_and_contracts_only
+  benchmark_questions_as_input: forbidden
+  benchmark_answers_as_input: forbidden
+  benchmark_paraphrasing: forbidden
+  paid_or_cloud_models: forbidden
+
+architecture:
+  selected: fully_procedural_program_and_controlled_templates
+  label_source: exact_latent_program_execution
+  random_seed_required: true
+  arithmetic: integer_decimal_fraction_exact_only
+
+selected_reasoning_categories:
+  - multi_step_bookkeeping_or_omission
+  - rate_ratio_percentage_or_average
+  - constraint_distribution_or_discrete_reasoning
+
+output_contract_track:
+  id: terminal-final-answer-contract-v1
+  required_last_line: "Final answer: <canonical-number>"
+  examples_per_dataset: 800
+
+pilot:
+  generator_smoke_examples: 120
+  targeted_dataset:
+    accepted_examples: 4000
+    training_examples: 3600
+    synthetic_validation_examples: 400
+    reasoning_distribution:
+      multi_step_bookkeeping_or_omission: 1760
+      rate_ratio_percentage_or_average: 720
+      constraint_distribution_or_discrete_reasoning: 720
+      output_contract_track: 800
+  generic_control_dataset:
+    accepted_examples: 4000
+    training_examples: 3600
+    synthetic_validation_examples: 400
+    curriculum: broad_approximately_uniform_reasoning_sampling
+    output_contract_track: 800
+  expected_tokens_per_dataset: 1400000
+
+verification:
+  required_agreeing_verifiers: 2
+  disagreement: reject
+  timeout: reject
+  floating_point_labels: forbidden
+
+deduplication_and_contamination:
+  token_ngram_size: 5
+  reject_ngram_jaccard: 0.35
+  manual_semantic_similarity: 0.75
+  reject_semantic_similarity: 0.82
+  semantic_backend: pinned_local_sentence_encoder_required_before_pilot
+  unresolved_semantic_check: reject_or_manual_review
+  benchmark_content_as_generator_input: forbidden
+  closest_match_manual_audit_required: true
+
+training_comparison_future_only:
+  base_checkpoint: Qwen/Qwen2.5-1.5B-Instruct
+  base_revision: 989aa7980e4cf806f80c7fef2b1adb7bc71aa306
+  matched_qlora_architecture: required
+  matched_training_tokens: required
+  matched_optimizer_steps: required
+  controlled_seeds: required
+  sealed_final_before_recipe_freeze: forbidden
