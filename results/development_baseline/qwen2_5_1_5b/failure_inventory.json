@@ -1,0 +1,176 @@
+{
+  "mathematical_failure_sample": {
+    "category_counts": {
+      "arithmetic_execution": 12,
+      "benchmark_ambiguity_or_annotation_risk": 1,
+      "constraint_distribution_or_discrete_reasoning": 15,
+      "multi_step_bookkeeping_or_omission": 28,
+      "rate_ratio_percentage_or_average": 12,
+      "target_or_language_interpretation": 18,
+      "time_unit_or_sequence_reasoning": 14
+    },
+    "category_identifier_prefixes": {
+      "arithmetic_execution": [
+        "1fca8dbaa144",
+        "40a499b7a5ca",
+        "758b90a6e004",
+        "a265bc1b20e0",
+        "6a1278333388",
+        "cdb11d081cac",
+        "a0221e924d7c",
+        "d5ee4522bc94",
+        "02d87d9869be",
+        "a63bb270479c",
+        "152b6ae5be42",
+        "f76feab13761"
+      ],
+      "benchmark_ambiguity_or_annotation_risk": [
+        "3da65a4e399a"
+      ],
+      "constraint_distribution_or_discrete_reasoning": [
+        "61ff8695e082",
+        "83116b5049eb",
+        "9fb172363603",
+        "77d055ddb98d",
+        "01365f6802fe",
+        "fb855713247c",
+        "90895bb6d39c",
+        "9e2fed33130b",
+        "40d009b9b522",
+        "a021367ceefc",
+        "c594f87b62db",
+        "063401e4627e",
+        "6fac786783da",
+        "dc3cb08a509f",
+        "b6bb96675679"
+      ],
+      "multi_step_bookkeeping_or_omission": [
+        "ca0e5502d964",
+        "c64ef13db09b",
+        "170afc57dcf3",
+        "0a4ca7eff615",
+        "cfd74889e93c",
+        "0b3a4b594d5e",
+        "3b268228a422",
+        "e17e4b155eda",
+        "77f906dedfea",
+        "d601a1e7b5b8",
+        "1e2c7fa16b8e",
+        "cbb445fb9766",
+        "d172cf26f501",
+        "a021d6251f05",
+        "a4512e1bfd62",
+        "b87f671d345d",
+        "ddb588da7778",
+        "ef79b920239e",
+        "04403d7c1db5",
+        "1f1a9ae80f08",
+        "2ecd91deb639",
+        "158ca860910d",
+        "c095f1ef9ff5",
+        "3bbff93aa630",
+        "da087d329be0",
+        "2d2211cff27b",
+        "95df2bede221",
+        "155698043897"
+      ],
+      "rate_ratio_percentage_or_average": [
+        "04a2a92650ac",
+        "59b20ce8795b",
+        "982ec36835fe",
+        "16ca0ecdddf6",
+        "967020b3d2c9",
+        "024ef4a9cf9c",
+        "b9ca5dc7326f",
+        "5d240c7968b0",
+        "254773917c6d",
+        "cc59efea5f8e",
+        "4be2a99bced4",
+        "4ef932a1aa71"
+      ],
+      "target_or_language_interpretation": [
+        "da6da2235fd4",
+        "bf449ae93364",
+        "5ec3f8ccb3dc",
+        "3b2ccca87ae1",
+        "7ef5b36a3d73",
+        "e2b56b4d4fc5",
+        "1c934fdccf00",
+        "3e3326f2ccd3",
+        "06aec5acec76",
+        "faeca9a214e9",
+        "ef402a135ec5",
+        "fd7e4a08f693",
+        "277db0041aed",
+        "d95c6b0acaf3",
+        "e0e836355f2e",
+        "33a0c95eb1e3",
+        "8e05b45f222e",
+        "4310b4970cce"
+      ],
+      "time_unit_or_sequence_reasoning": [
+        "9c85912db20d",
+        "17ec71fe8199",
+        "e7d2440a1226",
+        "dd11c81f915b",
+        "139f391a5cf8",
+        "09b8c76314c2",
+        "0f7aea7f3789",
+        "22cf4b3f9c5c",
+        "fb8ba1b58377",
+        "1ba81698acf2",
+        "cc28448d8179",
+        "7b9bcc796e30",
+        "9b90f05db774",
+        "53ae430dc98e"
+      ]
+    },
+    "eligible_count": 231,
+    "identifier_prefix_length": 12,
+    "identifier_prefixes_are_unique": true,
+    "manual_audit": {
+      "confirmed_false_extractions": 2,
+      "false_extraction_identifier_prefixes": [
+        "ef402a135ec5",
+        "155698043897"
+      ],
+      "limitations": [
+        "The taxonomy assigns one primary interpretation per sampled failure; secondary causes can overlap.",
+        "The sample does not estimate failure types outside the 231 extractable-but-incorrect population.",
+        "The audit does not establish extractor precision among the 521 records scored correct."
+      ],
+      "records_reviewed": 100,
+      "score_effect_of_observed_false_extractions": "both remained mathematically incorrect"
+    },
+    "population": "extractable_but_incorrect",
+    "primary_categories_are_mutually_exclusive": true,
+    "sample_sha256": "3ae1e307e3576a07d563f872e24c6345b8bcbbf2cee65415f226bc1c6fc9981d",
+    "sample_size": 100,
+    "secondary_causes_may_overlap": true,
+    "selection_method": "lowest SHA-256 rank of seed:stable_id:row_index",
+    "selection_seed": "foundry-milestone-2-mathematical-failures-v1",
+    "taxonomy_is_provisional": true
+  },
+  "measured_population": {
+    "attempted": 814,
+    "correct": 521,
+    "exact_format_noncompliant": 684,
+    "extractable_incorrect": 231,
+    "extraction_failure_categories": {
+      "ambiguous_terminal_answer": 42,
+      "conflicting_answers": 8,
+      "generation_truncated": 3,
+      "malformed_terminal_answer": 2,
+      "no_terminal_answer": 7
+    },
+    "generation_failures": 0,
+    "incorrect": 293,
+    "truncated": 3,
+    "unextractable": 62
+  },
+  "schema_version": 1,
+  "source": {
+    "baseline_manifest_sha256": "5e810d3ab644bef1d43c598a14a6164ba6464b27fde50e92a2f241816ce87897",
+    "raw_predictions_sha256": "73d52dace0f27577b1177bdfa81dfbb4c88252107c9b04e2ff49dbbd93da6cc0"
+  }
+}

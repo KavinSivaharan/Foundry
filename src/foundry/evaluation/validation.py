@@ -573,3 +573,31 @@ def as_final_benchmark_manifest(
         entries=manifest.entries,
         manifest_sha256=manifest.manifest_sha256,
     )
+
+
+def as_frozen_baseline_manifest(
+    manifest: FinalEvaluatorValidationManifest,
+    source_baseline: AnswerValidationManifest,
+    canonical_source: BenchmarkManifest,
+    config: EvaluationConfig,
+) -> BenchmarkManifest:
+    """Adapt only the frozen 814-ID main-development baseline for evaluation."""
+
+    _validate_final_manifest(manifest, source_baseline, canonical_source)
+    if manifest.purpose != FINAL_MAIN_DEVELOPMENT_BASELINE:
+        raise ValidationManifestError("only the final main-development baseline may be evaluated")
+    if len(manifest.entries) != 814:
+        raise ValidationManifestError("frozen main-development baseline requires exactly 814 IDs")
+    return BenchmarkManifest(
+        schema_version=1,
+        dataset_id=config.dataset.repo_id,
+        dataset_revision=config.dataset.revision,
+        config_name=config.dataset.config_name,
+        source_split=config.dataset.source_split,
+        partition="development",
+        partition_seed=config.partition.seed,
+        expected_dataset_examples=config.dataset.expected_examples,
+        config_sha256=config.sha256,
+        entries=manifest.entries,
+        manifest_sha256=manifest.manifest_sha256,
+    )

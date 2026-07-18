@@ -1,6 +1,6 @@
 # Foundry Experiment Log
 
-Four bounded real-model experiment groups have completed: the ten-example Milestone 1 CUDA smoke, the 30-example/three-prompt Milestone 1.5 format calibration, the 30-example fresh Milestone 1.6 answer-validation run, and the final 30-example Milestone 1.7 evaluator validation recorded below. They are software, hardware, and evaluator-calibration evidence—not a full benchmark result or a training experiment.
+Five bounded real-model experiment groups have completed: the ten-example Milestone 1 CUDA smoke, the 30-example/three-prompt Milestone 1.5 format calibration, the 30-example fresh Milestone 1.6 answer-validation run, the final 30-example Milestone 1.7 evaluator validation, and the frozen 814-example Milestone 2 base-development baseline recorded below. No training experiment or sealed-final benchmark result exists.
 
 Every future experiment must be registered here before a costly run begins. Its machine-readable configuration must be saved under `configs/`, raw evaluation outputs under `results/raw/`, and reviewable summaries under `results/`.
 
@@ -120,3 +120,26 @@ Every future experiment must be registered here before a costly run begins. Its 
 - **Hypothesis supported:** no; fresh extractability was 83.33%, below 90%, despite zero false extractions and zero backend generation failures.
 - **Failures/blockers:** one final output reached 768 tokens and four complete clear answers used unsupported terminal prose. Transformers emitted non-fatal warnings for sampling defaults ignored under greedy decoding. No CUDA, OOM, dependency, dataset, backend, manifest, or raw-artifact containment failure occurred.
 - **Next experiment:** none approved. The user must choose either (1) proceed to Milestone 2 while scoring all unextractable outputs incorrect and reporting coverage/exact compliance separately, or (2) reconsider the base model or benchmark. No further evaluator-calibration milestone is proposed.
+
+## EXP-20260718-005 — Frozen Qwen GSM1K base-development baseline
+
+- **Status:** completed; one-time D-011 exception applied; no training or synthesis
+- **Date:** 2026-07-18
+- **Hypothesis:** The untouched base model can complete exactly the frozen 814-ID development baseline once on the RTX 3080 under the immutable Milestone 1.7 stack, producing a reproducible end-to-end score and an initial bounded failure inventory without a backend or memory failure.
+- **Model:** `Qwen/Qwen2.5-1.5B-Instruct`
+- **Exact model revision:** `989aa7980e4cf806f80c7fef2b1adb7bc71aa306`
+- **Dataset:** `ScaleAI/gsm1k`, configuration `default`, source split `test`
+- **Exact dataset revision:** `bc09569d09a614b9b530edc7f076fb214ac10493`
+- **Training configuration:** none; untouched base-model evaluation only.
+- **Evaluation configuration:** current prompt SHA-256 `738ea5a3b94e7c75ac0bd50a229bbf04f3fc5d773e14658bc6728bc7a4b18350`; unchanged strict parser; canonical extractor `foundry-terminal-number-v2` SHA-256 `e099d1c247968fed982cb849022ec3137b1694c15f23a65663a127b8158c06df`; final config SHA-256 `5f315d5de645f9563b8d1e61bc8e02c3513c453238ad9e1d6f9473489b5a622b`; greedy decoding; 768 maximum new tokens; 814-ID development manifest SHA-256 `5e810d3ab644bef1d43c598a14a6164ba6464b27fde50e92a2f241816ce87897`.
+- **Hardware:** Windows 11 Pro build 26200; AMD Ryzen 7 9700X; 31.11 GiB RAM; NVIDIA GeForce RTX 3080 with 10,240 MiB VRAM; driver 610.47; CPython 3.12.10; PyTorch 2.5.1+cu121 with CUDA runtime 12.1.
+- **Random seed:** deterministic greedy generation; fixed identifier manifest and no stochastic generation.
+- **Baseline score:** 521/814 correct, or 64.0049% end-to-end accuracy with every unextractable response counted wrong. The evaluator classified 752/814 answers extractable (92.3833%); 521/752 extracted answers were correct (69.2819%); 130/814 outputs were exact-format compliant (15.9705%). There were 231 extractable-but-wrong outputs, 62 unextractable outputs, three truncations, and zero backend failures.
+- **Resulting score:** not applicable; no candidate model or adapter was evaluated.
+- **Cost and runtime:** $0 API/cloud cost. Evaluation time 3,160.074 seconds (52:40.074); total runtime including 1.847 seconds model loading was 3,161.921 seconds. Throughput was 0.2576 examples/second and 74.08 generated tokens/second. The run processed 113,720 input tokens and generated 234,106 output tokens, averaging 287.60 output tokens/example. Peak RTX 3080 memory was 3,133,062,144 bytes (2,987.92 MiB) allocated and 3,353,346,048 bytes (3,198 MiB; 3.123 GiB) reserved.
+- **Artifacts/checkpoint:** aggregate summary and content-free failure inventory under `results/development_baseline/qwen2_5_1_5b/`; complete 814-record output under ignored `results/raw/development_baseline/qwen2_5_1_5b/`; no checkpoint.
+- **Code commit:** run began from clean published Milestone 1.7 commit `7786fe7`; Milestone 2 execution/summary plumbing, tests, aggregate records, and documentation were uncommitted during the run and are intended for one local atomic commit.
+- **Interpretation:** The base model completed the exact frozen development scope without CUDA, OOM, dataset, or backend failure. A deterministic SHA-256-ranked audit sampled 100 of 231 extractable-but-wrong records. Primary categories were bookkeeping/omission 28, target/language interpretation 18, constraint/discrete reasoning 15, time/unit/sequence 14, arithmetic execution 12, rate/ratio/percentage/average 12, and benchmark ambiguity/annotation risk 1. These are provisional sampled interpretations, not exhaustive population counts.
+- **Hypothesis supported:** yes for execution and reproducible aggregate measurement. The broader premise that the extractor makes only conservative errors was not supported: the 100-record audit found two false extractions. Both remained mathematically wrong, so the 521-correct count did not change, but precision among the 521 scored-correct records remains unaudited.
+- **Failures/blockers:** 42 ambiguous terminal answers, eight conflicting answers, seven missing terminal answers, two malformed terminal answers, and three truncated generations. Two local read-only inspection commands failed before correction—one quoting syntax error and one incorrect dataset configuration—and one later inspection batch hit a Windows console-encoding error after returning 19 records; none changed files or evaluation artifacts. Transformers emitted expected warnings about sampling defaults ignored under greedy decoding. No run retry occurred.
+- **Next experiment:** none approved. The user must decide whether to authorize a bounded audit of records scored correct before candidate comparisons or accept the documented extractor risk and separately scope targeted synthetic-data design. No generation or training begins automatically.

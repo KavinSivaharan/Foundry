@@ -247,9 +247,15 @@ Status: complete; the final fresh 90% extractability gate failed at 83.33%, so t
 
 ### Milestone 2 — Base development benchmark
 
-- Freeze prompt and decoding settings.
-- Evaluate the base model on the development split.
-- Record accuracy, category counts, runtime, peak VRAM, and parsing failures.
+Status: complete under the one-time D-011 exception; one frozen 814-example development run and a bounded 100-example failure audit completed.
+
+- Freeze the exact Milestone 1.7 prompt, strict parser, `foundry-terminal-number-v2` extractor, greedy 768-token generation config, pinned Qwen/GSM1K revisions, and 814-ID development-baseline manifest.
+- Count every unextractable response as incorrect in end-to-end accuracy while reporting extractability and exact-format compliance separately.
+- Evaluate the untouched base model once on exactly the 814 development identifiers without retries.
+- Record accuracy, coverage, category counts, runtime, tokens, peak VRAM, parsing failures, and a provisional taxonomy from a deterministic sample of at most 100 incorrect development outputs.
+- Do not access sealed-final examples, generate synthetic data, or train a model.
+- Result: 521/814 correct (64.00% end-to-end); 752/814 extractable (92.38%); 69.28% accuracy among extractable answers; 130/814 exact-format compliant (15.97%); 62 unextractable; three truncated; zero backend failures.
+- A deterministic audit of 100/231 extractable-but-wrong records found recurring bookkeeping/omission, target interpretation, constraint/discrete, time/unit/sequence, arithmetic, and rate/ratio/percentage weaknesses. It also found two false extractions that remained scored wrong, so the aggregate score is reproducible under the frozen evaluator but extractor precision across the full baseline is not established.
 
 ### Milestone 3 — Failure taxonomy
 
@@ -318,24 +324,24 @@ Secondary metrics:
 - Exact and semantic dedup rejection rates.
 - Regression rate on categories not targeted by training.
 
-Measured main-development baseline and candidate scores: **not yet available.** The completed smoke and evaluator-calibration/validation subsets are bounded diagnostics, not the Milestone 2 baseline.
+Measured base main-development baseline: **521/814 correct (64.00% end-to-end)**, with **92.38% extractability**, **69.28% accuracy among extractable answers**, and **15.97% exact-format compliance**. This is a frozen development result, not a sealed-final score. No candidate or trained-model score exists.
 
 ## Current project phase
 
-Milestone 1 and its deferred RTX smoke are complete. Milestones 1.5, 1.6, and the final planned Milestone 1.7 evaluator blocker resolution are complete. The final extractor generalized to only 83.33% extractability on the last untouched 30-ID gate, below the required 90% threshold.
+Milestone 1 and its deferred RTX smoke, Milestones 1.5–1.7, and the frozen Milestone 2 base-development baseline are complete. The one approved 814-example run used the D-011 exception without changing the frozen evaluation stack.
 
-The repository now records deterministic, pairwise-disjoint development partitions of 30 prompt-calibration IDs, 30 answer-extraction-validation IDs, 30 final-evaluator-validation IDs, and 814 candidate baseline IDs. The final extractor, prompt, generation config, and 814-ID set are recorded as evidence but are not admitted for Milestone 2 because the gate failed. No training, synthetic-data generation, SFT, QLoRA, GRPO, paid service, or sealed-final evaluation occurred.
+The repository records deterministic, pairwise-disjoint development partitions of 30 prompt-calibration IDs, 30 answer-extraction-validation IDs, 30 final-evaluator-validation IDs, and 814 baseline IDs. The completed baseline counts every unextractable output wrong and reports coverage separately. A deterministic 100-record mathematical-failure sample exposed two false extractor acceptances; neither changed the correct count, but this finding means the earlier zero-false-extraction evidence does not generalize to the larger run. This milestone does not authorize training, synthetic-data generation, SFT, QLoRA, GRPO, paid services, or sealed-final evaluation.
 
 ## Unresolved questions
 
-1. Should Milestone 2 proceed with unextractable outputs counted as incorrect while exact-format compliance and extraction coverage are reported separately?
-2. Alternatively, should the Phase 1 base model or benchmark be reconsidered because the final evaluator gate failed?
+1. Should a separate bounded audit determine extractor precision among records currently scored correct before the baseline is used to compare a trained candidate?
+2. Alternatively, should the reproducible 64.00% frozen-evaluator baseline be accepted with the documented extraction limitation and targeted synthetic-data work be designed from the provisional taxonomy?
 3. Should the cross-platform dependency locks explicitly pin Windows-only `colorama` and `tzdata` in a separately approved lock-maintenance task?
-4. If the user chooses to proceed, Milestone 2 must use the 814-ID candidate main-baseline manifest—not the original 904-ID development superset, either parent pool, or any 30-ID calibration/validation set—and must preserve the recorded prompt/extractor/generation configuration without another calibration round.
+4. Any future comparison must preserve the exact 814-ID manifest and frozen prompt/extractor/generation configuration unless the user explicitly authorizes a new evaluator lineage and complete reruns.
 5. Should the first synthetic generator use templates only, or later allow an approved local/paid paraphraser behind the same verifier?
 6. Which small embedding model and threshold should implement semantic-overlap rejection without introducing excessive dependency or false positives?
 7. Is a 3-point final improvement statistically realistic after the development baseline, or should the success threshold be revised before training?
 
 ## Next approved milestone
 
-None. The final planned evaluator-calibration milestone failed its 90% gate at 83.33% with zero false extractions. No further evaluator-calibration milestone is proposed. The user must choose between exactly two paths: (1) approve Milestone 2 with every unextractable output counted incorrect and extraction coverage reported separately, using the recorded evaluator and 814-ID candidate baseline; or (2) reconsider the base model or benchmark. No Milestone 2 work is authorized until that explicit decision.
+No further milestone is approved. Milestone 2 ends after its local atomic commit. The next user decision is whether to authorize a bounded precision audit of records scored correct or accept the known evaluator limitation and separately scope targeted synthetic-data design. Neither option is authorized by this plan entry.

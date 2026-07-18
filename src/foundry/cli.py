@@ -42,9 +42,11 @@ from foundry.evaluation.runner import run_evaluation
 from foundry.evaluation.validation import (
     ANSWER_EXTRACTION_VALIDATION,
     FINAL_EVALUATOR_VALIDATION,
+    FINAL_MAIN_DEVELOPMENT_BASELINE,
     ValidationManifestError,
     as_benchmark_manifest,
     as_final_benchmark_manifest,
+    as_frozen_baseline_manifest,
     assert_final_evaluator_config,
     build_answer_validation_manifests,
     build_final_evaluator_manifests,
@@ -170,6 +172,18 @@ def _parser() -> argparse.ArgumentParser:
     final_validate.add_argument("--source-baseline-manifest", required=True, type=_path)
     final_validate.add_argument("--validation-manifest", required=True, type=_path)
     final_validate.add_argument("--output-dir", required=True, type=_path)
+
+    baseline = subparsers.add_parser(
+        "development-baseline",
+        help="run the frozen evaluator on exactly 814 untouched development IDs",
+    )
+    baseline.add_argument("--base-config", required=True, type=_path)
+    baseline.add_argument("--config", required=True, type=_path)
+    baseline.add_argument("--development-manifest", required=True, type=_path)
+    baseline.add_argument("--source-pool-manifest", required=True, type=_path)
+    baseline.add_argument("--source-baseline-manifest", required=True, type=_path)
+    baseline.add_argument("--baseline-manifest", required=True, type=_path)
+    baseline.add_argument("--output-dir", required=True, type=_path)
     return parser
 
 
@@ -475,6 +489,50 @@ def _run_final_evaluator_validate(args: argparse.Namespace) -> int:
     return 0
 
 
+def _print_baseline_progress(completed: int, total: int) -> None:
+    if completed % 25 == 0 or completed == total:
+        print(
+            json.dumps(
+                {"baseline_completed": completed, "baseline_total": total},
+                sort_keys=True,
+            ),
+            flush=True,
+        )
+
+
+def _run_development_baseline(args: argparse.Namespace) -> int:
+    base_config = load_config(args.base_config)
+    config = load_config(args.config)
+    assert_final_evaluator_config(base_config, config)
+    development = load_manifest(args.development_manifest, base_config)
+    source_pool = load_development_subset(args.source_pool_manifest, development)
+    source_baseline = load_answer_validation_manifest(
+        args.source_baseline_manifest,
+        source_pool,
+        development,
+    )
+    baseline = load_final_evaluator_manifest(
+        args.baseline_manifest,
+        source_baseline,
+        development,
+    )
+    if baseline.purpose != FINAL_MAIN_DEVELOPMENT_BASELINE or len(baseline.entries) != 814:
+        raise ValidationManifestError("development-baseline requires the frozen 814 IDs")
+    manifest = as_frozen_baseline_manifest(baseline, source_baseline, development, config)
+    backend = HuggingFaceCudaBackend(config)
+    examples = load_huggingface_examples(config, manifest)
+    summary = run_evaluation(
+        config=config,
+        manifest=manifest,
+        examples=examples,
+        backend=backend,
+        output_dir=args.output_dir,
+        progress_callback=_print_baseline_progress,
+    )
+    print(json.dumps(asdict(summary), sort_keys=True))
+    return 0
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     """Run one Foundry evaluation-foundation command."""
 
@@ -503,6 +561,8 @@ def main(argv: Sequence[str] | None = None) -> int:
             return _run_build_final_evaluator_validation(args)
         if args.command == "final-evaluator-validate":
             return _run_final_evaluator_validate(args)
+        if args.command == "development-baseline":
+            return _run_development_baseline(args)
         parser.error(f"unsupported command {args.command}")
     except (
         BackendError,

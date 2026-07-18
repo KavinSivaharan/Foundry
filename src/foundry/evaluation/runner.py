@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import time
+from collections.abc import Callable
 from dataclasses import asdict, dataclass
 from pathlib import Path
 
@@ -68,12 +69,18 @@ class EvaluationSummary:
     ambiguous_or_rejected_examples: int
     generation_failures: int
     accuracy: float
+    accuracy_among_extractable_answers: float
+    extractable_incorrect_examples: int
+    unextractable_examples: int
+    truncated_examples: int
     extraction_failure_categories: dict[str, int]
     evaluation_seconds: float
     total_runtime_seconds: float
     examples_per_second: float
     total_input_tokens: int | None
     total_output_tokens: int | None
+    average_output_tokens: float | None
+    generated_tokens_per_second: float | None
     backend_metrics: dict[str, MetricValue]
 
 
@@ -89,6 +96,7 @@ def run_evaluation(
     examples: tuple[BenchmarkExample, ...],
     backend: ModelBackend,
     output_dir: Path,
+    progress_callback: Callable[[int, int], None] | None = None,
 ) -> EvaluationSummary:
     """Evaluate examples, store ignored raw records, and return an auditable summary."""
 
@@ -97,7 +105,8 @@ def run_evaluation(
 
     records: list[EvaluationRecord] = []
     evaluation_started = time.perf_counter()
-    for example in examples:
+    total_examples = len(examples)
+    for position, example in enumerate(examples, start=1):
         messages = render_messages(config.prompt, example.question)
         generation_started = time.perf_counter()
         try:
@@ -160,6 +169,8 @@ def run_evaluation(
                     generation_seconds=time.perf_counter() - generation_started,
                 )
             )
+        if progress_callback is not None:
+            progress_callback(position, total_examples)
     evaluation_seconds = time.perf_counter() - evaluation_started
 
     backend_metrics = backend.metrics()
@@ -169,6 +180,7 @@ def run_evaluation(
     exact_format_compliant = sum(record.exact_format_compliant for record in records)
     extractable = sum(record.predicted_answer is not None for record in records)
     correct = sum(record.correct for record in records)
+    truncated = sum(record.generation_truncated for record in records)
     generation_failures = sum(
         record.error is not None and record.error.startswith("generation failure:")
         for record in records
@@ -189,8 +201,10 @@ def run_evaluation(
         record.output_tokens for record in records if record.output_tokens is not None
     ]
     total_runtime = evaluation_seconds + load_seconds
+    total_input_tokens = sum(input_token_values) if input_token_values else None
+    total_output_tokens = sum(output_token_values) if output_token_values else None
     summary = EvaluationSummary(
-        schema_version=2,
+        schema_version=3,
         backend=backend.name,
         model_id=config.model.repo_id,
         model_revision=config.model.revision,
@@ -212,12 +226,22 @@ def run_evaluation(
         ambiguous_or_rejected_examples=invalid,
         generation_failures=generation_failures,
         accuracy=correct / processed,
+        accuracy_among_extractable_answers=correct / extractable if extractable else 0.0,
+        extractable_incorrect_examples=extractable - correct,
+        unextractable_examples=processed - extractable,
+        truncated_examples=truncated,
         extraction_failure_categories=failure_categories,
         evaluation_seconds=evaluation_seconds,
         total_runtime_seconds=total_runtime,
         examples_per_second=processed / evaluation_seconds,
-        total_input_tokens=sum(input_token_values) if input_token_values else None,
-        total_output_tokens=sum(output_token_values) if output_token_values else None,
+        total_input_tokens=total_input_tokens,
+        total_output_tokens=total_output_tokens,
+        average_output_tokens=(
+            total_output_tokens / processed if total_output_tokens is not None else None
+        ),
+        generated_tokens_per_second=(
+            total_output_tokens / evaluation_seconds if total_output_tokens is not None else None
+        ),
         backend_metrics=backend_metrics,
     )
 

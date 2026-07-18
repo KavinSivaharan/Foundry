@@ -99,7 +99,7 @@ def test_fake_model_runs_end_to_end_without_gpu_or_download(tmp_path: Path) -> N
     summary = json.loads((output_dir / "summary.json").read_text(encoding="utf-8"))
     assert summary["backend"] == "fake"
     assert summary["processed_examples"] == 3
-    assert summary["schema_version"] == 2
+    assert summary["schema_version"] == 3
     assert summary["exact_format_compliant_examples"] == 2
     assert summary["exact_format_compliance_rate"] == 2 / 3
     assert summary["extractable_examples"] == 2
@@ -109,6 +109,12 @@ def test_fake_model_runs_end_to_end_without_gpu_or_download(tmp_path: Path) -> N
     assert summary["ambiguous_or_rejected_examples"] == 1
     assert summary["generation_failures"] == 0
     assert summary["accuracy"] == 2 / 3
+    assert summary["accuracy_among_extractable_answers"] == 1.0
+    assert summary["extractable_incorrect_examples"] == 0
+    assert summary["unextractable_examples"] == 1
+    assert summary["truncated_examples"] == 0
+    assert summary["average_output_tokens"] is None
+    assert summary["generated_tokens_per_second"] is None
     assert summary["extraction_failure_categories"] == {"no_terminal_answer": 1}
     raw_lines = (output_dir / "raw" / "predictions.jsonl").read_text(encoding="utf-8").splitlines()
     assert len(raw_lines) == 3

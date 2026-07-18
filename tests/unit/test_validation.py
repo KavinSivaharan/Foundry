@@ -13,6 +13,7 @@ from foundry.evaluation.validation import (
     ValidationManifestError,
     as_benchmark_manifest,
     as_final_benchmark_manifest,
+    as_frozen_baseline_manifest,
     assert_final_evaluator_config,
     build_answer_validation_manifests,
     build_final_evaluator_manifests,
@@ -219,6 +220,22 @@ def test_final_evaluator_split_is_deterministic_complete_and_identifier_only(
     )
     assert adapted.entries == validation.entries
     assert adapted.config_sha256 == evaluator_config.sha256
+    baseline_adapted = as_frozen_baseline_manifest(
+        baseline,
+        source_baseline,
+        development,
+        evaluator_config,
+    )
+    assert len(baseline_adapted.entries) == 814
+    assert baseline_adapted.manifest_sha256 == baseline.manifest_sha256
+
+    with pytest.raises(ValidationManifestError):
+        as_frozen_baseline_manifest(
+            validation,
+            source_baseline,
+            development,
+            evaluator_config,
+        )
 
 
 def test_modified_final_evaluator_manifest_is_rejected(tmp_path: Path) -> None:
