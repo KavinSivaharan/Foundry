@@ -185,3 +185,42 @@ This log separates proposals from approved decisions. A proposal does not author
 - **Alternatives considered:** Another set of procedural question-form or template patches is rejected by the explicit final-lineage stop rule. Lowering contamination thresholds, accepting the defects, or generating the full pilot would invalidate the frozen gate. Discarding procedural programs is unnecessary because labels and dual verification remain correct. A frontier/paid generator is outside scope and not required for the proposed local pivot.
 - **Expected consequences:** No fresh 120-candidate result, production dataset, adapter, benchmark inference, or training artifact exists. The typed compiler remains useful as semantic evidence and a deterministic fallback, while any local-model realization path requires a separately approved design, model pin, dependency/resource assessment, round-trip validator, and bounded smoke.
 - **Next user decision:** Decide whether to approve a design-only architectural-pivot milestone for constrained local-model realization. No model download, realization generation, full dataset, or training may begin from this decision alone.
+
+## D-018 — Freeze a value-blind Qwen3 realization pivot and separate semantic policy roles
+
+- **Date:** 2026-07-18
+- **Status:** accepted Milestone 5A design; implementation and inference remain unapproved
+- **Decision:** Retain the procedural latent programs, typed IR, exact labels, deterministic traces,
+  dual verifiers, and existing generated-to-development contamination policy. Select
+  `Qwen/Qwen3-1.7B@70d244cc86ccca08cf5af4e1e306ecf908b1ad5e` as the primary surface model and
+  `Qwen/Qwen2.5-1.5B-Instruct@989aa7980e4cf806f80c7fef2b1adb7bc71aa306` as fallback. The model
+  receives only typed roles and opaque placeholders and returns strict JSON with a template,
+  placeholder inventory, clause-to-node map, target/intent echoes, and no answer. Deterministic
+  validation and filling precede the unchanged exact verifiers and human audit.
+- **Semantic-policy decision:** Choose option 2. Keep
+  `all-MiniLM-L6-v2@1110a243fdf4706b3f48f1d95db1a4f5529b4d41` and 0.75/0.82 unchanged for
+  generated-to-development contamination. Retain exact/template/latent/five-token controls for
+  generated peers, but calibrate their semantic-diversity policy separately on original,
+  benchmark-independent fixtures and freeze it before viewing new model realizations.
+- **Generation decision:** Prefer fixed three-beam deterministic search over one greedy surface or
+  seeded sampling. A future smoke has exactly 120 IRs, at most 360 returned sequences, stable beam
+  order, no retries or replacements, 256 maximum new tokens, and complete manual audit. Readiness
+  still requires at least 90 clean IRs, at least 15 per family, and zero false labels, accepted
+  semantic drift, invalid acceptances, verifier disagreements, or unresolved contamination.
+- **Alternatives considered:** Qwen2.5 primary minimizes dependency risk but offers less evidence of
+  a dedicated non-thinking control; SmolLM3-3B is credible but larger and needs a greater dependency
+  move; greedy decoding is simpler but yields only one surface; seeded sampling is more diverse but
+  less reproducible; using the same MiniLM thresholds for both roles confuses topical similarity
+  with duplication; lowering benchmark thresholds risks contamination.
+- **Rationale:** Qwen3 is Apache-2.0, fits 10 GiB in FP16, has an official hard non-thinking switch,
+  uses standard Transformers without remote code, and is small enough for a bounded local smoke.
+  The slot contract prevents it from controlling values or labels. Independent semantic policy
+  calibration responds to the 899/900 internal-collision result without weakening the benchmark
+  firewall.
+- **Expected consequences:** Milestone 5A creates schemas, validators, a design configuration, tests,
+  and documentation only. No model weight, inference result, generated example, dependency change,
+  dataset, or training artifact exists. Ordinary Transformers on Windows is sufficient for the
+  planned smoke; vLLM and quantization are not recommended.
+- **Next user decision:** Decide whether to approve Milestone 5B with a dedicated pinned dependency
+  lock, one Qwen3 download, pre-generation internal-policy calibration, and the bounded 120-IR smoke.
+  Full 4,000 + 4,000 generation and all training remain separately blocked.

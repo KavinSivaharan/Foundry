@@ -383,3 +383,25 @@ and dual verifiers remain the trustworthy label source. A future surface-realiza
 approved, should receive only typed synthetic semantics, produce wording rather than labels, and be
 accepted only after deterministic round-trip recovery of every semantic node, target, quantity,
 unit, and relation. The existing contamination scanner then remains the final diversity firewall.
+
+## Fluent realization can be useful only when it is value-blind and reject-only
+
+Milestone 5A turns the architectural boundary into a concrete contract. The local model sees typed
+roles and immutable placeholder tokens, not names, numbers, units, or answers. It proposes a JSON
+template and a clause-to-semantic-node map. Deterministic code checks exact slot inventory,
+occurrence counts, node coverage, target/intent equality, rate denominators, and discourse order
+before inserting real values. The original exact program and independent verifier still determine
+the label. A model failure can therefore reduce yield, but it cannot legitimately establish
+correctness.
+
+Round-trip validation is a stack, not a second request to the same model. Schema, slots, nodes,
+targets, units, filled surfaces, exact execution, independent execution, answer contracts,
+language rules, contamination checks, and answer-blind human audit each cover a different failure
+mode. An LLM reverse parse may add a conservative rejection signal later, but asking a model to
+approve its own wording would not be independent evidence.
+
+Semantic similarity also needs role-specific interpretation. MiniLM's sentence embeddings capture
+broad meaning and topic; they do not encode exact latent-program identity. A same-skill pair can be
+close yet independently generated, while a benchmark paraphrase remains dangerous. Foundry will
+therefore retain strict 0.75/0.82 MiniLM screening against development questions but calibrate a
+separate generated-peer semantic policy on original fixtures before any new realization smoke.

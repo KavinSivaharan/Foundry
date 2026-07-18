@@ -1,0 +1,58 @@
+schema_version: 1
+design_only: true
+system_prompt_sha256: 9d3e808d5c887d974919728d5afb51df9daa5760d467d3c08648799aeddcc393
+response_schema_version: 1
+
+primary_model:
+  repo_id: Qwen/Qwen3-1.7B
+  revision: 70d244cc86ccca08cf5af4e1e306ecf908b1ad5e
+  license_id: Apache-2.0
+  minimum_transformers: "4.51.0"
+  trust_remote_code: false
+  thinking_enabled: false
+  chat_template_sha256: a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8
+
+fallback_model:
+  repo_id: Qwen/Qwen2.5-1.5B-Instruct
+  revision: 989aa7980e4cf806f80c7fef2b1adb7bc71aa306
+  license_id: Apache-2.0
+  minimum_transformers: "4.37.0"
+  trust_remote_code: false
+  thinking_enabled: false
+  chat_template_sha256: cd8e9439f0570856fd70470bf8889ebd8b5d1107207f67a5efb46e342330527f
+
+generation:
+  strategy: deterministic_beam
+  seed: 5172026
+  do_sample: false
+  num_beams: 3
+  num_return_sequences: 3
+  candidates_per_ir: 3
+  max_new_tokens: 256
+  timeout_seconds: 90
+
+semantic_screening:
+  artifact_id: sentence-transformers/all-MiniLM-L6-v2
+  revision: 1110a243fdf4706b3f48f1d95db1a4f5529b4d41
+  benchmark_manual_review_threshold: 0.75
+  benchmark_rejection_threshold: 0.82
+  internal_diversity_mode: calibrate_separately_before_smoke
+  internal_semantic_threshold: null
+
+future_smoke:
+  ir_attempts: 120
+  targeted_allocations:
+    bookkeeping: 33
+    rates: 14
+    discrete: 13
+  generic_allocations:
+    bookkeeping: 20
+    rates: 20
+    discrete: 20
+  output_contract_per_group: 12
+  minimum_clean_accepts: 90
+  minimum_accepts_per_family: 15
+  maximum_false_labels: 0
+  maximum_semantic_drift_accepts: 0
+  maximum_invalid_accepts: 0
+  maximum_unresolved_contamination: 0

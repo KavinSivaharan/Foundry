@@ -222,3 +222,42 @@ Every future experiment must be registered here before a costly run begins. Its 
 - **Gate decision:** failed. Naturalness and scale-diversity requirements were not met, so the prompt-authorized fresh 120-candidate smoke did not run. No acceptance-by-group/category/output-track result exists for Milestone 4.2.
 - **Safety:** No sealed-final access, benchmark inference, benchmark generator input, paid/cloud service, LLM-generated question/label, full synthetic dataset, SFT, QLoRA, or GRPO occurred.
 - **Next experiment:** none approved. The pure procedural-renderer lineage is closed. The exact next decision is whether to approve a design-only pivot to constrained local-model surface realization with exact typed round-trip validation and the unchanged contamination pipeline.
+
+## EXP-20260718-011 — Constrained local-model realization design
+
+- **Status:** completed design record; no model download, inference, generation, or training
+- **Date:** 2026-07-18
+- **Hypothesis:** A local language model can be restricted to surface wording while deterministic
+  slots, node coverage, procedural execution, and independent verification retain control of every
+  mathematical fact and label.
+- **Candidate comparison:** Compared only the approved Qwen2.5-1.5B-Instruct, Qwen3-1.7B, and
+  SmolLM3-3B official metadata. Selected
+  `Qwen/Qwen3-1.7B@70d244cc86ccca08cf5af4e1e306ecf908b1ad5e` as primary and the existing pinned
+  Qwen2.5 revision as fallback. No weights were downloaded. Qwen3 requires a future dedicated
+  Transformers >=4.51 lock; no dependency changed here.
+- **Contract:** The model sees typed semantic roles and opaque placeholders, not values, answers, or
+  benchmark content. Strict JSON returns a question template, placeholder inventory,
+  clause-to-node map, target/intent echoes, and no answer. Deterministic checks reject slot, node,
+  target, intent, rate, unit, discourse, structure, or answer-content deviations before filling.
+- **Round trip:** Existing typed quality checks, exact program execution, independent mathematical
+  verification, output-contract validation, contamination screening, and answer-blind human audit
+  all remain mandatory. A model reverse parse can only add rejection evidence.
+- **Semantic policy:** Preserve MiniLM 0.75/0.82 for generated-to-development contamination. Keep
+  exact/template/latent/five-token controls internally and calibrate a separate semantic-diversity
+  policy on original fixtures before any future generation.
+- **Future smoke:** Proposed 120 IRs and at most 360 fixed three-beam candidates under the unchanged
+  category/output-track allocation, no retries or replacements, complete audit, at least 90 clean
+  IRs and 15 per family, and zero false labels, semantic-drift accepts, invalid accepts, verifier
+  disagreements, or unresolved contamination.
+- **Planning estimate:** Qwen3 needs about 4.08 GB of repository download and an estimated 4.5–5.5
+  GiB FP16 VRAM. A 120-IR generation phase is estimated at 15–45 minutes plus 2–4 hours of complete
+  audit. The estimates are not measurements.
+- **Hypothesis supported:** supported as an auditable design, not as an empirical realization result.
+  The typed contracts can make model output reject-only, but placeholder fidelity, naturalness,
+  yield, deterministic replay, and scale remain unmeasured.
+- **Safety:** No benchmark or sealed content, model weights, generated examples, model inference,
+  dependency installation, dataset, paid/cloud service, QLoRA, SFT, or GRPO was used.
+- **Next experiment:** none approved. The exact proposed Milestone 5B is a bounded implementation
+  smoke that first freezes the internal-diversity policy, then downloads only the pinned Qwen3
+  artifact and processes 120 IRs/360 candidates maximum. Full dataset generation and training remain
+  separately blocked.

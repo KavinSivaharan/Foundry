@@ -482,3 +482,38 @@ entities, quantities, units, relations, targets, and required nodes; disagreemen
 evidence rejects. A bounded design milestone must pin the model/revision/license, quantify local
 compute and dependency impact, freeze the constrained prompt/schema and round-trip verifier, and
 define a new smoke before any realization generation.
+
+## Milestone 5A constrained local-model realization pivot
+
+The design milestone selected
+`Qwen/Qwen3-1.7B@70d244cc86ccca08cf5af4e1e306ecf908b1ad5e` as primary and the existing pinned
+Qwen2.5-1.5B-Instruct model as fallback. Both are Apache-2.0 and use standard Transformers with
+`trust_remote_code=False`; thinking is disabled. Qwen3 requires a separately approved realization
+lock with Transformers at least 4.51 but is estimated to fit at 4.5–5.5 GiB FP16/BF16 VRAM.
+
+The model receives a content/value-blind `RealizationRequest` with ordered events, typed opaque
+placeholders, target kind, exact question intent, allowed discourse orders, forbidden
+transformations, and bounded style controls. It returns strict JSON containing a slot-preserving
+question template, exact placeholder inventory, clause-to-node map, target/intent echoes, and no
+answer. Missing, extra, altered, duplicated, or misplaced slots/nodes; raw numeric literals;
+target, unit, interval, or question-intent changes; answer text; and malformed structure reject
+before the compiler inserts values.
+
+Round-trip admission then uses the existing typed morphology/reference/coverage checks, exact latent
+execution, independent verifier, terminal-output contract, deterministic quality rules, and complete
+answer-blind human audit. No LLM can accept an example, choose a label, judge correctness, or break a
+verifier tie.
+
+Generated-to-development contamination retains the pinned MiniLM model and 0.75/0.82 thresholds.
+Generated-to-generated diversity retains exact, number-neutral, latent-structure, and five-token
+Jaccard 0.35 controls but receives a separately calibrated semantic policy based only on original
+fixtures. That policy must be frozen before model-generated smoke output is examined.
+
+The proposed, separately approved Milestone 5B uses 120 new IRs under the existing 60/60 curriculum
+and 20% output-contract track. Three deterministic beams per IR create at most 360 candidate
+sequences, with stable ordering, no sampling, retry, or replacement. At least 90 clean IRs and 15 per
+family are required, with zero false labels, accepted semantic drift, invalid acceptances, verifier
+disagreements, or unresolved contamination. Full dataset generation and training remain blocked.
+
+The complete model comparison, schemas, audit protocol, policy analysis, compute estimates, risks,
+and next-decision boundary are in `docs/LOCAL_MODEL_REALIZATION_DESIGN.md`.
