@@ -445,3 +445,30 @@ This log separates proposals from approved decisions. A proposal does not author
 - **Next user decision:** Decide whether to authorize a narrowly scoped expansion of independent rate
   and discrete latent-program ranges/modes, retaining exact arithmetic and both verifiers, then rerun
   the capacity gate before allocator implementation.
+
+## D-027 — Stop signal-first allocation on target-type/frame compatibility
+
+- **Date:** 2026-07-19
+- **Status:** reduced-pilot quotas frozen; corrected capacity gate failed; no allocator or smoke
+- **Decision:** Freeze the requested 1,000-targeted plus 1,000-generic experiment and its 2,504
+  attempts, but stop before allocation. Enforce the existing per-target-type and semantic-frame caps
+  jointly with finite modes and targeted/generic disjointness rather than treating each identity
+  layer as an independent aggregate.
+- **Evidence:** Bookkeeping supports 1,384/1,106 attempts. Rate target types and exact modes jointly
+  support 695/709 (shortfall 14). Discrete target types, per-mode frame balance, and the 90-example
+  dual-capacity domain jointly support 598/689 (shortfall 91); generic discrete alone supports
+  399/417. Internal capacity-audit SHA-256 is `522b5b4e...7aaf`.
+- **Rationale:** The language bank and total latent inventory are sufficient for this smaller pilot,
+  but a target type is compatible with only particular mathematical modes. Multiplying identity
+  count by a uniform cap overstates capacity when two modes share one target or a mode has fewer
+  compatible frames. A schedule must not rely on nonexistent compatibility edges.
+- **Alternatives considered:** ignore target-type caps; count aggregate target identities without
+  compatibility; change family quotas; expand generators; or implement an allocator and discover
+  failure later. Each is outside the frozen policy/quota scope or violates the pre-allocation gate.
+- **Expected consequences:** No allocator, full schedule, smoke, replay, packet, dataset, inference,
+  training, or sealed-final access occurs. The preliminary pass remains visible in the append-only
+  DEVLOG but is superseded by exact compatibility evidence.
+- **Next user decision:** Decide whether to authorize a separate policy-design milestone that derives
+  target-type and semantic-frame caps from the predeclared curriculum compatibility graph while
+  preserving plan/number-neutral caps, exact/latent uniqueness, and every benchmark-contamination
+  control; otherwise redefine or abandon the current 1,000 + 1,000 quotas.

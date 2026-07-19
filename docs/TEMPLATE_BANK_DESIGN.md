@@ -293,3 +293,18 @@ not make the full generation feasible: finite program supply under balanced fram
 fail, no global allocator or 120-slot schedule was implemented and no second packet exists. The next
 capacity decision concerns mathematical program ranges/modes, not authoring thousands of additional
 sentence plans.
+
+## Signal-first compatibility audit
+
+The bank remains unchanged at 58 frames and 232 sentence plans. Reducing the pilot to 1,000 accepted
+examples per dataset removes raw surface and latent-inventory shortages, but it does not make the
+frozen uniform identity caps compatible with the requested curriculum. The corrected audit routes
+each mode only through its compatible target type and semantic frames before applying shared finite
+mode limits.
+
+Bookkeeping passes at 1,384/1,106. Rates fail at 695/709 because rate-total and combined-rate share
+the `total_quantity` cap while ratio, weighted-mean, and the exact 104-example percentage pool provide
+the remaining supply. Discrete fails at 598/689 because two count modes share their target cap,
+complete packages have 220 combined frame-balanced slots, and dual capacity has 90 exact programs.
+This is not a wording defect or benchmark-contamination issue. No bank entry or threshold changed,
+and the failed gate prevented allocation, smoke generation, replay, and packet creation.

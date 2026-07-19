@@ -1,0 +1,1608 @@
+{
+  "allocator_implemented": false,
+  "audit_id": "foundry-signal-first-capacity-v1",
+  "benchmark_contamination_changed": false,
+  "capacity_audit_sha256": "522b5b4eaeaea3fe7c29542afd78a62532ead6d8c5fa6356abd7db125a307aaf",
+  "capacity_gate_passed": false,
+  "combined_family_capacity": {
+    "constraint_distribution_or_discrete_reasoning": {
+      "accepted_compatibility": {
+        "shared_mode_caps": {
+          "complete_packages": 175,
+          "dual_capacity": 90,
+          "equal_distribution": 175,
+          "two_type_allocation": 175
+        },
+        "target_type_by_mode": {
+          "complete_packages": "group_count",
+          "dual_capacity": "capacity",
+          "equal_distribution": "count",
+          "two_type_allocation": "count"
+        },
+        "target_type_caps": {
+          "generic_control": {
+            "capacity": 139,
+            "count": 139,
+            "group_count": 139
+          },
+          "targeted": {
+            "capacity": 91,
+            "count": 91,
+            "group_count": 91
+          }
+        }
+      },
+      "attempt_capacity_ratio": 0.8679245283018868,
+      "attempt_compatibility": {
+        "shared_mode_caps": {
+          "complete_packages": 220,
+          "dual_capacity": 90,
+          "equal_distribution": 220,
+          "two_type_allocation": 220
+        },
+        "target_type_by_mode": {
+          "complete_packages": "group_count",
+          "dual_capacity": "capacity",
+          "equal_distribution": "count",
+          "two_type_allocation": "count"
+        },
+        "target_type_caps": {
+          "generic_control": {
+            "capacity": 174,
+            "count": 174,
+            "group_count": 174
+          },
+          "targeted": {
+            "capacity": 114,
+            "count": 114,
+            "group_count": 114
+          }
+        }
+      },
+      "available_latent_accepted_capacity": 495,
+      "available_latent_attempt_capacity": 598,
+      "available_surface_accepted_capacity": 690,
+      "available_surface_attempt_capacity": 862,
+      "gate_passed": false,
+      "limiting_modes": [
+        "complete_packages",
+        "equal_distribution",
+        "dual_capacity"
+      ],
+      "mode_accepted_allocation": {
+        "complete_packages": 160,
+        "dual_capacity": 70,
+        "equal_distribution": 160,
+        "two_type_allocation": 160
+      },
+      "mode_accepted_capacity": {
+        "complete_packages": 175,
+        "dual_capacity": 90,
+        "equal_distribution": 175,
+        "two_type_allocation": 175
+      },
+      "mode_attempt_allocation": {
+        "complete_packages": 206,
+        "dual_capacity": 72,
+        "equal_distribution": 205,
+        "two_type_allocation": 206
+      },
+      "mode_attempt_capacity": {
+        "complete_packages": 220,
+        "dual_capacity": 90,
+        "equal_distribution": 220,
+        "two_type_allocation": 220
+      },
+      "required_accepted": 550,
+      "required_attempts": 689
+    },
+    "multi_step_bookkeeping_or_omission": {
+      "accepted_compatibility": {
+        "shared_mode_caps": {
+          "grouping": 553,
+          "inventory": 553
+        },
+        "target_type_by_mode": {
+          "grouping": "group_count",
+          "inventory": "remaining_quantity"
+        },
+        "target_type_caps": {
+          "generic_control": {
+            "group_count": 209,
+            "remaining_quantity": 209
+          },
+          "targeted": {
+            "group_count": 344,
+            "remaining_quantity": 344
+          }
+        }
+      },
+      "attempt_capacity_ratio": 1.2513562386980108,
+      "attempt_compatibility": {
+        "shared_mode_caps": {
+          "grouping": 692,
+          "inventory": 692
+        },
+        "target_type_by_mode": {
+          "grouping": "group_count",
+          "inventory": "remaining_quantity"
+        },
+        "target_type_caps": {
+          "generic_control": {
+            "group_count": 262,
+            "remaining_quantity": 262
+          },
+          "targeted": {
+            "group_count": 430,
+            "remaining_quantity": 430
+          }
+        }
+      },
+      "available_latent_accepted_capacity": 1106,
+      "available_latent_attempt_capacity": 1384,
+      "available_surface_accepted_capacity": 1106,
+      "available_surface_attempt_capacity": 1384,
+      "gate_passed": true,
+      "limiting_modes": [],
+      "mode_accepted_allocation": {
+        "grouping": 442,
+        "inventory": 442
+      },
+      "mode_accepted_capacity": {
+        "grouping": 553,
+        "inventory": 553
+      },
+      "mode_attempt_allocation": {
+        "grouping": 553,
+        "inventory": 553
+      },
+      "mode_attempt_capacity": {
+        "grouping": 692,
+        "inventory": 692
+      },
+      "required_accepted": 884,
+      "required_attempts": 1106
+    },
+    "rate_ratio_percentage_or_average": {
+      "accepted_compatibility": {
+        "shared_mode_caps": {
+          "combined_rate": 144,
+          "percentage": 104,
+          "rate_total": 96,
+          "ratio_scale": 144,
+          "weighted_average": 144
+        },
+        "target_type_by_mode": {
+          "combined_rate": "total_quantity",
+          "percentage": "percentage",
+          "rate_total": "total_quantity",
+          "ratio_scale": "ratio",
+          "weighted_average": "weighted_mean"
+        },
+        "target_type_caps": {
+          "generic_control": {
+            "percentage": 105,
+            "ratio": 105,
+            "total_quantity": 105,
+            "weighted_mean": 105
+          },
+          "targeted": {
+            "percentage": 73,
+            "ratio": 73,
+            "total_quantity": 73,
+            "weighted_mean": 73
+          }
+        }
+      },
+      "attempt_capacity_ratio": 0.9802538787023978,
+      "attempt_compatibility": {
+        "shared_mode_caps": {
+          "combined_rate": 184,
+          "percentage": 104,
+          "rate_total": 96,
+          "ratio_scale": 184,
+          "weighted_average": 184
+        },
+        "target_type_by_mode": {
+          "combined_rate": "total_quantity",
+          "percentage": "percentage",
+          "rate_total": "total_quantity",
+          "ratio_scale": "ratio",
+          "weighted_average": "weighted_mean"
+        },
+        "target_type_caps": {
+          "generic_control": {
+            "percentage": 131,
+            "ratio": 131,
+            "total_quantity": 131,
+            "weighted_mean": 131
+          },
+          "targeted": {
+            "percentage": 92,
+            "ratio": 92,
+            "total_quantity": 92,
+            "weighted_mean": 92
+          }
+        }
+      },
+      "available_latent_accepted_capacity": 570,
+      "available_latent_attempt_capacity": 695,
+      "available_surface_accepted_capacity": 712,
+      "available_surface_attempt_capacity": 892,
+      "gate_passed": false,
+      "limiting_modes": [
+        "rate_total",
+        "ratio_scale",
+        "percentage",
+        "combined_rate"
+      ],
+      "mode_accepted_allocation": {
+        "combined_rate": 143,
+        "percentage": 68,
+        "rate_total": 67,
+        "ratio_scale": 144,
+        "weighted_average": 144
+      },
+      "mode_accepted_capacity": {
+        "combined_rate": 144,
+        "percentage": 104,
+        "rate_total": 96,
+        "ratio_scale": 144,
+        "weighted_average": 144
+      },
+      "mode_attempt_allocation": {
+        "combined_rate": 181,
+        "percentage": 80,
+        "rate_total": 80,
+        "ratio_scale": 184,
+        "weighted_average": 184
+      },
+      "mode_attempt_capacity": {
+        "combined_rate": 184,
+        "percentage": 104,
+        "rate_total": 96,
+        "ratio_scale": 184,
+        "weighted_average": 184
+      },
+      "required_accepted": 566,
+      "required_attempts": 709
+    }
+  },
+  "config_sha256": "5231a73d7031fbd4e80444789c88261d0328e3c20cebf9a616185f3942296c67",
+  "cross_dataset_exact_overlap_allowed": false,
+  "cross_dataset_latent_overlap_allowed": false,
+  "cross_split_exact_overlap_allowed": false,
+  "cross_split_latent_overlap_allowed": false,
+  "datasets": {
+    "generic_control": {
+      "constraint_distribution_or_discrete_reasoning": {
+        "accepted_compatibility": {
+          "shared_mode_caps": {
+            "complete_packages": 105,
+            "dual_capacity": 90,
+            "equal_distribution": 105,
+            "two_type_allocation": 105
+          },
+          "target_type_by_mode": {
+            "complete_packages": "group_count",
+            "dual_capacity": "capacity",
+            "equal_distribution": "count",
+            "two_type_allocation": "count"
+          },
+          "target_type_caps": {
+            "generic_control": {
+              "capacity": 139,
+              "count": 139,
+              "group_count": 139
+            }
+          }
+        },
+        "attempt_capacity_ratio": 0.9568345323741008,
+        "attempt_compatibility": {
+          "shared_mode_caps": {
+            "complete_packages": 135,
+            "dual_capacity": 90,
+            "equal_distribution": 135,
+            "two_type_allocation": 135
+          },
+          "target_type_by_mode": {
+            "complete_packages": "group_count",
+            "dual_capacity": "capacity",
+            "equal_distribution": "count",
+            "two_type_allocation": "count"
+          },
+          "target_type_caps": {
+            "generic_control": {
+              "capacity": 174,
+              "count": 174,
+              "group_count": 174
+            }
+          }
+        },
+        "available_latent_accepted_capacity": 334,
+        "available_latent_attempt_capacity": 399,
+        "available_surface_accepted_capacity": 417,
+        "available_surface_attempt_capacity": 522,
+        "caps": {
+          "accepted_caps": {
+            "number_neutral": 2,
+            "plan_scenario_domain": 1,
+            "semantic_frame": 21,
+            "sentence_plan": 6,
+            "target_type": 139
+          },
+          "accepted_layer_capacity": {
+            "number_neutral": 640,
+            "plan_scenario_domain": 1600,
+            "semantic_frame": 420,
+            "sentence_plan": 480,
+            "target_type": 417
+          },
+          "attempt_caps": {
+            "number_neutral": 2,
+            "plan_scenario_domain": 1,
+            "semantic_frame": 27,
+            "sentence_plan": 7,
+            "target_type": 174
+          },
+          "attempt_layer_capacity": {
+            "number_neutral": 640,
+            "plan_scenario_domain": 1600,
+            "semantic_frame": 540,
+            "sentence_plan": 560,
+            "target_type": 522
+          },
+          "maximum_number_neutral_attempt_concentration": 0.004796163069544364,
+          "maximum_plan_attempt_concentration": 0.016786570743405275,
+          "surface_accepted_capacity": 417,
+          "surface_attempt_capacity": 522
+        },
+        "difficulty_strata": {
+          "easy": {
+            "attempt_capacity_ratio": 0.9568345323741008,
+            "available_accepted_capacity": 112,
+            "available_attempt_capacity": 133,
+            "capacity_reserved_from_shared_family_pool": true,
+            "gate_passed": false,
+            "limiting_modes": [
+              "complete_packages",
+              "equal_distribution",
+              "dual_capacity"
+            ],
+            "maximum_plan_concentration": 0.016786570743405275,
+            "required_accepted": 111,
+            "required_attempts": 139
+          },
+          "hard": {
+            "attempt_capacity_ratio": 0.9568345323741008,
+            "available_accepted_capacity": 111,
+            "available_attempt_capacity": 133,
+            "capacity_reserved_from_shared_family_pool": true,
+            "gate_passed": false,
+            "limiting_modes": [
+              "complete_packages",
+              "equal_distribution",
+              "dual_capacity"
+            ],
+            "maximum_plan_concentration": 0.016786570743405275,
+            "required_accepted": 111,
+            "required_attempts": 139
+          },
+          "medium": {
+            "attempt_capacity_ratio": 0.9568345323741008,
+            "available_accepted_capacity": 111,
+            "available_attempt_capacity": 133,
+            "capacity_reserved_from_shared_family_pool": true,
+            "gate_passed": false,
+            "limiting_modes": [
+              "complete_packages",
+              "equal_distribution",
+              "dual_capacity"
+            ],
+            "maximum_plan_concentration": 0.016786570743405275,
+            "required_accepted": 111,
+            "required_attempts": 139
+          }
+        },
+        "gate_passed": false,
+        "limiting_modes": [
+          "complete_packages",
+          "equal_distribution",
+          "dual_capacity"
+        ],
+        "mode_accepted_allocation": {
+          "complete_packages": 100,
+          "dual_capacity": 33,
+          "equal_distribution": 100,
+          "two_type_allocation": 100
+        },
+        "mode_accepted_capacity": {
+          "complete_packages": 105,
+          "dual_capacity": 90,
+          "equal_distribution": 105,
+          "two_type_allocation": 105
+        },
+        "mode_attempt_allocation": {
+          "complete_packages": 128,
+          "dual_capacity": 35,
+          "equal_distribution": 127,
+          "two_type_allocation": 127
+        },
+        "mode_attempt_capacity": {
+          "complete_packages": 135,
+          "dual_capacity": 90,
+          "equal_distribution": 135,
+          "two_type_allocation": 135
+        },
+        "output_contract_strata": {
+          "disabled": {
+            "attempt_capacity_ratio": 0.9580838323353293,
+            "available_accepted_capacity": 267,
+            "available_attempt_capacity": 320,
+            "capacity_reserved_from_shared_family_pool": true,
+            "gate_passed": false,
+            "limiting_modes": [
+              "complete_packages",
+              "equal_distribution",
+              "dual_capacity"
+            ],
+            "maximum_plan_concentration": 0.016786570743405275,
+            "required_accepted": 267,
+            "required_attempts": 334
+          },
+          "enabled": {
+            "attempt_capacity_ratio": 0.9518072289156626,
+            "available_accepted_capacity": 67,
+            "available_attempt_capacity": 79,
+            "capacity_reserved_from_shared_family_pool": true,
+            "gate_passed": false,
+            "limiting_modes": [
+              "complete_packages",
+              "equal_distribution",
+              "dual_capacity"
+            ],
+            "maximum_plan_concentration": 0.016786570743405275,
+            "required_accepted": 66,
+            "required_attempts": 83
+          }
+        },
+        "required_accepted": 333,
+        "required_attempts": 417,
+        "split_strata": {
+          "synthetic_validation": {
+            "attempt_capacity_ratio": 0.9523809523809523,
+            "available_accepted_capacity": 33,
+            "available_attempt_capacity": 40,
+            "capacity_reserved_from_shared_family_pool": true,
+            "gate_passed": false,
+            "limiting_modes": [
+              "complete_packages",
+              "equal_distribution",
+              "dual_capacity"
+            ],
+            "maximum_plan_concentration": 0.016786570743405275,
+            "required_accepted": 33,
+            "required_attempts": 42
+          },
+          "training": {
+            "attempt_capacity_ratio": 0.9573333333333334,
+            "available_accepted_capacity": 301,
+            "available_attempt_capacity": 359,
+            "capacity_reserved_from_shared_family_pool": true,
+            "gate_passed": false,
+            "limiting_modes": [
+              "complete_packages",
+              "equal_distribution",
+              "dual_capacity"
+            ],
+            "maximum_plan_concentration": 0.016786570743405275,
+            "required_accepted": 300,
+            "required_attempts": 375
+          }
+        }
+      },
+      "multi_step_bookkeeping_or_omission": {
+        "accepted_compatibility": {
+          "shared_mode_caps": {
+            "grouping": 209,
+            "inventory": 209
+          },
+          "target_type_by_mode": {
+            "grouping": "group_count",
+            "inventory": "remaining_quantity"
+          },
+          "target_type_caps": {
+            "generic_control": {
+              "group_count": 209,
+              "remaining_quantity": 209
+            }
+          }
+        },
+        "attempt_capacity_ratio": 1.2535885167464116,
+        "attempt_compatibility": {
+          "shared_mode_caps": {
+            "grouping": 262,
+            "inventory": 262
+          },
+          "target_type_by_mode": {
+            "grouping": "group_count",
+            "inventory": "remaining_quantity"
+          },
+          "target_type_caps": {
+            "generic_control": {
+              "group_count": 262,
+              "remaining_quantity": 262
+            }
+          }
+        },
+        "available_latent_accepted_capacity": 418,
+        "available_latent_attempt_capacity": 524,
+        "available_surface_accepted_capacity": 418,
+        "available_surface_attempt_capacity": 524,
+        "caps": {
+          "accepted_caps": {
+            "number_neutral": 1,
+            "plan_scenario_domain": 1,
+            "semantic_frame": 24,
+            "sentence_plan": 6,
+            "target_type": 209
+          },
+          "accepted_layer_capacity": {
+            "number_neutral": 768,
+            "plan_scenario_domain": 1728,
+            "semantic_frame": 432,
+            "sentence_plan": 432,
+            "target_type": 418
+          },
+          "attempt_caps": {
+            "number_neutral": 1,
+            "plan_scenario_domain": 1,
+            "semantic_frame": 30,
+            "sentence_plan": 8,
+            "target_type": 262
+          },
+          "attempt_layer_capacity": {
+            "number_neutral": 768,
+            "plan_scenario_domain": 1728,
+            "semantic_frame": 540,
+            "sentence_plan": 576,
+            "target_type": 524
+          },
+          "maximum_number_neutral_attempt_concentration": 0.0023923444976076554,
+          "maximum_plan_attempt_concentration": 0.019138755980861243,
+          "surface_accepted_capacity": 418,
+          "surface_attempt_capacity": 524
+        },
+        "difficulty_strata": {
+          "easy": {
+            "attempt_capacity_ratio": 1.2571428571428571,
+            "available_accepted_capacity": 140,
+            "available_attempt_capacity": 176,
+            "capacity_reserved_from_shared_family_pool": true,
+            "gate_passed": true,
+            "limiting_modes": [],
+            "maximum_plan_concentration": 0.019138755980861243,
+            "required_accepted": 112,
+            "required_attempts": 140
+          },
+          "hard": {
+            "attempt_capacity_ratio": 1.2517985611510791,
+            "available_accepted_capacity": 139,
+            "available_attempt_capacity": 174,
+            "capacity_reserved_from_shared_family_pool": true,
+            "gate_passed": true,
+            "limiting_modes": [],
+            "maximum_plan_concentration": 0.019138755980861243,
+            "required_accepted": 111,
+            "required_attempts": 139
+          },
+          "medium": {
+            "attempt_capacity_ratio": 1.2517985611510791,
+            "available_accepted_capacity": 139,
+            "available_attempt_capacity": 174,
+            "capacity_reserved_from_shared_family_pool": true,
+            "gate_passed": true,
+            "limiting_modes": [],
+            "maximum_plan_concentration": 0.019138755980861243,
+            "required_accepted": 111,
+            "required_attempts": 139
+          }
+        },
+        "gate_passed": true,
+        "limiting_modes": [],
+        "mode_accepted_allocation": {
+          "grouping": 167,
+          "inventory": 167
+        },
+        "mode_accepted_capacity": {
+          "grouping": 209,
+          "inventory": 209
+        },
+        "mode_attempt_allocation": {
+          "grouping": 209,
+          "inventory": 209
+        },
+        "mode_attempt_capacity": {
+          "grouping": 262,
+          "inventory": 262
+        },
+        "output_contract_strata": {
+          "disabled": {
+            "attempt_capacity_ratio": 1.158682634730539,
+            "available_accepted_capacity": 309,
+            "available_attempt_capacity": 387,
+            "capacity_reserved_from_shared_family_pool": true,
+            "gate_passed": true,
+            "limiting_modes": [],
+            "maximum_plan_concentration": 0.019138755980861243,
+            "required_accepted": 267,
+            "required_attempts": 334
+          },
+          "enabled": {
+            "attempt_capacity_ratio": 1.630952380952381,
+            "available_accepted_capacity": 109,
+            "available_attempt_capacity": 137,
+            "capacity_reserved_from_shared_family_pool": true,
+            "gate_passed": true,
+            "limiting_modes": [],
+            "maximum_plan_concentration": 0.019138755980861243,
+            "required_accepted": 67,
+            "required_attempts": 84
+          }
+        },
+        "required_accepted": 334,
+        "required_attempts": 418,
+        "split_strata": {
+          "synthetic_validation": {
+            "attempt_capacity_ratio": 2.2325581395348837,
+            "available_accepted_capacity": 76,
+            "available_attempt_capacity": 96,
+            "capacity_reserved_from_shared_family_pool": true,
+            "gate_passed": true,
+            "limiting_modes": [],
+            "maximum_plan_concentration": 0.019138755980861243,
+            "required_accepted": 34,
+            "required_attempts": 43
+          },
+          "training": {
+            "attempt_capacity_ratio": 1.1413333333333333,
+            "available_accepted_capacity": 342,
+            "available_attempt_capacity": 428,
+            "capacity_reserved_from_shared_family_pool": true,
+            "gate_passed": true,
+            "limiting_modes": [],
+            "maximum_plan_concentration": 0.019138755980861243,
+            "required_accepted": 300,
+            "required_attempts": 375
+          }
+        }
+      },
+      "rate_ratio_percentage_or_average": {
+        "accepted_compatibility": {
+          "shared_mode_caps": {
+            "combined_rate": 84,
+            "percentage": 84,
+            "rate_total": 84,
+            "ratio_scale": 84,
+            "weighted_average": 84
+          },
+          "target_type_by_mode": {
+            "combined_rate": "total_quantity",
+            "percentage": "percentage",
+            "rate_total": "total_quantity",
+            "ratio_scale": "ratio",
+            "weighted_average": "weighted_mean"
+          },
+          "target_type_caps": {
+            "generic_control": {
+              "percentage": 105,
+              "ratio": 105,
+              "total_quantity": 105,
+              "weighted_mean": 105
+            }
+          }
+        },
+        "attempt_capacity_ratio": 1.0815347721822541,
+        "attempt_compatibility": {
+          "shared_mode_caps": {
+            "combined_rate": 108,
+            "percentage": 104,
+            "rate_total": 96,
+            "ratio_scale": 108,
+            "weighted_average": 108
+          },
+          "target_type_by_mode": {
+            "combined_rate": "total_quantity",
+            "percentage": "percentage",
+            "rate_total": "total_quantity",
+            "ratio_scale": "ratio",
+            "weighted_average": "weighted_mean"
+          },
+          "target_type_caps": {
+            "generic_control": {
+              "percentage": 131,
+              "ratio": 131,
+              "total_quantity": 131,
+              "weighted_mean": 131
+            }
+          }
+        },
+        "available_latent_accepted_capacity": 357,
+        "available_latent_attempt_capacity": 451,
+        "available_surface_accepted_capacity": 420,
+        "available_surface_attempt_capacity": 524,
+        "caps": {
+          "accepted_caps": {
+            "number_neutral": 5,
+            "plan_scenario_domain": 2,
+            "semantic_frame": 21,
+            "sentence_plan": 6,
+            "target_type": 105
+          },
+          "accepted_layer_capacity": {
+            "number_neutral": 440,
+            "plan_scenario_domain": 800,
+            "semantic_frame": 420,
+            "sentence_plan": 480,
+            "target_type": 420
+          },
+          "attempt_caps": {
+            "number_neutral": 6,
+            "plan_scenario_domain": 2,
+            "semantic_frame": 27,
+            "sentence_plan": 7,
+            "target_type": 131
+          },
+          "attempt_layer_capacity": {
+            "number_neutral": 528,
+            "plan_scenario_domain": 800,
+            "semantic_frame": 540,
+            "sentence_plan": 560,
+            "target_type": 524
+          },
+          "maximum_number_neutral_attempt_concentration": 0.014388489208633094,
+          "maximum_plan_attempt_concentration": 0.016786570743405275,
+          "surface_accepted_capacity": 420,
+          "surface_attempt_capacity": 524
+        },
+        "difficulty_strata": {
+          "easy": {
+            "attempt_capacity_ratio": 1.0863309352517985,
+            "available_accepted_capacity": 119,
+            "available_attempt_capacity": 151,
+            "capacity_reserved_from_shared_family_pool": true,
+            "gate_passed": true,
+            "limiting_modes": [
+              "rate_total",
+              "ratio_scale",
+              "percentage",
+              "combined_rate"
+            ],
+            "maximum_plan_concentration": 0.016786570743405275,
+            "required_accepted": 111,
+            "required_attempts": 139
+          },
+          "hard": {
+            "attempt_capacity_ratio": 1.079136690647482,
+            "available_accepted_capacity": 119,
+            "available_attempt_capacity": 150,
+            "capacity_reserved_from_shared_family_pool": true,
+            "gate_passed": true,
+            "limiting_modes": [
+              "rate_total",
+              "ratio_scale",
+              "percentage",
+              "combined_rate"
+            ],
+            "maximum_plan_concentration": 0.016786570743405275,
+            "required_accepted": 111,
+            "required_attempts": 139
+          },
+          "medium": {
+            "attempt_capacity_ratio": 1.079136690647482,
+            "available_accepted_capacity": 119,
+            "available_attempt_capacity": 150,
+            "capacity_reserved_from_shared_family_pool": true,
+            "gate_passed": true,
+            "limiting_modes": [
+              "rate_total",
+              "ratio_scale",
+              "percentage",
+              "combined_rate"
+            ],
+            "maximum_plan_concentration": 0.016786570743405275,
+            "required_accepted": 111,
+            "required_attempts": 139
+          }
+        },
+        "gate_passed": true,
+        "limiting_modes": [
+          "rate_total",
+          "ratio_scale",
+          "percentage",
+          "combined_rate"
+        ],
+        "mode_accepted_allocation": {
+          "combined_rate": 84,
+          "percentage": 41,
+          "rate_total": 40,
+          "ratio_scale": 84,
+          "weighted_average": 84
+        },
+        "mode_accepted_capacity": {
+          "combined_rate": 84,
+          "percentage": 84,
+          "rate_total": 84,
+          "ratio_scale": 84,
+          "weighted_average": 84
+        },
+        "mode_attempt_allocation": {
+          "combined_rate": 107,
+          "percentage": 47,
+          "rate_total": 47,
+          "ratio_scale": 108,
+          "weighted_average": 108
+        },
+        "mode_attempt_capacity": {
+          "combined_rate": 108,
+          "percentage": 104,
+          "rate_total": 96,
+          "ratio_scale": 108,
+          "weighted_average": 108
+        },
+        "output_contract_strata": {
+          "disabled": {
+            "attempt_capacity_ratio": 1.0508982035928143,
+            "available_accepted_capacity": 278,
+            "available_attempt_capacity": 351,
+            "capacity_reserved_from_shared_family_pool": true,
+            "gate_passed": true,
+            "limiting_modes": [
+              "rate_total",
+              "ratio_scale",
+              "percentage",
+              "combined_rate"
+            ],
+            "maximum_plan_concentration": 0.016786570743405275,
+            "required_accepted": 266,
+            "required_attempts": 334
+          },
+          "enabled": {
+            "attempt_capacity_ratio": 1.2048192771084338,
+            "available_accepted_capacity": 79,
+            "available_attempt_capacity": 100,
+            "capacity_reserved_from_shared_family_pool": true,
+            "gate_passed": true,
+            "limiting_modes": [
+              "rate_total",
+              "ratio_scale",
+              "percentage",
+              "combined_rate"
+            ],
+            "maximum_plan_concentration": 0.016786570743405275,
+            "required_accepted": 67,
+            "required_attempts": 83
+          }
+        },
+        "required_accepted": 333,
+        "required_attempts": 417,
+        "split_strata": {
+          "synthetic_validation": {
+            "attempt_capacity_ratio": 1.4047619047619047,
+            "available_accepted_capacity": 45,
+            "available_attempt_capacity": 59,
+            "capacity_reserved_from_shared_family_pool": true,
+            "gate_passed": true,
+            "limiting_modes": [
+              "rate_total",
+              "ratio_scale",
+              "percentage",
+              "combined_rate"
+            ],
+            "maximum_plan_concentration": 0.016786570743405275,
+            "required_accepted": 33,
+            "required_attempts": 42
+          },
+          "training": {
+            "attempt_capacity_ratio": 1.0453333333333332,
+            "available_accepted_capacity": 312,
+            "available_attempt_capacity": 392,
+            "capacity_reserved_from_shared_family_pool": true,
+            "gate_passed": true,
+            "limiting_modes": [
+              "rate_total",
+              "ratio_scale",
+              "percentage",
+              "combined_rate"
+            ],
+            "maximum_plan_concentration": 0.016786570743405275,
+            "required_accepted": 300,
+            "required_attempts": 375
+          }
+        }
+      }
+    },
+    "targeted": {
+      "constraint_distribution_or_discrete_reasoning": {
+        "accepted_compatibility": {
+          "shared_mode_caps": {
+            "complete_packages": 70,
+            "dual_capacity": 70,
+            "equal_distribution": 70,
+            "two_type_allocation": 70
+          },
+          "target_type_by_mode": {
+            "complete_packages": "group_count",
+            "dual_capacity": "capacity",
+            "equal_distribution": "count",
+            "two_type_allocation": "count"
+          },
+          "target_type_caps": {
+            "targeted": {
+              "capacity": 91,
+              "count": 91,
+              "group_count": 91
+            }
+          }
+        },
+        "attempt_capacity_ratio": 1.0441176470588236,
+        "attempt_compatibility": {
+          "shared_mode_caps": {
+            "complete_packages": 85,
+            "dual_capacity": 85,
+            "equal_distribution": 85,
+            "two_type_allocation": 85
+          },
+          "target_type_by_mode": {
+            "complete_packages": "group_count",
+            "dual_capacity": "capacity",
+            "equal_distribution": "count",
+            "two_type_allocation": "count"
+          },
+          "target_type_caps": {
+            "targeted": {
+              "capacity": 114,
+              "count": 114,
+              "group_count": 114
+            }
+          }
+        },
+        "available_latent_accepted_capacity": 231,
+        "available_latent_attempt_capacity": 284,
+        "available_surface_accepted_capacity": 273,
+        "available_surface_attempt_capacity": 340,
+        "caps": {
+          "accepted_caps": {
+            "number_neutral": 1,
+            "plan_scenario_domain": 1,
+            "semantic_frame": 14,
+            "sentence_plan": 4,
+            "target_type": 91
+          },
+          "accepted_layer_capacity": {
+            "number_neutral": 320,
+            "plan_scenario_domain": 1600,
+            "semantic_frame": 280,
+            "sentence_plan": 320,
+            "target_type": 273
+          },
+          "attempt_caps": {
+            "number_neutral": 2,
+            "plan_scenario_domain": 1,
+            "semantic_frame": 17,
+            "sentence_plan": 5,
+            "target_type": 114
+          },
+          "attempt_layer_capacity": {
+            "number_neutral": 640,
+            "plan_scenario_domain": 1600,
+            "semantic_frame": 340,
+            "sentence_plan": 400,
+            "target_type": 342
+          },
+          "maximum_number_neutral_attempt_concentration": 0.007352941176470588,
+          "maximum_plan_attempt_concentration": 0.01838235294117647,
+          "surface_accepted_capacity": 273,
+          "surface_attempt_capacity": 340
+        },
+        "difficulty_strata": {
+          "easy": {
+            "attempt_capacity_ratio": 1.043956043956044,
+            "available_accepted_capacity": 78,
+            "available_attempt_capacity": 95,
+            "capacity_reserved_from_shared_family_pool": true,
+            "gate_passed": true,
+            "limiting_modes": [
+              "complete_packages",
+              "equal_distribution",
+              "dual_capacity"
+            ],
+            "maximum_plan_concentration": 0.01838235294117647,
+            "required_accepted": 73,
+            "required_attempts": 91
+          },
+          "hard": {
+            "attempt_capacity_ratio": 1.0444444444444445,
+            "available_accepted_capacity": 76,
+            "available_attempt_capacity": 94,
+            "capacity_reserved_from_shared_family_pool": true,
+            "gate_passed": true,
+            "limiting_modes": [
+              "complete_packages",
+              "equal_distribution",
+              "dual_capacity"
+            ],
+            "maximum_plan_concentration": 0.01838235294117647,
+            "required_accepted": 72,
+            "required_attempts": 90
+          },
+          "medium": {
+            "attempt_capacity_ratio": 1.043956043956044,
+            "available_accepted_capacity": 77,
+            "available_attempt_capacity": 95,
+            "capacity_reserved_from_shared_family_pool": true,
+            "gate_passed": true,
+            "limiting_modes": [
+              "complete_packages",
+              "equal_distribution",
+              "dual_capacity"
+            ],
+            "maximum_plan_concentration": 0.01838235294117647,
+            "required_accepted": 72,
+            "required_attempts": 91
+          }
+        },
+        "gate_passed": true,
+        "limiting_modes": [
+          "complete_packages",
+          "equal_distribution",
+          "dual_capacity"
+        ],
+        "mode_accepted_allocation": {
+          "complete_packages": 60,
+          "dual_capacity": 37,
+          "equal_distribution": 60,
+          "two_type_allocation": 60
+        },
+        "mode_accepted_capacity": {
+          "complete_packages": 70,
+          "dual_capacity": 70,
+          "equal_distribution": 70,
+          "two_type_allocation": 70
+        },
+        "mode_attempt_allocation": {
+          "complete_packages": 78,
+          "dual_capacity": 37,
+          "equal_distribution": 78,
+          "two_type_allocation": 79
+        },
+        "mode_attempt_capacity": {
+          "complete_packages": 85,
+          "dual_capacity": 85,
+          "equal_distribution": 85,
+          "two_type_allocation": 85
+        },
+        "output_contract_strata": {
+          "disabled": {
+            "attempt_capacity_ratio": 1.0275229357798166,
+            "available_accepted_capacity": 181,
+            "available_attempt_capacity": 224,
+            "capacity_reserved_from_shared_family_pool": true,
+            "gate_passed": true,
+            "limiting_modes": [
+              "complete_packages",
+              "equal_distribution",
+              "dual_capacity"
+            ],
+            "maximum_plan_concentration": 0.01838235294117647,
+            "required_accepted": 174,
+            "required_attempts": 218
+          },
+          "enabled": {
+            "attempt_capacity_ratio": 1.1111111111111112,
+            "available_accepted_capacity": 50,
+            "available_attempt_capacity": 60,
+            "capacity_reserved_from_shared_family_pool": true,
+            "gate_passed": true,
+            "limiting_modes": [
+              "complete_packages",
+              "equal_distribution",
+              "dual_capacity"
+            ],
+            "maximum_plan_concentration": 0.01838235294117647,
+            "required_accepted": 43,
+            "required_attempts": 54
+          }
+        },
+        "required_accepted": 217,
+        "required_attempts": 272,
+        "split_strata": {
+          "synthetic_validation": {
+            "attempt_capacity_ratio": 1.2142857142857142,
+            "available_accepted_capacity": 29,
+            "available_attempt_capacity": 34,
+            "capacity_reserved_from_shared_family_pool": true,
+            "gate_passed": true,
+            "limiting_modes": [
+              "complete_packages",
+              "equal_distribution",
+              "dual_capacity"
+            ],
+            "maximum_plan_concentration": 0.01838235294117647,
+            "required_accepted": 22,
+            "required_attempts": 28
+          },
+          "training": {
+            "attempt_capacity_ratio": 1.0245901639344261,
+            "available_accepted_capacity": 202,
+            "available_attempt_capacity": 250,
+            "capacity_reserved_from_shared_family_pool": true,
+            "gate_passed": true,
+            "limiting_modes": [
+              "complete_packages",
+              "equal_distribution",
+              "dual_capacity"
+            ],
+            "maximum_plan_concentration": 0.01838235294117647,
+            "required_accepted": 195,
+            "required_attempts": 244
+          }
+        }
+      },
+      "multi_step_bookkeeping_or_omission": {
+        "accepted_compatibility": {
+          "shared_mode_caps": {
+            "grouping": 344,
+            "inventory": 344
+          },
+          "target_type_by_mode": {
+            "grouping": "group_count",
+            "inventory": "remaining_quantity"
+          },
+          "target_type_caps": {
+            "targeted": {
+              "group_count": 344,
+              "remaining_quantity": 344
+            }
+          }
+        },
+        "attempt_capacity_ratio": 1.25,
+        "attempt_compatibility": {
+          "shared_mode_caps": {
+            "grouping": 430,
+            "inventory": 430
+          },
+          "target_type_by_mode": {
+            "grouping": "group_count",
+            "inventory": "remaining_quantity"
+          },
+          "target_type_caps": {
+            "targeted": {
+              "group_count": 430,
+              "remaining_quantity": 430
+            }
+          }
+        },
+        "available_latent_accepted_capacity": 688,
+        "available_latent_attempt_capacity": 860,
+        "available_surface_accepted_capacity": 688,
+        "available_surface_attempt_capacity": 860,
+        "caps": {
+          "accepted_caps": {
+            "number_neutral": 1,
+            "plan_scenario_domain": 1,
+            "semantic_frame": 39,
+            "sentence_plan": 10,
+            "target_type": 344
+          },
+          "accepted_layer_capacity": {
+            "number_neutral": 768,
+            "plan_scenario_domain": 1728,
+            "semantic_frame": 702,
+            "sentence_plan": 720,
+            "target_type": 688
+          },
+          "attempt_caps": {
+            "number_neutral": 2,
+            "plan_scenario_domain": 1,
+            "semantic_frame": 48,
+            "sentence_plan": 12,
+            "target_type": 430
+          },
+          "attempt_layer_capacity": {
+            "number_neutral": 1536,
+            "plan_scenario_domain": 1728,
+            "semantic_frame": 864,
+            "sentence_plan": 864,
+            "target_type": 860
+          },
+          "maximum_number_neutral_attempt_concentration": 0.0029069767441860465,
+          "maximum_plan_attempt_concentration": 0.01744186046511628,
+          "surface_accepted_capacity": 688,
+          "surface_attempt_capacity": 860
+        },
+        "difficulty_strata": {
+          "easy": {
+            "attempt_capacity_ratio": 1.2521739130434784,
+            "available_accepted_capacity": 230,
+            "available_attempt_capacity": 288,
+            "capacity_reserved_from_shared_family_pool": true,
+            "gate_passed": true,
+            "limiting_modes": [],
+            "maximum_plan_concentration": 0.01744186046511628,
+            "required_accepted": 184,
+            "required_attempts": 230
+          },
+          "hard": {
+            "attempt_capacity_ratio": 1.2489082969432315,
+            "available_accepted_capacity": 229,
+            "available_attempt_capacity": 286,
+            "capacity_reserved_from_shared_family_pool": true,
+            "gate_passed": true,
+            "limiting_modes": [],
+            "maximum_plan_concentration": 0.01744186046511628,
+            "required_accepted": 183,
+            "required_attempts": 229
+          },
+          "medium": {
+            "attempt_capacity_ratio": 1.2489082969432315,
+            "available_accepted_capacity": 229,
+            "available_attempt_capacity": 286,
+            "capacity_reserved_from_shared_family_pool": true,
+            "gate_passed": true,
+            "limiting_modes": [],
+            "maximum_plan_concentration": 0.01744186046511628,
+            "required_accepted": 183,
+            "required_attempts": 229
+          }
+        },
+        "gate_passed": true,
+        "limiting_modes": [],
+        "mode_accepted_allocation": {
+          "grouping": 275,
+          "inventory": 275
+        },
+        "mode_accepted_capacity": {
+          "grouping": 344,
+          "inventory": 344
+        },
+        "mode_attempt_allocation": {
+          "grouping": 344,
+          "inventory": 344
+        },
+        "mode_attempt_capacity": {
+          "grouping": 430,
+          "inventory": 430
+        },
+        "output_contract_strata": {
+          "disabled": {
+            "attempt_capacity_ratio": 1.1563636363636363,
+            "available_accepted_capacity": 509,
+            "available_attempt_capacity": 636,
+            "capacity_reserved_from_shared_family_pool": true,
+            "gate_passed": true,
+            "limiting_modes": [],
+            "maximum_plan_concentration": 0.01744186046511628,
+            "required_accepted": 440,
+            "required_attempts": 550
+          },
+          "enabled": {
+            "attempt_capacity_ratio": 1.6231884057971016,
+            "available_accepted_capacity": 179,
+            "available_attempt_capacity": 224,
+            "capacity_reserved_from_shared_family_pool": true,
+            "gate_passed": true,
+            "limiting_modes": [],
+            "maximum_plan_concentration": 0.01744186046511628,
+            "required_accepted": 110,
+            "required_attempts": 138
+          }
+        },
+        "required_accepted": 550,
+        "required_attempts": 688,
+        "split_strata": {
+          "synthetic_validation": {
+            "attempt_capacity_ratio": 2.246376811594203,
+            "available_accepted_capacity": 124,
+            "available_attempt_capacity": 155,
+            "capacity_reserved_from_shared_family_pool": true,
+            "gate_passed": true,
+            "limiting_modes": [],
+            "maximum_plan_concentration": 0.01744186046511628,
+            "required_accepted": 55,
+            "required_attempts": 69
+          },
+          "training": {
+            "attempt_capacity_ratio": 1.1389337641357027,
+            "available_accepted_capacity": 564,
+            "available_attempt_capacity": 705,
+            "capacity_reserved_from_shared_family_pool": true,
+            "gate_passed": true,
+            "limiting_modes": [],
+            "maximum_plan_concentration": 0.01744186046511628,
+            "required_accepted": 495,
+            "required_attempts": 619
+          }
+        }
+      },
+      "rate_ratio_percentage_or_average": {
+        "accepted_compatibility": {
+          "shared_mode_caps": {
+            "combined_rate": 60,
+            "percentage": 60,
+            "rate_total": 60,
+            "ratio_scale": 60,
+            "weighted_average": 60
+          },
+          "target_type_by_mode": {
+            "combined_rate": "total_quantity",
+            "percentage": "percentage",
+            "rate_total": "total_quantity",
+            "ratio_scale": "ratio",
+            "weighted_average": "weighted_mean"
+          },
+          "target_type_caps": {
+            "targeted": {
+              "percentage": 73,
+              "ratio": 73,
+              "total_quantity": 73,
+              "weighted_mean": 73
+            }
+          }
+        },
+        "attempt_capacity_ratio": 1.095890410958904,
+        "attempt_compatibility": {
+          "shared_mode_caps": {
+            "combined_rate": 76,
+            "percentage": 76,
+            "rate_total": 76,
+            "ratio_scale": 76,
+            "weighted_average": 76
+          },
+          "target_type_by_mode": {
+            "combined_rate": "total_quantity",
+            "percentage": "percentage",
+            "rate_total": "total_quantity",
+            "ratio_scale": "ratio",
+            "weighted_average": "weighted_mean"
+          },
+          "target_type_caps": {
+            "targeted": {
+              "percentage": 92,
+              "ratio": 92,
+              "total_quantity": 92,
+              "weighted_mean": 92
+            }
+          }
+        },
+        "available_latent_accepted_capacity": 253,
+        "available_latent_attempt_capacity": 320,
+        "available_surface_accepted_capacity": 292,
+        "available_surface_attempt_capacity": 368,
+        "caps": {
+          "accepted_caps": {
+            "number_neutral": 4,
+            "plan_scenario_domain": 1,
+            "semantic_frame": 15,
+            "sentence_plan": 4,
+            "target_type": 73
+          },
+          "accepted_layer_capacity": {
+            "number_neutral": 352,
+            "plan_scenario_domain": 400,
+            "semantic_frame": 300,
+            "sentence_plan": 320,
+            "target_type": 292
+          },
+          "attempt_caps": {
+            "number_neutral": 5,
+            "plan_scenario_domain": 1,
+            "semantic_frame": 19,
+            "sentence_plan": 5,
+            "target_type": 92
+          },
+          "attempt_layer_capacity": {
+            "number_neutral": 440,
+            "plan_scenario_domain": 400,
+            "semantic_frame": 380,
+            "sentence_plan": 400,
+            "target_type": 368
+          },
+          "maximum_number_neutral_attempt_concentration": 0.017123287671232876,
+          "maximum_plan_attempt_concentration": 0.017123287671232876,
+          "surface_accepted_capacity": 292,
+          "surface_attempt_capacity": 368
+        },
+        "difficulty_strata": {
+          "easy": {
+            "attempt_capacity_ratio": 1.1020408163265305,
+            "available_accepted_capacity": 85,
+            "available_attempt_capacity": 108,
+            "capacity_reserved_from_shared_family_pool": true,
+            "gate_passed": true,
+            "limiting_modes": [
+              "rate_total",
+              "ratio_scale",
+              "percentage",
+              "combined_rate"
+            ],
+            "maximum_plan_concentration": 0.017123287671232876,
+            "required_accepted": 78,
+            "required_attempts": 98
+          },
+          "hard": {
+            "attempt_capacity_ratio": 1.092783505154639,
+            "available_accepted_capacity": 83,
+            "available_attempt_capacity": 106,
+            "capacity_reserved_from_shared_family_pool": true,
+            "gate_passed": true,
+            "limiting_modes": [
+              "rate_total",
+              "ratio_scale",
+              "percentage",
+              "combined_rate"
+            ],
+            "maximum_plan_concentration": 0.017123287671232876,
+            "required_accepted": 77,
+            "required_attempts": 97
+          },
+          "medium": {
+            "attempt_capacity_ratio": 1.092783505154639,
+            "available_accepted_capacity": 85,
+            "available_attempt_capacity": 106,
+            "capacity_reserved_from_shared_family_pool": true,
+            "gate_passed": true,
+            "limiting_modes": [
+              "rate_total",
+              "ratio_scale",
+              "percentage",
+              "combined_rate"
+            ],
+            "maximum_plan_concentration": 0.017123287671232876,
+            "required_accepted": 78,
+            "required_attempts": 97
+          }
+        },
+        "gate_passed": true,
+        "limiting_modes": [
+          "rate_total",
+          "ratio_scale",
+          "percentage",
+          "combined_rate"
+        ],
+        "mode_accepted_allocation": {
+          "combined_rate": 59,
+          "percentage": 27,
+          "rate_total": 27,
+          "ratio_scale": 60,
+          "weighted_average": 60
+        },
+        "mode_accepted_capacity": {
+          "combined_rate": 60,
+          "percentage": 60,
+          "rate_total": 60,
+          "ratio_scale": 60,
+          "weighted_average": 60
+        },
+        "mode_attempt_allocation": {
+          "combined_rate": 74,
+          "percentage": 33,
+          "rate_total": 33,
+          "ratio_scale": 76,
+          "weighted_average": 76
+        },
+        "mode_attempt_capacity": {
+          "combined_rate": 76,
+          "percentage": 76,
+          "rate_total": 76,
+          "ratio_scale": 76,
+          "weighted_average": 76
+        },
+        "output_contract_strata": {
+          "disabled": {
+            "attempt_capacity_ratio": 1.0598290598290598,
+            "available_accepted_capacity": 196,
+            "available_attempt_capacity": 248,
+            "capacity_reserved_from_shared_family_pool": true,
+            "gate_passed": true,
+            "limiting_modes": [
+              "rate_total",
+              "ratio_scale",
+              "percentage",
+              "combined_rate"
+            ],
+            "maximum_plan_concentration": 0.017123287671232876,
+            "required_accepted": 186,
+            "required_attempts": 234
+          },
+          "enabled": {
+            "attempt_capacity_ratio": 1.2413793103448276,
+            "available_accepted_capacity": 57,
+            "available_attempt_capacity": 72,
+            "capacity_reserved_from_shared_family_pool": true,
+            "gate_passed": true,
+            "limiting_modes": [
+              "rate_total",
+              "ratio_scale",
+              "percentage",
+              "combined_rate"
+            ],
+            "maximum_plan_concentration": 0.017123287671232876,
+            "required_accepted": 47,
+            "required_attempts": 58
+          }
+        },
+        "required_accepted": 233,
+        "required_attempts": 292,
+        "split_strata": {
+          "synthetic_validation": {
+            "attempt_capacity_ratio": 1.4827586206896552,
+            "available_accepted_capacity": 33,
+            "available_attempt_capacity": 43,
+            "capacity_reserved_from_shared_family_pool": true,
+            "gate_passed": true,
+            "limiting_modes": [
+              "rate_total",
+              "ratio_scale",
+              "percentage",
+              "combined_rate"
+            ],
+            "maximum_plan_concentration": 0.017123287671232876,
+            "required_accepted": 23,
+            "required_attempts": 29
+          },
+          "training": {
+            "attempt_capacity_ratio": 1.053231939163498,
+            "available_accepted_capacity": 220,
+            "available_attempt_capacity": 277,
+            "capacity_reserved_from_shared_family_pool": true,
+            "gate_passed": true,
+            "limiting_modes": [
+              "rate_total",
+              "ratio_scale",
+              "percentage",
+              "combined_rate"
+            ],
+            "maximum_plan_concentration": 0.017123287671232876,
+            "required_accepted": 210,
+            "required_attempts": 263
+          }
+        }
+      }
+    }
+  },
+  "deterministic_replay_run": false,
+  "fresh_smoke_run": false,
+  "full_2504_schedule_feasible": false,
+  "full_schedule_created": false,
+  "generators_changed": false,
+  "limiting_cross_dataset_families": [
+    {
+      "available_compatible_attempts": 695,
+      "category": "rate_ratio_percentage_or_average",
+      "required_attempts": 709,
+      "shortfall": 14
+    },
+    {
+      "available_compatible_attempts": 598,
+      "category": "constraint_distribution_or_discrete_reasoning",
+      "required_attempts": 689,
+      "shortfall": 91
+    }
+  ],
+  "old_10003_schedule_remains_unapproved": true,
+  "output_contract_accepted_total": 400,
+  "pilot_id": "foundry-signal-first-pilot-v1",
+  "planned_accepted_total": 2000,
+  "previous_capacity_audit_sha256": "1a40db7b40005d12f631b534e07f28d4f9974d6516b900975116526575f21129",
+  "required_attempt_total": 2504,
+  "reuse_policy_id": "bounded-balanced-template-reuse-v1",
+  "reuse_policy_sha256": "66443bc82db961ab2ee34ef8c051928fb27985a733bc9a31e5c60ba3596c25f0",
+  "review_packet_created": false,
+  "schema_version": 1,
+  "sealed_final_accessed": false,
+  "synthetic_validation_accepted_total": 200,
+  "template_bank_sha256": "af561b9b171e271f1b88a6e7c7894a39db691bdf3c63d520ac12c918015efa45",
+  "training_accepted_total": 1800,
+  "verifiers_changed": false
+}

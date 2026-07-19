@@ -1,0 +1,148 @@
+schema_version: 1
+pilot_id: foundry-signal-first-pilot-v1
+capacity_audit_id: foundry-signal-first-capacity-v1
+allocator_id: foundry-signal-first-balanced-allocator-v1
+reuse_policy:
+  config_path: configs/synthesis/template_bank_bounded_reuse_candidates.yaml
+  policy_id: bounded-balanced-template-reuse-v1
+  policy_sha256: 66443bc82db961ab2ee34ef8c051928fb27985a733bc9a31e5c60ba3596c25f0
+attempt_multiplier:
+  numerator: 5
+  denominator: 4
+datasets:
+  targeted:
+    accepted_total: 1000
+    training_accepted: 900
+    validation_accepted: 100
+    output_contract_accepted: 200
+    families:
+      multi_step_bookkeeping_or_omission:
+        accepted: 550
+        attempts: 688
+        training_accepted: 495
+        validation_accepted: 55
+        training_attempts: 619
+        validation_attempts: 69
+        output_contract_accepted: 110
+        output_contract_attempts: 138
+        accepted_modes: {inventory: 275, grouping: 275}
+        attempt_modes: {inventory: 344, grouping: 344}
+      rate_ratio_percentage_or_average:
+        accepted: 233
+        attempts: 292
+        training_accepted: 210
+        validation_accepted: 23
+        training_attempts: 263
+        validation_attempts: 29
+        output_contract_accepted: 47
+        output_contract_attempts: 58
+        accepted_modes:
+          {rate_total: 27, ratio_scale: 60, percentage: 27, weighted_average: 60, combined_rate: 59}
+        attempt_modes:
+          {rate_total: 33, ratio_scale: 76, percentage: 33, weighted_average: 76, combined_rate: 74}
+      constraint_distribution_or_discrete_reasoning:
+        accepted: 217
+        attempts: 272
+        training_accepted: 195
+        validation_accepted: 22
+        training_attempts: 244
+        validation_attempts: 28
+        output_contract_accepted: 43
+        output_contract_attempts: 54
+        accepted_modes:
+          {two_type_allocation: 60, complete_packages: 60, equal_distribution: 60, dual_capacity: 37}
+        attempt_modes:
+          {two_type_allocation: 79, complete_packages: 78, equal_distribution: 78, dual_capacity: 37}
+  generic_control:
+    accepted_total: 1000
+    training_accepted: 900
+    validation_accepted: 100
+    output_contract_accepted: 200
+    families:
+      multi_step_bookkeeping_or_omission:
+        accepted: 334
+        attempts: 418
+        training_accepted: 300
+        validation_accepted: 34
+        training_attempts: 375
+        validation_attempts: 43
+        output_contract_accepted: 67
+        output_contract_attempts: 84
+        accepted_modes: {inventory: 167, grouping: 167}
+        attempt_modes: {inventory: 209, grouping: 209}
+      rate_ratio_percentage_or_average:
+        accepted: 333
+        attempts: 417
+        training_accepted: 300
+        validation_accepted: 33
+        training_attempts: 375
+        validation_attempts: 42
+        output_contract_accepted: 67
+        output_contract_attempts: 83
+        accepted_modes:
+          {rate_total: 40, ratio_scale: 84, percentage: 41, weighted_average: 84, combined_rate: 84}
+        attempt_modes:
+          {rate_total: 47, ratio_scale: 108, percentage: 47, weighted_average: 108, combined_rate: 107}
+      constraint_distribution_or_discrete_reasoning:
+        accepted: 333
+        attempts: 417
+        training_accepted: 300
+        validation_accepted: 33
+        training_attempts: 375
+        validation_attempts: 42
+        output_contract_accepted: 66
+        output_contract_attempts: 83
+        accepted_modes:
+          {two_type_allocation: 100, complete_packages: 100, equal_distribution: 100, dual_capacity: 33}
+        attempt_modes:
+          {two_type_allocation: 127, complete_packages: 128, equal_distribution: 127, dual_capacity: 35}
+difficulty_order: [easy, medium, hard]
+split_order: [training, synthetic_validation]
+full_schedule_master_seed: foundry-signal-first-full-schedule-20260719-v1
+full_schedule_candidate_pool_per_slot: 256
+smoke:
+  run_id: foundry-template-bank-signal-pilot-review-v1
+  master_seed: foundry-signal-pilot-review-smoke-20260719-v1
+  attempts: 120
+  datasets:
+    targeted:
+      family_counts:
+        multi_step_bookkeeping_or_omission: 33
+        rate_ratio_percentage_or_average: 14
+        constraint_distribution_or_discrete_reasoning: 13
+      output_contract_attempts: 12
+      mode_counts:
+        multi_step_bookkeeping_or_omission: {inventory: 17, grouping: 16}
+        rate_ratio_percentage_or_average:
+          {rate_total: 3, ratio_scale: 3, percentage: 3, weighted_average: 3, combined_rate: 2}
+        constraint_distribution_or_discrete_reasoning:
+          {two_type_allocation: 4, complete_packages: 3, equal_distribution: 3, dual_capacity: 3}
+    generic_control:
+      family_counts:
+        multi_step_bookkeeping_or_omission: 20
+        rate_ratio_percentage_or_average: 20
+        constraint_distribution_or_discrete_reasoning: 20
+      output_contract_attempts: 12
+      mode_counts:
+        multi_step_bookkeeping_or_omission: {inventory: 10, grouping: 10}
+        rate_ratio_percentage_or_average:
+          {rate_total: 4, ratio_scale: 4, percentage: 4, weighted_average: 4, combined_rate: 4}
+        constraint_distribution_or_discrete_reasoning:
+          {two_type_allocation: 5, complete_packages: 5, equal_distribution: 5, dual_capacity: 5}
+  semantic_config: configs/synthesis/semantic_all_minilm_l6_v2.yaml
+  development_manifest: configs/eval/manifests/gsm1k_development.json
+  evaluation_config: configs/eval/gsm1k_qwen2_5_1_5b_final_evaluator.yaml
+  raw_directory: results/raw/template_bank_signal_pilot_review
+  summary_path: results/synthesis_smoke/signal_pilot_review_summary.json
+  schedule_path: configs/synthesis/signal_pilot_review_schedule.json
+  human_review_markdown: results/raw/template_bank_signal_pilot_review/human_review.md
+  human_review_html: results/raw/template_bank_signal_pilot_review/human_review.html
+  codex_audit_path: results/raw/template_bank_signal_pilot_review/codex_language_audit.json
+  codex_assisted_html: results/raw/template_bank_signal_pilot_review/codex_assisted_review.html
+  export_filename: foundry-signal-pilot-template-review.json
+safety:
+  benchmark_answers_allowed: false
+  sealed_final_allowed: false
+  llm_generation_allowed: false
+  full_dataset_generation_allowed: false
+  training_allowed: false

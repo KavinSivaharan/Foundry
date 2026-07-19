@@ -597,3 +597,22 @@ Full generation and training remain blocked. The exact next decision is whether 
 narrow mathematical-program capacity expansion for the finite rate and discrete modes, with
 unchanged labels, dual verifiers, language bank, benchmark firewall, and contamination thresholds,
 followed by the same capacity audit before any allocation or generation.
+
+### Milestone 7A: signal-first capacity preflight (stopped; capacity gate failed)
+
+The proposed first experiment is frozen at 1,000 accepted targeted and 1,000 accepted generic
+examples, each split 900/100 for training/synthetic validation with 200 output-contract examples.
+Its fixed attempt pool is 2,504: 1,106 bookkeeping, 709 rates, and 689 discrete problems.
+
+An initial aggregate audit appeared to pass, but allocator preflight exposed a missing compatibility
+constraint. Under the unchanged quota-derived policy, modes sharing one target type must share that
+target-type cap, and modes also share the per-frame and finite global supply across both datasets.
+The exact compatibility graph supports 1,384 bookkeeping attempts, 695 rate attempts, and 598
+discrete attempts. Rates are short by 14; discrete is short by 91; generic discrete also fails its
+own 417-attempt quota at 399. The reduced-pilot gate is therefore false.
+
+Per the approved stop rule, no allocator, 2,504-slot schedule, 120-question smoke, replay, or second
+review packet was created. Full generation and training remain blocked. The next decision is whether
+to authorize a separate correction to the frozen target-type/semantic-frame cap derivation so it
+reflects predeclared curriculum compatibility, or to abandon/redefine the signal-first quotas. No
+benchmark-contamination control needs or receives a change.

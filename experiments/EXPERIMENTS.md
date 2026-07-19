@@ -488,3 +488,27 @@ Every future experiment must be registered here before a costly run begins. Its 
 - **Next experiment:** none approved. Decide whether to expand only the deficient exact rate and
   discrete program ranges/modes, preserving labels and dual verification, then rerun capacity before
   any allocation.
+
+## EXP-20260719-020 — Signal-first pilot compatibility audit
+
+- **Status:** complete; reduced quotas frozen; exact compatibility gate failed; mandatory stop
+  applied.
+- **Question:** Can the unchanged bounded-reuse policy and mathematical inventory support 1,000
+  accepted targeted plus 1,000 accepted generic examples through the complete 2,504 fixed attempts?
+- **Method:** Froze exact dataset/family/split/output/mode totals, then joined per-dataset target-type
+  and semantic-frame caps to their compatible modes through a deterministic integer maximum-flow
+  graph. Globally finite mode capacity was shared across datasets; no candidate schedule or question
+  corpus was created.
+- **Capacity result:** Bookkeeping passes at 1,384/1,106. Rates fail at 695/709 (shortfall 14).
+  Discrete fails at 598/689 (shortfall 91), with generic discrete also failing independently at
+  399/417. Internal audit SHA-256 is `522b5b4e...7aaf`; serialized evidence SHA-256 is
+  `b18b7e44...6995`.
+- **Diagnostic correction:** A preliminary aggregate audit reported a pass because it did not join
+  target identities to compatible modes. The exact graph supersedes that result before allocator
+  implementation or smoke output.
+- **Scope result:** No allocator, 2,504-slot schedule, 120-question smoke, deterministic replay,
+  second packet, dataset, inference, training, or sealed-final access occurred. Templates,
+  generators, verifiers, evaluator, and benchmark-contamination controls remain unchanged.
+- **Next experiment:** none approved. Decide whether to redesign only target-type/semantic-frame cap
+  derivation around the predeclared curriculum compatibility graph, or redefine the signal-first
+  quotas, before capacity is audited again.

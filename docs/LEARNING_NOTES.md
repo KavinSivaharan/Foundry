@@ -557,3 +557,20 @@ program supply. The earlier conclusion that thousands of additional plans were n
 was over-conservative. The next valid proposal is narrower—expand verified latent ranges or
 independent program forms in the deficient rate and discrete modes, then rerun capacity before any
 allocator or smoke.
+
+## Aggregate identity capacity is not compatibility capacity
+
+Milestone 7A exposed a third capacity layer. Even when the surface bank and total latent-program
+inventory are large enough, an identity cap cannot be multiplied by an identity count without
+checking which mathematical modes can use each identity. Rate-total and combined-rate both consume
+the `total_quantity` target cap. Two-type allocation and equal distribution both consume the
+discrete `count` cap. Discrete modes also have only five compatible semantic frames apiece.
+
+For the 2,504-attempt signal pilot, the aggregate calculation said 752 rate and 750 discrete slots
+were available. Exact maximum-flow compatibility reduced those values to 695 and 598, below the 709
+and 689 required attempts. The audit caught this before an allocator or generated smoke existed.
+
+The general lesson is to model capacity as a compatibility graph: dataset-specific target and frame
+caps feed only compatible modes, and globally finite mode supply is shared across datasets and
+splits. A future cap policy may intentionally reflect an unequal curriculum, but that is a new
+predeclared scientific decision—not something to adjust after observing allocation yield.

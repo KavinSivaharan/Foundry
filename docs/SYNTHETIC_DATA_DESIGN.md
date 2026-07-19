@@ -680,3 +680,24 @@ The full 10,003-attempt schedule is not feasible. Exact finite shortages occur i
 ratio-scale (336), percentage (104), combined-rate (384), equal-distribution (253), and dual-capacity
 (90) program domains. Abundant modes are still bounded by semantic-frame balance. Per the capacity
 gate, no allocator, candidate schedule, smoke, replay, or review packet follows.
+
+## Signal-first 1,000 + 1,000 capacity result
+
+The reduced pilot freezes 1,000 accepted examples per dataset, 900/100 train/validation splits, 200
+output-contract examples per dataset, and 2,504 fixed attempts. Accepted family quotas are
+550/233/217 targeted and 334/333/333 generic for bookkeeping/rates/discrete. Attempt quotas are
+688/292/272 and 418/417/417 respectively. Difficulty is divided as evenly as integer counts allow.
+
+The compatibility-aware audit applies the unchanged bounded-reuse caps to actual mode/target/frame
+edges and shares finite mode supply across datasets:
+
+| Family | Required attempts | Compatible capacity | Shortfall | Result |
+|---|---:|---:|---:|---|
+| Bookkeeping | 1,106 | 1,384 | 0 | pass |
+| Rate/ratio/percentage/average | 709 | 695 | 14 | fail |
+| Discrete constraints | 689 | 598 | 91 | fail |
+
+Each targeted family and generic bookkeeping/rates pass independently. Generic discrete fails at
+399/417, so all its attempt-level difficulty, output, and split reservations are short. Cross-dataset
+disjointness then makes both rate and discrete family totals fail. The audit is exact over the frozen
+compatibility graph; no allocator, schedule, smoke, replay, or packet was produced.
