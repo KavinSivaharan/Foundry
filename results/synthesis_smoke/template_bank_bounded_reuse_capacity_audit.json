@@ -1,0 +1,434 @@
+{
+  "allocator_implemented": false,
+  "audit_id": "foundry-template-bank-bounded-reuse-v1",
+  "benchmark_contamination_unchanged": true,
+  "calibration_sha256": "fd731501fddc67eef9ef8c571a8b87edef6d17113e67370e13eacb02f36f2693",
+  "candidate_schedule_created": false,
+  "capacity_audit_sha256": "1a40db7b40005d12f631b534e07f28d4f9974d6516b900975116526575f21129",
+  "capacity_gate_passed": false,
+  "category_capacity": {
+    "constraint_distribution_or_discrete_reasoning": {
+      "accepted_quota": 2200,
+      "bounded_identity_capacity": 3441,
+      "capacity_ratio": 0.7535441657579062,
+      "constructive_probe": {
+        "dual_verified_by_mode": {
+          "complete_packages": 865,
+          "dual_capacity": 90,
+          "equal_distribution": 253,
+          "two_type_allocation": 865
+        },
+        "fixed_probe_candidates": 20000,
+        "persisted_programs": false,
+        "unique_by_mode": {
+          "complete_packages": 1231,
+          "dual_capacity": 90,
+          "equal_distribution": 253,
+          "two_type_allocation": 4878
+        },
+        "unique_programs": 6452
+      },
+      "gate_passed": false,
+      "group_caps": {
+        "generic_control": {
+          "accepted_quota": 1333,
+          "difficulty_attempts": {
+            "easy": 556,
+            "hard": 555,
+            "medium": 556
+          },
+          "difficulty_caps": {
+            "easy": 695,
+            "hard": 694,
+            "medium": 695
+          },
+          "max_accepted_per_number_neutral_signature": 6,
+          "max_accepted_per_plan_scenario_domain": 2,
+          "max_accepted_per_semantic_frame": 84,
+          "max_accepted_per_sentence_plan": 21,
+          "max_accepted_per_target_type": 556,
+          "max_attempts_per_number_neutral_signature": 7,
+          "max_attempts_per_plan_scenario_domain": 2,
+          "max_attempts_per_semantic_frame": 105,
+          "max_attempts_per_sentence_plan": 27,
+          "max_attempts_per_target_type": 695,
+          "output_contract_accepted": {
+            "disabled": 1066,
+            "enabled": 267
+          },
+          "output_contract_attempts": {
+            "disabled": 1333,
+            "enabled": 334
+          },
+          "output_contract_caps": {
+            "disabled": 1667,
+            "enabled": 418
+          },
+          "required_attempts": 1667
+        },
+        "targeted": {
+          "accepted_quota": 867,
+          "difficulty_attempts": {
+            "easy": 362,
+            "hard": 361,
+            "medium": 361
+          },
+          "difficulty_caps": {
+            "easy": 453,
+            "hard": 452,
+            "medium": 452
+          },
+          "max_accepted_per_number_neutral_signature": 4,
+          "max_accepted_per_plan_scenario_domain": 1,
+          "max_accepted_per_semantic_frame": 55,
+          "max_accepted_per_sentence_plan": 14,
+          "max_accepted_per_target_type": 362,
+          "max_attempts_per_number_neutral_signature": 5,
+          "max_attempts_per_plan_scenario_domain": 1,
+          "max_attempts_per_semantic_frame": 68,
+          "max_attempts_per_sentence_plan": 17,
+          "max_attempts_per_target_type": 452,
+          "output_contract_accepted": {
+            "disabled": 693,
+            "enabled": 174
+          },
+          "output_contract_attempts": {
+            "disabled": 867,
+            "enabled": 217
+          },
+          "output_contract_caps": {
+            "disabled": 1084,
+            "enabled": 272
+          },
+          "required_attempts": 1084
+        }
+      },
+      "identity_layer_capacities": {
+        "difficulty": 3441,
+        "number_neutral": 3840,
+        "output_contract": 3441,
+        "plan_scenario_domain": 4800,
+        "semantic_frame": 3460,
+        "sentence_plan": 3520,
+        "target_type": 3441
+      },
+      "latent_capacity_under_balanced_frame_or_target_caps": 2073,
+      "mode_details": {
+        "complete_packages": {
+          "available_bounded_programs": 865,
+          "constructive_unique_programs": 1231,
+          "dual_verified_programs": 865,
+          "exact_finite_upper_bound": 1344,
+          "semantic_frame_cap": 865
+        },
+        "dual_capacity": {
+          "available_bounded_programs": 90,
+          "constructive_unique_programs": 90,
+          "dual_verified_programs": 90,
+          "exact_finite_upper_bound": 90,
+          "semantic_frame_cap": 865
+        },
+        "equal_distribution": {
+          "available_bounded_programs": 253,
+          "constructive_unique_programs": 253,
+          "dual_verified_programs": 253,
+          "exact_finite_upper_bound": 253,
+          "semantic_frame_cap": 865
+        },
+        "two_type_allocation": {
+          "available_bounded_programs": 865,
+          "constructive_unique_programs": 4878,
+          "dual_verified_programs": 865,
+          "exact_finite_upper_bound": null,
+          "semantic_frame_cap": 865
+        }
+      },
+      "required_attempts": 2751,
+      "shortfall": 678
+    },
+    "multi_step_bookkeeping_or_omission": {
+      "accepted_quota": 3534,
+      "bounded_identity_capacity": 5524,
+      "capacity_ratio": 1.250339520144862,
+      "constructive_probe": {
+        "dual_verified_by_mode": {
+          "grouping": 2762,
+          "inventory": 2762
+        },
+        "fixed_probe_candidates": 20000,
+        "persisted_programs": false,
+        "unique_by_mode": {
+          "grouping": 3999,
+          "inventory": 15908
+        },
+        "unique_programs": 19907
+      },
+      "gate_passed": true,
+      "group_caps": {
+        "generic_control": {
+          "accepted_quota": 1334,
+          "difficulty_attempts": {
+            "easy": 556,
+            "hard": 556,
+            "medium": 556
+          },
+          "difficulty_caps": {
+            "easy": 695,
+            "hard": 695,
+            "medium": 695
+          },
+          "max_accepted_per_number_neutral_signature": 3,
+          "max_accepted_per_plan_scenario_domain": 1,
+          "max_accepted_per_semantic_frame": 93,
+          "max_accepted_per_sentence_plan": 24,
+          "max_accepted_per_target_type": 834,
+          "max_attempts_per_number_neutral_signature": 3,
+          "max_attempts_per_plan_scenario_domain": 2,
+          "max_attempts_per_semantic_frame": 116,
+          "max_attempts_per_sentence_plan": 29,
+          "max_attempts_per_target_type": 1043,
+          "output_contract_accepted": {
+            "disabled": 1067,
+            "enabled": 267
+          },
+          "output_contract_attempts": {
+            "disabled": 1334,
+            "enabled": 334
+          },
+          "output_contract_caps": {
+            "disabled": 1668,
+            "enabled": 418
+          },
+          "required_attempts": 1668
+        },
+        "targeted": {
+          "accepted_quota": 2200,
+          "difficulty_attempts": {
+            "easy": 917,
+            "hard": 916,
+            "medium": 917
+          },
+          "difficulty_caps": {
+            "easy": 1147,
+            "hard": 1145,
+            "medium": 1147
+          },
+          "max_accepted_per_number_neutral_signature": 4,
+          "max_accepted_per_plan_scenario_domain": 2,
+          "max_accepted_per_semantic_frame": 153,
+          "max_accepted_per_sentence_plan": 39,
+          "max_accepted_per_target_type": 1375,
+          "max_attempts_per_number_neutral_signature": 5,
+          "max_attempts_per_plan_scenario_domain": 2,
+          "max_attempts_per_semantic_frame": 191,
+          "max_attempts_per_sentence_plan": 48,
+          "max_attempts_per_target_type": 1719,
+          "output_contract_accepted": {
+            "disabled": 1760,
+            "enabled": 440
+          },
+          "output_contract_attempts": {
+            "disabled": 2200,
+            "enabled": 550
+          },
+          "output_contract_caps": {
+            "disabled": 2750,
+            "enabled": 688
+          },
+          "required_attempts": 2750
+        }
+      },
+      "identity_layer_capacities": {
+        "difficulty": 5524,
+        "number_neutral": 6144,
+        "output_contract": 5524,
+        "plan_scenario_domain": 6912,
+        "semantic_frame": 5526,
+        "sentence_plan": 5544,
+        "target_type": 5524
+      },
+      "latent_capacity_under_balanced_frame_or_target_caps": 5524,
+      "mode_details": {
+        "grouping": {
+          "available_bounded_programs": 2762,
+          "constructive_unique_programs": 3999,
+          "frame_or_target_cap": 2762
+        },
+        "inventory": {
+          "available_bounded_programs": 2762,
+          "constructive_unique_programs": 15908,
+          "frame_or_target_cap": 2762
+        }
+      },
+      "required_attempts": 4418,
+      "shortfall": 0
+    },
+    "rate_ratio_percentage_or_average": {
+      "accepted_quota": 2266,
+      "bounded_identity_capacity": 3544,
+      "capacity_ratio": 0.5758645024700071,
+      "constructive_probe": {
+        "dual_verified_by_mode": {
+          "combined_rate": 384,
+          "percentage": 104,
+          "rate_total": 96,
+          "ratio_scale": 336,
+          "weighted_average": 712
+        },
+        "fixed_probe_candidates": 20000,
+        "persisted_programs": false,
+        "unique_by_mode": {
+          "combined_rate": 384,
+          "percentage": 104,
+          "rate_total": 96,
+          "ratio_scale": 336,
+          "weighted_average": 3600
+        },
+        "unique_programs": 4520
+      },
+      "gate_passed": false,
+      "group_caps": {
+        "generic_control": {
+          "accepted_quota": 1333,
+          "difficulty_attempts": {
+            "easy": 556,
+            "hard": 555,
+            "medium": 556
+          },
+          "difficulty_caps": {
+            "easy": 695,
+            "hard": 694,
+            "medium": 695
+          },
+          "max_accepted_per_number_neutral_signature": 19,
+          "max_accepted_per_plan_scenario_domain": 5,
+          "max_accepted_per_semantic_frame": 84,
+          "max_accepted_per_sentence_plan": 21,
+          "max_accepted_per_target_type": 417,
+          "max_attempts_per_number_neutral_signature": 24,
+          "max_attempts_per_plan_scenario_domain": 6,
+          "max_attempts_per_semantic_frame": 105,
+          "max_attempts_per_sentence_plan": 27,
+          "max_attempts_per_target_type": 521,
+          "output_contract_accepted": {
+            "disabled": 1066,
+            "enabled": 267
+          },
+          "output_contract_attempts": {
+            "disabled": 1333,
+            "enabled": 334
+          },
+          "output_contract_caps": {
+            "disabled": 1667,
+            "enabled": 418
+          },
+          "required_attempts": 1667
+        },
+        "targeted": {
+          "accepted_quota": 933,
+          "difficulty_attempts": {
+            "easy": 389,
+            "hard": 389,
+            "medium": 389
+          },
+          "difficulty_caps": {
+            "easy": 487,
+            "hard": 487,
+            "medium": 487
+          },
+          "max_accepted_per_number_neutral_signature": 14,
+          "max_accepted_per_plan_scenario_domain": 3,
+          "max_accepted_per_semantic_frame": 59,
+          "max_accepted_per_sentence_plan": 15,
+          "max_accepted_per_target_type": 292,
+          "max_attempts_per_number_neutral_signature": 17,
+          "max_attempts_per_plan_scenario_domain": 4,
+          "max_attempts_per_semantic_frame": 73,
+          "max_attempts_per_sentence_plan": 19,
+          "max_attempts_per_target_type": 365,
+          "output_contract_accepted": {
+            "disabled": 746,
+            "enabled": 187
+          },
+          "output_contract_attempts": {
+            "disabled": 933,
+            "enabled": 234
+          },
+          "output_contract_caps": {
+            "disabled": 1167,
+            "enabled": 293
+          },
+          "required_attempts": 1167
+        }
+      },
+      "identity_layer_capacities": {
+        "difficulty": 3545,
+        "number_neutral": 3608,
+        "output_contract": 3545,
+        "plan_scenario_domain": 4000,
+        "semantic_frame": 3560,
+        "sentence_plan": 3680,
+        "target_type": 3544
+      },
+      "latent_capacity_under_balanced_frame_or_target_caps": 1632,
+      "mode_details": {
+        "combined_rate": {
+          "available_bounded_programs": 384,
+          "constructive_unique_programs": 384,
+          "dual_verified_programs": 384,
+          "exact_finite_upper_bound": 384,
+          "semantic_frame_cap": 712
+        },
+        "percentage": {
+          "available_bounded_programs": 104,
+          "constructive_unique_programs": 104,
+          "dual_verified_programs": 104,
+          "exact_finite_upper_bound": 104,
+          "semantic_frame_cap": 712
+        },
+        "rate_total": {
+          "available_bounded_programs": 96,
+          "constructive_unique_programs": 96,
+          "dual_verified_programs": 96,
+          "exact_finite_upper_bound": 96,
+          "semantic_frame_cap": 712
+        },
+        "ratio_scale": {
+          "available_bounded_programs": 336,
+          "constructive_unique_programs": 336,
+          "dual_verified_programs": 336,
+          "exact_finite_upper_bound": 336,
+          "semantic_frame_cap": 712
+        },
+        "weighted_average": {
+          "available_bounded_programs": 712,
+          "constructive_unique_programs": 3600,
+          "dual_verified_programs": 712,
+          "exact_finite_upper_bound": null,
+          "semantic_frame_cap": 712
+        }
+      },
+      "required_attempts": 2834,
+      "shortfall": 1202
+    }
+  },
+  "config_sha256": "f8b8f5e91b5206dd90abbc4c6107d02f6897da0becda4bb8cd65046c17b2be4f",
+  "deterministic_replay_run": false,
+  "fixture_set_sha256": "2a829eea47aa189016b787acf5be731b5b75cb7e79d04a29f9baae425820b419",
+  "fresh_smoke_run": false,
+  "full_generation_feasible": false,
+  "identity_definitions": {
+    "exact_question": "fully rendered and normalized exact text; globally unique",
+    "latent_program": "complete executable program plus instantiated parameters; globally unique",
+    "structural_problem": "content-free skill and operation topology; balanced repetition allowed",
+    "surface_template": "plan, scenario, lexical family, ordering, render and number-neutral signatures; capped reuse allowed"
+  },
+  "planned_accepted_total": 8000,
+  "required_attempt_total": 10003,
+  "review_packet_created": false,
+  "schema_version": 1,
+  "sealed_final_accessed": false,
+  "selected_policy_id": "bounded-balanced-template-reuse-v1",
+  "selected_policy_sha256": "66443bc82db961ab2ee34ef8c051928fb27985a733bc9a31e5c60ba3596c25f0",
+  "stop_reason": "finite unique latent-program supply under balanced semantic-frame caps is insufficient"
+}

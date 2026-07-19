@@ -536,3 +536,24 @@ step is not a cleverer permutation or a weaker screen; it is independent languag
 that adds genuinely different sentence plans, lexical scenarios, and structures. Those additions
 must be human reviewed, then re-enumerated against the same per-category, difficulty, output-track,
 and cross-dataset uniqueness contract before any smoke or full schedule is frozen.
+
+## Template identity is not example identity
+
+Milestone 6E falsifies the one-use interpretation of a number-neutral sentence pattern. The same
+reviewed wording can safely express different training examples when rendered text and complete
+latent programs are unique, usage is balanced and capped, and cross-dataset exact overlap remains
+impossible. That reuse also improves the targeted-versus-generic control: both curricula share the
+same language machinery instead of acquiring different writing styles.
+
+Correcting that policy exposed a deeper, independent constraint. Surface identities now support the
+attempt budget, but several exact generator modes have small finite domains. Under balanced frame
+caps, rates provide only 1,632 of 2,834 attempts and discrete problems 2,073 of 2,751. Weighted
+averages and two-type allocation have ample constructive variety, but allowing them to dominate
+would defeat the frozen balance policy; number substitution in the smaller modes cannot exceed their
+actual finite parameter combinations.
+
+Capacity audits therefore need two layers: bounded language reuse and constructive mathematical
+program supply. The earlier conclusion that thousands of additional plans were necessarily required
+was over-conservative. The next valid proposal is narrower—expand verified latent ranges or
+independent program forms in the deficient rate and discrete modes, then rerun capacity before any
+allocator or smoke.

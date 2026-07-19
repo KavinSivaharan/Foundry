@@ -578,3 +578,22 @@ separate expansion milestone for independently authored and human-reviewed sente
 domains, and structural surfaces. Any expansion must first raise the measured number-neutral pools
 by at least 3,650 bookkeeping, 2,746 rate/ratio, and 2,431 discrete identities and then repeat this
 capacity audit under the unchanged duplicate and contamination policies.
+
+### Milestone 6E: bounded template reuse and revised capacity (complete; capacity gate failed)
+
+Milestone 6E corrects the scientific interpretation of a sentence plan. Exact rendered questions
+and complete latent programs remain globally unique, while structural skills and reviewed language
+plans may recur under deterministic quota-derived caps. The selected policy passed 14/14 original
+fixtures; the one-use policy and an uncapped permissive policy did not. Development-contamination
+screening remains unchanged.
+
+The correction removes language identity as the limiting layer, but the unchanged mathematical
+generators still cannot construct the full balanced pool. Bookkeeping supplies 5,524 bounded unique
+programs for 4,418 required attempts. Rates supply 1,632 for 2,834 (shortfall 1,202), and discrete
+reasoning supplies 2,073 for 2,751 (shortfall 678). The 10,003-attempt gate therefore still fails.
+No allocator, schedule, fresh smoke, replay, or second review packet was created.
+
+Full generation and training remain blocked. The exact next decision is whether to authorize a
+narrow mathematical-program capacity expansion for the finite rate and discrete modes, with
+unchanged labels, dual verifiers, language bank, benchmark firewall, and contamination thresholds,
+followed by the same capacity audit before any allocation or generation.

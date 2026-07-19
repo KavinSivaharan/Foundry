@@ -1,0 +1,59 @@
+schema_version: 1
+fixture_path: configs/synthesis/template_bank_bounded_reuse_fixtures.json
+selected_policy_id: bounded-balanced-template-reuse-v1
+candidate_policies:
+  - policy_id: legacy-one-use-number-neutral
+    reject_number_neutral_reuse: true
+    enforce_usage_caps: true
+    close_paraphrase_action: review
+  - policy_id: bounded-balanced-template-reuse-v1
+    reject_number_neutral_reuse: false
+    enforce_usage_caps: true
+    close_paraphrase_action: review
+  - policy_id: permissive-exact-latent-only
+    reject_number_neutral_reuse: false
+    enforce_usage_caps: false
+    close_paraphrase_action: pass
+benchmark_contamination:
+  model_id: sentence-transformers/all-MiniLM-L6-v2
+  revision: 1110a243fdf4706b3f48f1d95db1a4f5529b4d41
+  manual_review_at: 0.75
+  automatic_reject_at: 0.82
+  trust_remote_code: false
+  unchanged: true
+quota_contract:
+  attempt_multiplier_numerator: 5
+  attempt_multiplier_denominator: 4
+  targeted:
+    multi_step_bookkeeping_or_omission: 2200
+    rate_ratio_percentage_or_average: 933
+    constraint_distribution_or_discrete_reasoning: 867
+  generic_control:
+    multi_step_bookkeeping_or_omission: 1334
+    rate_ratio_percentage_or_average: 1333
+    constraint_distribution_or_discrete_reasoning: 1333
+identity_inventory:
+  multi_step_bookkeeping_or_omission:
+    sentence_plans: 72
+    number_neutral_signatures: 768
+    plan_scenario_domains: 1728
+    semantic_frames: 18
+    target_types: 2
+  rate_ratio_percentage_or_average:
+    sentence_plans: 80
+    number_neutral_signatures: 88
+    plan_scenario_domains: 400
+    semantic_frames: 20
+    target_types: 4
+  constraint_distribution_or_discrete_reasoning:
+    sentence_plans: 80
+    number_neutral_signatures: 320
+    plan_scenario_domains: 1600
+    semantic_frames: 20
+    target_types: 3
+latent_probe:
+  probe_id: foundry-m6e-latent-probe-v1
+  candidates_per_family: 20000
+  seed_derivation: sha256-prefix-64
+  persisted_programs: false
+  benchmark_content_allowed: false

@@ -415,3 +415,33 @@ This log separates proposals from approved decisions. A proposal does not author
   the existing number-neutral pools need 3,650 additional bookkeeping, 2,746 rate/ratio, and 2,431
   discrete identities, accompanied by enough independently reviewed plans/domains to satisfy every
   group, difficulty, and output-contract stratum before allocation is reconsidered.
+
+## D-026 — Permit bounded reviewed-template reuse; stop on latent-program capacity
+
+- **Date:** 2026-07-19
+- **Status:** policy corrected; revised capacity gate failed; no allocator or smoke
+- **Decision:** Separate exact-question, latent-program, structural-problem, and surface-template
+  identities. Keep exact questions and complete latent programs globally unique across datasets and
+  splits. Permit structural skills and reviewed sentence plans/number-neutral signatures to repeat
+  only within quota-derived caps. Preserve development-contamination screening exactly. Stop before
+  allocation because the unchanged rate and discrete generators cannot supply the complete balanced
+  125% attempt pools.
+- **Evidence:** `bounded-balanced-template-reuse-v1` matches 14/14 original fixtures (policy SHA-256
+  `66443bc8...25f0`); the legacy one-use and permissive alternatives match 12/14 and 11/14. Surface
+  identity capacity now passes. Constructive dual-verified capacity is 5,524/4,418 bookkeeping,
+  1,632/2,834 rate/ratio, and 2,073/2,751 discrete. The finite rate-total, ratio, percentage, combined-
+  rate, equal-distribution, and dual-capacity modes are the limiting compatibility constraints.
+- **Rationale:** Reusing controlled language is scientifically desirable because targeted and generic
+  groups should differ in curriculum rather than style. But template reuse cannot justify duplicate
+  mathematical examples or conceal insufficient program diversity. The remaining blocker is a
+  generator parameter/program-space limit, not a need for thousands of new sentence plans.
+- **Alternatives considered:** retain one-use number-neutral rejection; allow uncapped reuse; adjust
+  caps after results; overfill weighted-average or two-type modes beyond frame-balance caps; allocate
+  a small smoke despite failed full capacity; or count unconstructed numeric substitutions as
+  capacity. All either fail fixtures or violate the predeclared gate.
+- **Expected consequences:** No candidate allocator, full schedule, 120-question smoke, replay, v3
+  review packet, dataset, benchmark inference, or training is produced. The selected policy and
+  negative capacity evidence are published as content-free contracts.
+- **Next user decision:** Decide whether to authorize a narrowly scoped expansion of independent rate
+  and discrete latent-program ranges/modes, retaining exact arithmetic and both verifiers, then rerun
+  the capacity gate before allocator implementation.

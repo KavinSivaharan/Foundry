@@ -460,3 +460,31 @@ Every future experiment must be registered here before a costly run begins. Its 
   Full generation and training remain blocked.
 - **Next experiment:** none approved. Decide whether to expand independently authored and
   human-reviewed plan/scenario capacity, then repeat the same preflight before allocator work.
+
+## EXP-20260719-019 — Bounded template-reuse policy and revised capacity
+
+- **Status:** complete; selected policy passed fixtures; full capacity failed; mandatory stop
+  applied.
+- **Question:** Can quota-derived reuse of reviewed sentence plans support the fixed 10,003-attempt
+  pool while exact rendered questions and latent programs remain globally unique and benchmark
+  contamination remains unchanged?
+- **Policy calibration:** Three predeclared policies were tested on 14 original fixtures. Bounded
+  balanced reuse matched 14/14; legacy one-use matched 12/14; permissive exact/latent-only matched
+  11/14. Fixture, selected-policy, and calibration SHA-256 values are `2a829eea...419b`,
+  `66443bc8...25f0`, and `fd731501...2693`.
+- **Method:** Caps were mechanically derived per dataset/family for plan, number-neutral signature,
+  plan plus domain, frame, target, difficulty, and output-contract use. A fixed 20,000-seed pool per
+  family constructed unchanged generator programs; each available program counted toward a cap was
+  checked with both existing verifiers. No program corpus or question dataset was persisted.
+- **Capacity result:** Surface identity layers pass. Bookkeeping provides 5,524 programs for 4,418
+  attempts. Rates provide 1,632/2,834 (shortfall 1,202); discrete provides 2,073/2,751 (shortfall
+  678). Internal capacity-audit SHA-256 is `1a40db7b...1129`.
+- **Scope result:** Development MiniLM revision and 0.75/0.82 thresholds are unchanged. No allocator,
+  schedule, new seed, 120-candidate smoke, replay, second review packet, dataset, inference, training,
+  or sealed-final access occurred.
+- **Conclusion:** The one-use surface rule was scientifically over-conservative, but 10,003 fixed
+  attempts remain infeasible because finite rate and discrete program domains fail the balanced
+  latent-capacity gate.
+- **Next experiment:** none approved. Decide whether to expand only the deficient exact rate and
+  discrete program ranges/modes, preserving labels and dual verification, then rerun capacity before
+  any allocation.

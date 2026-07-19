@@ -640,3 +640,43 @@ discrete surfaces. Adding IDs alone is not sufficient: future capacity work must
 authored and reviewed plan structures and scenario/lexical domains that survive the unchanged
 number-neutral and contamination controls. Capacity must be re-audited before selection logic is
 implemented.
+
+## Milestone 6E bounded-reuse contract and remaining program-space limit
+
+Generated-to-generated identity is now four explicit layers:
+
+1. The normalized, fully rendered question is globally unique across datasets and splits.
+2. The complete executable latent program plus instantiated parameters is globally unique.
+3. Content-free structural skills may repeat under balanced family/frame/target/difficulty/output
+   quotas because repeated reasoning structure is the curriculum.
+4. Reviewed sentence plans, scenarios, lexical families, render signatures, and number-neutral
+   signatures may repeat only under frozen quota-derived caps.
+
+Generated-to-development matching is unaffected: exact, n-gram, structural, and MiniLM screening
+remain fixed at revision `1110a243...b4d41`, 0.75 manual review, and 0.82 automatic rejection.
+
+The cap rule is `ceil(1.25 * stratum quantity / active identities)`. The principal plan and
+number-neutral caps are:
+
+| Dataset / family | Required attempts | Plan attempt/accepted cap | Number-neutral attempt/accepted cap | Frame attempt/accepted cap |
+|---|---:|---:|---:|---:|
+| Targeted bookkeeping | 2,750 | 48 / 39 | 5 / 4 | 191 / 153 |
+| Targeted rate/ratio | 1,167 | 19 / 15 | 17 / 14 | 73 / 59 |
+| Targeted discrete | 1,084 | 17 / 14 | 5 / 4 | 68 / 55 |
+| Generic bookkeeping | 1,668 | 29 / 24 | 3 / 3 | 116 / 93 |
+| Generic rate/ratio | 1,667 | 27 / 21 | 24 / 19 | 105 / 84 |
+| Generic discrete | 1,667 | 27 / 21 | 7 / 6 | 105 / 84 |
+
+Plan-plus-domain, target-type, difficulty, and output-contract caps are derived by the same formula
+and recorded in the content-free capacity audit. No cap is learned from generated outputs.
+
+| Family | Accepted quota | Required attempts | Bounded surface capacity | Verified latent capacity under balance | Ratio | Result |
+|---|---:|---:|---:|---:|---:|---|
+| Bookkeeping | 3,534 | 4,418 | 5,524 | 5,524 | 125.03% | pass |
+| Rate/ratio/percentage/average | 2,266 | 2,834 | 3,544 | 1,632 | 57.59% | fail |
+| Discrete constraints | 2,200 | 2,751 | 3,441 | 2,073 | 75.35% | fail |
+
+The full 10,003-attempt schedule is not feasible. Exact finite shortages occur in rate-total (96),
+ratio-scale (336), percentage (104), combined-rate (384), equal-distribution (253), and dual-capacity
+(90) program domains. Abundant modes are still bounded by semantic-frame balance. Per the capacity
+gate, no allocator, candidate schedule, smoke, replay, or review packet follows.

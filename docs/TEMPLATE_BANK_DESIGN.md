@@ -272,3 +272,24 @@ directory, or review packet exists for Milestone 6D. The bank remains frozen at 
 language state. A future proposal must expand genuinely distinct, human-reviewed structural and
 number-neutral capacity before allocation is reconsidered; duplicate and contamination policy stays
 unchanged.
+
+## Milestone 6E bounded reuse replaces one-use sentence plans
+
+The bank remains frozen at 58 frames and 232 plans; no sentence wording changed. A plan is now a
+reviewed language resource rather than a consumable one-example identity. Exact rendered questions
+and complete latent programs remain globally unique, while plan, plan-plus-domain, semantic-frame,
+target-type, difficulty, output-contract, render-signature, and number-neutral use are balanced under
+predeclared quota-derived caps. The same formulas and allocator contract apply to targeted and
+generic groups.
+
+The selected policy passed 14/14 original fixtures. It rejects exact and latent copies, rejects cap
+violations, routes cross-plan close paraphrases to review, and permits a reviewed plan shared across
+datasets only when the instantiated questions and programs are distinct. Benchmark contamination
+continues to use its separate unchanged exact, structural, n-gram, and MiniLM policy.
+
+This correction makes all surface-identity layers large enough for the planned attempt pool. It does
+not make the full generation feasible: finite program supply under balanced frame/target caps is
+5,524/4,418 bookkeeping, 1,632/2,834 rates, and 2,073/2,751 discrete. Because the last two families
+fail, no global allocator or 120-slot schedule was implemented and no second packet exists. The next
+capacity decision concerns mathematical program ranges/modes, not authoring thousands of additional
+sentence plans.

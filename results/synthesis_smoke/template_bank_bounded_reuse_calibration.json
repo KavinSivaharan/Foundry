@@ -1,0 +1,359 @@
+{
+  "audit_id": "foundry-template-bank-bounded-reuse-v1",
+  "benchmark_contamination": {
+    "automatic_reject_at": 0.82,
+    "manual_review_at": 0.75,
+    "model_id": "sentence-transformers/all-MiniLM-L6-v2",
+    "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "trust_remote_code": false,
+    "unchanged": true
+  },
+  "calibration_sha256": "fd731501fddc67eef9ef8c571a8b87edef6d17113e67370e13eacb02f36f2693",
+  "candidate_policies": {
+    "bounded-balanced-template-reuse-v1": {
+      "decisions": [
+        {
+          "actual": "reject",
+          "expected": "reject",
+          "fixture_id": "reuse-exact-question",
+          "reason": "exact_complete_candidate",
+          "relationship": "exact_duplicate_question"
+        },
+        {
+          "actual": "pass",
+          "expected": "pass",
+          "fixture_id": "reuse-number-swap",
+          "reason": "bounded_distinct_example",
+          "relationship": "number_swap_distinct_program"
+        },
+        {
+          "actual": "pass",
+          "expected": "pass",
+          "fixture_id": "reuse-same-template-new-program",
+          "reason": "bounded_distinct_example",
+          "relationship": "same_template_distinct_latent_program"
+        },
+        {
+          "actual": "pass",
+          "expected": "pass",
+          "fixture_id": "reuse-same-plan-new-scenario",
+          "reason": "bounded_distinct_example",
+          "relationship": "same_plan_different_scenario"
+        },
+        {
+          "actual": "pass",
+          "expected": "pass",
+          "fixture_id": "reuse-same-skill-new-plan",
+          "reason": "bounded_distinct_example",
+          "relationship": "same_skill_different_sentence_plan"
+        },
+        {
+          "actual": "pass",
+          "expected": "pass",
+          "fixture_id": "reuse-structural-copy",
+          "reason": "bounded_distinct_example",
+          "relationship": "shared_structure_distinct_instantiation"
+        },
+        {
+          "actual": "review",
+          "expected": "review",
+          "fixture_id": "reuse-close-paraphrase",
+          "reason": "cross_plan_close_paraphrase",
+          "relationship": "cross_plan_close_paraphrase"
+        },
+        {
+          "actual": "pass",
+          "expected": "pass",
+          "fixture_id": "reuse-unrelated",
+          "reason": "bounded_distinct_example",
+          "relationship": "unrelated_problems"
+        },
+        {
+          "actual": "reject",
+          "expected": "reject",
+          "fixture_id": "reuse-cross-dataset-exact",
+          "reason": "exact_complete_candidate",
+          "relationship": "cross_dataset_exact_overlap"
+        },
+        {
+          "actual": "pass",
+          "expected": "pass",
+          "fixture_id": "reuse-cross-dataset-template",
+          "reason": "bounded_distinct_example",
+          "relationship": "cross_dataset_shared_template_distinct_example"
+        },
+        {
+          "actual": "reject",
+          "expected": "reject",
+          "fixture_id": "reuse-latent-copy-new-wording",
+          "reason": "latent_program_copy",
+          "relationship": "identical_latent_program_different_wording"
+        },
+        {
+          "actual": "reject",
+          "expected": "reject",
+          "fixture_id": "reuse-plan-cap-exceeded",
+          "reason": "sentence_plan_cap_exceeded",
+          "relationship": "sentence_plan_cap_exceeded"
+        },
+        {
+          "actual": "reject",
+          "expected": "reject",
+          "fixture_id": "reuse-number-neutral-cap-exceeded",
+          "reason": "number_neutral_cap_exceeded",
+          "relationship": "number_neutral_cap_exceeded"
+        },
+        {
+          "actual": "reject",
+          "expected": "reject",
+          "fixture_id": "reuse-cross-split-exact",
+          "reason": "exact_complete_candidate",
+          "relationship": "cross_split_exact_overlap"
+        }
+      ],
+      "exact_matches": 14,
+      "fixture_count": 14,
+      "mismatched_fixture_ids": [],
+      "pass_count": 7,
+      "policy_sha256": "66443bc82db961ab2ee34ef8c051928fb27985a733bc9a31e5c60ba3596c25f0",
+      "reject_count": 6,
+      "review_count": 1
+    },
+    "legacy-one-use-number-neutral": {
+      "decisions": [
+        {
+          "actual": "reject",
+          "expected": "reject",
+          "fixture_id": "reuse-exact-question",
+          "reason": "exact_complete_candidate",
+          "relationship": "exact_duplicate_question"
+        },
+        {
+          "actual": "reject",
+          "expected": "pass",
+          "fixture_id": "reuse-number-swap",
+          "reason": "legacy_number_neutral_one_use",
+          "relationship": "number_swap_distinct_program"
+        },
+        {
+          "actual": "reject",
+          "expected": "pass",
+          "fixture_id": "reuse-same-template-new-program",
+          "reason": "legacy_number_neutral_one_use",
+          "relationship": "same_template_distinct_latent_program"
+        },
+        {
+          "actual": "pass",
+          "expected": "pass",
+          "fixture_id": "reuse-same-plan-new-scenario",
+          "reason": "bounded_distinct_example",
+          "relationship": "same_plan_different_scenario"
+        },
+        {
+          "actual": "pass",
+          "expected": "pass",
+          "fixture_id": "reuse-same-skill-new-plan",
+          "reason": "bounded_distinct_example",
+          "relationship": "same_skill_different_sentence_plan"
+        },
+        {
+          "actual": "pass",
+          "expected": "pass",
+          "fixture_id": "reuse-structural-copy",
+          "reason": "bounded_distinct_example",
+          "relationship": "shared_structure_distinct_instantiation"
+        },
+        {
+          "actual": "review",
+          "expected": "review",
+          "fixture_id": "reuse-close-paraphrase",
+          "reason": "cross_plan_close_paraphrase",
+          "relationship": "cross_plan_close_paraphrase"
+        },
+        {
+          "actual": "pass",
+          "expected": "pass",
+          "fixture_id": "reuse-unrelated",
+          "reason": "bounded_distinct_example",
+          "relationship": "unrelated_problems"
+        },
+        {
+          "actual": "reject",
+          "expected": "reject",
+          "fixture_id": "reuse-cross-dataset-exact",
+          "reason": "exact_complete_candidate",
+          "relationship": "cross_dataset_exact_overlap"
+        },
+        {
+          "actual": "pass",
+          "expected": "pass",
+          "fixture_id": "reuse-cross-dataset-template",
+          "reason": "bounded_distinct_example",
+          "relationship": "cross_dataset_shared_template_distinct_example"
+        },
+        {
+          "actual": "reject",
+          "expected": "reject",
+          "fixture_id": "reuse-latent-copy-new-wording",
+          "reason": "latent_program_copy",
+          "relationship": "identical_latent_program_different_wording"
+        },
+        {
+          "actual": "reject",
+          "expected": "reject",
+          "fixture_id": "reuse-plan-cap-exceeded",
+          "reason": "sentence_plan_cap_exceeded",
+          "relationship": "sentence_plan_cap_exceeded"
+        },
+        {
+          "actual": "reject",
+          "expected": "reject",
+          "fixture_id": "reuse-number-neutral-cap-exceeded",
+          "reason": "legacy_number_neutral_one_use",
+          "relationship": "number_neutral_cap_exceeded"
+        },
+        {
+          "actual": "reject",
+          "expected": "reject",
+          "fixture_id": "reuse-cross-split-exact",
+          "reason": "exact_complete_candidate",
+          "relationship": "cross_split_exact_overlap"
+        }
+      ],
+      "exact_matches": 12,
+      "fixture_count": 14,
+      "mismatched_fixture_ids": [
+        "reuse-number-swap",
+        "reuse-same-template-new-program"
+      ],
+      "pass_count": 5,
+      "policy_sha256": "81901dd2ff1d0db2a4f924beda15f46bb6c855c24260ba287f42a4c9ed9fd2e4",
+      "reject_count": 8,
+      "review_count": 1
+    },
+    "permissive-exact-latent-only": {
+      "decisions": [
+        {
+          "actual": "reject",
+          "expected": "reject",
+          "fixture_id": "reuse-exact-question",
+          "reason": "exact_complete_candidate",
+          "relationship": "exact_duplicate_question"
+        },
+        {
+          "actual": "pass",
+          "expected": "pass",
+          "fixture_id": "reuse-number-swap",
+          "reason": "bounded_distinct_example",
+          "relationship": "number_swap_distinct_program"
+        },
+        {
+          "actual": "pass",
+          "expected": "pass",
+          "fixture_id": "reuse-same-template-new-program",
+          "reason": "bounded_distinct_example",
+          "relationship": "same_template_distinct_latent_program"
+        },
+        {
+          "actual": "pass",
+          "expected": "pass",
+          "fixture_id": "reuse-same-plan-new-scenario",
+          "reason": "bounded_distinct_example",
+          "relationship": "same_plan_different_scenario"
+        },
+        {
+          "actual": "pass",
+          "expected": "pass",
+          "fixture_id": "reuse-same-skill-new-plan",
+          "reason": "bounded_distinct_example",
+          "relationship": "same_skill_different_sentence_plan"
+        },
+        {
+          "actual": "pass",
+          "expected": "pass",
+          "fixture_id": "reuse-structural-copy",
+          "reason": "bounded_distinct_example",
+          "relationship": "shared_structure_distinct_instantiation"
+        },
+        {
+          "actual": "pass",
+          "expected": "review",
+          "fixture_id": "reuse-close-paraphrase",
+          "reason": "cross_plan_close_paraphrase",
+          "relationship": "cross_plan_close_paraphrase"
+        },
+        {
+          "actual": "pass",
+          "expected": "pass",
+          "fixture_id": "reuse-unrelated",
+          "reason": "bounded_distinct_example",
+          "relationship": "unrelated_problems"
+        },
+        {
+          "actual": "reject",
+          "expected": "reject",
+          "fixture_id": "reuse-cross-dataset-exact",
+          "reason": "exact_complete_candidate",
+          "relationship": "cross_dataset_exact_overlap"
+        },
+        {
+          "actual": "pass",
+          "expected": "pass",
+          "fixture_id": "reuse-cross-dataset-template",
+          "reason": "bounded_distinct_example",
+          "relationship": "cross_dataset_shared_template_distinct_example"
+        },
+        {
+          "actual": "reject",
+          "expected": "reject",
+          "fixture_id": "reuse-latent-copy-new-wording",
+          "reason": "latent_program_copy",
+          "relationship": "identical_latent_program_different_wording"
+        },
+        {
+          "actual": "pass",
+          "expected": "reject",
+          "fixture_id": "reuse-plan-cap-exceeded",
+          "reason": "bounded_distinct_example",
+          "relationship": "sentence_plan_cap_exceeded"
+        },
+        {
+          "actual": "pass",
+          "expected": "reject",
+          "fixture_id": "reuse-number-neutral-cap-exceeded",
+          "reason": "bounded_distinct_example",
+          "relationship": "number_neutral_cap_exceeded"
+        },
+        {
+          "actual": "reject",
+          "expected": "reject",
+          "fixture_id": "reuse-cross-split-exact",
+          "reason": "exact_complete_candidate",
+          "relationship": "cross_split_exact_overlap"
+        }
+      ],
+      "exact_matches": 11,
+      "fixture_count": 14,
+      "mismatched_fixture_ids": [
+        "reuse-close-paraphrase",
+        "reuse-plan-cap-exceeded",
+        "reuse-number-neutral-cap-exceeded"
+      ],
+      "pass_count": 10,
+      "policy_sha256": "8139687bbb3a43c221fcf9d63d300b37ba6274af1abdf016fa260fde8d102f38",
+      "reject_count": 4,
+      "review_count": 0
+    }
+  },
+  "config_sha256": "f8b8f5e91b5206dd90abbc4c6107d02f6897da0becda4bb8cd65046c17b2be4f",
+  "fixture_count": 14,
+  "fixture_set_sha256": "2a829eea47aa189016b787acf5be731b5b75cb7e79d04a29f9baae425820b419",
+  "rejected_alternatives": {
+    "legacy-one-use-number-neutral": "rejects harmless distinct programs sharing reviewed wording",
+    "permissive-exact-latent-only": "does not enforce concentration caps or near-copy review"
+  },
+  "schema_version": 1,
+  "selected_policy_id": "bounded-balanced-template-reuse-v1",
+  "selected_policy_sha256": "66443bc82db961ab2ee34ef8c051928fb27985a733bc9a31e5c60ba3596c25f0",
+  "selection_frozen_before_smoke_outputs": true
+}
