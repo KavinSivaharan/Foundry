@@ -385,3 +385,22 @@ The micro-gate failed at 0 clean IRs versus 22 required and zero accepted exampl
 No 120-IR Qwen3 compact smoke is justified. Under the final stop rule, the single recommendation is
 to test a stronger local realization model with this protocol frozen; no further Qwen3 prompt patch,
 full generation, or training is authorized.
+
+## Milestone 5D: final stronger-model substitution
+
+The frozen compact protocol was tested without modification using official Apache-2.0
+`Qwen/Qwen3-4B-Instruct-2507@cdbee75f17c01a7cc42f958dc650907174af0554`. The complete snapshot is
+8,060,917,568 bytes and loaded offline as 4,022,468,096 FP16 parameters on the RTX 3080 without CPU
+offload. The three-beam probe peaked at 8,489,271,296 reserved bytes and left 946,094,080 bytes free,
+so compatibility passed.
+
+Every M5C control field matched: 30 plans, semantic-IR hashes, latent hashes, and compact-request
+hashes; control manifest `794ade78741918113cfab2f223c58007c9a5a3289196cdd36c6aa3d16a8cad66`.
+The compact system/user/combined hashes remained unchanged. The counted 90-beam run parsed 71 outputs,
+preserved placeholders/anchors/targets in 47/50/47, and selected zero IRs. Blinded audit found 90
+unnatural and 90 drifted outputs. Replay exactly reproduced
+`7043fb5f94cbd95fe76391fa167ba766acf5080f77b0fede7197c00b8b9a9f01`.
+
+The final local-model stop rule is active. No other local realization model or compact-prompt revision
+is recommended. The proposed successor is an offline, manually vetted template bank with deterministic
+typed slot filling; procedural IR, labels, verifiers, and contamination controls remain unchanged.

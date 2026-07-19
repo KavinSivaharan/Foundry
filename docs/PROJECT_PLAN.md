@@ -484,3 +484,22 @@ rule was a manually vetted template-bank architecture, but Milestone 5C selects 
 test as the single recommendation because it isolates model capacity while preserving the tested
 protocol and every deterministic safety layer. The 4,000 + 4,000 pilot, training, SFT, QLoRA, GRPO,
 paid services, benchmark inference, fallback inference, and sealed-final access remain unapproved.
+
+### Milestone 5D: stronger-model substitution micro-smoke (complete; gate failed)
+
+Milestone 5D changed exactly one experimental variable: Qwen3-1.7B was replaced by pinned
+`Qwen/Qwen3-4B-Instruct-2507@cdbee75f17c01a7cc42f958dc650907174af0554`. The same 30 M5C plans,
+semantic IRs, latent programs, compact requests, prompt hashes, three-beam decoding, validators,
+verifiers, screens, audit rules, and gates were proven identical before inference. The official
+Apache-2.0 snapshot loaded offline in FP16 without CPU offload and passed the fixed memory probe.
+
+The counted run produced exactly 90 beams but accepted 0/30 IRs. Only 71/90 outputs tag-parsed;
+47/90 preserved placeholders, 50/90 preserved anchors, and 47/90 preserved targets. All 90 audited
+outputs were unnatural and semantically drifted, while false labels, invalid acceptances, verifier
+disagreements, timeouts, and backend failures remained zero. Exact replay passed. The 22/30 gate and
+all family minima failed, so a 120-IR run is not justified.
+
+The final local-model substitution stop rule is active. No further local model, compact-prompt
+experiment, full dataset generation, or training is approved. The exact next decision is whether to
+authorize design and bounded validation of an offline, manually vetted natural-language template
+bank layered over the retained exact procedural IR, labels, dual verifiers, and contamination stack.

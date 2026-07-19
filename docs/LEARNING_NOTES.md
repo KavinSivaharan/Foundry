@@ -454,3 +454,18 @@ corruption, and exact replay shows the result is stable. Further Qwen3 prompt ed
 interface against observed failures without evidence that model capacity is adequate. The cleanest
 next experiment, if approved, is to hold the compact protocol fixed and test one stronger local
 model; otherwise the project should stop this realization route.
+
+## Model capacity did not rescue the frozen compact protocol
+
+Qwen3-4B-Instruct-2507 had enough memory headroom for the exact three-beam experiment, but more
+parameters did not produce a reliable compiler. Relative to Qwen3-1.7B, tag parsing fell from 90/90
+to 71/90, complete placeholder preservation fell from 87/90 to 47/90, and clean yield stayed 0/30.
+The larger model often substituted invented values or nouns for opaque placeholders; beams that did
+retain tokens still placed predicates after argument lists instead of composing natural clauses.
+
+This controlled negative result distinguishes model-capability failure from prompt-tuning failure:
+the IRs, prompt, decoding, validators, and gates were unchanged. The deterministic safety stack again
+did its job by rejecting every invalid surface without corrupting labels. The appropriate next
+architecture is not another live realizer. It is a finite, offline template bank whose language is
+manually vetted before deterministic slot filling, while procedural mathematics and dual verification
+remain the source of truth.

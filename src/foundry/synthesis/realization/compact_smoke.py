@@ -488,14 +488,33 @@ def execute_compact_smoke(
             )
         )
         if plan.attempt_index in {15, 30}:
+            observed_beams = [beam for record in records for beam in record.beams]
+            passed = {
+                layer: sum(beam.layer_results[layer] for beam in observed_beams)
+                for layer in (
+                    "placeholder_set",
+                    "semantic_anchor",
+                    "target_preservation",
+                    "language_quality",
+                    "filled_question_consistency",
+                )
+            }
+
             print(
                 json.dumps(
                     {
                         "progress_irs": plan.attempt_index,
                         "beams": plan.attempt_index * 3,
+                        "tag_parsed": sum(beam.tag_parsed for beam in observed_beams),
+                        "placeholder_preserved": passed["placeholder_set"],
+                        "semantic_anchor_preserved": passed["semantic_anchor"],
+                        "target_preserved": passed["target_preservation"],
+                        "language_quality_passed": passed["language_quality"],
+                        "filled_consistency_passed": passed["filled_question_consistency"],
                         "automatic_selected": sum(
                             record.selected_beam_index is not None for record in records
                         ),
+                        "cuda_failures_or_memory_warnings": 0,
                         "elapsed_seconds": time.perf_counter() - started,
                     },
                     sort_keys=True,

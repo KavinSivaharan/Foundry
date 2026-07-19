@@ -292,3 +292,26 @@ This log separates proposals from approved decisions. A proposal does not author
   3080 feasibility, fixed budget, and unchanged compact-protocol hashes before download or inference.
 - **Next user decision:** Decide whether to approve a bounded stronger-local-model design and smoke
   using the frozen compact tagged protocol. Otherwise stop the local surface-realization route.
+
+## D-021 — End live local-model realization and pivot to a manually vetted template bank
+
+- **Date:** 2026-07-18
+- **Status:** accepted by the Milestone 5D stop rule
+- **Decision:** Reject Qwen3-4B-Instruct-2507 as a production surface realizer after the controlled
+  30-IR comparison yielded 0 clean IRs. Do not test another local model or revise the compact prompt.
+  Retain exact procedural semantic IR, labels, and dual verifiers, but recommend an offline,
+  manually vetted natural-language template bank with deterministic slot filling plus the existing
+  contamination and diversity screens.
+- **Evidence:** The stronger model used the exact 30 M5C IRs and unchanged protocol. It returned 90
+  beams, with 71 tag parses, 47 placeholder-preserving outputs, 50 anchor-preserving outputs, 47
+  target-preserving outputs, and no automatically selected beam. All 90 audited outputs were
+  unnatural and semantically drifted. Exact replay passed; false labels, invalid acceptances,
+  verifier disagreements, and unresolved contamination cases were zero.
+- **Rationale:** Changing only model capacity did not resolve the systematic realization defect.
+  Continuing model or prompt experiments would violate the final stop rule and increase adaptive
+  overfitting risk. A reviewed finite language asset separates linguistic quality from label
+  generation while retaining the trustworthy mathematical and safety stack.
+- **Expected consequences:** No M5D output becomes training data. A 120-IR Qwen3-4B run, another
+  model substitution, full pilot generation, or training remains blocked.
+- **Next user decision:** Decide whether to approve a design-and-bounded-smoke milestone for the
+  manually vetted offline template-bank architecture.

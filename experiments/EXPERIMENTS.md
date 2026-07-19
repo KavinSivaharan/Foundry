@@ -342,3 +342,27 @@ Every future experiment must be registered here before a costly run begins. Its 
 - **Next experiment:** none approved. The final Qwen3 prompt-patching stop rule is active. The one
   recommended pivot is a separately approved stronger local realization model using the same frozen
   compact protocol and unchanged deterministic gates.
+
+## EXP-20260718-014 — Stronger-model compact realization comparison
+
+- **Status:** complete; fixed gate failed; final local-model stop rule active.
+- **Question:** Does changing only Qwen3-1.7B to Qwen3-4B-Instruct-2507 make the frozen compact
+  protocol a viable natural-language realization layer?
+- **Control:** Exact M5C 30-IR plan and hashes; same compact prompt, three beams, 384-token limit,
+  seed, event tags, anchors, validation, verifiers, screens, audit, and 22/30 gate.
+- **Model:** `Qwen/Qwen3-4B-Instruct-2507@cdbee75f17c01a7cc42f958dc650907174af0554`,
+  Apache-2.0, offline FP16 CUDA, no offload or quantization.
+- **Probe:** 3/3 decoded and tag-parsed; 8,489,271,296 peak reserved VRAM; 946,094,080 bytes free;
+  3.575 seconds generation.
+- **Counted result:** 30 IRs, 90 beams, 71 tag parses, 47 placeholder passes, 50 anchor passes,
+  47 target passes, 19 language-quality passes, 10 filled-consistency passes, 0 automatic selections,
+  and 0 clean IRs after audit. All 90 beams were unnatural and semantically drifted. False labels,
+  invalid acceptances, incorrect rejections, verifier disagreements, timeouts, and backend failures
+  were zero.
+- **Runtime/resources:** 108.983 seconds generation; 121.937 seconds total; 11,410 input and 8,838
+  output tokens; 8,553,572,352/8,703,180,800 peak allocated/reserved VRAM; 12,593,078,272 peak RAM;
+  160,116 raw beam bytes.
+- **Replay:** exact pass at `7043fb5f94cbd95fe76391fa167ba766acf5080f77b0fede7197c00b8b9a9f01`.
+- **Conclusion:** Capacity substitution did not rescue the protocol. No 120-IR run is justified.
+- **Next experiment:** none approved. Recommend a separately approved manually vetted offline
+  template-bank design and bounded smoke; do not test another live realization model.

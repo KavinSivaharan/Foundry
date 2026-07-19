@@ -1,0 +1,292 @@
+{
+  "attempted_irs": 30,
+  "automatic_acceptance_by_category": {
+    "constraint_distribution_or_discrete_reasoning": 0,
+    "multi_step_bookkeeping_or_omission": 0,
+    "rate_ratio_percentage_or_average": 0
+  },
+  "automatic_acceptance_by_difficulty": {
+    "easy": 0,
+    "hard": 0,
+    "medium": 0
+  },
+  "automatic_acceptance_by_group": {
+    "generic_control": 0,
+    "targeted": 0
+  },
+  "automatic_acceptance_by_output_track": {
+    "disabled": 0,
+    "enabled": 0
+  },
+  "automatic_selected_irs": 0,
+  "benchmark_screen_outcomes": {},
+  "compact_combined_protocol_sha256": "6aec762647b03708268da0ae85c5c584821bdc2c82064a6534251c695a48fcf8",
+  "compact_system_prompt_sha256": "d5ea32af1d6df2c6bc06f7a315cab68084c26c0c719d5d08d1cb7c4628630222",
+  "compact_user_protocol_sha256": "6ed50a9c49434ec2e61d4d6065a9854aca414523b7b14eb5e33c60eee3285454",
+  "config_sha256": "362a9faeea7ad30151b53731fb4a155efb670a4b04433a2580d392ba23a654bc",
+  "controlled_comparison": {
+    "combined_experiment_sha256": "e09e1acab6d6ee2c2f0d04032fb3808326a14fc443c43979757356702c2fb377",
+    "control_verification": {
+      "control_manifest_sha256": "794ade78741918113cfab2f223c58007c9a5a3289196cdd36c6aa3d16a8cad66",
+      "ir_count": 30,
+      "latent_hash_matches": 30,
+      "plan_matches": 30,
+      "request_hash_matches": 30,
+      "semantic_ir_hash_matches": 30
+    },
+    "m5c_deterministic_run_sha256": "b9b1a7bc8214c2656b6cd45cb089252f63fbe572c52f910e1148a34cd6a4358a",
+    "m5c_model": "Qwen/Qwen3-1.7B",
+    "m5c_raw_sha256": "680748fdeba73e44dfe1b1d23c43052ff2820eb8ae1978f4d570b7373bd4554e",
+    "m5d_model": "Qwen/Qwen3-4B-Instruct-2507",
+    "only_changed_variable": "realization_model"
+  },
+  "deterministic_replay": {
+    "actual_sha256": "7043fb5f94cbd95fe76391fa167ba766acf5080f77b0fede7197c00b8b9a9f01",
+    "beams": 90,
+    "expected_sha256": "7043fb5f94cbd95fe76391fa167ba766acf5080f77b0fede7197c00b8b9a9f01",
+    "irs": 30,
+    "replay_measurements": {
+      "generation_seconds": 109.12026079998759,
+      "initialization_seconds": 12.743762499998411,
+      "input_tokens": 11410,
+      "model_cache_bytes": 15239713179,
+      "output_tokens": 8838,
+      "peak_gpu_allocated_bytes": 8553572352,
+      "peak_gpu_reserved_bytes": 8703180800,
+      "peak_system_ram_bytes": 12585926656,
+      "raw_artifact_bytes": 0,
+      "total_runtime_seconds": 121.9467857999989
+    },
+    "status": "passed"
+  },
+  "deterministic_run_sha256": "7043fb5f94cbd95fe76391fa167ba766acf5080f77b0fede7197c00b8b9a9f01",
+  "direct_model_comparison": {
+    "qwen3_1_7b": {
+      "automatic_selected_irs": 0,
+      "clean_accepted_irs": 0,
+      "measurements": {
+        "generation_seconds": 83.47423989999152,
+        "initialization_seconds": 9.315293100000417,
+        "input_tokens": 11530,
+        "model_cache_bytes": 7178795611,
+        "output_tokens": 11472,
+        "peak_gpu_allocated_bytes": 3728026112,
+        "peak_gpu_reserved_bytes": 3825205248,
+        "peak_system_ram_bytes": 7532572672,
+        "raw_artifact_bytes": 160872,
+        "total_runtime_seconds": 92.86902249999912
+      },
+      "placeholder_preserved_beams": 87,
+      "semantic_anchor_preserved_beams": 87,
+      "tag_parsed_beams": 90,
+      "target_preserved_beams": 87
+    },
+    "qwen3_4b_instruct_2507": {
+      "automatic_selected_irs": 0,
+      "clean_accepted_irs": 0,
+      "measurements": {
+        "generation_seconds": 108.98313769999731,
+        "initialization_seconds": 12.871494200000598,
+        "input_tokens": 11410,
+        "model_cache_bytes": 15239713179,
+        "output_tokens": 8838,
+        "peak_gpu_allocated_bytes": 8553572352,
+        "peak_gpu_reserved_bytes": 8703180800,
+        "peak_system_ram_bytes": 12593078272,
+        "raw_artifact_bytes": 160116,
+        "total_runtime_seconds": 121.93694029999824
+      },
+      "placeholder_preserved_beams": 47,
+      "semantic_anchor_preserved_beams": 50,
+      "tag_parsed_beams": 71,
+      "target_preserved_beams": 47
+    }
+  },
+  "final_ignored_raw_artifact_bytes": 220449,
+  "generated_beams": 90,
+  "generation_config_sha256": "ec90127f5e10a8160f11a63b9c727eeaf6df249bc856d67cecab41a8ddaddb51",
+  "internal_diversity_policy_sha256": "26c030e8497c4727e286ff3e89d4720cee1c2681a224b8a93b8c515ef521cc90",
+  "internal_screen_outcomes": {},
+  "ir_master_seed": "foundry-m5c-compact-ir-master-20260718-v1",
+  "layer_failures": {
+    "answer_calculation_guard": 0,
+    "benchmark_contamination": 0,
+    "event_order": 0,
+    "event_tag_occurrence": 0,
+    "event_tag_set": 0,
+    "filled_question_consistency": 80,
+    "independent_verifier": 0,
+    "internal_diversity": 0,
+    "language_quality": 71,
+    "output_contract": 0,
+    "outside_text": 19,
+    "placeholder_assignment": 43,
+    "placeholder_set": 43,
+    "primary_verifier": 0,
+    "raw_numeric_guard": 43,
+    "semantic_anchor": 40,
+    "tag_parse": 19,
+    "target_preservation": 43,
+    "verifier_agreement": 0
+  },
+  "manual_audit": {
+    "audit_method": "all beams reviewed with canonical answers and verifier evidence hidden",
+    "audited_beams": 90,
+    "clean_acceptance_by_category": {},
+    "clean_acceptance_by_difficulty": {},
+    "clean_acceptance_by_group": {},
+    "clean_acceptance_by_output_track": {},
+    "clean_accepted_irs": 0,
+    "defect_categories": {
+      "systematic_compact_protocol_nonrealization": 90
+    },
+    "false_labels": 0,
+    "incorrect_rejections": 0,
+    "invalid_acceptances": 0,
+    "label_and_verifier_visibility_first_pass": "hidden",
+    "naturalness": {
+      "unnatural": 90
+    },
+    "pipeline_decisions": {
+      "correct_rejection": 90
+    },
+    "semantic_drift_outputs": 90,
+    "semantic_preservation": {
+      "drifted": 90
+    },
+    "status": "complete",
+    "systematic_wording_defect": true,
+    "uncertainty_is_rejection": true
+  },
+  "measurements": {
+    "generation_seconds": 108.98313769999731,
+    "initialization_seconds": 12.871494200000598,
+    "input_tokens": 11410,
+    "model_cache_bytes": 15239713179,
+    "output_tokens": 8838,
+    "peak_gpu_allocated_bytes": 8553572352,
+    "peak_gpu_reserved_bytes": 8703180800,
+    "peak_system_ram_bytes": 12593078272,
+    "raw_artifact_bytes": 160116,
+    "total_runtime_seconds": 121.93694029999824
+  },
+  "memory_probe": {
+    "checks": {
+      "all_beams_decoded": true,
+      "all_beams_tag_parsed": true,
+      "all_weights_on_cuda": true,
+      "exactly_three_beams": true,
+      "free_vram_meets_minimum": true,
+      "no_cpu_offload": true,
+      "no_timeout": true,
+      "peak_reserved_within_limit": true
+    },
+    "fixture": {
+      "kind": "original_nonbenchmark_procedural_fixture",
+      "latent_structure_sha256": "5f87fa4eadaad1cefdd20c1053ab9517e5cd730b403e776c9639239f885cd070",
+      "request_sha256": "411d7e81c209390076d9d623c90251350b769d63964223341f6ca5030c4ebbf3",
+      "semantic_ir_sha256": "204bf15a412d007b371f7498cbad51d7701445e268cd01c557f4979aec9adb7b"
+    },
+    "generation": {
+      "beams": 3,
+      "elapsed_seconds": 3.5750354000010702,
+      "input_tokens": 419,
+      "output_tokens": 267,
+      "tag_parsed_beams": 3,
+      "timeout_exceeded": false
+    },
+    "model": {
+      "chat_template_sha256": "64f85b198065d0fba2a81f37e10ed68161ce2c19a754c7100e67e0ca2ee9c326",
+      "license_id": "Apache-2.0",
+      "model_config_sha256": "5beea1a4a34c62782bfb2f911c606741a3bab8f92d80a118fa053c28af12e8ba",
+      "parameter_count": 4022468096,
+      "repo_id": "Qwen/Qwen3-4B-Instruct-2507",
+      "repository_bytes": 8060917568,
+      "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+      "safetensors_bytes": 8044982000,
+      "tokenizer_json_sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+    },
+    "resources": {
+      "free_gpu_after_generation_bytes": 946094080,
+      "peak_gpu_allocated_bytes": 8426049024,
+      "peak_gpu_reserved_bytes": 8489271296,
+      "peak_system_ram_bytes": 12480253952,
+      "total_gpu_bytes": 10736893952
+    },
+    "runtime_metadata": {
+      "chat_template_sha256": "64f85b198065d0fba2a81f37e10ed68161ce2c19a754c7100e67e0ca2ee9c326",
+      "device": "cuda:0",
+      "dtype": "torch.float16",
+      "model_load_seconds": 5.048941400000331,
+      "model_parameter_count": 4022468096,
+      "resolved_revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+      "snapshot_path": "C:\\Users\\Admin\\Projects\\Foundry\\data\\huggingface\\hub\\models--Qwen--Qwen3-4B-Instruct-2507\\snapshots\\cdbee75f17c01a7cc42f958dc650907174af0554",
+      "tokenizer_load_seconds": 0.25548300000082236
+    },
+    "status": "passed"
+  },
+  "model": {
+    "cache_root": "data\\huggingface",
+    "dtype": "float16",
+    "license_id": "Apache-2.0",
+    "local_files_only": true,
+    "repo_id": "Qwen/Qwen3-4B-Instruct-2507",
+    "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+    "trust_remote_code": false
+  },
+  "model_artifact": {
+    "chat_template_sha256": "64f85b198065d0fba2a81f37e10ed68161ce2c19a754c7100e67e0ca2ee9c326",
+    "license_id": "Apache-2.0",
+    "model_config_sha256": "5beea1a4a34c62782bfb2f911c606741a3bab8f92d80a118fa053c28af12e8ba",
+    "parameter_count": 4022468096,
+    "repo_id": "Qwen/Qwen3-4B-Instruct-2507",
+    "repository_bytes": 8060917568,
+    "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+    "safetensors_bytes": 8044982000,
+    "tokenizer_json_sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+  },
+  "placeholder_preserved_beams": 47,
+  "readiness_gate": {
+    "clean_accepted_irs": 0,
+    "criteria": {
+      "at_least_22_clean_irs": false,
+      "bookkeeping_at_least_8": false,
+      "deterministic_replay_matches": true,
+      "discrete_at_least_5": false,
+      "exactly_30_irs": true,
+      "exactly_90_beams": true,
+      "no_systematic_wording_defect": false,
+      "rates_at_least_6": false,
+      "vram_and_speed_practical": true,
+      "zero_accepted_semantic_drift": true,
+      "zero_false_labels": true,
+      "zero_invalid_acceptances": true,
+      "zero_unresolved_contamination": true,
+      "zero_verifier_disagreements": true
+    },
+    "final_local_model_stop_rule": "active",
+    "minimum_required": 22,
+    "recommended_next_step": "manually vetted offline natural-language template bank",
+    "status": "failed"
+  },
+  "run_id": "foundry-qwen3-4b-compact-model-comparison-v1",
+  "runtime_metadata": {
+    "chat_template_sha256": "64f85b198065d0fba2a81f37e10ed68161ce2c19a754c7100e67e0ca2ee9c326",
+    "device": "cuda:0",
+    "dtype": "torch.float16",
+    "model_load_seconds": 3.7048141000013857,
+    "model_parameter_count": 4022468096,
+    "resolved_revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+    "snapshot_path": "C:\\Users\\Admin\\Projects\\Foundry\\data\\huggingface\\hub\\models--Qwen--Qwen3-4B-Instruct-2507\\snapshots\\cdbee75f17c01a7cc42f958dc650907174af0554",
+    "tokenizer_load_seconds": 0.26898050000090734
+  },
+  "schema_version": 1,
+  "selected_beam_contribution": {
+    "1": 0,
+    "2": 0,
+    "3": 0
+  },
+  "semantic_anchor_preserved_beams": 50,
+  "tag_parsed_beams": 71,
+  "target_preserved_beams": 47
+}

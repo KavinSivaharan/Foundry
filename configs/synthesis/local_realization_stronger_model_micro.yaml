@@ -1,0 +1,45 @@
+schema_version: 1
+run_id: foundry-qwen3-4b-compact-model-comparison-v1
+base_compact_config: configs/synthesis/local_realization_compact_micro.yaml
+m5c_raw_path: results/raw/realization_micro_smoke/qwen3_compact_v1/beams.jsonl
+m5c_raw_sha256: 680748fdeba73e44dfe1b1d23c43052ff2820eb8ae1978f4d570b7373bd4554e
+m5c_control_manifest_sha256: 794ade78741918113cfab2f223c58007c9a5a3289196cdd36c6aa3d16a8cad66
+m5c_deterministic_run_sha256: b9b1a7bc8214c2656b6cd45cb089252f63fbe572c52f910e1148a34cd6a4358a
+
+model:
+  repo_id: Qwen/Qwen3-4B-Instruct-2507
+  revision: cdbee75f17c01a7cc42f958dc650907174af0554
+  license_id: Apache-2.0
+  trust_remote_code: false
+  dtype: float16
+  local_files_only: true
+  cache_root: data/huggingface
+  parameter_count: 4022468096
+  repository_bytes: 8060917568
+  safetensors_bytes: 8044982000
+  model_config_sha256: 5beea1a4a34c62782bfb2f911c606741a3bab8f92d80a118fa053c28af12e8ba
+  tokenizer_json_sha256: aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4
+  chat_template_sha256: 64f85b198065d0fba2a81f37e10ed68161ce2c19a754c7100e67e0ca2ee9c326
+
+combined_experiment_sha256: e09e1acab6d6ee2c2f0d04032fb3808326a14fc443c43979757356702c2fb377
+raw_directory: results/raw/realization_model_comparison/qwen3_4b_compact_v1
+summary_path: results/synthesis_smoke/qwen3_4b_compact_v1_summary.json
+artifact_summary_path: results/synthesis_smoke/qwen3_4b_model_artifact.json
+
+memory_probe:
+  random_seed: 5517004
+  style_variant: 451
+  peak_reserved_vram_limit_bytes: 9932111872
+  minimum_free_vram_bytes: 536870912
+  raw_path: results/raw/realization_model_comparison/qwen3_4b_compact_v1/memory_probe.json
+
+rules:
+  only_model_changes: true
+  fresh_or_replacement_irs: false
+  prompt_changes: false
+  validator_changes: false
+  dependency_changes: false
+  fallback_inference: false
+  cpu_offload: false
+  quantization: false
+  sealed_final_allowed: false

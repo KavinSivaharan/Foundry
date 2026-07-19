@@ -559,3 +559,18 @@ Therefore no compact output is accepted training data, the 120-IR Qwen3 follow-u
 the 4,000 + 4,000 pilot remains unapproved. The final Qwen3 prompt-patching stop rule is active. The
 single recommended next experiment is a separately approved stronger local realization model using
 the same frozen compact protocol and gates; changing the protocol again is not recommended.
+
+## Milestone 5D stronger-model conclusion
+
+The final approved model substitution used the exact M5C control set and compact protocol with
+Qwen3-4B-Instruct-2507. Artifact, memory, and exact-replay checks passed, but clean acceptance remained
+0/30 and every returned beam failed blinded naturalness/semantic-preservation review. Therefore live
+LLM surface realization is removed from the proposed production path.
+
+The recommended replacement preserves the independently verified core: sample exact latent programs,
+compute labels exactly, and retain both mathematical verifiers. Natural language would come from a
+versioned offline bank of independently authored templates, each manually accepted before use.
+Deterministic compatibility rules would select templates and fill typed slots; the existing language
+quality, exact/template/structural duplicate, development-contamination, and internal-diversity screens
+would remain mandatory. No template may contain or be derived from benchmark content. This architecture
+requires a separately approved design and bounded smoke before any 4,000 + 4,000 generation.
