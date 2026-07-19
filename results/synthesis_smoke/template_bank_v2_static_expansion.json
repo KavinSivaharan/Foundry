@@ -1,0 +1,30 @@
+{
+  "aggregate_sha256": "78802a61a421ed060aeeab9841c8dd139b97b0ddf971a9b5dd85f5e4766d8e99",
+  "codex_inspection_sample_by_category": {
+    "constraint_distribution_or_discrete_reasoning": 30,
+    "multi_step_bookkeeping_or_omission": 30,
+    "rate_ratio_percentage_or_average": 30
+  },
+  "codex_inspection_sample_size": 90,
+  "codex_inspection_status": "complete_no_defects",
+  "distinct_render_signatures": 232,
+  "duplicate_noun_detections": 0,
+  "exact_duplicate_expansions": 15,
+  "expansion_version": "foundry-template-bank-static-expansion-v2",
+  "expected_incompatibility_rejections": 0,
+  "failure_counts": {},
+  "fixtures_per_plan": 10,
+  "internal_label_detections": 0,
+  "morphology_failures": 0,
+  "number_neutral_duplicate_expansions": 1192,
+  "ordinal_failures": 0,
+  "raw_failure_path": "results/raw/template_bank_static_v2/failures.md",
+  "raw_sample_path": "results/raw/template_bank_static_v2/codex_sample.md",
+  "schema_version": 2,
+  "semantic_coverage_failures": 0,
+  "sentence_plans": 232,
+  "target_mismatches": 0,
+  "total_expansions_attempted": 2320,
+  "training_dataset_created": false,
+  "valid_renders": 2320
+}

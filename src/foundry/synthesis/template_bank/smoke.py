@@ -1,5 +1,7 @@
 """Bounded 120-attempt smoke for the offline template bank."""
 
+# ruff: noqa: E501  # the local review packet keeps readable HTML and JavaScript literals
+
 from __future__ import annotations
 
 import argparse
@@ -35,7 +37,8 @@ from foundry.synthesis.realization import validate_realization
 from foundry.synthesis.realization.ir import DiscreteProblemIR, RateProblemIR
 from foundry.synthesis.schema import LatentProgramSpec
 from foundry.synthesis.semantic import PinnedSentenceEncoder, load_semantic_artifact_config
-from foundry.synthesis.template_bank.bank import build_template_bank
+from foundry.synthesis.template_bank.bank import TEMPLATE_BANK_VERSION, build_template_bank
+from foundry.synthesis.template_bank.composition import audit_surface_provenance
 from foundry.synthesis.template_bank.contracts import SentencePlanSpec, TemplateSpec
 from foundry.synthesis.template_bank.policy import TemplateBankDiversityPolicy, load_policy
 from foundry.synthesis.template_bank.renderer import render_with_template
@@ -57,6 +60,7 @@ class TemplateBankRecord:
     render_signature_sha256: str
     latent_program_sha256: str
     rendered_text_sha256: str
+    surface_provenance_sha256: str
     rendered_question: str
     primary_verifier_success: bool
     independent_verifier_success: bool
@@ -173,6 +177,7 @@ def _run_once(
         original = _generate(plan)
         template, sentence_plan = _select_template(plan, original, bank)
         draft = render_with_template(original, template, sentence_plan)
+        provenance = audit_surface_provenance(draft.problem_ir, draft.realization, template)
         generation_seconds = time.perf_counter() - generation_start
         render_signature = template.render_signature_hash(sentence_plan)
         latent_hash = _latent_program_sha256(draft.latent_program)
@@ -180,16 +185,22 @@ def _run_once(
         numeric_hash = numeric_template_sha256(draft.rendered_question)
 
         verification_start = time.perf_counter()
-        language_reasons = validate_realization(
-            problem=draft.problem_ir,
-            realization=draft.realization,
-            answer=draft.canonical_final_answer,
-        ) + validate_rendered_candidate(
-            question=draft.rendered_question,
-            completion=draft.training_completion,
-            answer=draft.canonical_final_answer,
-            output_contract_enabled=draft.output_contract_enabled,
-            metadata=draft.quality_metadata,
+        language_reasons = tuple(
+            dict.fromkeys(
+                validate_realization(
+                    problem=draft.problem_ir,
+                    realization=draft.realization,
+                    answer=draft.canonical_final_answer,
+                )
+                + validate_rendered_candidate(
+                    question=draft.rendered_question,
+                    completion=draft.training_completion,
+                    answer=draft.canonical_final_answer,
+                    output_contract_enabled=draft.output_contract_enabled,
+                    metadata=draft.quality_metadata,
+                )
+                + provenance.reasons
+            )
         )
         primary, independent, generator_reasons = _verify(draft)
         agreement = (
@@ -269,11 +280,12 @@ def _run_once(
                 render_signature_sha256=render_signature,
                 latent_program_sha256=latent_hash,
                 rendered_text_sha256=rendered_hash,
+                surface_provenance_sha256=provenance.provenance_sha256,
                 rendered_question=draft.rendered_question,
                 primary_verifier_success=primary.success,
                 independent_verifier_success=independent.success,
                 verifier_agreement=agreement,
-                deterministic_language_reasons=tuple(dict.fromkeys(language_reasons)),
+                deterministic_language_reasons=language_reasons,
                 benchmark_lexical_reason=lexical.rejection_reason,
                 benchmark_ngram_maximum=lexical.maximum_ngram_jaccard,
                 benchmark_semantic_outcome=str(benchmark_outcome),
@@ -340,8 +352,9 @@ def _write_review_packet(path: Path, records: tuple[TemplateBankRecord, ...]) ->
     for item in records:
         lines.extend(
             (
-                f"## {item.attempt_index:03d} — {item.candidate_id}",
+                f"## {item.attempt_index:03d} - {item.candidate_id}",
                 "",
+                f"- Group: `{item.group}`",
                 f"- Category: `{item.category}`",
                 f"- Difficulty: `{item.difficulty}`",
                 f"- Template: `{item.template_id}`",
@@ -355,6 +368,138 @@ def _write_review_packet(path: Path, records: tuple[TemplateBankRecord, ...]) ->
         )
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text("\n".join(lines), encoding="utf-8")
+
+
+def _write_html_review_packet(path: Path, records: tuple[TemplateBankRecord, ...]) -> None:
+    """Write an ignored, browser-local human-review interface with JSON export."""
+
+    candidates = [
+        {
+            "candidate_id": item.candidate_id,
+            "attempt_index": item.attempt_index,
+            "group": item.group,
+            "category": item.category,
+            "difficulty": item.difficulty,
+            "rendered_question": item.rendered_question,
+            "pipeline_decision": item.final_decision,
+            "rejection_reason": item.rejection_reason,
+        }
+        for item in records
+    ]
+    payload = json.dumps(candidates, sort_keys=True).replace("<", "\\u003c")
+    html = f"""<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Foundry template-bank human review</title>
+  <style>
+    :root {{ color-scheme: light dark; font-family: system-ui, sans-serif; }}
+    body {{ max-width: 980px; margin: 0 auto; padding: 24px; line-height: 1.45; }}
+    header {{ position: sticky; top: 0; background: Canvas; padding: 12px 0; z-index: 2; }}
+    .card {{ border: 1px solid GrayText; border-radius: 10px; padding: 16px; margin: 16px 0; }}
+    .meta {{ color: GrayText; font-size: 0.9rem; }}
+    .question {{ font-size: 1.05rem; margin: 14px 0; }}
+    .controls {{ display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }}
+    button, select, input {{ padding: 8px 10px; }}
+    button.selected {{ outline: 3px solid Highlight; }}
+    input {{ min-width: 260px; }}
+    .accepted {{ border-left: 6px solid #238636; }}
+    .rejected {{ border-left: 6px solid #cf222e; }}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Foundry template-bank human review</h1>
+    <p>No benchmark answers or sealed-final content appear here. Review wording, completeness, and target clarity.</p>
+    <p id="progress">0 of 120 reviewed</p>
+    <button id="export">Export review JSON</button>
+  </header>
+  <main id="cards"></main>
+  <script>
+    const candidates = {payload};
+    const storageKey = "foundry-template-bank-smoke-v2-review";
+    const defectLabels = ["", "unnatural wording", "ambiguous target", "missing information", "repeated wording", "grammar", "wrong unit", "unclear referent", "other"];
+    const state = JSON.parse(localStorage.getItem(storageKey) || "{{}}");
+    const save = () => {{ localStorage.setItem(storageKey, JSON.stringify(state)); updateProgress(); }};
+    const updateProgress = () => {{
+      const reviewed = Object.values(state).filter(item => item && item.decision).length;
+      document.getElementById("progress").textContent = `${{reviewed}} of ${{candidates.length}} reviewed`;
+    }};
+    const cards = document.getElementById("cards");
+    candidates.forEach(candidate => {{
+      const card = document.createElement("section");
+      card.className = `card ${{candidate.pipeline_decision}}`;
+      const title = document.createElement("h2");
+      title.textContent = `${{String(candidate.attempt_index).padStart(3, "0")}} - ${{candidate.candidate_id}}`;
+      const meta = document.createElement("p");
+      meta.className = "meta";
+      meta.textContent = `${{candidate.group}} | ${{candidate.category}} | ${{candidate.difficulty}} | pipeline: ${{candidate.pipeline_decision}}${{candidate.rejection_reason ? " (" + candidate.rejection_reason + ")" : ""}}`;
+      const question = document.createElement("p");
+      question.className = "question";
+      question.textContent = candidate.rendered_question;
+      const controls = document.createElement("div");
+      controls.className = "controls";
+      const current = state[candidate.candidate_id] || {{ decision: "", defect_label: "", note: "" }};
+      ["Approve", "Reject", "Unsure"].forEach(label => {{
+        const button = document.createElement("button");
+        button.textContent = label;
+        button.classList.toggle("selected", current.decision === label.toLowerCase());
+        button.addEventListener("click", () => {{
+          state[candidate.candidate_id] = {{ ...current, ...state[candidate.candidate_id], decision: label.toLowerCase() }};
+          controls.querySelectorAll("button").forEach(item => item.classList.remove("selected"));
+          button.classList.add("selected");
+          save();
+        }});
+        controls.appendChild(button);
+      }});
+      const select = document.createElement("select");
+      defectLabels.forEach(label => {{
+        const option = document.createElement("option");
+        option.value = label;
+        option.textContent = label || "Defect label (optional)";
+        select.appendChild(option);
+      }});
+      select.value = current.defect_label;
+      select.addEventListener("change", () => {{
+        state[candidate.candidate_id] = {{ ...current, ...state[candidate.candidate_id], defect_label: select.value }};
+        save();
+      }});
+      const note = document.createElement("input");
+      note.placeholder = "Short note (optional)";
+      note.value = current.note;
+      note.addEventListener("change", () => {{
+        state[candidate.candidate_id] = {{ ...current, ...state[candidate.candidate_id], note: note.value }};
+        save();
+      }});
+      controls.append(select, note);
+      card.append(title, meta, question, controls);
+      cards.appendChild(card);
+    }});
+    document.getElementById("export").addEventListener("click", () => {{
+      const exportObject = {{
+        schema_version: 1,
+        review_kind: "genuine_user_human_review",
+        exported_at: new Date().toISOString(),
+        candidates: candidates.map(candidate => ({{
+          candidate_id: candidate.candidate_id,
+          ...(state[candidate.candidate_id] || {{ decision: "", defect_label: "", note: "" }})
+        }}))
+      }};
+      const url = URL.createObjectURL(new Blob([JSON.stringify(exportObject, null, 2)], {{ type: "application/json" }}));
+      const anchor = document.createElement("a");
+      anchor.href = url;
+      anchor.download = "foundry-template-bank-smoke-v2-review.json";
+      anchor.click();
+      URL.revokeObjectURL(url);
+    }});
+    updateProgress();
+  </script>
+</body>
+</html>
+"""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(html, encoding="utf-8")
 
 
 def run_template_bank_smoke(repository_root: Path, config_path: Path) -> dict[str, object]:
@@ -383,6 +528,27 @@ def run_template_bank_smoke(repository_root: Path, config_path: Path) -> dict[st
     replay_hash = _decision_sha256(replay)
     replay_match = counted_hash == replay_hash
     _write_review_packet(repository_root / config.manual_audit_path, counted)
+    html_packet_path = raw_directory / "human_review.html"
+    _write_html_review_packet(html_packet_path, counted)
+    static_summary = json.loads(
+        (
+            repository_root / "results/synthesis_smoke/template_bank_v2_static_expansion.json"
+        ).read_text(encoding="utf-8")
+    )
+    static_inspection = json.loads(
+        (
+            repository_root / "results/synthesis_smoke/template_bank_v2_static_inspection.json"
+        ).read_text(encoding="utf-8")
+    )
+    static_gate = (
+        static_summary.get("total_expansions_attempted") == 2320
+        and static_summary.get("valid_renders") == 2320
+        and static_summary.get("failure_counts") == {}
+        and static_summary.get("codex_inspection_status") == "complete_no_defects"
+        and static_inspection.get("sample_size") == 90
+        and static_inspection.get("invalid_or_unnatural_count") == 0
+        and static_inspection.get("systematic_composition_defect") is False
+    )
     accepted = sum(item.final_decision == "accepted" for item in counted)
     accepted_records = tuple(item for item in counted if item.final_decision == "accepted")
     category_acceptance = _acceptance(counted, "category")
@@ -392,6 +558,7 @@ def run_template_bank_smoke(repository_root: Path, config_path: Path) -> dict[st
     unresolved_contamination = 0
     technical_gate = (
         len(counted) == 120
+        and static_gate
         and replay_match
         and accepted >= 90
         and family_minimum
@@ -413,7 +580,7 @@ def run_template_bank_smoke(repository_root: Path, config_path: Path) -> dict[st
         "run_id": config.run_id,
         "master_seed": config.master_seed,
         "config_sha256": config.config_sha256,
-        "template_bank_version": "foundry-template-bank-v1",
+        "template_bank_version": TEMPLATE_BANK_VERSION,
         "template_bank_sha256": _canonical_sha256([asdict(item) for item in bank]),
         "template_frames": len(bank),
         "sentence_plans": sum(len(item.sentence_plan_variants) for item in bank),
@@ -421,6 +588,13 @@ def run_template_bank_smoke(repository_root: Path, config_path: Path) -> dict[st
         "plans_by_category": dict(sorted(plans_by_category.items())),
         "internal_policy_sha256": policy.policy_sha256,
         "internal_fixture_set_sha256": policy.fixture_set_sha256,
+        "static_expansion_sha256": static_summary["aggregate_sha256"],
+        "static_expansion_attempted": static_summary["total_expansions_attempted"],
+        "static_expansion_valid": static_summary["valid_renders"],
+        "static_codex_inspection_sample": static_inspection["sample_size"],
+        "static_codex_inspection_defects": static_inspection["invalid_or_unnatural_count"],
+        "static_gate_passed": static_gate,
+        "milestone_6a_regressions_blocked": 13,
         "attempted": len(counted),
         "accepted": accepted,
         "rejected": len(counted) - accepted,
@@ -478,6 +652,7 @@ def run_template_bank_smoke(repository_root: Path, config_path: Path) -> dict[st
         "technical_gate_passed": technical_gate,
         "human_review_status": "pending_user_review",
         "human_review_packet": config.manual_audit_path.as_posix(),
+        "human_review_html_packet": html_packet_path.relative_to(repository_root).as_posix(),
         "scope_exclusions": [
             "no_language_model_inference",
             "no_full_dataset_generation",

@@ -335,3 +335,30 @@ This log separates proposals from approved decisions. A proposal does not author
   generation, training, benchmark inference, live realizer, or sealed-final access follows.
 - **Next user decision:** Review the local packet, then decide whether to approve one architecture-
   level bank-composition blocker resolution or stop the realization program.
+
+## D-023 — Admit the composition compiler to genuine user review
+
+- **Date:** 2026-07-19
+- **Status:** technically ready; human review pending
+- **Decision:** Freeze the Milestone 6B lexical boundary, ordinal renderer, one-head noun-phrase
+  composition, token provenance, full-bank static expansion, and fresh 120-attempt result. Treat the
+  bank as technically ready for user review, but not as human-vetted and not as authorized for full
+  generation.
+- **Evidence:** Every one of 232 plans passed ten deterministic fixtures (2,320/2,320), all 13 prior
+  defects are blocked, and the stratified 90-render Codex sample had no finding. The fresh smoke
+  accepted 116/120; four duplicate candidates were safely rejected. Dual verifiers agreed on all
+  120, false labels and deterministic language defects were zero, contamination remained clear,
+  and replay exactly reproduced `f5caa7e8...a254`.
+- **Rationale:** Internal metadata can no longer become prose; noun, ordinal, target, and node
+  composition now have typed, auditable sources. These checks establish technical consistency, not
+  human naturalness. A real reviewer must decide whether each surface reads naturally enough for
+  future training data.
+- **Alternatives considered:** treat Codex inspection as human review; generate the pilot from the
+  automatic result; lower duplicate or contamination gates; run another smoke; reopen live-model
+  realization; or stop the synthesis path.
+- **Expected consequences:** The ignored HTML/Markdown packets and any exported review JSON remain
+  local. No full dataset, benchmark evaluation, model inference, QLoRA, SFT, GRPO, or sealed-final
+  access follows automatically.
+- **Next user decision:** Open `results/raw/template_bank_smoke_v2/human_review.html`, mark all 120
+  items Approve/Reject/Unsure, export the JSON, and explicitly approve or reject the bank. Any Reject
+  or Unsure item requires review before a full-generation proposal.

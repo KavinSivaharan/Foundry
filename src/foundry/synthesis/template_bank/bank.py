@@ -7,9 +7,13 @@ from __future__ import annotations
 from foundry.synthesis.realization.ir import TargetKind
 from foundry.synthesis.schema import DifficultyLevel
 from foundry.synthesis.taxonomy import FailureCategory
-from foundry.synthesis.template_bank.contracts import SentencePlanSpec, TemplateSpec
+from foundry.synthesis.template_bank.contracts import (
+    SentencePlanSpec,
+    SurfaceLexemeSpec,
+    TemplateSpec,
+)
 
-TEMPLATE_BANK_VERSION = "foundry-template-bank-v1"
+TEMPLATE_BANK_VERSION = "foundry-template-bank-v2"
 _DIFFICULTIES = (DifficultyLevel.EASY, DifficultyLevel.MEDIUM, DifficultyLevel.HARD)
 
 _BOOKKEEPING_FRAMES = (
@@ -81,6 +85,79 @@ _DISCRETE_FRAMES = {
         "two_component_limit",
     ),
 }
+
+_SURFACE_PHRASES = {
+    # Bookkeeping frames. These phrases are authored surface language, never normalized IDs.
+    "opening_inventory": ("starting inventory", "inventory"),
+    "scheduled_transfers": ("transfer schedule", "schedule"),
+    "stock_log": ("stock count", "count"),
+    "supply_ledger": ("supply tally", "tally"),
+    "storage_updates": ("storage tally", "tally"),
+    "shift_handover": ("handover inventory", "inventory"),
+    "dispatch_record": ("dispatch tally", "tally"),
+    "receiving_record": ("receiving tally", "tally"),
+    "allocation_log": ("allocation count", "count"),
+    "materials_register": ("materials count", "count"),
+    "workshop_balance": ("workshop tally", "tally"),
+    "collection_changes": ("collection tally", "tally"),
+    "equipment_register": ("equipment count", "count"),
+    "packing_inventory": ("packing count", "count"),
+    "resource_movements": ("resource tally", "tally"),
+    "cabinet_tally": ("cabinet inventory", "inventory"),
+    "depot_balance": ("depot inventory", "inventory"),
+    "closing_inventory": ("final inventory", "inventory"),
+    # Rate and ratio frames.
+    "steady_output": ("steady production", "production"),
+    "timed_production": ("timed production", "production"),
+    "interval_yield": ("interval output", "output"),
+    "repeated_cycle": ("repeated operation", "operation"),
+    "paired_collections": ("paired quantities", "quantities"),
+    "matched_batches": ("matched quantities", "quantities"),
+    "proportional_sets": ("proportional quantities", "quantities"),
+    "scaled_groups": ("scaled quantities", "quantities"),
+    "selected_share": ("selected portion", "portion"),
+    "inspection_sample": ("inspection sample", "sample"),
+    "allocated_portion": ("allocated portion", "portion"),
+    "chosen_fraction": ("chosen portion", "portion"),
+    "weighted_readings": ("weighted measurements", "measurements"),
+    "grouped_measurements": ("grouped measurements", "measurements"),
+    "combined_mean": ("combined average", "average"),
+    "weighted_scores": ("weighted values", "values"),
+    "parallel_channels": ("parallel operation", "operation"),
+    "paired_streams": ("paired operation", "operation"),
+    "joint_output": ("joint production", "production"),
+    "simultaneous_processes": ("simultaneous operation", "operation"),
+    # Discrete frames.
+    "two_design_build": ("two-design allocation", "allocation"),
+    "dual_recipe_plan": ("two-type allocation", "allocation"),
+    "mixed_package_order": ("mixed-item allocation", "allocation"),
+    "two_grade_allocation": ("two-grade allocation", "allocation"),
+    "paired_type_schedule": ("paired-type allocation", "allocation"),
+    "complete_container_count": ("complete-container task", "task"),
+    "full_bundle_count": ("full-bundle task", "task"),
+    "whole_package_count": ("whole-package task", "task"),
+    "complete_set_count": ("complete-set task", "task"),
+    "filled_crate_count": ("filled-container task", "task"),
+    "equal_container_share": ("equal-share task", "task"),
+    "balanced_location_split": ("balanced-allocation task", "task"),
+    "even_station_allocation": ("even-allocation task", "task"),
+    "uniform_group_share": ("uniform-share task", "task"),
+    "equal_batch_distribution": ("equal-distribution task", "task"),
+    "two_resource_capacity": ("two-resource limit", "limit"),
+    "paired_supply_limit": ("paired-resource limit", "limit"),
+    "dual_material_build": ("two-material limit", "limit"),
+    "combined_constraint_capacity": ("combined-resource limit", "limit"),
+    "two_component_limit": ("two-component limit", "limit"),
+}
+
+
+def _surface_lexeme(frame: str) -> SurfaceLexemeSpec:
+    surface_key = frame.split(".")[-1]
+    try:
+        text, head = _SURFACE_PHRASES[surface_key]
+    except KeyError as error:
+        raise ValueError(f"no approved surface lexeme for frame {frame!r}") from error
+    return SurfaceLexemeSpec(f"surface.{surface_key}", text, head)
 
 
 def _plans(category: str) -> tuple[SentencePlanSpec, ...]:
@@ -253,6 +330,7 @@ def _template(
             "discrete": str(FailureCategory.CONSTRAINT_DISCRETE),
         }[category],
         semantic_frame=frame,
+        surface_lexeme=_surface_lexeme(frame),
         compatible_target_types=targets,
         required_semantic_event_types=event_types,
         required_placeholder_roles=roles,

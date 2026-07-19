@@ -588,3 +588,17 @@ verifier disagreements. One latent duplicate and one number-neutral duplicate we
 inspection then found 13 invalid or unnatural surfaces, so the implementation failed the unchanged
 systematic-language-defect gate. The packet remains ignored and human review remains pending. Full
 generation and training are not ready.
+
+## Milestone 6B composition and review boundary
+
+The offline-bank path now uses an explicit surface compiler. Internal IDs never become prose;
+approved surface lexemes, typed noun phrases, centralized ordinals, and token provenance are checked
+before the frozen contamination pipeline. Ten deterministic fixtures per plan exercised all 232
+plans (2,320 total), with zero final rule failures and all 13 prior defects blocked.
+
+The new fixed-seed smoke retained the targeted 33/14/13 and generic 20/20/20 curricula and the 20%
+output-contract track. It accepted 116/120 and rejected three latent copies plus one number-neutral
+copy. Every mathematical check agreed; no label, target, language-rule, benchmark-screen, or replay
+failure occurred. This establishes **technical readiness for review only**. The 116 candidates are
+not an approved dataset, and the bank remains `human_review_pending` until the user exports and
+approves the local review JSON.

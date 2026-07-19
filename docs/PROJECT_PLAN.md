@@ -516,3 +516,22 @@ failures. Repeated frame nouns, invalid ordinal forms, malformed noun compounds,
 labels are systematic, so the technical gate failed. Full pilot generation and training remain
 blocked. The next decision is whether to approve one architecture-level bank-composition blocker
 resolution after user review, or stop synthesis realization.
+
+### Milestone 6B: offline template-composition compiler (complete; human review pending)
+
+Milestone 6B retained the 58-frame/232-plan bank and replaced identifier-derived prose with approved
+surface lexemes, typed single-head noun phrases, correct ordinals, and token-level provenance. All
+13 Milestone 6A defects are deterministic regressions. A non-dataset expansion rendered ten fixtures
+per plan: 2,320/2,320 passed, all 232 signatures were exercised, and a stratified 90-render Codex
+inspection (30 per family, not human review) found no remaining deterministic surface defect.
+
+The one fresh 120-attempt smoke accepted 116 automatically: targeted 58/60, generic 58/60;
+bookkeeping/rates/discrete 53/31/32; easy/medium/hard 38/39/39. Three latent-program copies and one
+number-neutral copy were safely rejected. False labels, verifier disagreements, deterministic
+language defects, target mismatches, benchmark rejections, unresolved contamination, exact accepted
+duplicates, and reused render signatures were zero. Replay exactly matched SHA-256
+`f5caa7e811cbf257c752a15059e25cc20b2f978fb60e8ad0890c64186095a254`.
+
+The technical status is **TECHNICALLY READY — HUMAN REVIEW PENDING**. Full 4,000 + 4,000
+generation and training remain blocked. The exact next decision is the user's review of the ignored
+HTML packet and explicit approval or rejection of template-bank language quality.

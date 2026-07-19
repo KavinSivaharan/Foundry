@@ -388,3 +388,27 @@ Every future experiment must be registered here before a costly run begins. Its 
   review packet is pending at `results/raw/template_bank_smoke/human_review.md`.
 - **Next experiment:** none approved. Await user packet review and an explicit decision on one
   offline architecture-level bank-composition blocker resolution or stopping realization.
+
+## EXP-20260719-016 — Offline template-composition compiler and final review smoke
+
+- **Status:** complete; technical gate passed; genuine human review pending.
+- **Question:** Can typed lexical, ordinal, noun-phrase, and provenance composition eliminate the 13
+  M6A defects broadly enough to justify user review of a fresh bounded smoke?
+- **Static expansion:** 232 plans x 10 deterministic fixtures = 2,320 attempts; 2,320 valid; all 232
+  render signatures exercised; zero final noun, internal-label, ordinal, morphology, target, or
+  coverage failures. A stratified 90-render Codex sample had zero findings. Expansion SHA-256 is
+  `78802a61a421ed060aeeab9841c8dd139b97b0ddf971a9b5dd85f5e4766d8e99`.
+- **Budget:** exactly 120 fresh attempts, no replacement; targeted 33/14/13 and generic 20/20/20;
+  24 output-contract attempts; no language model or GPU inference.
+- **Automatic result:** 116 accepted, four rejected (three latent copies and one number-neutral
+  copy). Targeted/generic accepted 58/58; bookkeeping/rates/discrete accepted 53/31/32. Verifiers
+  agreed throughout; false labels, deterministic language defects, target mismatches, benchmark
+  rejections, unresolved contamination, exact duplicates, and signature reuse were zero.
+- **Replay:** exact match at
+  `f5caa7e811cbf257c752a15059e25cc20b2f978fb60e8ad0890c64186095a254`.
+- **Resources:** 1.670 seconds counted, 1.612 seconds replay, 912,838,656 peak process RSS, 539,386
+  ignored artifact bytes, no GPU.
+- **Conclusion:** **TECHNICALLY READY — HUMAN REVIEW PENDING**. The ignored HTML packet is
+  `results/raw/template_bank_smoke_v2/human_review.html`; Codex inspection is not human approval.
+- **Next experiment:** none approved. Await the user's complete packet review and explicit decision;
+  do not generate the 4,000 + 4,000 pilot or train.

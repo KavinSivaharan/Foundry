@@ -11,15 +11,25 @@ from foundry.synthesis.pipeline import _generate, build_attempt_plan, load_smoke
 from foundry.synthesis.quality import validate_rendered_candidate
 from foundry.synthesis.realization import validate_realization
 from foundry.synthesis.realization.ir import TargetKind
-from foundry.synthesis.template_bank import build_template_bank
+from foundry.synthesis.realization.morphology import count_lexeme
+from foundry.synthesis.template_bank import TEMPLATE_BANK_VERSION, build_template_bank
+from foundry.synthesis.template_bank.composition import (
+    NounPhraseSpec,
+    audit_surface_provenance,
+    numeric_ordinal,
+    validate_surface_text,
+    word_ordinal,
+)
 from foundry.synthesis.template_bank.contracts import SentencePlanSpec
+from foundry.synthesis.template_bank.expansion import run_static_expansion
 from foundry.synthesis.template_bank.finalize import finalize_summary
 from foundry.synthesis.template_bank.policy import load_policy
 from foundry.synthesis.template_bank.renderer import render_with_template
-from foundry.synthesis.template_bank.smoke import _select_template
+from foundry.synthesis.template_bank.smoke import _select_template, _write_html_review_packet
 
 
 def test_initial_bank_has_required_capacity_and_review_state() -> None:
+    assert TEMPLATE_BANK_VERSION == "foundry-template-bank-v2"
     bank = build_template_bank()
     counts: dict[str, int] = {}
     signatures: set[str] = set()
@@ -27,6 +37,8 @@ def test_initial_bank_has_required_capacity_and_review_state() -> None:
         counts[template.reasoning_category] = counts.get(template.reasoning_category, 0) + 1
         assert template.review_status == "human_review_pending"
         assert template.normalized_template_hash
+        assert "_" not in template.surface_lexeme.text
+        assert template.surface_lexeme.text != template.semantic_frame.replace("_", " ")
         for plan in template.sentence_plan_variants:
             signatures.add(template.render_signature_hash(plan))
     assert sorted(counts.values()) == [18, 20, 20]
@@ -73,6 +85,9 @@ def test_all_120_plans_render_uniquely_and_pass_deterministic_language_rules() -
             output_contract_enabled=draft.output_contract_enabled,
             metadata=draft.quality_metadata,
         )
+        provenance = audit_surface_provenance(draft.problem_ir, draft.realization, template)
+        assert not provenance.reasons
+        assert provenance.provenance_sha256
         signatures.add(template.render_signature_hash(sentence_plan))
         latent_ids.add(draft.candidate_id)
     assert len(signatures) == 120
@@ -91,6 +106,97 @@ def test_internal_policy_is_frozen_before_smoke() -> None:
 def test_sentence_plan_requires_meaningful_clause_order() -> None:
     with pytest.raises(ValueError, match="multi-clause"):
         SentencePlanSpec("bad.plan", ("only",), "opening", "event", "question", "now", "active")
+
+
+@pytest.mark.parametrize(
+    ("value", "expected"),
+    (
+        (1, "1st"),
+        (2, "2nd"),
+        (3, "3rd"),
+        (4, "4th"),
+        (11, "11th"),
+        (12, "12th"),
+        (13, "13th"),
+        (21, "21st"),
+        (22, "22nd"),
+        (23, "23rd"),
+        (101, "101st"),
+    ),
+)
+def test_numeric_ordinals_are_morphologically_correct(value: int, expected: str) -> None:
+    assert numeric_ordinal(value) == expected
+
+
+def test_ordinal_words_fail_closed_outside_approved_mapping() -> None:
+    assert word_ordinal(1) == "first"
+    assert word_ordinal(13) == "thirteenth"
+    with pytest.raises(ValueError, match="positive"):
+        numeric_ordinal(0)
+    with pytest.raises(ValueError, match="unsupported"):
+        word_ordinal(21)
+
+
+def test_noun_phrase_has_one_typed_head_and_rejects_repetition() -> None:
+    shelf = count_lexeme("shelf", "shelf", "shelves", attributive="shelf")
+    box = count_lexeme("box", "box", "boxes", attributive="box")
+    assert NounPhraseSpec(head=shelf, quantity=1).render()[0] == "shelf"
+    assert NounPhraseSpec(head=shelf, quantity=2).render()[0] == "shelves"
+    assert NounPhraseSpec(head=box, quantity=2).render()[0] == "boxes"
+    with pytest.raises(ValueError, match="repeat"):
+        NounPhraseSpec(head=shelf, quantity=2, grouping_noun=shelf).render()
+
+
+@pytest.mark.parametrize(
+    ("sanitized_surface", "internal_identifier", "expected_reason"),
+    (
+        ("dispatch record record", "dispatch_record", "adjacent_duplicate_noun"),
+        ("receiving record record", "receiving_record", "adjacent_duplicate_noun"),
+        ("paired collections collections", "paired_collections", "adjacent_duplicate_noun"),
+        ("selected share inventory", "selected_share", "internal_frame_label_leak"),
+        ("the 1th group", "weighted_readings", "invalid_ordinal_morphology"),
+        ("two resource capacity inventory", "two_resource_capacity", "internal_frame_label_leak"),
+        ("materials register register", "materials_register", "adjacent_duplicate_noun"),
+        ("equipment register register", "equipment_register", "adjacent_duplicate_noun"),
+        ("parallel channels process", "parallel_channels", "internal_frame_label_leak"),
+        ("matched batches collections", "matched_batches", "internal_frame_label_leak"),
+        ("the 2th group", "grouped_measurements", "invalid_ordinal_morphology"),
+        ("paired supply limit inventory", "paired_supply_limit", "internal_frame_label_leak"),
+        ("dual recipe plan plan", "dual_recipe_plan", "adjacent_duplicate_noun"),
+    ),
+)
+def test_all_thirteen_milestone_6a_surface_defects_are_blocked(
+    sanitized_surface: str, internal_identifier: str, expected_reason: str
+) -> None:
+    reasons = validate_surface_text(sanitized_surface, (internal_identifier,))
+    assert expected_reason in reasons
+
+
+def test_internal_identifiers_cannot_reach_surface_text() -> None:
+    assert "internal_identifier_leak" in validate_surface_text("raw_frame_id appears here")
+    assert "internal_frame_label_leak" in validate_surface_text(
+        "a raw frame label appears here", ("raw_frame_label",)
+    )
+
+
+def test_full_bank_expansion_exercises_ten_fixtures_per_plan(tmp_path: Path) -> None:
+    summary = run_static_expansion(tmp_path)
+    assert summary["total_expansions_attempted"] == 2320
+    assert summary["valid_renders"] == 2320
+    assert summary["failure_counts"] == {}
+    assert summary["distinct_render_signatures"] == 232
+    assert summary["training_dataset_created"] is False
+
+
+def test_html_review_packet_is_local_and_exports_user_decisions(tmp_path: Path) -> None:
+    packet = tmp_path / "human_review.html"
+    _write_html_review_packet(packet, ())
+    html = packet.read_text(encoding="utf-8")
+    assert "localStorage" in html
+    assert '["Approve", "Reject", "Unsure"]' in html
+    assert "Export review JSON" in html
+    assert "genuine_user_human_review" in html
+    assert "foundry-template-bank-smoke-v2-review.json" in html
 
 
 def test_codex_inspection_can_only_fail_the_automatic_gate(tmp_path: Path) -> None:

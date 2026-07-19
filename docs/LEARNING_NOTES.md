@@ -483,3 +483,22 @@ typed slots. A deterministic validator can prove coverage, units, target identit
 but it cannot infer that “record record,” “1th,” or a malformed compound sounds wrong unless those
 properties are represented explicitly. Human review remains a separate scientific gate; Codex
 inspection is useful pre-screening but must not be mislabeled as human vetting.
+
+## Surface provenance turns composition assumptions into testable invariants
+
+Milestone 6B fixed classes rather than strings. Internal frame and role IDs now stay in metadata;
+English comes only from approved surface lexemes. A noun phrase has one typed head, optional typed
+modifiers, and explicit morphology. Numeric ordinals use the English 11/12/13 exception rather than
+blindly appending `th`. Each emitted token is attributed to grammar, an approved lexeme, an entity,
+a quantity, a unit, morphology, punctuation, or approved context, while each semantic node must be
+realized exactly once.
+
+The first 2,320-render sweep showed why broad expansion matters: it found repeated event clauses and
+an over-broad identifier substring rule that a small happy-path test missed. Sequence-aware event
+phrasing and word-boundary matching resolved both across the bank. The final sweep passed 2,320/2,320
+and the fresh smoke safely rejected four duplicates while accepting 116 candidates.
+
+The remaining distinction is crucial: deterministic validity is not human naturalness. Codex
+inspection can pre-screen synthetic wording, but only the user's packet decisions can change the
+review state from pending. A high automatic yield is evidence that review is worth doing, not a
+substitute for it.

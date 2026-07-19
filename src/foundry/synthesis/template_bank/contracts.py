@@ -13,6 +13,27 @@ from foundry.synthesis.schema import DifficultyLevel
 _ID = re.compile(r"^[a-z0-9][a-z0-9._-]+$")
 _PLACEHOLDER = re.compile(r"\{([a-z][a-z0-9_]*)\}")
 _FORBIDDEN = ("answer", "gsm", "benchmark")
+_INTERNAL_TOKEN = re.compile(r"[a-z0-9]+_[a-z0-9_]+")
+
+
+@dataclass(frozen=True)
+class SurfaceLexemeSpec:
+    """An approved phrase that is explicitly separate from an internal identifier."""
+
+    lexeme_id: str
+    text: str
+    head_noun: str
+
+    def __post_init__(self) -> None:
+        if not _ID.fullmatch(self.lexeme_id):
+            raise ValueError("surface-lexeme ID is invalid")
+        if not self.text.strip() or not self.head_noun.strip():
+            raise ValueError("surface lexemes require explicit text and a head noun")
+        if _INTERNAL_TOKEN.search(self.text) or _INTERNAL_TOKEN.search(self.head_noun):
+            raise ValueError("internal identifiers cannot be surface lexemes")
+        words = re.findall(r"[a-z]+", self.text.lower())
+        if self.head_noun.lower() not in words:
+            raise ValueError("surface-lexeme head noun must occur in its approved text")
 
 
 @dataclass(frozen=True)
@@ -58,6 +79,7 @@ class TemplateSpec:
     template_version: str
     reasoning_category: str
     semantic_frame: str
+    surface_lexeme: SurfaceLexemeSpec
     compatible_target_types: tuple[TargetKind, ...]
     required_semantic_event_types: tuple[str, ...]
     required_placeholder_roles: tuple[str, ...]
@@ -75,6 +97,9 @@ class TemplateSpec:
     def __post_init__(self) -> None:
         if not _ID.fullmatch(self.template_id) or not _ID.fullmatch(self.template_version):
             raise ValueError("template ID or version is invalid")
+        normalized_internal = self.semantic_frame.replace("_", " ").replace(".", " ")
+        if self.surface_lexeme.text.lower() == normalized_internal.lower():
+            raise ValueError("internal frame labels cannot be reused as surface language")
         if len(self.sentence_plan_variants) < 4:
             raise ValueError("each semantic frame requires at least four sentence plans")
         if len({plan.plan_id for plan in self.sentence_plan_variants}) != len(

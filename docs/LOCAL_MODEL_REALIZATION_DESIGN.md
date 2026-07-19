@@ -414,3 +414,15 @@ rule: Qwen3-1.7B, Qwen3-4B, the compact protocol, and further prompt/model subst
 The bank's automatic yield was high, but Codex inspection found systematic frame-name and morphology
 defects. This is a template-composition blocker, not a reason to reopen live inference. Any next
 proposal must remain offline and must be separately approved; full generation is blocked.
+
+## Milestone 6B confirms the offline successor
+
+No local model, prompt, compact protocol, model cache, or inference runtime was used in Milestone 6B.
+The offline successor now separates internal semantic identifiers from approved surface lexemes and
+adds typed noun/ordinal composition plus token provenance. The full bank passed 2,320 static renders;
+the fresh 120-attempt smoke accepted 116 with exact replay and no deterministic language or semantic
+failure. The live-model route remains permanently closed.
+
+This result does not retroactively validate either Qwen experiment and does not authorize full
+generation. It moves the offline bank to **TECHNICALLY READY — HUMAN REVIEW PENDING**. The next
+action is genuine user review of the local HTML packet, not another realizer experiment.

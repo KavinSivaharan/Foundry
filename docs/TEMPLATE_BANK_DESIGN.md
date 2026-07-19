@@ -117,3 +117,99 @@ sentences would be evidence for a future design decision, not authorization for 
 Do not generate 4,000 + 4,000 examples or train. The user must decide whether to approve a bounded,
 architecture-level blocker resolution for reviewed phrase composition and ordinal/frame-name
 morphology, with a new bank version and a new single smoke, or stop synthetic-data realization.
+
+## Milestone 6B composition compiler
+
+Milestone 6B freezes the compiler-backed bank as `foundry-template-bank-v2` while preserving the 58
+frames, 232 sentence plans, mathematical generators, dual verifiers,
+MiniLM artifact, and every contamination threshold. It changes only deterministic surface
+composition. The final status is **TECHNICALLY READY — HUMAN REVIEW PENDING**.
+
+### Thirteen prior defect regressions
+
+| # | Sanitized surface | Primary class | Architectural prevention |
+|---:|---|---|---|
+| 1 | `dispatch record record` | adjacent duplicate head | one typed noun head plus approved surface lexeme |
+| 2 | `receiving record record` | adjacent duplicate head | one typed noun head plus approved surface lexeme |
+| 3 | `paired collections collections` | duplicated grouping head | grouping/head role uniqueness |
+| 4 | `selected share inventory` | internal frame leakage | ID/surface-lexeme separation |
+| 5 | `1th group` | invalid ordinal morphology | centralized ordinal renderer |
+| 6 | `two resource capacity inventory` | unsupported compound | approved surface lexeme and noun composition |
+| 7 | `materials register register` | adjacent duplicate head | one typed noun head plus approved surface lexeme |
+| 8 | `equipment register register` | adjacent duplicate head | one typed noun head plus approved surface lexeme |
+| 9 | `parallel channels process` | internal frame leakage | ID/surface-lexeme separation |
+| 10 | `matched batches collections` | malformed grouping compound | grouping/head role uniqueness |
+| 11 | `2th group` | invalid ordinal morphology | centralized ordinal renderer |
+| 12 | `paired supply limit inventory` | unsupported compound | approved surface lexeme and noun composition |
+| 13 | `dual recipe plan plan` | adjacent duplicate head | one typed noun head plus approved surface lexeme |
+
+All 13 are sanitized fixtures; no complete generated or benchmark question is tracked.
+
+### Lexical boundary, noun phrases, and ordinals
+
+`SurfaceLexemeSpec` provides an approved phrase and explicit head noun for each internal semantic
+frame. Internal frame, role, enum, snake-case, and debug identifiers remain metadata and cannot be
+normalized into prose. `NounPhraseSpec` separates head, attributive modifier, grouping noun,
+container noun, count behavior, and quantity; duplicate lexical roles or adjacent equal heads reject.
+The renderer uses explicit irregular morphology inherited from typed `LexemeSpec`.
+
+Numeric ordinals handle `1st`, `2nd`, `3rd`, `4th`, the `11th`/`12th`/`13th` exception, and larger
+forms such as `21st`, `22nd`, `23rd`, and `101st`. Word ordinals are allowed only from a bounded
+explicit mapping. Zero, negative, or unsupported word forms reject.
+
+### Surface provenance
+
+Every emitted token is classified as fixed grammar, approved lexeme, entity slot, quantity slot,
+unit slot, morphology output, punctuation, or approved optional context. The report also proves that
+every required semantic node is rendered exactly once and that no invented node appears. It hashes
+the complete token/source and node-count evidence. Provenance validation runs before mathematical
+verification and contamination screening.
+
+### Full-bank expansion
+
+Every one of 232 plans was rendered over ten deterministic fixtures spanning easy/medium/hard and
+output-contract on/off states: 2,320 attempts, 2,320 valid renders, 232 distinct signatures, zero
+final noun, identifier, ordinal, morphology, target, or coverage failures. Expansion SHA-256 is
+`78802a61a421ed060aeeab9841c8dd139b97b0ddf971a9b5dd85f5e4766d8e99`.
+
+The expansion measured 15 exact and 1,192 number-neutral repeats because it deliberately applies
+multiple fixture values to the same plans. Those expansion artifacts are not candidate data. The
+counted pipeline still rejects reused signatures, latent programs, exact text, and number-neutral
+copies. Codex inspected a deterministic stratified sample of 90 (30 per family) and recorded zero
+findings; that is not human review.
+
+### Fresh 120-attempt smoke
+
+Seed `foundry-template-bank-smoke-master-20260719-v2` produced exactly 120 attempts with no
+replacement. Automatic acceptance was 116/120: targeted 58/60, generic 58/60;
+bookkeeping/rates/discrete 53/31/32; easy/medium/hard 38/39/39. All 24 output-contract attempts
+passed. Three latent-program copies and one number-neutral copy were rejected. False labels,
+verifier disagreements, deterministic language defects, target mismatches, benchmark rejections,
+unresolved contamination, exact accepted duplicates, and reused signatures were zero.
+
+Counted/replay SHA-256 is
+`f5caa7e811cbf257c752a15059e25cc20b2f978fb60e8ad0890c64186095a254`. Counted/replay runtime was
+1.670/1.612 seconds; peak process RSS was 912,838,656 bytes; ignored evidence was 539,386 bytes; GPU
+use was zero.
+
+### Genuine user review instructions
+
+Open this ignored local file in a browser:
+
+`C:\Users\Admin\Projects\Foundry\results\raw\template_bank_smoke_v2\human_review.html`
+
+For each of 120 cards:
+
+1. Read only for natural wording, complete information, clear references, correct units, and an
+   unambiguous target.
+2. Click **Approve**, **Reject**, or **Unsure**.
+3. For Reject/Unsure, choose a defect label and optionally add a short note.
+4. Confirm the progress counter reaches `120 of 120 reviewed`.
+5. Click **Export review JSON** and retain the downloaded
+   `foundry-template-bank-smoke-v2-review.json` locally.
+6. Tell Codex whether the bank is approved and provide the exported JSON for deterministic summary
+   if desired.
+
+The page stores progress in browser `localStorage`; the HTML, Markdown fallback, and exported JSON
+are ignored and must not be committed. Human review status remains **PENDING USER REVIEW**. Full
+generation and all training remain unapproved.

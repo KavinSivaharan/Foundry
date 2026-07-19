@@ -14,6 +14,7 @@ from foundry.synthesis.realization.ir import (
     CoverageEntry,
     DiscreteProblemIR,
     DiscreteRelationKind,
+    LexemeSpec,
     MorphologyUse,
     RateProblemIR,
     RateRelationKind,
@@ -22,10 +23,16 @@ from foundry.synthesis.realization.ir import (
     TargetKind,
     Voice,
 )
-from foundry.synthesis.realization.morphology import noun_form
+from foundry.synthesis.template_bank.composition import NounPhraseSpec, numeric_ordinal
 from foundry.synthesis.template_bank.contracts import SentencePlanSpec, TemplateSpec
 
-RENDERER_VERSION = "foundry-template-bank-realizer-v1"
+RENDERER_VERSION = "foundry-template-bank-realizer-v2"
+
+
+def _noun_form(lexeme: LexemeSpec, quantity: int) -> tuple[str, MorphologyUse]:
+    """Route every emitted noun through the typed one-head composition layer."""
+
+    return NounPhraseSpec(head=lexeme, quantity=quantity).render()
 
 
 def _sentence(text: str) -> str:
@@ -84,21 +91,21 @@ def _bookkeeping(
     domain = problem.domain
     actor = domain.actor.proper_name or "The inventory coordinator"
     item = domain.item.lexeme
-    initial_noun, initial_use = noun_form(item, problem.initial.value)
-    lead = template.semantic_frame.replace("_", " ")
+    initial_noun, initial_use = _noun_form(item, problem.initial.value)
+    lead = template.surface_lexeme.text
     ledger = domain.primary_location.lexeme.singular
     openings = (
         f"For the {lead} at the {domain.setting}, {actor} records {problem.initial.value} {initial_noun} in the {ledger}.",
-        f"The {lead} record for the {ledger} at the {domain.setting} starts with {problem.initial.value} {initial_noun}.",
-        f"Before the scheduled movements at the {domain.setting}, the {ledger} contains {problem.initial.value} {initial_noun} for the {lead} count.",
-        f"At the {domain.setting}, {actor}'s {lead} register opens with {problem.initial.value} {initial_noun} stored in the {ledger}.",
+        f"The {ledger} at the {domain.setting} contains {problem.initial.value} {initial_noun} at the start of the {lead}.",
+        f"Before the scheduled movements at the {domain.setting}, the {ledger} contains {problem.initial.value} {initial_noun} for the {lead}.",
+        f"At the {domain.setting}, {actor} begins the {lead} with {problem.initial.value} {initial_noun} stored in the {ledger}.",
     )
     clauses = [_sentence(openings[index])]
     coverage = [CoverageEntry(problem.initial.node_id, 0)]
     morphology: list[MorphologyUse] = [initial_use]
     for ordinal, change in enumerate(problem.changes, start=1):
         amount = change.quantity.value
-        noun, use = noun_form(item, amount)
+        noun, use = _noun_form(item, amount)
         morphology.append(use)
         incoming = change.destination_id == "primary_location"
         origin = (
@@ -114,12 +121,12 @@ def _bookkeeping(
         events = (
             f"Update {ordinal} has {actor} move {amount} {noun} from the {origin} to the {destination}.",
             f"In update {ordinal}, a transfer of {amount} {noun} is recorded from the {origin} to the {destination}.",
-            f"From the {origin}, {actor} next moves {amount} {noun} into the {destination}.",
-            f"The {lead} register then shows {amount} {noun} moving from the {origin} to the {destination}.",
+            f"In the {numeric_ordinal(ordinal)} movement, {actor} moves {amount} {noun} from the {origin} into the {destination}.",
+            f"The {numeric_ordinal(ordinal)} entry shows {amount} {noun} moving from the {origin} to the {destination}.",
         )
         clauses.append(_sentence(events[index]))
         coverage.append(CoverageEntry(change.node_id, len(clauses) - 1))
-    plural, plural_use = noun_form(item, 2)
+    plural, plural_use = _noun_form(item, 2)
     morphology.append(plural_use)
     if problem.target.kind is TargetKind.GROUP_COUNT:
         if problem.group_size is None:
@@ -160,8 +167,7 @@ def _rate(
     index = _plan_index(template, plan)
     domain = problem.domain
     actor = domain.actor.proper_name or "The operator"
-    plural, item_use = noun_form(domain.item.lexeme, 2)
-    lead = template.semantic_frame.split(".", 1)[1].replace("_", " ")
+    plural, item_use = _noun_form(domain.item.lexeme, 2)
     clauses: list[str] = []
     coverage: list[CoverageEntry] = []
     morphology: list[MorphologyUse] = [item_use]
@@ -173,7 +179,7 @@ def _rate(
             f"a process produces {rate} {plural} per interval",
             f"{actor} records an output of {rate} {plural} during each interval",
             f"each operating interval yields {rate} {plural}",
-            f"the {lead} process contributes {rate} {plural} every interval",
+            f"the process contributes {rate} {plural} every interval",
         )
         supports = (
             f"The process runs for {intervals} equal intervals.",
@@ -202,9 +208,9 @@ def _rate(
         )
         facts = (
             f"two collections of {plural} are in the ratio {first}:{second}",
-            f"the first and second {lead} collections follow a {first}-to-{second} ratio",
+            f"the first and second collections follow a {first}-to-{second} ratio",
             f"for every {first} parts in the first collection, the second collection has {second} parts",
-            f"the paired collections maintain the exact proportion {first}:{second}",
+            f"the two collections maintain the exact proportion {first}:{second}",
         )
         supports = (
             f"The first collection contains {known} {plural}.",
@@ -232,7 +238,7 @@ def _rate(
         facts = (
             f"a collection contains {base} {plural}",
             f"{actor} begins with a batch of {base} {plural}",
-            f"the full {lead} inventory consists of {base} {plural}",
+            f"the full inventory consists of {base} {plural}",
             f"a recorded batch has {base} {plural} altogether",
         )
         supports = (
@@ -259,15 +265,15 @@ def _rate(
         if len({(group.weight, group.value) for group in problem.groups}) != len(problem.groups):
             raise ValueError("weighted groups must be unique")
         for ordinal, group in enumerate(problem.groups, start=1):
-            panel, panel_use = noun_form(
+            panel, panel_use = _noun_form(
                 problem.target.unit.denominator or domain.item.lexeme, group.weight
             )
-            mark, mark_use = noun_form(problem.target.unit.numerator, group.value)
+            mark, mark_use = _noun_form(problem.target.unit.numerator, group.value)
             morphology.extend((panel_use, mark_use))
             forms = (
                 f"Group {ordinal} contains {group.weight} {panel}, each with a value of {group.value} {mark}.",
                 f"In group {ordinal}, {group.weight} {panel} are recorded at {group.value} {mark} per panel.",
-                f"The {ordinal}th group contributes {group.weight} {panel} whose individual value is {group.value} {mark}.",
+                f"The {numeric_ordinal(ordinal)} group contributes {group.weight} {panel} whose individual value is {group.value} {mark}.",
                 f"For group {ordinal}, the record lists {group.weight} {panel} and {group.value} {mark} per panel.",
             )
             clauses.append(_sentence(forms[index]))
@@ -285,9 +291,9 @@ def _rate(
         )
         facts = (
             f"two channels deliver {first} and {second} {plural} per interval, respectively",
-            f"one channel supplies {first} {plural} per interval while the other supplies {second}",
-            f"the paired streams operate at {first} and {second} {plural} per interval",
-            f"the {lead} process combines rates of {first} and {second} {plural} per interval",
+            f"one channel supplies {first} {plural} per interval while the other supplies {second} {plural} per interval",
+            f"the two streams operate at {first} and {second} {plural} per interval",
+            f"the process combines rates of {first} and {second} {plural} per interval",
         )
         supports = (
             f"Both channels operate for {intervals} intervals.",
@@ -339,9 +345,8 @@ def _discrete(
     index = _plan_index(template, plan)
     domain = problem.domain
     actor = domain.actor.proper_name or "The planner"
-    plural, item_use = noun_form(domain.item.lexeme, 2)
-    container_plural, container_use = noun_form(domain.container.lexeme, 2)
-    lead = template.semantic_frame.split(".", 1)[1].replace("_", " ")
+    plural, item_use = _noun_form(domain.item.lexeme, 2)
+    container_plural, container_use = _noun_form(domain.container.lexeme, 2)
     coverage: list[CoverageEntry] = []
     morphology = [item_use, container_use]
     if problem.relation_kind is DiscreteRelationKind.TWO_TYPE_ALLOCATION:
@@ -352,14 +357,14 @@ def _discrete(
         facts = (
             f"{actor} will make exactly {total} {plural}, split between type A and type B",
             f"a production order calls for {total} {plural} of two types",
-            f"the {lead} plan contains a total of {total} {plural} across designs A and B",
+            f"the plan contains a total of {total} {plural} across designs A and B",
             f"two designs together must account for exactly {total} {plural}",
         )
         conditions = (
             f"type A uses {first} parts, type B uses {second} parts, and the complete order uses {resource} parts",
-            f"each A requires {first} parts and each B requires {second}, with {resource} parts used altogether",
-            f"the two per-item requirements are {first} and {second} parts, and their combined use is {resource} parts",
-            f"design A consumes {first} parts per item, design B consumes {second}, and total consumption is {resource} parts",
+            f"each A requires {first} parts and each B requires {second} parts, with {resource} parts used altogether",
+            f"the per-item requirements are {first} parts for type A and {second} parts for type B, and their combined use is {resource} parts",
+            f"design A consumes {first} parts per item, design B consumes {second} parts per item, and total consumption is {resource} parts",
         )
         questions = (
             f"How many of the {plural} are type A",
@@ -372,7 +377,7 @@ def _discrete(
         facts = (
             f"{actor} has {total} {plural} available for packing",
             f"the packing inventory contains {total} {plural}",
-            f"a total of {total} {plural} is available for the {lead} task",
+            f"a total of {total} {plural} is available for packing",
             f"the packing area has {total} {plural} ready to be grouped",
         )
         conditions = (
@@ -391,7 +396,7 @@ def _discrete(
         total, containers = _scalar(problem, "total"), _scalar(problem, "containers")
         facts = (
             f"{actor} has {total} {plural} to place among {containers} {container_plural}",
-            f"the {lead} task distributes {total} {plural} across {containers} {container_plural}",
+            f"the plan distributes {total} {plural} across {containers} {container_plural}",
             f"there are {total} {plural} and {containers} receiving {container_plural}",
             f"{containers} {container_plural} must share a supply of {total} {plural}",
         )
@@ -414,14 +419,14 @@ def _discrete(
         )
         facts = (
             f"{actor} has {first_resource} amber parts and {second_resource} cobalt parts",
-            f"the {lead} inventory provides {first_resource} amber parts together with {second_resource} cobalt parts",
+            f"the inventory provides {first_resource} amber parts together with {second_resource} cobalt parts",
             f"two material stocks contain {first_resource} amber parts and {second_resource} cobalt parts",
             f"the available supplies are {first_resource} amber parts and {second_resource} cobalt parts",
         )
         conditions = (
             f"each {domain.item.lexeme.singular} requires {first_per} amber parts and {second_per} cobalt parts",
             f"one completed {domain.item.lexeme.singular} consumes {first_per} amber parts plus {second_per} cobalt parts",
-            f"both requirements—{first_per} amber and {second_per} cobalt parts—must be met for every {domain.item.lexeme.singular}",
+            f"both requirements, {first_per} amber parts and {second_per} cobalt parts, must be met for every {domain.item.lexeme.singular}",
             f"a valid build uses {first_per} amber parts and {second_per} cobalt parts per {domain.item.lexeme.singular}",
         )
         questions = (
@@ -433,7 +438,7 @@ def _discrete(
     if index == 2:
         clauses = [
             _sentence(
-                f"Provided that {conditions[index]}, the {lead} task can proceed at the {domain.setting}"
+                f"Provided that {conditions[index]}, the task can proceed at the {domain.setting}"
             ),
             _sentence(facts[index]),
         ]

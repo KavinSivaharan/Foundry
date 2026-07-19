@@ -1,0 +1,14 @@
+{
+  "aggregate_sha256": "78802a61a421ed060aeeab9841c8dd139b97b0ddf971a9b5dd85f5e4766d8e99",
+  "findings": [],
+  "human_review_status": "pending_user_review",
+  "inspection_kind": "codex_non_human_surface_inspection",
+  "invalid_or_unnatural_count": 0,
+  "sample_by_category": {
+    "constraint_distribution_or_discrete_reasoning": 30,
+    "multi_step_bookkeeping_or_omission": 30,
+    "rate_ratio_percentage_or_average": 30
+  },
+  "sample_size": 90,
+  "systematic_composition_defect": false
+}
