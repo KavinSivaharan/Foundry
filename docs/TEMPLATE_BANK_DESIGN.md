@@ -213,3 +213,33 @@ For each of 120 cards:
 The page stores progress in browser `localStorage`; the HTML, Markdown fallback, and exported JSON
 are ignored and must not be committed. Human review status remains **PENDING USER REVIEW**. Full
 generation and all training remain unapproved.
+
+## Milestone 6C-R genuine review import and v3 revision
+
+The imported v2 review contains exactly 120 unique decisions: 60 Approve, 60 Reject, no Unsure. Its
+verified SHA-256 is `564a8ca584984ee7a0b997eec4a6a6f377308c869b62cf65ebeef5375cef0791`.
+The tracked manifest contains only stable candidate/template/plan identifiers, counts, disposition
+categories, and hashes; the genuine review and rendered wording remain ignored.
+
+Twelve sentence-plan families were replaced or compatibility-restricted. Replacements state changes,
+ratios, samples, weighted groups, and discrete constraints directly and avoid log/register/workflow
+filler. The bank remains 58 frames and 232 plans. Static expansion SHA-256 is
+`fc3c6a16e1c9c4f5583215e60c9efab8b4221e9b361f4d1d0f683e7c40dacc6c`: 2,320/2,320 renders pass;
+exact and number-neutral duplicate sentence-plan counts are zero; a stratified 90-render Codex
+inspection has no final finding. One duplicated-quantifier family found during inspection was fixed
+before the counted smoke and is a regression.
+
+### V3 smoke and fail-closed packet boundary
+
+Seed `foundry-template-bank-smoke-master-20260719-v3` produced exactly 120 attempts and no
+replacement. Automatic acceptance was 104/120: targeted/generic 56/48;
+bookkeeping/rates/discrete 39/33/32; easy/medium/hard 32/34/38; output-contract 21/24. Fifteen
+number-neutral template copies and one latent-program copy were rejected. All verifiers agreed;
+false labels, language defects, target mismatches, contamination rejections, unresolved cases, exact
+duplicates, and reused render signatures were zero. Counted and replay hashes both equal
+`44cd52653ec1e45a3d603f3858c9051e6d48a53d6fdc3417ba9989563c171e0f`.
+
+The fixed 110/120 gate failed. `human_review.md`, `human_review.html`,
+`codex_language_audit.json`, and `codex_assisted_review.html` were therefore not created for v3, and
+there is no v3 file URL or export filename. The smoke workflow now enforces this ordering explicitly.
+Human review status is **NOT STARTED — TECHNICAL GATE FAILED**.

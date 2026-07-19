@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 from dataclasses import replace
 from pathlib import Path
 
@@ -10,7 +11,12 @@ import pytest
 from foundry.synthesis.pipeline import _generate, build_attempt_plan, load_smoke_config
 from foundry.synthesis.quality import validate_rendered_candidate
 from foundry.synthesis.realization import validate_realization
-from foundry.synthesis.realization.ir import TargetKind
+from foundry.synthesis.realization.ir import (
+    BookkeepingProblemIR,
+    RateProblemIR,
+    RateRelationKind,
+    TargetKind,
+)
 from foundry.synthesis.realization.morphology import count_lexeme
 from foundry.synthesis.template_bank import TEMPLATE_BANK_VERSION, build_template_bank
 from foundry.synthesis.template_bank.composition import (
@@ -25,17 +31,26 @@ from foundry.synthesis.template_bank.expansion import run_static_expansion
 from foundry.synthesis.template_bank.finalize import finalize_summary
 from foundry.synthesis.template_bank.policy import load_policy
 from foundry.synthesis.template_bank.renderer import render_with_template
-from foundry.synthesis.template_bank.smoke import _select_template, _write_html_review_packet
+from foundry.synthesis.template_bank.review_import import (
+    EXPECTED_REVIEW_SHA256,
+    PLAN_DISPOSITIONS,
+)
+from foundry.synthesis.template_bank.smoke import (
+    _select_template,
+    _write_html_review_packet,
+    _write_review_packets_if_ready,
+)
 
 
 def test_initial_bank_has_required_capacity_and_review_state() -> None:
-    assert TEMPLATE_BANK_VERSION == "foundry-template-bank-v2"
+    assert TEMPLATE_BANK_VERSION == "foundry-template-bank-v3"
     bank = build_template_bank()
     counts: dict[str, int] = {}
     signatures: set[str] = set()
     for template in bank:
         counts[template.reasoning_category] = counts.get(template.reasoning_category, 0) + 1
         assert template.review_status == "human_review_pending"
+        assert template.provenance == "human_review_reauthored_foundry_v2"
         assert template.normalized_template_hash
         assert "_" not in template.surface_lexeme.text
         assert template.surface_lexeme.text != template.semantic_frame.replace("_", " ")
@@ -44,6 +59,80 @@ def test_initial_bank_has_required_capacity_and_review_state() -> None:
     assert sorted(counts.values()) == [18, 20, 20]
     assert len(bank) == 58
     assert len(signatures) == 232
+
+
+def test_human_review_manifest_is_content_free_and_complete() -> None:
+    manifest = json.loads(
+        Path("configs/synthesis/template_bank_human_review_v2.json").read_text(encoding="utf-8")
+    )
+    summary = json.loads(
+        Path("results/synthesis_smoke/template_bank_human_review_v2_summary.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    assert manifest["review_export_sha256"] == EXPECTED_REVIEW_SHA256
+    assert summary["review_export_sha256"] == EXPECTED_REVIEW_SHA256
+    assert summary["attempted"] == 120
+    assert summary["approved"] == summary["rejected"] == 60
+    assert summary["unsure"] == 0
+    assert not summary["full_generation_gate_passed"]
+    assert len(manifest["approved_reviewed_plan_keys"]) == 60
+    assert len(manifest["quarantined_reviewed_plan_keys"]) == 60
+    assert len(PLAN_DISPOSITIONS) == 12
+    serialized = json.dumps((manifest, summary)).lower()
+    assert "rendered_question" not in serialized
+    assert "canonical_answer" not in serialized
+
+
+def test_reauthored_bank_replaces_all_review_derived_defective_plan_families() -> None:
+    old_ids = {item.plan_id for item in PLAN_DISPOSITIONS if item.replacement_plan_id is not None}
+    replacement_ids = {
+        item.replacement_plan_id
+        for item in PLAN_DISPOSITIONS
+        if item.replacement_plan_id is not None
+    }
+    bank_ids = {
+        plan.plan_id
+        for template in build_template_bank()
+        for plan in template.sentence_plan_variants
+    }
+    assert old_ids.isdisjoint(bank_ids)
+    assert replacement_ids <= bank_ids
+
+
+def test_v3_smoke_blocks_every_recurring_human_rejected_language_pattern() -> None:
+    config = load_smoke_config(Path("configs/synthesis/template_bank_smoke_v3.yaml"))
+    bank = build_template_bank()
+    forbidden = (
+        "update 1 has",
+        "a transfer of",
+        "before the scheduled movements",
+        "using every listed movement",
+        "when the register closes",
+        "panel-weighted average",
+        "assigned to the sample",
+        "first side",
+        "second side",
+        "the exact condition is",
+        "the task can proceed",
+        "completely filled",
+        "belongs in the completed order",
+        "in total, a total of",
+    )
+    for attempt in build_attempt_plan(config):
+        original = _generate(attempt)
+        template, sentence_plan = _select_template(attempt, original, bank)
+        rendered = render_with_template(original, template, sentence_plan)
+        lowered = rendered.rendered_question.lower()
+        assert not any(phrase in lowered for phrase in forbidden)
+        if isinstance(rendered.problem_ir, BookkeepingProblemIR):
+            ledger = rendered.problem_ir.domain.primary_location.lexeme.singular
+            assert ledger in rendered.realization.question_clause
+        if (
+            isinstance(rendered.problem_ir, RateProblemIR)
+            and rendered.problem_ir.relation_kind is RateRelationKind.RATIO_SCALE
+        ):
+            assert "second collection" in rendered.realization.question_clause
 
 
 def test_bank_fails_closed_on_untyped_placeholder() -> None:
@@ -197,6 +286,24 @@ def test_html_review_packet_is_local_and_exports_user_decisions(tmp_path: Path) 
     assert "Export review JSON" in html
     assert "genuine_user_human_review" in html
     assert "foundry-template-bank-smoke-v2-review.json" in html
+
+
+def test_failed_technical_gate_does_not_create_review_packets(tmp_path: Path) -> None:
+    config = load_smoke_config(Path("configs/synthesis/template_bank_smoke_v3.yaml"))
+    metadata = _write_review_packets_if_ready(
+        repository_root=tmp_path,
+        config=config,
+        records=(),
+        technical_gate=False,
+    )
+    assert metadata == {
+        "human_review_status": "not_created_technical_gate_failed",
+        "human_review_packet": None,
+        "human_review_html_packet": None,
+        "human_review_export_filename": None,
+    }
+    assert not (tmp_path / config.manual_audit_path).exists()
+    assert not (tmp_path / config.raw_directory / "human_review.html").exists()
 
 
 def test_codex_inspection_can_only_fail_the_automatic_gate(tmp_path: Path) -> None:

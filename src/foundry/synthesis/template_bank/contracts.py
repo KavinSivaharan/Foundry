@@ -114,7 +114,10 @@ class TemplateSpec:
             raise ValueError("object and difficulty compatibility is required")
         if self.review_status != "human_review_pending":
             raise ValueError("new template-bank plans must remain human-review pending")
-        if self.provenance != "original_hand_authored_foundry_v1":
+        if self.provenance not in {
+            "original_hand_authored_foundry_v1",
+            "human_review_reauthored_foundry_v2",
+        }:
             raise ValueError("template provenance differs from the approved source")
         if not self.output_contract_compatible:
             raise ValueError("every initial-bank template must support the shared output track")

@@ -502,3 +502,18 @@ The remaining distinction is crucial: deterministic validity is not human natura
 inspection can pre-screen synthetic wording, but only the user's packet decisions can change the
 review state from pending. A high automatic yield is evidence that review is worth doing, not a
 substitute for it.
+
+## Human review can pass language repair while runtime diversity still blocks the packet
+
+The genuine Milestone 6B review rejected half the packet even though every question had passed typed
+composition checks. That evidence was most useful at the sentence-plan level: direct relationship
+and direct constraint wording survived, while update-log, register, transfer-record, vague ratio,
+and workflow-like constructions repeatedly failed. Replacing those families and expanding every plan
+across ten fixtures produced a clean static language result.
+
+The v3 smoke exposed a different failure mode. It had no mathematical, grammar, target, verifier, or
+contamination errors, yet 15 questions were conservatively rejected because their filled wording
+collided after number normalization. Static uniqueness of plan metadata is therefore not sufficient
+to predict runtime surface diversity when the same scenario vocabulary and sentence structures can
+coincide. The right response is to preserve the negative result and require separate approval for a
+selection/diversity change—not rerun seeds until one crosses the gate or weaken duplicate screening.

@@ -21,7 +21,7 @@ from foundry.synthesis.template_bank.contracts import SentencePlanSpec, Template
 from foundry.synthesis.template_bank.renderer import render_with_template
 
 EXPANSION_FIXTURES_PER_PLAN = 10
-EXPANSION_VERSION = "foundry-template-bank-static-expansion-v2"
+EXPANSION_VERSION = "foundry-template-bank-static-expansion-v3"
 
 
 @dataclass(frozen=True)
@@ -52,7 +52,7 @@ def _category(template: TemplateSpec) -> FailureCategory:
 
 
 def _variant(template: TemplateSpec, template_index: int, fixture_index: int) -> int:
-    occurrence = template_index + fixture_index * 58
+    occurrence = template_index + fixture_index * len(build_template_bank())
     if template.reasoning_category == str(FailureCategory.MULTI_STEP_BOOKKEEPING):
         return occurrence
     relation = template.semantic_frame.split(".", 1)[0]
@@ -192,6 +192,28 @@ def run_static_expansion(repository_root: Path) -> dict[str, object]:
     rendered_hashes = [record.rendered_text_sha256 for record in records]
     numeric_hashes = [record.numeric_template_sha256 for record in records]
     signatures = {record.render_signature_sha256 for record in records}
+    sentence_plan_signatures = [
+        template.render_signature_hash(plan)
+        for template in bank
+        for plan in template.sentence_plan_variants
+    ]
+    number_neutral_plan_keys = [
+        hashlib.sha256(
+            json.dumps(
+                {
+                    "semantic_frame": template.semantic_frame,
+                    "clause_order": plan.clause_order,
+                    "opening_form": plan.opening_form,
+                    "event_form": plan.event_form,
+                    "question_form": plan.question_form,
+                },
+                sort_keys=True,
+                separators=(",", ":"),
+            ).encode("utf-8")
+        ).hexdigest()
+        for template in bank
+        for plan in template.sentence_plan_variants
+    ]
     sample_by_category = {
         category: tuple(rows[index * len(rows) // 30] for index in range(30))
         for category, rows in sample_candidates_by_category.items()
@@ -199,14 +221,27 @@ def run_static_expansion(repository_root: Path) -> dict[str, object]:
     sample_rows = [row for category in sample_by_category.values() for row in category]
     if len(sample_rows) != 90:
         raise AssertionError("static inspection sample must contain 30 renders per family")
-    sample_path = repository_root / "results/raw/template_bank_static_v2/codex_sample.md"
+    sample_path = repository_root / "results/raw/template_bank_static_v3/codex_sample.md"
     _write_sample(sample_path, sample_rows)
-    failure_path = repository_root / "results/raw/template_bank_static_v2/failures.md"
+    failure_path = repository_root / "results/raw/template_bank_static_v3/failures.md"
     _write_sample(failure_path, failure_rows)
     deterministic_records = [asdict(record) for record in records]
     aggregate_sha256 = hashlib.sha256(
         json.dumps(deterministic_records, sort_keys=True, separators=(",", ":")).encode("utf-8")
     ).hexdigest()
+    inspection_path = (
+        repository_root / "results/synthesis_smoke/template_bank_v3_static_inspection.json"
+    )
+    inspection_status = "pending"
+    if inspection_path.exists():
+        inspection = json.loads(inspection_path.read_text(encoding="utf-8"))
+        if (
+            inspection.get("expansion_aggregate_sha256") == aggregate_sha256
+            and inspection.get("sample_size") == 90
+            and inspection.get("invalid_or_unnatural_count") == 0
+            and inspection.get("systematic_composition_defect") is False
+        ):
+            inspection_status = "complete_no_defects"
     summary: dict[str, object] = {
         "schema_version": 2,
         "expansion_version": EXPANSION_VERSION,
@@ -228,18 +263,22 @@ def run_static_expansion(repository_root: Path) -> dict[str, object]:
         "exact_duplicate_expansions": len(rendered_hashes) - len(set(rendered_hashes)),
         "number_neutral_duplicate_expansions": len(numeric_hashes) - len(set(numeric_hashes)),
         "distinct_render_signatures": len(signatures),
+        "exact_duplicate_sentence_plans": len(sentence_plan_signatures)
+        - len(set(sentence_plan_signatures)),
+        "number_neutral_duplicate_sentence_plans": len(number_neutral_plan_keys)
+        - len(set(number_neutral_plan_keys)),
         "codex_inspection_sample_size": len(sample_rows),
         "codex_inspection_sample_by_category": {
             key: len(value) for key, value in sorted(sample_by_category.items())
         },
-        "codex_inspection_status": "pending",
+        "codex_inspection_status": inspection_status,
         "aggregate_sha256": aggregate_sha256,
         "raw_sample_path": sample_path.relative_to(repository_root).as_posix(),
         "raw_failure_path": failure_path.relative_to(repository_root).as_posix(),
         "training_dataset_created": False,
     }
     summary_path = (
-        repository_root / "results/synthesis_smoke/template_bank_v2_static_expansion.json"
+        repository_root / "results/synthesis_smoke/template_bank_v3_static_expansion.json"
     )
     summary_path.parent.mkdir(parents=True, exist_ok=True)
     summary_path.write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8")

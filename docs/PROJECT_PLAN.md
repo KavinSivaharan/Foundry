@@ -535,3 +535,24 @@ duplicates, and reused render signatures were zero. Replay exactly matched SHA-2
 The technical status is **TECHNICALLY READY — HUMAN REVIEW PENDING**. Full 4,000 + 4,000
 generation and training remain blocked. The exact next decision is the user's review of the ignored
 HTML packet and explicit approval or rejection of template-bank language quality.
+
+### Milestone 6C-R: human-review-driven bank revision (complete; technical gate failed)
+
+The genuine Milestone 6B review was verified at SHA-256
+`564a8ca584984ee7a0b997eec4a6a6f377308c869b62cf65ebeef5375cef0791`: 120 unique decisions,
+60 Approve, 60 Reject, and no Unsure. The rejected surfaces concentrated in indirect update-log,
+transfer-record, register/tally, vague ratio/sample, awkward average, and indirect discrete wording.
+The review-derived manifest freezes 60 approved historical plan uses and 60 quarantined uses without
+tracking any question text.
+
+The v3 bank replaces the 12 affected plan families with direct, original worksheet-style language.
+Every one of 232 plans passed ten static fixtures (2,320/2,320), exact and number-neutral sentence-plan
+identity checks were zero, and a 90-render Codex inspection found no remaining surface defect after
+one shared duplicated-quantifier rule was corrected.
+
+The one permitted fresh smoke accepted only 104/120 automatically. All mathematics, dual verification,
+language validation, contamination controls, and exact replay passed; 15 number-neutral template
+copies and one latent-program copy were safely rejected. Because the fixed gate requires 110, no v3
+review packet was created. Full generation and training remain blocked. The next decision is whether
+to authorize a narrowly bounded plan-allocation/diversity correction and one new smoke; the current
+milestone does not authorize that work.

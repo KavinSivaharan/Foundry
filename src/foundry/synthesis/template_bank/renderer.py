@@ -26,7 +26,7 @@ from foundry.synthesis.realization.ir import (
 from foundry.synthesis.template_bank.composition import NounPhraseSpec, numeric_ordinal
 from foundry.synthesis.template_bank.contracts import SentencePlanSpec, TemplateSpec
 
-RENDERER_VERSION = "foundry-template-bank-realizer-v2"
+RENDERER_VERSION = "foundry-template-bank-realizer-v3"
 
 
 def _noun_form(lexeme: LexemeSpec, quantity: int) -> tuple[str, MorphologyUse]:
@@ -92,13 +92,12 @@ def _bookkeeping(
     actor = domain.actor.proper_name or "The inventory coordinator"
     item = domain.item.lexeme
     initial_noun, initial_use = _noun_form(item, problem.initial.value)
-    lead = template.surface_lexeme.text
     ledger = domain.primary_location.lexeme.singular
     openings = (
-        f"For the {lead} at the {domain.setting}, {actor} records {problem.initial.value} {initial_noun} in the {ledger}.",
-        f"The {ledger} at the {domain.setting} contains {problem.initial.value} {initial_noun} at the start of the {lead}.",
-        f"Before the scheduled movements at the {domain.setting}, the {ledger} contains {problem.initial.value} {initial_noun} for the {lead}.",
-        f"At the {domain.setting}, {actor} begins the {lead} with {problem.initial.value} {initial_noun} stored in the {ledger}.",
+        f"At the {domain.setting}, the {ledger} initially contains {problem.initial.value} {initial_noun}.",
+        f"The {ledger} at the {domain.setting} starts with {problem.initial.value} {initial_noun}.",
+        f"At the {domain.setting}, {actor} starts with {problem.initial.value} {initial_noun} in the {ledger}.",
+        f"Before any transfers, the {ledger} in the {domain.setting} contains {problem.initial.value} {initial_noun}.",
     )
     clauses = [_sentence(openings[index])]
     coverage = [CoverageEntry(problem.initial.node_id, 0)]
@@ -118,11 +117,14 @@ def _bookkeeping(
             if incoming
             else domain.destination_location.lexeme.singular
         )
+        transition = {1: "First", 2: "Second", 3: "Third", 4: "Fourth"}.get(
+            ordinal, f"Step {ordinal}"
+        )
         events = (
-            f"Update {ordinal} has {actor} move {amount} {noun} from the {origin} to the {destination}.",
-            f"In update {ordinal}, a transfer of {amount} {noun} is recorded from the {origin} to the {destination}.",
-            f"In the {numeric_ordinal(ordinal)} movement, {actor} moves {amount} {noun} from the {origin} into the {destination}.",
-            f"The {numeric_ordinal(ordinal)} entry shows {amount} {noun} moving from the {origin} to the {destination}.",
+            f"{transition}, {actor} moves {amount} {noun} from the {origin} to the {destination}.",
+            f"{transition}, {amount} {noun} move from the {origin} to the {destination}.",
+            f"{transition}, {actor} moves {amount} {noun} from the {origin} to the {destination}.",
+            f"{transition}, {amount} {noun} are moved from the {origin} to the {destination}.",
         )
         clauses.append(_sentence(events[index]))
         coverage.append(CoverageEntry(change.node_id, len(clauses) - 1))
@@ -132,17 +134,17 @@ def _bookkeeping(
         if problem.group_size is None:
             raise ValueError("group-count target requires a group size")
         questions = (
-            f"After all updates, how many complete groups of {problem.group_size} {plural} can be formed from the {ledger}",
-            f"How many full sets, each containing {problem.group_size} {plural}, does the closing {ledger} inventory provide",
-            f"Using the final balance, what number of complete {problem.group_size}-{item.attributive} groups can be made",
-            f"When the register closes, how many whole groups of {problem.group_size} {plural} are available",
+            f"After these changes, how many complete groups of {problem.group_size} {plural} can be made from the {plural} in the {ledger}",
+            f"How many full groups of {problem.group_size} {plural} can be formed from the final inventory in the {ledger}",
+            f"After all the moves, how many complete groups of {problem.group_size} {plural} can be made from the {ledger}'s contents",
+            f"After every transfer, how many groups of {problem.group_size} {plural} can be formed from the {plural} left in the {ledger}",
         )
     else:
         questions = (
-            f"After all updates, how many {plural} remain in the {ledger}",
-            f"What final quantity of {plural} should the {ledger} record",
-            f"Using every listed movement, how many {plural} are left in the {ledger}",
-            f"When the register closes, what is the {ledger}'s inventory of {plural}",
+            f"How many {plural} are in the {ledger} after these changes",
+            f"What is the final number of {plural} in the {ledger}",
+            f"After all the moves, how many {plural} remain in the {ledger}",
+            f"How many {plural} are left in the {ledger} after every transfer",
         )
     question = _question(questions[index])
     clauses.append(question)
@@ -177,21 +179,21 @@ def _rate(
         rate, intervals = _scalar(problem, "rate"), _scalar(problem, "intervals")
         facts = (
             f"a process produces {rate} {plural} per interval",
-            f"{actor} records an output of {rate} {plural} during each interval",
-            f"each operating interval yields {rate} {plural}",
-            f"the process contributes {rate} {plural} every interval",
+            f"{actor} produces {rate} {plural} during each interval",
+            f"each interval produces {rate} {plural}",
+            f"the output rate is {rate} {plural} per interval",
         )
         supports = (
             f"The process runs for {intervals} equal intervals.",
             f"Exactly {intervals} intervals are completed.",
-            f"Production continues through {intervals} intervals.",
-            f"The recorded run spans {intervals} intervals.",
+            f"This continues for {intervals} intervals.",
+            f"The process lasts for {intervals} intervals.",
         )
         questions = (
             f"How many {plural} are produced in total",
             f"What total number of {plural} does the run produce",
-            f"Across all intervals, what is the complete output of {plural}",
-            f"What quantity of {plural} should {actor} record for the full run",
+            f"How many {plural} are produced across all {intervals} intervals",
+            f"How many {plural} does the process produce altogether",
         )
         clauses = [
             _sentence(f"At the {domain.setting}, {facts[index]}"),
@@ -207,22 +209,22 @@ def _rate(
             _scalar(problem, name) for name in ("first_part", "second_part", "known")
         )
         facts = (
-            f"two collections of {plural} are in the ratio {first}:{second}",
-            f"the first and second collections follow a {first}-to-{second} ratio",
-            f"for every {first} parts in the first collection, the second collection has {second} parts",
-            f"the two collections maintain the exact proportion {first}:{second}",
+            f"the ratio of {plural} in the first collection to {plural} in the second collection is {first}:{second}",
+            f"the first collection and second collection contain {plural} in a {first}-to-{second} ratio",
+            f"for every {first} parts in the first collection, there are {second} parts in the second collection",
+            f"the two collections have a first-to-second ratio of {first}:{second}",
         )
         supports = (
             f"The first collection contains {known} {plural}.",
             f"There are {known} {plural} in the first collection.",
-            f"The known first collection has {known} {plural}.",
-            f"{actor} counts {known} {plural} on the first side of the proportion.",
+            f"The first collection has {known} {plural}.",
+            f"{actor} counts {known} {plural} in the first collection.",
         )
         questions = (
             f"How many {plural} are in the second collection",
-            f"What quantity of {plural} belongs in the second collection",
-            f"What is the corresponding count of {plural} on the second side",
-            f"How many {plural} complete the paired proportion",
+            f"How many {plural} does the second collection contain",
+            f"How many {plural} are in the second collection",
+            f"What is the number of {plural} in the second collection",
         )
         clauses = [
             _sentence(f"At the {domain.setting}, {facts[index]}"),
@@ -238,20 +240,20 @@ def _rate(
         facts = (
             f"a collection contains {base} {plural}",
             f"{actor} begins with a batch of {base} {plural}",
-            f"the full inventory consists of {base} {plural}",
-            f"a recorded batch has {base} {plural} altogether",
+            f"there are {base} {plural} in a collection",
+            f"a batch contains {base} {plural}",
         )
         supports = (
             f"Exactly {percent}% of the collection is selected.",
             f"The selected portion is {percent}% of that batch.",
-            f"A {percent}% share is assigned to the sample.",
-            f"The plan calls for choosing {percent}% of the complete inventory.",
+            f"Exactly {percent}% of the {plural} are chosen for inspection.",
+            f"The selection covers {percent}% of the batch.",
         )
         questions = (
             f"How many {plural} are selected",
             f"What is the selected quantity of {plural}",
-            f"How many {plural} make up that percentage share",
-            f"What number of {plural} belongs to the chosen portion",
+            f"How many {plural} are chosen for inspection",
+            f"How many {plural} are selected",
         )
         clauses = [
             _sentence(f"At the {domain.setting}, {facts[index]}"),
@@ -271,18 +273,18 @@ def _rate(
             mark, mark_use = _noun_form(problem.target.unit.numerator, group.value)
             morphology.extend((panel_use, mark_use))
             forms = (
-                f"Group {ordinal} contains {group.weight} {panel}, each with a value of {group.value} {mark}.",
-                f"In group {ordinal}, {group.weight} {panel} are recorded at {group.value} {mark} per panel.",
-                f"The {numeric_ordinal(ordinal)} group contributes {group.weight} {panel} whose individual value is {group.value} {mark}.",
-                f"For group {ordinal}, the record lists {group.weight} {panel} and {group.value} {mark} per panel.",
+                f"Group {ordinal} has {group.weight} {panel}, each worth {group.value} {mark}.",
+                f"The {numeric_ordinal(ordinal)} group has {group.weight} {panel} worth {group.value} {mark} each.",
+                f"Group {ordinal} includes {group.weight} {panel}, with each one worth {group.value} {mark}.",
+                f"There are {group.weight} {panel} in group {ordinal}, and each is worth {group.value} {mark}.",
             )
             clauses.append(_sentence(forms[index]))
             coverage.append(CoverageEntry(group.node_id, len(clauses) - 1))
         questions = (
-            "What is the exact weighted mean in marks per panel",
-            "What panel-weighted average do all groups produce",
-            "Across the groups, what is the exact mean value per panel",
-            "What weighted average in marks per panel should be recorded",
+            "What is the average value per panel across all the panels",
+            "What is the average number of marks per panel across all the groups",
+            "Across all the groups, what is the average value per panel",
+            "What is the combined average in marks per panel",
         )
         units.append(RenderedUnitUse(problem.target.unit.unit_id, "marks", "panel"))
     else:
@@ -292,20 +294,20 @@ def _rate(
         facts = (
             f"two channels deliver {first} and {second} {plural} per interval, respectively",
             f"one channel supplies {first} {plural} per interval while the other supplies {second} {plural} per interval",
-            f"the two streams operate at {first} and {second} {plural} per interval",
-            f"the process combines rates of {first} and {second} {plural} per interval",
+            f"one stream produces {first} {plural} per interval and a second stream produces {second} {plural} per interval",
+            f"two processes produce {first} and {second} {plural} per interval, respectively",
         )
         supports = (
             f"Both channels operate for {intervals} intervals.",
             f"The two channels each run for {intervals} intervals.",
-            f"Their shared operating period lasts {intervals} intervals.",
-            f"{actor} keeps both streams active through {intervals} intervals.",
+            f"Both streams run for {intervals} intervals.",
+            f"{actor} runs both processes for {intervals} intervals.",
         )
         questions = (
             f"How many {plural} do the two channels deliver altogether",
             f"What is the combined output of {plural}",
-            f"Across both streams and all intervals, how many {plural} are delivered",
-            f"What total quantity of {plural} should {actor} record",
+            f"How many {plural} do both streams produce altogether",
+            f"How many {plural} do the two processes produce in total",
         )
         clauses = [
             _sentence(f"At the {domain.setting}, {facts[index]}"),
@@ -346,71 +348,72 @@ def _discrete(
     domain = problem.domain
     actor = domain.actor.proper_name or "The planner"
     plural, item_use = _noun_form(domain.item.lexeme, 2)
+    singular, singular_use = _noun_form(domain.item.lexeme, 1)
     container_plural, container_use = _noun_form(domain.container.lexeme, 2)
     coverage: list[CoverageEntry] = []
-    morphology = [item_use, container_use]
+    morphology = [item_use, singular_use, container_use]
     if problem.relation_kind is DiscreteRelationKind.TWO_TYPE_ALLOCATION:
         total, resource, first, second = (
             _scalar(problem, name)
             for name in ("total", "resource_total", "first_cost", "second_cost")
         )
         facts = (
-            f"{actor} will make exactly {total} {plural}, split between type A and type B",
-            f"a production order calls for {total} {plural} of two types",
-            f"the plan contains a total of {total} {plural} across designs A and B",
-            f"two designs together must account for exactly {total} {plural}",
+            f"{actor} will make exactly {total} {plural}, with each one classified as type A or type B",
+            f"a batch contains {total} {plural} split between type A and type B",
+            f"the order contains {total} {plural} divided between types A and B",
+            f"there are exactly {total} {plural} in total, consisting of type A and type B items",
         )
         conditions = (
-            f"type A uses {first} parts, type B uses {second} parts, and the complete order uses {resource} parts",
-            f"each A requires {first} parts and each B requires {second} parts, with {resource} parts used altogether",
-            f"the per-item requirements are {first} parts for type A and {second} parts for type B, and their combined use is {resource} parts",
-            f"design A consumes {first} parts per item, design B consumes {second} parts per item, and total consumption is {resource} parts",
+            f"each type A {singular} uses {first} parts, each type B {singular} uses {second} parts, and all {plural} use {resource} parts altogether",
+            f"a type A {singular} requires {first} parts, a type B {singular} requires {second} parts, and the batch uses {resource} parts in total",
+            f"type A {plural} use {first} parts each, type B {plural} use {second} parts each, and the combined requirement is {resource} parts",
+            f"each type A {singular} needs {first} parts and each type B {singular} needs {second} parts, for a total of {resource} parts",
         )
         questions = (
             f"How many of the {plural} are type A",
-            f"What is the exact count of type A {plural}",
-            f"How many type A {plural} satisfy both conditions",
-            f"What number of type A {plural} belongs in the completed order",
+            f"How many type A {plural} are in the batch",
+            f"How many of the {plural} must be type A",
+            f"What is the number of type A {plural}",
         )
     elif problem.relation_kind is DiscreteRelationKind.COMPLETE_PACKAGES:
         total, size = _scalar(problem, "total"), _scalar(problem, "package_size")
         facts = (
             f"{actor} has {total} {plural} available for packing",
-            f"the packing inventory contains {total} {plural}",
-            f"a total of {total} {plural} is available for packing",
-            f"the packing area has {total} {plural} ready to be grouped",
+            f"there are {total} {plural} available",
+            f"there are {total} {plural} available for packing",
+            f"{actor} needs to place {total} {plural} into containers",
         )
         conditions = (
-            f"every complete {domain.container.lexeme.singular} must contain {size} {plural}",
-            f"a full {domain.container.lexeme.singular} holds exactly {size} {plural}",
-            f"only {domain.container.lexeme.plural} with all {size} {plural} count as complete",
-            f"the packing rule assigns {size} {plural} to each complete {domain.container.lexeme.singular}",
+            f"each full {domain.container.lexeme.singular} contains {size} {plural}",
+            f"every {domain.container.lexeme.singular} holds exactly {size} {plural}",
+            f"a {domain.container.lexeme.singular} is full when it contains {size} {plural}",
+            f"{size} {plural} must be placed in each {domain.container.lexeme.singular}",
         )
         questions = (
-            f"How many complete {container_plural} can be filled",
-            f"What number of full {container_plural} can {actor} prepare",
-            f"How many whole {container_plural} are possible",
-            f"What is the count of completely filled {container_plural}",
+            f"How many full {container_plural} can be filled",
+            f"How many full {container_plural} can {actor} prepare",
+            f"How many complete {container_plural} can be made",
+            f"How many {container_plural} can be filled completely",
         )
     elif problem.relation_kind is DiscreteRelationKind.EQUAL_DISTRIBUTION:
         total, containers = _scalar(problem, "total"), _scalar(problem, "containers")
         facts = (
             f"{actor} has {total} {plural} to place among {containers} {container_plural}",
             f"the plan distributes {total} {plural} across {containers} {container_plural}",
-            f"there are {total} {plural} and {containers} receiving {container_plural}",
-            f"{containers} {container_plural} must share a supply of {total} {plural}",
+            f"there are {total} {plural} to divide among {containers} {container_plural}",
+            f"a total of {total} {plural} must be shared by {containers} {container_plural}",
         )
         conditions = (
             f"every {domain.container.lexeme.singular} receives the same number of {plural}",
             f"the {plural} are divided equally with no remainder",
-            "each destination gets an identical share",
+            f"each {domain.container.lexeme.singular} gets the same number of {plural}",
             f"the allocation must be even across all {container_plural}",
         )
         questions = (
             f"How many {plural} does each {domain.container.lexeme.singular} receive",
-            f"What equal share of {plural} goes to one {domain.container.lexeme.singular}",
-            f"What is the number of {plural} assigned to every {domain.container.lexeme.singular}",
-            f"How large is each {domain.container.lexeme.singular}'s share in {plural}",
+            f"How many {plural} go to each {domain.container.lexeme.singular}",
+            f"How many {plural} does every {domain.container.lexeme.singular} receive",
+            f"How many {plural} are assigned to each {domain.container.lexeme.singular}",
         )
     else:
         first_resource, second_resource, first_per, second_per = (
@@ -419,34 +422,44 @@ def _discrete(
         )
         facts = (
             f"{actor} has {first_resource} amber parts and {second_resource} cobalt parts",
-            f"the inventory provides {first_resource} amber parts together with {second_resource} cobalt parts",
-            f"two material stocks contain {first_resource} amber parts and {second_resource} cobalt parts",
-            f"the available supplies are {first_resource} amber parts and {second_resource} cobalt parts",
+            f"there are {first_resource} amber parts and {second_resource} cobalt parts available",
+            f"the supplies include {first_resource} amber parts and {second_resource} cobalt parts",
+            f"the available materials are {first_resource} amber parts and {second_resource} cobalt parts",
         )
         conditions = (
             f"each {domain.item.lexeme.singular} requires {first_per} amber parts and {second_per} cobalt parts",
-            f"one completed {domain.item.lexeme.singular} consumes {first_per} amber parts plus {second_per} cobalt parts",
-            f"both requirements, {first_per} amber parts and {second_per} cobalt parts, must be met for every {domain.item.lexeme.singular}",
-            f"a valid build uses {first_per} amber parts and {second_per} cobalt parts per {domain.item.lexeme.singular}",
+            f"one {domain.item.lexeme.singular} uses {first_per} amber parts and {second_per} cobalt parts",
+            f"every {domain.item.lexeme.singular} needs {first_per} amber parts and {second_per} cobalt parts",
+            f"making one {domain.item.lexeme.singular} requires {first_per} amber parts and {second_per} cobalt parts",
         )
         questions = (
-            f"How many complete {plural} can the two supplies support",
-            f"What is the greatest number of {plural} that can be completed",
-            f"How many {plural} can be made before either material becomes insufficient",
-            f"What production capacity, measured in complete {plural}, do the supplies allow",
+            f"How many complete {plural} can be made",
+            f"What is the greatest number of {plural} that can be made",
+            f"How many {plural} can be made before either type of part runs out",
+            f"How many complete {plural} can the available parts produce",
         )
     if index == 2:
         clauses = [
-            _sentence(
-                f"Provided that {conditions[index]}, the task can proceed at the {domain.setting}"
-            ),
-            _sentence(facts[index]),
+            _sentence(f"At the {domain.setting}, {conditions[index]}"),
+            _sentence(f"In total, {facts[index]}"),
         ]
-        coverage_offset = {scalar.node_id: 1 for scalar in problem.scalars}
+        fact_scalar_names = {
+            DiscreteRelationKind.TWO_TYPE_ALLOCATION: {"total"},
+            DiscreteRelationKind.COMPLETE_PACKAGES: {"total"},
+            DiscreteRelationKind.EQUAL_DISTRIBUTION: {"total", "containers"},
+            DiscreteRelationKind.DUAL_CAPACITY: {
+                "first_resource",
+                "second_resource",
+            },
+        }[problem.relation_kind]
+        coverage_offset = {
+            scalar.node_id: 1 if scalar.name in fact_scalar_names else 0
+            for scalar in problem.scalars
+        }
     else:
         clauses = [
             _sentence(f"At the {domain.setting}, {facts[index]}"),
-            _sentence(f"The exact condition is that {conditions[index]}"),
+            _sentence(conditions[index]),
         ]
         coverage_offset = {
             scalar.node_id: (

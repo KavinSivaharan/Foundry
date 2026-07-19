@@ -1,0 +1,144 @@
+{
+  "acceptance_by_category": {
+    "constraint_distribution_or_discrete_reasoning": {
+      "accepted": 32,
+      "attempted": 33,
+      "rejected": 1
+    },
+    "multi_step_bookkeeping_or_omission": {
+      "accepted": 39,
+      "attempted": 53,
+      "rejected": 14
+    },
+    "rate_ratio_percentage_or_average": {
+      "accepted": 33,
+      "attempted": 34,
+      "rejected": 1
+    }
+  },
+  "acceptance_by_difficulty": {
+    "easy": {
+      "accepted": 32,
+      "attempted": 40,
+      "rejected": 8
+    },
+    "hard": {
+      "accepted": 38,
+      "attempted": 40,
+      "rejected": 2
+    },
+    "medium": {
+      "accepted": 34,
+      "attempted": 40,
+      "rejected": 6
+    }
+  },
+  "acceptance_by_group": {
+    "generic_control": {
+      "accepted": 48,
+      "attempted": 60,
+      "rejected": 12
+    },
+    "targeted": {
+      "accepted": 56,
+      "attempted": 60,
+      "rejected": 4
+    }
+  },
+  "acceptance_by_output_contract": {
+    "False": {
+      "accepted": 83,
+      "attempted": 96,
+      "rejected": 13
+    },
+    "True": {
+      "accepted": 21,
+      "attempted": 24,
+      "rejected": 3
+    }
+  },
+  "acceptance_rate": 0.8666666666666667,
+  "accepted": 104,
+  "allocation_by_category": {
+    "constraint_distribution_or_discrete_reasoning": 33,
+    "multi_step_bookkeeping_or_omission": 53,
+    "rate_ratio_percentage_or_average": 34
+  },
+  "allocation_by_difficulty": {
+    "easy": 40,
+    "hard": 40,
+    "medium": 40
+  },
+  "allocation_by_group": {
+    "generic_control": 60,
+    "targeted": 60
+  },
+  "attempted": 120,
+  "benchmark_lexical_rejections": 0,
+  "benchmark_semantic_rejections": 0,
+  "benchmark_semantic_review_rejections": 0,
+  "config_sha256": "807849c845386cfc799c729005e9a3563de08a16f4693a23b781254af42d2fe3",
+  "counted_decision_sha256": "44cd52653ec1e45a3d603f3858c9051e6d48a53d6fdc3417ba9989563c171e0f",
+  "counted_runtime_seconds": 1.611911500000133,
+  "deterministic_language_defects": 0,
+  "deterministic_replay_match": true,
+  "duplicate_latent_programs": 1,
+  "exact_duplicates": 0,
+  "false_labels": 0,
+  "frames_by_category": {
+    "constraint_distribution_or_discrete_reasoning": 20,
+    "multi_step_bookkeeping_or_omission": 18,
+    "rate_ratio_percentage_or_average": 20
+  },
+  "gpu_used": false,
+  "human_review_export_filename": null,
+  "human_review_html_packet": null,
+  "human_review_packet": null,
+  "human_review_status": "not_created_technical_gate_failed",
+  "independent_verifier_failures": 0,
+  "internal_fixture_set_sha256": "5cb72b962ab9a33370426a26b6e50b34e217309f35ded0762b744f9d47a23931",
+  "internal_policy_sha256": "1ee8993754599e86a4ee37f89064588c9fbef42b3bd12996abd241aff00a9604",
+  "internal_review_records": 49,
+  "master_seed": "foundry-template-bank-smoke-master-20260719-v3",
+  "milestone_6a_regressions_blocked": 13,
+  "output_contract_attempts": 24,
+  "peak_process_rss_bytes": 923930624,
+  "plans_by_category": {
+    "constraint_distribution_or_discrete_reasoning": 80,
+    "multi_step_bookkeeping_or_omission": 72,
+    "rate_ratio_percentage_or_average": 80
+  },
+  "primary_verifier_failures": 0,
+  "raw_artifact_bytes": 380785,
+  "rejected": 16,
+  "rejection_reasons": {
+    "latent_program_copy": 1,
+    "numeric_template_copy": 15
+  },
+  "replay_decision_sha256": "44cd52653ec1e45a3d603f3858c9051e6d48a53d6fdc3417ba9989563c171e0f",
+  "replay_runtime_seconds": 1.5297590000000127,
+  "reused_render_signatures": 0,
+  "run_id": "foundry-template-bank-smoke-v3",
+  "schema_version": 1,
+  "scope_exclusions": [
+    "no_language_model_inference",
+    "no_full_dataset_generation",
+    "no_training",
+    "no_sealed_final_access"
+  ],
+  "sentence_plans": 232,
+  "static_codex_inspection_defects": 0,
+  "static_codex_inspection_sample": 90,
+  "static_expansion_attempted": 2320,
+  "static_expansion_sha256": "fc3c6a16e1c9c4f5583215e60c9efab8b4221e9b361f4d1d0f683e7c40dacc6c",
+  "static_expansion_valid": 2320,
+  "static_gate_passed": true,
+  "target_mismatches": 0,
+  "technical_gate_passed": false,
+  "technical_status": "TECHNICAL GATE FAILED",
+  "template_bank_sha256": "af561b9b171e271f1b88a6e7c7894a39db691bdf3c63d520ac12c918015efa45",
+  "template_bank_version": "foundry-template-bank-v3",
+  "template_frames": 58,
+  "unresolved_contamination_cases": 0,
+  "verifier_disagreements": 0
+}

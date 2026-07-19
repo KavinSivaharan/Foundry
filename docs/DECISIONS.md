@@ -362,3 +362,26 @@ This log separates proposals from approved decisions. A proposal does not author
 - **Next user decision:** Open `results/raw/template_bank_smoke_v2/human_review.html`, mark all 120
   items Approve/Reject/Unsure, export the JSON, and explicitly approve or reject the bank. Any Reject
   or Unsure item requires review before a full-generation proposal.
+
+## D-024 — Preserve the language repair but fail the v3 packet gate on runtime diversity
+
+- **Date:** 2026-07-19
+- **Status:** implemented; technical gate failed; no second-review packet created
+- **Decision:** Accept the genuine 60-Approve/60-Reject review as immutable evidence, retain the
+  review-derived quarantine manifest and v3 worksheet-language replacements, but do not admit the
+  v3 smoke to user review because only 104/120 candidates passed the fixed 110 gate.
+- **Evidence:** Review SHA-256 is `564a8ca...791` with 120 matching unique IDs. Static expansion is
+  2,320/2,320 with zero rule failures, zero exact or number-neutral duplicate sentence plans, and a
+  clean 90-render Codex sample. The fresh smoke rejected 15 number-neutral rendered-template copies
+  and one latent-program copy; all 120 dual verifications agreed, false labels and deterministic
+  language defects were zero, contamination remained clear, and replay exactly matched
+  `44cd5265...1e0f`.
+- **Rationale:** Human-facing language quality and runtime candidate diversity are separate gates.
+  The review repair succeeded statically, but issuing a packet below the precommitted automatic
+  threshold would silently weaken the experiment. A different seed, replacements, or post-result
+  threshold changes are not permitted.
+- **Expected consequences:** Failed-run HTML, Markdown, Codex-audit, and assisted-review packets do
+  not exist. Ignored attempts/replay remain local; only content-free evidence is published. No full
+  generation, training, benchmark evaluation, or sealed-final access follows.
+- **Next user decision:** Decide whether to authorize a narrowly bounded template-selection and
+  internal-diversity blocker resolution followed by one fresh precommitted 120-attempt smoke.

@@ -1,0 +1,376 @@
+{
+  "approval_rate": 0.5,
+  "approved": 60,
+  "attempted": 120,
+  "by_difficulty": {
+    "easy": {
+      "approval_rate": 0.55,
+      "approved": 22,
+      "attempted": 40,
+      "rejected": 18
+    },
+    "hard": {
+      "approval_rate": 0.525,
+      "approved": 21,
+      "attempted": 40,
+      "rejected": 19
+    },
+    "medium": {
+      "approval_rate": 0.425,
+      "approved": 17,
+      "attempted": 40,
+      "rejected": 23
+    }
+  },
+  "by_group": {
+    "generic_control": {
+      "approval_rate": 0.5666666666666667,
+      "approved": 34,
+      "attempted": 60,
+      "rejected": 26
+    },
+    "targeted": {
+      "approval_rate": 0.43333333333333335,
+      "approved": 26,
+      "attempted": 60,
+      "rejected": 34
+    }
+  },
+  "by_output_contract": {
+    "False": {
+      "approval_rate": 0.4895833333333333,
+      "approved": 47,
+      "attempted": 96,
+      "rejected": 49
+    },
+    "True": {
+      "approval_rate": 0.5416666666666666,
+      "approved": 13,
+      "attempted": 24,
+      "rejected": 11
+    }
+  },
+  "by_reasoning_family": {
+    "constraint_distribution_or_discrete_reasoning": {
+      "approval_rate": 0.5757575757575758,
+      "approved": 19,
+      "attempted": 33,
+      "rejected": 14
+    },
+    "multi_step_bookkeeping_or_omission": {
+      "approval_rate": 0.2830188679245283,
+      "approved": 15,
+      "attempted": 53,
+      "rejected": 38
+    },
+    "rate_ratio_percentage_or_average": {
+      "approval_rate": 0.7647058823529411,
+      "approved": 26,
+      "attempted": 34,
+      "rejected": 8
+    }
+  },
+  "by_sentence_plan_id": {
+    "chronological_active": {
+      "approval_rate": 0.0,
+      "approved": 0,
+      "attempted": 14,
+      "rejected": 14
+    },
+    "condition_first": {
+      "approval_rate": 0.4444444444444444,
+      "approved": 4,
+      "attempted": 9,
+      "rejected": 5
+    },
+    "condition_fronted": {
+      "approval_rate": 0.0,
+      "approved": 0,
+      "attempted": 8,
+      "rejected": 8
+    },
+    "constraint_sequence": {
+      "approval_rate": 1.0,
+      "approved": 9,
+      "attempted": 9,
+      "rejected": 0
+    },
+    "direct_relation": {
+      "approval_rate": 1.0,
+      "approved": 10,
+      "attempted": 10,
+      "rejected": 0
+    },
+    "ledger_passive": {
+      "approval_rate": 0.23076923076923078,
+      "approved": 3,
+      "attempted": 13,
+      "rejected": 10
+    },
+    "movement_first": {
+      "approval_rate": 0.15384615384615385,
+      "approved": 2,
+      "attempted": 13,
+      "rejected": 11
+    },
+    "operations_note": {
+      "approval_rate": 0.5,
+      "approved": 4,
+      "attempted": 8,
+      "rejected": 4
+    },
+    "operator_record": {
+      "approval_rate": 0.8,
+      "approved": 8,
+      "attempted": 10,
+      "rejected": 2
+    },
+    "paired_summary": {
+      "approval_rate": 0.8,
+      "approved": 4,
+      "attempted": 5,
+      "rejected": 1
+    },
+    "planner_brief": {
+      "approval_rate": 0.75,
+      "approved": 6,
+      "attempted": 8,
+      "rejected": 2
+    },
+    "register_summary": {
+      "approval_rate": 0.7692307692307693,
+      "approved": 10,
+      "attempted": 13,
+      "rejected": 3
+    }
+  },
+  "by_template_id": {
+    "bk.01.opening_inventory": {
+      "approval_rate": 0.0,
+      "approved": 0,
+      "attempted": 4,
+      "rejected": 4
+    },
+    "bk.02.scheduled_transfers": {
+      "approval_rate": 0.25,
+      "approved": 1,
+      "attempted": 4,
+      "rejected": 3
+    },
+    "bk.03.stock_log": {
+      "approval_rate": 0.5,
+      "approved": 2,
+      "attempted": 4,
+      "rejected": 2
+    },
+    "bk.04.supply_ledger": {
+      "approval_rate": 0.25,
+      "approved": 1,
+      "attempted": 4,
+      "rejected": 3
+    },
+    "bk.05.storage_updates": {
+      "approval_rate": 0.0,
+      "approved": 0,
+      "attempted": 4,
+      "rejected": 4
+    },
+    "bk.06.shift_handover": {
+      "approval_rate": 0.25,
+      "approved": 1,
+      "attempted": 4,
+      "rejected": 3
+    },
+    "bk.07.dispatch_record": {
+      "approval_rate": 0.25,
+      "approved": 1,
+      "attempted": 4,
+      "rejected": 3
+    },
+    "bk.08.receiving_record": {
+      "approval_rate": 0.75,
+      "approved": 3,
+      "attempted": 4,
+      "rejected": 1
+    },
+    "bk.09.allocation_log": {
+      "approval_rate": 0.25,
+      "approved": 1,
+      "attempted": 4,
+      "rejected": 3
+    },
+    "bk.10.materials_register": {
+      "approval_rate": 0.0,
+      "approved": 0,
+      "attempted": 4,
+      "rejected": 4
+    },
+    "bk.11.workshop_balance": {
+      "approval_rate": 0.25,
+      "approved": 1,
+      "attempted": 4,
+      "rejected": 3
+    },
+    "bk.12.collection_changes": {
+      "approval_rate": 0.25,
+      "approved": 1,
+      "attempted": 4,
+      "rejected": 3
+    },
+    "bk.13.equipment_register": {
+      "approval_rate": 0.75,
+      "approved": 3,
+      "attempted": 4,
+      "rejected": 1
+    },
+    "bk.14.packing_inventory": {
+      "approval_rate": 0.0,
+      "approved": 0,
+      "attempted": 1,
+      "rejected": 1
+    },
+    "ds.01.two_type_allocation.two_design_build": {
+      "approval_rate": 0.25,
+      "approved": 1,
+      "attempted": 4,
+      "rejected": 3
+    },
+    "ds.02.two_type_allocation.dual_recipe_plan": {
+      "approval_rate": 0.25,
+      "approved": 1,
+      "attempted": 4,
+      "rejected": 3
+    },
+    "ds.03.two_type_allocation.mixed_package_order": {
+      "approval_rate": 1.0,
+      "approved": 1,
+      "attempted": 1,
+      "rejected": 0
+    },
+    "ds.06.complete_packages.complete_container_count": {
+      "approval_rate": 0.5,
+      "approved": 2,
+      "attempted": 4,
+      "rejected": 2
+    },
+    "ds.07.complete_packages.full_bundle_count": {
+      "approval_rate": 0.5,
+      "approved": 2,
+      "attempted": 4,
+      "rejected": 2
+    },
+    "ds.11.equal_distribution.equal_container_share": {
+      "approval_rate": 0.75,
+      "approved": 3,
+      "attempted": 4,
+      "rejected": 1
+    },
+    "ds.12.equal_distribution.balanced_location_split": {
+      "approval_rate": 0.75,
+      "approved": 3,
+      "attempted": 4,
+      "rejected": 1
+    },
+    "ds.16.dual_capacity.two_resource_capacity": {
+      "approval_rate": 0.75,
+      "approved": 3,
+      "attempted": 4,
+      "rejected": 1
+    },
+    "ds.17.dual_capacity.paired_supply_limit": {
+      "approval_rate": 0.75,
+      "approved": 3,
+      "attempted": 4,
+      "rejected": 1
+    },
+    "rt.01.rate_total.steady_output": {
+      "approval_rate": 1.0,
+      "approved": 4,
+      "attempted": 4,
+      "rejected": 0
+    },
+    "rt.02.rate_total.timed_production": {
+      "approval_rate": 1.0,
+      "approved": 3,
+      "attempted": 3,
+      "rejected": 0
+    },
+    "rt.05.ratio_scale.paired_collections": {
+      "approval_rate": 0.5,
+      "approved": 2,
+      "attempted": 4,
+      "rejected": 2
+    },
+    "rt.06.ratio_scale.matched_batches": {
+      "approval_rate": 0.6666666666666666,
+      "approved": 2,
+      "attempted": 3,
+      "rejected": 1
+    },
+    "rt.09.percentage.selected_share": {
+      "approval_rate": 0.75,
+      "approved": 3,
+      "attempted": 4,
+      "rejected": 1
+    },
+    "rt.10.percentage.inspection_sample": {
+      "approval_rate": 0.6666666666666666,
+      "approved": 2,
+      "attempted": 3,
+      "rejected": 1
+    },
+    "rt.13.weighted_average.weighted_readings": {
+      "approval_rate": 0.5,
+      "approved": 2,
+      "attempted": 4,
+      "rejected": 2
+    },
+    "rt.14.weighted_average.grouped_measurements": {
+      "approval_rate": 0.6666666666666666,
+      "approved": 2,
+      "attempted": 3,
+      "rejected": 1
+    },
+    "rt.17.combined_rate.parallel_channels": {
+      "approval_rate": 1.0,
+      "approved": 4,
+      "attempted": 4,
+      "rejected": 0
+    },
+    "rt.18.combined_rate.paired_streams": {
+      "approval_rate": 1.0,
+      "approved": 2,
+      "attempted": 2,
+      "rejected": 0
+    }
+  },
+  "full_generation_gate_passed": false,
+  "full_generation_gate_status": "FAILED_GENUINE_HUMAN_LANGUAGE_REVIEW",
+  "packet_identity_match": true,
+  "plans_producing_mixed_decisions": [
+    "condition_first",
+    "ledger_passive",
+    "movement_first",
+    "operations_note",
+    "operator_record",
+    "paired_summary",
+    "planner_brief",
+    "register_summary"
+  ],
+  "plans_producing_only_approvals": [
+    "constraint_sequence",
+    "direct_relation"
+  ],
+  "plans_producing_only_rejections": [
+    "chronological_active",
+    "condition_fronted"
+  ],
+  "rejected": 60,
+  "rejection_rate": 0.5,
+  "review_export_sha256": "564a8ca584984ee7a0b997eec4a6a6f377308c869b62cf65ebeef5375cef0791",
+  "review_kind": "genuine_user_human_review",
+  "root_causes_are_inferred_not_user_labels": true,
+  "schema_version": 1,
+  "summary_sha256": "69feacf53837b908f6610bc15af71055846632f71dfd8732baa8b79ecad2826d",
+  "unsure": 0
+}

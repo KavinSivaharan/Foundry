@@ -13,7 +13,7 @@ from foundry.synthesis.template_bank.contracts import (
     TemplateSpec,
 )
 
-TEMPLATE_BANK_VERSION = "foundry-template-bank-v2"
+TEMPLATE_BANK_VERSION = "foundry-template-bank-v3"
 _DIFFICULTIES = (DifficultyLevel.EASY, DifficultyLevel.MEDIUM, DifficultyLevel.HARD)
 
 _BOOKKEEPING_FRAMES = (
@@ -161,45 +161,45 @@ def _surface_lexeme(frame: str) -> SurfaceLexemeSpec:
 
 
 def _plans(category: str) -> tuple[SentencePlanSpec, ...]:
-    """Return four complete, meaningfully distinct grammatical constructions."""
+    """Return four reviewed or review-driven worksheet-quality constructions."""
 
     if category == "bookkeeping":
         return (
             SentencePlanSpec(
-                "chronological_active",
+                "direct_changes",
                 ("opening", "events", "question"),
-                "{frame_lead}, {actor} records {initial_quantity} {item} in the {primary_location} at the {setting}.",
-                "Next, {actor} transfers {event_quantity} {item} from the {event_origin} to the {event_destination}.",
-                "After every recorded movement, {question_request}",
-                "chronological",
-                "active subject first",
+                "At the {setting}, the {primary_location} initially contains {initial_quantity} {item}.",
+                "{actor} moves {event_quantity} {item} from the {event_origin} to the {event_destination}.",
+                "After these changes, {question_request}",
+                "direct sequence",
+                "plain active clauses",
             ),
             SentencePlanSpec(
-                "ledger_passive",
+                "plain_location_changes",
                 ("opening", "events", "question"),
-                "{frame_lead}, the {primary_location} at the {setting} starts with {initial_quantity} {item}.",
-                "A transfer of {event_quantity} {item} is recorded from the {event_origin} to the {event_destination}.",
-                "Once the ledger is complete, {question_request}",
-                "ledger sequence",
-                "natural passive event",
+                "The {primary_location} at the {setting} starts with {initial_quantity} {item}.",
+                "Then {event_quantity} {item} move from the {event_origin} to the {event_destination}.",
+                "When all changes are complete, {question_request}",
+                "location sequence",
+                "location-led clauses",
             ),
             SentencePlanSpec(
-                "movement_first",
+                "direct_sequence",
                 ("opening", "events", "question"),
-                "Before the scheduled movements at the {setting}, {initial_quantity} {item} are stored in the {primary_location}.",
-                "From the {event_origin}, {actor} moves {event_quantity} {item} to the {event_destination}.",
-                "Using the resulting inventory, {question_request}",
-                "before and after",
-                "fronted source phrase",
+                "At the {setting}, {actor} starts with {initial_quantity} {item} in the {primary_location}.",
+                "{actor} next moves {event_quantity} {item} from the {event_origin} to the {event_destination}.",
+                "After all the moves, {question_request}",
+                "actor sequence",
+                "active chronological clauses",
             ),
             SentencePlanSpec(
-                "register_summary",
+                "compact_sequence",
                 ("opening", "events", "question"),
-                "The {frame_lead} register for the {setting} opens at {initial_quantity} {item} in the {primary_location}.",
-                "The next entry moves {event_quantity} {item} from the {event_origin} to the {event_destination} under {actor}'s supervision.",
-                "What should the closing register report when all entries are applied? {question_request}",
-                "register summary",
-                "record-centered construction",
+                "Before any transfers, the {primary_location} in the {setting} contains {initial_quantity} {item}.",
+                "Next, {event_quantity} {item} are moved from the {event_origin} to the {event_destination}.",
+                "After every transfer, {question_request}",
+                "compact transfer sequence",
+                "concise passive clauses",
             ),
         )
     if category == "rates":
@@ -214,31 +214,31 @@ def _plans(category: str) -> tuple[SentencePlanSpec, ...]:
                 "declarative facts then question",
             ),
             SentencePlanSpec(
-                "operator_record",
+                "actor_context",
                 ("facts", "question"),
-                "{actor}'s record at the {setting} states that {fact_clause}",
-                "The same record notes that {support_clause}",
-                "Based on those recorded quantities, {question_request}",
-                "record based",
-                "possessive subject",
+                "At the {setting}, {actor} observes that {fact_clause}",
+                "{support_clause}",
+                "Using these quantities, {question_request}",
+                "actor context",
+                "active contextual clauses",
             ),
             SentencePlanSpec(
-                "condition_first",
+                "relation_rephrased",
                 ("facts", "question"),
-                "For this calculation at the {setting}, {support_clause}",
-                "Under that condition, {fact_clause}",
+                "At the {setting}, {support_clause}",
+                "The related fact is that {fact_clause}",
                 "{question_request}",
-                "condition first",
-                "fronted condition",
+                "relation first",
+                "supporting fact first",
             ),
             SentencePlanSpec(
-                "paired_summary",
+                "balanced_facts",
                 ("facts", "question"),
-                "Two details govern the {frame_lead} situation at the {setting}: {fact_clause}",
-                "In addition, {support_clause}",
-                "Using both details, {question_request}",
-                "paired summary",
-                "colon introduction",
+                "At the {setting}, {fact_clause}",
+                "Also, {support_clause}",
+                "From these facts, {question_request}",
+                "balanced facts",
+                "parallel declarative clauses",
             ),
         )
     return (
@@ -252,31 +252,31 @@ def _plans(category: str) -> tuple[SentencePlanSpec, ...]:
             "declarative condition",
         ),
         SentencePlanSpec(
-            "planner_brief",
+            "actor_setup",
             ("facts", "constraints", "question"),
-            "{actor} is preparing the {frame_lead} plan at the {setting}. {fact_clause}",
-            "For the plan to be valid, {constraint_clause}",
-            "Under these conditions, {question_request}",
-            "planning brief",
-            "actor-led construction",
-        ),
-        SentencePlanSpec(
-            "condition_fronted",
-            ("constraints", "facts", "question"),
-            "Provided that {constraint_clause}, the {frame_lead} task can proceed at the {setting}.",
-            "The available quantities are as follows: {fact_clause}",
+            "At the {setting}, {actor} works with the following quantities: {fact_clause}",
+            "Each item must satisfy this requirement: {constraint_clause}",
             "{question_request}",
-            "condition first",
-            "fronted subordinate clause",
+            "actor setup",
+            "actor-led direct clauses",
         ),
         SentencePlanSpec(
-            "operations_note",
+            "direct_conditions",
+            ("constraints", "facts", "question"),
+            "At the {setting}, {constraint_clause}",
+            "The available quantities are {fact_clause}",
+            "{question_request}",
+            "direct condition first",
+            "plain condition clauses",
+        ),
+        SentencePlanSpec(
+            "alternate_direct",
             ("facts", "constraints", "question"),
-            "An operations note for the {setting} describes a {frame_lead} task. {fact_clause}",
-            "It also specifies the following exact condition: {constraint_clause}",
-            "Using only the stated quantities, {question_request}",
-            "operations note",
-            "document-centered construction",
+            "At the {setting}, {fact_clause}",
+            "The requirement is simple: {constraint_clause}",
+            "{question_request}",
+            "alternate direct",
+            "fact and requirement clauses",
         ),
     )
 
@@ -323,7 +323,7 @@ def _template(
     plans = _plans(category)
     return TemplateSpec(
         template_id=f"{prefix}.{index:02d}.{frame}",
-        template_version="v1",
+        template_version="v2",
         reasoning_category={
             "bookkeeping": str(FailureCategory.MULTI_STEP_BOOKKEEPING),
             "rates": str(FailureCategory.RATE_RATIO_PERCENTAGE),
@@ -342,7 +342,7 @@ def _template(
         sentence_plan_variants=plans,
         optional_context_policy="omit_unless_source_ir_marks_safe_context",
         output_contract_compatible=True,
-        provenance="original_hand_authored_foundry_v1",
+        provenance="human_review_reauthored_foundry_v2",
         review_status="human_review_pending",
     )
 

@@ -602,3 +602,18 @@ copy. Every mathematical check agreed; no label, target, language-rule, benchmar
 failure occurred. This establishes **technical readiness for review only**. The 116 candidates are
 not an approved dataset, and the bank remains `human_review_pending` until the user exports and
 approves the local review JSON.
+
+## Milestone 6C-R review-derived revision and diversity blocker
+
+The genuine v2 review is now a frozen content-free input contract: 120 matching IDs, 60 approvals,
+60 rejections, no unsure decisions, and SHA-256 `564a8ca...791`. Approved historical uses and
+quarantined uses are recorded separately. Twelve affected sentence-plan families were reauthored;
+generator mathematics, labels, verifiers, target contracts, benchmark firewall, and contamination
+thresholds were unchanged.
+
+The v3 static matrix validates 2,320/2,320 renders and 232 distinct signatures with no deterministic
+failure. The fresh precommitted smoke nonetheless accepted 104/120 because 15 rendered questions
+collided under number-neutral duplicate detection and one latent program duplicated. Exact replay and
+all correctness/safety checks passed. The required 110 gate therefore failed, no review packet was
+created, and neither an 8,000-example generation nor training is permitted. A future proposal must
+address runtime selection/diversity without weakening the frozen duplicate or contamination policies.

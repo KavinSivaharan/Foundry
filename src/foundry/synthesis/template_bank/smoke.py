@@ -370,7 +370,12 @@ def _write_review_packet(path: Path, records: tuple[TemplateBankRecord, ...]) ->
     path.write_text("\n".join(lines), encoding="utf-8")
 
 
-def _write_html_review_packet(path: Path, records: tuple[TemplateBankRecord, ...]) -> None:
+def _write_html_review_packet(
+    path: Path,
+    records: tuple[TemplateBankRecord, ...],
+    *,
+    packet_version: str = "v2",
+) -> None:
     """Write an ignored, browser-local human-review interface with JSON export."""
 
     candidates = [
@@ -418,7 +423,7 @@ def _write_html_review_packet(path: Path, records: tuple[TemplateBankRecord, ...
   <main id="cards"></main>
   <script>
     const candidates = {payload};
-    const storageKey = "foundry-template-bank-smoke-v2-review";
+    const storageKey = "foundry-template-bank-smoke-{packet_version}-review";
     const defectLabels = ["", "unnatural wording", "ambiguous target", "missing information", "repeated wording", "grammar", "wrong unit", "unclear referent", "other"];
     const state = JSON.parse(localStorage.getItem(storageKey) || "{{}}");
     const save = () => {{ localStorage.setItem(storageKey, JSON.stringify(state)); updateProgress(); }};
@@ -489,7 +494,7 @@ def _write_html_review_packet(path: Path, records: tuple[TemplateBankRecord, ...
       const url = URL.createObjectURL(new Blob([JSON.stringify(exportObject, null, 2)], {{ type: "application/json" }}));
       const anchor = document.createElement("a");
       anchor.href = url;
-      anchor.download = "foundry-template-bank-smoke-v2-review.json";
+      anchor.download = "foundry-template-bank-smoke-{packet_version}-review.json";
       anchor.click();
       URL.revokeObjectURL(url);
     }});
@@ -500,6 +505,37 @@ def _write_html_review_packet(path: Path, records: tuple[TemplateBankRecord, ...
 """
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(html, encoding="utf-8")
+
+
+def _write_review_packets_if_ready(
+    *,
+    repository_root: Path,
+    config: SynthesisSmokeConfig,
+    records: tuple[TemplateBankRecord, ...],
+    technical_gate: bool,
+) -> dict[str, str | None]:
+    """Create user-review packets only after the fixed technical gate passes."""
+
+    if not technical_gate:
+        return {
+            "human_review_status": "not_created_technical_gate_failed",
+            "human_review_packet": None,
+            "human_review_html_packet": None,
+            "human_review_export_filename": None,
+        }
+    raw_directory = repository_root / config.raw_directory
+    html_packet_path = raw_directory / "human_review.html"
+    packet_version = config.run_id.rsplit("-", 1)[-1]
+    _write_review_packet(repository_root / config.manual_audit_path, records)
+    _write_html_review_packet(html_packet_path, records, packet_version=packet_version)
+    return {
+        "human_review_status": "pending_user_review",
+        "human_review_packet": config.manual_audit_path.as_posix(),
+        "human_review_html_packet": html_packet_path.relative_to(repository_root).as_posix(),
+        "human_review_export_filename": (
+            f"foundry-template-bank-smoke-{packet_version}-review.json"
+        ),
+    }
 
 
 def run_template_bank_smoke(repository_root: Path, config_path: Path) -> dict[str, object]:
@@ -527,23 +563,22 @@ def run_template_bank_smoke(repository_root: Path, config_path: Path) -> dict[st
     counted_hash = _decision_sha256(counted)
     replay_hash = _decision_sha256(replay)
     replay_match = counted_hash == replay_hash
-    _write_review_packet(repository_root / config.manual_audit_path, counted)
-    html_packet_path = raw_directory / "human_review.html"
-    _write_html_review_packet(html_packet_path, counted)
     static_summary = json.loads(
         (
-            repository_root / "results/synthesis_smoke/template_bank_v2_static_expansion.json"
+            repository_root / "results/synthesis_smoke/template_bank_v3_static_expansion.json"
         ).read_text(encoding="utf-8")
     )
     static_inspection = json.loads(
         (
-            repository_root / "results/synthesis_smoke/template_bank_v2_static_inspection.json"
+            repository_root / "results/synthesis_smoke/template_bank_v3_static_inspection.json"
         ).read_text(encoding="utf-8")
     )
     static_gate = (
         static_summary.get("total_expansions_attempted") == 2320
         and static_summary.get("valid_renders") == 2320
         and static_summary.get("failure_counts") == {}
+        and static_summary.get("exact_duplicate_sentence_plans") == 0
+        and static_summary.get("number_neutral_duplicate_sentence_plans") == 0
         and static_summary.get("codex_inspection_status") == "complete_no_defects"
         and static_inspection.get("sample_size") == 90
         and static_inspection.get("invalid_or_unnatural_count") == 0
@@ -554,20 +589,46 @@ def run_template_bank_smoke(repository_root: Path, config_path: Path) -> dict[st
     category_acceptance = _acceptance(counted, "category")
     family_minimum = all(value["accepted"] >= 15 for value in category_acceptance.values())
     language_defects = sum(bool(item.deterministic_language_reasons) for item in counted)
+    primary_verifier_failures = sum(not item.primary_verifier_success for item in counted)
+    independent_verifier_failures = sum(not item.independent_verifier_success for item in counted)
     verifier_disagreements = sum(not item.verifier_agreement for item in counted)
+    target_mismatches = sum(
+        "target" in reason for item in counted for reason in item.deterministic_language_reasons
+    )
+    benchmark_lexical_rejections = sum(
+        item.benchmark_lexical_reason is not None for item in counted
+    )
+    benchmark_semantic_rejections = sum(
+        item.benchmark_semantic_outcome == "reject" for item in counted
+    )
+    benchmark_semantic_review_rejections = sum(
+        item.benchmark_semantic_outcome == "manual_review" for item in counted
+    )
     unresolved_contamination = 0
     technical_gate = (
         len(counted) == 120
         and static_gate
         and replay_match
-        and accepted >= 90
+        and accepted >= 110
         and family_minimum
         and language_defects == 0
+        and primary_verifier_failures == 0
+        and independent_verifier_failures == 0
         and verifier_disagreements == 0
+        and target_mismatches == 0
+        and benchmark_lexical_rejections == 0
+        and benchmark_semantic_rejections == 0
+        and benchmark_semantic_review_rejections == 0
         and unresolved_contamination == 0
         and len({item.render_signature_sha256 for item in counted}) == 120
         and len({item.rendered_text_sha256 for item in accepted_records}) == len(accepted_records)
         and len({item.latent_program_sha256 for item in accepted_records}) == len(accepted_records)
+    )
+    packet_metadata = _write_review_packets_if_ready(
+        repository_root=repository_root,
+        config=config,
+        records=counted,
+        technical_gate=technical_gate,
     )
     bank = build_template_bank()
     frames_by_category = Counter(item.reasoning_category for item in bank)
@@ -612,25 +673,15 @@ def run_template_bank_smoke(repository_root: Path, config_path: Path) -> dict[st
                 Counter(item.rejection_reason for item in counted if item.rejection_reason).items()
             )
         ),
-        "primary_verifier_failures": sum(not item.primary_verifier_success for item in counted),
-        "independent_verifier_failures": sum(
-            not item.independent_verifier_success for item in counted
-        ),
+        "primary_verifier_failures": primary_verifier_failures,
+        "independent_verifier_failures": independent_verifier_failures,
         "verifier_disagreements": verifier_disagreements,
         "false_labels": 0,
         "deterministic_language_defects": language_defects,
-        "target_mismatches": sum(
-            "target" in reason for item in counted for reason in item.deterministic_language_reasons
-        ),
-        "benchmark_lexical_rejections": sum(
-            item.benchmark_lexical_reason is not None for item in counted
-        ),
-        "benchmark_semantic_rejections": sum(
-            item.benchmark_semantic_outcome == "reject" for item in counted
-        ),
-        "benchmark_semantic_review_rejections": sum(
-            item.benchmark_semantic_outcome == "manual_review" for item in counted
-        ),
+        "target_mismatches": target_mismatches,
+        "benchmark_lexical_rejections": benchmark_lexical_rejections,
+        "benchmark_semantic_rejections": benchmark_semantic_rejections,
+        "benchmark_semantic_review_rejections": benchmark_semantic_review_rejections,
         "internal_review_records": sum(item.internal_review_recorded for item in counted),
         "unresolved_contamination_cases": unresolved_contamination,
         "exact_duplicates": len(counted) - len({item.rendered_text_sha256 for item in counted}),
@@ -650,9 +701,7 @@ def run_template_bank_smoke(repository_root: Path, config_path: Path) -> dict[st
         if technical_gate
         else "TECHNICAL GATE FAILED",
         "technical_gate_passed": technical_gate,
-        "human_review_status": "pending_user_review",
-        "human_review_packet": config.manual_audit_path.as_posix(),
-        "human_review_html_packet": html_packet_path.relative_to(repository_root).as_posix(),
+        **packet_metadata,
         "scope_exclusions": [
             "no_language_model_inference",
             "no_full_dataset_generation",

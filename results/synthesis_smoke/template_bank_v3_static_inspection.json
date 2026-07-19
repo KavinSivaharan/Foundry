@@ -1,0 +1,14 @@
+{
+  "expansion_aggregate_sha256": "fc3c6a16e1c9c4f5583215e60c9efab8b4221e9b361f4d1d0f683e7c40dacc6c",
+  "human_review_status": "pending_user_review",
+  "inspection_kind": "codex_non_human_surface_inspection",
+  "invalid_or_unnatural_count": 0,
+  "sample_by_category": {
+    "constraint_distribution_or_discrete_reasoning": 30,
+    "multi_step_bookkeeping_or_omission": 30,
+    "rate_ratio_percentage_or_average": 30
+  },
+  "sample_size": 90,
+  "schema_version": 1,
+  "systematic_composition_defect": false
+}

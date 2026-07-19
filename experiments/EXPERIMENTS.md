@@ -412,3 +412,27 @@ Every future experiment must be registered here before a costly run begins. Its 
   `results/raw/template_bank_smoke_v2/human_review.html`; Codex inspection is not human approval.
 - **Next experiment:** none approved. Await the user's complete packet review and explicit decision;
   do not generate the 4,000 + 4,000 pilot or train.
+
+## EXP-20260719-017 — Human-review-driven template-bank revision
+
+- **Status:** complete; technical gate failed; no second-review packet created.
+- **Question:** Can replacements derived from 60 genuine approvals and 60 genuine rejections pass
+  static language validation and the fixed 110/120 runtime gate?
+- **Review evidence:** 120 unique matching decisions, 60 Approve/60 Reject/0 Unsure, SHA-256
+  `564a8ca584984ee7a0b997eec4a6a6f377308c869b62cf65ebeef5375cef0791`.
+- **Static result:** 232 plans x 10 fixtures = 2,320/2,320 valid; zero exact or number-neutral duplicate
+  sentence plans; clean 90-render Codex sample after one shared quantifier regression repair;
+  expansion SHA-256 `fc3c6a16...cc6c`.
+- **Budget:** exactly 120 fresh attempts, no replacement; targeted 33/14/13 and generic 20/20/20;
+  24 output-contract attempts; no language model or GPU inference.
+- **Automatic result:** 104 accepted and 16 rejected. Targeted/generic accepted 56/48;
+  bookkeeping/rates/discrete 39/33/32. Fifteen number-neutral rendered-template copies and one latent
+  copy were rejected. False labels, verifier disagreements, deterministic language defects, target
+  mismatches, benchmark rejections, unresolved contamination, exact duplicates, and signature reuse
+  were zero.
+- **Replay/resources:** exact match at `44cd5265...1e0f`; counted/replay runtime 1.612/1.530 seconds;
+  923,930,624 peak RSS; 380,785 ignored raw bytes; no GPU.
+- **Conclusion:** The fixed 110 threshold failed, so no v3 human/Codex-assisted packet was created.
+  The language repair is retained as evidence, but full generation and training remain blocked.
+- **Next experiment:** none approved. A future decision may authorize a narrow runtime
+  template-selection/diversity correction and one new bounded smoke without lowering any gate.

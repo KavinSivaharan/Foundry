@@ -21,3 +21,16 @@ def test_template_bank_v2_smoke_uses_a_fresh_seed_and_ignored_review_path() -> N
     assert second.master_seed != first.master_seed
     assert second.raw_directory.as_posix() == "results/raw/template_bank_smoke_v2"
     assert second.manual_audit_path.as_posix().endswith("template_bank_smoke_v2/human_review.md")
+
+
+def test_template_bank_v3_smoke_is_fresh_bounded_and_review_only() -> None:
+    second = load_smoke_config(Path("configs/synthesis/template_bank_smoke_v2.yaml"))
+    third = load_smoke_config(Path("configs/synthesis/template_bank_smoke_v3.yaml"))
+    plans = build_attempt_plan(third)
+    assert third.attempts == 120
+    assert third.master_seed != second.master_seed
+    assert third.raw_directory.as_posix() == "results/raw/template_bank_smoke_v3"
+    assert third.manual_audit_path.as_posix().endswith("template_bank_smoke_v3/human_review.md")
+    assert len(plans) == 120
+    assert sum(plan.output_contract_enabled for plan in plans[:60]) == 12
+    assert sum(plan.output_contract_enabled for plan in plans[60:]) == 12
