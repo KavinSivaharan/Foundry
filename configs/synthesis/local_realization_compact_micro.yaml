@@ -1,0 +1,67 @@
+schema_version: 1
+run_id: foundry-qwen3-compact-tagged-micro-v1
+ir_master_seed: foundry-m5c-compact-ir-master-20260718-v1
+ir_attempts: 30
+
+model:
+  repo_id: Qwen/Qwen3-1.7B
+  revision: 70d244cc86ccca08cf5af4e1e306ecf908b1ad5e
+  license_id: Apache-2.0
+  trust_remote_code: false
+  dtype: float16
+  local_files_only: true
+  cache_root: data/huggingface
+
+generation:
+  seed: 5172026
+  enable_thinking: false
+  do_sample: false
+  num_beams: 3
+  num_return_sequences: 3
+  max_new_tokens: 384
+  timeout_seconds_per_ir: 90
+  stopping_tag: "</Q>"
+
+groups:
+  targeted:
+    attempts: 15
+    category_counts:
+      multi_step_bookkeeping_or_omission: 8
+      rate_ratio_percentage_or_average: 4
+      constraint_distribution_or_discrete_reasoning: 3
+    output_contract_counts:
+      multi_step_bookkeeping_or_omission: 2
+      rate_ratio_percentage_or_average: 1
+      constraint_distribution_or_discrete_reasoning: 0
+  generic_control:
+    attempts: 15
+    category_counts:
+      multi_step_bookkeeping_or_omission: 5
+      rate_ratio_percentage_or_average: 5
+      constraint_distribution_or_discrete_reasoning: 5
+    output_contract_counts:
+      multi_step_bookkeeping_or_omission: 1
+      rate_ratio_percentage_or_average: 1
+      constraint_distribution_or_discrete_reasoning: 1
+
+difficulty_cycle: [easy, medium, hard]
+output_contract_id: terminal-final-answer-contract-v1
+compact_system_prompt_sha256: d5ea32af1d6df2c6bc06f7a315cab68084c26c0c719d5d08d1cb7c4628630222
+compact_user_protocol_sha256: 6ed50a9c49434ec2e61d4d6065a9854aca414523b7b14eb5e33c60eee3285454
+compact_combined_protocol_sha256: 6aec762647b03708268da0ae85c5c584821bdc2c82064a6534251c695a48fcf8
+chat_template_sha256: a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8
+internal_diversity_policy: configs/synthesis/internal_diversity_v1.yaml
+semantic_artifact: configs/synthesis/semantic_all_minilm_l6_v2.yaml
+development_question_export: results/raw/realization_smoke/development_questions.jsonl
+raw_directory: results/raw/realization_micro_smoke/qwen3_compact_v1
+summary_path: results/synthesis_smoke/local_realization_compact_v1_summary.json
+
+rules:
+  benchmark_content_is_model_input: false
+  benchmark_answers_allowed: false
+  sealed_final_allowed: false
+  replace_rejected_irs: false
+  retry_until_success: false
+  llm_math_verifier: false
+  llm_judge: false
+  repair_model_output: false

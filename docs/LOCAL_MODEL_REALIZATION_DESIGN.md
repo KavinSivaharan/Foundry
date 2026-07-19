@@ -351,3 +351,37 @@ and verbose echoed inventories/maps with a compact declarative response whose sl
 coverage can still be derived deterministically. Original hand-authored fixtures must prove the new
 contract before any separately approved model inference. The alternative is to stop the local
 surface-realization route. Neither choice authorizes full generation or training.
+
+## Milestone 5C compact tagged micro-smoke
+
+Milestone 5C implemented `foundry-compact-tagged-v1`. The model returns only consecutive `<E1>`…
+`<En>` fact blocks and one terminal `<Q>` block. Each block receives an exact set of immutable value
+and semantic-anchor tokens. Deterministic code derives node coverage from tags, enforces token-to-
+event assignment, fills approved predicates and values only after validation, and retains every
+mathematical, target, verifier, output-contract, contamination, and diversity decision.
+
+Frozen hashes:
+
+- system prompt: `d5ea32af1d6df2c6bc06f7a315cab68084c26c0c719d5d08d1cb7c4628630222`;
+- user protocol: `6ed50a9c49434ec2e61d4d6065a9854aca414523b7b14eb5e33c60eee3285454`;
+- combined protocol: `6aec762647b03708268da0ae85c5c584821bdc2c82064a6534251c695a48fcf8`;
+- normalized config: `78d1f3e37dad7e97c7e857a0f60efa5459af55b246a34dc653efceb01b47438b`;
+- generation configuration: `fe9614dea4be2d5c7ec6983e54deb86ebd19787d61e53a62bc6bd5fb63315968`.
+
+The counted run used 30 new IRs: targeted 8/4/3 and generic 5/5/5 across bookkeeping/rates/
+discrete, with three output-contract IRs per group. Three deterministic beams per IR produced 90
+outputs. Tag parse was 90/90; placeholder, semantic-anchor, and target preservation were each 87/90;
+automatic selections were 0/30. All 90 hidden-label audit decisions were unnatural, drifted, and
+correctly rejected. False labels, verifier disagreements, invalid acceptances, incorrect rejections,
+timeouts, and backend errors were zero. No beam reached semantic screening because earlier language
+or fill checks failed.
+
+Generation took 83.474 seconds and the complete counted run 92.869 seconds, with 11,530 input and
+11,472 output tokens. Peak allocated/reserved VRAM was 3,728,026,112/3,825,205,248 bytes; peak
+process RAM was 7,532,572,672 bytes. Exact replay reproduced run SHA-256
+`b9b1a7bc8214c2656b6cd45cb089252f63fbe572c52f910e1148a34cd6a4358a`.
+
+The micro-gate failed at 0 clean IRs versus 22 required and zero accepted examples in every family.
+No 120-IR Qwen3 compact smoke is justified. Under the final stop rule, the single recommendation is
+to test a stronger local realization model with this protocol frozen; no further Qwen3 prompt patch,
+full generation, or training is authorized.

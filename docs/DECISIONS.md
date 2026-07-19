@@ -260,3 +260,35 @@ This log separates proposals from approved decisions. A proposal does not author
 - **Next user decision:** Choose whether to stop the local realization route or approve a design-only
   compact-protocol milestone. No fallback-model run, new Qwen generation, full dataset, QLoRA, SFT,
   GRPO, benchmark inference, or sealed-final access follows automatically.
+
+## D-020 — End Qwen3-1.7B prompt engineering after the compact micro-smoke
+
+- **Date:** 2026-07-18
+- **Status:** accepted Milestone 5C stop decision; no 120-IR follow-up or full generation approved
+- **Decision:** Freeze `foundry-compact-tagged-v1`, its hashes, exact 30-IR evidence, all-beam audit,
+  and replay result. Reject a 120-IR Qwen3 compact smoke, another compact-prompt patch, model-output
+  repair, threshold reduction, or full dataset generation. Preserve the procedural IR, exact labels,
+  dual verifiers, pinned Qwen3 environment, value/benchmark firewall, and contamination policies.
+- **Evidence:** Exactly 30 fresh IRs produced 90 deterministic beams. Tag parsing improved from the
+  verbose protocol's 50.28% JSON rate to 90/90; 87/90 beams preserved placeholders, anchors, and
+  target tokens. Nevertheless, Qwen placed relation anchors after argument lists and omitted the
+  grammatical structure needed to bind quantities, entities, origins, destinations, units, and
+  targets. Automatic and manual clean acceptance were both 0/30. All 90 surfaces were unnatural and
+  semantically drifted. False labels, verifier disagreements, invalid acceptances, incorrect
+  rejections, timeouts, and backend failures were zero. Replay exactly reproduced SHA-256
+  `b9b1a7bc8214c2656b6cd45cb089252f63fbe572c52f910e1148a34cd6a4358a`.
+- **Alternatives considered:** continue patching Qwen3; run 120 IRs despite zero micro yield; accept
+  token echo because every anchor is present; repair or reorder generated tokens deterministically;
+  switch immediately to the existing fallback; test a stronger local realization model with the
+  same compact protocol; or build an offline model-generated, manually vetted template bank.
+- **Rationale:** The compact experiment isolates the remaining failure from JSON verbosity: Qwen3
+  can copy tags but cannot reliably compose the supplied opaque predicates into natural English.
+  More prompt patches would violate the final stop rule and overfit to observed failures. Of the two
+  permitted pivots, a stronger-model test is the narrower scientific comparison because it keeps
+  the protocol, IRs, labels, validators, and gates fixed while changing only model capacity.
+- **Expected consequences:** No Milestone 5C output is training data. No 120-IR Qwen3 run, complete
+  synthetic dataset, training, fallback inference, or sealed evaluation follows. Any stronger model
+  requires a separately approved design recording exact revision, license, dependency impact, RTX
+  3080 feasibility, fixed budget, and unchanged compact-protocol hashes before download or inference.
+- **Next user decision:** Decide whether to approve a bounded stronger-local-model design and smoke
+  using the frozen compact tagged protocol. Otherwise stop the local surface-realization route.

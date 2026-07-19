@@ -541,3 +541,21 @@ curriculum, output-contract, and contamination contracts. It must make semantic 
 deterministically recoverable without asking the model to echo a long inventory and separate clause
 map, and it must freeze original fixtures before any new inference. No such milestone is currently
 approved.
+
+## Milestone 5C compact-protocol consequence
+
+The compact tagged protocol removed every redundant model echo. Qwen returned only one `<E…>` block
+per fact and one `<Q>` block, with immutable value placeholders and deterministic semantic-anchor
+tokens. The compiler derived coverage from tags and inserted all approved predicate phrases after
+validation. The exact generators, answers, dual verifiers, output-contract track, development
+firewall, and internal-diversity policy were unchanged.
+
+This improved structural compliance but not usable realization. All 90 beams parsed; 87 preserved
+the full token assignment; no verifier disagreed. Yet automatic and audited clean acceptance were
+0/30 because the model echoed the listed tokens rather than composing them into grammatical
+predicate-argument clauses. Every beam was unnatural and semantically drifted. Exact replay passed.
+
+Therefore no compact output is accepted training data, the 120-IR Qwen3 follow-up is blocked, and
+the 4,000 + 4,000 pilot remains unapproved. The final Qwen3 prompt-patching stop rule is active. The
+single recommended next experiment is a separately approved stronger local realization model using
+the same frozen compact protocol and gates; changing the protocol again is not recommended.

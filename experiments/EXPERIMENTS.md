@@ -309,3 +309,36 @@ Every future experiment must be registered here before a costly run begins. Its 
   milestone that retains Qwen3 and every safety gate but removes verbose echoed inventories/maps and
   imperative event input before any separately approved new inference. The alternative is to stop
   local surface realization.
+
+## EXP-20260718-013 — Compact tagged-realization micro-smoke
+
+- **Status:** completed; exact replay passed; micro-gate failed; Qwen3 prompt lineage closed
+- **Date:** 2026-07-18
+- **Hypothesis:** Removing redundant JSON metadata and asking Qwen3 only for tagged natural clauses
+  can yield at least 22 clean IRs from 30 while deterministic code retains all semantics and labels.
+- **Protocol:** Consecutive `<E…>` fact tags plus one `<Q>` tag; immutable value and semantic-anchor
+  tokens; no JSON, answer, calculation, mapping echo, target echo, repair, retry, or replacement.
+  Fixed three-beam deterministic decoding, seed 5172026, 384-token hard cap, and per-beam `</Q>` stop.
+- **Execution:** Exactly 30 new IRs under `foundry-m5c-compact-ir-master-20260718-v1`: targeted
+  8/4/3 and generic 5/5/5 across bookkeeping/rates/discrete, with three output-contract IRs in each
+  group. Exactly 90 beams were returned from the existing offline Qwen3 snapshot.
+- **Automatic result:** 90/90 tags parsed; 87/90 preserved placeholders, semantic anchors, and target
+  tokens; 60 failed before deterministic filling; all 90 failed language quality; 0/30 IRs had a
+  selected beam. Dual verifiers agreed throughout and no backend failure or timeout occurred.
+- **Manual audit:** Every beam was reviewed with answers and verifier evidence hidden. All 90 were
+  unnatural and semantically drifted because Qwen copied token lists with postfixed predicates and
+  inadequate connecting syntax. Every rejection was correct; false labels, invalid acceptances, and
+  incorrect rejections were zero.
+- **Determinism:** Exact replay reproduced all beam text, order, decisions, and SHA-256
+  `b9b1a7bc8214c2656b6cd45cb089252f63fbe572c52f910e1148a34cd6a4358a`.
+- **Runtime/resources:** Counted generation 83.474 seconds; total 92.869 seconds; 11,530 input and
+  11,472 output tokens; 137.43 returned output tokens/s. Peak allocated/reserved VRAM
+  3,728,026,112/3,825,205,248 bytes; peak process RAM 7,532,572,672 bytes; counted raw beam file
+  160,872 bytes.
+- **Hypothesis supported:** no. Structural compliance improved, but clean yield remained 0/30. The
+  required 22 total, 8 bookkeeping, 6 rate, and 5 discrete acceptances all failed.
+- **Safety:** No accepted/full dataset, fallback inference, training, QLoRA, SFT, GRPO, benchmark
+  inference, paid/cloud service, or sealed-final access occurred. Raw beams and audits remain ignored.
+- **Next experiment:** none approved. The final Qwen3 prompt-patching stop rule is active. The one
+  recommended pivot is a separately approved stronger local realization model using the same frozen
+  compact protocol and unchanged deterministic gates.

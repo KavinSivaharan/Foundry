@@ -1,0 +1,166 @@
+{
+  "attempted_irs": 30,
+  "automatic_acceptance_by_category": {
+    "constraint_distribution_or_discrete_reasoning": 0,
+    "multi_step_bookkeeping_or_omission": 0,
+    "rate_ratio_percentage_or_average": 0
+  },
+  "automatic_acceptance_by_difficulty": {
+    "easy": 0,
+    "hard": 0,
+    "medium": 0
+  },
+  "automatic_acceptance_by_group": {
+    "generic_control": 0,
+    "targeted": 0
+  },
+  "automatic_acceptance_by_output_track": {
+    "disabled": 0,
+    "enabled": 0
+  },
+  "automatic_selected_irs": 0,
+  "benchmark_screen_outcomes": {},
+  "compact_combined_protocol_sha256": "6aec762647b03708268da0ae85c5c584821bdc2c82064a6534251c695a48fcf8",
+  "compact_system_prompt_sha256": "d5ea32af1d6df2c6bc06f7a315cab68084c26c0c719d5d08d1cb7c4628630222",
+  "compact_user_protocol_sha256": "6ed50a9c49434ec2e61d4d6065a9854aca414523b7b14eb5e33c60eee3285454",
+  "config_sha256": "78d1f3e37dad7e97c7e857a0f60efa5459af55b246a34dc653efceb01b47438b",
+  "deterministic_replay": {
+    "actual_sha256": "b9b1a7bc8214c2656b6cd45cb089252f63fbe572c52f910e1148a34cd6a4358a",
+    "beams": 90,
+    "expected_sha256": "b9b1a7bc8214c2656b6cd45cb089252f63fbe572c52f910e1148a34cd6a4358a",
+    "irs": 30,
+    "replay_measurements": {
+      "generation_seconds": 83.83292039999651,
+      "initialization_seconds": 8.938212700002623,
+      "input_tokens": 11530,
+      "model_cache_bytes": 7178795611,
+      "output_tokens": 11472,
+      "peak_gpu_allocated_bytes": 3728026112,
+      "peak_gpu_reserved_bytes": 3825205248,
+      "peak_system_ram_bytes": 7530815488,
+      "raw_artifact_bytes": 0,
+      "total_runtime_seconds": 92.8489522000018
+    },
+    "status": "passed"
+  },
+  "deterministic_run_sha256": "b9b1a7bc8214c2656b6cd45cb089252f63fbe572c52f910e1148a34cd6a4358a",
+  "final_ignored_raw_artifact_bytes": 186534,
+  "generated_beams": 90,
+  "generation_config_sha256": "fe9614dea4be2d5c7ec6983e54deb86ebd19787d61e53a62bc6bd5fb63315968",
+  "internal_diversity_policy_sha256": "26c030e8497c4727e286ff3e89d4720cee1c2681a224b8a93b8c515ef521cc90",
+  "internal_screen_outcomes": {},
+  "ir_master_seed": "foundry-m5c-compact-ir-master-20260718-v1",
+  "layer_failures": {
+    "answer_calculation_guard": 0,
+    "benchmark_contamination": 0,
+    "event_order": 0,
+    "event_tag_occurrence": 0,
+    "event_tag_set": 0,
+    "filled_question_consistency": 60,
+    "independent_verifier": 0,
+    "internal_diversity": 0,
+    "language_quality": 90,
+    "output_contract": 0,
+    "outside_text": 0,
+    "placeholder_assignment": 3,
+    "placeholder_set": 3,
+    "primary_verifier": 0,
+    "raw_numeric_guard": 0,
+    "semantic_anchor": 3,
+    "tag_parse": 0,
+    "target_preservation": 3,
+    "verifier_agreement": 0
+  },
+  "manual_audit": {
+    "audit_method": "every returned beam manually reviewed with answers and verifier evidence hidden",
+    "audited_beams": 90,
+    "clean_accepted_irs": 0,
+    "defect_categories": {
+      "postfixed_anchor_token_list_echo": 90
+    },
+    "false_labels": 0,
+    "incorrect_rejections": 0,
+    "invalid_acceptances": 0,
+    "label_and_verifier_visibility_first_pass": "hidden",
+    "naturalness": {
+      "unnatural": 90
+    },
+    "pipeline_decisions": {
+      "correct_rejection": 90
+    },
+    "semantic_preservation": {
+      "drifted": 90
+    },
+    "status": "complete",
+    "uncertainty_is_rejection": true
+  },
+  "measurements": {
+    "generation_seconds": 83.47423989999152,
+    "initialization_seconds": 9.315293100000417,
+    "input_tokens": 11530,
+    "model_cache_bytes": 7178795611,
+    "output_tokens": 11472,
+    "peak_gpu_allocated_bytes": 3728026112,
+    "peak_gpu_reserved_bytes": 3825205248,
+    "peak_system_ram_bytes": 7532572672,
+    "raw_artifact_bytes": 160872,
+    "total_runtime_seconds": 92.86902249999912
+  },
+  "model": {
+    "cache_root": "data\\huggingface",
+    "dtype": "float16",
+    "license_id": "Apache-2.0",
+    "local_files_only": true,
+    "repo_id": "Qwen/Qwen3-1.7B",
+    "revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e",
+    "trust_remote_code": false
+  },
+  "placeholder_preserved_beams": 87,
+  "readiness_gate": {
+    "blockers": [
+      "zero clean IRs across all groups and mathematical families",
+      "systematic postfixed semantic anchors and token-list echo",
+      "all 90 returned beams were unnatural and semantically drifted"
+    ],
+    "clean_accepted_irs": 0,
+    "criteria": {
+      "at_least_22_clean_irs": false,
+      "at_most_90_beams": true,
+      "bookkeeping_at_least_8": false,
+      "deterministic_replay_matches": true,
+      "discrete_at_least_5": false,
+      "exactly_30_irs": true,
+      "no_systematic_tagged_or_wording_defect": false,
+      "rates_at_least_6": false,
+      "zero_accepted_semantic_drift": true,
+      "zero_false_labels": true,
+      "zero_invalid_acceptances": true,
+      "zero_unresolved_contamination": true,
+      "zero_verifier_disagreements": true
+    },
+    "final_qwen3_stop_rule": "active",
+    "minimum_required": 22,
+    "recommended_pivot": "test a stronger local realization model using the same frozen compact protocol",
+    "status": "failed"
+  },
+  "run_id": "foundry-qwen3-compact-tagged-micro-v1",
+  "runtime_metadata": {
+    "chat_template_sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8",
+    "device": "cuda:0",
+    "dtype": "torch.float16",
+    "model_load_seconds": 1.5287865999998758,
+    "model_parameter_count": 1720574976,
+    "resolved_revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e",
+    "snapshot_path": "C:\\Users\\Admin\\Projects\\Foundry\\data\\huggingface\\hub\\models--Qwen--Qwen3-1.7B\\snapshots\\70d244cc86ccca08cf5af4e1e306ecf908b1ad5e",
+    "tokenizer_load_seconds": 0.2553501000002143
+  },
+  "schema_version": 1,
+  "selected_beam_contribution": {
+    "1": 0,
+    "2": 0,
+    "3": 0
+  },
+  "semantic_anchor_preserved_beams": 87,
+  "tag_parsed_beams": 90,
+  "target_preserved_beams": 87
+}

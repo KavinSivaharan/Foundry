@@ -442,7 +442,8 @@ Measured base main-development baseline: **521/814 correct (64.00% end-to-end)**
 
 Milestone 1 and its deferred RTX smoke, Milestones 1.5–1.7, the frozen Milestone 2
 base-development baseline, the bounded Milestone 2.1 correct-response audit, design-only Milestone
-3, bounded Milestones 4 through 4.2, design-only Milestone 5A, and bounded Milestone 5B are complete.
+3, bounded Milestones 4 through 4.2, design-only Milestone 5A, bounded Milestone 5B, and the
+Milestone 5C compact-protocol micro-smoke are complete.
 The one approved 814-example run used the D-011 exception without changing the frozen evaluation
 stack.
 
@@ -454,27 +455,32 @@ answers, zero false acceptances, and zero ambiguity. Milestone 3 classified all 
 froze the content-free generator design. Milestone 4.2 demonstrated correct typed semantics but
 failed the renderer stress gate. Milestone 5B proved that the pinned Qwen3 runtime is local,
 reproducible, and mathematically firewalled, but the verbose strict-JSON protocol produced zero
-clean IRs. Full dataset generation and every training stage remain blocked; no complete synthetic
-dataset or adapter exists.
+clean IRs. Milestone 5C removed redundant JSON metadata and reached 90/90 tag parses, but Qwen3
+still echoed ordered token lists rather than realizing natural predicate-argument clauses; all 90
+beams were unnatural and semantically drifted, with zero clean IRs. The final Qwen3 prompt-patching
+stop rule is active. Full dataset generation and every training stage remain blocked; no complete
+synthetic dataset or adapter exists.
 
 ## Unresolved questions
 
-1. Should the project stop local-model realization, or approve a design-only compact-protocol
-   blocker-resolution milestone that preserves Qwen3, the procedural labels/verifiers, and all
-   contamination gates while replacing the verbose response contract before any new inference?
+1. Should the project approve a separately designed bounded test of a stronger local realization
+   model using the now-frozen compact tagged protocol? No further Qwen3-1.7B prompt patch or
+   120-IR Qwen3 smoke is allowed under the Milestone 5C stop rule.
 2. Should the cross-platform dependency locks explicitly pin Windows-only `colorama` and `tzdata` in a separately approved lock-maintenance task?
 3. Any future comparison must preserve the exact 814-ID manifest and frozen prompt/extractor/generation configuration unless the user explicitly authorizes a new evaluator lineage and complete reruns.
-4. The pure procedural renderer is closed, and the first constrained local-model protocol failed
-   its fixed readiness gate. Any compact-protocol design or later inference needs explicit approval.
+4. The pure procedural renderer and Qwen3-1.7B prompt-engineering lineages are closed. Any stronger
+   local model comparison needs an explicit model/revision/license/dependency/compute design and
+   separate approval before download or inference.
 5. The pinned MiniLM encoder behaved acceptably on original fixtures; future work must retain its exact revision/configuration unless a separate design decision replaces the semantic lineage.
 6. Is a 3-point final improvement statistically realistic after the development baseline, or should the success threshold be revised before training?
 
 ## Next approved milestone
 
-No further milestone is approved. Milestone 5B ends after its verified evidence commit is pushed.
-The exact next decision is whether to approve a design-only compact realization-protocol milestone
-or stop this synthesis route. The proposed design work would not download another model or run
-inference; it would replace verbose placeholder-inventory/clause-map echoing with a shorter
-deterministically recoverable contract and freeze original fixtures before any later bounded smoke.
-The 4,000 + 4,000 pilot, training, SFT, QLoRA, GRPO, paid services, benchmark inference, fallback
-model, and sealed-final access remain unapproved.
+No further milestone is approved. Milestone 5C ends after its verified evidence commit is pushed.
+Its 0/30 clean result fails the fixed micro-gate, so a 120-IR compact Qwen3 smoke is not justified.
+The exact next decision is whether to approve a design-and-bounded-smoke proposal for one stronger
+local realization model using the frozen compact protocol. The alternative approved by the stop
+rule was a manually vetted template-bank architecture, but Milestone 5C selects the stronger-model
+test as the single recommendation because it isolates model capacity while preserving the tested
+protocol and every deterministic safety layer. The 4,000 + 4,000 pilot, training, SFT, QLoRA, GRPO,
+paid services, benchmark inference, fallback inference, and sealed-final access remain unapproved.

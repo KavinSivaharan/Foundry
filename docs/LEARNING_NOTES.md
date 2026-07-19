@@ -433,3 +433,24 @@ third completely. Exact replay proves the failure is reproducible, not random. T
 is not to loosen coverage or repair model text after generation. A future design would need a much
 shorter declarative protocol whose semantic coverage is derived rather than redundantly echoed, and
 that design must be frozen on original fixtures before another model run.
+
+## Removing metadata does not give a small model compositional syntax
+
+Milestone 5C tested the shortest safe version of the same idea. Qwen returned only ordered event
+tags, immutable data placeholders, and semantic-anchor tokens. Deterministic code retained every
+mapping, phrase replacement, target, label, verifier, and screen. This solved the serialization
+problem: all 90 beams parsed as tags, most completed far below the 384-token cap, and 87 preserved
+the complete immutable-token assignment.
+
+The result still had zero usable yield. Qwen mostly copied each supplied token list, then placed the
+semantic anchor at the end. A human could see which tokens had been supplied, but the output did not
+grammatically bind a quantity to an entity, an origin to a destination, or a target to its question.
+Token presence is therefore weaker than semantic preservation: predicate-argument structure is a
+required part of meaning, not optional style.
+
+This falsifies the hypothesis that prompt compression alone can make Qwen3-1.7B a reliable surface
+compiler. The safe validator again converted model weakness into rejection rather than label
+corruption, and exact replay shows the result is stable. Further Qwen3 prompt edits would tune the
+interface against observed failures without evidence that model capacity is adequate. The cleanest
+next experiment, if approved, is to hold the compact protocol fixed and test one stronger local
+model; otherwise the project should stop this realization route.
