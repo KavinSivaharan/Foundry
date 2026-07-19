@@ -503,3 +503,16 @@ The final local-model substitution stop rule is active. No further local model, 
 experiment, full dataset generation, or training is approved. The exact next decision is whether to
 authorize design and bounded validation of an offline, manually vetted natural-language template
 bank layered over the retained exact procedural IR, labels, dual verifiers, and contamination stack.
+
+### Milestone 6A: offline template-bank implementation and smoke (complete; technical gate failed)
+
+The offline bank contains 58 original semantic frames and 232 versioned sentence plans. It consumed
+the existing typed IR without changing generator or verifier mathematics and ran exactly 120 new
+attempts. Automatic gates accepted 118, both verifiers agreed throughout, contamination remained
+clear, and exact replay passed. The ignored user packet contains all 120 rendered questions.
+
+Codex inspection found 13 clearly invalid or unnatural surfaces despite zero rule-based language
+failures. Repeated frame nouns, invalid ordinal forms, malformed noun compounds, and literal frame
+labels are systematic, so the technical gate failed. Full pilot generation and training remain
+blocked. The next decision is whether to approve one architecture-level bank-composition blocker
+resolution after user review, or stop synthesis realization.

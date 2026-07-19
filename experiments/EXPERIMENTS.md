@@ -366,3 +366,25 @@ Every future experiment must be registered here before a costly run begins. Its 
 - **Conclusion:** Capacity substitution did not rescue the protocol. No 120-IR run is justified.
 - **Next experiment:** none approved. Recommend a separately approved manually vetted offline
   template-bank design and bounded smoke; do not test another live realization model.
+
+## EXP-20260719-015 — Offline template-bank bounded smoke
+
+- **Status:** complete; technical gate failed; human review pending.
+- **Question:** Can a 58-frame/232-plan offline bank produce at least 90 clean automatic candidates
+  while preserving exact IR, labels, dual verification, and frozen contamination controls?
+- **Budget:** exactly 120 attempts, no replacements; targeted 33/14/13 and generic 20/20/20; 24
+  output-contract attempts; no LLM or GPU inference.
+- **Automatic result:** 118 accepted and two rejected (one latent-program copy, one number-neutral
+  copy). Bookkeeping/rate/discrete accepted 53/33/32. Both verifiers agreed on all 120; false labels,
+  deterministic language defects, target mismatches, benchmark rejections, and unresolved cases were
+  zero.
+- **Replay:** exact match at
+  `bf87e7af166f5dca107c9777337216e6da7a656b4eec3efb372dc98d1bfa5487`.
+- **Resources:** 1.579 seconds counted, 1.585 seconds replay, 914,022,400 peak process bytes, 440,657
+  ignored raw bytes, no GPU.
+- **Codex inspection:** all 120 reviewed; not a human audit. Thirteen invalid/unnatural surfaces show
+  systematic frame-label, grouping-noun, compound-noun, and ordinal-inflection defects.
+- **Conclusion:** automatic count gates pass, but the systematic-template-defect gate fails. Human
+  review packet is pending at `results/raw/template_bank_smoke/human_review.md`.
+- **Next experiment:** none approved. Await user packet review and an explicit decision on one
+  offline architecture-level bank-composition blocker resolution or stopping realization.

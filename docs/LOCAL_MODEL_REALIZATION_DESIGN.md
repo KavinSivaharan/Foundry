@@ -404,3 +404,13 @@ unnatural and 90 drifted outputs. Replay exactly reproduced
 The final local-model stop rule is active. No other local realization model or compact-prompt revision
 is recommended. The proposed successor is an offline, manually vetted template bank with deterministic
 typed slot filling; procedural IR, labels, verifiers, and contamination controls remain unchanged.
+
+## Live-model route closure confirmed by Milestone 6A
+
+Milestone 6A did not load or run any realization model. It implemented the D-021 successor as a
+source-controlled bank with typed deterministic filling. This preserves the final live-model stop
+rule: Qwen3-1.7B, Qwen3-4B, the compact protocol, and further prompt/model substitutions remain closed.
+
+The bank's automatic yield was high, but Codex inspection found systematic frame-name and morphology
+defects. This is a template-composition blocker, not a reason to reopen live inference. Any next
+proposal must remain offline and must be separately approved; full generation is blocked.

@@ -469,3 +469,17 @@ did its job by rejecting every invalid surface without corrupting labels. The ap
 architecture is not another live realizer. It is a finite, offline template bank whose language is
 manually vetted before deterministic slot filling, while procedural mathematics and dual verification
 remain the source of truth.
+
+## A finite bank still needs a language compiler, not metadata interpolation
+
+Milestone 6A confirms that removing live generation eliminates model drift without automatically
+solving natural-language quality. Exact typed IR, stable plans, and perfect verifier agreement gave
+118 automatic passes, yet complete Codex inspection found 13 invalid or unnatural surfaces. The
+common cause was treating internal frame labels as if they were already natural noun phrases and
+forming ordinals mechanically.
+
+The lesson is that template review must cover composed outputs, not only isolated sentence plans or
+typed slots. A deterministic validator can prove coverage, units, target identity, and punctuation,
+but it cannot infer that “record record,” “1th,” or a malformed compound sounds wrong unless those
+properties are represented explicitly. Human review remains a separate scientific gate; Codex
+inspection is useful pre-screening but must not be mislabeled as human vetting.

@@ -1,0 +1,142 @@
+{
+  "acceptance_by_category": {
+    "constraint_distribution_or_discrete_reasoning": {
+      "accepted": 32,
+      "attempted": 33,
+      "rejected": 1
+    },
+    "multi_step_bookkeeping_or_omission": {
+      "accepted": 53,
+      "attempted": 53,
+      "rejected": 0
+    },
+    "rate_ratio_percentage_or_average": {
+      "accepted": 33,
+      "attempted": 34,
+      "rejected": 1
+    }
+  },
+  "acceptance_by_difficulty": {
+    "easy": {
+      "accepted": 39,
+      "attempted": 40,
+      "rejected": 1
+    },
+    "hard": {
+      "accepted": 40,
+      "attempted": 40,
+      "rejected": 0
+    },
+    "medium": {
+      "accepted": 39,
+      "attempted": 40,
+      "rejected": 1
+    }
+  },
+  "acceptance_by_group": {
+    "generic_control": {
+      "accepted": 58,
+      "attempted": 60,
+      "rejected": 2
+    },
+    "targeted": {
+      "accepted": 60,
+      "attempted": 60,
+      "rejected": 0
+    }
+  },
+  "acceptance_by_output_contract": {
+    "False": {
+      "accepted": 94,
+      "attempted": 96,
+      "rejected": 2
+    },
+    "True": {
+      "accepted": 24,
+      "attempted": 24,
+      "rejected": 0
+    }
+  },
+  "acceptance_rate": 0.9833333333333333,
+  "accepted": 118,
+  "allocation_by_category": {
+    "constraint_distribution_or_discrete_reasoning": 33,
+    "multi_step_bookkeeping_or_omission": 53,
+    "rate_ratio_percentage_or_average": 34
+  },
+  "allocation_by_difficulty": {
+    "easy": 40,
+    "hard": 40,
+    "medium": 40
+  },
+  "allocation_by_group": {
+    "generic_control": 60,
+    "targeted": 60
+  },
+  "attempted": 120,
+  "benchmark_lexical_rejections": 0,
+  "benchmark_semantic_rejections": 0,
+  "benchmark_semantic_review_rejections": 0,
+  "codex_inspection": {
+    "attempts_inspected": 120,
+    "human_review_status": "pending_user_review",
+    "invalid_or_unnatural_count": 13,
+    "status": "codex_non_human_surface_inspection",
+    "systematic_template_defect": true
+  },
+  "config_sha256": "416ff570cb041eba64f31f0b8c1f6b1f282a835d0f907b89e75f242d6d398711",
+  "counted_decision_sha256": "bf87e7af166f5dca107c9777337216e6da7a656b4eec3efb372dc98d1bfa5487",
+  "counted_runtime_seconds": 1.578990399997565,
+  "deterministic_language_defects": 0,
+  "deterministic_replay_match": true,
+  "duplicate_latent_programs": 1,
+  "exact_duplicates": 0,
+  "false_labels": 0,
+  "frames_by_category": {
+    "constraint_distribution_or_discrete_reasoning": 20,
+    "multi_step_bookkeeping_or_omission": 18,
+    "rate_ratio_percentage_or_average": 20
+  },
+  "gpu_used": false,
+  "human_review_packet": "results/raw/template_bank_smoke/human_review.md",
+  "human_review_status": "pending_user_review",
+  "independent_verifier_failures": 0,
+  "internal_fixture_set_sha256": "5cb72b962ab9a33370426a26b6e50b34e217309f35ded0762b744f9d47a23931",
+  "internal_policy_sha256": "1ee8993754599e86a4ee37f89064588c9fbef42b3bd12996abd241aff00a9604",
+  "internal_review_records": 45,
+  "master_seed": "foundry-template-bank-smoke-master-20260718-v1",
+  "output_contract_attempts": 24,
+  "peak_process_rss_bytes": 914022400,
+  "plans_by_category": {
+    "constraint_distribution_or_discrete_reasoning": 80,
+    "multi_step_bookkeeping_or_omission": 72,
+    "rate_ratio_percentage_or_average": 80
+  },
+  "primary_verifier_failures": 0,
+  "raw_artifact_bytes": 440657,
+  "rejected": 2,
+  "rejection_reasons": {
+    "latent_program_copy": 1,
+    "numeric_template_copy": 1
+  },
+  "replay_decision_sha256": "bf87e7af166f5dca107c9777337216e6da7a656b4eec3efb372dc98d1bfa5487",
+  "replay_runtime_seconds": 1.5848036999996111,
+  "reused_render_signatures": 0,
+  "run_id": "foundry-template-bank-smoke-v1",
+  "schema_version": 1,
+  "scope_exclusions": [
+    "no_language_model_inference",
+    "no_full_dataset_generation",
+    "no_training",
+    "no_sealed_final_access"
+  ],
+  "sentence_plans": 232,
+  "target_mismatches": 0,
+  "technical_gate_passed": false,
+  "technical_status": "TECHNICAL GATE FAILED",
+  "template_bank_sha256": "7b60ca254cf52617bb0f87d9b480092300a1fb3f868299a9f5a982d1a08a3188",
+  "template_bank_version": "foundry-template-bank-v1",
+  "template_frames": 58,
+  "unresolved_contamination_cases": 0,
+  "verifier_disagreements": 0
+}

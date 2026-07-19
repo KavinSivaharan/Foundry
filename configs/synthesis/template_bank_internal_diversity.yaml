@@ -1,0 +1,18 @@
+policy_id: foundry-template-bank-internal-diversity-v1
+calibration_fixture_path: configs/synthesis/template_bank_internal_diversity_fixtures.json
+hard_reject:
+  - exact_normalized_text
+  - identical_filled_question
+  - numeric_template_copy
+  - latent_program_copy
+  - render_signature_reuse
+  - cross_template_structural_copy
+record_for_review:
+  five_token_jaccard_at_or_above: 0.35
+  semantic_similarity_at_or_above: 0.82
+distinct_signature_topical_similarity_is_automatic_reject: false
+benchmark_contamination_policy_unchanged: true
+alternatives_rejected:
+  - reuse_benchmark_semantic_bands_for_internal_diversity
+  - ignore_semantic_neighbors_entirely
+  - weaken_benchmark_contamination_thresholds

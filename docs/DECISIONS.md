@@ -315,3 +315,23 @@ This log separates proposals from approved decisions. A proposal does not author
   model substitution, full pilot generation, or training remains blocked.
 - **Next user decision:** Decide whether to approve a design-and-bounded-smoke milestone for the
   manually vetted offline template-bank architecture.
+
+## D-022 — Implement the offline bank but reject Milestone 6A technical readiness
+
+- **Date:** 2026-07-19
+- **Status:** implemented; technical gate failed; human review pending
+- **Decision:** Permanently retain the closure of live-model realization. Preserve the 58-frame,
+  232-plan offline bank, typed compatibility contracts, exact mathematics, dual verifiers, and
+  unchanged contamination policies as experimental evidence, but do not approve full generation.
+- **Evidence:** The single 120-attempt smoke automatically accepted 118, rejected one latent-program
+  copy and one number-neutral copy, produced zero false labels or verifier disagreements, and replayed
+  exactly at `bf87e7af...5487`. Codex inspection of all 120 surfaces—explicitly not a human audit—found
+  13 invalid or unnatural questions from repeated frame nouns, invalid ordinals, malformed compound
+  nouns, and raw frame-label realization. The systematic-template-defect gate therefore failed.
+- **Rationale:** High automatic yield is insufficient when deterministic metadata does not recognize
+  visibly bad English. Patching the 13 observed strings after the smoke would overfit this bounded
+  result and would violate the one-smoke evidence boundary.
+- **Expected consequences:** The ignored packet remains available for user review. No 4,000 + 4,000
+  generation, training, benchmark inference, live realizer, or sealed-final access follows.
+- **Next user decision:** Review the local packet, then decide whether to approve one architecture-
+  level bank-composition blocker resolution or stop the realization program.

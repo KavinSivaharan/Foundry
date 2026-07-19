@@ -574,3 +574,17 @@ Deterministic compatibility rules would select templates and fill typed slots; t
 quality, exact/template/structural duplicate, development-contamination, and internal-diversity screens
 would remain mandatory. No template may contain or be derived from benchmark content. This architecture
 requires a separately approved design and bounded smoke before any 4,000 + 4,000 generation.
+
+## Milestone 6A offline-bank evidence
+
+`foundry-template-bank-v1` supplies 18 bookkeeping, 20 rate/ratio, and 20 discrete semantic frames,
+four sentence plans each (232 signatures). The bank is source controlled, original, fail closed on
+untyped or incompatible IR, and marked human-review pending. Generated-to-development MiniLM and
+lexical thresholds remain unchanged; internal diversity uses separate identity/structure controls
+without treating same-skill topical similarity alone as duplication.
+
+The bounded smoke accepted 118/120 automatically with exact replay, zero false labels, and zero
+verifier disagreements. One latent duplicate and one number-neutral duplicate were rejected. Codex
+inspection then found 13 invalid or unnatural surfaces, so the implementation failed the unchanged
+systematic-language-defect gate. The packet remains ignored and human review remains pending. Full
+generation and training are not ready.

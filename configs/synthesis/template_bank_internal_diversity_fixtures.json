@@ -1,0 +1,32 @@
+[
+  {
+    "fixture_id": "tb-exact-duplicate",
+    "relationship": "exact_duplicate",
+    "expected": "reject"
+  },
+  {
+    "fixture_id": "tb-number-swap",
+    "relationship": "numeric_template_copy",
+    "expected": "reject"
+  },
+  {
+    "fixture_id": "tb-structural-rewrite",
+    "relationship": "cross_template_structural_copy",
+    "expected": "reject"
+  },
+  {
+    "fixture_id": "tb-close-paraphrase",
+    "relationship": "supported_paraphrase",
+    "expected": "review"
+  },
+  {
+    "fixture_id": "tb-same-skill-new-scenario",
+    "relationship": "topically_related_distinct_signature",
+    "expected": "pass"
+  },
+  {
+    "fixture_id": "tb-unrelated",
+    "relationship": "unrelated",
+    "expected": "pass"
+  }
+]

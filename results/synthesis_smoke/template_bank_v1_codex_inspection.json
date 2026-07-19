@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "inspection_kind": "codex_non_human_surface_inspection",
+  "attempts_inspected": 120,
+  "human_review_status": "pending_user_review",
+  "invalid_or_unnatural_count": 13,
+  "systematic_template_defect": true,
+  "findings": [
+    {"attempt_index": 26, "defect": "duplicated_frame_noun"},
+    {"attempt_index": 30, "defect": "duplicated_frame_noun"},
+    {"attempt_index": 40, "defect": "duplicated_grouping_noun"},
+    {"attempt_index": 46, "defect": "awkward_frame_label_realization"},
+    {"attempt_index": 47, "defect": "invalid_ordinal_inflection"},
+    {"attempt_index": 55, "defect": "awkward_frame_label_realization"},
+    {"attempt_index": 67, "defect": "duplicated_frame_noun"},
+    {"attempt_index": 79, "defect": "duplicated_frame_noun"},
+    {"attempt_index": 86, "defect": "malformed_compound_noun"},
+    {"attempt_index": 93, "defect": "malformed_grouping_noun"},
+    {"attempt_index": 100, "defect": "invalid_ordinal_inflection"},
+    {"attempt_index": 111, "defect": "awkward_frame_label_realization"},
+    {"attempt_index": 112, "defect": "duplicated_frame_noun"}
+  ]
+}
