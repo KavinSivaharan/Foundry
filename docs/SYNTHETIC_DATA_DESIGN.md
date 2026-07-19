@@ -617,3 +617,26 @@ collided under number-neutral duplicate detection and one latent program duplica
 all correctness/safety checks passed. The required 110 gate therefore failed, no review packet was
 created, and neither an 8,000-example generation nor training is permitted. A future proposal must
 address runtime selection/diversity without weakening the frozen duplicate or contamination policies.
+
+## Milestone 6D cross-dataset capacity boundary
+
+The proposed pilot contains 4,000 targeted and 4,000 generic-control acceptances. Applying the frozen
+125% candidate budget independently to each group/category quota produces 10,003 required attempts:
+
+| Family | Accepted quota | Fixed attempts | Active plan identities | Domain-aware identities | Number-neutral identities |
+|---|---:|---:|---:|---:|---:|
+| Bookkeeping | 3,534 | 4,418 | 72 | 1,728 | 768 |
+| Rate/ratio/percentage/average | 2,266 | 2,834 | 80 | 400 | 88 |
+| Discrete constraints | 2,200 | 2,751 | 80 | 1,600 | 320 |
+| **Total** | **8,000** | **10,003** | **232** | **3,728** | **1,176** |
+
+The same question-identity pool serves output-contract enabled and disabled examples because the
+contract changes the completion, not the question. Every family/difficulty/output stratum is below
+its required quota. The capacity gate therefore fails before scheduling. Milestone 6D creates no
+allocator, latent schedule, 120-attempt schedule, fresh smoke, raw candidate evidence, or packet.
+
+The minimum current number-neutral shortfalls are 3,650 bookkeeping, 2,746 rate/ratio, and 2,431
+discrete surfaces. Adding IDs alone is not sufficient: future capacity work must add independently
+authored and reviewed plan structures and scenario/lexical domains that survive the unchanged
+number-neutral and contamination controls. Capacity must be re-audited before selection logic is
+implemented.

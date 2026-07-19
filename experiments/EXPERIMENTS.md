@@ -436,3 +436,27 @@ Every future experiment must be registered here before a costly run begins. Its 
   The language repair is retained as evidence, but full generation and training remain blocked.
 - **Next experiment:** none approved. A future decision may authorize a narrow runtime
   template-selection/diversity correction and one new bounded smoke without lowering any gate.
+
+## EXP-20260719-018 — Runtime-diversity capacity preflight
+
+- **Status:** complete; capacity gate failed; mandatory stop applied.
+- **Question:** Can the frozen v3 bank support collision-free cross-dataset allocation for 4,000
+  targeted and 4,000 generic-control acceptances with fixed 125% attempt pools under every unchanged
+  uniqueness and contamination rule?
+- **Source evidence:** The existing 120-record v3 smoke was read locally and remained ignored. All 16
+  duplicate rejections were mapped to deterministic earlier partners: 15 number-neutral surface
+  copies and one latent-program copy. Source-attempt SHA-256 is
+  `773e2bfad21374cc6ee403b486c1af1f72215360fc647e8c1c96e7c861651828`.
+- **Budget:** 8,000 accepted examples imply 10,003 fixed attempts after applying `ceil(1.25 * quota)`
+  to each group/category stratum: 4,418 bookkeeping, 2,834 rates, and 2,751 discrete.
+- **Capacity result:** Active plan signatures are 72/80/80; domain-aware signatures are
+  1,728/400/1,600; number-neutral surfaces are 768/88/320 for bookkeeping/rates/discrete. Every
+  category, difficulty, and output-contract stratum fails. Audit SHA-256 is
+  `8b921822bf10da964cf357cf3851084a2e0bd15ffc5dc549a85e04f84c9ccd7b`.
+- **Scope result:** No allocator, latent schedule, candidate schedule, master seed, fresh smoke,
+  replay, raw candidate evidence, or review packet was created. No language, mathematics, verifier,
+  evaluator, duplicate rule, contamination threshold, or benchmark artifact changed.
+- **Conclusion:** A scheduler cannot satisfy cross-dataset uniqueness with the current finite bank.
+  Full generation and training remain blocked.
+- **Next experiment:** none approved. Decide whether to expand independently authored and
+  human-reviewed plan/scenario capacity, then repeat the same preflight before allocator work.

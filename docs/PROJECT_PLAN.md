@@ -556,3 +556,25 @@ copies and one latent-program copy were safely rejected. Because the fixed gate 
 review packet was created. Full generation and training remain blocked. The next decision is whether
 to authorize a narrowly bounded plan-allocation/diversity correction and one new smoke; the current
 milestone does not authorize that work.
+
+### Milestone 6D: runtime-diversity capacity audit (complete; capacity gate failed)
+
+Milestone 6D diagnosed all 16 v3 duplicate rejections before changing allocation. The 15
+number-neutral collisions reused a sentence-plan identity under different frame/template metadata
+and collapsed to an earlier normalized surface; the one latent-program collision was a repeated
+discrete structure from the seed schedule. Neither pattern was a label, verifier, language, or
+benchmark-contamination failure.
+
+The precommitted capacity audit then applied the 125% attempt budget to both future 4,000-example
+groups. The accepted quota of 8,000 requires 10,003 fixed attempts after per-stratum rounding:
+4,418 bookkeeping, 2,834 rate/ratio, and 2,751 discrete. The current active plan-level capacity is
+only 72/80/80, while existing domain-aware signatures provide 1,728/400/1,600 and actual
+number-neutral surfaces provide 768/88/320. Every category, difficulty, and output-contract stratum
+fails. Therefore the mandatory stop rule prevented allocator implementation, latent scheduling,
+schedule freezing, a fresh 120-attempt smoke, and packet creation.
+
+Full generation and training remain blocked. The exact next decision is whether to authorize a
+separate expansion milestone for independently authored and human-reviewed sentence plans, scenario
+domains, and structural surfaces. Any expansion must first raise the measured number-neutral pools
+by at least 3,650 bookkeeping, 2,746 rate/ratio, and 2,431 discrete identities and then repeat this
+capacity audit under the unchanged duplicate and contamination policies.

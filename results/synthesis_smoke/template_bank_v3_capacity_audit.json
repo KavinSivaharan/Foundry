@@ -1,0 +1,623 @@
+{
+  "allocator_implemented": false,
+  "audit_id": "foundry-template-bank-runtime-capacity-v1",
+  "audit_sha256": "8b921822bf10da964cf357cf3851084a2e0bd15ffc5dc549a85e04f84c9ccd7b",
+  "available_unique_total_under_all_current_controls": 232,
+  "candidate_schedule_created": false,
+  "capacity_by_category": {
+    "constraint_distribution_or_discrete_reasoning": {
+      "active_plan_render_signatures": 80,
+      "by_difficulty": {
+        "easy": {
+          "active_plan_render_signatures": 80,
+          "domain_aware_render_signatures": 1600,
+          "limiting_unique_capacity": 80,
+          "number_neutral_signatures": 320,
+          "required_attempt_pool_if_cycled": 917,
+          "semantic_frame_signatures": 1600,
+          "stratum_passed": false
+        },
+        "hard": {
+          "active_plan_render_signatures": 80,
+          "domain_aware_render_signatures": 1600,
+          "limiting_unique_capacity": 80,
+          "number_neutral_signatures": 320,
+          "required_attempt_pool_if_cycled": 917,
+          "semantic_frame_signatures": 1600,
+          "stratum_passed": false
+        },
+        "medium": {
+          "active_plan_render_signatures": 80,
+          "domain_aware_render_signatures": 1600,
+          "limiting_unique_capacity": 80,
+          "number_neutral_signatures": 320,
+          "required_attempt_pool_if_cycled": 917,
+          "semantic_frame_signatures": 1600,
+          "stratum_passed": false
+        }
+      },
+      "by_output_contract": {
+        "disabled": {
+          "active_plan_render_signatures": 80,
+          "domain_aware_render_signatures": 1600,
+          "limiting_unique_capacity": 80,
+          "number_neutral_signatures": 320,
+          "required_attempt_pool_at_80_percent": 2200,
+          "semantic_frame_signatures": 1600,
+          "stratum_passed": false
+        },
+        "enabled": {
+          "active_plan_render_signatures": 80,
+          "domain_aware_render_signatures": 1600,
+          "limiting_unique_capacity": 80,
+          "number_neutral_signatures": 320,
+          "required_attempt_pool_at_20_percent": 551,
+          "semantic_frame_signatures": 1600,
+          "stratum_passed": false
+        },
+        "signature_pool_shared_across_statuses": true
+      },
+      "combined_cross_dataset": {
+        "accepted_quota": 2200,
+        "available_under_all_current_controls": 80,
+        "capacity_ratio": 0.029080334423845874,
+        "expected_average_plan_reuse_without_uniqueness": 34.3875,
+        "gate_passed": false,
+        "required_125_percent_attempt_pool": 2751
+      },
+      "domain_aware_render_signatures": 1600,
+      "limiting_unique_capacity": 80,
+      "number_neutral_signatures": 320,
+      "planned_quotas": {
+        "generic_control": {
+          "accepted_quota": 1333,
+          "required_125_percent_attempt_pool": 1667
+        },
+        "targeted": {
+          "accepted_quota": 867,
+          "required_125_percent_attempt_pool": 1084
+        }
+      },
+      "semantic_frame_signatures": 1600
+    },
+    "multi_step_bookkeeping_or_omission": {
+      "active_plan_render_signatures": 72,
+      "by_difficulty": {
+        "easy": {
+          "active_plan_render_signatures": 72,
+          "domain_aware_render_signatures": 1728,
+          "limiting_unique_capacity": 72,
+          "number_neutral_signatures": 192,
+          "required_attempt_pool_if_cycled": 1473,
+          "semantic_frame_signatures": 3456,
+          "stratum_passed": false
+        },
+        "hard": {
+          "active_plan_render_signatures": 72,
+          "domain_aware_render_signatures": 1728,
+          "limiting_unique_capacity": 72,
+          "number_neutral_signatures": 384,
+          "required_attempt_pool_if_cycled": 1472,
+          "semantic_frame_signatures": 3456,
+          "stratum_passed": false
+        },
+        "medium": {
+          "active_plan_render_signatures": 72,
+          "domain_aware_render_signatures": 1728,
+          "limiting_unique_capacity": 72,
+          "number_neutral_signatures": 192,
+          "required_attempt_pool_if_cycled": 1473,
+          "semantic_frame_signatures": 3456,
+          "stratum_passed": false
+        }
+      },
+      "by_output_contract": {
+        "disabled": {
+          "active_plan_render_signatures": 72,
+          "domain_aware_render_signatures": 1728,
+          "limiting_unique_capacity": 72,
+          "number_neutral_signatures": 768,
+          "required_attempt_pool_at_80_percent": 3534,
+          "semantic_frame_signatures": 3456,
+          "stratum_passed": false
+        },
+        "enabled": {
+          "active_plan_render_signatures": 72,
+          "domain_aware_render_signatures": 1728,
+          "limiting_unique_capacity": 72,
+          "number_neutral_signatures": 768,
+          "required_attempt_pool_at_20_percent": 884,
+          "semantic_frame_signatures": 3456,
+          "stratum_passed": false
+        },
+        "signature_pool_shared_across_statuses": true
+      },
+      "combined_cross_dataset": {
+        "accepted_quota": 3534,
+        "available_under_all_current_controls": 72,
+        "capacity_ratio": 0.016296966953372568,
+        "expected_average_plan_reuse_without_uniqueness": 61.361111111111114,
+        "gate_passed": false,
+        "required_125_percent_attempt_pool": 4418
+      },
+      "domain_aware_render_signatures": 1728,
+      "limiting_unique_capacity": 72,
+      "number_neutral_signatures": 768,
+      "planned_quotas": {
+        "generic_control": {
+          "accepted_quota": 1334,
+          "required_125_percent_attempt_pool": 1668
+        },
+        "targeted": {
+          "accepted_quota": 2200,
+          "required_125_percent_attempt_pool": 2750
+        }
+      },
+      "semantic_frame_signatures": 3456
+    },
+    "rate_ratio_percentage_or_average": {
+      "active_plan_render_signatures": 80,
+      "by_difficulty": {
+        "easy": {
+          "active_plan_render_signatures": 80,
+          "domain_aware_render_signatures": 400,
+          "limiting_unique_capacity": 80,
+          "number_neutral_signatures": 84,
+          "required_attempt_pool_if_cycled": 945,
+          "semantic_frame_signatures": 400,
+          "stratum_passed": false
+        },
+        "hard": {
+          "active_plan_render_signatures": 80,
+          "domain_aware_render_signatures": 400,
+          "limiting_unique_capacity": 80,
+          "number_neutral_signatures": 84,
+          "required_attempt_pool_if_cycled": 944,
+          "semantic_frame_signatures": 400,
+          "stratum_passed": false
+        },
+        "medium": {
+          "active_plan_render_signatures": 80,
+          "domain_aware_render_signatures": 400,
+          "limiting_unique_capacity": 80,
+          "number_neutral_signatures": 84,
+          "required_attempt_pool_if_cycled": 945,
+          "semantic_frame_signatures": 400,
+          "stratum_passed": false
+        }
+      },
+      "by_output_contract": {
+        "disabled": {
+          "active_plan_render_signatures": 80,
+          "domain_aware_render_signatures": 400,
+          "limiting_unique_capacity": 80,
+          "number_neutral_signatures": 88,
+          "required_attempt_pool_at_80_percent": 2267,
+          "semantic_frame_signatures": 400,
+          "stratum_passed": false
+        },
+        "enabled": {
+          "active_plan_render_signatures": 80,
+          "domain_aware_render_signatures": 400,
+          "limiting_unique_capacity": 80,
+          "number_neutral_signatures": 88,
+          "required_attempt_pool_at_20_percent": 567,
+          "semantic_frame_signatures": 400,
+          "stratum_passed": false
+        },
+        "signature_pool_shared_across_statuses": true
+      },
+      "combined_cross_dataset": {
+        "accepted_quota": 2266,
+        "available_under_all_current_controls": 80,
+        "capacity_ratio": 0.028228652081863093,
+        "expected_average_plan_reuse_without_uniqueness": 35.425,
+        "gate_passed": false,
+        "required_125_percent_attempt_pool": 2834
+      },
+      "domain_aware_render_signatures": 400,
+      "limiting_unique_capacity": 80,
+      "number_neutral_signatures": 88,
+      "planned_quotas": {
+        "generic_control": {
+          "accepted_quota": 1333,
+          "required_125_percent_attempt_pool": 1667
+        },
+        "targeted": {
+          "accepted_quota": 933,
+          "required_125_percent_attempt_pool": 1167
+        }
+      },
+      "semantic_frame_signatures": 400
+    }
+  },
+  "capacity_gate_passed": false,
+  "collision_inventory": {
+    "attempted_source_candidates": 120,
+    "diagnoses": [
+      {
+        "attempt_index": 26,
+        "candidate_id_prefix": "syn-c9a02643",
+        "category": "multi_step_bookkeeping_or_omission",
+        "cause": "same_plan_and_lexical_realization_across_semantic_frames",
+        "collision_stage": "numeric_template_copy",
+        "difficulty": "medium",
+        "earlier_attempt_index": 2,
+        "earlier_candidate_id_prefix": "syn-100ad4b2",
+        "earlier_sentence_plan_id": "plain_location_changes",
+        "earlier_template_id": "bk.01.opening_inventory",
+        "group": "targeted",
+        "latent_program_sha256": "9b69f9aeeff1cde443b4c2ddfef6d8ebc638732d88bf1feb179b8042c794744f",
+        "number_neutral_sha256": "d51d5b856bd8314e116adba6992d68603dbc28aa9bfd99528e8c331e60b086a3",
+        "output_contract_enabled": true,
+        "render_signature_sha256": "435ba9918c474255797f32eb8db0301a9bd508b1f88e7f3dc46426c1b9ece9b0",
+        "semantic_frame_id": "dispatch_record",
+        "sentence_plan_id": "plain_location_changes",
+        "template_id": "bk.07.dispatch_record"
+      },
+      {
+        "attempt_index": 28,
+        "candidate_id_prefix": "syn-2c6928dd",
+        "category": "multi_step_bookkeeping_or_omission",
+        "cause": "same_plan_and_lexical_realization_across_semantic_frames",
+        "collision_stage": "numeric_template_copy",
+        "difficulty": "easy",
+        "earlier_attempt_index": 4,
+        "earlier_candidate_id_prefix": "syn-50b4adf7",
+        "earlier_sentence_plan_id": "compact_sequence",
+        "earlier_template_id": "bk.01.opening_inventory",
+        "group": "targeted",
+        "latent_program_sha256": "683459096582623a107fdadf657b96b5f6e0054bdd2c282875d408b05c84fb11",
+        "number_neutral_sha256": "560e881f665058546ca9f793af53b1e27bb682c36cc3f2b4598d121dc83d1405",
+        "output_contract_enabled": false,
+        "render_signature_sha256": "9d20442a66d71430b5cdb26b1ba0160af69743b952ade6db8a6ff1d347166950",
+        "semantic_frame_id": "dispatch_record",
+        "sentence_plan_id": "compact_sequence",
+        "template_id": "bk.07.dispatch_record"
+      },
+      {
+        "attempt_index": 31,
+        "candidate_id_prefix": "syn-223c3e35",
+        "category": "multi_step_bookkeeping_or_omission",
+        "cause": "same_plan_and_lexical_realization_across_semantic_frames",
+        "collision_stage": "numeric_template_copy",
+        "difficulty": "easy",
+        "earlier_attempt_index": 7,
+        "earlier_candidate_id_prefix": "syn-2215566e",
+        "earlier_sentence_plan_id": "direct_sequence",
+        "earlier_template_id": "bk.02.scheduled_transfers",
+        "group": "targeted",
+        "latent_program_sha256": "15cf981ab0869a4c0f638dd10fbc072812cc99d72d379968e6ffcb5c2aa99dad",
+        "number_neutral_sha256": "4866040a77c458df62f7d00813d3f5adcba605f2c9875921faed67fdf6e0669e",
+        "output_contract_enabled": false,
+        "render_signature_sha256": "a502535e366fe909f22da0414868a20761a4e6bf22dba75b1a4e09a353fe9b89",
+        "semantic_frame_id": "receiving_record",
+        "sentence_plan_id": "direct_sequence",
+        "template_id": "bk.08.receiving_record"
+      },
+      {
+        "attempt_index": 32,
+        "candidate_id_prefix": "syn-c81ffcb0",
+        "category": "multi_step_bookkeeping_or_omission",
+        "cause": "same_plan_and_lexical_realization_across_semantic_frames",
+        "collision_stage": "numeric_template_copy",
+        "difficulty": "medium",
+        "earlier_attempt_index": 8,
+        "earlier_candidate_id_prefix": "syn-a1458fb4",
+        "earlier_sentence_plan_id": "compact_sequence",
+        "earlier_template_id": "bk.02.scheduled_transfers",
+        "group": "targeted",
+        "latent_program_sha256": "d7537a5a30925d4cbf2fc0fccd462767ff273cd3414ab653996f88695e32e362",
+        "number_neutral_sha256": "987d586b253e47c6936907da7bfcb4fde0fafa08e02de91f8bca218a67d45874",
+        "output_contract_enabled": false,
+        "render_signature_sha256": "a6ed9f2ab9bbb72ecdf64c07291b2c16bdc8a8ed3f3e412c7809b498dfa485c9",
+        "semantic_frame_id": "receiving_record",
+        "sentence_plan_id": "compact_sequence",
+        "template_id": "bk.08.receiving_record"
+      },
+      {
+        "attempt_index": 64,
+        "candidate_id_prefix": "syn-b0db2883",
+        "category": "multi_step_bookkeeping_or_omission",
+        "cause": "same_plan_and_lexical_realization_across_semantic_frames",
+        "collision_stage": "numeric_template_copy",
+        "difficulty": "easy",
+        "earlier_attempt_index": 13,
+        "earlier_candidate_id_prefix": "syn-535197e1",
+        "earlier_sentence_plan_id": "direct_changes",
+        "earlier_template_id": "bk.04.supply_ledger",
+        "group": "generic_control",
+        "latent_program_sha256": "b75709d51bb5dfc372885aead15dae136424791f4bb95d07e767e1b61fa0caa8",
+        "number_neutral_sha256": "2f4a08c6c5d77864a7e5e40150ecc3bed5f76d5eb7482d76566efc62dad9fe5e",
+        "output_contract_enabled": false,
+        "render_signature_sha256": "bae224da95a8734b1c1aa7cff8c81a8318faeee647ba89fb26cbfe819df3f781",
+        "semantic_frame_id": "materials_register",
+        "sentence_plan_id": "direct_changes",
+        "template_id": "bk.10.materials_register"
+      },
+      {
+        "attempt_index": 65,
+        "candidate_id_prefix": "syn-89d4bb23",
+        "category": "multi_step_bookkeeping_or_omission",
+        "cause": "same_plan_and_lexical_realization_across_semantic_frames",
+        "collision_stage": "numeric_template_copy",
+        "difficulty": "medium",
+        "earlier_attempt_index": 14,
+        "earlier_candidate_id_prefix": "syn-9611b93a",
+        "earlier_sentence_plan_id": "plain_location_changes",
+        "earlier_template_id": "bk.04.supply_ledger",
+        "group": "generic_control",
+        "latent_program_sha256": "e0fb3eb5ff3459fde8c0a3f1ce34703181bfcd969537c19e1b88bf1f09abc97c",
+        "number_neutral_sha256": "43871864ec95f864b1c92fe75f7266e0dfe7239f2d86eff4c2b6aadf5e9cdee2",
+        "output_contract_enabled": false,
+        "render_signature_sha256": "1b1e124d52ea9d7508c67d0fde393b18a55f626b5ec51e028d0038087fb8b543",
+        "semantic_frame_id": "materials_register",
+        "sentence_plan_id": "plain_location_changes",
+        "template_id": "bk.10.materials_register"
+      },
+      {
+        "attempt_index": 68,
+        "candidate_id_prefix": "syn-e452b505",
+        "category": "multi_step_bookkeeping_or_omission",
+        "cause": "same_plan_and_lexical_realization_across_semantic_frames",
+        "collision_stage": "numeric_template_copy",
+        "difficulty": "medium",
+        "earlier_attempt_index": 17,
+        "earlier_candidate_id_prefix": "syn-4241c125",
+        "earlier_sentence_plan_id": "direct_changes",
+        "earlier_template_id": "bk.05.storage_updates",
+        "group": "generic_control",
+        "latent_program_sha256": "ff9ac9213dd05ed99ac59854806b98899e97a5e8e0a2fb862f166221c73c06f0",
+        "number_neutral_sha256": "9e7bedeac9753643476a98c89795279aea5032762900aa6a41714f6c86e85c9d",
+        "output_contract_enabled": false,
+        "render_signature_sha256": "3712fb492be8c29c3b72204a0458f488a68b5be8305733e3c2656f0a08e21005",
+        "semantic_frame_id": "workshop_balance",
+        "sentence_plan_id": "direct_changes",
+        "template_id": "bk.11.workshop_balance"
+      },
+      {
+        "attempt_index": 70,
+        "candidate_id_prefix": "syn-b3b1c455",
+        "category": "multi_step_bookkeeping_or_omission",
+        "cause": "same_plan_and_lexical_realization_across_semantic_frames",
+        "collision_stage": "numeric_template_copy",
+        "difficulty": "easy",
+        "earlier_attempt_index": 19,
+        "earlier_candidate_id_prefix": "syn-1439a269",
+        "earlier_sentence_plan_id": "direct_sequence",
+        "earlier_template_id": "bk.05.storage_updates",
+        "group": "generic_control",
+        "latent_program_sha256": "d0d375cb2516645cc26fc303483a30289278f50ffb92891c2b2569e533722f57",
+        "number_neutral_sha256": "1d6ccd5685ec765f572089a539f13da33e3180ddbcaf53474f7da007c518a7d5",
+        "output_contract_enabled": true,
+        "render_signature_sha256": "fd06e57428c4ea29a36d6a4091488557d3e530e12cf307ef7f1ce5ef8e9b3f7f",
+        "semantic_frame_id": "workshop_balance",
+        "sentence_plan_id": "direct_sequence",
+        "template_id": "bk.11.workshop_balance"
+      },
+      {
+        "attempt_index": 73,
+        "candidate_id_prefix": "syn-307c2012",
+        "category": "multi_step_bookkeeping_or_omission",
+        "cause": "same_plan_and_lexical_realization_across_semantic_frames",
+        "collision_stage": "numeric_template_copy",
+        "difficulty": "easy",
+        "earlier_attempt_index": 22,
+        "earlier_candidate_id_prefix": "syn-cedf39a8",
+        "earlier_sentence_plan_id": "plain_location_changes",
+        "earlier_template_id": "bk.06.shift_handover",
+        "group": "generic_control",
+        "latent_program_sha256": "98f82276069b5d7688616d057d9b0ea03d943f013eb760742f24b7d93ba9e1af",
+        "number_neutral_sha256": "0c50a6c2346078cdfa639b73bc93f08a6fe1f5ec236aef8df62f7bda1516f33e",
+        "output_contract_enabled": false,
+        "render_signature_sha256": "6e835663bc5927532c3c916f81918ce7f8bbc96bd4e716fa79401534be9c69f7",
+        "semantic_frame_id": "collection_changes",
+        "sentence_plan_id": "plain_location_changes",
+        "template_id": "bk.12.collection_changes"
+      },
+      {
+        "attempt_index": 74,
+        "candidate_id_prefix": "syn-39676dd1",
+        "category": "multi_step_bookkeeping_or_omission",
+        "cause": "same_plan_and_lexical_realization_across_semantic_frames",
+        "collision_stage": "numeric_template_copy",
+        "difficulty": "medium",
+        "earlier_attempt_index": 23,
+        "earlier_candidate_id_prefix": "syn-140cb170",
+        "earlier_sentence_plan_id": "direct_sequence",
+        "earlier_template_id": "bk.06.shift_handover",
+        "group": "generic_control",
+        "latent_program_sha256": "9d8447204137f1137e8f7117f2ed9b3ff5a65d66f2a94916008a4a638302da5d",
+        "number_neutral_sha256": "49a2b83555c6b9ad5f1c736a3fdfdc29ecdeb3395cdc88fd5df6199462f91f06",
+        "output_contract_enabled": false,
+        "render_signature_sha256": "13ca52b1a37ee44bdad38423eb6f0ed0e265b5c90d538804c3a038cd55ef664d",
+        "semantic_frame_id": "collection_changes",
+        "sentence_plan_id": "direct_sequence",
+        "template_id": "bk.12.collection_changes"
+      },
+      {
+        "attempt_index": 76,
+        "candidate_id_prefix": "syn-adbe9980",
+        "category": "multi_step_bookkeeping_or_omission",
+        "cause": "same_plan_and_lexical_realization_across_semantic_frames",
+        "collision_stage": "numeric_template_copy",
+        "difficulty": "easy",
+        "earlier_attempt_index": 1,
+        "earlier_candidate_id_prefix": "syn-c1571367",
+        "earlier_sentence_plan_id": "direct_changes",
+        "earlier_template_id": "bk.01.opening_inventory",
+        "group": "generic_control",
+        "latent_program_sha256": "4d2cde1bc8cad8440d89043fee724a14f3669d947a152e5ead250ae875e16617",
+        "number_neutral_sha256": "72b127f44357b7ebbb46b2d34710fff127cd2d2368819816899f09213d873d35",
+        "output_contract_enabled": false,
+        "render_signature_sha256": "197e17851e206f08e839dce584bbd0cb728a98bf7eb4d7b93d7d4099d23535d3",
+        "semantic_frame_id": "equipment_register",
+        "sentence_plan_id": "direct_changes",
+        "template_id": "bk.13.equipment_register"
+      },
+      {
+        "attempt_index": 78,
+        "candidate_id_prefix": "syn-3348ad64",
+        "category": "multi_step_bookkeeping_or_omission",
+        "cause": "same_plan_and_lexical_realization_across_semantic_frames",
+        "collision_stage": "numeric_template_copy",
+        "difficulty": "hard",
+        "earlier_attempt_index": 3,
+        "earlier_candidate_id_prefix": "syn-22b93b97",
+        "earlier_sentence_plan_id": "direct_sequence",
+        "earlier_template_id": "bk.01.opening_inventory",
+        "group": "generic_control",
+        "latent_program_sha256": "1706d83c9ffc848d096a9ecf713f120de1206b11cc24f22fa56f35d96b7877eb",
+        "number_neutral_sha256": "e8a34a1b0f403bfffca5bfa91d4fa88ce329308a5b0da1571f0f9be5b3764d43",
+        "output_contract_enabled": false,
+        "render_signature_sha256": "8e92d8b7188bf6a0a2751932e91598935f321a1509534b7183d749683b0fbdbb",
+        "semantic_frame_id": "equipment_register",
+        "sentence_plan_id": "direct_sequence",
+        "template_id": "bk.13.equipment_register"
+      },
+      {
+        "attempt_index": 79,
+        "candidate_id_prefix": "syn-3aaa81b6",
+        "category": "multi_step_bookkeeping_or_omission",
+        "cause": "same_plan_and_lexical_realization_across_semantic_frames",
+        "collision_stage": "numeric_template_copy",
+        "difficulty": "easy",
+        "earlier_attempt_index": 4,
+        "earlier_candidate_id_prefix": "syn-50b4adf7",
+        "earlier_sentence_plan_id": "compact_sequence",
+        "earlier_template_id": "bk.01.opening_inventory",
+        "group": "generic_control",
+        "latent_program_sha256": "ffad28c1573325ccb6ca2342464fb84d1ea1332deeb7270a6d39f3d06c0d4f85",
+        "number_neutral_sha256": "560e881f665058546ca9f793af53b1e27bb682c36cc3f2b4598d121dc83d1405",
+        "output_contract_enabled": false,
+        "render_signature_sha256": "4e7c9de60ee26be95899b8ab03a3be7b9f52ec482c3843facd7ca26396c1e9a9",
+        "semantic_frame_id": "equipment_register",
+        "sentence_plan_id": "compact_sequence",
+        "template_id": "bk.13.equipment_register"
+      },
+      {
+        "attempt_index": 80,
+        "candidate_id_prefix": "syn-9970c6e4",
+        "category": "multi_step_bookkeeping_or_omission",
+        "cause": "same_plan_and_lexical_realization_across_semantic_frames",
+        "collision_stage": "numeric_template_copy",
+        "difficulty": "medium",
+        "earlier_attempt_index": 29,
+        "earlier_candidate_id_prefix": "syn-aa9b2f3e",
+        "earlier_sentence_plan_id": "direct_changes",
+        "earlier_template_id": "bk.08.receiving_record",
+        "group": "generic_control",
+        "latent_program_sha256": "69439a07e9ea03624525469359a53b9c7e64768c20acceeadce3859237ab4fb5",
+        "number_neutral_sha256": "a8aeeafdf54844044cb017134b384811e455cd916f3ee063737229ac16e93745",
+        "output_contract_enabled": false,
+        "render_signature_sha256": "96d83fce28108bbf56f7b786ded29889323d197ffbf1ccba024f2e1f5fd61500",
+        "semantic_frame_id": "packing_inventory",
+        "sentence_plan_id": "direct_changes",
+        "template_id": "bk.14.packing_inventory"
+      },
+      {
+        "attempt_index": 100,
+        "candidate_id_prefix": "syn-cff3f597",
+        "category": "rate_ratio_percentage_or_average",
+        "cause": "same_plan_and_lexical_realization_across_semantic_frames",
+        "collision_stage": "numeric_template_copy",
+        "difficulty": "easy",
+        "earlier_attempt_index": 47,
+        "earlier_candidate_id_prefix": "syn-4a376df0",
+        "earlier_sentence_plan_id": "relation_rephrased",
+        "earlier_template_id": "rt.13.weighted_average.weighted_readings",
+        "group": "generic_control",
+        "latent_program_sha256": "2823feb33914ce5df443603df7ba6ee1e1a358d474c7bc9ec020e84646c58418",
+        "number_neutral_sha256": "5cdc03a61d9bf208d4de315bd5269de06917d55f2bc5d344a82b06846ac8fc64",
+        "output_contract_enabled": true,
+        "render_signature_sha256": "e4461c102bf794e9f7bc6e989f1dd87746f96400f5031090474c773ba47681a0",
+        "semantic_frame_id": "weighted_average.grouped_measurements",
+        "sentence_plan_id": "relation_rephrased",
+        "template_id": "rt.14.weighted_average.grouped_measurements"
+      },
+      {
+        "attempt_index": 117,
+        "candidate_id_prefix": "syn-fe80c365",
+        "category": "constraint_distribution_or_discrete_reasoning",
+        "cause": "latent_seed_collision",
+        "collision_stage": "latent_program_copy",
+        "difficulty": "hard",
+        "earlier_attempt_index": 105,
+        "earlier_candidate_id_prefix": "syn-ff5700b6",
+        "earlier_sentence_plan_id": "constraint_sequence",
+        "earlier_template_id": "ds.07.complete_packages.full_bundle_count",
+        "group": "generic_control",
+        "latent_program_sha256": "b138065f864505eed6c230d0a16bfdee98627abe13774caf1c5435f32d644475",
+        "number_neutral_sha256": "01a4d787db001454551fe3fc724038dc239055501de6cfc50d5e270028524c17",
+        "output_contract_enabled": false,
+        "render_signature_sha256": "72c0c022bb0f9a5fcf550cac02dfeaaf71fb7803da0f0d39682e41e3e6346488",
+        "semantic_frame_id": "complete_packages.full_bundle_count",
+        "sentence_plan_id": "alternate_direct",
+        "template_id": "ds.07.complete_packages.full_bundle_count"
+      }
+    ],
+    "latent_program_collisions": 1,
+    "number_neutral_collisions": 15,
+    "root_cause_counts": {
+      "latent_seed_collision": 1,
+      "same_plan_and_lexical_realization_across_semantic_frames": 15
+    }
+  },
+  "existing_controls_make_8000_examples_feasible": false,
+  "fresh_smoke_run": false,
+  "latent_schedule_implemented": false,
+  "limiting_strata": [
+    {
+      "available_under_all_current_controls": 72,
+      "category": "multi_step_bookkeeping_or_omission",
+      "required_unique_signatures": 4418,
+      "shortfall": 4346
+    },
+    {
+      "available_under_all_current_controls": 80,
+      "category": "rate_ratio_percentage_or_average",
+      "required_unique_signatures": 2834,
+      "shortfall": 2754
+    },
+    {
+      "available_under_all_current_controls": 80,
+      "category": "constraint_distribution_or_discrete_reasoning",
+      "required_unique_signatures": 2751,
+      "shortfall": 2671
+    }
+  ],
+  "methodology": {
+    "active_render_signature_definition": "template_id:template_version:sentence_plan_hash",
+    "bookkeeping_positive_guard_witness_seeds": {
+      "grouping": 591177,
+      "inventory": 53676
+    },
+    "domain_aware_signature_definition": "existing RenderSignature with template, plan, and domain",
+    "duplicate_thresholds_changed": false,
+    "number_neutral_definition": "existing numeric_template_sha256",
+    "output_contract_changes_question_surface": false,
+    "persisted_question_corpus_created": false,
+    "structural_variant_periods": {
+      "constraint_distribution_or_discrete_reasoning": 80,
+      "multi_step_bookkeeping_or_omission": 240,
+      "rate_ratio_percentage_or_average": 25
+    }
+  },
+  "overall_capacity_ratio": 0.02319304208737379,
+  "planned_accepted_total": 8000,
+  "required_125_percent_attempt_pool_total": 10003,
+  "review_packet_created": false,
+  "schema_version": 1,
+  "scope_exclusions": [
+    "no_template_wording_changes",
+    "no_allocator_after_failed_capacity_gate",
+    "no_fresh_smoke_after_failed_capacity_gate",
+    "no_review_packet_after_failed_capacity_gate",
+    "no_full_dataset_generation",
+    "no_training",
+    "no_benchmark_evaluation",
+    "no_sealed_final_access"
+  ],
+  "source_attempts_sha256": "773e2bfad21374cc6ee403b486c1af1f72215360fc647e8c1c96e7c861651828",
+  "stop_reason": "current cross-dataset uniqueness capacity is below every 125% category pool"
+}

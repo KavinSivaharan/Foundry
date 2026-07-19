@@ -517,3 +517,22 @@ collided after number normalization. Static uniqueness of plan metadata is there
 to predict runtime surface diversity when the same scenario vocabulary and sentence structures can
 coincide. The right response is to preserve the negative result and require separate approval for a
 selection/diversity change—not rerun seeds until one crosses the gate or weaken duplicate screening.
+
+## A better allocator cannot manufacture missing language capacity
+
+The full-capacity audit separates a scheduling defect from a finite vocabulary defect. Fifteen v3
+collisions did show allocator imbalance: the same sentence-plan identity was reused across frame
+metadata. The latent collision likewise came from the seed schedule. Those observations explain the
+small smoke, but fixing them would not make the bank ready for 8,000 examples.
+
+The planned targeted and generic datasets require 10,003 fixed attempts after applying the 125%
+budget inside each stratum. Only 232 active plan signatures exist. Counting domain choices expands
+that to 3,728 signatures, but the unchanged number-neutral filter sees only 1,176 distinct surfaces:
+768 bookkeeping, 88 rate/ratio, and 320 discrete. Numeric values do not enlarge those pools because
+the control intentionally removes numbers before comparison.
+
+Capacity must therefore be measured before allocator implementation. The next scientifically valid
+step is not a cleverer permutation or a weaker screen; it is independent language-bank expansion
+that adds genuinely different sentence plans, lexical scenarios, and structures. Those additions
+must be human reviewed, then re-enumerated against the same per-category, difficulty, output-track,
+and cross-dataset uniqueness contract before any smoke or full schedule is frozen.

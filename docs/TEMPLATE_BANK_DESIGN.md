@@ -243,3 +243,32 @@ The fixed 110/120 gate failed. `human_review.md`, `human_review.html`,
 `codex_language_audit.json`, and `codex_assisted_review.html` were therefore not created for v3, and
 there is no v3 file URL or export filename. The smoke workflow now enforces this ordering explicitly.
 Human review status is **NOT STARTED — TECHNICAL GATE FAILED**.
+
+## Milestone 6D runtime-diversity capacity audit
+
+All 16 v3 duplicate decisions were joined to their first prior collision partner using only ignored
+raw records and content-free hashes. Fifteen were `numeric_template_copy`: the allocator selected the
+same sentence plan under different frame/template metadata, and the scenario/grammar realization
+normalized to the same surface. One was `latent_program_copy`: discrete attempt 117 repeated the
+latent hash of attempt 105 under a different plan. These are allocation/seed-schedule failures, not
+language, label, verifier, or benchmark-contamination failures.
+
+The capacity auditor enumerates the finite generator cycles (bookkeeping 240, rates 25, discrete 80),
+all difficulties, compatible frame/template/plan/domain combinations, both reachable bookkeeping
+guard branches, and the existing identity layers. It compares them with the future 8,000 accepted
+quota plus fixed 125% group/category attempt pools. The tracked, content-free audit is
+`results/synthesis_smoke/template_bank_v3_capacity_audit.json`; its SHA-256 is
+`8b921822bf10da964cf357cf3851084a2e0bd15ffc5dc549a85e04f84c9ccd7b`.
+
+| Family | Attempts required | Active plan signatures | Domain-aware signatures | Number-neutral surfaces |
+|---|---:|---:|---:|---:|
+| Bookkeeping | 4,418 | 72 | 1,728 | 768 |
+| Rates | 2,834 | 80 | 400 | 88 |
+| Discrete | 2,751 | 80 | 1,600 | 320 |
+
+The gate fails in every category, difficulty, and output-contract stratum. Consequently no allocator,
+latent schedule, future schedule hash, new master seed, smoke, deterministic replay, raw candidate
+directory, or review packet exists for Milestone 6D. The bank remains frozen at the Milestone 6C-R
+language state. A future proposal must expand genuinely distinct, human-reviewed structural and
+number-neutral capacity before allocation is reconsidered; duplicate and contamination policy stays
+unchanged.

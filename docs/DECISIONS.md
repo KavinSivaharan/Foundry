@@ -385,3 +385,33 @@ This log separates proposals from approved decisions. A proposal does not author
   generation, training, benchmark evaluation, or sealed-final access follows.
 - **Next user decision:** Decide whether to authorize a narrowly bounded template-selection and
   internal-diversity blocker resolution followed by one fresh precommitted 120-attempt smoke.
+
+## D-025 — Stop runtime allocation because the frozen bank lacks pilot-scale unique capacity
+
+- **Date:** 2026-07-19
+- **Status:** capacity gate failed; allocator and smoke not implemented
+- **Decision:** Preserve all Milestone 6C-R language repairs and unchanged duplicate/contamination
+  rules, but do not implement collision-free allocation, a latent schedule, a future-candidate
+  schedule, another 120-attempt smoke, or a review packet. The required preflight proves the finite
+  bank cannot supply the fixed 10,003-attempt pilot budget without repeated active signatures or
+  number-neutral surfaces.
+- **Evidence:** All 16 prior rejections have deterministic partners: 15 reused the same sentence-plan
+  identity and normalized surface, and one repeated a latent discrete program. Future quotas require
+  4,418 bookkeeping, 2,834 rate/ratio, and 2,751 discrete attempts. Active plan-level capacities are
+  72, 80, and 80; domain-aware capacities are 1,728, 400, and 1,600; number-neutral capacities are
+  768, 88, and 320. Every category, difficulty, and output-contract stratum fails. Audit SHA-256 is
+  `8b921822bf10da964cf357cf3851084a2e0bd15ffc5dc549a85e04f84c9ccd7b`.
+- **Rationale:** A collision-free allocator cannot create identities that do not exist. Reordering
+  seeds could improve one 120-item sample but would conceal the scale limit and cannot satisfy the
+  cross-dataset uniqueness contract. Weakening duplicate rules would change the experiment and is
+  not authorized.
+- **Alternatives considered:** implement an allocator for the small smoke despite the failed full
+  capacity gate; reroll seeds; reuse signatures across targeted/generic datasets; count numeric
+  substitutions as diversity; or lower duplicate thresholds. Each conflicts with the fixed gate or
+  the scientific comparison.
+- **Expected consequences:** The tracked result is a content-free capacity audit only. No fresh raw
+  candidates, schedule, packet, dataset, model inference, training, or sealed-final access occurs.
+- **Next user decision:** Decide whether to authorize independent bank-capacity expansion. At minimum,
+  the existing number-neutral pools need 3,650 additional bookkeeping, 2,746 rate/ratio, and 2,431
+  discrete identities, accompanied by enough independently reviewed plans/domains to satisfy every
+  group, difficulty, and output-contract stratum before allocation is reconsidered.
