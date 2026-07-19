@@ -284,3 +284,70 @@ the internal-diversity semantic policy on original fixtures before generation, i
 runtime, and run the 120-IR/360-candidate maximum smoke under the gates above. Until that approval,
 no weight download, model generation, synthetic dataset, full pilot, QLoRA, SFT, GRPO, benchmark
 inference, or sealed-final access is authorized.
+
+## Milestone 5B measured implementation result
+
+Milestone 5B implemented the design without changing its fixed budget. The dedicated environment is
+CPython 3.12.10, PyTorch 2.5.1+cu121, Transformers 4.51.3, tokenizers 0.21.4, and PyYAML 6.0.2;
+`pip check` passes. The exact Qwen3 snapshot revision is
+`70d244cc86ccca08cf5af4e1e306ecf908b1ad5e`, Apache-2.0, `trust_remote_code=False`, and
+4,079,450,110 bytes. A fresh `local_files_only=True` FP16 reload succeeded with thinking disabled.
+
+Before Qwen generation, 24 original fixture pairs compared exactly three internal-diversity
+policies. `evidence-gated-balanced-v1` was selected with policy SHA-256
+`26c030e8497c4727e286ff3e89d4720cee1c2681a224b8a93b8c515ef521cc90`: 22/24 exact fixture
+outcomes, zero duplicate escapes, and zero distinct automatic rejections. Two deliberately
+ambiguous pairs passed instead of entering review and were documented rather than used to tune a
+threshold. The generated-to-development MiniLM revision and 0.75/0.82 policy were unchanged.
+
+The one counted run used master seed `foundry-m5b-ir-master-20260718-v1`, 60 targeted and 60 generic
+IRs, 12 output-contract IRs per group, and exactly three beams per IR. No replacement or retry was
+available. Aggregate results were:
+
+| Measure | Result |
+|---|---:|
+| IRs / returned beams | 120 / 360 |
+| Exact JSON parses | 181/360 (50.28%) |
+| Full placeholder preservation among parsed JSON | 41/181 (22.65%) |
+| Parsed beams passing semantic-node coverage | 0/181 |
+| Parsed beams preserving target/intent | 171/181 (94.48%) |
+| Beams consuming all 256 generated tokens | 219/360 |
+| Unparsed beams at 256 tokens | 160/179 |
+| Automatically selected IRs | 0/120 |
+| Dual-verifier disagreements / false labels | 0 / 0 |
+| Backend failures / per-IR timeouts | 0 / 0 |
+
+The dominant response pattern was a target-only question that omitted every input event. The other
+semantics-preserving pattern repeated imperative event descriptions as one run-on or all-caps
+instruction rather than producing a natural word problem. Verbose placeholder inventories and
+clause maps also exhausted the 256-token budget before many JSON objects closed. Because no beam
+reached the later semantic screens, there is no benchmark-contamination or internal-diversity pass
+rate to reinterpret.
+
+The first audit pass hid answers and verifier evidence. All 360 beams were reviewed through 37 exact
+template groups: 63 were natural but semantically drifted, 59 preserved semantics but were
+unnatural, 301 drifted in total, and 297 were unnatural. Every automatic rejection was correct;
+invalid acceptances and incorrect rejections were zero. Exact replay reproduced every beam and
+decision with SHA-256 `a2e6fb565da817ec5e2e6e3c87ba8a54643b2b5ec294dd8f5d24204083d06dcf`.
+
+Measured generation time was 802.093 seconds (812.465 seconds end to end), or 6.684 seconds per IR.
+The run generated 86,199 output tokens at an aggregate 107.47 returned tokens/s. Peak allocated and
+reserved VRAM were 4,289,053,184 and 4,716,494,848 bytes; peak process working set was
+7,531,028,480 bytes. The complete ignored raw/audit/replay directory occupies 967,542 bytes.
+
+At this measured rate, 8,000 IR attempts—not accepted examples—would take about 15.0 hours and
+roughly 65 MB of similarly shaped raw evidence, plus the fixed 4.08 GB model cache and 4.87 GB
+environment. With zero accepted IRs, no finite or credible projection exists for 8,000 accepted
+examples under this protocol.
+
+## Resulting stop and next design boundary
+
+The frozen readiness gate failed at 0 clean IRs versus 90 required, so full pilot generation is not
+ready. The result does not justify the fallback model, more beams, a longer limit, repairs, retries,
+or lower gates after observing the outputs.
+
+The narrowest scientifically valid follow-up is design-only: replace imperative event descriptions
+and verbose echoed inventories/maps with a compact declarative response whose slot and semantic
+coverage can still be derived deterministically. Original hand-authored fixtures must prove the new
+contract before any separately approved model inference. The alternative is to stop the local
+surface-realization route. Neither choice authorizes full generation or training.

@@ -405,3 +405,31 @@ broad meaning and topic; they do not encode exact latent-program identity. A sam
 close yet independently generated, while a benchmark paraphrase remains dangerous. Foundry will
 therefore retain strict 0.75/0.82 MiniLM screening against development questions but calibrate a
 separate generated-peer semantic policy on original fixtures before any new realization smoke.
+
+## A reject-only LLM boundary can protect labels while still producing zero usable data
+
+Milestone 5B validated the safety argument and falsified the yield assumption at the same time. The
+pinned Qwen3 runtime never saw values, answers, or benchmark questions; procedural execution and an
+independent verifier still agreed on every label; and the deterministic validator rejected all 360
+beams. That produced zero false labels and zero invalid acceptances—but also zero clean IRs.
+
+The verbose output contract created two coupled problems. First, the model often spent its budget
+copying the placeholder inventory and clause map: 160 of 179 unparsed outputs reached 256 tokens
+before closing valid JSON. Second, even valid JSON usually reduced the task to the target question,
+omitting the events it was supposed to express. Some alternatives preserved all placeholders by
+echoing imperative instructions in run-on or all-caps form, which is structurally faithful but not
+natural training text.
+
+This separates three notions that are easy to conflate:
+
+1. **Label safety:** exact programs and independent verifiers prevent an LLM from inventing labels.
+2. **Semantic safety:** strict slots and node coverage prevent incomplete wording from being
+   accepted.
+3. **Practical yield:** enough outputs must still be natural and complete to justify dataset-scale
+   generation.
+
+Milestone 5B passed the first two only because the second operated conservatively; it failed the
+third completely. Exact replay proves the failure is reproducible, not random. The proper next move
+is not to loosen coverage or repair model text after generation. A future design would need a much
+shorter declarative protocol whose semantic coverage is derived rather than redundantly echoed, and
+that design must be frozen on original fixtures before another model run.

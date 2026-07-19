@@ -224,3 +224,39 @@ This log separates proposals from approved decisions. A proposal does not author
 - **Next user decision:** Decide whether to approve Milestone 5B with a dedicated pinned dependency
   lock, one Qwen3 download, pre-generation internal-policy calibration, and the bounded 120-IR smoke.
   Full 4,000 + 4,000 generation and all training remain separately blocked.
+
+## D-019 — Reject the verbose Qwen3 realization protocol after its bounded smoke
+
+- **Date:** 2026-07-18
+- **Status:** accepted Milestone 5B stop decision; full generation and training remain unapproved
+- **Decision:** Preserve the pinned Qwen3 environment, exact procedural IRs and labels, dual
+  verifiers, value/benchmark firewall, calibrated internal-diversity policy, raw evidence, and exact
+  replay result. Do not generate the 4,000 + 4,000 pilot, run the fallback model, increase the beam
+  budget, change thresholds, or begin training. Reject `foundry-slot-preserving-json-v1` as a
+  production realization protocol because it yielded zero clean IRs under its predeclared gate.
+- **Evidence:** Exactly 120 fresh IRs produced exactly 360 deterministic beams. JSON parsed for
+  181/360; 160 of the 179 unparsed beams reached the frozen 256-token limit. All 181 parsed beams
+  omitted required nodes or declared invalid clause/discourse mappings. Manual review of all 360
+  beams through 37 exact-template groups found 301 semantic drifts, 297 unnatural surfaces, 63
+  natural-but-drifted outputs, and 59 semantics-preserving-but-unnatural outputs. Every automatic
+  rejection was correct. False labels, invalid acceptances, incorrect rejections, verifier
+  disagreements, backend failures, and unresolved contamination were zero. Exact replay reproduced
+  SHA-256 `a2e6fb565da817ec5e2e6e3c87ba8a54643b2b5ec294dd8f5d24204083d06dcf`.
+- **Alternatives considered:** loosen slot/node checks; accept target-only questions; raise the
+  256-token limit after observing truncation; simplify or repair outputs post hoc; add more beams;
+  retry failed IRs; switch automatically to Qwen2.5; lower contamination gates; proceed because
+  mathematical labels remained correct; or abandon the reusable procedural/verifier foundation.
+- **Rationale:** Deterministic rejection successfully protected label integrity, but zero usable IRs
+  makes the frozen protocol infeasible. Post-hoc repairs or a larger token/beam budget would change
+  the tested policy after seeing outputs. The dominant failure is architectural: the model was asked
+  to echo a long placeholder inventory and clause map while translating imperative event
+  descriptions, causing both output truncation and instruction echo. This is narrower than a failure
+  of the procedural mathematics or local model runtime.
+- **Expected consequences:** The Qwen3 snapshot and dedicated environment remain reproducible local
+  evidence, not authorization for further inference. No accepted synthetic question or dataset was
+  produced. A future design may retain the model and replace only the verbose protocol with a compact
+  declarative, deterministically recoverable representation, but it must be frozen on original
+  fixtures before another separately approved bounded model smoke.
+- **Next user decision:** Choose whether to stop the local realization route or approve a design-only
+  compact-protocol milestone. No fallback-model run, new Qwen generation, full dataset, QLoRA, SFT,
+  GRPO, benchmark inference, or sealed-final access follows automatically.

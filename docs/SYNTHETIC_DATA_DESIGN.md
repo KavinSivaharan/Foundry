@@ -517,3 +517,27 @@ disagreements, or unresolved contamination. Full dataset generation and training
 
 The complete model comparison, schemas, audit protocol, policy analysis, compute estimates, risks,
 and next-decision boundary are in `docs/LOCAL_MODEL_REALIZATION_DESIGN.md`.
+
+## Milestone 5B realization-smoke consequence
+
+The procedural source of truth and label path remain valid: all 120 new IRs were constructed
+deterministically, both exact verifier families agreed, and no false label occurred. The
+value/benchmark firewall also held. The local Qwen3 wording layer, however, admitted zero clean IRs
+from 360 fixed beams.
+
+This is a realization-contract failure, not permission to bypass verification. Parsed model output
+systematically omitted semantic events or declared invalid clause maps, while many unparsed JSON
+objects exhausted the frozen 256-token budget. The complete hidden-label audit confirmed that every
+automatic rejection was appropriate. Consequently:
+
+- no generated question from Milestone 5B is approved training data;
+- no targeted or generic 4,000-example dataset may be generated;
+- the matched-control and QLoRA plans remain designs only;
+- the frozen development benchmark and sealed-final partition remain outside generation;
+- contamination thresholds, labels, and verifier mathematics remain unchanged.
+
+A future compact-protocol design may retain the same procedural IR, exact arithmetic, verifier,
+curriculum, output-contract, and contamination contracts. It must make semantic coverage
+deterministically recoverable without asking the model to echo a long inventory and separate clause
+map, and it must freeze original fixtures before any new inference. No such milestone is currently
+approved.

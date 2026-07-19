@@ -352,6 +352,34 @@ Status: design complete; no model download or inference was performed.
 - Proposed Milestone 5B is a maximum 120-IR, 360-candidate implementation smoke with unchanged
   zero-defect gates and at least 90 clean IR acceptances. It requires separate approval.
 
+### Milestone 5B — Bounded local-model realization smoke
+
+Status: complete; exact replay passed, but the readiness gate failed at 0/120 clean IRs. Full pilot
+generation and training remain blocked.
+
+- Calibrated the internal generated-peer policy before seeing Qwen output. The selected
+  `evidence-gated-balanced-v1` policy rejects exact, number-neutral, latent-structure, five-token,
+  and supported high-semantic duplicates while preserving the development firewall's unchanged
+  MiniLM 0.75 review / 0.82 rejection bands.
+- Created an isolated CPython 3.12.10 environment with PyTorch 2.5.1 CUDA 12.1, Transformers
+  4.51.3, and tokenizers 0.21.4. Downloaded only
+  `Qwen/Qwen3-1.7B@70d244cc86ccca08cf5af4e1e306ecf908b1ad5e`; offline FP16 reload succeeded.
+- Processed exactly 120 fresh IRs and 360 fixed beams. The procedural programs and two independent
+  verifiers agreed throughout, with zero false labels, backend failures, or verifier disagreements.
+- Only 181/360 beams parsed as the exact JSON schema. Of 179 parse failures, 160 consumed the full
+  256-token budget. Every parsed beam still failed semantic-node coverage and clause/discourse
+  validation; model templates usually emitted only the target question or echoed the semantic
+  instructions rather than composing a complete problem.
+- The all-beam hidden-label audit found 63 natural-but-drifted outputs and 59
+  semantics-preserving-but-unnatural outputs. In total, 301/360 drifted and 297/360 were unnatural.
+  Every automatic rejection was correct; invalid acceptances and incorrect rejections were zero.
+- Exact replay reproduced all 360 beam texts, ordering, validation decisions, and aggregate hash
+  `a2e6fb565da817ec5e2e6e3c87ba8a54643b2b5ec294dd8f5d24204083d06dcf`.
+- The next architecture must not generate the 4,000 + 4,000 pilot. The narrowest evidence-based
+  option is a separately approved compact realization-protocol redesign that removes verbose echoed
+  inventories/maps, uses declarative rather than imperative event input, and proves semantic
+  coverage on original fixtures before another bounded model run.
+
 ### Milestone 5 — SFT smoke train
 
 - Train a tiny QLoRA adapter for a few steps.
@@ -412,28 +440,41 @@ Measured base main-development baseline: **521/814 correct (64.00% end-to-end)**
 
 ## Current project phase
 
-Milestone 1 and its deferred RTX smoke, Milestones 1.5–1.7, the frozen Milestone 2 base-development baseline, the bounded Milestone 2.1 correct-response audit, the design-only Milestone 3, bounded Milestones 4 through 4.2, and design-only Milestone 5A are complete. The one approved 814-example run used the D-011 exception without changing the frozen evaluation stack.
+Milestone 1 and its deferred RTX smoke, Milestones 1.5–1.7, the frozen Milestone 2
+base-development baseline, the bounded Milestone 2.1 correct-response audit, design-only Milestone
+3, bounded Milestones 4 through 4.2, design-only Milestone 5A, and bounded Milestone 5B are complete.
+The one approved 814-example run used the D-011 exception without changing the frozen evaluation
+stack.
 
-The repository records deterministic, pairwise-disjoint development partitions of 30 prompt-calibration IDs, 30 answer-extraction-validation IDs, 30 final-evaluator-validation IDs, and 814 baseline IDs. The completed baseline counts every unextractable output wrong and reports coverage separately. Milestone 2.1 audited all 521 correct-scored responses label-blind: 521 intended answers, zero false acceptances, and zero ambiguity. Milestone 3 classified all 293 failures and froze the content-free generator design. Milestone 4.2 demonstrated correct typed semantics but failed the renderer stress gate because 13/60 audited surfaces remained unnatural and generated-to-generated collision rates were too high. Milestone 5A now freezes a constrained, value-blind local-model interface and future smoke design; it did not install, download, or execute a realization model. Full dataset generation and every training stage remain blocked; no complete synthetic dataset or adapter exists.
+The repository records deterministic, pairwise-disjoint development partitions of 30
+prompt-calibration IDs, 30 answer-extraction-validation IDs, 30 final-evaluator-validation IDs, and
+814 baseline IDs. The completed baseline counts every unextractable output wrong and reports
+coverage separately. Milestone 2.1 audited all 521 correct-scored responses label-blind: 521 intended
+answers, zero false acceptances, and zero ambiguity. Milestone 3 classified all 293 failures and
+froze the content-free generator design. Milestone 4.2 demonstrated correct typed semantics but
+failed the renderer stress gate. Milestone 5B proved that the pinned Qwen3 runtime is local,
+reproducible, and mathematically firewalled, but the verbose strict-JSON protocol produced zero
+clean IRs. Full dataset generation and every training stage remain blocked; no complete synthetic
+dataset or adapter exists.
 
 ## Unresolved questions
 
-1. Should the project approve Milestone 5B to install a dedicated pinned realization environment,
-   download the selected Qwen3 revision, freeze an independently calibrated internal-diversity
-   policy, and run the bounded 120-IR implementation smoke?
+1. Should the project stop local-model realization, or approve a design-only compact-protocol
+   blocker-resolution milestone that preserves Qwen3, the procedural labels/verifiers, and all
+   contamination gates while replacing the verbose response contract before any new inference?
 2. Should the cross-platform dependency locks explicitly pin Windows-only `colorama` and `tzdata` in a separately approved lock-maintenance task?
 3. Any future comparison must preserve the exact 814-ID manifest and frozen prompt/extractor/generation configuration unless the user explicitly authorizes a new evaluator lineage and complete reruns.
-4. The pure procedural-renderer lineage is closed. Its constrained local-model successor is
-   designed but not implemented; model artifacts, dependency changes, or generation still require
-   explicit Milestone 5B approval.
+4. The pure procedural renderer is closed, and the first constrained local-model protocol failed
+   its fixed readiness gate. Any compact-protocol design or later inference needs explicit approval.
 5. The pinned MiniLM encoder behaved acceptably on original fixtures; future work must retain its exact revision/configuration unless a separate design decision replaces the semantic lineage.
 6. Is a 3-point final improvement statistically realistic after the development baseline, or should the success threshold be revised before training?
 
 ## Next approved milestone
 
-No further milestone is approved. Milestone 5A ends after its verified design commit is pushed. The
-exact next decision is whether to approve bounded Milestone 5B: create a dedicated realization lock,
-download only the pinned Qwen3 artifact, freeze the independent internal-diversity policy on original
-fixtures, implement the runtime, and run at most 120 IR requests/360 fixed beam candidates. The
-4,000 + 4,000 pilot, training, SFT, QLoRA, GRPO, paid services, benchmark inference, and sealed-final access
-remain unapproved.
+No further milestone is approved. Milestone 5B ends after its verified evidence commit is pushed.
+The exact next decision is whether to approve a design-only compact realization-protocol milestone
+or stop this synthesis route. The proposed design work would not download another model or run
+inference; it would replace verbose placeholder-inventory/clause-map echoing with a shorter
+deterministically recoverable contract and freeze original fixtures before any later bounded smoke.
+The 4,000 + 4,000 pilot, training, SFT, QLoRA, GRPO, paid services, benchmark inference, fallback
+model, and sealed-final access remain unapproved.

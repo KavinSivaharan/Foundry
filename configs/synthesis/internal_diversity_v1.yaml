@@ -1,0 +1,40 @@
+schema_version: 1
+fixture_set: tests/fixtures/synthesis/internal_diversity_v1.json
+fixture_count: 24
+fixture_set_sha256: e5ba09dc45c6afd58c2c6f9435a33756cb0bb5c20ab73d41313bc49e09c17b89
+calibration_sha256: e855e29a953cbb6b0563e73def3ee4bceb3bbbf20a6f0c5dc7f18573d43063ab
+selected_policy:
+  policy_id: evidence-gated-balanced-v1
+  policy_sha256: 26c030e8497c4727e286ff3e89d4720cee1c2681a224b8a93b8c515ef521cc90
+  mode: evidence_gated
+  semantic_review_at: 0.84
+  semantic_reject_at: 0.90
+  reject_support_ngram_at: 0.18
+  review_support_ngram_at: 0.10
+  same_frame_review_at: 0.90
+  signature_is_support: true
+hard_controls:
+  exact_normalized_text: reject
+  number_neutral_template_identity: reject
+  latent_program_structure_identity: reject
+  five_token_jaccard_at_or_above: 0.35
+semantic_behavior:
+  automatic_reject: similarity >= 0.90 and five-token Jaccard >= 0.18 or same realization signature
+  manual_review: similarity >= 0.84 and supporting lexical, signature, or high same-frame evidence
+  automatic_pass: no hard match and no supported semantic review or reject condition
+  unresolved_manual_review: reject
+benchmark_contamination:
+  model_id: sentence-transformers/all-MiniLM-L6-v2
+  revision: 1110a243fdf4706b3f48f1d95db1a4f5529b4d41
+  manual_review_at: 0.75
+  automatic_reject_at: 0.82
+  trust_remote_code: false
+  unchanged: true
+ambiguous_fixture_handling:
+  fixture_ids:
+    - ambiguous-01
+    - ambiguous-02
+  policy_outcome: pass
+  calibration_label: manual_review
+  selection_use: documented_not_threshold_tuned
+  future_safeguard: every returned realization candidate receives manual audit

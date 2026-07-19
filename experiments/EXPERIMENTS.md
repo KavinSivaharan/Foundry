@@ -261,3 +261,51 @@ Every future experiment must be registered here before a costly run begins. Its 
   smoke that first freezes the internal-diversity policy, then downloads only the pinned Qwen3
   artifact and processes 120 IRs/360 candidates maximum. Full dataset generation and training remain
   separately blocked.
+
+## EXP-20260718-012 — Bounded Qwen3 local-realization smoke
+
+- **Status:** completed; exact replay passed; readiness gate failed; full pilot generation blocked
+- **Date:** 2026-07-18
+- **Hypothesis:** A pinned local Qwen3 model can convert at least 90 of 120 fixed, value-blind
+  procedural IRs into clean natural questions while preserving every placeholder, event, unit,
+  constraint, and target, with zero label, semantic, contamination, or replay defects.
+- **Internal policy calibration:** Compared exactly three predeclared policies on 24 original fixture
+  pairs before Qwen generation. Selected `evidence-gated-balanced-v1` (SHA-256
+  `26c030e8497c4727e286ff3e89d4720cee1c2681a224b8a93b8c515ef521cc90`): 22/24 exact
+  fixture outcomes, zero duplicate escapes, zero distinct automatic rejections, and two documented
+  ambiguous outcomes. Development MiniLM 0.75/0.82 controls were unchanged.
+- **Environment/model:** CPython 3.12.10; PyTorch 2.5.1+cu121; Transformers 4.51.3;
+  tokenizers 0.21.4; `Qwen/Qwen3-1.7B@70d244cc86ccca08cf5af4e1e306ecf908b1ad5e`,
+  Apache-2.0, 4,079,450,110 bytes, FP16, no remote code. Fresh offline reload succeeded.
+- **Execution:** Exactly 120 fresh IRs under `foundry-m5b-ir-master-20260718-v1`: targeted
+  33/14/13 and generic 20/20/20 across bookkeeping/rates/discrete, with 12 output-contract IRs per
+  group. Exactly three deterministic beams per IR produced 360 outputs; there were no retries,
+  replacement IRs, fallback inference, or benchmark generation.
+- **Automatic result:** 181/360 JSON parses (50.28%); 41/181 parsed outputs preserved the complete
+  placeholder set; 0/181 passed semantic-node coverage; 171/181 preserved target/intent. Of 179
+  unparsed outputs, 160 reached 256 tokens. No IR had a passing beam. Primary and independent
+  verifiers agreed throughout; false labels, verifier disagreements, backend failures, and per-IR
+  timeouts were zero. No beam reached semantic contamination screening because earlier required
+  layers failed.
+- **Manual audit:** All 360 beams were reviewed through 37 exact-template groups with answers and
+  verifier evidence hidden on the first pass. Naturalness was 63 natural and 297 unnatural;
+  semantic preservation was 59 preserved and 301 drifted. Every automatic rejection was correct;
+  invalid acceptances and incorrect rejections were zero. The systematic defects were target-only
+  event omission, instruction echo, run-on/all-caps surfaces, incomplete JSON, and invalid clause
+  maps.
+- **Determinism:** Exact replay reproduced beam text, ordering, validation decisions, and final
+  SHA-256 `a2e6fb565da817ec5e2e6e3c87ba8a54643b2b5ec294dd8f5d24204083d06dcf`.
+- **Runtime/resources:** Counted generation 802.093 seconds; end to end 812.465 seconds; 134,148 input
+  and 86,199 output tokens; 107.47 returned output tokens/s; 6.684 generation seconds/IR. Peak
+  allocated/reserved VRAM 4,289,053,184/4,716,494,848 bytes; peak process RAM 7,531,028,480 bytes;
+  ignored raw/audit/replay artifacts 967,542 bytes.
+- **Hypothesis supported:** no. Clean yield was 0/120 rather than at least 90. Zero defects among
+  accepted outputs is vacuous because nothing was accepted; the strict boundary protected labels
+  but did not produce usable wording.
+- **Safety:** No accepted/full dataset, training, QLoRA, SFT, GRPO, paid/cloud service, benchmark
+  inference, fallback model, or sealed-final access occurred. Complete outputs, question exports,
+  and audit decisions remain ignored.
+- **Next experiment:** none approved. The narrowest proposed step is a design-only compact-protocol
+  milestone that retains Qwen3 and every safety gate but removes verbose echoed inventories/maps and
+  imperative event input before any separately approved new inference. The alternative is to stop
+  local surface realization.

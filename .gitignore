@@ -218,6 +218,7 @@ __marimo__/
 .streamlit/secrets.toml
 
 # Foundry local data, generated artifacts, and experiment tracking
+.venv-realization/
 data/
 datasets/
 checkpoints/

@@ -31,6 +31,14 @@ _PLACEHOLDER_IN_TEXT = re.compile(r"<[A-Z][A-Z0-9_]*>")
 _CLAUSE_PATTERN = re.compile(r"[^.?!]+[.?!]")
 _NUMERIC_LITERAL = re.compile(r"(?<![A-Za-z_])[-+]?\d+(?:[.,/]\d+)?")
 _BAD_PUNCTUATION = re.compile(r"(?:\.\.|;;|,,|\s+[?.!,;])")
+_FORBIDDEN_MODEL_MARKUP = re.compile(r"```|<think>|</think>", re.IGNORECASE)
+_CALCULATION_CONTENT = re.compile(
+    r"(?:\b(?:therefore|thus|equals|answer\s+is|result\s+is)\b|=)", re.IGNORECASE
+)
+_UNLICENSED_PRONOUN = re.compile(
+    r"\b(?:he|she|it|they|them|their|theirs|his|hers|this|that|these|those)\b",
+    re.IGNORECASE,
+)
 
 
 class RealizationContractError(ValueError):
@@ -52,6 +60,8 @@ def _string_tuple(value: object, location: str) -> tuple[str, ...]:
 def parse_realization_response(raw: str) -> RealizationResponse:
     """Parse one exact JSON object and reject missing or invented fields."""
 
+    if _FORBIDDEN_MODEL_MARKUP.search(raw):
+        raise RealizationContractError("response contains forbidden markup or thinking content")
     try:
         loaded = json.loads(raw)
     except json.JSONDecodeError as exc:
@@ -143,6 +153,10 @@ def validate_realization_response(
         reasons.append("invented_numeric_literal")
     if "final answer" in response.question_template.lower():
         reasons.append("answer_content_forbidden")
+    if _CALCULATION_CONTENT.search(response.question_template):
+        reasons.append("calculation_content_forbidden")
+    if _UNLICENSED_PRONOUN.search(response.question_template):
+        reasons.append("unlicensed_pronoun")
 
     clauses = split_template_clauses(response.question_template)
     if not clauses or not response.question_template.rstrip().endswith("?"):
@@ -223,6 +237,33 @@ def fill_validated_template(
         template_sha256=template_hash,
         replacement_sha256=hashlib.sha256(replacement_payload.encode("utf-8")).hexdigest(),
     )
+
+
+def validate_filled_question(question: str) -> tuple[str, ...]:
+    """Apply deterministic surface checks after opaque values are substituted."""
+
+    reasons: list[str] = []
+    if _PLACEHOLDER_IN_TEXT.search(question):
+        reasons.append("unresolved_placeholder")
+    if not question.rstrip().endswith("?") or question.count("?") != 1:
+        reasons.append("filled_question_not_single_question")
+    if _BAD_PUNCTUATION.search(question):
+        reasons.append("filled_question_malformed_punctuation")
+    if _FORBIDDEN_MODEL_MARKUP.search(question):
+        reasons.append("filled_question_forbidden_markup")
+    if _CALCULATION_CONTENT.search(question):
+        reasons.append("filled_question_calculation_content")
+    if _UNLICENSED_PRONOUN.search(question):
+        reasons.append("filled_question_unlicensed_pronoun")
+    clauses = split_template_clauses(question)
+    if not clauses:
+        reasons.append("filled_question_incomplete")
+    if any(clause[0].isalpha() and not clause[0].isupper() for clause in clauses):
+        reasons.append("filled_question_capitalization")
+    normalized = tuple(" ".join(clause.lower().split()) for clause in clauses)
+    if len(normalized) != len(set(normalized)):
+        reasons.append("filled_question_duplicated_clause")
+    return tuple(dict.fromkeys(reasons))
 
 
 def response_sha256(response: RealizationResponse) -> str:

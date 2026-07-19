@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "calibration_name": "foundry-internal-diversity-original-fixtures-v1",
+  "fixture_count": 24,
+  "fixture_set_sha256": "e5ba09dc45c6afd58c2c6f9435a33756cb0bb5c20ab73d41313bc49e09c17b89",
+  "calibration_sha256": "e855e29a953cbb6b0563e73def3ee4bceb3bbbf20a6f0c5dc7f18573d43063ab",
+  "semantic_artifact": {
+    "model_id": "sentence-transformers/all-MiniLM-L6-v2",
+    "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "manual_review_threshold": 0.75,
+    "automatic_rejection_threshold": 0.82,
+    "benchmark_policy_changed": false
+  },
+  "fixture_relationship_counts": {
+    "ambiguous_similarity": 2,
+    "close_paraphrase": 3,
+    "exact_duplicate": 3,
+    "number_swapped_copy": 3,
+    "related_but_distinct": 3,
+    "same_skill_distinct_scenario": 4,
+    "structurally_equivalent_rewrite": 3,
+    "unrelated": 3
+  },
+  "candidate_policy_summaries": [
+    {
+      "policy_id": "legacy-shared-bands-v1",
+      "policy_sha256": "c343c9ef803acf557960c96adb45d70bc66e111183b258826738858a358d3c36",
+      "exact_matches": 19,
+      "duplicate_escapes": 0,
+      "distinct_auto_rejections": 2,
+      "ambiguous_misclassifications": 2,
+      "review_count": 1,
+      "reject_count": 14,
+      "pass_count": 9,
+      "selection": "rejected_overrejects_distinct_related_questions"
+    },
+    {
+      "policy_id": "evidence-gated-balanced-v1",
+      "policy_sha256": "26c030e8497c4727e286ff3e89d4720cee1c2681a224b8a93b8c515ef521cc90",
+      "exact_matches": 22,
+      "duplicate_escapes": 0,
+      "distinct_auto_rejections": 0,
+      "ambiguous_misclassifications": 2,
+      "review_count": 0,
+      "reject_count": 12,
+      "pass_count": 12,
+      "selection": "selected"
+    },
+    {
+      "policy_id": "evidence-gated-conservative-v1",
+      "policy_sha256": "15b41d2b98abc7e284b10600bbd999418223a9be2aede2869d69faa49044a461",
+      "exact_matches": 21,
+      "duplicate_escapes": 1,
+      "distinct_auto_rejections": 0,
+      "ambiguous_misclassifications": 2,
+      "review_count": 1,
+      "reject_count": 11,
+      "pass_count": 12,
+      "selection": "rejected_close_paraphrase_not_automatically_rejected"
+    }
+  ],
+  "selected_policy": {
+    "policy_id": "evidence-gated-balanced-v1",
+    "policy_sha256": "26c030e8497c4727e286ff3e89d4720cee1c2681a224b8a93b8c515ef521cc90",
+    "reject_count": 12,
+    "review_count": 0,
+    "pass_count": 12,
+    "duplicate_escapes": 0,
+    "distinct_auto_rejections": 0,
+    "relationship_outcomes": {
+      "ambiguous_similarity": {"pass": 2},
+      "close_paraphrase": {"reject": 3},
+      "exact_duplicate": {"reject": 3},
+      "number_swapped_copy": {"reject": 3},
+      "related_but_distinct": {"pass": 3},
+      "same_skill_distinct_scenario": {"pass": 4},
+      "structurally_equivalent_rewrite": {"reject": 3},
+      "unrelated": {"pass": 3}
+    }
+  },
+  "ambiguous_fixture_ids": ["ambiguous-01", "ambiguous-02"],
+  "ambiguous_fixture_decision": "documented and excluded from threshold tuning; both pass automatically and remain covered by mandatory full manual audit",
+  "benchmark_content_used": false,
+  "qwen_output_used": false
+}

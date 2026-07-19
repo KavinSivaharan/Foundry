@@ -1,0 +1,64 @@
+schema_version: 1
+run_id: foundry-qwen3-local-realization-smoke-v1
+ir_master_seed: foundry-m5b-ir-master-20260718-v1
+ir_attempts: 120
+
+model:
+  repo_id: Qwen/Qwen3-1.7B
+  revision: 70d244cc86ccca08cf5af4e1e306ecf908b1ad5e
+  license_id: Apache-2.0
+  trust_remote_code: false
+  dtype: float16
+  local_files_only: true
+  cache_root: data/huggingface
+
+generation:
+  seed: 5172026
+  enable_thinking: false
+  do_sample: false
+  num_beams: 3
+  num_return_sequences: 3
+  max_new_tokens: 256
+  timeout_seconds_per_ir: 90
+
+groups:
+  targeted:
+    attempts: 60
+    category_counts:
+      multi_step_bookkeeping_or_omission: 33
+      rate_ratio_percentage_or_average: 14
+      constraint_distribution_or_discrete_reasoning: 13
+    output_contract_counts:
+      multi_step_bookkeeping_or_omission: 7
+      rate_ratio_percentage_or_average: 3
+      constraint_distribution_or_discrete_reasoning: 2
+  generic_control:
+    attempts: 60
+    category_counts:
+      multi_step_bookkeeping_or_omission: 20
+      rate_ratio_percentage_or_average: 20
+      constraint_distribution_or_discrete_reasoning: 20
+    output_contract_counts:
+      multi_step_bookkeeping_or_omission: 4
+      rate_ratio_percentage_or_average: 4
+      constraint_distribution_or_discrete_reasoning: 4
+
+difficulty_cycle: [easy, medium, hard]
+output_contract_id: terminal-final-answer-contract-v1
+system_prompt_sha256: 9d3e808d5c887d974919728d5afb51df9daa5760d467d3c08648799aeddcc393
+realization_design_sha256: d6e6ca82681b702e07c71a9732a8c81159ea7a9bca78c73193228f72ca4ec3a5
+chat_template_sha256: a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8
+internal_diversity_policy: configs/synthesis/internal_diversity_v1.yaml
+semantic_artifact: configs/synthesis/semantic_all_minilm_l6_v2.yaml
+development_question_export: results/raw/realization_smoke/development_questions.jsonl
+raw_directory: results/raw/realization_smoke/qwen3_1_7b_v1
+summary_path: results/synthesis_smoke/local_realization_v1_summary.json
+
+rules:
+  benchmark_content_is_model_input: false
+  benchmark_answers_allowed: false
+  sealed_final_allowed: false
+  replace_rejected_irs: false
+  retry_until_success: false
+  llm_math_verifier: false
+  llm_judge: false

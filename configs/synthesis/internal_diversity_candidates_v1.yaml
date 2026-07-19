@@ -1,0 +1,29 @@
+schema_version: 1
+fixture_set: tests/fixtures/synthesis/internal_diversity_v1.json
+semantic_artifact: configs/synthesis/semantic_all_minilm_l6_v2.yaml
+benchmark_contamination_policy_unchanged: true
+candidate_policies:
+  - policy_id: legacy-shared-bands-v1
+    mode: legacy_bands
+    semantic_review_at: 0.75
+    semantic_reject_at: 0.82
+    reject_support_ngram_at: 0.0
+    review_support_ngram_at: 0.0
+    same_frame_review_at: 0.0
+    signature_is_support: false
+  - policy_id: evidence-gated-balanced-v1
+    mode: evidence_gated
+    semantic_review_at: 0.84
+    semantic_reject_at: 0.90
+    reject_support_ngram_at: 0.18
+    review_support_ngram_at: 0.10
+    same_frame_review_at: 0.90
+    signature_is_support: true
+  - policy_id: evidence-gated-conservative-v1
+    mode: evidence_gated
+    semantic_review_at: 0.88
+    semantic_reject_at: 0.94
+    reject_support_ngram_at: 0.15
+    review_support_ngram_at: 0.08
+    same_frame_review_at: 0.94
+    signature_is_support: true

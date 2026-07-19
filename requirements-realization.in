@@ -1,0 +1,7 @@
+--index-url https://pypi.org/simple
+--extra-index-url https://download.pytorch.org/whl/cu121
+
+PyYAML==6.0.2
+pip==25.1.1
+torch==2.5.1+cu121
+transformers==4.51.3
