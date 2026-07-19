@@ -1758,3 +1758,23 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
 - **Files changed:** This DEVLOG error record only; no Git config, source, evidence, raw artifact, or remote state changed.
 - **Errors or uncertainty:** Exact Git error: `Author identity unknown` followed by `fatal: unable to auto-detect email address (got 'Admin@DESKTOP-384F1AQ.(none)')`.
 - **Next action:** Restage this record, set `GIT_AUTHOR_*` and `GIT_COMMITTER_*` only in the commit process, retry the same exact message, then push and verify synchronization.
+
+## 2026-07-19 18:40:22 -04:00 - Milestone 6D Step 8: fresh-clone test dependency removed
+
+- **Current step:** Correct a post-push reproducibility defect without amending or rewriting the published Milestone 6D commit.
+- **Action performed:** Audited the new unit test's inputs after publication and found that both tests directly opened ignored local v3 attempts. Replaced that dependency with an original, hand-authored temporary collision fixture containing 15 deterministic number-neutral copies and one latent copy. The production auditor still reads the genuine ignored evidence when explicitly run; its tracked aggregate and measured hashes remain unchanged.
+- **Reason:** A unit test must pass in a fresh clone where ignored raw evidence is intentionally absent. Local success alone was insufficient proof because this desktop retained the source file.
+- **Result:** Focused tests pass with the hermetic fixture and no benchmark content. Ruff format passes; Ruff lint initially reported only import ordering, which was corrected directly. Strict Mypy remains clean in 77 source files. No production source, result, capacity count, decision, raw evidence, or published commit was changed or rewritten.
+- **Files changed:** The capacity unit test and this DEVLOG follow-up only.
+- **Errors or uncertainty:** The already-pushed `fa696d6` commit remains immutable. A small follow-up commit is required so `origin/main` is genuinely fresh-clone safe; this is disclosed rather than hidden through amend or force-push.
+- **Next action:** Run the full suite and safety checks again, commit the two-file hermetic-test correction, push normally, and report both the required Milestone 6D commit and the final synchronized follow-up tip.
+
+## 2026-07-19 18:41:08 -04:00 - Milestone 6D Step 9: hermetic follow-up verified
+
+- **Current step:** Verify and publish the fresh-clone-safe test correction without altering Milestone 6D evidence or production behavior.
+- **Action performed:** Ran Ruff format/check and lint, strict Mypy, all tests, `pip check`, `git diff --check`, high-confidence secret scanning, exact and 12-token development-content scans, production/sealed/raw/cache scope checks, and audit-file hash verification over the two-file follow-up.
+- **Reason:** The follow-up must prove both that the test no longer depends on ignored evidence and that the correction does not change the measured capacity result.
+- **Result:** Ruff passes; strict Mypy remains clean in 77 source files; all 298 tests pass in 12.59 seconds; dependencies and whitespace are clean. Secret, exact-development, 12-token-development, production-source, sealed-path, and raw/cache hits are zero. The aggregate audit file remains byte-identical at SHA-256 `bf107a9f...6553`.
+- **Files changed:** Only the hermetic capacity unit test and this DEVLOG. No production source, audit result, documentation decision, raw evidence, benchmark artifact, schedule, packet, or model/data artifact changed.
+- **Errors or uncertainty:** None. The fixture is original, temporary, and content-free; it exists only while the unit test runs.
+- **Next action:** Commit this disclosed two-file follow-up without amending history, push normally, and verify local `main` and `origin/main` are synchronized and clean.
