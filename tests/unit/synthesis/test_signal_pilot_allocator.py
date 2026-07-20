@@ -13,6 +13,7 @@ from foundry.synthesis.template_bank.signal_allocator import (
     SlotRequest,
     _frame_cap,
     _match_mode_candidates,
+    build_full_schedule,
     build_slot_requests,
 )
 from foundry.synthesis.template_bank.signal_pilot import canonical_sha256, load_signal_pilot_config
@@ -87,7 +88,7 @@ def test_full_slot_margins_are_exact_and_reproducible() -> None:
     assert len(first) == 2_504
     assert len({item.slot_id for item in first}) == 2_504
     assert canonical_sha256([item.__dict__ for item in first]) == (
-        "a04697d1ebd91024dd1f7adb4711c0acfa9deb3633141afb65fc4c40bbe9c45e"
+        "efea00fff13e6ca0cf9f2f44a66c60135afdfb59f1f0ea3216a18d0db7af2dc6"
     )
     assert Counter((item.group, item.family) for item in first) == {
         ("targeted", "multi_step_bookkeeping_or_omission"): 688,
@@ -145,3 +146,11 @@ def test_bookkeeping_frame_cap_covers_both_shared_modes() -> None:
         )
         == 39
     )
+
+
+def test_complete_schedule_fails_closed_on_joint_surface_compatibility() -> None:
+    with pytest.raises(
+        ValueError,
+        match=("generic_control/constraint_distribution_or_discrete_reasoning/complete_packages"),
+    ):
+        build_full_schedule(_CONFIG, _POLICY)

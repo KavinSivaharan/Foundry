@@ -24,6 +24,11 @@ from foundry.synthesis.schema import DifficultyLevel
 from foundry.synthesis.taxonomy import FailureCategory
 from foundry.synthesis.template_bank.bank import build_template_bank
 from foundry.synthesis.template_bank.contracts import SentencePlanSpec, TemplateSpec
+from foundry.synthesis.template_bank.difficulty_reallocation import (
+    build_corrected_capacity_audit,
+    corrected_subordinate_audit,
+    load_difficulty_reallocation_config,
+)
 from foundry.synthesis.template_bank.renderer import render_with_template
 from foundry.synthesis.template_bank.reuse import load_contract
 from foundry.synthesis.template_bank.signal_pilot import (
@@ -39,7 +44,10 @@ from foundry.synthesis.template_bank.signal_pilot import (
 )
 from foundry.synthesis.template_bank.submode_policy import (
     balanced_matrix,
-    build_revised_capacity_audit,
+)
+from foundry.synthesis.template_bank.surface_reuse import (
+    derive_surface_caps,
+    load_surface_reuse_config,
 )
 
 ALLOCATOR_VERSION = "foundry-signal-pilot-balanced-allocator-v1"
@@ -129,6 +137,19 @@ class PilotScheduleRecord:
     primary_evidence_sha256: str
     independent_evidence_sha256: str
     verifier_agreement: bool
+
+
+@dataclass(frozen=True)
+class _SurfaceChoice:
+    """One deterministic template option used by exact constrained matching."""
+
+    template: TemplateSpec
+    plan: SentencePlanSpec
+    exact_sha256: str
+    number_neutral_sha256: str
+    plan_key: str
+    scenario_key: tuple[str, str]
+    frame_key: str
 
 
 @dataclass
@@ -291,9 +312,12 @@ def build_slot_requests(config_path: Path, policy_path: Path) -> tuple[SlotReque
     """Construct exact content-free slot margins before latent matching."""
 
     config = load_signal_pilot_config(config_path)
-    audit = build_revised_capacity_audit(policy_path)
-    if audit["capacity_gate_passed"] is not True:
+    if not policy_path.is_file():
+        raise ValueError("frozen submode-policy configuration is missing")
+    capacity = build_corrected_capacity_audit(config.difficulty_reallocation_path)
+    if capacity["capacity_gate_passed"] is not True:
         raise ValueError("allocator cannot run before the revised capacity gate passes")
+    audit = corrected_subordinate_audit(config.difficulty_reallocation_path)
     requests: list[SlotRequest] = []
     slot_index = 1
     for group in GROUP_ORDER:
@@ -458,7 +482,7 @@ def _choose_template_plan(
     plan_use: Counter[tuple[str, str, str]],
     plan_scenario_use: Counter[tuple[str, str, str, str]],
     frame_use: Counter[tuple[str, str, str]],
-    number_neutral_use: Counter[tuple[str, str, str]],
+    number_neutral_use: Counter[tuple[str, str, str, str]],
     exact_hashes: set[str],
 ) -> tuple[TemplateSpec, SentencePlanSpec, str, str]:
     options: list[
@@ -486,7 +510,12 @@ def _choose_template_plan(
             number_neutral_hash = canonical_number_neutral_identity(
                 preview.rendered_question
             ).sha256
-            number_neutral_key = (request.group, request.family, number_neutral_hash)
+            number_neutral_key = (
+                request.group,
+                request.family,
+                request.mode,
+                number_neutral_hash,
+            )
             if (
                 exact_hash in exact_hashes
                 or number_neutral_use[number_neutral_key] >= number_neutral_cap
@@ -499,13 +528,22 @@ def _choose_template_plan(
                     "plan": plan.plan_id,
                 }
             )
-            score = (
-                frame_use[frame_key],
-                plan_use[plan_key],
-                plan_scenario_use[scenario_key],
-                number_neutral_use[number_neutral_key],
-                tie,
-            )
+            if request.mode == "weighted_average":
+                score = (
+                    number_neutral_use[number_neutral_key],
+                    plan_scenario_use[scenario_key],
+                    frame_use[frame_key],
+                    plan_use[plan_key],
+                    tie,
+                )
+            else:
+                score = (
+                    plan_scenario_use[scenario_key],
+                    number_neutral_use[number_neutral_key],
+                    frame_use[frame_key],
+                    plan_use[plan_key],
+                    tie,
+                )
             options.append((score, template, plan, exact_hash, number_neutral_hash))
     if not options:
         raise ValueError(
@@ -525,9 +563,187 @@ def _choose_template_plan(
             latent.scenario_domain,
         )
     ] += 1
-    number_neutral_use[(request.group, request.family, number_neutral_hash)] += 1
+    number_neutral_use[(request.group, request.family, request.mode, number_neutral_hash)] += 1
     exact_hashes.add(exact_hash)
     return template, plan, exact_hash, number_neutral_hash
+
+
+def _surface_choices(
+    request: SlotRequest,
+    latent: LatentCandidate,
+    bank: tuple[TemplateSpec, ...],
+) -> tuple[_SurfaceChoice, ...]:
+    draft = _generate(
+        request.family,
+        seed=latent.seed,
+        difficulty=request.difficulty,
+        variant=latent.variant,
+        output_contract_enabled=request.output_contract_enabled,
+    )
+    choices: list[_SurfaceChoice] = []
+    for template in _compatible_templates(request.family, request.mode, bank):
+        for plan in template.sentence_plan_variants:
+            preview = render_with_template(draft, template, plan)
+            choices.append(
+                _SurfaceChoice(
+                    template=template,
+                    plan=plan,
+                    exact_sha256=normalized_text_sha256(preview.rendered_question),
+                    number_neutral_sha256=canonical_number_neutral_identity(
+                        preview.rendered_question
+                    ).sha256,
+                    plan_key=f"{template.template_id}:{plan.plan_id}",
+                    scenario_key=(
+                        f"{template.template_id}:{plan.plan_id}",
+                        latent.scenario_domain,
+                    ),
+                    frame_key=template.template_id,
+                )
+            )
+    return tuple(choices)
+
+
+def _match_surface_choices(
+    requests: tuple[SlotRequest, ...],
+    latent_for_slot: dict[str, LatentCandidate],
+    bank: tuple[TemplateSpec, ...],
+    *,
+    plan_cap: int,
+    plan_scenario_cap: int,
+    frame_cap: int,
+    number_neutral_cap: int,
+) -> dict[str, _SurfaceChoice]:
+    """Exactly match a constrained submode when greedy ordering is insufficient."""
+
+    options = {
+        request.slot_id: _surface_choices(request, latent_for_slot[request.slot_id], bank)
+        for request in requests
+    }
+    request_by_id = {request.slot_id: request for request in requests}
+    scenario_frequency = Counter(
+        latent_for_slot[request.slot_id].scenario_domain for request in requests
+    )
+    remaining = sorted(
+        request_by_id,
+        key=lambda slot_id: (
+            -scenario_frequency[latent_for_slot[slot_id].scenario_domain],
+            DIFFICULTY_ORDER.index(request_by_id[slot_id].difficulty),
+            latent_for_slot[slot_id].scenario_domain,
+            slot_id,
+        ),
+    )
+    plan_use: Counter[str] = Counter()
+    scenario_use: Counter[tuple[str, str]] = Counter()
+    frame_use: Counter[str] = Counter()
+    identity_use: Counter[str] = Counter()
+    exact_use: set[str] = set()
+    selected: dict[str, _SurfaceChoice] = {}
+    visited = 0
+
+    def allowed(choice: _SurfaceChoice) -> bool:
+        return (
+            plan_use[choice.plan_key] < plan_cap
+            and scenario_use[choice.scenario_key] < plan_scenario_cap
+            and frame_use[choice.frame_key] < frame_cap
+            and identity_use[choice.number_neutral_sha256] < number_neutral_cap
+            and choice.exact_sha256 not in exact_use
+        )
+
+    def identity_margin_feasible(pending: list[str]) -> bool:
+        identities = sorted(
+            {
+                choice.number_neutral_sha256
+                for slot_id in pending
+                for choice in options[slot_id]
+                if allowed(choice)
+            }
+        )
+        source = 0
+        slot_offset = 1
+        identity_offset = slot_offset + len(pending)
+        sink = identity_offset + len(identities)
+        graph: list[list[_FlowEdge]] = [[] for _ in range(sink + 1)]
+        identity_index = {label: index for index, label in enumerate(identities)}
+        for slot_index, slot_id in enumerate(pending):
+            slot_node = slot_offset + slot_index
+            _add_flow_edge(graph, source, slot_node, 1)
+            for identity in sorted(
+                {choice.number_neutral_sha256 for choice in options[slot_id] if allowed(choice)}
+            ):
+                _add_flow_edge(
+                    graph,
+                    slot_node,
+                    identity_offset + identity_index[identity],
+                    1,
+                )
+        for identity in identities:
+            _add_flow_edge(
+                graph,
+                identity_offset + identity_index[identity],
+                sink,
+                number_neutral_cap - identity_use[identity],
+            )
+        return _dinic(graph, source, sink) == len(pending)
+
+    def search(pending: list[str]) -> bool:
+        nonlocal visited
+        visited += 1
+        if visited > 2_000_000:
+            raise ValueError("deterministic surface matching search bound exceeded")
+        if not pending:
+            return True
+        ranked: list[tuple[int, str, list[_SurfaceChoice]]] = []
+        for slot_id in pending:
+            available = [choice for choice in options[slot_id] if allowed(choice)]
+            if not available:
+                return False
+            ranked.append((len(available), slot_id, available))
+        _, slot_id, available = min(ranked, key=lambda item: (item[0], item[1]))
+        request = request_by_id[slot_id]
+        available.sort(
+            key=lambda choice: (
+                (
+                    identity_use[choice.number_neutral_sha256]
+                    if request.mode == "weighted_average"
+                    else scenario_use[choice.scenario_key]
+                ),
+                (
+                    scenario_use[choice.scenario_key]
+                    if request.mode == "weighted_average"
+                    else identity_use[choice.number_neutral_sha256]
+                ),
+                frame_use[choice.frame_key],
+                plan_use[choice.plan_key],
+                canonical_sha256(
+                    {
+                        "slot": slot_id,
+                        "template": choice.template.template_id,
+                        "plan": choice.plan.plan_id,
+                    }
+                ),
+            )
+        )
+        next_pending = [item for item in pending if item != slot_id]
+        for choice in available:
+            selected[slot_id] = choice
+            plan_use[choice.plan_key] += 1
+            scenario_use[choice.scenario_key] += 1
+            frame_use[choice.frame_key] += 1
+            identity_use[choice.number_neutral_sha256] += 1
+            exact_use.add(choice.exact_sha256)
+            if identity_margin_feasible(next_pending) and search(next_pending):
+                return True
+            exact_use.remove(choice.exact_sha256)
+            identity_use[choice.number_neutral_sha256] -= 1
+            frame_use[choice.frame_key] -= 1
+            scenario_use[choice.scenario_key] -= 1
+            plan_use[choice.plan_key] -= 1
+            del selected[slot_id]
+        return False
+
+    if not search(remaining):
+        raise ValueError("exact deterministic surface matching is infeasible")
+    return selected
 
 
 def _frame_cap(
@@ -556,8 +772,12 @@ def build_full_schedule(
     requests = build_slot_requests(config_path, policy_path)
     bank = build_template_bank()
     reuse = load_contract(config.reuse_config_path)
+    difficulty_policy = load_difficulty_reallocation_config(config.difficulty_reallocation_path)
+    surface_policy = load_surface_reuse_config(difficulty_policy.surface_policy_config)
+    surface_caps = derive_surface_caps(config, surface_policy)
     latent_for_slot: dict[str, LatentCandidate] = {}
     scenario_use: Counter[tuple[str, str, str]] = Counter()
+    scenario_difficulty_use: Counter[tuple[str, str, str, str]] = Counter()
     lexical_use: Counter[tuple[str, str, str]] = Counter()
     for family in CATEGORY_ORDER:
         for mode in MODE_ORDER[family]:
@@ -571,22 +791,50 @@ def build_full_schedule(
                 pool_size=config.full_schedule_candidate_pool_per_mode_difficulty,
             )
             selected = _match_mode_candidates(current_requests, pool)
+            complete_packages_used: set[str] = set()
             for difficulty in DIFFICULTY_ORDER:
                 slots = sorted(
                     (request for request in current_requests if request.difficulty == difficulty),
                     key=lambda request: request.slot_id,
                 )
-                available = list(selected.get(difficulty, []))
+                available = (
+                    [
+                        by_difficulty[difficulty]
+                        for latent_sha256, by_difficulty in sorted(pool.items())
+                        if difficulty in by_difficulty
+                        and latent_sha256 not in complete_packages_used
+                    ]
+                    if mode == "complete_packages"
+                    else list(selected.get(difficulty, []))
+                )
                 for request in slots:
                     latent = min(
                         available,
                         key=lambda item: (
+                            scenario_difficulty_use[
+                                (
+                                    request.group,
+                                    family,
+                                    difficulty,
+                                    item.scenario_domain,
+                                )
+                            ],
                             scenario_use[(request.group, family, item.scenario_domain)],
                             lexical_use[(request.group, family, item.lexical_family)],
                             item.latent_sha256,
                         ),
                     )
                     available.remove(latent)
+                    if mode == "complete_packages":
+                        complete_packages_used.add(latent.latent_sha256)
+                    scenario_difficulty_use[
+                        (
+                            request.group,
+                            family,
+                            difficulty,
+                            latent.scenario_domain,
+                        )
+                    ] += 1
                     scenario_use[(request.group, family, latent.scenario_domain)] += 1
                     lexical_use[(request.group, family, latent.lexical_family)] += 1
                     latent_for_slot[request.slot_id] = latent
@@ -609,10 +857,63 @@ def build_full_schedule(
     plan_use: Counter[tuple[str, str, str]] = Counter()
     plan_scenario_use: Counter[tuple[str, str, str, str]] = Counter()
     frame_use: Counter[tuple[str, str, str]] = Counter()
-    number_neutral_use: Counter[tuple[str, str, str]] = Counter()
+    number_neutral_use: Counter[tuple[str, str, str, str]] = Counter()
     exact_hashes: set[str] = set()
     records: list[PilotScheduleRecord] = []
-    for request in requests:
+    surface_requests = sorted(
+        requests,
+        key=lambda request: (
+            request.group,
+            request.family,
+            request.mode,
+            (
+                0
+                if request.mode == "weighted_average" and request.difficulty in {"easy", "medium"}
+                else 1
+                if request.mode == "weighted_average"
+                else 0
+            ),
+            DIFFICULTY_ORDER.index(request.difficulty),
+            latent_for_slot[request.slot_id].scenario_domain,
+            request.slot_id,
+        ),
+    )
+    exact_matches: dict[str, _SurfaceChoice] = {}
+    constrained_modes = (
+        (CATEGORY_ORDER[1], "weighted_average"),
+        (CATEGORY_ORDER[2], "complete_packages"),
+    )
+    for group in GROUP_ORDER:
+        for family, mode in constrained_modes:
+            current = tuple(
+                request
+                for request in surface_requests
+                if request.group == group and request.family == family and request.mode == mode
+            )
+            example = current[0]
+            caps = _derive_group_caps(config, reuse.identity_inventory, group, family)
+            attempt_caps = cast(dict[str, int], caps["attempt_caps"])
+            frame_count = len(_compatible_templates(family, mode, bank))
+            try:
+                mode_matches = _match_surface_choices(
+                    current,
+                    latent_for_slot,
+                    bank,
+                    plan_cap=attempt_caps["sentence_plan"],
+                    plan_scenario_cap=attempt_caps["plan_scenario_domain"],
+                    frame_cap=_frame_cap(
+                        request=example,
+                        frame_count=frame_count,
+                        config=config,
+                    ),
+                    number_neutral_cap=surface_caps[group][family][mode].max_attempts_per_identity,
+                )
+            except ValueError as error:
+                raise ValueError(
+                    f"surface matching failed for {group}/{family}/{mode}: {error}"
+                ) from error
+            exact_matches.update(mode_matches)
+    for request in surface_requests:
         source = latent_for_slot[request.slot_id]
         draft = _generate(
             request.family,
@@ -635,21 +936,46 @@ def build_full_schedule(
             frame_count=frame_count,
             config=config,
         )
-        template, plan, rendered_text_hash, number_neutral_hash = _choose_template_plan(
-            request=request,
-            latent=latent,
-            draft=draft,
-            bank=bank,
-            plan_cap=attempt_caps["sentence_plan"],
-            plan_scenario_cap=attempt_caps["plan_scenario_domain"],
-            frame_cap=frame_cap,
-            number_neutral_cap=attempt_caps["number_neutral"],
-            plan_use=plan_use,
-            plan_scenario_use=plan_scenario_use,
-            frame_use=frame_use,
-            number_neutral_use=number_neutral_use,
-            exact_hashes=exact_hashes,
-        )
+        matched = exact_matches.get(request.slot_id)
+        if matched is None:
+            template, plan, rendered_text_hash, number_neutral_hash = _choose_template_plan(
+                request=request,
+                latent=latent,
+                draft=draft,
+                bank=bank,
+                plan_cap=attempt_caps["sentence_plan"],
+                plan_scenario_cap=attempt_caps["plan_scenario_domain"],
+                frame_cap=frame_cap,
+                number_neutral_cap=surface_caps[request.group][request.family][
+                    request.mode
+                ].max_attempts_per_identity,
+                plan_use=plan_use,
+                plan_scenario_use=plan_scenario_use,
+                frame_use=frame_use,
+                number_neutral_use=number_neutral_use,
+                exact_hashes=exact_hashes,
+            )
+        else:
+            template = matched.template
+            plan = matched.plan
+            rendered_text_hash = matched.exact_sha256
+            number_neutral_hash = matched.number_neutral_sha256
+            if rendered_text_hash in exact_hashes:
+                raise ValueError("exact constrained surface matching produced a duplicate")
+            frame_use[(request.group, request.family, template.template_id)] += 1
+            plan_use[(request.group, request.family, matched.plan_key)] += 1
+            plan_scenario_use[
+                (
+                    request.group,
+                    request.family,
+                    matched.plan_key,
+                    latent.scenario_domain,
+                )
+            ] += 1
+            number_neutral_use[
+                (request.group, request.family, request.mode, number_neutral_hash)
+            ] += 1
+            exact_hashes.add(rendered_text_hash)
         render_signature = template.render_signature_hash(plan)
         candidate_identity = canonical_sha256(
             {
@@ -691,7 +1017,7 @@ def build_full_schedule(
                 verifier_agreement=True,
             )
         )
-    return tuple(records)
+    return tuple(sorted(records, key=lambda record: record.slot_index))
 
 
 def _counter(records: tuple[PilotScheduleRecord, ...], *fields: str) -> dict[str, int]:
@@ -758,8 +1084,12 @@ def validate_full_schedule(
         for record in records
     )
     number_neutral_counts = Counter(
-        (record.group, record.family, record.number_neutral_sha256) for record in records
+        (record.group, record.family, record.mode, record.number_neutral_sha256)
+        for record in records
     )
+    difficulty_policy = load_difficulty_reallocation_config(config.difficulty_reallocation_path)
+    surface_policy = load_surface_reuse_config(difficulty_policy.surface_policy_config)
+    surface_caps = derive_surface_caps(config, surface_policy)
     for group in GROUP_ORDER:
         for family in CATEGORY_ORDER:
             caps = _derive_group_caps(config, reuse.identity_inventory, group, family)
@@ -782,15 +1112,16 @@ def validate_full_schedule(
                 > attempt_caps["plan_scenario_domain"]
             ):
                 raise ValueError("plan-plus-scenario cap exceeded")
-            if (
-                max(
-                    count
-                    for key, count in number_neutral_counts.items()
-                    if key[0] == group and key[1] == family
-                )
-                > attempt_caps["number_neutral"]
-            ):
-                raise ValueError("number-neutral reuse cap exceeded")
+            for mode in MODE_ORDER[family]:
+                if (
+                    max(
+                        count
+                        for key, count in number_neutral_counts.items()
+                        if key[0] == group and key[1] == family and key[2] == mode
+                    )
+                    > surface_caps[group][family][mode].max_attempts_per_identity
+                ):
+                    raise ValueError("submode-local number-neutral reuse cap exceeded")
     bank = build_template_bank()
     template_by_id = {item.template_id: item for item in bank}
     for record in records:
@@ -865,6 +1196,10 @@ def validate_full_schedule(
             {record.number_neutral_sha256 for record in records}
         ),
         "schedule_identity_contract_sha256": number_neutral_identity_contract_sha256(),
+        "difficulty_reallocation_policy_sha256": build_corrected_capacity_audit(
+            config.difficulty_reallocation_path
+        )["policy_sha256"],
+        "surface_reuse_policy_sha256": surface_policy.config_sha256,
         "schedule_runtime_identity_mismatches": 0,
         "targeted_generic_latent_overlap": len(
             {record.latent_program_sha256 for record in records if record.group == GROUP_ORDER[0]}

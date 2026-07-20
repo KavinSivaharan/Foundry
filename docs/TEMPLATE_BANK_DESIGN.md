@@ -339,3 +339,13 @@ percentage, and combined-rate; eight for weighted-average; and 80 per discrete m
 inventory passes the new formula. Weighted-average difficulty compatibility does not: four surfaces
 must cover all easy/medium attempts, producing a five-attempt combined shortfall. Because the gate
 failed before a complete schedule, the bank did not produce a new smoke or human-review packet.
+
+### Milestone 7E exact joint-cap finding
+
+The approved difficulty correction reduces weighted-average easy/medium use to the exact available
+capacity and leaves the template bank unchanged. Exact construction then finds the first remaining
+surface blocker in generic complete-packages. Its 121 attempts cannot be jointly assigned while
+simultaneously respecting maximum uses of seven per sentence plan, one per plan/scenario pair, 25 per
+semantic frame, and two per canonical runtime identity. Separate inventory products overstate usable
+capacity because they ignore intersections among these identities. The bank remains reviewed and
+unchanged, but no second human-review packet is issued from this failed schedule gate.

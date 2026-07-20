@@ -511,3 +511,20 @@ This log separates proposals from approved decisions. A proposal does not author
 - **Consequence:** No schedule, smoke, replay, review packet, dataset, or training run occurs.
 - **Next user decision:** Authorize one narrow policy/allocation decision that resolves the five-slot
   weighted-average easy/medium compatibility shortfall, or stop the signal-first pilot.
+
+## 2026-07-19 - Correct difficulty minimally; stop on the next exact schedule blocker
+
+- **Decision:** Select `minimal-compatible-difficulty-reallocation-v1`. Move weighted-average
+  targeted easy `2` and medium `1` to hard, and generic easy `1` and medium `1` to hard. Compensate
+  targeted through ratio-scale hard-to-easy `1`, ratio-scale hard-to-medium `1`, and combined-rate
+  hard-to-easy `1`; compensate generic through ratio-scale hard-to-easy `1` and combined-rate
+  hard-to-medium `1`.
+- **Why:** This is the deterministic minimum that resolves the measured five-slot shortage while
+  preserving every row and column margin and every frozen scientific control.
+- **Measured consequence:** Weighted-average compatibility passes exactly. Complete scheduling still
+  fails in generic complete-packages: exact joint matching cannot place 121 attempts under caps of
+  seven per plan, one per plan-plus-scenario, 25 per frame, and two per runtime identity.
+- **Alternatives rejected:** More heuristic ordering, cap relaxation, new templates, or generator
+  changes. The milestone stop rule applies.
+- **Next user decision:** Reduce the signal-pilot attempt pool or stop. Adding weighted-average plans
+  would not address the newly measured discrete complete-packages constraint.

@@ -1,0 +1,228 @@
+{
+  "accepted_cells_fit_corrected_attempts": true,
+  "all_active_modes_covered": true,
+  "audit_id": "foundry-signal-pilot-corrected-difficulty-capacity-v1",
+  "benchmark_contamination_unchanged": true,
+  "calibration_sha256": "ec00bfe529b901f45b48a1a108b231c010027c47bfb9c2689a739ad8860e6a11",
+  "capacity_audit_sha256": "4ab358b7739d167bbd51cc108b77cc0c171dd878239650bfcfbdfff426f904cb",
+  "capacity_gate_passed": true,
+  "corrected_allocation": {
+    "generic_control": {
+      "combined_rate": {
+        "easy": 34,
+        "hard": 32,
+        "medium": 34
+      },
+      "percentage": {
+        "easy": 20,
+        "hard": 20,
+        "medium": 21
+      },
+      "rate_total": {
+        "easy": 19,
+        "hard": 19,
+        "medium": 18
+      },
+      "ratio_scale": {
+        "easy": 34,
+        "hard": 32,
+        "medium": 34
+      },
+      "weighted_average": {
+        "easy": 32,
+        "hard": 36,
+        "medium": 32
+      }
+    },
+    "targeted": {
+      "combined_rate": {
+        "easy": 24,
+        "hard": 22,
+        "medium": 23
+      },
+      "percentage": {
+        "easy": 14,
+        "hard": 15,
+        "medium": 14
+      },
+      "rate_total": {
+        "easy": 13,
+        "hard": 13,
+        "medium": 14
+      },
+      "ratio_scale": {
+        "easy": 25,
+        "hard": 21,
+        "medium": 24
+      },
+      "weighted_average": {
+        "easy": 22,
+        "hard": 26,
+        "medium": 22
+      }
+    }
+  },
+  "corrected_allocation_sha256": "1f9abb5132a5476bce5f15abfe816de126a812e7755d206f871c45649608d332",
+  "dataset_difficulty_totals_preserved": true,
+  "exact_question_uniqueness_required": true,
+  "family_and_submode_totals_preserved": true,
+  "fixture_set_sha256": "c8ae7f755168472c9f8a775c286407506c0d2dee1f097c13eec3a1b9fb8e6231",
+  "full_2504_schedule_authorized": true,
+  "future_split_totals_preserved": true,
+  "latent_program_uniqueness_required": true,
+  "original_allocation": {
+    "generic_control": {
+      "combined_rate": {
+        "easy": 34,
+        "hard": 33,
+        "medium": 33
+      },
+      "percentage": {
+        "easy": 20,
+        "hard": 20,
+        "medium": 21
+      },
+      "rate_total": {
+        "easy": 19,
+        "hard": 19,
+        "medium": 18
+      },
+      "ratio_scale": {
+        "easy": 33,
+        "hard": 33,
+        "medium": 34
+      },
+      "weighted_average": {
+        "easy": 33,
+        "hard": 34,
+        "medium": 33
+      }
+    },
+    "targeted": {
+      "combined_rate": {
+        "easy": 23,
+        "hard": 23,
+        "medium": 23
+      },
+      "percentage": {
+        "easy": 14,
+        "hard": 15,
+        "medium": 14
+      },
+      "rate_total": {
+        "easy": 13,
+        "hard": 13,
+        "medium": 14
+      },
+      "ratio_scale": {
+        "easy": 24,
+        "hard": 23,
+        "medium": 23
+      },
+      "weighted_average": {
+        "easy": 24,
+        "hard": 23,
+        "medium": 23
+      }
+    }
+  },
+  "original_allocation_sha256": "10a99906b5b84fbf416133ba78c8a132bff259b938604b1b319213796613cb8d",
+  "output_contract_totals_preserved": true,
+  "policy_config_sha256": "c05883f24f4401c01551676789d8895d30eb64a2a5c1a131b283a1c6bc30068c",
+  "policy_id": "minimal-compatible-difficulty-reallocation-v1",
+  "policy_sha256": "edd80f6795a1561483f650e8fcc1630620acfd52925fcaa2649c0d84263593d7",
+  "required_accepted_total": 2000,
+  "required_attempt_total": 2504,
+  "schema_version": 1,
+  "sealed_final_accessed": false,
+  "shifts": {
+    "generic_control": [
+      {
+        "count": 1,
+        "from": "easy",
+        "mode": "weighted_average",
+        "to": "hard"
+      },
+      {
+        "count": 1,
+        "from": "medium",
+        "mode": "weighted_average",
+        "to": "hard"
+      },
+      {
+        "count": 1,
+        "from": "hard",
+        "mode": "ratio_scale",
+        "to": "easy"
+      },
+      {
+        "count": 1,
+        "from": "hard",
+        "mode": "combined_rate",
+        "to": "medium"
+      }
+    ],
+    "targeted": [
+      {
+        "count": 2,
+        "from": "easy",
+        "mode": "weighted_average",
+        "to": "hard"
+      },
+      {
+        "count": 1,
+        "from": "medium",
+        "mode": "weighted_average",
+        "to": "hard"
+      },
+      {
+        "count": 1,
+        "from": "hard",
+        "mode": "ratio_scale",
+        "to": "easy"
+      },
+      {
+        "count": 1,
+        "from": "hard",
+        "mode": "ratio_scale",
+        "to": "medium"
+      },
+      {
+        "count": 1,
+        "from": "hard",
+        "mode": "combined_rate",
+        "to": "easy"
+      }
+    ]
+  },
+  "surface_reuse_caps_unchanged": true,
+  "targeted_generic_isolation_required": true,
+  "train_validation_isolation_required": true,
+  "unchanged_surface_mode_gates_passed": true,
+  "weighted_average_compatibility": {
+    "combined": {
+      "easy_medium_capacity": 108,
+      "easy_medium_required": 108,
+      "gate_passed": true,
+      "global_max_attempts_per_identity": 27,
+      "hard_capacity": 108,
+      "hard_required": 62
+    },
+    "generic_control": {
+      "easy_medium_capacity": 64,
+      "easy_medium_required": 64,
+      "gate_passed": true,
+      "hard_capacity": 64,
+      "hard_required": 36,
+      "max_attempts_per_identity": 16
+    },
+    "targeted": {
+      "easy_medium_capacity": 44,
+      "easy_medium_required": 44,
+      "gate_passed": true,
+      "hard_capacity": 44,
+      "hard_required": 26,
+      "max_attempts_per_identity": 11
+    }
+  }
+}

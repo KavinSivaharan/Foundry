@@ -141,6 +141,7 @@ class SignalPilotConfig:
     pilot_id: str
     capacity_audit_id: str
     allocator_id: str
+    difficulty_reallocation_path: Path
     reuse_config_path: Path
     reuse_policy_id: str
     reuse_policy_sha256: str
@@ -374,6 +375,12 @@ def load_signal_pilot_config(path: Path) -> SignalPilotConfig:
         pilot_id=_string(root.get("pilot_id"), "pilot_id"),
         capacity_audit_id=_string(root.get("capacity_audit_id"), "capacity_audit_id"),
         allocator_id=_string(root.get("allocator_id"), "allocator_id"),
+        difficulty_reallocation_path=Path(
+            _string(
+                root.get("difficulty_reallocation_path"),
+                "difficulty_reallocation_path",
+            )
+        ),
         reuse_config_path=Path(_string(reuse.get("config_path"), "reuse config path")),
         reuse_policy_id=_string(reuse.get("policy_id"), "reuse policy id"),
         reuse_policy_sha256=_string(reuse.get("policy_sha256"), "reuse policy hash"),

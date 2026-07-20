@@ -732,3 +732,13 @@ easy/medium surfaces and four hard surfaces. The frozen easy/medium allocations 
 113 uses, versus capacities 44, 64, and 108. The corrected full-pilot capacity gate fails by five
 combined attempts. No generated-to-development rule, MiniLM threshold, template wording, generator,
 label, or verifier changed, and no smoke or packet followed the failure.
+
+### Minimal difficulty correction and exact-schedule stop
+
+Milestone 7E froze `minimal-compatible-difficulty-reallocation-v1`. It changes only rate attempt
+difficulty placement: three targeted and two generic weighted-average easy/medium attempts move to
+hard, with equal inverse shifts in compatible ratio-scale and combined-rate cells. The corrected
+surface proof passes, and all accepted cells still fit their attempt pools. Full deterministic
+scheduling then fails closed in generic complete-packages because its 121 attempts have no joint
+assignment satisfying all unchanged surface caps. This supersedes the arithmetic-only authorization:
+the 2,504-slot pilot is not currently schedulable, and no new 120-question smoke was run.

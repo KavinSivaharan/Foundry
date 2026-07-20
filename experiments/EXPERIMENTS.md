@@ -549,3 +549,20 @@ Every future experiment must be registered here before a costly run begins. Its 
   inference, training, or sealed-final access occurred. Benchmark-contamination controls were unchanged.
 - **Next experiment:** none approved. Decide whether to make a separately frozen correction to the
   weighted-average difficulty/surface compatibility allocation or stop the pilot.
+
+## Milestone 7E - Minimal difficulty correction and exact scheduling stop
+
+- **Policy:** `minimal-compatible-difficulty-reallocation-v1`; 9/9 original fixtures pass. Policy
+  SHA-256 `edd80f67...93d7`, corrected allocation `1f9abb51...d332`, and calibration
+  `ec00bfe5...6a11`.
+- **Corrected capacity:** weighted-average easy/medium is targeted 44/44, generic 64/64, combined
+  108/108; hard is 26/44, 36/64, and 62/108. Arithmetic capacity SHA-256 is
+  `4ab358b7...04cb`.
+- **Exact schedule result:** failed in generic complete-packages (121 required) under the unchanged
+  joint plan, plan/scenario, frame, and runtime-identity caps. Content-free blocker SHA-256 is
+  `a387b5ce...41ab`.
+- **Downstream status:** No complete 2,504-slot schedule, fresh review schedule, 120-question smoke,
+  deterministic smoke replay, assisted review packet, dataset, inference, training, or sealed-final
+  access occurred.
+- **Next experiment:** none approved. The only relevant permitted choice is to reduce the fixed
+  signal-pilot attempt pool; weighted-average plan expansion does not solve the discrete blocker.

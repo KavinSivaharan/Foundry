@@ -636,3 +636,15 @@ capacity is 108/113. The complete schedule gate therefore remains false. No new 
 120-question smoke, replay, or review packet is authorized. The next decision must address this
 five-attempt weighted-average difficulty compatibility shortfall without weakening exact, latent,
 runtime-identity, or benchmark-contamination controls.
+
+## Milestone 7E stopped result: weighted correction passed, complete schedule blocked
+
+`minimal-compatible-difficulty-reallocation-v1` moved exactly three targeted and two generic
+weighted-average attempts from easy/medium to hard and made five inverse shifts in ratio-scale and
+combined-rate. Dataset difficulty totals, rate-submode totals, output-track totals, and future split
+totals remain exact. The weighted compatibility proof now passes at targeted 44/44, generic 64/64,
+and combined 108/108. Exact 2,504-slot construction then exposed a different joint constraint:
+generic complete-packages cannot assign its 121 attempts under the unchanged sentence-plan,
+plan-plus-scenario, frame, and canonical runtime-identity caps. The schedule gate therefore failed;
+no fresh smoke, replay, or review packet was created. The next permitted decision is whether to
+reduce the signal-pilot fixed attempt pool. Complete dataset generation and training remain blocked.

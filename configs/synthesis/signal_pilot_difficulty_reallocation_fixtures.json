@@ -1,0 +1,14 @@
+{
+  "fixture_set_id": "foundry-minimal-difficulty-reallocation-original-fixtures-v1",
+  "fixtures": [
+    {"fixture_id": "weighted-five-slot-shortage", "assertion": "corrected_surface_capacity"},
+    {"fixture_id": "feasible-compensating-shift", "assertion": "exact_compensating_moves"},
+    {"fixture_id": "impossible-compensating-shift", "assertion": "impossible_shift_fails_closed"},
+    {"fixture_id": "dataset-difficulty-totals", "assertion": "dataset_difficulty_totals_preserved"},
+    {"fixture_id": "submode-attempt-totals", "assertion": "submode_totals_preserved"},
+    {"fixture_id": "output-contract-compatibility", "assertion": "output_contract_untouched"},
+    {"fixture_id": "targeted-generic-separation", "assertion": "group_separation_preserved"},
+    {"fixture_id": "deterministic-tie-breaking", "assertion": "deterministic_tie_break"},
+    {"fixture_id": "zero-shift-no-op", "assertion": "zero_shift_is_no_op"}
+  ]
+}

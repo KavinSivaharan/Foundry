@@ -1,0 +1,219 @@
+{
+  "benchmark_content_used": false,
+  "calibration_sha256": "ec00bfe529b901f45b48a1a108b231c010027c47bfb9c2689a739ad8860e6a11",
+  "candidate_results": {
+    "broader-proportional-redistribution-v1": {
+      "exact_matches": 8,
+      "mismatched_fixture_ids": [
+        "feasible-compensating-shift"
+      ],
+      "reason": "resolves capacity but changes more cells than required"
+    },
+    "frozen-allocation-v1": {
+      "exact_matches": 7,
+      "mismatched_fixture_ids": [
+        "weighted-five-slot-shortage",
+        "feasible-compensating-shift"
+      ],
+      "reason": "retains the measured five-slot compatibility shortage"
+    },
+    "minimal-compatible-difficulty-reallocation-v1": {
+      "exact_matches": 9,
+      "mismatched_fixture_ids": [],
+      "reason": "changes exactly the required slots and preserves every frozen margin"
+    }
+  },
+  "corrected_allocation": {
+    "generic_control": {
+      "combined_rate": {
+        "easy": 34,
+        "hard": 32,
+        "medium": 34
+      },
+      "percentage": {
+        "easy": 20,
+        "hard": 20,
+        "medium": 21
+      },
+      "rate_total": {
+        "easy": 19,
+        "hard": 19,
+        "medium": 18
+      },
+      "ratio_scale": {
+        "easy": 34,
+        "hard": 32,
+        "medium": 34
+      },
+      "weighted_average": {
+        "easy": 32,
+        "hard": 36,
+        "medium": 32
+      }
+    },
+    "targeted": {
+      "combined_rate": {
+        "easy": 24,
+        "hard": 22,
+        "medium": 23
+      },
+      "percentage": {
+        "easy": 14,
+        "hard": 15,
+        "medium": 14
+      },
+      "rate_total": {
+        "easy": 13,
+        "hard": 13,
+        "medium": 14
+      },
+      "ratio_scale": {
+        "easy": 25,
+        "hard": 21,
+        "medium": 24
+      },
+      "weighted_average": {
+        "easy": 22,
+        "hard": 26,
+        "medium": 22
+      }
+    }
+  },
+  "corrected_allocation_sha256": "1f9abb5132a5476bce5f15abfe816de126a812e7755d206f871c45649608d332",
+  "fixture_count": 9,
+  "fixture_set_id": "foundry-minimal-difficulty-reallocation-original-fixtures-v1",
+  "fixture_set_sha256": "c8ae7f755168472c9f8a775c286407506c0d2dee1f097c13eec3a1b9fb8e6231",
+  "invariants": {
+    "corrected_surface_capacity": true,
+    "dataset_difficulty_totals_preserved": true,
+    "deterministic_tie_break": true,
+    "exact_compensating_moves": true,
+    "group_separation_preserved": true,
+    "impossible_shift_fails_closed": true,
+    "output_contract_untouched": true,
+    "submode_totals_preserved": true,
+    "zero_shift_is_no_op": true
+  },
+  "original_allocation": {
+    "generic_control": {
+      "combined_rate": {
+        "easy": 34,
+        "hard": 33,
+        "medium": 33
+      },
+      "percentage": {
+        "easy": 20,
+        "hard": 20,
+        "medium": 21
+      },
+      "rate_total": {
+        "easy": 19,
+        "hard": 19,
+        "medium": 18
+      },
+      "ratio_scale": {
+        "easy": 33,
+        "hard": 33,
+        "medium": 34
+      },
+      "weighted_average": {
+        "easy": 33,
+        "hard": 34,
+        "medium": 33
+      }
+    },
+    "targeted": {
+      "combined_rate": {
+        "easy": 23,
+        "hard": 23,
+        "medium": 23
+      },
+      "percentage": {
+        "easy": 14,
+        "hard": 15,
+        "medium": 14
+      },
+      "rate_total": {
+        "easy": 13,
+        "hard": 13,
+        "medium": 14
+      },
+      "ratio_scale": {
+        "easy": 24,
+        "hard": 23,
+        "medium": 23
+      },
+      "weighted_average": {
+        "easy": 24,
+        "hard": 23,
+        "medium": 23
+      }
+    }
+  },
+  "original_allocation_sha256": "10a99906b5b84fbf416133ba78c8a132bff259b938604b1b319213796613cb8d",
+  "policy_config_sha256": "c05883f24f4401c01551676789d8895d30eb64a2a5c1a131b283a1c6bc30068c",
+  "schema_version": 1,
+  "selected_policy_id": "minimal-compatible-difficulty-reallocation-v1",
+  "selected_policy_sha256": "edd80f6795a1561483f650e8fcc1630620acfd52925fcaa2649c0d84263593d7",
+  "selection_frozen_before_schedule_or_smoke": true,
+  "shifts": {
+    "generic_control": [
+      {
+        "count": 1,
+        "from": "easy",
+        "mode": "weighted_average",
+        "to": "hard"
+      },
+      {
+        "count": 1,
+        "from": "medium",
+        "mode": "weighted_average",
+        "to": "hard"
+      },
+      {
+        "count": 1,
+        "from": "hard",
+        "mode": "ratio_scale",
+        "to": "easy"
+      },
+      {
+        "count": 1,
+        "from": "hard",
+        "mode": "combined_rate",
+        "to": "medium"
+      }
+    ],
+    "targeted": [
+      {
+        "count": 2,
+        "from": "easy",
+        "mode": "weighted_average",
+        "to": "hard"
+      },
+      {
+        "count": 1,
+        "from": "medium",
+        "mode": "weighted_average",
+        "to": "hard"
+      },
+      {
+        "count": 1,
+        "from": "hard",
+        "mode": "ratio_scale",
+        "to": "easy"
+      },
+      {
+        "count": 1,
+        "from": "hard",
+        "mode": "ratio_scale",
+        "to": "medium"
+      },
+      {
+        "count": 1,
+        "from": "hard",
+        "mode": "combined_rate",
+        "to": "easy"
+      }
+    ]
+  }
+}

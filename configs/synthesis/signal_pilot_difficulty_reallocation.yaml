@@ -1,0 +1,49 @@
+schema_version: 1
+policy_id: minimal-compatible-difficulty-reallocation-v1
+fixture_path: configs/synthesis/signal_pilot_difficulty_reallocation_fixtures.json
+signal_pilot_config: configs/synthesis/signal_pilot.yaml
+source_allocation_evidence: results/synthesis_smoke/signal_pilot_feasible_capacity_audit.json
+source_allocation_sha256: 7c1d87d7ed43b71343a1af68c531f3d747f9d46c0ef3d6268b380213e830aa0c
+surface_policy_config: configs/synthesis/signal_pilot_surface_reuse.yaml
+failed_surface_audit: results/synthesis_smoke/signal_pilot_surface_capacity_audit.json
+failed_surface_audit_sha256: 7c0f2913751aa42697eaeee849f2cbf38fef13b51684850767d31286977710f5
+calibration_output: results/synthesis_smoke/signal_pilot_difficulty_reallocation_calibration.json
+capacity_output: results/synthesis_smoke/signal_pilot_corrected_capacity_audit.json
+candidate_policies:
+  - frozen-allocation-v1
+  - minimal-compatible-difficulty-reallocation-v1
+  - broader-proportional-redistribution-v1
+family: rate_ratio_percentage_or_average
+weighted_average_mode: weighted_average
+stable_donor_mode_order:
+  - rate_total
+  - ratio_scale
+  - percentage
+  - combined_rate
+difficulty_order: [easy, medium, hard]
+required_moves:
+  targeted: 3
+  generic_control: 2
+objective_order:
+  - complete_feasibility
+  - exact_required_weighted_moves
+  - exact_compensating_moves
+  - minimum_total_absolute_deviation
+  - minimum_difficulty_dispersion
+  - broad_donor_coverage
+  - stable_mode_and_difficulty_order
+preserved_controls:
+  dataset_difficulty_totals: true
+  family_attempt_totals: true
+  submode_attempt_totals: true
+  output_contract_totals: true
+  future_split_totals: true
+  exact_question_uniqueness: true
+  global_latent_program_uniqueness: true
+  targeted_generic_isolation: true
+  train_validation_isolation: true
+  surface_reuse_caps: true
+  benchmark_contamination: true
+  generators_labels_verifiers: true
+  template_wording: true
+  sealed_final_access: false

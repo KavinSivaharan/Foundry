@@ -604,3 +604,14 @@ The general lesson is to model capacity as a compatibility graph: dataset-specif
 caps feed only compatible modes, and globally finite mode supply is shared across datasets and
 splits. A future cap policy may intentionally reflect an unequal curriculum, but that is a new
 predeclared scientific decision—not something to adjust after observing allocation yield.
+
+## Milestone 7E: aggregate capacity is not joint assignability
+
+The five weighted-average slots were genuinely a difficulty-placement problem and were resolved by
+five forward plus five compensating moves without changing any margin. But passing each resource cap
+separately still did not prove a complete schedule exists. Generic complete-packages has ample latent
+programs, 80 runtime identities, 20 reviewed plans, and 20 observed scenario domains; nevertheless,
+the intersection of plan, plan-plus-scenario, frame, and runtime-identity caps cannot cover its 121
+fixed attempts under the frozen allocation. A useful capacity proof must therefore test the full
+compatibility hypergraph, not only independent per-layer products. Exact matching should be part of
+the gate before a capacity result is called schedulable.

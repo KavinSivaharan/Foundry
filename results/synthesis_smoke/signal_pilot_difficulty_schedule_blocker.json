@@ -1,0 +1,45 @@
+{
+  "allocator_source_sha256": "5a51b214f1e3553c5f11d455ca11450fccbfdd198f4615b827ba6c9318c5e0be",
+  "audit_id": "foundry-signal-pilot-difficulty-schedule-blocker-v1",
+  "benchmark_contamination_changed": false,
+  "blocker": {
+    "family": "constraint_distribution_or_discrete_reasoning",
+    "group": "generic_control",
+    "joint_assignment_feasible": false,
+    "mode": "complete_packages",
+    "reason": "exact deterministic joint surface matching is infeasible under the frozen plan, plan-plus-scenario, frame, and canonical runtime-identity caps",
+    "required_attempts": 121,
+    "verified_unique_latent_pool": 1337
+  },
+  "blocker_sha256": "a387b5ce3ad55fd45b16d94021dae6500d49565f559db4fc61358c68f93741ab",
+  "complete_2504_schedule_created": false,
+  "complete_2504_schedule_gate_passed": false,
+  "corrected_capacity_audit_sha256": "4ab358b7739d167bbd51cc108b77cc0c171dd878239650bfcfbdfff426f904cb",
+  "corrected_weighted_average_capacity_gate_passed": true,
+  "fresh_120_schedule_created": false,
+  "fresh_smoke_run": false,
+  "joint_caps": {
+    "max_attempts_per_runtime_identity": 2,
+    "max_attempts_per_semantic_frame": 25,
+    "max_attempts_per_sentence_plan": 7,
+    "max_attempts_per_sentence_plan_scenario": 1
+  },
+  "mathematical_generators_changed": false,
+  "policy_id": "minimal-compatible-difficulty-reallocation-v1",
+  "policy_sha256": "edd80f6795a1561483f650e8fcc1630620acfd52925fcaa2649c0d84263593d7",
+  "raw_or_rendered_questions_tracked": false,
+  "replay_run": false,
+  "review_packet_created": false,
+  "schema_version": 1,
+  "sealed_final_accessed": false,
+  "signal_config_sha256": "e31eb8a2ee63de9a5f9582f6bf3304347ba1de2bfbba85e9eda84eb2476ea133",
+  "surface_inventory": {
+    "active_runtime_identities": 80,
+    "compatible_sentence_plans": 20,
+    "observed_scenario_domains": 20
+  },
+  "template_wording_changed": false,
+  "verifiers_or_labels_changed": false,
+  "weighted_average_shifts_completed": 5,
+  "weighted_average_shifts_required": 5
+}

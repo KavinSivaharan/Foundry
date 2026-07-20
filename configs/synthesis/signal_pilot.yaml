@@ -2,6 +2,7 @@ schema_version: 1
 pilot_id: foundry-signal-first-pilot-v1
 capacity_audit_id: foundry-signal-first-capacity-v1
 allocator_id: foundry-signal-first-balanced-allocator-v1
+difficulty_reallocation_path: configs/synthesis/signal_pilot_difficulty_reallocation.yaml
 reuse_policy:
   config_path: configs/synthesis/template_bank_bounded_reuse_candidates.yaml
   policy_id: bounded-balanced-template-reuse-v1
@@ -103,8 +104,8 @@ full_schedule_candidate_pool_per_mode_difficulty: 4096
 full_schedule_raw_path: results/raw/signal_pilot/full_schedule.jsonl
 full_schedule_summary_path: results/synthesis_smoke/signal_pilot_schedule_summary.json
 smoke:
-  run_id: foundry-template-bank-signal-pilot-review-v1
-  master_seed: foundry-signal-pilot-review-smoke-20260719-v1
+  run_id: foundry-template-bank-signal-pilot-review-v2
+  master_seed: foundry-signal-pilot-review-smoke-20260719-v2
   attempts: 120
   datasets:
     targeted:
