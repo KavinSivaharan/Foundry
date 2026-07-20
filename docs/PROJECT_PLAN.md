@@ -662,3 +662,18 @@ surface controls. No multiplier was selected. Therefore no complete schedule, ne
 smoke, replay, or assisted review packet was created. The next architectural decision is whether to
 reduce the accepted signal pilot itself; no further attempt multiplier may be invented from these
 results.
+
+### Milestone 7G: reduced signal-pilot selection (complete; architecture stop)
+
+Milestone 7G evaluated exactly `900`, `800`, `700`, `600`, and `500` accepted examples per
+dataset at the frozen `1.10` multiplier. Stable largest remainder preserved the targeted
+`550/233/217` and generic `334/333/333` family weights; every candidate preserved 90/10
+train/validation, 20% output-contract, frozen submode/difficulty policies, exact uniqueness,
+runtime identities, and verification. The corresponding fixed pools were `1,981`, `1,762`,
+`1,544`, `1,320`, and `1,102` attempts.
+
+All five candidates had sufficient verified latent mathematics but failed exact joint surface
+scheduling. No accepted size was selected, so the complete schedule, review smoke, deterministic
+replay, and assisted packet were not created. Per the approved final stop rule, the current
+synthetic-data architecture ends here; the next decision must concern project direction rather
+than another scheduling, cap, template, generator-range, or pilot-size patch.

@@ -625,3 +625,12 @@ a feasible schedule. Each reduced pool still failed the same exact generic-perce
 assignment. The broader lesson is that a high aggregate acceptance rate does not establish capacity:
 the fixed pool must be schedulable before generation, and only a complete runtime-exact assignment
 can prove that claim.
+
+Milestone 7G demonstrates that reducing accepted volume does not necessarily remove a joint
+surface-allocation obstruction. Even the 500+500 candidate retained enough unique programs, but
+surface choices still formed an infeasible intersection of reviewed plan, scenario, frame,
+runtime-number-neutral, and exact-question constraints. One diagnostic at size 700 also showed why
+an allocator search limit is not scientific evidence: after replacing that inconclusive bound with
+the existing deterministic constructive weighted-average assignment, a different exact discrete
+blocker emerged. Feasibility requires either a complete witness or a conclusive exact failure—not a
+timeout, independent capacity products, or a desired sample size.

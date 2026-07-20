@@ -582,3 +582,21 @@ Every future experiment must be registered here before a costly run begins. Its 
   inference, training, or sealed-final access occurred. Templates, generators, labels, verifiers,
   runtime normalizer, reuse rules, and benchmark-contamination controls remained unchanged.
 - **Next experiment:** none approved. Decide whether to reduce the accepted signal-pilot size itself.
+
+### EXP-SYN-016: reduced matched-size exact selection
+
+- **Status:** completed; selection gate failed; architecture stop invoked
+- **Question:** What is the largest exactly schedulable matched pilot among 900, 800, 700, 600,
+  and 500 accepted examples per dataset at a fixed 1.10 attempt multiplier?
+- **Frozen method:** Stable largest-remainder family quotas; 90/10 split; 20% output track; frozen
+  submode, difficulty, template/surface reuse, runtime identity, exact uniqueness, dual verification,
+  contamination, and sealed-final controls. Actual runtime surfaces—not metadata proxies—determined
+  schedulability.
+- **Results:** All candidates failed. Fixed pools were 1,981, 1,762, 1,544, 1,320, and 1,102.
+  Exact blockers were respectively generic ratio-scale, rate-total, two-type allocation, rate-total,
+  and ratio-scale. Every latent mode met its unique mathematical requirement.
+- **Evidence:** Selection config SHA-256 `073f03bb...bd49`; aggregate evidence SHA-256
+  `793c0276...407f`. Complete candidate configurations remain in the ignored raw evidence boundary.
+- **Scope result:** No selected size, complete schedule, smoke, replay, assisted packet, dataset,
+  training, benchmark evaluation, or sealed-final access.
+- **Next experiment:** none in this architecture. A new project-direction decision is required.

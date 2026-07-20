@@ -758,3 +758,23 @@ bounded-reuse policy; reducing the candidate pool does not silently redefine the
 
 The final scheduler fails each pool in generic percentage realization. No multiplier is frozen as a
 selected production pool, and the technical pipeline stops before schedule persistence or smoke.
+
+## Reduced matched-size selection
+
+`largest-feasible-matched-signal-pilot-v1` evaluates only matched accepted sizes 900, 800, 700,
+600, and 500 at multiplier 1.10. Family acceptances use stable largest remainder from the frozen
+targeted and generic weights. Training/validation remains 90/10 and output-contract remains 20%.
+Family attempts are `ceil(family_acceptances * 1.10)`; frozen submode, difficulty, split, surface,
+identity, verification, and contamination policies allocate all subordinate cells.
+
+| Accepted per dataset | Training / validation | Output track | Fixed attempts | Exact blocker |
+|---:|---:|---:|---:|---|
+| 900 | 810 / 90 | 180 | 1,981 | generic ratio-scale |
+| 800 | 720 / 80 | 160 | 1,762 | generic rate-total |
+| 700 | 630 / 70 | 140 | 1,544 | generic two-type allocation |
+| 600 | 540 / 60 | 120 | 1,320 | generic rate-total |
+| 500 | 450 / 50 | 100 | 1,102 | generic ratio-scale |
+
+No size passed, so no selected subordinate allocation, complete schedule, smoke, replay, or packet
+exists. The architecture-stop rule prohibits testing another size, multiplier, difficulty change,
+template addition, or generator-range change in this lineage.

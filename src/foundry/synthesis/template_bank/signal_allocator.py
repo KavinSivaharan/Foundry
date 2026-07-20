@@ -50,6 +50,12 @@ from foundry.synthesis.template_bank.surface_reuse import (
 )
 
 ALLOCATOR_VERSION = "foundry-signal-pilot-balanced-allocator-v1"
+EXACT_SURFACE_MATCHING_MODES = tuple(
+    (family, mode)
+    for family in CATEGORY_ORDER[1:]
+    for mode in MODE_ORDER[family]
+    if mode != "weighted_average"
+)
 
 _CATEGORY_ENUM = {
     str(FailureCategory.MULTI_STEP_BOOKKEEPING): FailureCategory.MULTI_STEP_BOOKKEEPING,
@@ -883,11 +889,16 @@ def build_full_schedule(
         ),
     )
     exact_matches: dict[str, _SurfaceChoice] = {}
-    constrained_modes = tuple(
-        (family, mode) for family in CATEGORY_ORDER[1:] for mode in MODE_ORDER[family]
-    )
+    # Weighted-average surfaces have a small, deliberately balanced identity
+    # inventory.  The stable constructive allocator below already prioritizes
+    # identity, plan/scenario, frame, and plan headroom for that mode.  Sending
+    # the same feasible construction through the general multidimensional
+    # backtracker can exhaust its proof bound without establishing either
+    # feasibility or infeasibility.  Keep exact backtracking for the other
+    # finite rate/discrete modes and use the deterministic constructive proof
+    # for weighted average.
     for group in GROUP_ORDER:
-        for family, mode in constrained_modes:
+        for family, mode in EXACT_SURFACE_MATCHING_MODES:
             current = tuple(
                 request
                 for request in surface_requests

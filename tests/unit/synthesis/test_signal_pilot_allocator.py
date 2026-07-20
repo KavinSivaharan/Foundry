@@ -9,6 +9,7 @@ from pathlib import Path
 import pytest
 
 from foundry.synthesis.template_bank.signal_allocator import (
+    EXACT_SURFACE_MATCHING_MODES,
     LatentCandidate,
     SlotRequest,
     _frame_cap,
@@ -154,3 +155,10 @@ def test_complete_schedule_fails_closed_on_joint_surface_compatibility() -> None
         match=("generic_control/constraint_distribution_or_discrete_reasoning/"),
     ):
         build_full_schedule(_CONFIG, _POLICY)
+
+
+def test_weighted_average_constructive_routing_is_stable() -> None:
+    """The reduced-pilot matcher must not turn a proof bound into a capacity result."""
+
+    assert all(mode != "weighted_average" for _, mode in EXACT_SURFACE_MATCHING_MODES)
+    assert len(EXACT_SURFACE_MATCHING_MODES) == 8

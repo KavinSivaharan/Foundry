@@ -1,0 +1,209 @@
+{
+  "attempt_multiplier": {
+    "denominator": 10,
+    "label": "1.10",
+    "numerator": 11
+  },
+  "candidate_order": [
+    900,
+    800,
+    700,
+    600,
+    500
+  ],
+  "complete_schedule_created": false,
+  "deterministic_replay_run": false,
+  "evidence_id": "foundry-reduced-signal-pilot-selection-v1",
+  "evidence_sha256": "793c0276b42fb7bd26dbdfd95a316ec4fbcb4d6178d5567011d83013b96a407f",
+  "family_weights_unchanged": true,
+  "fresh_review_schedule_created": false,
+  "fresh_smoke_run": false,
+  "frozen_controls_changed": false,
+  "lower_sizes_not_tested_after_first_feasible": true,
+  "next_action": "architecture-stop",
+  "policy_id": "largest-feasible-matched-signal-pilot-v1",
+  "results": [
+    {
+      "accepted_per_dataset": 900,
+      "allocation": null,
+      "allocation_sha256": "311f9f4a0239dc154a8b3a65835e805cd7551f827d3d5cf21eac4a6a822b87c3",
+      "blocker": "surface matching failed for generic_control/rate_ratio_percentage_or_average/ratio_scale: exact deterministic surface matching is infeasible",
+      "candidate_sha256": "3cf931ce1601a9f8f71b05a6c6e2a26714b96ade47dabaad5fb2be2b392aa4e0",
+      "config_sha256": "0834b0a397524b2bbe334739aad69597ac89dce60fa5697bdebe1992d3102311",
+      "exact_schedule_feasible": false,
+      "generic_accepted": {
+        "constraint_distribution_or_discrete_reasoning": 300,
+        "multi_step_bookkeeping_or_omission": 300,
+        "rate_ratio_percentage_or_average": 300
+      },
+      "generic_attempts": {
+        "constraint_distribution_or_discrete_reasoning": 330,
+        "multi_step_bookkeeping_or_omission": 330,
+        "rate_ratio_percentage_or_average": 330
+      },
+      "output_contract_per_dataset": 180,
+      "schedule_sha256": null,
+      "schedule_summary_sha256": null,
+      "targeted_accepted": {
+        "constraint_distribution_or_discrete_reasoning": 195,
+        "multi_step_bookkeeping_or_omission": 495,
+        "rate_ratio_percentage_or_average": 210
+      },
+      "targeted_attempts": {
+        "constraint_distribution_or_discrete_reasoning": 215,
+        "multi_step_bookkeeping_or_omission": 545,
+        "rate_ratio_percentage_or_average": 231
+      },
+      "total_attempts": 1981,
+      "training_per_dataset": 810,
+      "validation_per_dataset": 90
+    },
+    {
+      "accepted_per_dataset": 800,
+      "allocation": null,
+      "allocation_sha256": "09ddab2b6f55267f3d922c4cad3d400c33c4626828621689e4a71193f649793b",
+      "blocker": "surface matching failed for generic_control/rate_ratio_percentage_or_average/rate_total: exact deterministic surface matching is infeasible",
+      "candidate_sha256": "ff3c63a807ba07fbeb7de8c1ee6888733b59cca3f8c41dd3e8cb308b26331a4f",
+      "config_sha256": "8d3a4d0a2760fe5b6d30343033156a35fcf91a3fadbd8e971d278447c417799e",
+      "exact_schedule_feasible": false,
+      "generic_accepted": {
+        "constraint_distribution_or_discrete_reasoning": 266,
+        "multi_step_bookkeeping_or_omission": 267,
+        "rate_ratio_percentage_or_average": 267
+      },
+      "generic_attempts": {
+        "constraint_distribution_or_discrete_reasoning": 293,
+        "multi_step_bookkeeping_or_omission": 294,
+        "rate_ratio_percentage_or_average": 294
+      },
+      "output_contract_per_dataset": 160,
+      "schedule_sha256": null,
+      "schedule_summary_sha256": null,
+      "targeted_accepted": {
+        "constraint_distribution_or_discrete_reasoning": 174,
+        "multi_step_bookkeeping_or_omission": 440,
+        "rate_ratio_percentage_or_average": 186
+      },
+      "targeted_attempts": {
+        "constraint_distribution_or_discrete_reasoning": 192,
+        "multi_step_bookkeeping_or_omission": 484,
+        "rate_ratio_percentage_or_average": 205
+      },
+      "total_attempts": 1762,
+      "training_per_dataset": 720,
+      "validation_per_dataset": 80
+    },
+    {
+      "accepted_per_dataset": 700,
+      "allocation": null,
+      "allocation_sha256": "045ec71b84c298908cccd182ff7dc35530d7c01b8ed86b81e71f4b4acca9d774",
+      "blocker": "surface matching failed for generic_control/constraint_distribution_or_discrete_reasoning/two_type_allocation: exact deterministic surface matching is infeasible",
+      "candidate_sha256": "68c2189d8f14d4f98819ac9d5701baf7f6ced4fad5bbb7eac8ac54ebae1bc263",
+      "config_sha256": "2383ae36b5940cad8046982d30e4714631ee9129d6e73bc666804c5dfd6a3983",
+      "exact_schedule_feasible": false,
+      "generic_accepted": {
+        "constraint_distribution_or_discrete_reasoning": 233,
+        "multi_step_bookkeeping_or_omission": 234,
+        "rate_ratio_percentage_or_average": 233
+      },
+      "generic_attempts": {
+        "constraint_distribution_or_discrete_reasoning": 257,
+        "multi_step_bookkeeping_or_omission": 258,
+        "rate_ratio_percentage_or_average": 257
+      },
+      "output_contract_per_dataset": 140,
+      "schedule_sha256": null,
+      "schedule_summary_sha256": null,
+      "targeted_accepted": {
+        "constraint_distribution_or_discrete_reasoning": 152,
+        "multi_step_bookkeeping_or_omission": 385,
+        "rate_ratio_percentage_or_average": 163
+      },
+      "targeted_attempts": {
+        "constraint_distribution_or_discrete_reasoning": 168,
+        "multi_step_bookkeeping_or_omission": 424,
+        "rate_ratio_percentage_or_average": 180
+      },
+      "total_attempts": 1544,
+      "training_per_dataset": 630,
+      "validation_per_dataset": 70
+    },
+    {
+      "accepted_per_dataset": 600,
+      "allocation": null,
+      "allocation_sha256": "c5bedfbdb39d9a9a37844603e09f824d4607855b68f8f687e837238645d1221b",
+      "blocker": "surface matching failed for generic_control/rate_ratio_percentage_or_average/rate_total: exact deterministic surface matching is infeasible",
+      "candidate_sha256": "7070a288549941e979611f1fb2898d89f8006bb9714ba2d18ee3912ef13cb67b",
+      "config_sha256": "a781dbbe957a5f62aca69f8171b02d0b821b7e313c74b507ce9be0f8318535d1",
+      "exact_schedule_feasible": false,
+      "generic_accepted": {
+        "constraint_distribution_or_discrete_reasoning": 200,
+        "multi_step_bookkeeping_or_omission": 200,
+        "rate_ratio_percentage_or_average": 200
+      },
+      "generic_attempts": {
+        "constraint_distribution_or_discrete_reasoning": 220,
+        "multi_step_bookkeeping_or_omission": 220,
+        "rate_ratio_percentage_or_average": 220
+      },
+      "output_contract_per_dataset": 120,
+      "schedule_sha256": null,
+      "schedule_summary_sha256": null,
+      "targeted_accepted": {
+        "constraint_distribution_or_discrete_reasoning": 130,
+        "multi_step_bookkeeping_or_omission": 330,
+        "rate_ratio_percentage_or_average": 140
+      },
+      "targeted_attempts": {
+        "constraint_distribution_or_discrete_reasoning": 143,
+        "multi_step_bookkeeping_or_omission": 363,
+        "rate_ratio_percentage_or_average": 154
+      },
+      "total_attempts": 1320,
+      "training_per_dataset": 540,
+      "validation_per_dataset": 60
+    },
+    {
+      "accepted_per_dataset": 500,
+      "allocation": null,
+      "allocation_sha256": "dd822482cb90c850aa51fc3149301b16130a72504841109a50003b180ad17c90",
+      "blocker": "surface matching failed for generic_control/rate_ratio_percentage_or_average/ratio_scale: exact deterministic surface matching is infeasible",
+      "candidate_sha256": "40d219edabe03bf560fdd01a00c1e5ab17f90f483b4565419154bcf567bdc4e5",
+      "config_sha256": "d388b40f34066571c9a911ecc8343256f7111acd1e3d2a05c0ceac0ef16938e2",
+      "exact_schedule_feasible": false,
+      "generic_accepted": {
+        "constraint_distribution_or_discrete_reasoning": 166,
+        "multi_step_bookkeeping_or_omission": 167,
+        "rate_ratio_percentage_or_average": 167
+      },
+      "generic_attempts": {
+        "constraint_distribution_or_discrete_reasoning": 183,
+        "multi_step_bookkeeping_or_omission": 184,
+        "rate_ratio_percentage_or_average": 184
+      },
+      "output_contract_per_dataset": 100,
+      "schedule_sha256": null,
+      "schedule_summary_sha256": null,
+      "targeted_accepted": {
+        "constraint_distribution_or_discrete_reasoning": 108,
+        "multi_step_bookkeeping_or_omission": 275,
+        "rate_ratio_percentage_or_average": 117
+      },
+      "targeted_attempts": {
+        "constraint_distribution_or_discrete_reasoning": 119,
+        "multi_step_bookkeeping_or_omission": 303,
+        "rate_ratio_percentage_or_average": 129
+      },
+      "total_attempts": 1102,
+      "training_per_dataset": 450,
+      "validation_per_dataset": 50
+    }
+  ],
+  "review_packet_created": false,
+  "schema_version": 1,
+  "sealed_final_accessed": false,
+  "selected_accepted_size_per_dataset": null,
+  "selected_fixed_attempts": null,
+  "selection_config_sha256": "073f03bbc291502fb92f39c22f4fae70d5496a077d346f82e1a087438c7bbd49",
+  "size_selection_gate_passed": false
+}

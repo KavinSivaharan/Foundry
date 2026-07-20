@@ -22,6 +22,7 @@ GROUP_ORDER = ("targeted", "generic_control")
 DIFFICULTY_ORDER = ("easy", "medium", "hard")
 SPLIT_ORDER = ("training", "synthetic_validation")
 _APPROVED_ATTEMPT_MULTIPLIERS = {(5, 4), (23, 20), (9, 8), (11, 10)}
+_APPROVED_ACCEPTED_TOTALS = {500, 600, 700, 800, 900, 1000}
 _FROZEN_REUSE_CAP_NUMERATOR = 5
 _FROZEN_REUSE_CAP_DENOMINATOR = 4
 
@@ -97,7 +98,7 @@ class FamilyQuota:
 
 @dataclass(frozen=True)
 class DatasetQuota:
-    """The frozen 1,000-example dataset contract."""
+    """One frozen matched signal-pilot dataset contract."""
 
     accepted_total: int
     training_accepted: int
@@ -256,19 +257,25 @@ def _dataset_quota(raw: object, group: str) -> DatasetQuota:
         ),
         families=families,
     )
-    if result.accepted_total != 1000:
-        raise ValueError("each signal-first dataset must contain exactly 1,000 acceptances")
-    if (result.training_accepted, result.validation_accepted) != (900, 100):
-        raise ValueError("each signal-first dataset must freeze a 900/100 split")
-    if result.output_contract_accepted != 200:
-        raise ValueError("each signal-first dataset must contain 200 output-track acceptances")
+    if result.accepted_total not in _APPROVED_ACCEPTED_TOTALS:
+        raise ValueError("signal-first accepted total is not an approved pilot size")
+    expected_training = result.accepted_total * 9 // 10
+    expected_validation = result.accepted_total // 10
+    expected_output = result.accepted_total // 5
+    if (result.training_accepted, result.validation_accepted) != (
+        expected_training,
+        expected_validation,
+    ):
+        raise ValueError("signal-first dataset must freeze a 90/10 split")
+    if result.output_contract_accepted != expected_output:
+        raise ValueError("signal-first dataset must contain exactly 20% output-track acceptances")
     if sum(value.accepted for value in families.values()) != result.accepted_total:
         raise ValueError(f"datasets.{group} family acceptances do not sum")
-    if sum(value.training_accepted for value in families.values()) != 900:
+    if sum(value.training_accepted for value in families.values()) != expected_training:
         raise ValueError(f"datasets.{group} training acceptances do not sum")
-    if sum(value.validation_accepted for value in families.values()) != 100:
+    if sum(value.validation_accepted for value in families.values()) != expected_validation:
         raise ValueError(f"datasets.{group} validation acceptances do not sum")
-    if sum(value.output_contract_accepted for value in families.values()) != 200:
+    if sum(value.output_contract_accepted for value in families.values()) != expected_output:
         raise ValueError(f"datasets.{group} output acceptances do not sum")
     return result
 
@@ -316,6 +323,8 @@ def load_signal_pilot_config(path: Path) -> SignalPilotConfig:
     if tuple(datasets_raw) != GROUP_ORDER:
         raise ValueError("signal-pilot dataset order differs")
     datasets = {group: _dataset_quota(datasets_raw[group], group) for group in GROUP_ORDER}
+    if datasets[GROUP_ORDER[0]].accepted_total != datasets[GROUP_ORDER[1]].accepted_total:
+        raise ValueError("targeted and generic signal-pilot sizes must match")
     attempt_numerator = _integer(multiplier.get("numerator"), "attempt numerator")
     attempt_denominator = _integer(multiplier.get("denominator"), "attempt denominator")
     if (attempt_numerator, attempt_denominator) not in _APPROVED_ATTEMPT_MULTIPLIERS:

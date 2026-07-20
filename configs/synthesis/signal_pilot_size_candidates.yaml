@@ -1,0 +1,26 @@
+schema_version: 1
+policy_id: largest-feasible-matched-signal-pilot-v1
+accepted_sizes_per_dataset: [900, 800, 700, 600, 500]
+attempt_multiplier:
+  numerator: 11
+  denominator: 10
+  label: "1.10"
+selection_rule: first-feasible-in-descending-order
+targeted_family_weights:
+  multi_step_bookkeeping_or_omission: 550
+  rate_ratio_percentage_or_average: 233
+  constraint_distribution_or_discrete_reasoning: 217
+generic_family_weights:
+  multi_step_bookkeeping_or_omission: 334
+  rate_ratio_percentage_or_average: 333
+  constraint_distribution_or_discrete_reasoning: 333
+training_fraction: 0.90
+synthetic_validation_fraction: 0.10
+output_contract_fraction: 0.20
+frozen_policies:
+  submodes: maximally-balanced-feasible-submodes-v1
+  difficulty: minimal-compatible-difficulty-reallocation-v1
+  surface_reuse: submode-local-balanced-surface-reuse-v1
+  template_reuse: bounded-balanced-template-reuse-v1
+  number_neutral_identity: foundry-number-neutral-v1
+stop_rule: end-synthetic-data-architecture-if-all-five-fail

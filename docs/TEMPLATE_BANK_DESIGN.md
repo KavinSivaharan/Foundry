@@ -358,3 +358,12 @@ latent mathematics, generic percentage could not be jointly assigned at 1.15, 1.
 the unchanged reviewed-plan, plan/scenario, frame, exact-question, and runtime-identity controls.
 This is a bank/compatibility limit at the current accepted objective, not a mathematical-label or
 benchmark-contamination failure. No packet was issued.
+
+### Reduced accepted-size exhaustion
+
+The bank wording and genuine review status remained frozen while exact scheduling tested matched
+accepted sizes 900 through 500. Every candidate had sufficient mathematical programs, but no
+candidate admitted a complete surface assignment under the existing reviewed-plan, plan/scenario,
+frame, exact-question, and canonical runtime-identity constraints. The blockers occurred in generic
+ratio-scale, rate-total, or discrete two-type allocation depending on size. Because 500 also failed,
+the approved stop rule ends this template-bank scheduling lineage. No new review packet was issued.

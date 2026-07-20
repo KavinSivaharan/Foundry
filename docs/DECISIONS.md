@@ -544,3 +544,21 @@ This log separates proposals from approved decisions. A proposal does not author
 - **Consequence:** No selected config, complete schedule, smoke, replay, review packet, dataset, or
   training run is produced.
 - **Next user decision:** Decide whether to reduce the accepted 1,000 + 1,000 signal-pilot objective.
+
+## 2026-07-19: end the current synthetic-data architecture after reduced-size exhaustion
+
+- **Status:** selected; verified stopped result
+- **Context:** The accepted size was not part of the hypothesis, so Milestone 7G predeclared the
+  descending matched sizes 900, 800, 700, 600, and 500 with one fixed 1.10 multiplier.
+- **Decision:** Use `largest-feasible-matched-signal-pilot-v1`, stable largest-remainder family
+  quotas, and the actual runtime-rendered exact scheduler. Select only the first feasible size.
+- **Measured result:** Every size failed exact surface assignment: 900 at generic ratio-scale; 800
+  at generic rate-total; 700 at generic two-type allocation; 600 at generic rate-total; and 500 at
+  generic ratio-scale. All mathematical latent pools passed.
+- **Rationale:** A lower headline size cannot be selected without a complete schedule. Exhausting
+  the approved list under unchanged controls is stronger evidence than another aggregate capacity
+  estimate.
+- **Alternatives rejected:** Test below 500, change the 1.10 multiplier, loosen reuse/identity
+  rules, add templates, change mathematical ranges, or infer feasibility from latent capacity.
+- **Consequence:** No pilot size, schedule, smoke, packet, dataset, or training run is authorized.
+  The next decision is whether to end the synthetic-data line or choose a new research direction.

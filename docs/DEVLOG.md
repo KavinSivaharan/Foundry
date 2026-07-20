@@ -2096,3 +2096,67 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
 - **Errors or uncertainty:** The first 1.125 diagnostic reached a legacy greedy path and was discarded as inconclusive; the allocator was then routed through the existing bounded exact matcher for every rate and discrete mode, all focused regressions passed, and every multiplier was reevaluated under that final implementation. Expected Windows LF-to-CRLF notices are non-fatal.
 - **Gate status:** **VERIFIED FAILURE.** The accurate 14-path stopped result is eligible for `analysis: record reduced-pool scheduling blocker`. Smoke, replay, packet, complete dataset generation, and training remain prohibited.
 - **Next action:** Fetch without integration, require `origin/main` to remain at `6a555405...f09088`, stage exactly the 14 reviewed paths, repeat cached scope/whitespace/secret/content/evidence/size checks, commit, push normally, and confirm clean `0/0` synchronization.
+
+### 2026-07-19 - Milestone 7G Stage A: frozen starting state verified
+
+- **Action performed:** Verified the required repository root, `main` branch, synchronized local and remote commit, ahead/behind state, clean worktree, ignored raw-results boundary, frozen attempt-policy configuration, canonical runtime identity tests, and exact-scheduler tests before editing.
+- **Result:** Local `main` and `origin/main` both point to `b66290b633fac4434e680be3b9180966950e0ee9`, ahead/behind is `0/0`, and the starting worktree was clean. `results/raw/` remains ignored. The frozen attempt-policy configuration file SHA-256 remains `c5840a94319351d59dcc1cac9a0b7aae9977928d53518044613c19f7161c707e`; 11 focused policy, allocator, and normalizer tests passed.
+- **Errors or uncertainty:** None. Exact commit equality and the empty starting diff establish that human-review evidence, repaired templates, generators, verifiers, canonical normalizer, reuse/balancing policies, evaluator, and contamination controls are unchanged. No sealed-final path was accessed.
+- **Gate status:** Starting-state gate **PASSED**.
+- **Next action:** Implement the predeclared descending accepted-size derivation and selection contract for exactly `900`, `800`, `700`, `600`, and `500`, all at the fixed `1.10` multiplier.
+
+### 2026-07-19 - Milestone 7G size-selection contract implemented
+
+- **Action performed:** Added `largest-feasible-matched-signal-pilot-v1`, stable largest-remainder family derivation, dynamic matched 90/10 split validation, exact 20% output-contract margins, family-level `ceil(accepted * 1.10)` attempts, and deterministic reuse of the frozen submode/difficulty/surface policies. Added focused tests for every approved size, exact quotas, invalid-size rejection, descending selection, and reproducible evidence.
+- **Result:** The derived total fixed attempts are `1,981`, `1,762`, `1,544`, `1,320`, and `1,102` for accepted sizes `900`, `800`, `700`, `600`, and `500`, respectively. Ruff format/lint pass and all 22 focused size-selection, prior multiplier, and allocator tests pass.
+- **Errors or uncertainty:** Exact surface schedulability has not yet been inferred from these arithmetic totals; each candidate must now pass the runtime-rendered joint matcher. No candidate schedule has yet been selected or persisted.
+- **Gate status:** Derivation/implementation gate **PASSED**.
+- **Next action:** Evaluate the five accepted sizes in strict descending order, stopping immediately at the first exact complete schedule.
+
+### 2026-07-19 - Milestone 7G accepted size 900 exact preflight failed
+
+- **Action performed:** Derived the matched 900-targeted/900-generic contract at the frozen `1.10` multiplier and ran all 1,981 fixed slots through the actual latent enumerator, deterministic renderer, canonical runtime identity function, and exact joint surface matcher.
+- **Result:** Targeted accepted family quotas are `495/210/195`; generic quotas are `300/300/300`. All eleven mathematical modes supplied their required unique latent programs. Exact scheduling failed at `generic_control/rate_ratio_percentage_or_average/ratio_scale`; no complete schedule or schedule hash was produced. Candidate config SHA-256 is `0834b0a3...2311`; allocation SHA-256 is `311f9f4a...87c3`.
+- **Errors or uncertainty:** The matcher proves infeasibility under the current joint surface constraints; it does not attribute the blocker to any one cap in isolation. No cap, template, or threshold was changed.
+- **Gate status:** Accepted size `900` **FAILED**.
+- **Next action:** Evaluate accepted size `800` through the identical exact scheduler.
+
+### 2026-07-19 - Milestone 7G accepted size 800 exact preflight failed
+
+- **Action performed:** Derived the matched 800-targeted/800-generic contract and ran its 1,762 fixed attempts through the unchanged exact scheduler.
+- **Result:** Targeted accepted family quotas are `440/186/174`; generic quotas are `267/267/266`. Unique latent supply passed in all modes. Exact surface assignment failed at `generic_control/rate_ratio_percentage_or_average/rate_total`. Candidate config SHA-256 is `8d3a4d0a...799e`; allocation SHA-256 is `09ddab2b...793b`.
+- **Errors or uncertainty:** No complete schedule was available to hash. The exact matcher retained all joint caps and runtime identities.
+- **Gate status:** Accepted size `800` **FAILED**.
+- **Next action:** Evaluate accepted size `700` through the identical exact scheduler.
+
+### 2026-07-19 - Milestone 7G accepted size 700 exact preflight failed
+
+- **Action performed:** Evaluated the 1,544-attempt size-700 pool. The general multidimensional matcher first exhausted its deterministic proof bound on generic weighted average. Because that is neither a feasibility proof nor an infeasibility proof, weighted average was routed through the existing stable constructive allocator, whose priority order directly enforces runtime identity, plan/scenario, frame, plan, and exact-text headroom. The unchanged exact matcher remained authoritative for every other finite rate/discrete mode.
+- **Result:** Targeted accepted family quotas are `385/163/152`; generic quotas are `234/233/233`. The constructive weighted-average assignment passed. Exact scheduling then conclusively failed at `generic_control/constraint_distribution_or_discrete_reasoning/two_type_allocation`. Candidate config SHA-256 is `2383ae36...3983`; allocation SHA-256 is `045ec71b...d774`.
+- **Errors or uncertainty:** The initial search-bound result was rejected as inconclusive and is not the recorded capacity decision. No cap or identity changed; a focused routing regression prevents recurrence.
+- **Gate status:** Accepted size `700` **FAILED** under the final deterministic allocator.
+- **Next action:** Evaluate accepted size `600` through the same final allocator.
+
+### 2026-07-19 - Milestone 7G accepted size 600 exact preflight failed
+
+- **Action performed:** Derived and exactly scheduled the matched 600-targeted/600-generic candidate contract with 1,320 total fixed attempts.
+- **Result:** Targeted accepted family quotas are `330/140/130`; generic quotas are `200/200/200`. All latent requirements passed. Exact assignment failed at `generic_control/rate_ratio_percentage_or_average/rate_total`. Candidate config SHA-256 is `a781dbbe...35d1`; allocation SHA-256 is `c5bedfbd...21b`.
+- **Errors or uncertainty:** None. No complete schedule was produced and no frozen rule changed.
+- **Gate status:** Accepted size `600` **FAILED**.
+- **Next action:** Evaluate the final approved size, `500`; if it fails, invoke the architecture stop rule.
+
+### 2026-07-19 - Milestone 7G size selection exhausted; architecture stop invoked
+
+- **Action performed:** Evaluated the final matched 500-targeted/500-generic candidate, then froze the descending result set for all five approved sizes at the one approved `1.10` multiplier.
+- **Result:** Size 500 contains 1,102 attempts, with targeted accepted family quotas `275/117/108` and generic quotas `167/167/166`. All eleven latent pools passed; exact scheduling failed at `generic_control/rate_ratio_percentage_or_average/ratio_scale`. Candidate config SHA-256 is `d388b40f...38e2`; allocation SHA-256 is `dd822482...7c90`. The complete order is: 900 failed generic ratio-scale; 800 failed generic rate-total; 700 failed generic two-type allocation; 600 failed generic rate-total; 500 failed generic ratio-scale.
+- **Errors or uncertainty:** No approved size remains. The scheduler failures concern joint surface compatibility, not mathematical generation or verifier capacity. No result was selected based on desired scale or expected benchmark performance.
+- **Gate status:** Size-selection gate **FAILED** after exactly five candidates. The mandatory architecture-stop rule is active.
+- **Next action:** Persist content-free aggregate evidence, update every required project record, verify the stopped result repository-wide, commit `analysis: record reduced signal-pilot blocker`, push, and stop. No complete schedule, 120-question smoke, replay, or review packet may be created.
+
+### 2026-07-19 - Milestone 7G final verification passed for stopped result
+
+- **Action performed:** Ran repository-wide Ruff formatting/linting, strict Mypy, all unit and integration tests, `pip check`, and `git diff --check`; replayed all five exact size preflights under the final allocator; reproduced the aggregate evidence and internal hash; validated size order, family largest-remainder quotas, 90/10 splits, 20% output track, family-level 1.10 ceilings, submode allocations, downstream stop flags, and absence of packet/schedule artifacts. Scanned all 14 candidate paths for high-confidence secrets and exact/12-token matches against exactly 904 cached development questions in offline mode; checked protected generator/evaluator paths, sealed-path changes, tracked raw/cache/environment/model files, ignore rules, and tracked sizes.
+- **Result:** Ruff is format/lint clean; strict Mypy reports no issues in 86 source files; all 361 tests pass in 88.87 seconds; dependencies and whitespace pass. All five exact blocker decisions replay in order. Selection config SHA-256 is `073f03bbc291502fb92f39c22f4fae70d5496a077d346f82e1a087438c7bbd49`; evidence SHA-256 is `793c0276b42fb7bd26dbdfd95a316ec4fbcb4d6178d5567011d83013b96a407f`. Secret, exact-development, 12-token-development, protected-path, sealed-path, tracked raw/cache/environment/model, and review-packet counts are zero. The largest candidate is this DEVLOG at about 428 KiB before this entry, below 1 MiB.
+- **Errors or uncertainty:** The first size-700 diagnostic hit a generic backtracking proof bound and was rejected as inconclusive. The final allocator uses the pre-existing stable constructive weighted-average assignment, passed focused regression, and then produced a conclusive exact two-type-allocation blocker. Expected Windows LF-to-CRLF notices are non-fatal.
+- **Gate status:** **VERIFIED FAILURE.** No approved accepted size is schedulable. The accurate stopped result is eligible for commit and push; no smoke, replay, packet, complete dataset, or training is permitted.
+- **Next action:** Fetch without integration, require `origin/main` to remain at `b66290b6...ee9`, stage exactly the reviewed 14 paths, repeat index-only scope/whitespace/secret/content/size checks, commit `analysis: record reduced signal-pilot blocker`, push normally, and confirm clean `0/0` synchronization.
