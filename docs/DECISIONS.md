@@ -488,3 +488,26 @@ This log separates proposals from approved decisions. A proposal does not author
   target-type and semantic-frame caps from the predeclared curriculum compatibility graph while
   preserving plan/number-neutral caps, exact/latent uniqueness, and every benchmark-contamination
   control; otherwise redefine or abandon the current 1,000 + 1,000 quotas.
+
+## Decision: Submode-local surface caps are selected but insufficient at a frozen difficulty stratum
+
+- **Date:** 2026-07-19
+- **Status:** policy selected; full capacity gate failed; smoke and packet prohibited
+- **Decision:** Select `submode-local-balanced-surface-reuse-v1` from three predeclared fixture-tested
+  policies. Derive dataset caps as `ceil(1.25 * submode quota / active runtime identities)` and the
+  global cap as the sum of targeted and generic caps. Preserve every exact, latent, plan, scenario,
+  normalizer, verifier, and benchmark-contamination control.
+- **Evidence:** The selected policy matches 10/10 original fixtures. Aggregate quotas pass for all
+  eleven modes. Weighted-average's easy/medium group has only four compatible runtime identities:
+  targeted requires 47 under cap 11 (capacity 44), generic requires 66 under cap 16 (capacity 64),
+  and combined requires 113 under cap 27 (capacity 108). Corrected audit SHA-256 is
+  `7c0f2913...10f5`.
+- **Rationale:** Cap granularity must follow the finite submode being taught, but a submode total is
+  still not enough when surface identities have narrower difficulty compatibility. The schedule gate
+  must evaluate those edges before construction.
+- **Alternatives rejected:** Keep family-level caps (underallocates scarce modes); remove surface
+  caps (uncontrolled concentration); change the normalizer, difficulty allocation, or wording after
+  observing the failure (outside approval).
+- **Consequence:** No schedule, smoke, replay, review packet, dataset, or training run occurs.
+- **Next user decision:** Authorize one narrow policy/allocation decision that resolves the five-slot
+  weighted-average easy/medium compatibility shortfall, or stop the signal-first pilot.

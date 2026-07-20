@@ -575,6 +575,19 @@ accounting. The fixed weighted-average pool has 16 internal render signatures bu
 number-neutral identities. Frozen per-identity caps limit it to 40 targeted and 48 generic attempts,
 far below 70 and 100. Once that upper bound fails, changing allocator search order cannot help.
 
+## Submode totals can still hide difficulty-local surface shortages
+
+Milestone 7D corrected the obvious denominator: a scarce weighted-average surface should receive a
+cap based on weighted-average demand, not total rate-family demand. That makes the aggregate eight
+identities support 216 uses against 170 required. The result still cannot be scheduled.
+
+The reason is compatibility inside the submode. Four identities serve easy and medium questions,
+while four disjoint identities serve hard questions. Aggregate multiplication silently lets hard-only
+identities cover easy/medium demand. Under the frozen allocations, the easy/medium pool is short by
+three targeted, two generic, and five combined attempts. The reusable lesson is recursive: capacity
+must be checked at every frozen allocation boundary where compatibility is not complete. A cap formula
+can be correct and still require a compatibility audit before it authorizes generation.
+
 ## Aggregate identity capacity is not compatibility capacity
 
 Milestone 7A exposed a third capacity layer. Even when the surface bank and total latent-program

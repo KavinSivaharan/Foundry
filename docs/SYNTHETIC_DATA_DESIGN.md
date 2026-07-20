@@ -718,3 +718,17 @@ Each targeted family and generic bookkeeping/rates pass independently. Generic d
 399/417, so all its attempt-level difficulty, output, and split reservations are short. Cross-dataset
 disjointness then makes both rate and discrete family totals fail. The audit is exact over the frozen
 compatibility graph; no allocator, schedule, smoke, replay, or packet was produced.
+
+## Submode-local canonical-surface reuse result
+
+The selected internal policy keys usage by dataset, reasoning family, mathematical submode, and the
+unchanged canonical runtime number-neutral identity. Its attempt and accepted caps are derived from
+the frozen submode quotas and measured active identities; the global identity cap is the sum of the
+two dataset caps. Exact question duplicates and latent-program duplicates remain prohibited.
+
+All eleven mode totals have aggregate headroom. Weighted-average caps are 11 targeted, 16 generic,
+and 27 combined across eight identities. Difficulty compatibility divides those identities into four
+easy/medium surfaces and four hard surfaces. The frozen easy/medium allocations require 47, 66, and
+113 uses, versus capacities 44, 64, and 108. The corrected full-pilot capacity gate fails by five
+combined attempts. No generated-to-development rule, MiniLM threshold, template wording, generator,
+label, or verifier changed, and no smoke or packet followed the failure.

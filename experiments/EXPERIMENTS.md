@@ -531,3 +531,21 @@ Every future experiment must be registered here before a costly run begins. Its 
 - **Capacity result:** The fixed weighted-average pool has 9,265 unique latent programs and 10,512 difficulty realizations but only eight runtime number-neutral identities. Frozen caps give targeted capacity 40/70 and generic capacity 48/100, shortfalls of 30 and 52. The full 2,504-slot reconstruction is therefore mathematically impossible under current controls.
 - **Scope result:** No fresh 120-slot schedule, candidate smoke, replay, assisted packet, complete dataset, inference, training, or sealed-final access occurred. Existing Milestone 7B evidence remains preserved at commit `23c2cdb5ab2a931df6b711b1f3fc571c748035c3`.
 - **Next experiment:** none approved. Decide whether to authorize genuinely distinct reviewed weighted-average surface forms or a separately justified cap-policy revision; do not weaken runtime normalization after observing this result.
+
+## EXP-20260719-022 — Submode-local balanced surface-reuse calibration
+
+- **Status:** complete; selected policy calibrated; full capacity gate failed; mandatory stop applied.
+- **Question:** Does deriving canonical runtime-surface caps at dataset/family/submode granularity make
+  the fixed 2,504-attempt signal pilot schedulable without changing wording or duplicate controls?
+- **Method:** Compared exactly three policies on ten original fixtures, enumerated active identities
+  from fixed latent pools and every compatible reviewed plan, and applied the approved 1.25 cap
+  formula to all eleven submodes. Exact questions and latent programs remained globally unique.
+- **Calibration:** The selected policy matches 10/10 fixtures; family-level and permissive alternatives
+  each match 6/10. Fixture SHA-256 is `7f32574c...15be5`; policy `acb01f6d...4babc`.
+- **Capacity result:** Aggregate mode capacity passes. The weighted-average easy/medium identity group
+  fails: targeted 47/44, generic 66/64, combined 113/108. Corrected audit SHA-256 is
+  `7c0f2913...10f5`.
+- **Scope result:** No complete dry schedule, new 120-question smoke, replay, assisted packet, dataset,
+  inference, training, or sealed-final access occurred. Benchmark-contamination controls were unchanged.
+- **Next experiment:** none approved. Decide whether to make a separately frozen correction to the
+  weighted-average difficulty/surface compatibility allocation or stop the pilot.

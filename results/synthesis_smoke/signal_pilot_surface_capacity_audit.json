@@ -1,0 +1,494 @@
+{
+  "all_eleven_submodes_audited": true,
+  "audit_id": "foundry-signal-pilot-submode-surface-capacity-v1",
+  "benchmark_contamination_changed": false,
+  "calibration_sha256": "0187a2d4398ad453d210df1a1c41b601ebb1a676eabb3cba47257e107a61d337",
+  "capacity_audit_sha256": "7c0f2913751aa42697eaeee849f2cbf38fef13b51684850767d31286977710f5",
+  "capacity_gate_passed": false,
+  "datasets": {
+    "generic_control": {
+      "constraint_distribution_or_discrete_reasoning": {
+        "gate_passed": true,
+        "submodes": {
+          "complete_packages": {
+            "accepted_capacity": 160,
+            "accepted_headroom": 67,
+            "accepted_quota": 93,
+            "active_identities": 80,
+            "attempt_capacity": 160,
+            "attempt_headroom": 39,
+            "gate_passed": true,
+            "max_accepted_per_identity": 2,
+            "max_attempts_per_identity": 2,
+            "maximum_attempt_concentration": 0.01652892561983471,
+            "required_attempts": 121
+          },
+          "dual_capacity": {
+            "accepted_capacity": 80,
+            "accepted_headroom": 26,
+            "accepted_quota": 54,
+            "active_identities": 80,
+            "attempt_capacity": 80,
+            "attempt_headroom": 26,
+            "gate_passed": true,
+            "max_accepted_per_identity": 1,
+            "max_attempts_per_identity": 1,
+            "maximum_attempt_concentration": 0.018518518518518517,
+            "required_attempts": 54
+          },
+          "equal_distribution": {
+            "accepted_capacity": 160,
+            "accepted_headroom": 67,
+            "accepted_quota": 93,
+            "active_identities": 80,
+            "attempt_capacity": 160,
+            "attempt_headroom": 39,
+            "gate_passed": true,
+            "max_accepted_per_identity": 2,
+            "max_attempts_per_identity": 2,
+            "maximum_attempt_concentration": 0.01652892561983471,
+            "required_attempts": 121
+          },
+          "two_type_allocation": {
+            "accepted_capacity": 160,
+            "accepted_headroom": 67,
+            "accepted_quota": 93,
+            "active_identities": 80,
+            "attempt_capacity": 160,
+            "attempt_headroom": 39,
+            "gate_passed": true,
+            "max_accepted_per_identity": 2,
+            "max_attempts_per_identity": 2,
+            "maximum_attempt_concentration": 0.01652892561983471,
+            "required_attempts": 121
+          }
+        }
+      },
+      "multi_step_bookkeeping_or_omission": {
+        "gate_passed": true,
+        "submodes": {
+          "grouping": {
+            "accepted_capacity": 384,
+            "accepted_headroom": 217,
+            "accepted_quota": 167,
+            "active_identities": 384,
+            "attempt_capacity": 384,
+            "attempt_headroom": 175,
+            "gate_passed": true,
+            "max_accepted_per_identity": 1,
+            "max_attempts_per_identity": 1,
+            "maximum_attempt_concentration": 0.004784688995215311,
+            "required_attempts": 209
+          },
+          "inventory": {
+            "accepted_capacity": 384,
+            "accepted_headroom": 217,
+            "accepted_quota": 167,
+            "active_identities": 384,
+            "attempt_capacity": 384,
+            "attempt_headroom": 175,
+            "gate_passed": true,
+            "max_accepted_per_identity": 1,
+            "max_attempts_per_identity": 1,
+            "maximum_attempt_concentration": 0.004784688995215311,
+            "required_attempts": 209
+          }
+        }
+      },
+      "rate_ratio_percentage_or_average": {
+        "gate_passed": true,
+        "submodes": {
+          "combined_rate": {
+            "accepted_capacity": 100,
+            "accepted_headroom": 28,
+            "accepted_quota": 72,
+            "active_identities": 20,
+            "attempt_capacity": 140,
+            "attempt_headroom": 40,
+            "gate_passed": true,
+            "max_accepted_per_identity": 5,
+            "max_attempts_per_identity": 7,
+            "maximum_attempt_concentration": 0.07,
+            "required_attempts": 100
+          },
+          "percentage": {
+            "accepted_capacity": 80,
+            "accepted_headroom": 19,
+            "accepted_quota": 61,
+            "active_identities": 20,
+            "attempt_capacity": 80,
+            "attempt_headroom": 19,
+            "gate_passed": true,
+            "max_accepted_per_identity": 4,
+            "max_attempts_per_identity": 4,
+            "maximum_attempt_concentration": 0.06557377049180328,
+            "required_attempts": 61
+          },
+          "rate_total": {
+            "accepted_capacity": 80,
+            "accepted_headroom": 24,
+            "accepted_quota": 56,
+            "active_identities": 20,
+            "attempt_capacity": 80,
+            "attempt_headroom": 24,
+            "gate_passed": true,
+            "max_accepted_per_identity": 4,
+            "max_attempts_per_identity": 4,
+            "maximum_attempt_concentration": 0.07142857142857142,
+            "required_attempts": 56
+          },
+          "ratio_scale": {
+            "accepted_capacity": 100,
+            "accepted_headroom": 28,
+            "accepted_quota": 72,
+            "active_identities": 20,
+            "attempt_capacity": 140,
+            "attempt_headroom": 40,
+            "gate_passed": true,
+            "max_accepted_per_identity": 5,
+            "max_attempts_per_identity": 7,
+            "maximum_attempt_concentration": 0.07,
+            "required_attempts": 100
+          },
+          "weighted_average": {
+            "accepted_capacity": 96,
+            "accepted_headroom": 24,
+            "accepted_quota": 72,
+            "active_identities": 8,
+            "attempt_capacity": 128,
+            "attempt_headroom": 28,
+            "gate_passed": true,
+            "max_accepted_per_identity": 12,
+            "max_attempts_per_identity": 16,
+            "maximum_attempt_concentration": 0.16,
+            "required_attempts": 100
+          }
+        }
+      }
+    },
+    "targeted": {
+      "constraint_distribution_or_discrete_reasoning": {
+        "gate_passed": true,
+        "submodes": {
+          "complete_packages": {
+            "accepted_capacity": 80,
+            "accepted_headroom": 20,
+            "accepted_quota": 60,
+            "active_identities": 80,
+            "attempt_capacity": 160,
+            "attempt_headroom": 81,
+            "gate_passed": true,
+            "max_accepted_per_identity": 1,
+            "max_attempts_per_identity": 2,
+            "maximum_attempt_concentration": 0.02531645569620253,
+            "required_attempts": 79
+          },
+          "dual_capacity": {
+            "accepted_capacity": 80,
+            "accepted_headroom": 44,
+            "accepted_quota": 36,
+            "active_identities": 80,
+            "attempt_capacity": 80,
+            "attempt_headroom": 44,
+            "gate_passed": true,
+            "max_accepted_per_identity": 1,
+            "max_attempts_per_identity": 1,
+            "maximum_attempt_concentration": 0.027777777777777776,
+            "required_attempts": 36
+          },
+          "equal_distribution": {
+            "accepted_capacity": 80,
+            "accepted_headroom": 20,
+            "accepted_quota": 60,
+            "active_identities": 80,
+            "attempt_capacity": 160,
+            "attempt_headroom": 82,
+            "gate_passed": true,
+            "max_accepted_per_identity": 1,
+            "max_attempts_per_identity": 2,
+            "maximum_attempt_concentration": 0.02564102564102564,
+            "required_attempts": 78
+          },
+          "two_type_allocation": {
+            "accepted_capacity": 80,
+            "accepted_headroom": 19,
+            "accepted_quota": 61,
+            "active_identities": 80,
+            "attempt_capacity": 160,
+            "attempt_headroom": 81,
+            "gate_passed": true,
+            "max_accepted_per_identity": 1,
+            "max_attempts_per_identity": 2,
+            "maximum_attempt_concentration": 0.02531645569620253,
+            "required_attempts": 79
+          }
+        }
+      },
+      "multi_step_bookkeeping_or_omission": {
+        "gate_passed": true,
+        "submodes": {
+          "grouping": {
+            "accepted_capacity": 384,
+            "accepted_headroom": 109,
+            "accepted_quota": 275,
+            "active_identities": 384,
+            "attempt_capacity": 768,
+            "attempt_headroom": 424,
+            "gate_passed": true,
+            "max_accepted_per_identity": 1,
+            "max_attempts_per_identity": 2,
+            "maximum_attempt_concentration": 0.005813953488372093,
+            "required_attempts": 344
+          },
+          "inventory": {
+            "accepted_capacity": 384,
+            "accepted_headroom": 109,
+            "accepted_quota": 275,
+            "active_identities": 384,
+            "attempt_capacity": 768,
+            "attempt_headroom": 424,
+            "gate_passed": true,
+            "max_accepted_per_identity": 1,
+            "max_attempts_per_identity": 2,
+            "maximum_attempt_concentration": 0.005813953488372093,
+            "required_attempts": 344
+          }
+        }
+      },
+      "rate_ratio_percentage_or_average": {
+        "gate_passed": true,
+        "submodes": {
+          "combined_rate": {
+            "accepted_capacity": 80,
+            "accepted_headroom": 30,
+            "accepted_quota": 50,
+            "active_identities": 20,
+            "attempt_capacity": 100,
+            "attempt_headroom": 31,
+            "gate_passed": true,
+            "max_accepted_per_identity": 4,
+            "max_attempts_per_identity": 5,
+            "maximum_attempt_concentration": 0.07246376811594203,
+            "required_attempts": 69
+          },
+          "percentage": {
+            "accepted_capacity": 60,
+            "accepted_headroom": 17,
+            "accepted_quota": 43,
+            "active_identities": 20,
+            "attempt_capacity": 60,
+            "attempt_headroom": 17,
+            "gate_passed": true,
+            "max_accepted_per_identity": 3,
+            "max_attempts_per_identity": 3,
+            "maximum_attempt_concentration": 0.06976744186046512,
+            "required_attempts": 43
+          },
+          "rate_total": {
+            "accepted_capacity": 60,
+            "accepted_headroom": 20,
+            "accepted_quota": 40,
+            "active_identities": 20,
+            "attempt_capacity": 60,
+            "attempt_headroom": 20,
+            "gate_passed": true,
+            "max_accepted_per_identity": 3,
+            "max_attempts_per_identity": 3,
+            "maximum_attempt_concentration": 0.075,
+            "required_attempts": 40
+          },
+          "ratio_scale": {
+            "accepted_capacity": 80,
+            "accepted_headroom": 30,
+            "accepted_quota": 50,
+            "active_identities": 20,
+            "attempt_capacity": 100,
+            "attempt_headroom": 30,
+            "gate_passed": true,
+            "max_accepted_per_identity": 4,
+            "max_attempts_per_identity": 5,
+            "maximum_attempt_concentration": 0.07142857142857142,
+            "required_attempts": 70
+          },
+          "weighted_average": {
+            "accepted_capacity": 64,
+            "accepted_headroom": 14,
+            "accepted_quota": 50,
+            "active_identities": 8,
+            "attempt_capacity": 88,
+            "attempt_headroom": 18,
+            "gate_passed": true,
+            "max_accepted_per_identity": 8,
+            "max_attempts_per_identity": 11,
+            "maximum_attempt_concentration": 0.15714285714285714,
+            "required_attempts": 70
+          }
+        }
+      }
+    }
+  },
+  "difficulty_compatibility_proof": {
+    "rate_ratio_percentage_or_average": {
+      "weighted_average": {
+        "combined": {
+          "compatible_capacity": 108,
+          "compatible_runtime_identities": 4,
+          "difficulty_group": [
+            "easy",
+            "medium"
+          ],
+          "gate_passed": false,
+          "global_max_attempts_per_identity": 27,
+          "required_attempts": 113,
+          "shortfall": 5
+        },
+        "generic_control": {
+          "compatible_capacity": 64,
+          "compatible_runtime_identities": 4,
+          "difficulty_group": [
+            "easy",
+            "medium"
+          ],
+          "gate_passed": false,
+          "max_attempts_per_identity": 16,
+          "required_attempts": 66,
+          "shortfall": 2
+        },
+        "targeted": {
+          "compatible_capacity": 44,
+          "compatible_runtime_identities": 4,
+          "difficulty_group": [
+            "easy",
+            "medium"
+          ],
+          "gate_passed": false,
+          "max_attempts_per_identity": 11,
+          "required_attempts": 47,
+          "shortfall": 3
+        }
+      }
+    }
+  },
+  "exact_question_uniqueness_changed": false,
+  "first_limiting_stratum": {
+    "combined_compatible_capacity": 108,
+    "combined_required_attempts": 113,
+    "difficulty_group": [
+      "easy",
+      "medium"
+    ],
+    "family": "rate_ratio_percentage_or_average",
+    "shortfall": 5,
+    "submode": "weighted_average"
+  },
+  "fixture_set_sha256": "7f32574c6e5b8a67eb6ac61d3cadf41cf40c1606781abbdd392dad72d5615be5",
+  "full_2504_schedule_authorized": false,
+  "global_submodes": {
+    "constraint_distribution_or_discrete_reasoning": {
+      "complete_packages": {
+        "active_runtime_identities": 80,
+        "gate_passed": true,
+        "global_attempt_capacity": 320,
+        "global_max_attempts_per_identity": 4,
+        "headroom": 120,
+        "required_attempts": 200
+      },
+      "dual_capacity": {
+        "active_runtime_identities": 80,
+        "gate_passed": true,
+        "global_attempt_capacity": 160,
+        "global_max_attempts_per_identity": 2,
+        "headroom": 70,
+        "required_attempts": 90
+      },
+      "equal_distribution": {
+        "active_runtime_identities": 80,
+        "gate_passed": true,
+        "global_attempt_capacity": 320,
+        "global_max_attempts_per_identity": 4,
+        "headroom": 121,
+        "required_attempts": 199
+      },
+      "two_type_allocation": {
+        "active_runtime_identities": 80,
+        "gate_passed": true,
+        "global_attempt_capacity": 320,
+        "global_max_attempts_per_identity": 4,
+        "headroom": 120,
+        "required_attempts": 200
+      }
+    },
+    "multi_step_bookkeeping_or_omission": {
+      "grouping": {
+        "active_runtime_identities": 384,
+        "gate_passed": true,
+        "global_attempt_capacity": 1152,
+        "global_max_attempts_per_identity": 3,
+        "headroom": 599,
+        "required_attempts": 553
+      },
+      "inventory": {
+        "active_runtime_identities": 384,
+        "gate_passed": true,
+        "global_attempt_capacity": 1152,
+        "global_max_attempts_per_identity": 3,
+        "headroom": 599,
+        "required_attempts": 553
+      }
+    },
+    "rate_ratio_percentage_or_average": {
+      "combined_rate": {
+        "active_runtime_identities": 20,
+        "gate_passed": true,
+        "global_attempt_capacity": 240,
+        "global_max_attempts_per_identity": 12,
+        "headroom": 71,
+        "required_attempts": 169
+      },
+      "percentage": {
+        "active_runtime_identities": 20,
+        "gate_passed": true,
+        "global_attempt_capacity": 140,
+        "global_max_attempts_per_identity": 7,
+        "headroom": 36,
+        "required_attempts": 104
+      },
+      "rate_total": {
+        "active_runtime_identities": 20,
+        "gate_passed": true,
+        "global_attempt_capacity": 140,
+        "global_max_attempts_per_identity": 7,
+        "headroom": 44,
+        "required_attempts": 96
+      },
+      "ratio_scale": {
+        "active_runtime_identities": 20,
+        "gate_passed": true,
+        "global_attempt_capacity": 240,
+        "global_max_attempts_per_identity": 12,
+        "headroom": 70,
+        "required_attempts": 170
+      },
+      "weighted_average": {
+        "active_runtime_identities": 8,
+        "gate_passed": true,
+        "global_attempt_capacity": 216,
+        "global_max_attempts_per_identity": 27,
+        "headroom": 46,
+        "required_attempts": 170
+      }
+    }
+  },
+  "identity_contract_sha256": "e57f12e06673c21bb4c257c651d96b791a8b991260a3e5fd7c5fd11bdc3a72eb",
+  "latent_program_uniqueness_changed": false,
+  "policy_config_sha256": "fc0901355e00c710bf9dde066e313a8d1a1339f2263896ac9d36ed05e13ac1a5",
+  "policy_id": "submode-local-balanced-surface-reuse-v1",
+  "policy_sha256": "acb01f6d0d8004739e8d7c65ea09fe1199fcd2ae962228dbb78e44231794babc",
+  "required_accepted_total": 2000,
+  "required_attempt_total": 2504,
+  "runtime_normalizer_source_sha256": "57d77d32b4631aaecacb02d454f39000f7e13fec457b398ff983817df05c3d1f",
+  "runtime_normalizer_version": "foundry-number-neutral-v1",
+  "schema_version": 1,
+  "sealed_final_accessed": false,
+  "signal_config_sha256": "f962dfe0b2c282fe2ea25eb9370aca131e5a4133e4093ff1d18c2b78d556a68f"
+}

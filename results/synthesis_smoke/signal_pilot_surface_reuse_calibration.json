@@ -1,0 +1,49 @@
+{
+  "benchmark_contamination_changed": false,
+  "calibration_sha256": "0187a2d4398ad453d210df1a1c41b601ebb1a676eabb3cba47257e107a61d337",
+  "candidate_results": {
+    "family-level-bounded-surface-reuse-v1": {
+      "exact_matches": 6,
+      "mismatched_fixture_ids": [
+        "targeted_weighted_reuse_within_local_cap",
+        "generic_weighted_reuse_within_local_cap",
+        "global_weighted_reuse_at_cap",
+        "ordinary_rate_reuse_exceeds_cap"
+      ]
+    },
+    "permissive-exact-latent-only-v1": {
+      "exact_matches": 6,
+      "mismatched_fixture_ids": [
+        "targeted_weighted_reuse_exceeds_local_cap",
+        "generic_weighted_reuse_exceeds_local_cap",
+        "global_weighted_reuse_exceeds_cap",
+        "ordinary_rate_reuse_exceeds_cap"
+      ]
+    },
+    "submode-local-balanced-surface-reuse-v1": {
+      "exact_matches": 10,
+      "mismatched_fixture_ids": []
+    }
+  },
+  "config_sha256": "fc0901355e00c710bf9dde066e313a8d1a1339f2263896ac9d36ed05e13ac1a5",
+  "fixture_count": 10,
+  "fixture_set_sha256": "7f32574c6e5b8a67eb6ac61d3cadf41cf40c1606781abbdd392dad72d5615be5",
+  "policy_id": "submode-local-balanced-surface-reuse-v1",
+  "rejected_alternatives": {
+    "family-level-bounded-surface-reuse-v1": "underallocates scarce submodes by averaging over a family",
+    "permissive-exact-latent-only-v1": "places no deterministic concentration bound on surface reuse"
+  },
+  "schema_version": 1,
+  "sealed_final_accessed": false,
+  "selected_policy_contract": {
+    "accepted_formula": "ceil(1.25*submode_acceptances/active_runtime_identities)",
+    "attempt_formula": "ceil(1.25*submode_attempts/active_runtime_identities)",
+    "cap_granularity": "dataset/family/submode/runtime-number-neutral-identity",
+    "exact_question_duplicates": "reject",
+    "global_cap": "targeted_cap+generic_control_cap",
+    "latent_program_duplicates": "reject",
+    "policy_id": "submode-local-balanced-surface-reuse-v1"
+  },
+  "selected_policy_sha256": "acb01f6d0d8004739e8d7c65ea09fe1199fcd2ae962228dbb78e44231794babc",
+  "selection_frozen_before_real_capacity_or_smoke": true
+}

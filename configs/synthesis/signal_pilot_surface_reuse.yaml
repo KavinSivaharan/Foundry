@@ -1,0 +1,70 @@
+schema_version: 1
+policy_id: submode-local-balanced-surface-reuse-v1
+fixture_path: configs/synthesis/signal_pilot_surface_reuse_fixtures.json
+signal_pilot_config: configs/synthesis/signal_pilot.yaml
+subordinate_allocation_evidence: results/synthesis_smoke/signal_pilot_feasible_capacity_audit.json
+candidate_policies:
+  - family-level-bounded-surface-reuse-v1
+  - submode-local-balanced-surface-reuse-v1
+  - permissive-exact-latent-only-v1
+cap_formula:
+  multiplier_numerator: 5
+  multiplier_denominator: 4
+  dataset_key: dataset/family/submode/runtime-number-neutral-identity
+  global_key: family/submode/runtime-number-neutral-identity
+  global_cap: sum-of-dataset-caps
+normalizer:
+  version: foundry-number-neutral-v1
+  source_sha256: 57d77d32b4631aaecacb02d454f39000f7e13fec457b398ff983817df05c3d1f
+  identity_contract_sha256: e57f12e06673c21bb4c257c651d96b791a8b991260a3e5fd7c5fd11bdc3a72eb
+  semantics_unchanged: true
+active_runtime_identities:
+  multi_step_bookkeeping_or_omission:
+    inventory: 384
+    grouping: 384
+  rate_ratio_percentage_or_average:
+    rate_total: 20
+    ratio_scale: 20
+    percentage: 20
+    weighted_average: 8
+    combined_rate: 20
+  constraint_distribution_or_discrete_reasoning:
+    two_type_allocation: 80
+    complete_packages: 80
+    equal_distribution: 80
+    dual_capacity: 80
+inventory_evidence:
+  fixed_pool_candidates_per_mode_difficulty: 4096
+  rendered_with_all_compatible_sentence_plans: true
+  output_contract_does_not_change_question_text: true
+  benchmark_content_used: false
+difficulty_compatibility_evidence:
+  rate_ratio_percentage_or_average:
+    weighted_average:
+      easy_medium:
+        difficulties: [easy, medium]
+        runtime_identity_sha256_values:
+          - 5cdc03a61d9bf208d4de315bd5269de06917d55f2bc5d344a82b06846ac8fc64
+          - 6196fca02d7f944c87ae3db1a435b18bd4e77a818ba730735022f180cb797c97
+          - 73697f945d2e2f2e91ae495e166f93a42f4cb8382bb542ddc7deab6d2a854b0b
+          - 7be8725cc6d13b04e5b945b1167bf0ea2bc6d36d02988e26595f0c04bf6117c7
+      hard:
+        difficulties: [hard]
+        runtime_identity_sha256_values:
+          - 187ed7d868dc3ed49412956ae504c29ce85a39e3f79fb96e2768a46e91975347
+          - 68e1c158d6eb0d6ba249f730058803a43f97eb164365c92691dcc6caeecfd491
+          - ab8c45865cd19dc4e5b63bbfed4da770942fa042e67b0ca0887b44819abb9572
+          - c3e75590df37d859960aaaac3f993ceacc11b3e485b926d9ec42d50f1be4155c
+preserved_controls:
+  exact_rendered_question_uniqueness: true
+  normalized_exact_question_uniqueness: true
+  global_latent_program_uniqueness: true
+  cross_dataset_exact_isolation: true
+  train_validation_latent_isolation: true
+  sentence_plan_caps: unchanged
+  plan_scenario_caps: unchanged
+  semantic_frame_caps: unchanged
+  scenario_caps: unchanged
+  benchmark_contamination: unchanged
+  generators_labels_verifiers: unchanged
+  sealed_final_access: false

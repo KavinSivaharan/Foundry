@@ -620,3 +620,19 @@ review packet was created. Full generation and training remain blocked. The next
 to authorize a separate correction to the frozen target-type/semantic-frame cap derivation so it
 reflects predeclared curriculum compatibility, or to abandon/redefine the signal-first quotas. No
 benchmark-contamination control needs or receives a change.
+
+### Milestone 7D: submode-local runtime-surface caps (stopped; difficulty stratum failed)
+
+The approved correction replaces only the family-level runtime number-neutral cap with
+`submode-local-balanced-surface-reuse-v1`. Exact rendered questions and latent programs remain
+globally unique, while the same reviewed wording may be reused by distinct verified programs within
+a quota-derived dataset/family/submode cap. Ten original fixtures select this policy over both the
+family-level and uncapped alternatives.
+
+All eleven aggregate submode quotas fit. Weighted-average, however, has four identities shared by
+easy/medium wording and four different identities used by hard wording. The frozen allocations need
+47 targeted and 66 generic easy/medium attempts. Their local caps provide only 44 and 64; combined
+capacity is 108/113. The complete schedule gate therefore remains false. No new 2,504-slot schedule,
+120-question smoke, replay, or review packet is authorized. The next decision must address this
+five-attempt weighted-average difficulty compatibility shortfall without weakening exact, latent,
+runtime-identity, or benchmark-contamination controls.

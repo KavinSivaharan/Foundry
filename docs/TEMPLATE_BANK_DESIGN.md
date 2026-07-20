@@ -325,3 +325,17 @@ the remaining supply. Discrete fails at 598/689 because two count modes share th
 complete packages have 220 combined frame-balanced slots, and dual capacity has 90 exact programs.
 This is not a wording defect or benchmark-contamination issue. No bank entry or threshold changed,
 and the failed gate prevented allocation, smoke generation, replay, and packet creation.
+
+## Runtime surface reuse is bounded per mathematical submode
+
+`submode-local-balanced-surface-reuse-v1` permits a reviewed sentence surface to express multiple
+globally distinct latent programs, but caps each canonical runtime identity separately for each
+dataset and mathematical submode. The formula is frozen before generation, and combined use cannot
+exceed the sum of targeted and generic caps. Sentence-plan, plan-plus-scenario, frame, exact-question,
+and latent-program controls remain independent and unchanged.
+
+The bank exposes 384 runtime identities per bookkeeping mode; 20 for rate-total, ratio-scale,
+percentage, and combined-rate; eight for weighted-average; and 80 per discrete mode. The aggregate
+inventory passes the new formula. Weighted-average difficulty compatibility does not: four surfaces
+must cover all easy/medium attempts, producing a five-attempt combined shortfall. Because the gate
+failed before a complete schedule, the bank did not produce a new smoke or human-review packet.
