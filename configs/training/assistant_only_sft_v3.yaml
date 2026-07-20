@@ -1,0 +1,39 @@
+schema_version: 1
+recipe_id: foundry-assistant-only-sft-v3
+base_recipe:
+  path: configs/training/qwen2_5_1_5b_signal_qlora.yaml
+  recipe_sha256: 4a9c6043f72d4f5b83dad774ffcd208e17f8c9738c9b34b0ab06919ba2620590
+format:
+  format_sha256: 3ffba98610f0575e49e686c6d036e2c18963f3d9411b1f682fe07c009b535329
+  label_construction: assistant_completion_content_and_final_eos_only
+token_matching:
+  method: assistant_only_whole_example_token_budgeted_gradient_accumulation
+  nominal_loss_bearing_tokens: 90000
+  optimizer_steps: 200
+  retention_smoke_steps: 32
+  parity_limit: 0.005
+  arms:
+    generic_control:
+      census_sha256: c272533e992357e2c2da52de070c85ed9a82ce4dfb10c3842f2bce29132499e9
+      schedule_path: results/raw/training/assistant_only_v3/token_matching/schedules/method_b_generic_control_schedule.json
+      schedule_sha256: 90aa0e94d544c295a30b4875354c75a17d6a7697812dedf316956005314b194a
+      occurrences: 1792
+      loss_bearing_tokens: 90000
+      first_32_step_tokens: 14404
+    targeted:
+      census_sha256: 59871e458eb1908d225e6a277527557a52981ff1f34882da7b23c45eab7a071d
+      schedule_path: results/raw/training/assistant_only_v3/token_matching/schedules/method_b_targeted_schedule.json
+      schedule_sha256: ddf367a2fd35d79d2a6c3c624ace775212863436226bd791d6577849426cc224
+      occurrences: 1442
+      loss_bearing_tokens: 89995
+      first_32_step_tokens: 14404
+learning_rates:
+  primary: 0.0002
+  fallback: 0.00005
+retention:
+  suite_path: configs/training/assistant_only_v3_retention_suite.json
+  suite_sha256: 0f0b73d8cd920f20998ba00c81ac6ead4c45f04c972c033e5c30a95bfee63eb9
+  prompt_sha256: 451ed6c7fbaa4f96d3d07fdc7286d491c33969973fb110ba20c494c9517c82fe
+  generation_sha256: f628fe7faafe94040de3df696a63d98494525cd1a57487b718fd9a86b5292093
+  base_summary_sha256: 83858c632dfce15ecd88ac568b88d9145e150330303e1b6b2ab1e2ed6a683e0a
+checkpoints: [50, 100, 200]

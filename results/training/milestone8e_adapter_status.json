@@ -1,0 +1,22 @@
+{
+  "adapters": {
+    "collapsed_generic_control": {
+      "sha256": "c039612d250827525f06269d75da2600c24d2a76c26c11c58a3bfb838e025df1",
+      "status": "diagnostic_only_shared_sft_collapse"
+    },
+    "collapsed_targeted": {
+      "sha256": "b4a2e55d293ed88ccc2668dd450cc29f683bda7585668126fe75e2253fe3b02e",
+      "status": "diagnostic_only_shared_sft_collapse"
+    },
+    "original_generic_control": {
+      "sha256": "36b19165e348fecef09826c8b8807f75c2071be9c2aa622455cf723fb112e3ac",
+      "status": "invalid_for_comparative_evaluation"
+    },
+    "original_targeted": {
+      "sha256": "217a9bcf2a66dcefae1359409dc3962d554de1fad5f1aa880b8a89d38a36406e",
+      "status": "invalid_for_comparative_evaluation"
+    }
+  },
+  "schema_version": 1,
+  "sealed_final_accessed": false
+}

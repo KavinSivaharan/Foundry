@@ -748,3 +748,24 @@ The one-seed signal gate therefore failed. No second seed, tuning, retraining, s
 evaluation, or GRPO is planned automatically. The next decision is whether to approve a narrow
 training-format/instruction-retention diagnosis; stratified human language review also remains
 pending. The result is provisional and cannot support the targeted-data hypothesis.
+## Milestone 8E outcome: assistant-only correction is not retention-safe
+
+Milestone 8E identified two concrete shared SFT protocol defects: the prior formatter made system
+and user tokens loss-bearing in all 900 training records, and only 200 of 1,000 targets used the
+development evaluator's terminal-answer contract. Adapter application and base restoration were
+correct. `foundry-assistant-only-sft-v3` removes prompt/header/padding loss, retains only assistant
+content plus final EOS, and normalizes every completion to one `Final answer:` line without changing
+questions, reasoning, answers, membership, or splits.
+
+The original 60-prompt retention suite was frozen before corrected training. Base performance was
+30/30 arithmetic, 14/15 format, 14/15 instruction, and 59/60 extractability. The `2e-4` 32-step
+recipe failed multiple retention gates in both arms. The only authorized fallback, `5e-5`, also
+failed: generic instruction following was 13/15 and targeted arithmetic was 25/30. Each paired run
+had exact 14,404-token parity, finite losses, zero echo/question generation/backend failures, and no
+development exposure.
+
+**Current stop:** no common retention-safe recipe exists among the two predeclared options. No
+200-step retraining, retention checkpoint, final training-parity gate, corrected GSM1K evaluation,
+second seed, or sealed-final evaluation is authorized. The next decision must be a separately
+approved training-method investigation, not automatic tuning. Stratified human language review
+remains pending at the existing ignored local review page.

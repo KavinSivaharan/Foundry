@@ -1,0 +1,102 @@
+{
+  "arms": {
+    "generic_control": {
+      "appears_to_answer_user_count": 442,
+      "appears_to_continue_transcript_count": 1,
+      "arm": "generic_control",
+      "arm_summary_sha256": "319c504ef5b35644b857fb96bca481efd5bcba75bd68172ed3e28e99aefd4f8d",
+      "average_output_tokens": 48.21621621621622,
+      "category_counts": {
+        "ambiguous_or_malformed_answer": 85,
+        "answer_in_unsupported_form": 17,
+        "question_generation_or_transcript_continuation": 1,
+        "reasoning_like_without_terminal_answer": 228,
+        "repetitive_output": 300,
+        "terminal_answer_contract_present": 112,
+        "token_limit_truncation": 2,
+        "unrelated_or_unclassifiable_prose": 69
+      },
+      "final_answer_prefix_any_count": 143,
+      "final_answer_prefix_exactly_once_count": 143,
+      "first_pattern_counts": {
+        "other_lexical": 57,
+        "role_or_prompt_marker": 1,
+        "synthetic_trace_metadata_phrase": 243,
+        "synthetic_trace_operation": 513
+      },
+      "inferred_eos_before_limit_count": 812,
+      "maximum_output_tokens": 768,
+      "median_output_tokens": 36.0,
+      "minimum_output_tokens": 8,
+      "predictions_sha256": "0081115fdec4f432c23a1f2f178b4d7bfe94cad7cf10a8216757b2ea47fbfeb8",
+      "processed_outputs": 814,
+      "prompt_or_question_echo_count": 0,
+      "raw_diagnostics_sha256": "a32af32970cb9668276c47abcfef53a204ac6bcc9d7ce28ff953f782837d38a0",
+      "repetition_detected_count": 303,
+      "safe_trace_prefix_counts": {
+        "add the": 100,
+        "add up": 37,
+        "divide <num>": 65,
+        "exact equal": 18,
+        "multiply the": 137,
+        "represent <num>": 22,
+        "the exact": 136,
+        "the typed": 89,
+        "treat all": 13
+      },
+      "token_limit_truncation_count": 2,
+      "training_trace_prefix_count": 756
+    },
+    "targeted": {
+      "appears_to_answer_user_count": 490,
+      "appears_to_continue_transcript_count": 0,
+      "arm": "targeted",
+      "arm_summary_sha256": "8821c8d4acf86fa1c4aee5aa60a9a496e5b284dc5d6f82bcc0836fd5f07453b1",
+      "average_output_tokens": 49.42997542997543,
+      "category_counts": {
+        "ambiguous_or_malformed_answer": 161,
+        "answer_in_unsupported_form": 16,
+        "reasoning_like_without_terminal_answer": 193,
+        "repetitive_output": 260,
+        "terminal_answer_contract_present": 120,
+        "token_limit_truncation": 3,
+        "unrelated_or_unclassifiable_prose": 61
+      },
+      "final_answer_prefix_any_count": 167,
+      "final_answer_prefix_exactly_once_count": 166,
+      "first_pattern_counts": {
+        "other_lexical": 86,
+        "synthetic_trace_metadata_phrase": 344,
+        "synthetic_trace_operation": 384
+      },
+      "inferred_eos_before_limit_count": 811,
+      "maximum_output_tokens": 768,
+      "median_output_tokens": 37.0,
+      "minimum_output_tokens": 8,
+      "predictions_sha256": "1a387fdd3b1d93e4eb2a161e7cee5d008b275b94060dc17775e2e7fd8783a604",
+      "processed_outputs": 814,
+      "prompt_or_question_echo_count": 0,
+      "raw_diagnostics_sha256": "4442f3a4790fc57ded8a8be0d2327825384f9b59b4165bc79be56dda466d04fb",
+      "repetition_detected_count": 263,
+      "safe_trace_prefix_counts": {
+        "add the": 31,
+        "add up": 24,
+        "divide <num>": 44,
+        "exact equal": 14,
+        "multiply the": 149,
+        "represent <num>": 7,
+        "the exact": 273,
+        "the typed": 57,
+        "treat all": 24
+      },
+      "token_limit_truncation_count": 3,
+      "training_trace_prefix_count": 728
+    }
+  },
+  "classification_policy": "deterministic-collapsed-output-taxonomy-v1",
+  "new_benchmark_inference": false,
+  "raw_predictions_committed": false,
+  "schema_version": 1,
+  "sealed_final_accessed": false,
+  "summary_sha256": "c5c54b8472475f59d064fbbadaff7f9316737d636d21bd55e6393f1c63820951"
+}

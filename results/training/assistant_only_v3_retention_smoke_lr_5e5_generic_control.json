@@ -1,0 +1,48 @@
+{
+  "adapter_sha256": "7546d4adbbc8271f815417a580dbebaf6220d0b1493030edf5f50eef5fa0aae3",
+  "backend_failures": 0,
+  "base_revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+  "evaluation_id": "foundry-original-retention-evaluation-v1",
+  "exact_format": 54,
+  "exact_format_rate": 0.9,
+  "examples_per_second": 2.144496725487558,
+  "extractability": 0.9666666666666667,
+  "extractable": 58,
+  "generation_sha256": "f628fe7faafe94040de3df696a63d98494525cd1a57487b718fd9a86b5292093",
+  "gpu_name": "NVIDIA GeForce RTX 3080",
+  "input_tokens": 3561,
+  "load_seconds": 3.912626799999998,
+  "malformed_outputs": 2,
+  "output_tokens": 790,
+  "peak_vram_allocated_bytes": 3554672640,
+  "peak_vram_reserved_bytes": 3751804928,
+  "per_item_decision_sha256": "8b812e590788d7d53668eb456fc8211294553db8de6999623df04a958303479a",
+  "prompt_echo": 0,
+  "prompt_echo_rate": 0.0,
+  "prompt_sha256": "451ed6c7fbaa4f96d3d07fdc7286d491c33969973fb110ba20c494c9517c82fe",
+  "question_generation": 0,
+  "raw_packet_sha256": "58593f557613bdf0994015a751cbeabbba11fa5613c2ce753a13e5be954f7456",
+  "runtime_seconds": 27.97859249999965,
+  "schema_version": 1,
+  "section_metrics": {
+    "arithmetic": {
+      "accuracy": 0.9333333333333333,
+      "correct": 28,
+      "total": 30
+    },
+    "format": {
+      "accuracy": 1.0,
+      "correct": 15,
+      "total": 15
+    },
+    "instruction": {
+      "accuracy": 0.8666666666666667,
+      "correct": 13,
+      "total": 15
+    }
+  },
+  "suite_file_sha256": "62aaa38b502574ad8d54cfa60039c9bfe1684ec61ea7c26b14c32615e423d045",
+  "suite_sha256": "0f0b73d8cd920f20998ba00c81ac6ead4c45f04c972c033e5c30a95bfee63eb9",
+  "summary_sha256": "a1a3df23fa19fdb24e7e4760bc70d36d5a80b80cb3c1a761551a9ea891683b89",
+  "total": 60
+}

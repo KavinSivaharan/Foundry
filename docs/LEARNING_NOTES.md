@@ -695,3 +695,18 @@ supervised volume; it does not prove that the chosen SFT label scope and complet
 preserve the base model's instruction-following behavior. Because both arms fail in the same way,
 the right next inquiry is a common training-format and behavior audit, not a curriculum tweak or a
 second seed. Synthetic-validation loss alone cannot certify transfer to the frozen benchmark.
+## Assistant-only supervision fixed the protocol, not retention
+
+The previous collator's labels covered the entire chat transcript, including system and user
+content. That teaches a causal LM to reproduce the prompt distribution as well as answer it. The
+previous target corpus also mixed two completion contracts: only the 20% output-track subset ended
+with the terminal form required during evaluation. Both are concrete, deterministic defects.
+
+Assistant-only labels and one terminal contract removed those defects on every record, but a
+bounded smoke remains necessary: static label correctness does not prove instruction retention.
+Here it prevented an unsafe promotion. Lowering the learning rate from `2e-4` to `5e-5` improved
+retention markedly, yet the failure moved rather than disappeared: generic missed instruction
+following by one of 15 prompts, while targeted lost five of 30 arithmetic prompts. Because both
+arms must pass the same frozen gate, neither recipe is usable. Small objective suites therefore
+serve as a useful pre-benchmark checkpoint-selection firewall, provided they are frozen before
+adapter evaluation and failures are not tuned away.

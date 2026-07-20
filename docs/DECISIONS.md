@@ -669,3 +669,21 @@ This log separates proposals from approved decisions. A proposal does not author
   SFT label scope, completion format, and adapter behavior before any new training. Stratified
   human language review remains pending. This result is provisional and no later milestone begins
   without explicit approval.
+## 2026-07-20: stop after both assistant-only retention recipes fail
+
+- **Status:** mandatory Milestone 8E retention-smoke gate failure
+- **Decision:** Preserve `foundry-assistant-only-sft-v3`, its diagnostic evidence, and all four
+  temporary adapters as diagnostic artifacts, but select no learning rate and perform no full
+  retraining or new development evaluation.
+- **Evidence:** All 900 prior rows incorrectly supervised system/user content, while only 20% of
+  targets used the evaluator-aligned terminal line; adapter loading itself was correct. V3 blocks
+  those defects. At `2e-4`, generic/targeted arithmetic was 25/30 and 22/30, format 10/15 and 13/15,
+  and instruction 10/15 and 8/15. At `5e-5`, generic missed instruction at 13/15 and targeted missed
+  arithmetic at 25/30. Both fallback arms otherwise passed format, extractability, echo,
+  question-generation, backend, finite-loss, and exact token-parity requirements.
+- **Rationale:** A correction can be structurally correct without being retention-safe. Selecting a
+  recipe that fails even one frozen arm-level threshold would reintroduce a shared training-method
+  confound and violate the predeclared stop rule.
+- **Consequence:** Stages J through P are blocked. Any next experiment requires explicit approval
+  and a new design; it may not silently add a learning rate, change LoRA settings, rerun GSM1K, or
+  treat the collapsed Milestone 8D comparison as a curriculum result.

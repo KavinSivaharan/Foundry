@@ -1,0 +1,178 @@
+{
+  "base_retention_summary_sha256": "83858c632dfce15ecd88ac568b88d9145e150330303e1b6b2ab1e2ed6a683e0a",
+  "frozen_development_evaluation_authorized": false,
+  "full_retraining_authorized": false,
+  "gate_id": "foundry-assistant-only-sft-v3-retention-smoke-gate-v1",
+  "recipes": [
+    {
+      "generic_control": {
+        "actual_loss_bearing_tokens": 14404,
+        "adapter_sha256": "e9389ed561a7b838d7b220a11c7226d774db15aaba9cecc404669f5565c9fb8a",
+        "checks": {
+          "arithmetic_retention": false,
+          "backend_failures": true,
+          "extractability": true,
+          "finite_training_losses": true,
+          "finite_validation_loss": true,
+          "format_following": false,
+          "instruction_following": false,
+          "prompt_echo": true,
+          "question_generation": true,
+          "token_count_matches_schedule": true
+        },
+        "failed_checks": [
+          "arithmetic_retention",
+          "format_following",
+          "instruction_following"
+        ],
+        "metrics": {
+          "arithmetic_absolute_drop": 0.16666666666666663,
+          "arithmetic_accuracy": 0.8333333333333334,
+          "backend_failures": 0,
+          "extractability": 0.95,
+          "final_validation_loss": 0.06348716071324347,
+          "format_accuracy": 0.6666666666666666,
+          "instruction_accuracy": 0.6666666666666666,
+          "prompt_echo_rate": 0.0,
+          "question_generation": 0
+        },
+        "passed": false
+      },
+      "learning_rate": 0.0002,
+      "passed": false,
+      "recipe_id": "recipe_1_lr_2e4",
+      "targeted": {
+        "actual_loss_bearing_tokens": 14404,
+        "adapter_sha256": "0d4171b858fde81f6f23cbb55418a6e9c5327f3bdbfc5e53020cadd6ad691e65",
+        "checks": {
+          "arithmetic_retention": false,
+          "backend_failures": true,
+          "extractability": true,
+          "finite_training_losses": true,
+          "finite_validation_loss": true,
+          "format_following": false,
+          "instruction_following": false,
+          "prompt_echo": true,
+          "question_generation": true,
+          "token_count_matches_schedule": true
+        },
+        "failed_checks": [
+          "arithmetic_retention",
+          "format_following",
+          "instruction_following"
+        ],
+        "metrics": {
+          "arithmetic_absolute_drop": 0.2666666666666667,
+          "arithmetic_accuracy": 0.7333333333333333,
+          "backend_failures": 0,
+          "extractability": 0.9333333333333333,
+          "final_validation_loss": 0.06778821272427178,
+          "format_accuracy": 0.8666666666666667,
+          "instruction_accuracy": 0.5333333333333333,
+          "prompt_echo_rate": 0.0,
+          "question_generation": 0
+        },
+        "passed": false
+      },
+      "token_parity": {
+        "difference_rate": 0.0,
+        "difference_tokens": 0,
+        "generic_tokens": 14404,
+        "maximum_difference_rate": 0.005,
+        "passed": true,
+        "targeted_tokens": 14404
+      }
+    },
+    {
+      "generic_control": {
+        "actual_loss_bearing_tokens": 14404,
+        "adapter_sha256": "7546d4adbbc8271f815417a580dbebaf6220d0b1493030edf5f50eef5fa0aae3",
+        "checks": {
+          "arithmetic_retention": true,
+          "backend_failures": true,
+          "extractability": true,
+          "finite_training_losses": true,
+          "finite_validation_loss": true,
+          "format_following": true,
+          "instruction_following": false,
+          "prompt_echo": true,
+          "question_generation": true,
+          "token_count_matches_schedule": true
+        },
+        "failed_checks": [
+          "instruction_following"
+        ],
+        "metrics": {
+          "arithmetic_absolute_drop": 0.06666666666666665,
+          "arithmetic_accuracy": 0.9333333333333333,
+          "backend_failures": 0,
+          "extractability": 0.9666666666666667,
+          "final_validation_loss": 0.33460388610715464,
+          "format_accuracy": 1.0,
+          "instruction_accuracy": 0.8666666666666667,
+          "prompt_echo_rate": 0.0,
+          "question_generation": 0
+        },
+        "passed": false
+      },
+      "learning_rate": 5e-05,
+      "passed": false,
+      "recipe_id": "recipe_2_lr_5e5",
+      "targeted": {
+        "actual_loss_bearing_tokens": 14404,
+        "adapter_sha256": "d412d6118c449bcad069f180246af41a03e474f0c973cbb9db2840f64fc51e5b",
+        "checks": {
+          "arithmetic_retention": false,
+          "backend_failures": true,
+          "extractability": true,
+          "finite_training_losses": true,
+          "finite_validation_loss": true,
+          "format_following": true,
+          "instruction_following": true,
+          "prompt_echo": true,
+          "question_generation": true,
+          "token_count_matches_schedule": true
+        },
+        "failed_checks": [
+          "arithmetic_retention"
+        ],
+        "metrics": {
+          "arithmetic_absolute_drop": 0.16666666666666663,
+          "arithmetic_accuracy": 0.8333333333333334,
+          "backend_failures": 0,
+          "extractability": 0.95,
+          "final_validation_loss": 0.27404693104786637,
+          "format_accuracy": 1.0,
+          "instruction_accuracy": 0.9333333333333333,
+          "prompt_echo_rate": 0.0,
+          "question_generation": 0
+        },
+        "passed": false
+      },
+      "token_parity": {
+        "difference_rate": 0.0,
+        "difference_tokens": 0,
+        "generic_tokens": 14404,
+        "maximum_difference_rate": 0.005,
+        "passed": true,
+        "targeted_tokens": 14404
+      }
+    }
+  ],
+  "retention_safe_recipe_found": false,
+  "schema_version": 1,
+  "selected_recipe_id": null,
+  "stop_reason": "both predeclared learning-rate recipes failed the frozen retention gate",
+  "summary_sha256": "5d1d5f0d31fce710836bd398baeeb469bc4d36c9888476ae38f9721f37671201",
+  "thresholds": {
+    "backend_failures": 0,
+    "finite_training_and_validation_losses": true,
+    "maximum_arithmetic_absolute_drop": 0.1,
+    "maximum_prompt_echo_rate": 0.05,
+    "maximum_token_difference_rate": 0.005,
+    "minimum_extractability": 0.9,
+    "minimum_format_accuracy": 0.9,
+    "minimum_instruction_accuracy": 0.9,
+    "question_generation": 0
+  }
+}

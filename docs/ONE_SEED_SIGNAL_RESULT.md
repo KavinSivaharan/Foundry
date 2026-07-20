@@ -173,3 +173,25 @@ Decide whether to approve a narrow diagnosis of SFT label scope, completion form
 instruction retention. Do not approve a second seed until the shared behavior collapse is explained.
 Separately, the user may complete and export the pending stratified language review. No subsequent
 milestone begins automatically.
+
+## Milestone 8E diagnosis and retention stop
+
+The approved diagnosis found that all prior training transcripts made system and user text
+loss-bearing and that only 200/1,000 targets ended in the evaluator-aligned terminal contract.
+Adapter loading, disabling, re-enabling, LoRA inventory/scaling, and untouched-base restoration all
+passed. These findings classify the shared failure under causes 1 and 3; neither is claimed as the
+sole cause.
+
+The corrected `foundry-assistant-only-sft-v3` format hash is
+`3ffba98610f0575e49e686c6d036e2c18963f3d9411b1f682fe07c009b535329`. Its full schedules contain
+90,000 generic and 89,995 targeted assistant tokens (0.00556% difference); the two predeclared
+32-step prefixes contain exactly 14,404 tokens each. Recipe `2e-4` failed multiple retention
+requirements. Recipe `5e-5` failed because generic instruction accuracy was 13/15 and targeted
+arithmetic was 25/30. The deterministic gate summary is
+`5d1d5f0d31fce710836bd398baeeb469bc4d36c9888476ae38f9721f37671201`.
+
+No recipe was selected. Full retraining, common-checkpoint selection, final parity, corrected
+development evaluation, paired analysis, and a new signal decision were not run. The frozen base
+and Milestone 8D numbers above remain historical evidence of the collapse, not a valid curriculum
+comparison. Human review is still pending at
+`file:///C:/Users/Admin/Projects/Foundry/results/raw/foundry_500x2_signal_review/codex_assisted_review.html`.

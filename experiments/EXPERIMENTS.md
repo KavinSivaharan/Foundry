@@ -697,3 +697,25 @@ Every future experiment must be registered here before a costly run begins. Its 
   instruction-retention failure, not positive or negative evidence about targeted curriculum.
 - **Next experiment:** none approved. The narrowest possible next approval would diagnose SFT label
   scope/completion behavior without tuning, retraining, or sealed-final access.
+
+### EXP-TRAIN-005: assistant-only retention diagnosis and bounded recipe gate
+
+- **Status:** both predeclared recipes failed; full retraining and GSM1K evaluation not run
+- **Diagnosis:** All 900 prior training rows supervised system/user tokens. Only 200/1,000 assistant
+  targets used the evaluator-required terminal line. Adapter application was correct and disabling
+  either collapsed adapter restored the untouched base exactly. Causes 1 and 3 are directly
+  evidenced; no sole-cause claim is made.
+- **Frozen instrument:** 60 original non-benchmark prompts: 30 arithmetic, 15 format, and 15 general
+  instruction tasks. Base scored 30/30, 14/15, 14/15, and 59/60 extractable. Suite SHA-256 is
+  `0f0b73d8...3eb9`; prompt SHA-256 is `451ed6c7...2fe`.
+- **Corrected format:** `foundry-assistant-only-sft-v3`, format SHA-256 `3ffba986...35329`, recipe
+  SHA-256 `9a968154...e1df7`. System/user/header/padding/post-EOS labels are all masked; decoded
+  labels contain exactly the assistant completion plus final EOS and one terminal answer line.
+- **Recipe 1 (`2e-4`):** Exact 14,404-token parity. Generic scored arithmetic/format/instruction
+  25/30, 10/15, 10/15; targeted scored 22/30, 13/15, 8/15. Both failed.
+- **Recipe 2 (`5e-5`):** Exact 14,404-token parity. Generic scored 28/30, 15/15, 13/15 and failed
+  instruction retention. Targeted scored 25/30, 15/15, 14/15 and failed arithmetic retention.
+  Extractability was 58/60 and 57/60; echo, question generation, and backend failures were zero.
+- **Gate:** Failed. Summary SHA-256 `5d1d5f0d...1201`. No recipe, full adapter, common checkpoint,
+  final parity result, corrected GSM1K result, bootstrap interval, or new one-seed signal decision
+  exists. A separately approved training-method design is required before further model work.

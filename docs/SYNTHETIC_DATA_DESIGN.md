@@ -843,3 +843,15 @@ No synthetic example, template, label, or split was changed in response. The evi
 shared SFT instruction/output-format retention problem upstream of the curriculum contrast. The
 one-seed signal gate failed, so data regeneration, a second seed, tuning, sealed-final evaluation,
 and GRPO remain blocked pending an explicitly approved diagnosis.
+## Downstream SFT retention finding
+
+The frozen 500-by-2 datasets remain mathematically and procedurally unchanged. Milestone 8E found
+that the first two SFT protocols—not the dataset generator—supervised system/user prompt tokens and
+used inconsistent assistant terminal contracts. Assistant-only SFT v3 corrected both without
+altering any generated question, reasoning trace, canonical label, split, or membership.
+
+Neither allowed 32-step learning rate preserved the complete original retention gate in both arms.
+This blocks full adapter training and benchmark comparison but does not invalidate generator
+verification or contamination evidence. It also supplies no clean targeted-versus-generic result:
+training-method retention must be solved under separate approval before curriculum effects can be
+measured.

@@ -1,0 +1,425 @@
+{
+  "arms": {
+    "generic_control": {
+      "active_adapters": [
+        "default"
+      ],
+      "adapter": "generic_control",
+      "adapter_directory_sha256": "c039612d250827525f06269d75da2600c24d2a76c26c11c58a3bfb838e025df1",
+      "adapter_names_in_modules": [
+        "default"
+      ],
+      "aggregate_sha256": "aaf3ca0376eb588f40e46eb144e7fe7d805f8e69a10f2dc8168282295fa5b81c",
+      "alpha": 32,
+      "base_plus_adapter_load_seconds": 1.5067680000011023,
+      "disabled_matches_untouched_base": true,
+      "disabled_output_sha256": "d2b230f9174c2adeb33b258b0ab83014190d4b7a0ec9e42403c580614d23abff",
+      "dropout": 0.05,
+      "enabled_differs_from_base_count": 3,
+      "enabled_output_sha256": "9db42c72a126c30573055a408fbc648083c759a848cf15eb281ccdd6b2d0bf59",
+      "expected_scaling": 2.0,
+      "gate_passed": true,
+      "layer_norms": {
+        "0": {
+          "maximum": 2.470512628555298,
+          "mean": 1.3703799258385385,
+          "minimum": 0.11538690328598022,
+          "tensor_count": 14
+        },
+        "1": {
+          "maximum": 5.543453693389893,
+          "mean": 1.613703569131238,
+          "minimum": 0.11411336064338684,
+          "tensor_count": 14
+        },
+        "10": {
+          "maximum": 2.52504301071167,
+          "mean": 1.4333322846463747,
+          "minimum": 0.14322693645954132,
+          "tensor_count": 14
+        },
+        "11": {
+          "maximum": 2.543034315109253,
+          "mean": 1.4477086546165603,
+          "minimum": 0.14299315214157104,
+          "tensor_count": 14
+        },
+        "12": {
+          "maximum": 2.57562518119812,
+          "mean": 1.4562922311680657,
+          "minimum": 0.15900586545467377,
+          "tensor_count": 14
+        },
+        "13": {
+          "maximum": 2.566176414489746,
+          "mean": 1.4496029732482774,
+          "minimum": 0.1379072666168213,
+          "tensor_count": 14
+        },
+        "14": {
+          "maximum": 2.601181983947754,
+          "mean": 1.4617673956922121,
+          "minimum": 0.15400056540966034,
+          "tensor_count": 14
+        },
+        "15": {
+          "maximum": 2.568420886993408,
+          "mean": 1.4665038787892886,
+          "minimum": 0.15000154078006744,
+          "tensor_count": 14
+        },
+        "16": {
+          "maximum": 2.6333115100860596,
+          "mean": 1.4799357535583633,
+          "minimum": 0.15030252933502197,
+          "tensor_count": 14
+        },
+        "17": {
+          "maximum": 2.6522598266601562,
+          "mean": 1.4993338638118334,
+          "minimum": 0.15649570524692535,
+          "tensor_count": 14
+        },
+        "18": {
+          "maximum": 2.6655194759368896,
+          "mean": 1.5113824297274863,
+          "minimum": 0.16056111454963684,
+          "tensor_count": 14
+        },
+        "19": {
+          "maximum": 2.687390089035034,
+          "mean": 1.5211345393742834,
+          "minimum": 0.16760793328285217,
+          "tensor_count": 14
+        },
+        "2": {
+          "maximum": 6.265986442565918,
+          "mean": 1.6820735644016946,
+          "minimum": 0.1176404356956482,
+          "tensor_count": 14
+        },
+        "20": {
+          "maximum": 2.7169275283813477,
+          "mean": 1.5456767795341355,
+          "minimum": 0.19312721490859985,
+          "tensor_count": 14
+        },
+        "21": {
+          "maximum": 2.7102608680725098,
+          "mean": 1.5561981626919337,
+          "minimum": 0.19842852652072906,
+          "tensor_count": 14
+        },
+        "22": {
+          "maximum": 2.7170968055725098,
+          "mean": 1.5605132686240333,
+          "minimum": 0.18773287534713745,
+          "tensor_count": 14
+        },
+        "23": {
+          "maximum": 2.714249610900879,
+          "mean": 1.5660680564386504,
+          "minimum": 0.1864013522863388,
+          "tensor_count": 14
+        },
+        "24": {
+          "maximum": 2.7026546001434326,
+          "mean": 1.573583213346345,
+          "minimum": 0.2075762003660202,
+          "tensor_count": 14
+        },
+        "25": {
+          "maximum": 2.719097852706909,
+          "mean": 1.592156549649579,
+          "minimum": 0.17205928266048431,
+          "tensor_count": 14
+        },
+        "26": {
+          "maximum": 8.728350639343262,
+          "mean": 2.0310009898883954,
+          "minimum": 0.19869163632392883,
+          "tensor_count": 14
+        },
+        "27": {
+          "maximum": 2.6747536659240723,
+          "mean": 1.5787855333515577,
+          "minimum": 0.19935312867164612,
+          "tensor_count": 14
+        },
+        "3": {
+          "maximum": 2.5678112506866455,
+          "mean": 1.4302312614662307,
+          "minimum": 0.13274534046649933,
+          "tensor_count": 14
+        },
+        "4": {
+          "maximum": 2.5691511631011963,
+          "mean": 1.4231121401701654,
+          "minimum": 0.13151150941848755,
+          "tensor_count": 14
+        },
+        "5": {
+          "maximum": 2.555515766143799,
+          "mean": 1.4350130440933364,
+          "minimum": 0.12810519337654114,
+          "tensor_count": 14
+        },
+        "6": {
+          "maximum": 2.5587639808654785,
+          "mean": 1.4355598943574088,
+          "minimum": 0.1327493041753769,
+          "tensor_count": 14
+        },
+        "7": {
+          "maximum": 2.56571102142334,
+          "mean": 1.4424653447100095,
+          "minimum": 0.1419888436794281,
+          "tensor_count": 14
+        },
+        "8": {
+          "maximum": 2.5272555351257324,
+          "mean": 1.4389616250991821,
+          "minimum": 0.14226911962032318,
+          "tensor_count": 14
+        },
+        "9": {
+          "maximum": 2.523751735687256,
+          "mean": 1.4371850341558456,
+          "minimum": 0.13720746338367462,
+          "tensor_count": 14
+        }
+      },
+      "loaded_state_count_matches_saved": true,
+      "lora_module_count": 196,
+      "merged_lora_modules": 0,
+      "missing_expected_keys": [],
+      "rank": 16,
+      "raw_packet_sha256": "d2da6e79c64125130563eca22f4a5af773ca9a49a2fa12e7f7c4b6b5f0123db3",
+      "reenabled_matches_enabled": true,
+      "reenabled_output_sha256": "9db42c72a126c30573055a408fbc648083c759a848cf15eb281ccdd6b2d0bf59",
+      "saved_tensor_count": 392,
+      "scaling_values": [
+        2.0
+      ],
+      "unexpected_saved_keys": [],
+      "weight_file_sha256": "6bf62a376d9479fb31da1dc2e47c2072eda6acbd9b0ac13e29e6166bdd98021b"
+    },
+    "targeted": {
+      "active_adapters": [
+        "default"
+      ],
+      "adapter": "targeted",
+      "adapter_directory_sha256": "b4a2e55d293ed88ccc2668dd450cc29f683bda7585668126fe75e2253fe3b02e",
+      "adapter_names_in_modules": [
+        "default"
+      ],
+      "aggregate_sha256": "af81b4a3f477ee624c25be64b90bd3293bea2ed634e385f8f83e6f4640652597",
+      "alpha": 32,
+      "base_plus_adapter_load_seconds": 1.4613124999996217,
+      "disabled_matches_untouched_base": true,
+      "disabled_output_sha256": "d2b230f9174c2adeb33b258b0ab83014190d4b7a0ec9e42403c580614d23abff",
+      "dropout": 0.05,
+      "enabled_differs_from_base_count": 1,
+      "enabled_output_sha256": "ecf78c9306bfb2d5c05953db305adf7bd73a6ffb62ab006eb1e849c76c7681ce",
+      "expected_scaling": 2.0,
+      "gate_passed": true,
+      "layer_norms": {
+        "0": {
+          "maximum": 2.4477181434631348,
+          "mean": 1.3636725747159548,
+          "minimum": 0.11459315568208694,
+          "tensor_count": 14
+        },
+        "1": {
+          "maximum": 5.443912982940674,
+          "mean": 1.6067890269415719,
+          "minimum": 0.108969546854496,
+          "tensor_count": 14
+        },
+        "10": {
+          "maximum": 2.5231053829193115,
+          "mean": 1.4272472209164075,
+          "minimum": 0.1422938108444214,
+          "tensor_count": 14
+        },
+        "11": {
+          "maximum": 2.5493948459625244,
+          "mean": 1.4359128145234925,
+          "minimum": 0.1359647959470749,
+          "tensor_count": 14
+        },
+        "12": {
+          "maximum": 2.5662219524383545,
+          "mean": 1.4493817442229815,
+          "minimum": 0.1489843726158142,
+          "tensor_count": 14
+        },
+        "13": {
+          "maximum": 2.561837673187256,
+          "mean": 1.4426316342183523,
+          "minimum": 0.13793832063674927,
+          "tensor_count": 14
+        },
+        "14": {
+          "maximum": 2.6026341915130615,
+          "mean": 1.4560536103589194,
+          "minimum": 0.14262011647224426,
+          "tensor_count": 14
+        },
+        "15": {
+          "maximum": 2.5664286613464355,
+          "mean": 1.459690889077527,
+          "minimum": 0.14615115523338318,
+          "tensor_count": 14
+        },
+        "16": {
+          "maximum": 2.626864433288574,
+          "mean": 1.4751480764576368,
+          "minimum": 0.1567033976316452,
+          "tensor_count": 14
+        },
+        "17": {
+          "maximum": 2.638322591781616,
+          "mean": 1.4913694837263651,
+          "minimum": 0.15570329129695892,
+          "tensor_count": 14
+        },
+        "18": {
+          "maximum": 2.644625425338745,
+          "mean": 1.500373152749879,
+          "minimum": 0.16565491259098053,
+          "tensor_count": 14
+        },
+        "19": {
+          "maximum": 2.6690382957458496,
+          "mean": 1.5141363463231496,
+          "minimum": 0.15554597973823547,
+          "tensor_count": 14
+        },
+        "2": {
+          "maximum": 5.894431114196777,
+          "mean": 1.6566824513886655,
+          "minimum": 0.12021773308515549,
+          "tensor_count": 14
+        },
+        "20": {
+          "maximum": 2.691699504852295,
+          "mean": 1.5307284029466766,
+          "minimum": 0.1765783280134201,
+          "tensor_count": 14
+        },
+        "21": {
+          "maximum": 2.6768922805786133,
+          "mean": 1.5433914778488023,
+          "minimum": 0.1851939707994461,
+          "tensor_count": 14
+        },
+        "22": {
+          "maximum": 2.686746835708618,
+          "mean": 1.545372377548899,
+          "minimum": 0.1707668900489807,
+          "tensor_count": 14
+        },
+        "23": {
+          "maximum": 2.683166265487671,
+          "mean": 1.5588548534682818,
+          "minimum": 0.1882176697254181,
+          "tensor_count": 14
+        },
+        "24": {
+          "maximum": 2.6880011558532715,
+          "mean": 1.5619537819709097,
+          "minimum": 0.19869136810302734,
+          "tensor_count": 14
+        },
+        "25": {
+          "maximum": 2.7141168117523193,
+          "mean": 1.5791190298540252,
+          "minimum": 0.16705414652824402,
+          "tensor_count": 14
+        },
+        "26": {
+          "maximum": 8.605198860168457,
+          "mean": 2.0103793910571506,
+          "minimum": 0.19573044776916504,
+          "tensor_count": 14
+        },
+        "27": {
+          "maximum": 2.6740221977233887,
+          "mean": 1.5700792531882013,
+          "minimum": 0.18092164397239685,
+          "tensor_count": 14
+        },
+        "3": {
+          "maximum": 2.5586776733398438,
+          "mean": 1.4326265464935983,
+          "minimum": 0.13159289956092834,
+          "tensor_count": 14
+        },
+        "4": {
+          "maximum": 2.552732229232788,
+          "mean": 1.4212520782436644,
+          "minimum": 0.1289069503545761,
+          "tensor_count": 14
+        },
+        "5": {
+          "maximum": 2.539824962615967,
+          "mean": 1.4294567140085357,
+          "minimum": 0.12303896248340607,
+          "tensor_count": 14
+        },
+        "6": {
+          "maximum": 2.5341765880584717,
+          "mean": 1.4276122088943208,
+          "minimum": 0.13457225263118744,
+          "tensor_count": 14
+        },
+        "7": {
+          "maximum": 2.548360586166382,
+          "mean": 1.4401312896183558,
+          "minimum": 0.1449761539697647,
+          "tensor_count": 14
+        },
+        "8": {
+          "maximum": 2.5333187580108643,
+          "mean": 1.4347243851849012,
+          "minimum": 0.14275804162025452,
+          "tensor_count": 14
+        },
+        "9": {
+          "maximum": 2.528228998184204,
+          "mean": 1.4320616530520576,
+          "minimum": 0.13802875578403473,
+          "tensor_count": 14
+        }
+      },
+      "loaded_state_count_matches_saved": true,
+      "lora_module_count": 196,
+      "merged_lora_modules": 0,
+      "missing_expected_keys": [],
+      "rank": 16,
+      "raw_packet_sha256": "6ae0345243becf48719ad85942d0815788523c6663615a145897bda9c3b9dbbc",
+      "reenabled_matches_enabled": true,
+      "reenabled_output_sha256": "ecf78c9306bfb2d5c05953db305adf7bd73a6ffb62ab006eb1e849c76c7681ce",
+      "saved_tensor_count": 392,
+      "scaling_values": [
+        2.0
+      ],
+      "unexpected_saved_keys": [],
+      "weight_file_sha256": "8c6ea1bf6215692360bebfa9a0d4cc325f5d96337eb6cb4ec3bbb2af79534dc5"
+    }
+  },
+  "audit_id": "foundry-collapsed-adapter-application-sanity-v1",
+  "base_load_seconds": 1.70249960000001,
+  "base_model_id": "Qwen/Qwen2.5-1.5B-Instruct",
+  "base_output_sha256": "d2b230f9174c2adeb33b258b0ab83014190d4b7a0ec9e42403c580614d23abff",
+  "base_raw_packet_sha256": "f90d49dc6da6ce9c637207994a470c801656eb726bbd5f673c75f1a11d4c34e0",
+  "base_revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+  "base_snapshot_sha256": "ccc7ba57b35dd471dedfc0dd4b6edb1c23179a2a094e46dee45ca42e803a1815",
+  "diagnostic_prompt_count": 6,
+  "diagnostic_prompt_sha256": "6714ff238a28dcc3ba83b77ec1dcba89dda9ff09d07750a2759a16bb18078e4c",
+  "gate_passed": true,
+  "gpu_name": "NVIDIA GeForce RTX 3080",
+  "schema_version": 1,
+  "summary_sha256": "ebbc367dc2239b344f5d7c92c148fd9cf969842bd916e5eeebbb20e6b83421dc"
+}

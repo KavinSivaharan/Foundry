@@ -1,0 +1,146 @@
+{
+  "arms": {
+    "generic_control": {
+      "aggregate_sha256": "47de5fdb2847800efaa1ef3aee5139133d21954eaad1e3060b115e0ae9b6ef57",
+      "assistant_header_loss_bearing_records": 450,
+      "flag_counts": {
+        "assistant_content_present": 450,
+        "assistant_target_ends_with_eos": 450,
+        "chat_template_and_role_order_consistent": 450,
+        "decoded_labels_contain_internal_metadata": 0,
+        "decoded_labels_contain_question": 450,
+        "decoded_loss_equals_intended_completion": 0,
+        "padding_correctly_masked": 450,
+        "truncated": 0
+      },
+      "group": "generic_control",
+      "internal_metadata_hit_total": 0,
+      "nonpadding_tokens": 77348,
+      "original_tokens": 77348,
+      "packet_records": 30,
+      "packet_sha256": "957c4ba1d97d8abb4644230de6c3c0371ca921cd16a693f51c0c086d5ea110b9",
+      "records": 450,
+      "span_totals": {
+        "assistant_final_answer": {
+          "loss_bearing": 579,
+          "masked": 0,
+          "tokens": 579
+        },
+        "assistant_header": {
+          "loss_bearing": 1350,
+          "masked": 0,
+          "tokens": 1350
+        },
+        "assistant_reasoning": {
+          "loss_bearing": 19335,
+          "masked": 0,
+          "tokens": 19335
+        },
+        "eos": {
+          "loss_bearing": 900,
+          "masked": 0,
+          "tokens": 900
+        },
+        "padding": {
+          "loss_bearing": 0,
+          "masked": 153052,
+          "tokens": 153052
+        },
+        "system_message": {
+          "loss_bearing": 15300,
+          "masked": 0,
+          "tokens": 15300
+        },
+        "user_message": {
+          "loss_bearing": 39884,
+          "masked": 0,
+          "tokens": 39884
+        }
+      },
+      "system_content_loss_bearing_records": 450,
+      "system_content_loss_bearing_tokens": 13050,
+      "user_content_loss_bearing_records": 450,
+      "user_content_loss_bearing_tokens": 37634
+    },
+    "targeted": {
+      "aggregate_sha256": "a064342439d9cac3e0c2aae1ee01bd54f0a38822f667b26f55de2578a340fd3e",
+      "assistant_header_loss_bearing_records": 450,
+      "flag_counts": {
+        "assistant_content_present": 450,
+        "assistant_target_ends_with_eos": 450,
+        "chat_template_and_role_order_consistent": 450,
+        "decoded_labels_contain_internal_metadata": 0,
+        "decoded_labels_contain_question": 450,
+        "decoded_loss_equals_intended_completion": 0,
+        "padding_correctly_masked": 450,
+        "truncated": 0
+      },
+      "group": "targeted",
+      "internal_metadata_hit_total": 0,
+      "nonpadding_tokens": 87317,
+      "original_tokens": 87317,
+      "packet_records": 30,
+      "packet_sha256": "187255f561909f417b0bc03d0390fa81473f7298dc5b4aaf9b0bd2564d202d6d",
+      "records": 450,
+      "span_totals": {
+        "assistant_final_answer": {
+          "loss_bearing": 624,
+          "masked": 0,
+          "tokens": 624
+        },
+        "assistant_header": {
+          "loss_bearing": 1350,
+          "masked": 0,
+          "tokens": 1350
+        },
+        "assistant_reasoning": {
+          "loss_bearing": 24787,
+          "masked": 0,
+          "tokens": 24787
+        },
+        "eos": {
+          "loss_bearing": 900,
+          "masked": 0,
+          "tokens": 900
+        },
+        "padding": {
+          "loss_bearing": 0,
+          "masked": 143083,
+          "tokens": 143083
+        },
+        "system_message": {
+          "loss_bearing": 15300,
+          "masked": 0,
+          "tokens": 15300
+        },
+        "user_message": {
+          "loss_bearing": 44356,
+          "masked": 0,
+          "tokens": 44356
+        }
+      },
+      "system_content_loss_bearing_records": 450,
+      "system_content_loss_bearing_tokens": 13050,
+      "user_content_loss_bearing_records": 450,
+      "user_content_loss_bearing_tokens": 42106
+    }
+  },
+  "audit_id": "foundry-original-sft-role-label-audit-v1",
+  "label_mask_gate_passed_defect_found": true,
+  "label_rule": "every nonpadding token copied to labels; padding is -100",
+  "mandatory_answers": {
+    "assistant_content_present_all_records": true,
+    "assistant_header_tokens_loss_bearing": true,
+    "assistant_target_ends_with_eos_all_records": true,
+    "decoded_label_span_contains_internal_metadata_any_record": false,
+    "decoded_label_span_contains_original_question_any_record": true,
+    "decoded_loss_equals_intended_completion_all_records": false,
+    "different_chat_template_or_role_order_any_record": false,
+    "padding_correctly_masked_all_records": true,
+    "system_message_tokens_loss_bearing": true,
+    "user_question_tokens_loss_bearing": true
+  },
+  "model_revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+  "schema_version": 1,
+  "summary_sha256": "e9aba3ce9dea9b407dfaac98d54a8934ea67ca4dbe00236ab79d49857b84ccb6"
+}

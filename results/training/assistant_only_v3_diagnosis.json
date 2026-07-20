@@ -1,0 +1,53 @@
+{
+  "adapter_loading_gate_passed": true,
+  "classification": [
+    {
+      "category": 1,
+      "evidence": "All 900 prior training rows made system and user content loss-bearing.",
+      "selected": true
+    },
+    {
+      "category": 2,
+      "evidence": "Role order and Qwen chat template are consistent; response-style differences are accounted for by category 3.",
+      "selected": false
+    },
+    {
+      "category": 3,
+      "evidence": "Only 200 of 1000 assistant targets use the evaluator-required terminal-answer contract.",
+      "selected": true
+    },
+    {
+      "category": 4,
+      "evidence": "Both adapters pass enabled, disabled, re-enabled, inventory, scaling, and base-restoration checks.",
+      "selected": false
+    },
+    {
+      "category": 5,
+      "evidence": "Not selected because the previous formatting was not assistant-only and lacked a uniform terminal contract.",
+      "selected": false
+    },
+    {
+      "category": 6,
+      "evidence": "No additional directly evidenced cause is needed for the corrective protocol gate.",
+      "selected": false
+    },
+    {
+      "category": 7,
+      "evidence": "Concrete correctable protocol defects are resolved diagnostically, although retention smokes must test the correction.",
+      "selected": false
+    }
+  ],
+  "correction_constraints": {
+    "answers_unchanged": true,
+    "dataset_membership_unchanged": true,
+    "mathematical_reasoning_unchanged": true,
+    "questions_unchanged": true
+  },
+  "diagnosis_id": "foundry-shared-sft-collapse-diagnosis-v1",
+  "primary_shared_failure": [
+    "prompt_system_user_tokens_incorrectly_contributed_to_loss",
+    "assistant_targets_systematically_lacked_one_terminal_answer_contract"
+  ],
+  "schema_version": 1,
+  "sole_cause_claimed": false
+}

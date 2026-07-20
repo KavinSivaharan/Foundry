@@ -1,0 +1,84 @@
+{
+  "alignment": {
+    "assistant_style_aligned": false,
+    "evaluation_add_generation_prompt": true,
+    "evaluation_eos_behavior": "generation stops on tokenizer EOS and decoded special tokens are removed",
+    "evaluation_prompt_sha256": "738ea5a3b94e7c75ac0bd50a229bbf04f3fc5d773e14658bc6728bc7a4b18350",
+    "evaluation_response_style": "model-generated concise reasoning; exactly one required terminal line",
+    "evaluation_roles": [
+      "system",
+      "user",
+      "assistant_generation_prompt"
+    ],
+    "evaluation_system_sha256": "1cc978b6c3aa829649088203cabd224bb24774a6fa57704bf0e27a411a85b1d5",
+    "evaluation_terminal_placeholder": "<integer>",
+    "evaluation_user_template_sha256": "07f4c8168bc9fc55d347883bc0cc7586096915e136f63151ddaffbe6da6c6016",
+    "role_order_aligned": true,
+    "same_chat_template_and_special_tokens": true,
+    "system_text_exact_match": false,
+    "terminal_line_wording_aligned": false,
+    "training_add_generation_prompt": false,
+    "training_eos_behavior": "full assistant message appends Qwen im_end and newline; all were loss-bearing",
+    "training_prompt_contract_sha256": "34d894187c86e47538dd422b2487de6802627a2435ce216dd69f76a2ed568f14",
+    "training_response_style": "deterministic procedural trace; terminal line only on output-contract track",
+    "training_roles": [
+      "system",
+      "user",
+      "assistant"
+    ],
+    "training_system_sha256": "16554388ba9ccef6b894ee6a9a97d44f5dc7a0577684414ee0c8a16bbb5adbbe",
+    "training_terminal_placeholder": "<canonical-number>",
+    "training_user_template_sha256": "13b829694ea4ed99140597d7035cfefa2ee617dd15e5b80a0dad0bb8deb67eca",
+    "user_text_exact_match": false
+  },
+  "arms": {
+    "generic_control": {
+      "aggregate_sha256": "08f262314fc80506a6bf040c7daee12fe2825649400dd9d1a26a9d084432deb7",
+      "counts": {
+        "answer_occurs_before_final_line": 101,
+        "contains_multiple_answer_markers": 0,
+        "ends_with_exact_terminal": 100,
+        "exactly_one_clear_final_answer": 100,
+        "looks_like_internal_program_trace": 500,
+        "looks_like_worksheet_generation": 0,
+        "output_contract_enabled": 100,
+        "trace_preserved_exactly": 500,
+        "uses_another_terminal_form": 0
+      },
+      "explicit_final_line_count_distribution": {
+        "0": 400,
+        "1": 100
+      },
+      "group": "generic_control",
+      "packet_records": 30,
+      "packet_sha256": "4181cadea588c02e971ca15a9c8d8610de33be5771d78eff43ca5660cf6e38f5",
+      "records": 500
+    },
+    "targeted": {
+      "aggregate_sha256": "26689b1a700fc4bc97d95ffff9807549fd3e1428aa0d614b41032ab98c1acc6c",
+      "counts": {
+        "answer_occurs_before_final_line": 103,
+        "contains_multiple_answer_markers": 0,
+        "ends_with_exact_terminal": 100,
+        "exactly_one_clear_final_answer": 100,
+        "looks_like_internal_program_trace": 500,
+        "looks_like_worksheet_generation": 0,
+        "output_contract_enabled": 100,
+        "trace_preserved_exactly": 500,
+        "uses_another_terminal_form": 0
+      },
+      "explicit_final_line_count_distribution": {
+        "0": 400,
+        "1": 100
+      },
+      "group": "targeted",
+      "packet_records": 30,
+      "packet_sha256": "88b3b60657deccfd0cfff9a7a2d5b3e6b73a6d6683ee76500d2beb701292aed5",
+      "records": 500
+    }
+  },
+  "audit_id": "foundry-sft-evaluation-format-alignment-v1",
+  "completion_contract_defect_found": true,
+  "schema_version": 1,
+  "summary_sha256": "989b984baba2c0533a7c59995885e8dfd1a041bc37aa8f79c15aebc4e1b904c7"
+}

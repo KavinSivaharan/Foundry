@@ -19,6 +19,14 @@ SFT_USER_PREFIX = "Solve this problem.\n\n"
 SFT_USER_SUFFIX = (
     "\n\nEnd with exactly one final line in this form:\nFinal answer: <canonical-number>"
 )
+ASSISTANT_ONLY_V3_FORMAT_ID = "foundry-assistant-only-sft-v3"
+ASSISTANT_ONLY_V3_SYSTEM_PROMPT = (
+    "You solve grade-school arithmetic word problems carefully. Use the information "
+    "in the problem, show concise reasoning, and follow the required final-answer format."
+)
+ASSISTANT_ONLY_V3_USER_SUFFIX = (
+    "\n\nEnd with exactly one final line in this form:\nFinal answer: <integer>"
+)
 TARGET_MODULES = (
     "q_proj",
     "k_proj",
@@ -48,6 +56,45 @@ def sft_format_contract_sha256() -> str:
             "user_suffix": SFT_USER_SUFFIX,
         }
     )
+
+
+def assistant_only_v3_format_contract_sha256() -> str:
+    """Hash the corrected assistant-only formatting and label contract."""
+
+    return canonical_sha256(
+        {
+            "format_id": ASSISTANT_ONLY_V3_FORMAT_ID,
+            "messages": {
+                "assistant": "unchanged deterministic trace plus one normalized terminal line",
+                "system": ASSISTANT_ONLY_V3_SYSTEM_PROMPT,
+                "user_prefix": SFT_USER_PREFIX,
+                "user_suffix": ASSISTANT_ONLY_V3_USER_SUFFIX,
+            },
+            "loss_bearing": ["assistant_completion_content", "final_eos"],
+            "masked": [
+                "system",
+                "user",
+                "assistant_header",
+                "padding",
+                "post_eos_newline",
+            ],
+        }
+    )
+
+
+def assistant_only_v3_messages(question: str, completion: str) -> list[dict[str, str]]:
+    """Build the corrected evaluation-aligned three-message conversation."""
+
+    if not question.strip() or not completion.strip():
+        raise ValueError("assistant-only question and completion must be non-empty")
+    return [
+        {"role": "system", "content": ASSISTANT_ONLY_V3_SYSTEM_PROMPT},
+        {
+            "role": "user",
+            "content": f"{SFT_USER_PREFIX}{question}{ASSISTANT_ONLY_V3_USER_SUFFIX}",
+        },
+        {"role": "assistant", "content": completion},
+    ]
 
 
 @dataclass(frozen=True)

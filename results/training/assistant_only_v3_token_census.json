@@ -1,0 +1,377 @@
+{
+  "all_examples_have_loss_bearing_tokens": true,
+  "arms": {
+    "generic_control": {
+      "by_difficulty": {
+        "easy": {
+          "count": 152,
+          "entirely_masked_examples": 0,
+          "maximum": 85,
+          "mean": 42.94736842105263,
+          "median": 36.0,
+          "minimum": 19,
+          "percentiles": {
+            "25": 28.0,
+            "50": 36.0,
+            "75": 55.0,
+            "90": 81.9,
+            "95": 82.0,
+            "99": 85.0
+          },
+          "total": 6528,
+          "truncated_examples": 0,
+          "truncated_tokens": 0
+        },
+        "hard": {
+          "count": 149,
+          "entirely_masked_examples": 0,
+          "maximum": 125,
+          "mean": 57.147651006711406,
+          "median": 36,
+          "minimum": 20,
+          "percentiles": {
+            "25": 28.0,
+            "50": 36.0,
+            "75": 93.0,
+            "90": 118.0,
+            "95": 120.0,
+            "99": 125.0
+          },
+          "total": 8515,
+          "truncated_examples": 0,
+          "truncated_tokens": 0
+        },
+        "medium": {
+          "count": 149,
+          "entirely_masked_examples": 0,
+          "maximum": 105,
+          "mean": 50.738255033557046,
+          "median": 36,
+          "minimum": 20,
+          "percentiles": {
+            "25": 29.0,
+            "50": 36.0,
+            "75": 74.0,
+            "90": 99.39999999999998,
+            "95": 101.0,
+            "99": 104.04000000000002
+          },
+          "total": 7560,
+          "truncated_examples": 0,
+          "truncated_tokens": 0
+        }
+      },
+      "by_family": {
+        "constraint_distribution_or_discrete_reasoning": {
+          "count": 150,
+          "entirely_masked_examples": 0,
+          "maximum": 49,
+          "mean": 31.166666666666668,
+          "median": 29.0,
+          "minimum": 20,
+          "percentiles": {
+            "25": 23.0,
+            "50": 29.0,
+            "75": 39.75,
+            "90": 45.0,
+            "95": 46.0,
+            "99": 48.0
+          },
+          "total": 4675,
+          "truncated_examples": 0,
+          "truncated_tokens": 0
+        },
+        "multi_step_bookkeeping_or_omission": {
+          "count": 150,
+          "entirely_masked_examples": 0,
+          "maximum": 125,
+          "mean": 87.72,
+          "median": 88.0,
+          "minimum": 50,
+          "percentiles": {
+            "25": 74.25,
+            "50": 88.0,
+            "75": 101.0,
+            "90": 118.0,
+            "95": 120.0,
+            "99": 125.0
+          },
+          "total": 13158,
+          "truncated_examples": 0,
+          "truncated_tokens": 0
+        },
+        "rate_ratio_percentage_or_average": {
+          "count": 150,
+          "entirely_masked_examples": 0,
+          "maximum": 42,
+          "mean": 31.8,
+          "median": 33.0,
+          "minimum": 19,
+          "percentiles": {
+            "25": 28.0,
+            "50": 33.0,
+            "75": 36.0,
+            "90": 41.0,
+            "95": 41.0,
+            "99": 41.50999999999999
+          },
+          "total": 4770,
+          "truncated_examples": 0,
+          "truncated_tokens": 0
+        }
+      },
+      "by_output_contract": {
+        "False": {
+          "count": 358,
+          "entirely_masked_examples": 0,
+          "maximum": 125,
+          "mean": 49.99441340782123,
+          "median": 36.0,
+          "minimum": 19,
+          "percentiles": {
+            "25": 28.0,
+            "50": 36.0,
+            "75": 73.75,
+            "90": 99.0,
+            "95": 106.19999999999982,
+            "99": 120.0
+          },
+          "total": 17898,
+          "truncated_examples": 0,
+          "truncated_tokens": 0
+        },
+        "True": {
+          "count": 92,
+          "entirely_masked_examples": 0,
+          "maximum": 125,
+          "mean": 51.141304347826086,
+          "median": 36.0,
+          "minimum": 19,
+          "percentiles": {
+            "25": 28.0,
+            "50": 36.0,
+            "75": 79.0,
+            "90": 95.0,
+            "95": 118.0,
+            "99": 124.09
+          },
+          "total": 4705,
+          "truncated_examples": 0,
+          "truncated_tokens": 0
+        }
+      },
+      "census_file_sha256": "07590e4bda1b12330f20037bc038a8d767b4ab05f6a314a6b8746a858ca3b7d4",
+      "census_sha256": "c272533e992357e2c2da52de070c85ed9a82ce4dfb10c3842f2bce29132499e9",
+      "loss_bearing_tokens": {
+        "count": 450,
+        "entirely_masked_examples": 0,
+        "maximum": 125,
+        "mean": 50.22888888888889,
+        "median": 36.0,
+        "minimum": 19,
+        "percentiles": {
+          "25": 28.0,
+          "50": 36.0,
+          "75": 74.0,
+          "90": 99.0,
+          "95": 113.55000000000001,
+          "99": 121.01999999999998
+        },
+        "total": 22603,
+        "truncated_examples": 0,
+        "truncated_tokens": 0
+      }
+    },
+    "targeted": {
+      "by_difficulty": {
+        "easy": {
+          "count": 147,
+          "entirely_masked_examples": 0,
+          "maximum": 86,
+          "mean": 51.16326530612245,
+          "median": 54,
+          "minimum": 20,
+          "percentiles": {
+            "25": 33.0,
+            "50": 54.0,
+            "75": 77.0,
+            "90": 82.0,
+            "95": 82.69999999999999,
+            "99": 85.0
+          },
+          "total": 7521,
+          "truncated_examples": 0,
+          "truncated_tokens": 0
+        },
+        "hard": {
+          "count": 153,
+          "entirely_masked_examples": 0,
+          "maximum": 128,
+          "mean": 73.86928104575163,
+          "median": 89,
+          "minimum": 20,
+          "percentiles": {
+            "25": 36.0,
+            "50": 89.0,
+            "75": 115.0,
+            "90": 120.0,
+            "95": 123.0,
+            "99": 125.0
+          },
+          "total": 11302,
+          "truncated_examples": 0,
+          "truncated_tokens": 0
+        },
+        "medium": {
+          "count": 150,
+          "entirely_masked_examples": 0,
+          "maximum": 107,
+          "mean": 62.02,
+          "median": 70.0,
+          "minimum": 20,
+          "percentiles": {
+            "25": 33.0,
+            "50": 70.0,
+            "75": 98.5,
+            "90": 101.0,
+            "95": 104.10000000000002,
+            "99": 105.50999999999999
+          },
+          "total": 9303,
+          "truncated_examples": 0,
+          "truncated_tokens": 0
+        }
+      },
+      "by_family": {
+        "constraint_distribution_or_discrete_reasoning": {
+          "count": 97,
+          "entirely_masked_examples": 0,
+          "maximum": 50,
+          "mean": 31.257731958762886,
+          "median": 33,
+          "minimum": 21,
+          "percentiles": {
+            "25": 23.0,
+            "50": 33.0,
+            "75": 36.0,
+            "90": 45.0,
+            "95": 47.0,
+            "99": 49.040000000000006
+          },
+          "total": 3032,
+          "truncated_examples": 0,
+          "truncated_tokens": 0
+        },
+        "multi_step_bookkeeping_or_omission": {
+          "count": 248,
+          "entirely_masked_examples": 0,
+          "maximum": 128,
+          "mean": 87.6774193548387,
+          "median": 88.0,
+          "minimum": 50,
+          "percentiles": {
+            "25": 73.5,
+            "50": 88.0,
+            "75": 101.0,
+            "90": 119.0,
+            "95": 120.0,
+            "99": 124.53
+          },
+          "total": 21744,
+          "truncated_examples": 0,
+          "truncated_tokens": 0
+        },
+        "rate_ratio_percentage_or_average": {
+          "count": 105,
+          "entirely_masked_examples": 0,
+          "maximum": 42,
+          "mean": 31.904761904761905,
+          "median": 34,
+          "minimum": 20,
+          "percentiles": {
+            "25": 28.0,
+            "50": 34.0,
+            "75": 36.0,
+            "90": 41.0,
+            "95": 41.0,
+            "99": 41.0
+          },
+          "total": 3350,
+          "truncated_examples": 0,
+          "truncated_tokens": 0
+        }
+      },
+      "by_output_contract": {
+        "False": {
+          "count": 354,
+          "entirely_masked_examples": 0,
+          "maximum": 128,
+          "mean": 63.152542372881356,
+          "median": 57.0,
+          "minimum": 20,
+          "percentiles": {
+            "25": 33.0,
+            "50": 57.0,
+            "75": 94.0,
+            "90": 115.0,
+            "95": 120.0,
+            "99": 124.0
+          },
+          "total": 22356,
+          "truncated_examples": 0,
+          "truncated_tokens": 0
+        },
+        "True": {
+          "count": 96,
+          "entirely_masked_examples": 0,
+          "maximum": 124,
+          "mean": 60.104166666666664,
+          "median": 55.0,
+          "minimum": 20,
+          "percentiles": {
+            "25": 33.75,
+            "50": 55.0,
+            "75": 85.0,
+            "90": 101.0,
+            "95": 105.5,
+            "99": 121.14999999999999
+          },
+          "total": 5770,
+          "truncated_examples": 0,
+          "truncated_tokens": 0
+        }
+      },
+      "census_file_sha256": "721e0eb0959cbd1b9354686fa46617a1461566202a06c5faee1623ef2224f5ec",
+      "census_sha256": "59871e458eb1908d225e6a277527557a52981ff1f34882da7b23c45eab7a071d",
+      "loss_bearing_tokens": {
+        "count": 450,
+        "entirely_masked_examples": 0,
+        "maximum": 128,
+        "mean": 62.50222222222222,
+        "median": 57.0,
+        "minimum": 20,
+        "percentiles": {
+          "25": 33.0,
+          "50": 57.0,
+          "75": 92.0,
+          "90": 105.10000000000002,
+          "95": 120.0,
+          "99": 124.0
+        },
+        "total": 28126,
+        "truncated_examples": 0,
+        "truncated_tokens": 0
+      }
+    }
+  },
+  "assistant_only_format_sha256": "3ffba98610f0575e49e686c6d036e2c18963f3d9411b1f682fe07c009b535329",
+  "base_revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+  "census_id": "foundry-assistant-only-token-census-v3",
+  "chat_template_sha256": "cd8e9439f0570856fd70470bf8889ebd8b5d1107207f67a5efb46e342330527f",
+  "deterministic_reconstruction_match": true,
+  "label_construction": "assistant_completion_content_and_final_eos_only",
+  "max_sequence_length": 512,
+  "schema_version": 1,
+  "summary_sha256": "e6e79e0c10e236f7d019bc3ffccc2804d443d3a92a8c5c39c69c3a2bbeb3e11e",
+  "total_training_examples": 900
+}

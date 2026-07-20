@@ -410,3 +410,10 @@ development output/extractability collapse, so the failed one-seed signal cannot
 a measured template difference. The ignored stratified packet remains available at
 `results/raw/foundry_500x2_signal_review/codex_assisted_review.html`; no user decisions have been
 imported, and the bank is not newly claimed as human-vetted.
+## Milestone 8E downstream status
+
+No template, sentence plan, rendered question, canonical answer, or human-review decision changed
+during the SFT-collapse diagnosis. The template-bank datasets remain frozen. Both assistant-only
+retention recipes failed before full training, so no new evidence about template wording or the
+targeted curriculum was produced. Genuine stratified human language review remains pending at the
+existing ignored review interface.
