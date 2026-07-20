@@ -808,3 +808,11 @@ Both matched datasets use recipe `4a9c6043...0590`, seed `20260720`, 200 optimiz
 effective batch of eight. The only intended training difference is the frozen curriculum embodied
 by the 450 generic versus 450 targeted records. The ignored adapters must be frozen before any
 development evaluation.
+
+### Observed token-budget limitation
+
+The frozen datasets are matched in accepted examples but not in SFT sequence length. Under the exact
+200-step sampler, the generic adapter consumed 271,396 non-padding loss tokens and the targeted
+adapter 306,766. Their 11.5299% relative difference fails the experiment's 2% parity contract. This
+does not invalidate label or language quality, but it prevents these trained adapters from serving
+as a controlled targeted-versus-generic benchmark comparison.

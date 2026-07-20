@@ -707,3 +707,15 @@ optimizer, finite loss, evaluation, adapter save, offline reload, and determinis
 succeeded. Peak reserved VRAM was 3.741 GB, below the 9.6 GiB gate. Next is repository-wide
 verification and publication of the training setup; final generic and targeted runs remain blocked
 until that commit is pushed.
+
+### Fast-Track 8C: matched adapter training (stopped at parity gate)
+
+Generic and targeted adapters each completed the frozen 200-step recipe and reload offline on CUDA.
+Every metadata and padded-input field matches. The actual loss-bearing token exposure does not:
+generic processed 271,396 non-padding tokens and targeted processed 306,766, an 11.5299% relative
+difference. The approved maximum was 2%.
+
+The training-parity gate therefore failed before development evaluation. Neither adapter was run on
+the frozen 814 examples; there is no generic, targeted, category-level, or one-seed signal result.
+The next plan decision is whether to approve a fresh token-budget-matched experimental design and
+retraining. These adapters cannot answer the research question.

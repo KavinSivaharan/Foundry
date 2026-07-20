@@ -1,0 +1,29 @@
+{
+  "adapter_evaluation": {
+    "generic_control": null,
+    "targeted": null
+  },
+  "base_development_result": {
+    "accuracy": 0.6400491400491401,
+    "correct": 521,
+    "examples": 814,
+    "extractability": 0.9238
+  },
+  "blocker": "nonpadding_training_token_difference_exceeds_2_percent",
+  "development_benchmark_evaluation_run": false,
+  "generic_adapter_sha256": "36b19165e348fecef09826c8b8807f75c2071be9c2aa622455cf723fb112e3ac",
+  "human_language_review_status": "pending",
+  "one_seed_signal_gate": "not_evaluated_training_parity_failed",
+  "provisional_result_available": false,
+  "recipe_sha256": "4a9c6043f72d4f5b83dad774ffcd208e17f8c9738c9b34b0ab06919ba2620590",
+  "schema_version": 1,
+  "targeted_adapter_sha256": "217a9bcf2a66dcefae1359409dc3962d554de1fad5f1aa880b8a89d38a36406e",
+  "training_token_parity": {
+    "generic_nonpadding_tokens": 271396,
+    "padded_tokens_each": 819200,
+    "passed": false,
+    "relative_difference": 0.11529960947432245,
+    "required_maximum": 0.02,
+    "targeted_nonpadding_tokens": 306766
+  }
+}

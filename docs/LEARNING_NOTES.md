@@ -659,3 +659,12 @@ quantized loading, LoRA trainability, gradient checkpointing, accumulated backwa
 exposed a useful fail-closed detail: strict CUDA determinism requires the cuBLAS workspace setting
 before PyTorch initializes. Once set, the frozen recipe ran well below the RTX 3080 memory ceiling.
 Loss movement is not interpreted as experiment evidence; the smoke only admits the machinery.
+
+## Equal examples and padded tensors do not guarantee equal training signal
+
+Both final runs used 450 source records, 200 steps, an effective batch of eight, and 819,200 padded
+input tokens. Because padding labels are masked, the model actually received loss on 271,396 generic
+tokens versus 306,766 targeted tokens. The curriculum itself changes sequence length: targeted data
+contains more bookkeeping and longer traces. A fair future comparison must freeze the loss-bearing
+token budget before training rather than infer parity from example counts or padded shapes. Catching
+this before benchmark evaluation prevents an attractive but confounded result.

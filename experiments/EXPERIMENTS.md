@@ -639,3 +639,19 @@ Every future experiment must be registered here before a costly run begins. Its 
   second seed.
 - **Next experiment:** publish the frozen setup, then train generic followed by targeted using the
   same 200-step recipe without development-benchmark exposure.
+
+### EXP-TRAIN-002: matched adapter training and parity gate
+
+- **Status:** both adapters trained; parity failed; development evaluation not run
+- **Method:** Generic then targeted, each from the pinned base with recipe `4a9c6043...0590`, seed
+  `20260720`, 450/50 split, 200 optimizer steps, effective batch eight, and final-adapter-only save.
+- **Generic result:** 641.366 seconds; loss 3.1699 to 0.1179; final validation loss 0.153627;
+  271,396 non-padding tokens; adapter `36b19165...e3ac`.
+- **Targeted result:** 645.737 seconds; loss 2.7859 to 0.1199; final validation loss 0.144995;
+  306,766 non-padding tokens; adapter `217a9bcf...406e`.
+- **Parity:** All metadata and 819,200 padded tokens per run match, both adapters load offline on
+  CUDA, but the non-padding difference is 11.5299% versus the required maximum 2%.
+- **Gate:** failed before benchmark access. No generic, targeted, category-level, or one-seed signal
+  score exists. This is an experimental-control blocker, not a model-performance result.
+- **Next experiment:** none automatically. A separately approved token-budget-matched retraining
+  design is required before the research question can be evaluated.

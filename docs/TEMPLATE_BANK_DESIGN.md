@@ -389,3 +389,10 @@ only the already frozen rendered records and verified completions; no template i
 rewritten, repaired, or filtered from observed loss. The QLoRA smoke adapter and all subsequent
 adapters remain ignored artifacts, while this document continues to describe the language source
 of truth.
+
+### Token length is a downstream experimental variable
+
+The unchanged bank produced valid reviewed surfaces, but the targeted family mix yielded longer SFT
+sequences than the generic mix. No wording is being edited in response. Any future matched training
+design must account for this length distribution outside the template-review process while retaining
+the same bank and quality evidence.

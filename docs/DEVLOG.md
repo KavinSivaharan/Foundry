@@ -2264,3 +2264,38 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
 - **Result:** Ruff is clean; strict Mypy reports no issues in 92 source files; 367 unit and six integration tests pass; both environments have no broken requirements; whitespace passes. Recipe and smoke gates pass, and exact/12-token development hits, secret hits, protected/sealed candidate paths, and tracked raw/cache/environment paths are all zero. `.venv-training/` and the smoke adapter are ignored. The two pre-existing content-free files above 1 MiB were reviewed again; no new training file exceeds the threshold.
 - **Errors or uncertainty:** The first full unit collection found a duplicate `test_config.py` module name in the nested training test directory; renaming it to `test_qlora_recipe.py` resolved collection and the full suite passed. Expected Git LF-to-CRLF notices are non-fatal. No sealed-final artifact was opened.
 - **Next action:** Fetch without integration, require `origin/main` to remain synchronized, stage exactly the 16 approved setup files, repeat index-only safety checks, commit `train: validate RTX 3080 QLoRA compatibility`, push normally, and confirm a clean synchronized branch before final training.
+
+### 2026-07-20 - Fast-Track 8B training setup published
+
+- **Action performed:** Published `train: validate RTX 3080 QLoRA compatibility` and verified the local and remote branch tips after a normal push.
+- **Result:** Commit `6d2b96e845870ed5c56cfbb3ba115cbd311d0e71` is on both local `main` and `origin/main` at 0 ahead/0 behind with a clean worktree. No environment, adapter, raw data, cache, benchmark content, or secret was pushed.
+- **Next action:** Train the generic-control adapter first under the published recipe.
+
+### 2026-07-20 - Fast-Track 8C generic-control adapter frozen
+
+- **Action performed:** Trained the generic-control adapter from the pinned base and frozen 450/50 generic split for exactly 200 optimizer steps, using the published seed, effective batch, sequence length, optimizer, validation cadence, and final-adapter-only rule. The development benchmark was not loaded.
+- **Result:** Training completed 200/200 steps and 1,600 examples in 641.366 seconds. It processed 819,200 padded input tokens and 271,396 non-padding loss tokens; logged loss moved from 3.1699 to 0.1179 and final synthetic-validation loss was 0.153627. Peak allocated/reserved VRAM was 3,343,800,832/3,577,741,312 bytes; process RSS was 1,542,365,184 bytes. The ignored 89,796,953-byte adapter SHA-256 is `36b19165e348fecef09826c8b8807f75c2071be9c2aa622455cf723fb112e3ac`.
+- **Errors or uncertainty:** No OOM, NaN, offload, backend, forward, backward, optimizer, or save failure occurred. Development performance is unknown and remains prohibited until both adapters and parity checks pass.
+- **Next action:** Train the targeted adapter with the exact same published recipe and seed, then load both adapters and evaluate the predeclared parity gate before any benchmark inference.
+
+### 2026-07-20 - Fast-Track 8C targeted adapter frozen
+
+- **Action performed:** Trained the targeted adapter from the pinned base and frozen 450/50 targeted split for exactly 200 optimizer steps under the same published recipe and seed. The development benchmark was not loaded.
+- **Result:** Training completed 200/200 steps and 1,600 examples in 645.737 seconds. It processed 819,200 padded input tokens and 306,766 non-padding loss tokens; logged loss moved from 2.7859 to 0.1199 and final synthetic-validation loss was 0.144995. Peak allocated/reserved VRAM was 3,343,800,832/3,577,741,312 bytes; process RSS was 1,542,606,848 bytes. The ignored 89,796,953-byte adapter SHA-256 is `217a9bcf2a66dcefae1359409dc3962d554de1fad5f1aa880b8a89d38a36406e`.
+- **Errors or uncertainty:** No mechanical training failure occurred. Development performance remains unknown.
+- **Next action:** Load and hash both frozen adapters, compare every parity field, and apply the predeclared 2% loss-token gate before any benchmark access.
+
+### 2026-07-20 - Fast-Track 8C training parity gate failed; evaluation stopped
+
+- **Action performed:** Recomputed both adapter directory hashes, loaded each adapter offline on its own quantized base, verified all parameters stayed on CUDA, compared the frozen run summaries field by field, and applied the predeclared non-padding token threshold.
+- **Result:** Both adapter hashes match and both load with zero offloaded parameters. Base revision, packages, recipe hash, seed-bound configuration, 200 steps, 1,600 examples, 819,200 padded tokens, sequence length, and final-only rule match. Generic processed 271,396 non-padding tokens; targeted processed 306,766. The 35,370-token difference is 11.529961%, above the 2% maximum. Training parity gate failed and `benchmark_evaluation_authorized` is false.
+- **Gate status:** **FAILED.** The frozen 814-example development evaluator was not opened or run for either adapter. No generic/targeted development or category-level result exists, and the one-seed signal gate cannot be evaluated.
+- **Errors or uncertainty:** Equal padded tensor shapes do not make the loss-bearing token exposure equal because padding labels are masked. The result diagnoses an experimental-control mismatch, not adapter quality.
+- **Next action:** Document and publish the accurate stopped result. The narrowest future decision is whether to authorize a new pre-training token-budget-matching design and fresh retraining; do not evaluate these adapters.
+
+### 2026-07-20 - Fast-Track 8C stopped-result verification passed
+
+- **Action performed:** Ran repository-wide Ruff format/lint, strict Mypy, all unit and integration tests, both environment dependency checks, whitespace validation, dataset/split/recipe/adapter/summary hashes, exact step/seed/recipe/padded-token checks, offline adapter loads, fail-closed parity assertions, evaluator/synthesis freeze review, secret scanning, exact and 12-token development-content scans against all 904 cached development questions, protected/sealed path review, raw/cache/environment/adapter ignore and tracking checks, tracked-size review, and complete status review.
+- **Result:** Ruff is clean; strict Mypy reports no issues in 93 source files; 369 unit and six integration tests pass; both environments have no broken requirements; whitespace passes. Dataset/split and both adapter hashes match. Parity summary SHA-256 is `31c2cb90faa8d0c0ef94fd40b4334f9743979d04406d78a9b3b1ab6fe3d9762c`; generic/targeted training summary hashes are `f95bda22a4ffb580b5e6e2603e116191f28827a8156eebe4bc75368644ed60ed` and `b54c5d6cfbd7f2b21c05ede27b7e9c078971b4386f24659d307973f9569e74cf`. Exact/12-token development hits, secret hits, evaluator/synthesis changes, protected/sealed candidates, and tracked raw/cache/environment artifacts are all zero. The two pre-existing content-free tracked files above 1 MiB remain reviewed.
+- **Errors or uncertainty:** One consistency command initially compared the tracked nested split-hash mapping directly with the recipe's flattened mapping and stopped; a corrected read-only normalization proved all four hashes equal. The gate remains a verified failure, not an implementation error. No development prediction file exists for either adapter.
+- **Next action:** Fetch without integration, require `origin/main` to remain at the published training-setup commit, stage only this content-free stopped result, repeat index checks, create an accurate blocker commit, push normally, and report no adapter development scores.

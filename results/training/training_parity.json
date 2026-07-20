@@ -1,0 +1,53 @@
+{
+  "adapter_hash_checks": {
+    "generic": true,
+    "targeted": true
+  },
+  "adapter_loads": {
+    "generic_control": {
+      "adapter_sha256": "36b19165e348fecef09826c8b8807f75c2071be9c2aa622455cf723fb112e3ac",
+      "loaded": true,
+      "offloaded_parameter_count": 0
+    },
+    "targeted": {
+      "adapter_sha256": "217a9bcf2a66dcefae1359409dc3962d554de1fad5f1aa880b8a89d38a36406e",
+      "loaded": true,
+      "offloaded_parameter_count": 0
+    }
+  },
+  "benchmark_evaluation_authorized": false,
+  "blockers": [
+    "nonpadding_training_token_difference_exceeds_2_percent"
+  ],
+  "comparison": {
+    "equal_fields": {
+      "base_model_id": true,
+      "base_revision": true,
+      "cuda_runtime": true,
+      "examples_processed": true,
+      "optimizer_steps": true,
+      "padded_training_tokens": true,
+      "recipe_sha256": true,
+      "requirements_lock_sha256": true,
+      "sft_format_sha256": true,
+      "software_versions": true,
+      "total_parameters": true,
+      "trainable_parameters": true,
+      "training_source_records": true,
+      "training_truncated_records": true
+    },
+    "generic_nonpadding_training_tokens": 271396,
+    "metadata_parity_passed": true,
+    "nonpadding_token_absolute_difference": 35370,
+    "nonpadding_token_parity_limit": 0.02,
+    "nonpadding_token_parity_passed": false,
+    "nonpadding_token_relative_difference": 0.11529960947432245,
+    "padded_token_parity_passed": true,
+    "targeted_nonpadding_training_tokens": 306766
+  },
+  "development_benchmark_exposure_during_training": false,
+  "recipe_sha256": "4a9c6043f72d4f5b83dad774ffcd208e17f8c9738c9b34b0ab06919ba2620590",
+  "schema_version": 1,
+  "seed": 20260720,
+  "training_parity_gate_passed": false
+}

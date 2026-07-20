@@ -615,3 +615,18 @@ This log separates proposals from approved decisions. A proposal does not author
 - **Consequence:** After the setup commit is verified and pushed, train generic first and targeted
   second with the same recipe. Do not tune from training loss or expose development data during
   training.
+
+## 2026-07-20: stop the one-seed comparison at training-token parity
+
+- **Status:** mandatory gate failure before benchmark evaluation
+- **Decision:** Do not evaluate either trained adapter. The generic run processed 271,396
+  non-padding loss tokens and the targeted run 306,766; the 11.5299% relative difference exceeds
+  the frozen 2% maximum even though padded input tensors, steps, examples, and every recipe field
+  match.
+- **Evidence:** Both ignored adapters hash exactly to their summaries, load offline on CUDA, and
+  offload zero parameters. Parity evidence SHA-256 is recorded with the final commit.
+- **Rationale:** Padding tokens are masked from loss, so equal 512-token tensor shapes do not equalize
+  learning exposure. Evaluating now would confound curriculum targeting with token volume.
+- **Consequence:** The frozen 814-example evaluator remains unused for both adapters; no one-seed
+  result or category effect exists. Do not tune or retrain without a separately approved design that
+  freezes equal loss-bearing token budgets before optimizer execution.
