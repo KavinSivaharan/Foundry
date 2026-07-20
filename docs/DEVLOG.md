@@ -2216,3 +2216,51 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
 - **Errors or uncertainty:** Expected Windows LF-to-CRLF notices are non-fatal. Live `file:///` UI testing remains blocked by browser policy; static packet integrity tests pass.
 - **Gate status:** Dataset publication gate **PASSED**.
 - **Next action:** Fetch without integration, require the unchanged remote tip, stage exactly the 20 reviewed paths, repeat index-only scope/safety checks, commit `data: generate matched 500-example signal datasets`, push normally, and confirm clean `0/0` synchronization.
+
+### 2026-07-20 - Fast-Track 8A dataset commit published
+
+- **Action performed:** Fetched without integration, verified `origin/main` remained unchanged, staged exactly 21 reviewed content-free implementation/evidence/documentation paths, repeated scope and whitespace checks, and committed with a temporary process-only reuse of the latest repository author identity because Git configuration was intentionally left untouched.
+- **Result:** Commit `021517438e62210bc37a783269f4b7f367570745` (`data: generate matched 500-example signal datasets`) was pushed. Local and `origin/main` match with `0/0` divergence and a clean worktree. No raw dataset, rendered question, review page, environment, cache, adapter, or prediction was pushed.
+- **Errors or uncertainty:** The first commit command failed because this shell had no author identity. No Git configuration was changed; the retry used environment variables only.
+- **Gate status:** Dataset publication gate **PASSED**.
+- **Next action:** Create and validate the isolated native-Windows QLoRA environment.
+
+### 2026-07-20 - Fast-Track 8B training environment created
+
+- **Action performed:** Created ignored `.venv-training` with CPython 3.12.10 and installed the predeclared minimal stack: PyTorch 2.5.1+cu121, Transformers 4.51.3, tokenizers 0.21.4, PEFT 0.15.2, TRL 0.17.0, bitsandbytes 0.49.2, and Accelerate 1.7.0. Ran dependency, import, CUDA, NF4, and paged-optimizer probes.
+- **Result:** Environment creation took 4.59 seconds and dependency installation 123.86 seconds. `pip check` passes; CUDA reports RTX 3080 with 10,736,893,952 bytes. Native NF4 CUDA matrix multiplication and `PagedAdamW8bit` update both pass, reserving 23,068,672 bytes in the probe.
+- **Errors or uncertainty:** The first low-level probe called an outdated internal `functional.matmul_4bit` location and failed before work; the unchanged public `bitsandbytes.matmul_4bit` API then passed. No package changed.
+- **Gate status:** Training-environment gate **PASSED**.
+- **Next action:** Freeze the exact lock, QLoRA recipe, SFT formatting hash, and 32-step smoke implementation before the first optimizer step.
+
+### 2026-07-20 - Fast-Track 8B QLoRA recipe frozen
+
+- **Action performed:** Added an isolated training dependency lock, a strict typed QLoRA recipe, exact chat-format contract, offline data loader, quantized LoRA runtime, final-adapter hashing, reload/inference check, and focused configuration tests. Added `.venv-training/` to the exact Git ignore list after confirming the general `.venv/` entry did not cover it.
+- **Reason:** The generic and targeted runs must share one immutable recipe, and no optimizer step may occur until the model revision, tokenizer/chat hashes, dependency lock, SFT formatting, quantization, LoRA modules, optimizer, step count, and checkpoint rule are frozen.
+- **Result:** Recipe SHA-256 is `4a9c6043f72d4f5b83dad774ffcd208e17f8c9738c9b34b0ab06919ba2620590`; SFT-format SHA-256 is `34d894187c86e47538dd422b2487de6802627a2435ce216dd69f76a2ed568f14`; dependency-lock SHA-256 is `fc158cd278124af82406a110afb5efcde2346776dce79875fe3cf6aa5ccb4755`. Focused Ruff, strict Mypy, and four unit tests pass.
+- **Errors or uncertainty:** The 32-step smoke has not yet run, so full NF4 model loading, backward compatibility, optimizer stability, peak memory, adapter serialization, and reload inference remain gated. No hyperparameter has been tuned.
+- **Next action:** Run exactly 32 optimizer steps on at most 128 targeted training records and stop if any compatibility or memory requirement fails.
+
+### 2026-07-20 - Fast-Track 8B deterministic CUDA preflight correction
+
+- **Action performed:** Launched the frozen smoke once, observed a fail-closed cuBLAS determinism error on the first forward pass, confirmed zero optimizer steps completed, and added the required `CUBLAS_WORKSPACE_CONFIG=:4096:8` process setting before the training runtime imports PyTorch.
+- **Reason:** `torch.use_deterministic_algorithms(True)` requires a fixed cuBLAS workspace on CUDA 10.2 or newer. The process-level setting makes the frozen run reproducible without changing any model, data, optimizer, or hyperparameter choice.
+- **Result:** The first launch performed no training and created no accepted smoke result. Qwen loaded in 4-bit on CUDA and reached the first forward operation before PyTorch stopped it exactly as intended.
+- **Errors or uncertainty:** Transformers emitted a Qwen sliding-window/SDPA warning and a PEFT label-name warning; neither caused the stop. Backward, optimizer, memory, save, and reload checks remain untested until the corrected launch completes.
+- **Next action:** Rerun the identical 32-step smoke with the deterministic cuBLAS process contract active.
+
+### 2026-07-20 - Fast-Track 8B 32-step QLoRA compatibility gate passed
+
+- **Action performed:** Loaded the pinned Qwen base from the offline cache in NF4 with double quantization, attached rank-16 LoRA modules to all seven approved projection types, trained exactly 32 optimizer steps on the first 128 frozen targeted training records, evaluated at step 25 on all 50 targeted synthetic-validation records, saved one ignored adapter, reloaded it offline, and completed one deterministic non-benchmark inference.
+- **Reason:** Native Windows 4-bit model loading alone does not prove that forward, backward, paged 8-bit optimization, gradient accumulation/checkpointing, serialization, and reload all work within the RTX 3080 memory gate.
+- **Result:** Gate passed: 32/32 steps, 256 examples processed, 131,072 padded model-input tokens and 50,506 non-padding tokens; logged loss 2.5810 to 0.5413; step-25 validation loss 0.633282; 3,343,800,832 peak allocated and 3,741,319,168 peak reserved VRAM; 2,147,590,144-byte process RSS; 18,464,768 trainable LoRA parameters and no non-LoRA trainable parameters. Runtime was 102.395 seconds after 2.596 seconds setup. The 89,796,953-byte adapter hash is `11159bd5051bf71095952e8ae677ad73d1a7dae545ea7c890634c8155fb77849`; offline reload inference passed.
+- **Errors or uncertainty:** A pre-optimizer launcher attempt failed because the isolated environment lacked the repository import path; a subsequent pre-optimizer attempt stopped on the required cuBLAS deterministic workspace setting. Neither completed an optimizer step. The successful counted run emitted non-fatal sliding-window, PEFT label-name, and inherited sampling-parameter warnings. This smoke checks compatibility, not model quality.
+- **Next action:** Run the complete training-setup verification and publish the second atomic commit before training either final adapter.
+
+### 2026-07-20 - Fast-Track 8B training-setup verification passed
+
+- **Action performed:** Ran repository-wide Ruff formatting/lint, strict Mypy, every unit and integration test, main and training environment dependency checks, whitespace validation, frozen recipe/lock/tokenizer/chat/data hash checks, smoke-gate assertions, secrets scanning, exact and 12-token development-content scanning against all 904 cached development questions, protected/sealed path review, raw/cache/environment tracking checks, adapter/environment ignore checks, tracked-size review, and complete status/diff review.
+- **Reason:** Final adapters may be trained only from a verified published setup that cannot accidentally contain benchmark content, raw data, adapters, caches, environment files, secrets, or a mechanically drifting recipe.
+- **Result:** Ruff is clean; strict Mypy reports no issues in 92 source files; 367 unit and six integration tests pass; both environments have no broken requirements; whitespace passes. Recipe and smoke gates pass, and exact/12-token development hits, secret hits, protected/sealed candidate paths, and tracked raw/cache/environment paths are all zero. `.venv-training/` and the smoke adapter are ignored. The two pre-existing content-free files above 1 MiB were reviewed again; no new training file exceeds the threshold.
+- **Errors or uncertainty:** The first full unit collection found a duplicate `test_config.py` module name in the nested training test directory; renaming it to `test_qlora_recipe.py` resolved collection and the full suite passed. Expected Git LF-to-CRLF notices are non-fatal. No sealed-final artifact was opened.
+- **Next action:** Fetch without integration, require `origin/main` to remain synchronized, stage exactly the 16 approved setup files, repeat index-only safety checks, commit `train: validate RTX 3080 QLoRA compatibility`, push normally, and confirm a clean synchronized branch before final training.

@@ -598,3 +598,20 @@ This log separates proposals from approved decisions. A proposal does not author
   pending and does not become official without explicit user decisions.
 - **Consequence:** The frozen datasets may enter only the approved 32-step QLoRA compatibility
   gate after this stage is committed and pushed. Results remain provisional pending human review.
+
+## 2026-07-20: freeze and admit the one-seed QLoRA recipe
+
+- **Status:** selected; 32-step compatibility gate passed
+- **Decision:** Use `foundry-qwen2.5-1.5b-signal-qlora-v1` at recipe SHA-256
+  `4a9c6043...0590` for both final adapters. Preserve the exact base revision, dependency lock,
+  SFT format, NF4/double-quant settings, LoRA modules, 200 optimizer steps, effective batch eight,
+  evaluation cadence, seed, and final-adapter-only rule.
+- **Evidence:** Native Windows NF4 and paged-AdamW probes passed. The counted smoke completed 32
+  steps, finite loss, step-25 validation, save, offline reload, and deterministic inference using
+  3,741,319,168 bytes peak reserved VRAM. Only LoRA parameters were trainable.
+- **Rationale:** The compatibility result proves the approved stack can execute the exact recipe on
+  the RTX 3080 without WSL2, CPU offload, ordinary LoRA substitution, quantization changes, or cloud
+  compute. It does not establish downstream quality.
+- **Consequence:** After the setup commit is verified and pushed, train generic first and targeted
+  second with the same recipe. Do not tune from training loss or expose development data during
+  training.

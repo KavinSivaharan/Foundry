@@ -795,3 +795,16 @@ The frozen 1,100-slot pool contains 550 attempts per dataset. Targeted attempts/
 90/10 split. Passing examples are accepted in immutable order until each cell target is full;
 unused reserves reject as `quota_cell_filled`. Complete question/trace/answer records are ignored;
 tracked evidence contains only IDs, hashes, assignments, counts, and validation summaries.
+
+## Frozen SFT conversion and training contract
+
+Each accepted training record becomes one three-message chat: the fixed arithmetic system prompt,
+the rendered synthetic question plus the required `Final answer: <canonical-number>` instruction,
+and the already verified deterministic training completion. The model never creates or changes a
+label during formatting. The contract hash is `34d89418...8f14`; packing is disabled and sequences
+are deterministically padded or truncated to 512 tokens.
+
+Both matched datasets use recipe `4a9c6043...0590`, seed `20260720`, 200 optimizer steps, and an
+effective batch of eight. The only intended training difference is the frozen curriculum embodied
+by the 450 generic versus 450 targeted records. The ignored adapters must be frozen before any
+development evaluation.

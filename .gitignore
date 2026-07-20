@@ -219,6 +219,7 @@ __marimo__/
 
 # Foundry local data, generated artifacts, and experiment tracking
 .venv-realization/
+.venv-training/
 data/
 datasets/
 checkpoints/

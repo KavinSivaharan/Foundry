@@ -650,3 +650,12 @@ full. This yielded exact quotas without replacement generation or result-depende
 separate Codex audit and human-review packet preserve an important epistemic boundary: automated
 and AI-assisted language checks can support a provisional experiment, but they are not genuine
 human approval.
+
+## Native QLoRA compatibility must test the whole lifecycle
+
+A successful 4-bit tensor probe does not prove that a real model can train. The 32-step gate tested
+quantized loading, LoRA trainability, gradient checkpointing, accumulated backward passes, paged
+8-bit optimization, validation, serialization, offline reload, and generation together. It also
+exposed a useful fail-closed detail: strict CUDA determinism requires the cuBLAS workspace setting
+before PyTorch initializes. Once set, the frozen recipe ran well below the RTX 3080 memory ceiling.
+Loss movement is not interpreted as experiment evidence; the smoke only admits the machinery.

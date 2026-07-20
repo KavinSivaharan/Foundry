@@ -693,3 +693,17 @@ block the provisional one-seed experiment, but a later false label, systematic w
 greater-than-5% clean-sample rejection rate invalidates promotion. Next is a separately isolated
 QLoRA environment and 32-step compatibility smoke; no optimizer step is permitted before the
 dataset-stage commit is verified and pushed.
+
+### Fast-Track 8B: native Windows RTX 3080 QLoRA compatibility (gate passed)
+
+An isolated `.venv-training` uses CPython 3.12.10, PyTorch 2.5.1+cu121, Transformers
+4.51.3, PEFT 0.15.2, TRL 0.17.0, bitsandbytes 0.49.2, and Accelerate 1.7.0. The
+immutable recipe hash is `4a9c6043...0590`; it uses NF4 double quantization, rank-16 LoRA on
+all seven approved projections, 512-token unpacked examples, effective batch eight, paged AdamW
+8-bit, cosine learning rate, and a 200-step final-adapter-only rule.
+
+The exact 32-step compatibility smoke passed on 128 frozen targeted records: forward, backward,
+optimizer, finite loss, evaluation, adapter save, offline reload, and deterministic inference all
+succeeded. Peak reserved VRAM was 3.741 GB, below the 9.6 GiB gate. Next is repository-wide
+verification and publication of the training setup; final generic and targeted runs remain blocked
+until that commit is pushed.

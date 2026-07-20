@@ -381,3 +381,11 @@ defect. This is AI-assisted inspection, not human vetting. The ignored stratifie
 `results/raw/foundry_500x2_signal_review/` contains 100 questions (50 per dataset) for explicit user
 review, uses packet SHA-256 `ca5a3e01...31ab`, and exports
 `foundry-500x2-signal-review.json`. No decision is preselected.
+
+### Training boundary
+
+Fast-Track 8B does not alter the repaired bank or its genuine review evidence. Training consumes
+only the already frozen rendered records and verified completions; no template is selected,
+rewritten, repaired, or filtered from observed loss. The QLoRA smoke adapter and all subsequent
+adapters remain ignored artifacts, while this document continues to describe the language source
+of truth.

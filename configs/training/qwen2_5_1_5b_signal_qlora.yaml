@@ -1,0 +1,58 @@
+schema_version: 1
+recipe_id: foundry-qwen2.5-1.5b-signal-qlora-v1
+model:
+  repo_id: Qwen/Qwen2.5-1.5B-Instruct
+  revision: 989aa7980e4cf806f80c7fef2b1adb7bc71aa306
+  trust_remote_code: false
+quantization:
+  load_in_4bit: true
+  quantization_type: nf4
+  double_quantization: true
+  compute_dtype: float16
+lora:
+  rank: 16
+  alpha: 32
+  dropout: 0.05
+  bias: none
+  target_modules:
+    - q_proj
+    - k_proj
+    - v_proj
+    - o_proj
+    - gate_proj
+    - up_proj
+    - down_proj
+training:
+  max_sequence_length: 512
+  packing: false
+  micro_batch_size: 1
+  gradient_accumulation_steps: 8
+  effective_batch_size: 8
+  optimizer: paged_adamw_8bit
+  learning_rate: 0.0002
+  scheduler: cosine
+  warmup_ratio: 0.05
+  max_optimizer_steps: 200
+  weight_decay: 0.0
+  max_gradient_norm: 1.0
+  gradient_checkpointing: true
+  fp16: true
+  bf16: false
+  seed: 20260720
+  logging_steps: 5
+  evaluation_steps: 25
+  save_rule: final_adapter_only
+hashes:
+  tokenizer_sha256: c0382117ea329cdf097041132f6d735924b697924d6f6fc3945713e96ce87539
+  tokenizer_config_sha256: 5b5d4f65d0acd3b2d56a35b56d374a36cbc1c8fa5cf3b3febbbfabf22f359583
+  chat_template_sha256: cd8e9439f0570856fd70470bf8889ebd8b5d1107207f67a5efb46e342330527f
+  sft_format_sha256: 34d894187c86e47538dd422b2487de6802627a2435ce216dd69f76a2ed568f14
+  requirements_lock_sha256: fc158cd278124af82406a110afb5efcde2346776dce79875fe3cf6aa5ccb4755
+  dataset_sha256:
+    targeted: 987712f6d143b21bfed4972e727204e9a1aa8672a74733d8b9bc286f7a482876
+    generic_control: 49294282d1b233c1ca36a9d1aa4400e4cb01b2c8d115d4450afcec091add2e7e
+  split_sha256:
+    targeted_training: 9f8fef8070a8e3ea9874780d90bc4101d5b7827efaa54fa158eb32a8f5aae464
+    targeted_synthetic_validation: 1ec2074394233dbef217eede5a067ca1d83e0c3fbfe9996675cf0074f75b80ac
+    generic_control_training: 52276f04e2f6fb42a154d3f3dd082809b1ad252e10639996e222926b3f4d41dd
+    generic_control_synthetic_validation: 42f51218dff5d52ba1366159868deb1d49b839d7edaf04871b6847668abbd58c

@@ -620,3 +620,22 @@ Every future experiment must be registered here before a costly run begins. Its 
   `ca5a3e01...31ab`.
 - **Next experiment:** after the dataset-stage commit is published, create the isolated pinned
   training environment and run the predeclared 32-step QLoRA compatibility smoke.
+
+### EXP-TRAIN-001: RTX 3080 QLoRA compatibility smoke
+
+- **Status:** passed; final matched training not yet run
+- **Question:** Can native Windows execute the exact Qwen2.5-1.5B NF4 QLoRA/SFT recipe through
+  backward, paged optimization, validation, save, reload, and inference within 9.6 GiB reserved
+  VRAM?
+- **Frozen method:** Recipe SHA-256 `4a9c6043...0590`; 128 targeted training records; exactly 32
+  optimizer steps; 512-token unpacked inputs; effective batch eight; step-25 validation; one ignored
+  adapter; no benchmark access or tuning.
+- **Result:** Passed. Logged loss moved 2.5810 to 0.5413; validation loss was 0.633282; runtime was
+  102.395 seconds; peak allocated/reserved VRAM was 3,343,800,832/3,741,319,168 bytes. The
+  89,796,953-byte adapter saved, hashed to `11159bd5...849`, reloaded offline, and generated one
+  deterministic original-fixture response.
+- **Limitations:** This tests execution compatibility, not generalization. The final comparison is
+  provisional pending the stratified human language review and, if positive, a separately approved
+  second seed.
+- **Next experiment:** publish the frozen setup, then train generic followed by targeted using the
+  same 200-step recipe without development-benchmark exposure.
