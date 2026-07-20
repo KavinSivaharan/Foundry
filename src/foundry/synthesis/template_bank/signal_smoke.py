@@ -17,12 +17,15 @@ import torch
 
 from foundry.synthesis.contamination import (
     ContaminationOutcome,
+    canonical_number_neutral_identity,
     load_development_questions_for_contamination,
     normalized_text_sha256,
-    numeric_template_sha256,
+    number_neutral_identity_contract_sha256,
+    require_number_neutral_identity,
     token_ngram_jaccard,
 )
 from foundry.synthesis.deduplication import DeduplicationIndex
+from foundry.synthesis.generators import CandidateDraft
 from foundry.synthesis.pipeline import _verify
 from foundry.synthesis.quality import validate_rendered_candidate
 from foundry.synthesis.realization import validate_realization
@@ -34,10 +37,8 @@ from foundry.synthesis.template_bank.policy import load_policy
 from foundry.synthesis.template_bank.renderer import render_with_template
 from foundry.synthesis.template_bank.signal_allocator import (
     LatentCandidate,
-    SlotRequest,
     _generate,
     _latent_hash,
-    _match_mode_candidates,
     _mode,
     _pool_for_mode,
 )
@@ -85,7 +86,27 @@ class ReviewScheduleRecord:
     sentence_plan_id: str
     scenario_domain: str
     render_signature_sha256: str
-    predicted_number_neutral_sha256: str
+    rendered_text_sha256: str
+    number_neutral_sha256: str
+    identity_contract_sha256: str
+
+
+@dataclass(frozen=True)
+class _ReviewSlotContext:
+    slot: dict[str, object]
+    draft: CandidateDraft
+    latent_hash: str
+    generator_variant: int
+
+
+@dataclass(frozen=True)
+class _ReviewRenderOption:
+    template: TemplateSpec
+    plan: SentencePlanSpec
+    render_signature_sha256: str
+    rendered_text_sha256: str
+    number_neutral_sha256: str
+    tie_sha256: str
 
 
 def _stable_labels(counts: dict[str, int], material: str) -> list[str]:
@@ -172,25 +193,21 @@ def build_review_schedule(config_path: Path) -> tuple[ReviewScheduleRecord, ...]
     bank = build_template_bank()
     margins = _review_slot_margins(config)
     latent_by_attempt: dict[int, LatentCandidate] = {}
+    used_latent_candidates: set[str] = set()
+    latent_scenario_use: Counter[tuple[str, str, str]] = Counter()
+    latent_lexical_use: Counter[tuple[str, str, str]] = Counter()
+    surface_profile_use: Counter[tuple[str, str, tuple[str, ...]]] = Counter()
     for family in CATEGORY_ORDER:
         for mode in MODE_ORDER[family]:
-            current = [
-                item for item in margins if item["family"] == family and item["mode"] == mode
-            ]
-            requests = tuple(
-                SlotRequest(
-                    slot_index=cast(int, item["attempt_index"]),
-                    group=cast(str, item["group"]),
-                    group_index=cast(int, item["group_index"]),
-                    family=family,
-                    family_index=cast(int, item["family_index"]),
-                    mode=mode,
-                    mode_index=cast(int, item["mode_index"]),
-                    difficulty=cast(str, item["difficulty"]),
-                    output_contract_enabled=cast(bool, item["output"]),
-                    future_split="review",
-                )
-                for item in current
+            current = sorted(
+                (item for item in margins if item["family"] == family and item["mode"] == mode),
+                key=lambda item: canonical_sha256(
+                    {
+                        "seed": config.smoke.master_seed,
+                        "mode": mode,
+                        "attempt": item["attempt_index"],
+                    }
+                ),
             )
             pool = _pool_for_mode(
                 family=family,
@@ -198,26 +215,123 @@ def build_review_schedule(config_path: Path) -> tuple[ReviewScheduleRecord, ...]
                 master_seed=f"{config.smoke.master_seed}:latent-pool",
                 pool_size=512,
             )
-            selected = _match_mode_candidates(requests, pool)
-            for difficulty in DIFFICULTY_ORDER:
-                relevant = sorted(
-                    (item for item in current if item["difficulty"] == difficulty),
-                    key=lambda item: cast(int, item["attempt_index"]),
+            runtime_identities: set[str] = set()
+            required_states = {
+                (cast(str, item["difficulty"]), cast(bool, item["output"])) for item in current
+            }
+            for by_difficulty in pool.values():
+                for difficulty, output_enabled in sorted(required_states):
+                    candidate = by_difficulty.get(difficulty)
+                    if candidate is None:
+                        continue
+                    preview_draft = _generate(
+                        family,
+                        seed=candidate.seed,
+                        difficulty=difficulty,
+                        variant=candidate.variant,
+                        output_contract_enabled=output_enabled,
+                    )
+                    runtime_identities.update(
+                        canonical_number_neutral_identity(
+                            render_with_template(preview_draft, template, plan).rendered_question
+                        ).sha256
+                        for template, plan in _plan_options(bank, family, mode)
+                    )
+            if len(runtime_identities) < len(current):
+                raise ValueError(
+                    "unique runtime number-neutral review allocation is infeasible for "
+                    f"{family}/{mode}: {len(current)} required, "
+                    f"{len(runtime_identities)} available"
                 )
-                candidates = selected.get(difficulty, [])
-                for item, latent in zip(relevant, candidates, strict=True):
-                    latent_by_attempt[cast(int, item["attempt_index"])] = latent
+            profile_cache: dict[tuple[str, bool], tuple[str, ...]] = {}
+            for item in current:
+                difficulty = cast(str, item["difficulty"])
+                output_enabled = cast(bool, item["output"])
+                ranked: list[tuple[tuple[int, int, int, str], LatentCandidate]] = []
+                for latent_hash in sorted(pool):
+                    candidate = pool[latent_hash].get(difficulty)
+                    if candidate is None or latent_hash in used_latent_candidates:
+                        continue
+                    cache_key = (latent_hash, output_enabled)
+                    profile = profile_cache.get(cache_key)
+                    if profile is None:
+                        preview_draft = _generate(
+                            family,
+                            seed=candidate.seed,
+                            difficulty=difficulty,
+                            variant=candidate.variant,
+                            output_contract_enabled=output_enabled,
+                        )
+                        profile = tuple(
+                            sorted(
+                                {
+                                    canonical_number_neutral_identity(
+                                        render_with_template(
+                                            preview_draft, template, plan
+                                        ).rendered_question
+                                    ).sha256
+                                    for template, plan in _plan_options(bank, family, mode)
+                                }
+                            )
+                        )
+                        profile_cache[cache_key] = profile
+                    profile_key = (family, mode, profile)
+                    if surface_profile_use[profile_key] >= len(profile):
+                        continue
+                    tie = canonical_sha256(
+                        {
+                            "seed": config.smoke.master_seed,
+                            "attempt": item["attempt_index"],
+                            "latent": latent_hash,
+                        }
+                    )
+                    ranked.append(
+                        (
+                            (
+                                surface_profile_use[profile_key],
+                                latent_scenario_use[(family, mode, candidate.scenario_domain)],
+                                latent_lexical_use[(family, mode, candidate.lexical_family)],
+                                tie,
+                            ),
+                            candidate,
+                        )
+                    )
+                if not ranked:
+                    raise ValueError(
+                        f"runtime-identity-aware latent allocation is infeasible for {family}/{mode}"
+                    )
+                _, latent = min(ranked, key=lambda value: value[0])
+                selected_draft = _generate(
+                    family,
+                    seed=latent.seed,
+                    difficulty=difficulty,
+                    variant=latent.variant,
+                    output_contract_enabled=output_enabled,
+                )
+                selected_profile = tuple(
+                    sorted(
+                        {
+                            canonical_number_neutral_identity(
+                                render_with_template(
+                                    selected_draft, template, plan
+                                ).rendered_question
+                            ).sha256
+                            for template, plan in _plan_options(bank, family, mode)
+                        }
+                    )
+                )
+                latent_by_attempt[cast(int, item["attempt_index"])] = latent
+                used_latent_candidates.add(latent.latent_sha256)
+                latent_scenario_use[(family, mode, latent.scenario_domain)] += 1
+                latent_lexical_use[(family, mode, latent.lexical_family)] += 1
+                surface_profile_use[(family, mode, selected_profile)] += 1
     if len(latent_by_attempt) != 120:
         raise ValueError("review latent matching did not cover every slot")
     used_latent: set[str] = set()
-    used_render: set[str] = set()
-    plan_use: Counter[str] = Counter()
-    scenario_use: Counter[tuple[str, str]] = Counter()
-    records: list[ReviewScheduleRecord] = []
+    contexts: list[_ReviewSlotContext] = []
     for slot in margins:
         family = cast(str, slot["family"])
         mode = cast(str, slot["mode"])
-        group = cast(str, slot["group"])
         difficulty = cast(str, slot["difficulty"])
         output_enabled = cast(bool, slot["output"])
         source = latent_by_attempt[cast(int, slot["attempt_index"])]
@@ -236,72 +350,151 @@ def build_review_schedule(config_path: Path) -> tuple[ReviewScheduleRecord, ...]
         if latent_hash in used_latent:
             raise ValueError("review schedule latent program is not unique")
         used_latent.add(latent_hash)
-        options: list[tuple[tuple[int, int, str], TemplateSpec, SentencePlanSpec]] = []
+        contexts.append(
+            _ReviewSlotContext(
+                slot=slot,
+                draft=draft,
+                latent_hash=latent_hash,
+                generator_variant=variant,
+            )
+        )
+
+    options_by_attempt: dict[int, tuple[_ReviewRenderOption, ...]] = {}
+    for context in contexts:
+        slot = context.slot
+        family = cast(str, slot["family"])
+        mode = cast(str, slot["mode"])
+        attempt_index = cast(int, slot["attempt_index"])
+        options: list[_ReviewRenderOption] = []
         for template, plan in _plan_options(bank, family, mode):
             signature = template.render_signature_hash(plan)
-            if signature in used_render:
-                continue
-            key = f"{template.template_id}/{plan.plan_id}"
+            preview = render_with_template(context.draft, template, plan)
             tie = canonical_sha256(
                 {
                     "seed": config.smoke.master_seed,
-                    "slot": slot["attempt_index"],
-                    "plan": key,
+                    "slot": attempt_index,
+                    "plan": f"{template.template_id}/{plan.plan_id}",
                 }
             )
             options.append(
-                (
-                    (
-                        plan_use[key],
-                        scenario_use[(draft.problem_ir.domain.domain_id, key)],
-                        tie,
-                    ),
-                    template,
-                    plan,
+                _ReviewRenderOption(
+                    template=template,
+                    plan=plan,
+                    render_signature_sha256=signature,
+                    rendered_text_sha256=normalized_text_sha256(preview.rendered_question),
+                    number_neutral_sha256=canonical_number_neutral_identity(
+                        preview.rendered_question
+                    ).sha256,
+                    tie_sha256=tie,
                 )
             )
         if not options:
             raise ValueError("unique review render-signature capacity is exhausted")
-        _, template, plan = min(options, key=lambda item: item[0])
-        render_signature = template.render_signature_hash(plan)
-        used_render.add(render_signature)
-        plan_key = f"{template.template_id}/{plan.plan_id}"
-        plan_use[plan_key] += 1
-        scenario_use[(draft.problem_ir.domain.domain_id, plan_key)] += 1
+        options_by_attempt[attempt_index] = tuple(sorted(options, key=lambda item: item.tie_sha256))
+
+    assignments: dict[int, _ReviewRenderOption] = {}
+    used_render: set[str] = set()
+    used_exact: set[str] = set()
+    used_number_neutral: set[str] = set()
+
+    for family in CATEGORY_ORDER:
+        attempt_order = tuple(
+            cast(int, context.slot["attempt_index"])
+            for context in contexts
+            if context.slot["family"] == family
+        )
+        family_assignment: dict[int, _ReviewRenderOption] | None = None
+        for search_round in range(4096):
+            local_render: set[str] = set()
+            local_exact: set[str] = set()
+            local_number_neutral: set[str] = set()
+            trial: dict[int, _ReviewRenderOption] = {}
+            ordered_attempts = sorted(
+                attempt_order,
+                key=lambda index: canonical_sha256(
+                    {
+                        "seed": config.smoke.master_seed,
+                        "family": family,
+                        "search_round": search_round,
+                        "attempt": index,
+                    }
+                ),
+            )
+            for attempt_index in ordered_attempts:
+                render_options = [
+                    option
+                    for option in options_by_attempt[attempt_index]
+                    if option.render_signature_sha256 not in used_render | local_render
+                    and option.rendered_text_sha256 not in used_exact | local_exact
+                    and option.number_neutral_sha256
+                    not in used_number_neutral | local_number_neutral
+                ]
+                render_options.sort(
+                    key=lambda option: canonical_sha256(
+                        {
+                            "seed": config.smoke.master_seed,
+                            "family": family,
+                            "search_round": search_round,
+                            "attempt": attempt_index,
+                            "option": option.tie_sha256,
+                        }
+                    )
+                )
+                if not render_options:
+                    break
+                chosen = render_options[0]
+                trial[attempt_index] = chosen
+                local_render.add(chosen.render_signature_sha256)
+                local_exact.add(chosen.rendered_text_sha256)
+                local_number_neutral.add(chosen.number_neutral_sha256)
+            if len(trial) == len(attempt_order):
+                family_assignment = trial
+                used_render.update(local_render)
+                used_exact.update(local_exact)
+                used_number_neutral.update(local_number_neutral)
+                break
+        if family_assignment is None:
+            raise ValueError(
+                f"unique runtime number-neutral review allocation is infeasible for {family}"
+            )
+        assignments.update(family_assignment)
+
+    records: list[ReviewScheduleRecord] = []
+    for context in contexts:
+        slot = context.slot
+        draft = context.draft
         attempt_index = cast(int, slot["attempt_index"])
+        option = assignments[attempt_index]
         slot_id = f"signal-review-{attempt_index:03d}-{canonical_sha256(slot)[:12]}"
         records.append(
             ReviewScheduleRecord(
                 attempt_index=attempt_index,
                 slot_id=slot_id,
-                group=group,
-                category=family,
-                mode=mode,
-                difficulty=difficulty,
-                output_contract_enabled=output_enabled,
-                latent_seed=seed,
-                generator_variant=variant,
+                group=cast(str, slot["group"]),
+                category=cast(str, slot["family"]),
+                mode=cast(str, slot["mode"]),
+                difficulty=cast(str, slot["difficulty"]),
+                output_contract_enabled=cast(bool, slot["output"]),
+                latent_seed=draft.random_seed,
+                generator_variant=context.generator_variant,
                 candidate_id=draft.candidate_id,
-                latent_program_sha256=latent_hash,
+                latent_program_sha256=context.latent_hash,
                 semantic_ir_sha256=draft.semantic_ir_sha256,
-                template_id=template.template_id,
-                sentence_plan_id=plan.plan_id,
+                template_id=option.template.template_id,
+                sentence_plan_id=option.plan.plan_id,
                 scenario_domain=draft.problem_ir.domain.domain_id,
-                render_signature_sha256=render_signature,
-                predicted_number_neutral_sha256=canonical_sha256(
-                    {
-                        "template": template.template_id,
-                        "plan": plan.plan_id,
-                        "scenario": draft.problem_ir.domain.domain_id,
-                        "mode": mode,
-                    }
-                ),
+                render_signature_sha256=option.render_signature_sha256,
+                rendered_text_sha256=option.rendered_text_sha256,
+                number_neutral_sha256=option.number_neutral_sha256,
+                identity_contract_sha256=number_neutral_identity_contract_sha256(),
             )
         )
     if len({item.render_signature_sha256 for item in records}) != 120:
         raise ValueError("review render signatures are not unique")
-    if len({item.predicted_number_neutral_sha256 for item in records}) != 120:
-        raise ValueError("predicted review number-neutral signatures are not unique")
+    if len({item.rendered_text_sha256 for item in records}) != 120:
+        raise ValueError("review rendered-text identities are not unique")
+    if len({item.number_neutral_sha256 for item in records}) != 120:
+        raise ValueError("review runtime number-neutral identities are not unique")
     return tuple(records)
 
 
@@ -346,6 +539,15 @@ def load_review_schedule(config: SignalPilotConfig) -> tuple[ReviewScheduleRecor
         raise ValueError("review schedule has duplicate latent programs")
     if len({item.render_signature_sha256 for item in records}) != 120:
         raise ValueError("review schedule has duplicate render signatures")
+    if len({item.rendered_text_sha256 for item in records}) != 120:
+        raise ValueError("review schedule has duplicate rendered-text identities")
+    if len({item.number_neutral_sha256 for item in records}) != 120:
+        raise ValueError("review schedule has duplicate runtime number-neutral identities")
+    if any(
+        item.identity_contract_sha256 != number_neutral_identity_contract_sha256()
+        for item in records
+    ):
+        raise ValueError("review schedule identity contract differs")
     return records
 
 
@@ -370,7 +572,9 @@ def _review_record(value: object) -> ReviewScheduleRecord:
         sentence_plan_id=cast(str, item["sentence_plan_id"]),
         scenario_domain=cast(str, item["scenario_domain"]),
         render_signature_sha256=cast(str, item["render_signature_sha256"]),
-        predicted_number_neutral_sha256=cast(str, item["predicted_number_neutral_sha256"]),
+        rendered_text_sha256=cast(str, item["rendered_text_sha256"]),
+        number_neutral_sha256=cast(str, item["number_neutral_sha256"]),
+        identity_contract_sha256=cast(str, item["identity_contract_sha256"]),
     )
 
 
@@ -440,7 +644,16 @@ def _run_once(
         generation_seconds = time.perf_counter() - generation_start
         render_signature = template.render_signature_hash(plan)
         rendered_hash = normalized_text_sha256(draft.rendered_question)
-        numeric_hash = numeric_template_sha256(draft.rendered_question)
+        identity = require_number_neutral_identity(
+            draft.rendered_question, scheduled.number_neutral_sha256
+        )
+        numeric_hash = identity.sha256
+        if (
+            rendered_hash != scheduled.rendered_text_sha256
+            or render_signature != scheduled.render_signature_sha256
+            or scheduled.identity_contract_sha256 != number_neutral_identity_contract_sha256()
+        ):
+            raise ValueError("review schedule/runtime surface identity mismatch")
 
         verification_start = time.perf_counter()
         language_reasons = tuple(
@@ -633,7 +846,9 @@ def run_signal_review_smoke(repository_root: Path, config_path: Path) -> dict[st
     exact_duplicates = len(counted) - len({item.rendered_text_sha256 for item in counted})
     latent_duplicates = len(counted) - len({item.latent_program_sha256 for item in counted})
     render_duplicates = len(counted) - len({item.render_signature_sha256 for item in counted})
-    number_neutral_hashes = [numeric_template_sha256(item.rendered_question) for item in counted]
+    number_neutral_hashes = [
+        canonical_number_neutral_identity(item.rendered_question).sha256 for item in counted
+    ]
     number_neutral_duplicates = len(counted) - len(set(number_neutral_hashes))
     category_acceptance = _acceptance(counted, "category")
     full_schedule_summary = json.loads(
@@ -708,6 +923,8 @@ def run_signal_review_smoke(repository_root: Path, config_path: Path) -> dict[st
         "deterministic_language_defects": language_defects,
         "exact_duplicates": exact_duplicates,
         "number_neutral_duplicates": number_neutral_duplicates,
+        "schedule_runtime_identity_mismatches": 0,
+        "schedule_identity_contract_sha256": number_neutral_identity_contract_sha256(),
         "render_signature_duplicates": render_duplicates,
         "duplicate_latent_programs": latent_duplicates,
         "benchmark_lexical_rejections": sum(

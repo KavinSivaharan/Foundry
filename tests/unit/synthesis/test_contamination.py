@@ -1,7 +1,12 @@
+import pytest
+
 from foundry.synthesis.contamination import (
     ContaminationOutcome,
     assess_pair,
+    canonical_number_neutral_identity,
+    number_neutral_identity_contract_sha256,
     numeric_template_sha256,
+    require_number_neutral_identity,
     token_ngram_jaccard,
 )
 
@@ -84,3 +89,38 @@ def test_dissimilar_pair_passes_all_frozen_pairwise_checks() -> None:
 
     assert decision.outcome is ContaminationOutcome.PASS
     assert token_ngram_jaccard("one two three", "seven eight nine", size=2) == 0.0
+
+
+def test_canonical_number_neutral_identity_preserves_frozen_semantics() -> None:
+    identity = canonical_number_neutral_identity("A shelf holds 12 boxes!")
+
+    assert identity.normalized_text == "a shelf holds <num> boxes"
+    assert identity.sha256 == numeric_template_sha256("A shelf holds 12 boxes!")
+    assert len(number_neutral_identity_contract_sha256()) == 64
+
+
+@pytest.mark.parametrize(
+    ("left", "right"),
+    (
+        ("A drone plan permits 4 kits.", "A drone plan permits 19 kits!"),
+        ("The weighted mean uses 3 groups.", "The weighted mean uses 8 groups."),
+        ("A textile ledger records 6 spools.", "A textile ledger records 42 spools."),
+        ("Count 2 valid reef allocations.", "Count 11 valid reef allocations."),
+        ("A robot schedule has 5 arrangements.", "A robot schedule has 23 arrangements."),
+    ),
+)
+def test_metadata_cannot_make_identical_runtime_surfaces_unique(left: str, right: str) -> None:
+    assert canonical_number_neutral_identity(left).sha256 == (
+        canonical_number_neutral_identity(right).sha256
+    )
+
+
+def test_distinct_normalized_surfaces_remain_distinct() -> None:
+    assert canonical_number_neutral_identity("Count 4 valid allocations.").sha256 != (
+        canonical_number_neutral_identity("Find the average of 4 readings.").sha256
+    )
+
+
+def test_schedule_runtime_identity_mismatch_fails_closed() -> None:
+    with pytest.raises(ValueError, match="schedule/runtime"):
+        require_number_neutral_identity("Count 4 valid allocations.", "0" * 64)

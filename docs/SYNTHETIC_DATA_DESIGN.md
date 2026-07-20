@@ -685,6 +685,19 @@ ratio-scale (336), percentage (104), combined-rate (384), equal-distribution (25
 (90) program domains. Abundant modes are still bounded by semantic-frame balance. Per the capacity
 gate, no allocator, candidate schedule, smoke, replay, or review packet follows.
 
+## Runtime-exact number-neutral scheduling contract
+
+Milestone 7C removes scheduler-only predicted number-neutral identities. Schedule construction must
+deterministically render each option, call `canonical_number_neutral_identity`, store its SHA-256 and
+normalizer-contract hash, and require stable equality when runtime recomputes the identity.
+Semantic-frame, template, scenario, lexical, difficulty, and output-track metadata remain provenance
+and balancing inputs only; they cannot override a rendered-surface collision.
+
+The complete 2,504-slot reconstruction is blocked under unchanged caps. Weighted-average has eight
+runtime identities in the complete fixed pool. Targeted needs 70 attempts but can admit at most 40;
+generic needs 100 but can admit at most 48. The Stage D gate therefore prevents a new review schedule,
+smoke, replay, review packet, dataset generation, or training.
+
 ## Signal-first 1,000 + 1,000 capacity result
 
 The reduced pilot freezes 1,000 accepted examples per dataset, 900/100 train/validation splits, 200

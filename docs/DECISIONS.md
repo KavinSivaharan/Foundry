@@ -2,6 +2,14 @@
 
 This log separates proposals from approved decisions. A proposal does not authorize implementation.
 
+## D-030 — Use the runtime normalizer as the sole scheduling identity and stop on exact capacity
+
+- **Date:** 2026-07-19
+- **Status:** implemented in Milestone 7C; full schedule gate failed
+- **Decision:** Both scheduling and runtime call `canonical_number_neutral_identity`; scheduler metadata may remain diagnostic but cannot establish uniqueness. A schedule/runtime hash mismatch fails closed.
+- **Evidence:** All five Milestone 7B collisions differed only in metadata erased by runtime normalization. Exhaustive evaluation of the fixed weighted-average candidate pool found eight runtime identities. Frozen caps permit at most 40 targeted and 48 generic weighted-average attempts, below the required 70 and 100.
+- **Consequence:** The prior 2,504-slot metadata-based schedule remains preserved negative evidence but cannot authorize generation. No fresh smoke or assisted packet is issued. Any next proposal must expand genuinely distinct reviewed surface forms or explicitly revise the frozen reuse policy; it may not weaken runtime normalization post hoc.
+
 ## D-029 — Use feasible submode balancing; retain runtime identity as authoritative
 
 - **Date:** 2026-07-19

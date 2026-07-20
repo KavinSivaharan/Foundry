@@ -9,6 +9,12 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import cast
 
+from foundry.synthesis.contamination import (
+    canonical_number_neutral_identity,
+    normalized_text_sha256,
+    number_neutral_identity_contract_sha256,
+    require_number_neutral_identity,
+)
 from foundry.synthesis.generators import CandidateDraft
 from foundry.synthesis.generators.bookkeeping import generate_bookkeeping
 from foundry.synthesis.generators.discrete import generate_discrete
@@ -18,6 +24,7 @@ from foundry.synthesis.schema import DifficultyLevel
 from foundry.synthesis.taxonomy import FailureCategory
 from foundry.synthesis.template_bank.bank import build_template_bank
 from foundry.synthesis.template_bank.contracts import SentencePlanSpec, TemplateSpec
+from foundry.synthesis.template_bank.renderer import render_with_template
 from foundry.synthesis.template_bank.reuse import load_contract
 from foundry.synthesis.template_bank.signal_pilot import (
     CATEGORY_ORDER,
@@ -114,9 +121,11 @@ class PilotScheduleRecord:
     sentence_plan_id: str
     scenario_domain: str
     lexical_family: str
-    predicted_render_signature_sha256: str
-    predicted_number_neutral_sha256: str
-    predicted_candidate_identity_sha256: str
+    render_signature_sha256: str
+    rendered_text_sha256: str
+    number_neutral_sha256: str
+    schedule_identity_contract_sha256: str
+    candidate_identity_sha256: str
     primary_evidence_sha256: str
     independent_evidence_sha256: str
     verifier_agreement: bool
@@ -440,15 +449,21 @@ def _choose_template_plan(
     *,
     request: SlotRequest,
     latent: LatentCandidate,
+    draft: CandidateDraft,
     bank: tuple[TemplateSpec, ...],
     plan_cap: int,
     plan_scenario_cap: int,
     frame_cap: int,
+    number_neutral_cap: int,
     plan_use: Counter[tuple[str, str, str]],
     plan_scenario_use: Counter[tuple[str, str, str, str]],
     frame_use: Counter[tuple[str, str, str]],
-) -> tuple[TemplateSpec, SentencePlanSpec]:
-    options: list[tuple[tuple[int, int, int, str], TemplateSpec, SentencePlanSpec]] = []
+    number_neutral_use: Counter[tuple[str, str, str]],
+    exact_hashes: set[str],
+) -> tuple[TemplateSpec, SentencePlanSpec, str, str]:
+    options: list[
+        tuple[tuple[int, int, int, int, str], TemplateSpec, SentencePlanSpec, str, str]
+    ] = []
     for template in _compatible_templates(request.family, request.mode, bank):
         frame_key = (request.group, request.family, template.template_id)
         if frame_use[frame_key] >= frame_cap:
@@ -466,6 +481,17 @@ def _choose_template_plan(
                 or plan_scenario_use[scenario_key] >= plan_scenario_cap
             ):
                 continue
+            preview = render_with_template(draft, template, plan)
+            exact_hash = normalized_text_sha256(preview.rendered_question)
+            number_neutral_hash = canonical_number_neutral_identity(
+                preview.rendered_question
+            ).sha256
+            number_neutral_key = (request.group, request.family, number_neutral_hash)
+            if (
+                exact_hash in exact_hashes
+                or number_neutral_use[number_neutral_key] >= number_neutral_cap
+            ):
+                continue
             tie = canonical_sha256(
                 {
                     "slot": request.slot_id,
@@ -477,9 +503,10 @@ def _choose_template_plan(
                 frame_use[frame_key],
                 plan_use[plan_key],
                 plan_scenario_use[scenario_key],
+                number_neutral_use[number_neutral_key],
                 tie,
             )
-            options.append((score, template, plan))
+            options.append((score, template, plan, exact_hash, number_neutral_hash))
     if not options:
         raise ValueError(
             "template allocator exhausted a frozen plan or scenario cap: "
@@ -487,7 +514,7 @@ def _choose_template_plan(
             f"{latent.scenario_domain}; plan_cap={plan_cap}; "
             f"plan_scenario_cap={plan_scenario_cap}; frame_cap={frame_cap}"
         )
-    _, template, plan = min(options, key=lambda item: item[0])
+    _, template, plan, exact_hash, number_neutral_hash = min(options, key=lambda item: item[0])
     frame_use[(request.group, request.family, template.template_id)] += 1
     plan_use[(request.group, request.family, f"{template.template_id}:{plan.plan_id}")] += 1
     plan_scenario_use[
@@ -498,7 +525,9 @@ def _choose_template_plan(
             latent.scenario_domain,
         )
     ] += 1
-    return template, plan
+    number_neutral_use[(request.group, request.family, number_neutral_hash)] += 1
+    exact_hashes.add(exact_hash)
+    return template, plan, exact_hash, number_neutral_hash
 
 
 def _frame_cap(
@@ -580,6 +609,8 @@ def build_full_schedule(
     plan_use: Counter[tuple[str, str, str]] = Counter()
     plan_scenario_use: Counter[tuple[str, str, str, str]] = Counter()
     frame_use: Counter[tuple[str, str, str]] = Counter()
+    number_neutral_use: Counter[tuple[str, str, str]] = Counter()
+    exact_hashes: set[str] = set()
     records: list[PilotScheduleRecord] = []
     for request in requests:
         source = latent_for_slot[request.slot_id]
@@ -604,30 +635,22 @@ def build_full_schedule(
             frame_count=frame_count,
             config=config,
         )
-        template, plan = _choose_template_plan(
+        template, plan, rendered_text_hash, number_neutral_hash = _choose_template_plan(
             request=request,
             latent=latent,
+            draft=draft,
             bank=bank,
             plan_cap=attempt_caps["sentence_plan"],
             plan_scenario_cap=attempt_caps["plan_scenario_domain"],
             frame_cap=frame_cap,
+            number_neutral_cap=attempt_caps["number_neutral"],
             plan_use=plan_use,
             plan_scenario_use=plan_scenario_use,
             frame_use=frame_use,
+            number_neutral_use=number_neutral_use,
+            exact_hashes=exact_hashes,
         )
         render_signature = template.render_signature_hash(plan)
-        predicted_number_neutral = canonical_sha256(
-            {
-                "family": request.family,
-                "mode": request.mode,
-                "template": template.template_id,
-                "plan": plan.plan_id,
-                "scenario": latent.scenario_domain,
-                "target": latent.target_type,
-                "difficulty": request.difficulty,
-                "semantic_ir": latent.semantic_ir_sha256,
-            }
-        )
         candidate_identity = canonical_sha256(
             {
                 "latent": latent.latent_sha256,
@@ -658,9 +681,11 @@ def build_full_schedule(
                 sentence_plan_id=plan.plan_id,
                 scenario_domain=latent.scenario_domain,
                 lexical_family=latent.lexical_family,
-                predicted_render_signature_sha256=render_signature,
-                predicted_number_neutral_sha256=predicted_number_neutral,
-                predicted_candidate_identity_sha256=candidate_identity,
+                render_signature_sha256=render_signature,
+                rendered_text_sha256=rendered_text_hash,
+                number_neutral_sha256=number_neutral_hash,
+                schedule_identity_contract_sha256=number_neutral_identity_contract_sha256(),
+                candidate_identity_sha256=candidate_identity,
                 primary_evidence_sha256=latent.primary_evidence_sha256,
                 independent_evidence_sha256=latent.independent_evidence_sha256,
                 verifier_agreement=True,
@@ -691,7 +716,8 @@ def validate_full_schedule(
         "slot_id",
         "latent_program_sha256",
         "semantic_ir_sha256",
-        "predicted_candidate_identity_sha256",
+        "rendered_text_sha256",
+        "candidate_identity_sha256",
     )
     for field in unique_fields:
         if len({getattr(record, field) for record in records}) != len(records):
@@ -731,6 +757,9 @@ def validate_full_schedule(
         )
         for record in records
     )
+    number_neutral_counts = Counter(
+        (record.group, record.family, record.number_neutral_sha256) for record in records
+    )
     for group in GROUP_ORDER:
         for family in CATEGORY_ORDER:
             caps = _derive_group_caps(config, reuse.identity_inventory, group, family)
@@ -753,6 +782,52 @@ def validate_full_schedule(
                 > attempt_caps["plan_scenario_domain"]
             ):
                 raise ValueError("plan-plus-scenario cap exceeded")
+            if (
+                max(
+                    count
+                    for key, count in number_neutral_counts.items()
+                    if key[0] == group and key[1] == family
+                )
+                > attempt_caps["number_neutral"]
+            ):
+                raise ValueError("number-neutral reuse cap exceeded")
+    bank = build_template_bank()
+    template_by_id = {item.template_id: item for item in bank}
+    for record in records:
+        if record.schedule_identity_contract_sha256 != (number_neutral_identity_contract_sha256()):
+            raise ValueError("dry schedule identity contract differs")
+        draft = _generate(
+            record.family,
+            seed=record.latent_seed,
+            difficulty=record.difficulty,
+            variant=record.generator_variant,
+            output_contract_enabled=record.output_contract_enabled,
+        )
+        if (
+            _latent_hash(draft) != record.latent_program_sha256
+            or draft.semantic_ir_sha256 != record.semantic_ir_sha256
+        ):
+            raise ValueError("dry schedule latent reconstruction differs")
+        template = template_by_id.get(record.template_id)
+        if template is None:
+            raise ValueError("dry schedule template is missing")
+        plan = next(
+            (
+                item
+                for item in template.sentence_plan_variants
+                if item.plan_id == record.sentence_plan_id
+            ),
+            None,
+        )
+        if plan is None:
+            raise ValueError("dry schedule sentence plan is missing")
+        rendered = render_with_template(draft, template, plan)
+        require_number_neutral_identity(rendered.rendered_question, record.number_neutral_sha256)
+        if (
+            normalized_text_sha256(rendered.rendered_question) != record.rendered_text_sha256
+            or template.render_signature_hash(plan) != record.render_signature_sha256
+        ):
+            raise ValueError("dry schedule/runtime surface identity mismatch")
     if any(not record.verifier_agreement for record in records):
         raise ValueError("scheduled verifier disagreement")
     if any(
@@ -778,12 +853,19 @@ def validate_full_schedule(
         "target_type_counts": _counter(records, "family", "target_type"),
         "maximum_plan_use": max(plan_counts.values()),
         "maximum_plan_scenario_use": max(scenario_counts.values()),
+        "maximum_number_neutral_use": max(number_neutral_counts.values()),
         "unique_slot_ids": len({record.slot_id for record in records}),
         "unique_latent_programs": len({record.latent_program_sha256 for record in records}),
         "unique_semantic_irs": len({record.semantic_ir_sha256 for record in records}),
-        "unique_predicted_candidate_identities": len(
-            {record.predicted_candidate_identity_sha256 for record in records}
+        "unique_candidate_identities": len(
+            {record.candidate_identity_sha256 for record in records}
         ),
+        "unique_rendered_questions": len({record.rendered_text_sha256 for record in records}),
+        "unique_number_neutral_identities": len(
+            {record.number_neutral_sha256 for record in records}
+        ),
+        "schedule_identity_contract_sha256": number_neutral_identity_contract_sha256(),
+        "schedule_runtime_identity_mismatches": 0,
         "targeted_generic_latent_overlap": len(
             {record.latent_program_sha256 for record in records if record.group == GROUP_ORDER[0]}
             & {record.latent_program_sha256 for record in records if record.group == GROUP_ORDER[1]}

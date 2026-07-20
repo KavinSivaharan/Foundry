@@ -521,3 +521,13 @@ Every future experiment must be registered here before a costly run begins. Its 
 - **Next experiment:** none approved. Decide whether to redesign only target-type/semantic-frame cap
   derivation around the predeclared curriculum compatibility graph, or redefine the signal-first
   quotas, before capacity is audited again.
+
+## EXP-20260719-021 — Runtime-exact signal-pilot scheduling correction
+
+- **Status:** complete; canonical identity integrated; complete schedule gate failed; mandatory stop applied.
+- **Question:** Can the feasible 2,504-slot allocation be reconstructed when scheduler uniqueness uses the exact unchanged runtime number-neutral identity rather than semantic metadata?
+- **Collision evidence:** All five prior pairs differed in frame/template metadata; some also differed in difficulty, output track, scenario, or lexical metadata. Each pair nevertheless had an identical runtime-normalized SHA-256.
+- **Method:** Added one versioned canonical identity service, rendered every schedule option before identity assignment, required schedule/runtime equality, and preserved the production normalizer's NFKC, lowercase, numeric replacement, tokenization, punctuation, and hashing behavior. Mathematical generators, labels, verifiers, templates, and all benchmark-contamination controls remained unchanged.
+- **Capacity result:** The fixed weighted-average pool has 9,265 unique latent programs and 10,512 difficulty realizations but only eight runtime number-neutral identities. Frozen caps give targeted capacity 40/70 and generic capacity 48/100, shortfalls of 30 and 52. The full 2,504-slot reconstruction is therefore mathematically impossible under current controls.
+- **Scope result:** No fresh 120-slot schedule, candidate smoke, replay, assisted packet, complete dataset, inference, training, or sealed-final access occurred. Existing Milestone 7B evidence remains preserved at commit `23c2cdb5ab2a931df6b711b1f3fc571c748035c3`.
+- **Next experiment:** none approved. Decide whether to authorize genuinely distinct reviewed weighted-average surface forms or a separately justified cap-policy revision; do not weaken runtime normalization after observing this result.

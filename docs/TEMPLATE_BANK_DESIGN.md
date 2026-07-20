@@ -298,6 +298,19 @@ fail, no global allocator or 120-slot schedule was implemented and no second pac
 capacity decision concerns mathematical program ranges/modes, not authoring thousands of additional
 sentence plans.
 
+## Runtime-exact surface-capacity finding
+
+The bank's internal render-signature inventory must not be treated as its runtime number-neutral
+inventory. Four weighted-average semantic frames reuse the same four sentence-plan forms, so frame
+and template IDs can disappear completely from the rendered surface. Across the complete fixed
+candidate pool, grammar variation raises the actual runtime identity count to eight, still far below
+the 16 internal signatures and below the quota needed under existing reuse caps.
+
+Scheduling now renders before identity assignment and uses the production normalizer directly. The
+bank wording and normalizer remain frozen. Because the runtime-exact 2,504-slot gate fails, no new
+120-question packet was created. A future proposal must add genuinely reviewed surface capacity or
+make another predeclared policy decision; metadata-only identities cannot be reinstated.
+
 ## Signal-first compatibility audit
 
 The bank remains unchanged at 58 frames and 232 sentence plans. Reducing the pilot to 1,000 accepted

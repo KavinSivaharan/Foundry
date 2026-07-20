@@ -562,6 +562,19 @@ was over-conservative. The next valid proposal is narrower—expand verified lat
 independent program forms in the deficient rate and discrete modes, then rerun capacity before any
 allocator or smoke.
 
+## Metadata identity is not rendered identity
+
+Milestone 7C exposed a fourth capacity layer: a sentence plan, semantic frame, scenario, or lexical
+family can be distinct in metadata while producing the same normalized English surface. Those fields
+are useful for provenance and balance, but they cannot prove example diversity unless their
+differences survive rendering and the production normalizer.
+
+The safe contract is render first, then compute the exact same canonical identity used by runtime,
+and require the scheduled hash to match runtime recomputation. This correction also changes capacity
+accounting. The fixed weighted-average pool has 16 internal render signatures but only eight runtime
+number-neutral identities. Frozen per-identity caps limit it to 40 targeted and 48 generic attempts,
+far below 70 and 100. Once that upper bound fails, changing allocator search order cannot help.
+
 ## Aggregate identity capacity is not compatibility capacity
 
 Milestone 7A exposed a third capacity layer. Even when the surface bank and total latent-program

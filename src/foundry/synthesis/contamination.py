@@ -15,6 +15,17 @@ from foundry.config import load_config
 
 _NUMBER = re.compile(r"(?<!\w)[+-]?(?:\d+/\d+|\d+(?:,\d{3})*(?:\.\d+)?)")
 _TOKEN = re.compile(r"[a-z0-9]+|<num>")
+NUMBER_NEUTRAL_NORMALIZER_VERSION = "foundry-number-neutral-v1"
+_NUMBER_NEUTRAL_CONTRACT = {
+    "version": NUMBER_NEUTRAL_NORMALIZER_VERSION,
+    "unicode_normalization": "NFKC",
+    "case": "lower",
+    "numbers": "replace signed integer decimal comma decimal or fraction with <num>",
+    "tokens": "[a-z0-9]+ or <num>",
+    "punctuation": "discard",
+    "spacing": "single-space token join",
+    "hash": "sha256 utf-8 normalized text",
+}
 
 
 class ContaminationOutcome(StrEnum):
@@ -55,6 +66,15 @@ class DevelopmentQuestion:
     question: str
 
 
+@dataclass(frozen=True)
+class NumberNeutralIdentity:
+    """Canonical number-neutral surface identity shared by scheduling and runtime."""
+
+    normalized_text: str
+    sha256: str
+    normalizer_version: str = NUMBER_NEUTRAL_NORMALIZER_VERSION
+
+
 FROZEN_CONTAMINATION_POLICY = ContaminationPolicy()
 
 
@@ -77,7 +97,33 @@ def normalized_text_sha256(text: str) -> str:
 def numeric_template_sha256(text: str) -> str:
     """Hash wording after replacing all numeric values."""
 
-    return hashlib.sha256(normalize_text(text, replace_numbers=True).encode("utf-8")).hexdigest()
+    return canonical_number_neutral_identity(text).sha256
+
+
+def canonical_number_neutral_identity(text: str) -> NumberNeutralIdentity:
+    """Return the unchanged production number-neutral normalization and its identity."""
+
+    normalized = normalize_text(text, replace_numbers=True)
+    return NumberNeutralIdentity(
+        normalized_text=normalized,
+        sha256=hashlib.sha256(normalized.encode("utf-8")).hexdigest(),
+    )
+
+
+def require_number_neutral_identity(text: str, expected_sha256: str) -> NumberNeutralIdentity:
+    """Fail closed when a scheduled identity differs from runtime recomputation."""
+
+    identity = canonical_number_neutral_identity(text)
+    if identity.sha256 != expected_sha256:
+        raise ValueError("schedule/runtime number-neutral identity mismatch")
+    return identity
+
+
+def number_neutral_identity_contract_sha256() -> str:
+    """Hash the frozen normalization contract without depending on source formatting."""
+
+    payload = json.dumps(_NUMBER_NEUTRAL_CONTRACT, sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 
 def latent_structure_sha256(structure: object) -> str:

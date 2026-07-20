@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "audit_id": "foundry-signal-pilot-runtime-identity-capacity-v1",
+  "status": "blocked",
+  "normalizer": {
+    "source_file": "src/foundry/synthesis/contamination.py",
+    "canonical_function": "canonical_number_neutral_identity",
+    "normalizer_version": "foundry-number-neutral-v1",
+    "source_sha256": "57d77d32b4631aaecacb02d454f39000f7e13fec457b398ff983817df05c3d1f",
+    "identity_contract_sha256": "e57f12e06673c21bb4c257c651d96b791a8b991260a3e5fd7c5fd11bdc3a72eb",
+    "semantics_changed": false
+  },
+  "reconstruction": {
+    "requested_slots": 2504,
+    "completed": false,
+    "first_exhausted_stratum": {
+      "group": "targeted",
+      "family": "rate_ratio_percentage_or_average",
+      "submode": "weighted_average",
+      "scenario_domain": "loom",
+      "sentence_plan_cap": 5,
+      "plan_scenario_domain_cap": 1,
+      "semantic_frame_cap": 18
+    }
+  },
+  "fixed_pool_proof": {
+    "family": "rate_ratio_percentage_or_average",
+    "submode": "weighted_average",
+    "fixed_pool_unique_latents": 9265,
+    "evaluated_difficulty_realizations": 10512,
+    "compatible_render_signatures": 16,
+    "unique_runtime_number_neutral_identities": 8,
+    "runtime_identity_sha256_values": [
+      "187ed7d868dc3ed49412956ae504c29ce85a39e3f79fb96e2768a46e91975347",
+      "5cdc03a61d9bf208d4de315bd5269de06917d55f2bc5d344a82b06846ac8fc64",
+      "6196fca02d7f944c87ae3db1a435b18bd4e77a818ba730735022f180cb797c97",
+      "68e1c158d6eb0d6ba249f730058803a43f97eb164365c92691dcc6caeecfd491",
+      "73697f945d2e2f2e91ae495e166f93a42f4cb8382bb542ddc7deab6d2a854b0b",
+      "7be8725cc6d13b04e5b945b1167bf0ea2bc6d36d02988e26595f0c04bf6117c7",
+      "ab8c45865cd19dc4e5b63bbfed4da770942fa042e67b0ca0887b44819abb9572",
+      "c3e75590df37d859960aaaac3f993ceacc11b3e485b926d9ec42d50f1be4155c"
+    ],
+    "strata": [
+      {
+        "group": "targeted",
+        "required_attempts": 70,
+        "number_neutral_reuse_cap": 5,
+        "mathematical_upper_bound": 40,
+        "shortfall": 30
+      },
+      {
+        "group": "generic_control",
+        "required_attempts": 100,
+        "number_neutral_reuse_cap": 6,
+        "mathematical_upper_bound": 48,
+        "shortfall": 52
+      }
+    ]
+  },
+  "gate": {
+    "complete_2504_slot_schedule": false,
+    "review_schedule_authorized": false,
+    "fresh_smoke_authorized": false,
+    "review_packet_authorized": false,
+    "reason": "The unchanged runtime identities and frozen reuse caps cannot cover the weighted-average attempt quotas."
+  },
+  "safety": {
+    "benchmark_content_committed": false,
+    "sealed_final_accessed": false,
+    "full_dataset_generated": false,
+    "training_run": false
+  }
+}

@@ -2,9 +2,9 @@
 
 Last updated: 2026-07-19
 
-## Current milestone status: signal-first allocation blocked at review identity
+## Current milestone status: signal-first allocation blocked by runtime surface capacity
 
-Milestone 7B verified that the reduced 1,000-targeted plus 1,000-generic signal experiment is mathematically schedulable. A deterministic allocator produced 2,504 unique latent programs with exact dataset, family, difficulty, output-contract, and future split margins. The 120-question review smoke accepted 115 automatically, but five number-neutral runtime collisions failed the zero-duplicate review gate. No review packet, complete dataset, or training run was authorized. The next approved work must align scheduling with the unchanged runtime identity before another smoke.
+Milestone 7C unified scheduling and runtime behind the unchanged canonical number-neutral normalizer, then proved that the previous metadata prediction had overstated usable surface capacity. The fixed weighted-average pool has 16 internal render signatures but only eight actual runtime number-neutral identities. Under the frozen reuse caps, targeted weighted-average capacity is 40 for 70 required attempts and generic capacity is 48 for 100 required attempts. The required 2,504-slot reconstruction therefore failed before a fresh review schedule or smoke was authorized. No review packet, complete dataset, or training run exists. The next decision must address this measured surface-capacity shortfall without weakening the normalizer or duplicate gate.
 
 ## Project objective
 

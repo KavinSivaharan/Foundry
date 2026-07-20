@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 from collections import Counter
 from pathlib import Path
 
@@ -18,6 +19,9 @@ from foundry.synthesis.template_bank.signal_pilot import canonical_sha256, load_
 
 _CONFIG = Path("configs/synthesis/signal_pilot.yaml")
 _POLICY = Path("configs/synthesis/signal_pilot_submode_policy.yaml")
+_RUNTIME_BLOCKER = Path(
+    "results/synthesis_smoke/signal_pilot_runtime_identity_capacity_blocker.json"
+)
 
 
 def _candidate(identity: str, *difficulties: str) -> dict[str, LatentCandidate]:
@@ -50,6 +54,30 @@ def _request(slot: int, difficulty: str) -> SlotRequest:
         output_contract_enabled=False,
         future_split="training",
     )
+
+
+def test_runtime_exact_weighted_average_capacity_blocker_is_accounted_for() -> None:
+    evidence = json.loads(_RUNTIME_BLOCKER.read_text(encoding="utf-8"))
+
+    proof = evidence["fixed_pool_proof"]
+    assert proof["unique_runtime_number_neutral_identities"] == 8
+    assert proof["strata"] == [
+        {
+            "group": "targeted",
+            "required_attempts": 70,
+            "number_neutral_reuse_cap": 5,
+            "mathematical_upper_bound": 40,
+            "shortfall": 30,
+        },
+        {
+            "group": "generic_control",
+            "required_attempts": 100,
+            "number_neutral_reuse_cap": 6,
+            "mathematical_upper_bound": 48,
+            "shortfall": 52,
+        },
+    ]
+    assert evidence["gate"]["complete_2504_slot_schedule"] is False
 
 
 def test_full_slot_margins_are_exact_and_reproducible() -> None:
