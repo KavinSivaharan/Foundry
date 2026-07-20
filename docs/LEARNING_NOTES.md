@@ -634,3 +634,19 @@ an allocator search limit is not scientific evidence: after replacing that incon
 the existing deterministic constructive weighted-average assignment, a different exact discrete
 blocker emerged. Feasibility requires either a complete witness or a conclusive exact failure—not a
 timeout, independent capacity products, or a desired sample size.
+
+## Match what the experiment needs, not every enumerable surface identity
+
+The failed exact schedulers were correct about their own one-use surface rules, but those rules were
+not necessary for a controlled targeted-versus-generic comparison. Fast-Track 8A keeps the
+identities that protect scientific independenceâ€”exact question, normalized question, complete
+latent program, example ID, dataset, and splitâ€”while balancing reuse of genuinely reviewed
+language structures. This produced 1,000 unique, doubly verified examples from the first frozen
+pool without relaxing benchmark-contamination controls.
+
+A fixed reserve pool is also useful only when acceptance is deterministic and quota-local. Primary
+slots filled each exact stratum; reserves remained immutable and were rejected once their cell was
+full. This yielded exact quotas without replacement generation or result-dependent tuning. The
+separate Codex audit and human-review packet preserve an important epistemic boundary: automated
+and AI-assisted language checks can support a provisional experiment, but they are not genuine
+human approval.

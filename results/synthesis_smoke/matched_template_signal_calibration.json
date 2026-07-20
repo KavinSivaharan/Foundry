@@ -1,0 +1,27 @@
+{
+  "benchmark_contamination_changed": false,
+  "calibration_gate_passed": true,
+  "calibration_sha256": "2e1e791511d38ea9eabbe9be3025b477b314d6f466c6538a15e342a41a77aaa1",
+  "config_sha256": "563a52c4a334464e11cee7f1547088b48a3036a7cdbb61328ca7c740ee85582a",
+  "exact_fixture_matches": 8,
+  "fixture_count": 8,
+  "fixture_set_sha256": "63b9eec679ab0a281c9000bd27fc4f271547b1a56cfc2891b85cf386ae742bbe",
+  "frozen_before_generation": true,
+  "mismatched_fixture_ids": [],
+  "policy_contract": {
+    "benchmark_contamination": "unchanged-reject-or-review",
+    "cross_dataset_exact_or_latent": "reject",
+    "exact_question_duplicates": "reject",
+    "frame_cap": "ceil(accepted/compatible_frames)+2",
+    "latent_program_duplicates": "reject",
+    "normalized_exact_duplicates": "reject",
+    "number_neutral_reuse": "allow-within-15-percent-stratum-cap",
+    "policy_id": "matched-template-signal-v1",
+    "scenario_cap": "ceil(accepted/compatible_scenarios)+2",
+    "sentence_plan_cap": "ceil(accepted/compatible_plans)+2"
+  },
+  "policy_id": "matched-template-signal-v1",
+  "policy_sha256": "7e56acfae11db021a435e5c0bb2922bece4a17c0e5d2316c3b24f61ccdb93518",
+  "schema_version": 1,
+  "sealed_final_accessed": false
+}

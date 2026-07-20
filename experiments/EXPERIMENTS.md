@@ -600,3 +600,23 @@ Every future experiment must be registered here before a costly run begins. Its 
 - **Scope result:** No selected size, complete schedule, smoke, replay, assisted packet, dataset,
   training, benchmark evaluation, or sealed-final access.
 - **Next experiment:** none in this architecture. A new project-direction decision is required.
+
+### EXP-SYN-017: matched 500-by-2 signal dataset generation
+
+- **Status:** dataset and automatic-quality gates passed; stratified human review pending
+- **Question:** Can one frozen 550+550 attempt pool produce matched 500-example targeted and
+  generic datasets when reviewed worksheet structures may repeat under bounded balancing?
+- **Frozen method:** `matched-template-signal-v1`; exact targeted family quota `275/117/108` and
+  generic `167/167/166`; 450/50 split; 100 output-track examples per dataset; unchanged generators,
+  dual verifiers, language checks, development contamination model/thresholds, and sealed-final
+  prohibition.
+- **Result:** Exactly 1,100 attempts produced all 1,000 required acceptances; the 100 remaining
+  candidates were quota-filled reserves. False labels, verifier disagreements, language/target
+  defects, exact/latent duplicates, cross-dataset/split overlaps, and contamination findings are
+  all zero. Replay matched exactly. The blind Codex audit recommended all 1,000 at high confidence;
+  genuine human review of the ignored stratified 100-question packet is pending.
+- **Evidence:** Schedule `a70cb62c...5eb`; decision/replay `4574c969...ea93`; targeted dataset
+  `987712f6...2876`; generic `49294282...2e7e`; language audit `e148e8fd...e99d`; packet
+  `ca5a3e01...31ab`.
+- **Next experiment:** after the dataset-stage commit is published, create the isolated pinned
+  training environment and run the predeclared 32-step QLoRA compatibility smoke.

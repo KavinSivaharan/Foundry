@@ -1,0 +1,43 @@
+schema_version: 1
+dataset_id: foundry-matched-template-signal-500x2-v1
+policy_config: configs/synthesis/matched_template_signal.yaml
+submode_policy_config: configs/synthesis/signal_pilot_submode_policy.yaml
+template_reuse_config: configs/synthesis/template_bank_bounded_reuse_candidates.yaml
+semantic_config: configs/synthesis/semantic_all_minilm_l6_v2.yaml
+development_manifest: configs/eval/manifests/gsm1k_development.json
+evaluation_config: configs/eval/gsm1k_qwen2_5_1_5b_final_evaluator.yaml
+master_seed: foundry-matched-template-signal-20260720-v1
+candidate_attempts_total: 1100
+datasets:
+  targeted:
+    accepted_total: 500
+    attempts_total: 550
+    training: 450
+    synthetic_validation: 50
+    output_contract_enabled: 100
+    families:
+      multi_step_bookkeeping_or_omission: {accepted: 275, attempts: 302}
+      rate_ratio_percentage_or_average: {accepted: 117, attempts: 129}
+      constraint_distribution_or_discrete_reasoning: {accepted: 108, attempts: 119}
+  generic_control:
+    accepted_total: 500
+    attempts_total: 550
+    training: 450
+    synthetic_validation: 50
+    output_contract_enabled: 100
+    families:
+      multi_step_bookkeeping_or_omission: {accepted: 167, attempts: 184}
+      rate_ratio_percentage_or_average: {accepted: 167, attempts: 184}
+      constraint_distribution_or_discrete_reasoning: {accepted: 166, attempts: 182}
+paths:
+  schedule_manifest: configs/synthesis/matched_signal_schedule.json
+  dataset_manifest: results/synthesis_smoke/matched_signal_dataset_manifest.json
+  summary: results/synthesis_smoke/matched_signal_dataset_summary.json
+  raw_directory: results/raw/foundry_500x2_signal_data
+  review_directory: results/raw/foundry_500x2_signal_review
+safety:
+  benchmark_answers_allowed: false
+  sealed_final_allowed: false
+  llm_generation_allowed: false
+  replacement_pool_allowed: false
+  training_allowed_before_dataset_gate: false

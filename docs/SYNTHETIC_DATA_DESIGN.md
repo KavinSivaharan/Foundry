@@ -778,3 +778,20 @@ identity, verification, and contamination policies allocate all subordinate cell
 No size passed, so no selected subordinate allocation, complete schedule, smoke, replay, or packet
 exists. The architecture-stop rule prohibits testing another size, multiplier, difficulty change,
 template addition, or generator-range change in this lineage.
+
+## Matched-template signal dataset contract
+
+`matched-template-signal-v1` freezes exact and normalized rendered-question uniqueness, global
+latent-program uniqueness, synthetic-ID uniqueness, dataset/split isolation, unchanged dual
+verification, and unchanged development-contamination screening. Reviewed sentence plans,
+semantic frames, scenarios, target types, reasoning structures, and number-neutral structures may
+repeat under deterministic caps. Plan/frame/scenario caps are
+`ceil(dataset-family acceptance / compatible inventory) + 2`; any one number-neutral identity is
+limited to 15% of its dataset-family acceptance stratum.
+
+The frozen 1,100-slot pool contains 550 attempts per dataset. Targeted attempts/acceptances are
+`302/275`, `129/117`, and `119/108`; generic attempts/acceptances are `184/167`, `184/167`, and
+`182/166`. Stable quota cells jointly encode submode, difficulty, 20% output track, and future
+90/10 split. Passing examples are accepted in immutable order until each cell target is full;
+unused reserves reject as `quota_cell_filled`. Complete question/trace/answer records are ignored;
+tracked evidence contains only IDs, hashes, assignments, counts, and validation summaries.

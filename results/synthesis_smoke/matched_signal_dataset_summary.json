@@ -1,0 +1,94 @@
+{
+  "accepted": 1000,
+  "accepted_by_group_difficulty": {
+    "generic_control/easy": 168,
+    "generic_control/hard": 165,
+    "generic_control/medium": 167,
+    "targeted/easy": 167,
+    "targeted/hard": 166,
+    "targeted/medium": 167
+  },
+  "accepted_by_group_family": {
+    "generic_control/constraint_distribution_or_discrete_reasoning": 166,
+    "generic_control/multi_step_bookkeeping_or_omission": 167,
+    "generic_control/rate_ratio_percentage_or_average": 167,
+    "targeted/constraint_distribution_or_discrete_reasoning": 108,
+    "targeted/multi_step_bookkeeping_or_omission": 275,
+    "targeted/rate_ratio_percentage_or_average": 117
+  },
+  "accepted_by_group_output": {
+    "generic_control/False": 400,
+    "generic_control/True": 100,
+    "targeted/False": 400,
+    "targeted/True": 100
+  },
+  "accepted_by_group_split": {
+    "generic_control/synthetic_validation": 50,
+    "generic_control/training": 450,
+    "targeted/synthetic_validation": 50,
+    "targeted/training": 450
+  },
+  "accepted_exact_duplicates": 0,
+  "accepted_latent_duplicates": 0,
+  "accepted_normalized_duplicates": 0,
+  "attempted": 1100,
+  "attempts_by_group_family": {
+    "generic_control/constraint_distribution_or_discrete_reasoning": 182,
+    "generic_control/multi_step_bookkeeping_or_omission": 184,
+    "generic_control/rate_ratio_percentage_or_average": 184,
+    "targeted/constraint_distribution_or_discrete_reasoning": 119,
+    "targeted/multi_step_bookkeeping_or_omission": 302,
+    "targeted/rate_ratio_percentage_or_average": 129
+  },
+  "benchmark_lexical_rejections": 0,
+  "benchmark_semantic_manual_rejections": 0,
+  "benchmark_semantic_rejections": 0,
+  "config_sha256": "1efec10da3385170c24ac2eed9888767a7aa85b7b961e07dafdbec24b5aed9c6",
+  "counted_decision_sha256": "4574c969c963d68a2ed2a4a80458b0410dfcd37f6250166e13a8075e2c6ea93b",
+  "cross_dataset_exact_overlap": 0,
+  "cross_dataset_latent_overlap": 0,
+  "dataset_generation_gate_passed": true,
+  "dataset_hashes": {
+    "generic_control": "49294282d1b233c1ca36a9d1aa4400e4cb01b2c8d115d4450afcec091add2e7e",
+    "targeted": "987712f6d143b21bfed4972e727204e9a1aa8672a74733d8b9bc286f7a482876"
+  },
+  "dataset_id": "foundry-matched-template-signal-500x2-v1",
+  "deterministic_language_defects": 0,
+  "deterministic_reconstruction_match": true,
+  "false_labels": 0,
+  "independent_verifier_failures": 0,
+  "manifest_sha256": "33ca4041ac3fde472b49834b0c622664835b482e54eccb10c197c749fbce1094",
+  "maximum_frame_usage": 16,
+  "maximum_number_neutral_usage": 6,
+  "maximum_scenario_usage": 14,
+  "maximum_sentence_plan_usage": 4,
+  "peak_process_rss_bytes": 945278976,
+  "primary_verifier_failures": 0,
+  "raw_artifact_bytes": 7747981,
+  "rejected": 100,
+  "rejection_reasons": {
+    "quota_cell_filled": 100
+  },
+  "replay_decision_sha256": "4574c969c963d68a2ed2a4a80458b0410dfcd37f6250166e13a8075e2c6ea93b",
+  "runtime_seconds": 28.040059200000087,
+  "schedule_sha256": "a70cb62ce233724113293de7feedb1b00efe0cd1ba7b607e48831b8cb07dd5eb",
+  "schema_version": 1,
+  "sealed_final_accessed": false,
+  "split_hashes": {
+    "generic_control": {
+      "synthetic_validation": "42f51218dff5d52ba1366159868deb1d49b839d7edaf04871b6847668abbd58c",
+      "training": "52276f04e2f6fb42a154d3f3dd082809b1ad252e10639996e222926b3f4d41dd"
+    },
+    "targeted": {
+      "synthetic_validation": "1ec2074394233dbef217eede5a067ca1d83e0c3fbfe9996675cf0074f75b80ac",
+      "training": "9f8fef8070a8e3ea9874780d90bc4101d5b7827efaa54fa158eb32a8f5aae464"
+    }
+  },
+  "summary_sha256": "69737cabda4ed3c44bed746153ff31c7eb8254f48d1a275fc5d1634857331bc6",
+  "target_mismatches": 0,
+  "train_validation_exact_overlap": 0,
+  "train_validation_latent_overlap": 0,
+  "unique_number_neutral_identities": 680,
+  "unresolved_contamination_cases": 0,
+  "verifier_disagreements": 0
+}

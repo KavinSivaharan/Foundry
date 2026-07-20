@@ -677,3 +677,19 @@ scheduling. No accepted size was selected, so the complete schedule, review smok
 replay, and assisted packet were not created. Per the approved final stop rule, the current
 synthetic-data architecture ends here; the next decision must concern project direction rather
 than another scheduling, cap, template, generator-range, or pilot-size patch.
+
+### Fast-Track 8A: matched 500-example signal datasets (dataset gate passed)
+
+The fast-track decision replaced one-use worksheet-structure scheduling with
+`matched-template-signal-v1` while retaining globally unique exact/normalized questions, latent
+programs, synthetic IDs, and targeted/generic examples. One predeclared pool supplied exactly 550
+attempts per dataset. It produced all 500 targeted and 500 generic acceptances, exact `450/50`
+training/validation splits, exact family quotas, and exactly 100 output-contract examples per
+dataset. All candidates replay exactly, and automatic quality, verification, overlap, and
+development-contamination gates pass.
+
+The ignored stratified human-review packet is pending. Under the approved fast track, this does not
+block the provisional one-seed experiment, but a later false label, systematic wording defect, or
+greater-than-5% clean-sample rejection rate invalidates promotion. Next is a separately isolated
+QLoRA environment and 32-step compatibility smoke; no optimizer step is permitted before the
+dataset-stage commit is verified and pushed.

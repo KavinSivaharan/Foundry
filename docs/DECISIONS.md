@@ -562,3 +562,39 @@ This log separates proposals from approved decisions. A proposal does not author
   rules, add templates, change mathematical ranges, or infer feasibility from latent capacity.
 - **Consequence:** No pilot size, schedule, smoke, packet, dataset, or training run is authorized.
   The next decision is whether to end the synthetic-data line or choose a new research direction.
+
+## 2026-07-20: fast-track matched-template signal experiment
+
+- **Status:** selected and fixture-calibrated before generation
+- **Context:** Repeated exact scheduling searches showed sufficient unique mathematics but failed
+  because self-imposed surface identities treated reviewed worksheet skeletons as one-use capacity.
+- **Decision:** Permanently close capacity-search milestones and use `matched-template-signal-v1`.
+  Exact rendered questions, normalized exact questions, complete latent programs, example IDs, and
+  targeted/generic full examples remain globally unique. Reviewed sentence plans, semantic frames,
+  number-neutral worksheet structures, reasoning structures, scenarios, and target types may repeat
+  under deterministic balancing and frozen concentration caps.
+- **Rationale:** The research question compares targeted versus generic curricula under one language
+  system; it does not require every training question to have a unique sentence skeleton. The
+  immediate scientific priority is measuring that controlled signal.
+- **Evidence:** Eight original fixtures pass 8/8. Fixture SHA-256 is `63b9eec6...2bbe`; policy
+  SHA-256 is `7e56acfa...3518`; configuration SHA-256 is `563a52c4...582a`; calibration SHA-256 is
+  `2e1e7915...aaa1`.
+- **Consequence:** No further pilot-size, multiplier, template-cap, surface-cap, number-neutral-cap,
+  difficulty, capacity-preflight, template-expansion, or realization-model experiment is authorized.
+
+## 2026-07-20: freeze the matched 500-by-2 signal datasets
+
+- **Status:** dataset-generation and automatic-quality gates passed; human sample review pending
+- **Decision:** Freeze the 1,000 accepted examples produced from schedule SHA-256
+  `a70cb62c...5eb`: targeted family counts `275/117/108`, generic counts `167/167/166`, with
+  `450/50` deterministic training/validation splits and exactly 100 output-contract examples in
+  each dataset. Do not remove isolated examples after freeze.
+- **Evidence:** Exactly 1,100 attempts yielded 1,000 acceptances and 100 quota-filled reserves.
+  There were zero false labels, verifier disagreements, language defects, target mismatches, exact
+  or latent duplicates, cross-dataset/split overlaps, or development-contamination findings.
+  Deterministic decision SHA-256 is `4574c969...ea93` on both executions.
+- **Language review:** The blind Codex advisory audit covered all 1,000 rendered questions and found
+  no defect spanning three sentence plans. The ignored 100-question stratified human packet is
+  pending and does not become official without explicit user decisions.
+- **Consequence:** The frozen datasets may enter only the approved 32-step QLoRA compatibility
+  gate after this stage is committed and pushed. Results remain provisional pending human review.

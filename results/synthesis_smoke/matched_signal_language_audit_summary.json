@@ -1,0 +1,22 @@
+{
+  "accepted_questions_audited": 1000,
+  "audit_id": "foundry-matched-signal-codex-language-audit-v1",
+  "audit_sha256": "e148e8fdb73381c392c9bbdf528c91b26cbe749d9abfebdcc749f21dffe9e99d",
+  "confidence": {
+    "high": 1000
+  },
+  "defect_labels": {},
+  "export_filename": "foundry-500x2-signal-review.json",
+  "human_review_status": "pending",
+  "mandatory_candidate_count": 0,
+  "packet_candidate_count": 100,
+  "packet_sha256": "ca5a3e0188440c762d96f100331185f5e8a011f04fe1ef6d2ee3d058027731ab",
+  "recommendations": {
+    "approve": 1000
+  },
+  "review_directory": "results/raw/foundry_500x2_signal_review",
+  "schema_version": 1,
+  "stratified_high_confidence_sample_count": 100,
+  "summary_sha256": "d495aac8c6a557dfa61952d35faef89a02e47dd4599ba2dc78e776bfd0d3914c",
+  "systematic_sentence_plan_defects": 0
+}

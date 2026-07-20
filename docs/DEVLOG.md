@@ -2160,3 +2160,59 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
 - **Errors or uncertainty:** The first size-700 diagnostic hit a generic backtracking proof bound and was rejected as inconclusive. The final allocator uses the pre-existing stable constructive weighted-average assignment, passed focused regression, and then produced a conclusive exact two-type-allocation blocker. Expected Windows LF-to-CRLF notices are non-fatal.
 - **Gate status:** **VERIFIED FAILURE.** No approved accepted size is schedulable. The accurate stopped result is eligible for commit and push; no smoke, replay, packet, complete dataset, or training is permitted.
 - **Next action:** Fetch without integration, require `origin/main` to remain at `b66290b6...ee9`, stage exactly the reviewed 14 paths, repeat index-only scope/whitespace/secret/content/size checks, commit `analysis: record reduced signal-pilot blocker`, push normally, and confirm clean `0/0` synchronization.
+
+### 2026-07-20 - Fast-Track 8A Stage A: starting state verified
+
+- **Action performed:** Read the complete Fast-Track 8A-8C authorization; verified repository root, branch, local/remote tips, divergence, clean worktree, raw ignore boundary, frozen evaluator, generator/verifier tests, repaired bank, genuine review evidence, and contamination tests without opening any sealed-final path.
+- **Result:** Local `main` and `origin/main` both point to `a005dda6bf42d09b53a3d50e30cc7fc5a1d90654`; divergence is `0/0`; the worktree was clean. Genuine review SHA-256 remains `564a8ca5...0791`; 72 focused tests pass.
+- **Errors or uncertainty:** One exploratory hash command named a nonexistent generic template-bank config and reported only that missing path; the actual typed bank and its focused tests were then verified. No state changed.
+- **Gate status:** Starting-state gate **PASSED**.
+- **Next action:** Freeze and fixture-calibrate `matched-template-signal-v1` before generating any candidate.
+
+### 2026-07-20 - Fast-Track 8A Stage B: matched-template policy frozen
+
+- **Action performed:** Formalized global exact/normalized/latent/example uniqueness, balanced repeatability for reviewed language identities, `ceil(accepted/inventory)+2` plan/frame/scenario caps, and a 15% number-neutral concentration limit. Added eight original fixtures covering exact/latent/cross-dataset copies, harmless reviewed reuse, concentration, and benchmark contamination.
+- **Result:** Calibration passes 8/8 fixtures. Fixture SHA-256 is `63b9eec6...2bbe`; policy `7e56acfa...3518`; canonical configuration `563a52c4...582a`; config file `6f2717d5...f753`; calibration `2e1e7915...aaa1`. Ruff and three focused tests pass.
+- **Errors or uncertainty:** None. Benchmark contamination, templates, generators, labels, and verifiers remain unchanged. Number-neutral identity remains measured but is no longer a one-use rejection key.
+- **Gate status:** Policy gate **PASSED**.
+- **Next action:** Freeze the exact 500+500 quotas and 550+550 fixed attempt schedule, then generate without replacements.
+
+### 2026-07-20 - Fast-Track 8A matched dataset implementation
+
+- **Action performed:** Implemented the strict 500-by-2 dataset contract, exact family/mode/difficulty/output/split quota derivation, deterministic latent selection, balanced reviewed-template assignment, and content-free schedule serialization.
+- **Result:** Every scheduled candidate is reconstructible from content-free seeds and assignments; reconstruction checks latent, semantic-IR, exact-text, normalized-text, render-signature, and canonical number-neutral identities. Focused Ruff, strict Mypy, and matched-policy tests pass after resolving only mechanical typing and formatting issues.
+- **Errors or uncertainty:** The content-free schedule has not yet been frozen and no candidate has been screened. This prevents contamination outcomes from influencing allocation.
+- **Gate status:** Implementation preflight **PASSED**.
+- **Next action:** Freeze and hash the complete 1,100-slot schedule, then verify quota and uniqueness invariants before fixed-pool execution.
+
+### 2026-07-20 - Fast-Track 8A fixed schedule frozen
+
+- **Action performed:** Constructed the complete fixed candidate schedule before any benchmark-contamination outcome was inspected, then rebuilt it independently and added focused quota, uniqueness, reconstruction, and tamper-failure tests.
+- **Result:** The schedule contains exactly 1,100 slots, 1,100 unique latent-program hashes, 1,100 unique exact-question hashes, and 1,100 unique synthetic IDs. Family attempts are `302/129/119` targeted and `184/184/182` generic. Maximum planned sentence-plan/frame/scenario use is `5/17/15`; 730 number-neutral identities are present. Schedule SHA-256 is `a70cb62ce233724113293de7feedb1b00efe0cd1ba7b607e48831b8cb07dd5eb`; quota SHA-256 is `282647af2bbba68713aa3c401cfb7a77f177a8d560d1c1c4866236dc12ab1a89`.
+- **Errors or uncertainty:** Number-neutral repetition is intentionally permitted under the frozen 15% stratum cap. The tracked content-free schedule is approximately 1.61 MB and will receive explicit tracked-size review.
+- **Gate status:** Schedule-freeze gate **PASSED**.
+- **Next action:** Execute exactly the frozen 1,100 attempts through all deterministic, dual-verifier, lexical, structural, n-gram, and pinned MiniLM development-contamination gates, reporting at each quarter.
+
+### 2026-07-20 - Fast-Track 8A fixed pool generated and replayed
+
+- **Action performed:** Executed all 1,100 pre-scheduled attempts with no replacement or post-result change, using the repaired bank, typed renderer, dual verifiers, deterministic quality controls, development lexical/n-gram screening, and pinned offline MiniLM. Reconstructed and reran the complete pool.
+- **Result:** Quarter checkpoints were `275/275`, `500/550`, `775/825`, and `1000/1100` accepted. The final 100 rejections were only `quota_cell_filled`. Exact targeted family acceptances are `275/117/108`; generic are `167/167/166`; difficulty is targeted `167/167/166` and generic `168/167/165` for easy/medium/hard; each dataset has 100 output-track examples and a `450/50` split. Both decision hashes are `4574c969...ea93`. Dataset hashes are targeted `987712f6...2876` and generic `49294282...2e7e`.
+- **Errors or uncertainty:** None. Peak process RSS was 945,278,976 bytes; runtime was 28.04 seconds; ignored raw artifacts use 7,747,981 bytes.
+- **Gate status:** Dataset-generation and deterministic-reconstruction gates **PASSED**.
+- **Next action:** Audit all 1,000 accepted question texts blind to labels and build the ignored stratified human-review packet.
+
+### 2026-07-20 - Fast-Track 8A language audit and review packet complete
+
+- **Action performed:** Applied the frozen six-part language rubric to all 1,000 accepted records using only candidate ID and rendered question. Created ignored Markdown, static HTML, Codex audit JSON, and assisted HTML; selected a deterministic 100-question high-confidence sample split 50/50 between datasets and balanced by family, difficulty, and output track.
+- **Result:** Codex advisory recommendations are 1,000 approve, 0 reject, and 0 unsure, all high confidence; no defect category or three-plan systematic issue was found. Audit SHA-256 is `e148e8fd...e99d`; packet SHA-256 is `ca5a3e01...31ab`. Static packet validation confirms 100 unique IDs, matching identity hash, unique DOM IDs, all A/R/U/navigation/export controls, no preselected decision, and Git ignore coverage.
+- **Errors or uncertainty:** This is AI-assisted inspection, not human review. The in-app browser security policy blocked direct `file:///` navigation, so no workaround was used; page verification is static/script-contract validation rather than a live-render claim.
+- **Gate status:** Automatic data-quality gate **PASSED**; genuine human review remains pending and the one-seed result must remain provisional.
+- **Next action:** Update all required records, run repository-wide dataset-stage verification, publish the first atomic commit, then create the isolated training environment.
+
+### 2026-07-20 - Fast-Track 8A dataset-stage verification passed
+
+- **Action performed:** Ran repository-wide Ruff format/lint, strict Mypy, every unit and integration test, `pip check`, and `git diff --check`; validated the policy fixtures, exact quotas, 1,100-slot schedule reconstruction, 1,000 accepted records, manifest/summary/decision hashes, concentration caps, exact/normalized/latent uniqueness, cross-dataset and split isolation, verifier outcomes, contamination outcomes, packet identity and ignore rules. Scanned all 20 candidate paths for high-confidence secrets and exact/12-token matches against 904 locally cached development questions in offline mode; reviewed protected evaluator/generator/verifier/contamination paths, sealed-path changes, raw/environment tracking, and candidate sizes.
+- **Result:** Ruff is clean; strict Mypy reports no issues in 89 source files; 363 unit and six integration tests pass; dependencies and whitespace pass. Secret, exact-development, 12-token-development, protected-path, sealed-path, tracked raw/environment, cap, uniqueness, overlap, verifier, contamination, manifest, summary, and replay inconsistency counts are zero. All ten local data/review artifacts are ignored. The content-free schedule (1,606,584 bytes) and ID/hash manifest (1,200,111 bytes) exceed 1 MiB and were explicitly reviewed; neither contains rendered questions, answers, traces, or complete dataset rows.
+- **Errors or uncertainty:** Expected Windows LF-to-CRLF notices are non-fatal. Live `file:///` UI testing remains blocked by browser policy; static packet integrity tests pass.
+- **Gate status:** Dataset publication gate **PASSED**.
+- **Next action:** Fetch without integration, require the unchanged remote tip, stage exactly the 20 reviewed paths, repeat index-only scope/safety checks, commit `data: generate matched 500-example signal datasets`, push normally, and confirm clean `0/0` synchronization.

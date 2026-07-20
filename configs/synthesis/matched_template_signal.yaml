@@ -1,0 +1,28 @@
+schema_version: 1
+policy_id: matched-template-signal-v1
+fixture_path: configs/synthesis/fixtures/matched_template_signal_fixtures.json
+global_uniqueness:
+  exact_rendered_question: true
+  normalized_exact_rendered_question: true
+  latent_program: true
+  synthetic_example_id: true
+  targeted_generic_full_example: true
+balanced_repeatable_identities:
+  - sentence_plan
+  - semantic_frame
+  - number_neutral_structure
+  - reasoning_structure
+  - scenario_domain
+  - target_type
+concentration:
+  number_neutral_max_percent: 15
+  cap_additive_headroom: 2
+  balance_order: [sentence_plan, semantic_frame, scenario_domain]
+preserved_controls:
+  repaired_template_bank: true
+  mathematical_generators: true
+  canonical_labels: true
+  dual_verifiers: true
+  development_contamination: true
+  benchmark_evaluator: true
+  sealed_final_access: false

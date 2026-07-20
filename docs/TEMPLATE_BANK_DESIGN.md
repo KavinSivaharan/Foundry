@@ -367,3 +367,17 @@ candidate admitted a complete surface assignment under the existing reviewed-pla
 frame, exact-question, and canonical runtime-identity constraints. The blockers occurred in generic
 ratio-scale, rate-total, or discrete two-type allocation depending on size. Because 500 also failed,
 the approved stop rule ends this template-bank scheduling lineage. No new review packet was issued.
+
+### Matched-template reuse and the 500-by-2 dataset
+
+The repaired 58-frame, 232-plan bank remains byte-for-byte unchanged. The fast-track policy treats
+reviewed sentence plans as balanced reusable language components rather than one-use questions.
+The fixed pool used at most 4 accepted examples per dataset/family/plan, 16 per frame, 14 per
+scenario, and 6 per canonical number-neutral identity; all are below their predeclared caps. Every
+accepted exact question and complete latent program remains globally unique.
+
+The blind Codex audit covered all 1,000 accepted surfaces and found no systematic three-plan
+defect. This is AI-assisted inspection, not human vetting. The ignored stratified packet at
+`results/raw/foundry_500x2_signal_review/` contains 100 questions (50 per dataset) for explicit user
+review, uses packet SHA-256 `ca5a3e01...31ab`, and exports
+`foundry-500x2-signal-review.json`. No decision is preselected.
