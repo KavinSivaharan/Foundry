@@ -1,0 +1,36 @@
+schema_version: 1
+policy_id: largest-feasible-fixed-attempt-pool-v1
+base_signal_config: configs/synthesis/signal_pilot.yaml
+submode_policy: configs/synthesis/signal_pilot_submode_policy.yaml
+candidate_order:
+  - {label: "1.15", numerator: 23, denominator: 20}
+  - {label: "1.125", numerator: 9, denominator: 8}
+  - {label: "1.10", numerator: 11, denominator: 10}
+selection_rule: first-complete-exact-schedule-in-descending-order
+family_attempt_rule: ceil(accepted_family_quota_times_multiplier)
+subordinate_policies:
+  submodes: maximally-balanced-feasible-submodes-v1
+  difficulty: minimal-compatible-difficulty-reallocation-v1
+  surface_reuse: submode-local-balanced-surface-reuse-v1
+exact_preflight:
+  actual_runtime_rendered_identities: true
+  deterministic_joint_surface_matching: true
+  lower_candidates_after_first_pass: forbidden
+  unlisted_multiplier: forbidden
+  retry_until_success: forbidden
+stop_rule:
+  if_none_feasible: reduce-accepted-signal-pilot-as-next-architectural-decision
+  smoke_allowed: false
+  review_packet_allowed: false
+preserved_controls:
+  accepted_quotas: true
+  template_wording: true
+  generators_labels_verifiers: true
+  exact_question_uniqueness: true
+  global_latent_program_uniqueness: true
+  targeted_generic_isolation: true
+  train_validation_isolation: true
+  runtime_number_neutral_identity: true
+  plan_frame_scenario_identity_caps: true
+  benchmark_contamination: true
+  sealed_final_access: false

@@ -615,3 +615,13 @@ the intersection of plan, plan-plus-scenario, frame, and runtime-identity caps c
 fixed attempts under the frozen allocation. A useful capacity proof must therefore test the full
 compatibility hypergraph, not only independent per-layer products. Exact matching should be part of
 the gate before a capacity result is called schedulable.
+
+## Oversampling headroom and accepted capacity are different decisions
+
+Milestone 7F separated the accepted-example objective from the candidate-attempt buffer. Reducing a
+125% buffer to 115%, 112.5%, or 110% mechanically lowers family attempts while leaving accepted
+quotas and scientific controls intact. That is valid experimental design, but it does not guarantee
+a feasible schedule. Each reduced pool still failed the same exact generic-percentage surface
+assignment. The broader lesson is that a high aggregate acceptance rate does not establish capacity:
+the fixed pool must be schedulable before generation, and only a complete runtime-exact assignment
+can prove that claim.

@@ -648,3 +648,17 @@ generic complete-packages cannot assign its 121 attempts under the unchanged sen
 plan-plus-scenario, frame, and canonical runtime-identity caps. The schedule gate therefore failed;
 no fresh smoke, replay, or review packet was created. The next permitted decision is whether to
 reduce the signal-pilot fixed attempt pool. Complete dataset generation and training remain blocked.
+
+## Milestone 7F stopped result: every predeclared reduced attempt pool failed exact scheduling
+
+The accepted objective stayed fixed at 1,000 targeted and 1,000 generic examples. Foundry evaluated
+only the approved descending buffers. `1.15` derives 2,302 attempts, `1.125` derives 2,253, and
+`1.10` derives 2,203. Each pool has sufficient unique verified mathematical programs and preserves
+the frozen submode, difficulty, output, split, template-reuse, and contamination policies.
+
+The final uniform exact scheduler cannot assign the generic percentage submode for any candidate
+under the joint reviewed-plan, plan/scenario, semantic-frame, canonical runtime-identity, and exact
+surface controls. No multiplier was selected. Therefore no complete schedule, new 120-question
+smoke, replay, or assisted review packet was created. The next architectural decision is whether to
+reduce the accepted signal pilot itself; no further attempt multiplier may be invented from these
+results.

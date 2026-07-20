@@ -528,3 +528,19 @@ This log separates proposals from approved decisions. A proposal does not author
   changes. The milestone stop rule applies.
 - **Next user decision:** Reduce the signal-pilot attempt pool or stop. Adding weighted-average plans
   would not address the newly measured discrete complete-packages constraint.
+
+## 2026-07-19 - Reject all three reduced fixed-attempt pools after exact preflight
+
+- **Decision:** Evaluate exactly `1.15`, `1.125`, and `1.10` in descending order and select the first
+  complete exact schedule. None passed, so select none and invoke the mandatory stop rule.
+- **Evidence:** The pools contain 2,302, 2,253, and 2,203 attempts. Final exact preflight fails for
+  each at `generic_control/rate_ratio_percentage_or_average/percentage`. Selection configuration
+  SHA-256 is `c5840a94...707e`; evidence SHA-256 is `df31ac17...7ad7`.
+- **Rationale:** A lower candidate buffer cannot be called feasible from independent capacity
+  products. It must admit a complete schedule using actual rendered runtime identities and every
+  frozen cap. All three approved candidates fail that standard.
+- **Alternatives rejected:** Invent another multiplier, alter a cap, change wording, expand a mode,
+  or select from smoke yield. Each is prohibited or would make the decision result-dependent.
+- **Consequence:** No selected config, complete schedule, smoke, replay, review packet, dataset, or
+  training run is produced.
+- **Next user decision:** Decide whether to reduce the accepted 1,000 + 1,000 signal-pilot objective.

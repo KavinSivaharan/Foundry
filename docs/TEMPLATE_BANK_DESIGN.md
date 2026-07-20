@@ -349,3 +349,12 @@ simultaneously respecting maximum uses of seven per sentence plan, one per plan/
 semantic frame, and two per canonical runtime identity. Separate inventory products overstate usable
 capacity because they ignore intersections among these identities. The bank remains reviewed and
 unchanged, but no second human-review packet is issued from this failed schedule gate.
+
+### Reduced-pool exact surface result
+
+The template bank was not edited in Milestone 7F. Three smaller fixed attempt pools were tested using
+actual rendered surfaces and the canonical runtime normalizer. Although every pool had enough unique
+latent mathematics, generic percentage could not be jointly assigned at 1.15, 1.125, or 1.10 under
+the unchanged reviewed-plan, plan/scenario, frame, exact-question, and runtime-identity controls.
+This is a bank/compatibility limit at the current accepted objective, not a mathematical-label or
+benchmark-contamination failure. No packet was issued.

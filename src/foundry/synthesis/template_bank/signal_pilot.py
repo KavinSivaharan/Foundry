@@ -21,6 +21,9 @@ CATEGORY_ORDER = (_BOOKKEEPING, _RATES, _DISCRETE)
 GROUP_ORDER = ("targeted", "generic_control")
 DIFFICULTY_ORDER = ("easy", "medium", "hard")
 SPLIT_ORDER = ("training", "synthetic_validation")
+_APPROVED_ATTEMPT_MULTIPLIERS = {(5, 4), (23, 20), (9, 8), (11, 10)}
+_FROZEN_REUSE_CAP_NUMERATOR = 5
+_FROZEN_REUSE_CAP_DENOMINATOR = 4
 
 MODE_ORDER: dict[str, tuple[str, ...]] = {
     _BOOKKEEPING: ("inventory", "grouping"),
@@ -313,20 +316,42 @@ def load_signal_pilot_config(path: Path) -> SignalPilotConfig:
     if tuple(datasets_raw) != GROUP_ORDER:
         raise ValueError("signal-pilot dataset order differs")
     datasets = {group: _dataset_quota(datasets_raw[group], group) for group in GROUP_ORDER}
+    attempt_numerator = _integer(multiplier.get("numerator"), "attempt numerator")
+    attempt_denominator = _integer(multiplier.get("denominator"), "attempt denominator")
+    if (attempt_numerator, attempt_denominator) not in _APPROVED_ATTEMPT_MULTIPLIERS:
+        raise ValueError("signal-first attempt multiplier is not approved")
     expected_attempts = {
-        "targeted": {_BOOKKEEPING: 688, _RATES: 292, _DISCRETE: 272},
-        "generic_control": {_BOOKKEEPING: 418, _RATES: 417, _DISCRETE: 417},
+        group: {
+            category: _ceil_div(
+                datasets[group].families[category].accepted * attempt_numerator,
+                attempt_denominator,
+            )
+            for category in CATEGORY_ORDER
+        }
+        for group in GROUP_ORDER
     }
     if {
         group: {category: quota.attempts for category, quota in datasets[group].families.items()}
         for group in GROUP_ORDER
     } != expected_attempts:
         raise ValueError("signal-first fixed attempt pools differ from approval")
-    if (
-        sum(quota.attempts for dataset in datasets.values() for quota in dataset.families.values())
-        != 2504
-    ):
-        raise ValueError("signal-first fixed attempt total must equal 2,504")
+    for group in GROUP_ORDER:
+        for category in CATEGORY_ORDER:
+            quota = datasets[group].families[category]
+            expected_training = _ceil_div(
+                quota.training_accepted * attempt_numerator, attempt_denominator
+            )
+            if quota.training_attempts != expected_training:
+                raise ValueError("signal-first training attempt allocation differs")
+        expected_output = _ceil_div(
+            datasets[group].output_contract_accepted * attempt_numerator,
+            attempt_denominator,
+        )
+        if (
+            sum(quota.output_contract_attempts for quota in datasets[group].families.values())
+            != expected_output
+        ):
+            raise ValueError("signal-first output-contract attempt total differs")
     smoke_raw = _mapping(root.get("smoke"), "smoke")
     smoke_datasets = _mapping(smoke_raw.get("datasets"), "smoke.datasets")
     smoke = SmokeContract(
@@ -384,8 +409,8 @@ def load_signal_pilot_config(path: Path) -> SignalPilotConfig:
         reuse_config_path=Path(_string(reuse.get("config_path"), "reuse config path")),
         reuse_policy_id=_string(reuse.get("policy_id"), "reuse policy id"),
         reuse_policy_sha256=_string(reuse.get("policy_sha256"), "reuse policy hash"),
-        attempt_numerator=_integer(multiplier.get("numerator"), "attempt numerator"),
-        attempt_denominator=_integer(multiplier.get("denominator"), "attempt denominator"),
+        attempt_numerator=attempt_numerator,
+        attempt_denominator=attempt_denominator,
         datasets=datasets,
         full_schedule_master_seed=_string(
             root.get("full_schedule_master_seed"), "full schedule master seed"
@@ -409,9 +434,12 @@ def _ceil_div(numerator: int, denominator: int) -> int:
 
 
 def _reuse_cap(config: SignalPilotConfig, quantity: int, identities: int) -> int:
+    # Milestone 7F changes only the candidate-pool buffer. The bounded reuse
+    # policy remains the frozen 1.25 cap formula from Milestone 6E/7D.
+    del config
     return _ceil_div(
-        config.attempt_numerator * quantity,
-        config.attempt_denominator * identities,
+        _FROZEN_REUSE_CAP_NUMERATOR * quantity,
+        _FROZEN_REUSE_CAP_DENOMINATOR * identities,
     )
 
 

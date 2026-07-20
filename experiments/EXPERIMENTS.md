@@ -566,3 +566,19 @@ Every future experiment must be registered here before a costly run begins. Its 
   access occurred.
 - **Next experiment:** none approved. The only relevant permitted choice is to reduce the fixed
   signal-pilot attempt pool; weighted-average plan expansion does not solve the discrete blocker.
+
+## EXP-20260719-023 — Fixed-attempt-pool exact preflight
+
+- **Status:** complete; all approved multipliers failed; mandatory stop applied.
+- **Question:** Can the 1,000 + 1,000 accepted pilot retain a smaller predeclared fixed candidate
+  buffer while satisfying every frozen exact scheduling control?
+- **Method:** Evaluated only `1.15`, `1.125`, and `1.10` in descending order. Derived family attempts
+  by one ceiling operation, reused the frozen allocation policies, rendered actual candidate
+  surfaces, and applied bounded exact matching across every rate and discrete submode.
+- **Results:** 2,302, 2,253, and 2,203 attempts respectively; all fail exact scheduling in generic
+  percentage. Selection configuration SHA-256 is `c5840a94...707e`; content-free evidence SHA-256
+  is `df31ac17...7ad7`.
+- **Scope result:** No multiplier selected; no complete schedule, smoke, replay, packet, dataset,
+  inference, training, or sealed-final access occurred. Templates, generators, labels, verifiers,
+  runtime normalizer, reuse rules, and benchmark-contamination controls remained unchanged.
+- **Next experiment:** none approved. Decide whether to reduce the accepted signal-pilot size itself.

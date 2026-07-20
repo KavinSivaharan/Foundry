@@ -742,3 +742,19 @@ surface proof passes, and all accepted cells still fit their attempt pools. Full
 scheduling then fails closed in generic complete-packages because its 121 attempts have no joint
 assignment satisfying all unchanged surface caps. This supersedes the arithmetic-only authorization:
 the 2,504-slot pilot is not currently schedulable, and no new 120-question smoke was run.
+
+### Fixed-attempt-pool recalibration result
+
+Milestone 7F kept all 2,000 accepted quotas and evaluated exactly three smaller candidate buffers.
+Family-level attempts are ceiling-rounded once, then distributed by the frozen water-filling,
+difficulty, output-contract, and future-split rules. Frozen reuse caps remain the independent 1.25
+bounded-reuse policy; reducing the candidate pool does not silently redefine them.
+
+| Buffer | Targeted attempts | Generic attempts | Total | Exact result |
+|---|---:|---:|---:|---|
+| 1.15 | 1,151 | 1,151 | 2,302 | fail |
+| 1.125 | 1,127 | 1,126 | 2,253 | fail |
+| 1.10 | 1,101 | 1,102 | 2,203 | fail |
+
+The final scheduler fails each pool in generic percentage realization. No multiplier is frozen as a
+selected production pool, and the technical pipeline stops before schedule persistence or smoke.

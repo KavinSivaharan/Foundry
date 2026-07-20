@@ -1,0 +1,1868 @@
+{
+  "accepted_quotas_unchanged": true,
+  "benchmark_contamination_changed": false,
+  "candidate_order": [
+    "1.15",
+    "1.125",
+    "1.10"
+  ],
+  "complete_schedule_created": false,
+  "deterministic_replay_run": false,
+  "evidence_id": "foundry-signal-pilot-attempt-pool-selection-v1",
+  "evidence_sha256": "df31ac174fc2cac003f87b8a5b1ebd94a84f4aace93d0161975e4b001d027ad7",
+  "final_stop_rule_invoked": true,
+  "fresh_review_schedule_created": false,
+  "fresh_smoke_run": false,
+  "generators_or_verifiers_changed": false,
+  "next_architectural_decision": "reduce-accepted-signal-pilot",
+  "policy_id": "largest-feasible-fixed-attempt-pool-v1",
+  "results": [
+    {
+      "allocation_sha256": "afeeacec787e0f1cad01fc7eac20b4b4c5bc932bbcd204a18364bb0c1adf21ca",
+      "blocker": "generic_control/rate_ratio_percentage_or_average/percentage: exact deterministic surface matching is infeasible",
+      "candidate_sha256": "1d818ba1fc678bc34fcef1a86e2a5a637b4b5c047b0cec6b6194c99a8d6f04a8",
+      "config_sha256": "d0ae32788ff33258de6cb6025c8051988be1933138a3589848971d3b0737f4f7",
+      "datasets": {
+        "generic_control": {
+          "constraint_distribution_or_discrete_reasoning": {
+            "accepted_modes": {
+              "complete_packages": 93,
+              "dual_capacity": 54,
+              "equal_distribution": 93,
+              "two_type_allocation": 93
+            },
+            "accepted_subordinate_allocations": {
+              "difficulty": {
+                "complete_packages": {
+                  "easy": 42,
+                  "hard": 22,
+                  "medium": 29
+                },
+                "dual_capacity": {
+                  "easy": 18,
+                  "hard": 18,
+                  "medium": 18
+                },
+                "equal_distribution": {
+                  "easy": 9,
+                  "hard": 48,
+                  "medium": 36
+                },
+                "two_type_allocation": {
+                  "easy": 42,
+                  "hard": 23,
+                  "medium": 28
+                }
+              }
+            },
+            "attempt_modes": {
+              "complete_packages": 110,
+              "dual_capacity": 54,
+              "equal_distribution": 109,
+              "two_type_allocation": 110
+            },
+            "attempt_subordinate_allocations": {
+              "difficulty": {
+                "complete_packages": {
+                  "easy": 51,
+                  "hard": 22,
+                  "medium": 37
+                },
+                "dual_capacity": {
+                  "easy": 18,
+                  "hard": 18,
+                  "medium": 18
+                },
+                "equal_distribution": {
+                  "easy": 9,
+                  "hard": 64,
+                  "medium": 36
+                },
+                "two_type_allocation": {
+                  "easy": 50,
+                  "hard": 23,
+                  "medium": 37
+                }
+              },
+              "future_split": {
+                "complete_packages": {
+                  "synthetic_validation": 11,
+                  "training": 99
+                },
+                "dual_capacity": {
+                  "synthetic_validation": 5,
+                  "training": 49
+                },
+                "equal_distribution": {
+                  "synthetic_validation": 11,
+                  "training": 98
+                },
+                "two_type_allocation": {
+                  "synthetic_validation": 11,
+                  "training": 99
+                }
+              },
+              "output_contract": {
+                "complete_packages": {
+                  "disabled": 88,
+                  "enabled": 22
+                },
+                "dual_capacity": {
+                  "disabled": 43,
+                  "enabled": 11
+                },
+                "equal_distribution": {
+                  "disabled": 88,
+                  "enabled": 21
+                },
+                "two_type_allocation": {
+                  "disabled": 88,
+                  "enabled": 22
+                }
+              }
+            },
+            "required_accepted": 333,
+            "required_attempts": 383
+          },
+          "multi_step_bookkeeping_or_omission": {
+            "accepted_modes": {
+              "grouping": 167,
+              "inventory": 167
+            },
+            "accepted_subordinate_allocations": {
+              "difficulty": {
+                "grouping": {
+                  "easy": 56,
+                  "hard": 56,
+                  "medium": 55
+                },
+                "inventory": {
+                  "easy": 56,
+                  "hard": 55,
+                  "medium": 56
+                }
+              }
+            },
+            "attempt_modes": {
+              "grouping": 192,
+              "inventory": 193
+            },
+            "attempt_subordinate_allocations": {
+              "difficulty": {
+                "grouping": {
+                  "easy": 64,
+                  "hard": 65,
+                  "medium": 63
+                },
+                "inventory": {
+                  "easy": 65,
+                  "hard": 63,
+                  "medium": 65
+                }
+              },
+              "future_split": {
+                "grouping": {
+                  "synthetic_validation": 20,
+                  "training": 172
+                },
+                "inventory": {
+                  "synthetic_validation": 20,
+                  "training": 173
+                }
+              },
+              "output_contract": {
+                "grouping": {
+                  "disabled": 154,
+                  "enabled": 38
+                },
+                "inventory": {
+                  "disabled": 154,
+                  "enabled": 39
+                }
+              }
+            },
+            "required_accepted": 334,
+            "required_attempts": 385
+          },
+          "rate_ratio_percentage_or_average": {
+            "accepted_modes": {
+              "combined_rate": 72,
+              "percentage": 61,
+              "rate_total": 56,
+              "ratio_scale": 72,
+              "weighted_average": 72
+            },
+            "accepted_subordinate_allocations": {
+              "difficulty": {
+                "combined_rate": {
+                  "easy": 24,
+                  "hard": 24,
+                  "medium": 24
+                },
+                "percentage": {
+                  "easy": 21,
+                  "hard": 19,
+                  "medium": 21
+                },
+                "rate_total": {
+                  "easy": 19,
+                  "hard": 18,
+                  "medium": 19
+                },
+                "ratio_scale": {
+                  "easy": 23,
+                  "hard": 25,
+                  "medium": 24
+                },
+                "weighted_average": {
+                  "easy": 24,
+                  "hard": 25,
+                  "medium": 23
+                }
+              }
+            },
+            "attempt_modes": {
+              "combined_rate": 88,
+              "percentage": 61,
+              "rate_total": 56,
+              "ratio_scale": 89,
+              "weighted_average": 89
+            },
+            "attempt_subordinate_allocations": {
+              "difficulty": {
+                "combined_rate": {
+                  "easy": 30,
+                  "hard": 28,
+                  "medium": 30
+                },
+                "percentage": {
+                  "easy": 21,
+                  "hard": 19,
+                  "medium": 21
+                },
+                "rate_total": {
+                  "easy": 19,
+                  "hard": 18,
+                  "medium": 19
+                },
+                "ratio_scale": {
+                  "easy": 30,
+                  "hard": 29,
+                  "medium": 30
+                },
+                "weighted_average": {
+                  "easy": 28,
+                  "hard": 33,
+                  "medium": 28
+                }
+              },
+              "future_split": {
+                "combined_rate": {
+                  "synthetic_validation": 9,
+                  "training": 79
+                },
+                "percentage": {
+                  "synthetic_validation": 6,
+                  "training": 55
+                },
+                "rate_total": {
+                  "synthetic_validation": 5,
+                  "training": 51
+                },
+                "ratio_scale": {
+                  "synthetic_validation": 9,
+                  "training": 80
+                },
+                "weighted_average": {
+                  "synthetic_validation": 9,
+                  "training": 80
+                }
+              },
+              "output_contract": {
+                "combined_rate": {
+                  "disabled": 70,
+                  "enabled": 18
+                },
+                "percentage": {
+                  "disabled": 49,
+                  "enabled": 12
+                },
+                "rate_total": {
+                  "disabled": 45,
+                  "enabled": 11
+                },
+                "ratio_scale": {
+                  "disabled": 71,
+                  "enabled": 18
+                },
+                "weighted_average": {
+                  "disabled": 71,
+                  "enabled": 18
+                }
+              }
+            },
+            "required_accepted": 333,
+            "required_attempts": 383
+          }
+        },
+        "targeted": {
+          "constraint_distribution_or_discrete_reasoning": {
+            "accepted_modes": {
+              "complete_packages": 60,
+              "dual_capacity": 36,
+              "equal_distribution": 60,
+              "two_type_allocation": 61
+            },
+            "accepted_subordinate_allocations": {
+              "difficulty": {
+                "complete_packages": {
+                  "easy": 20,
+                  "hard": 20,
+                  "medium": 20
+                },
+                "dual_capacity": {
+                  "easy": 12,
+                  "hard": 12,
+                  "medium": 12
+                },
+                "equal_distribution": {
+                  "easy": 20,
+                  "hard": 20,
+                  "medium": 20
+                },
+                "two_type_allocation": {
+                  "easy": 21,
+                  "hard": 20,
+                  "medium": 20
+                }
+              }
+            },
+            "attempt_modes": {
+              "complete_packages": 71,
+              "dual_capacity": 36,
+              "equal_distribution": 72,
+              "two_type_allocation": 71
+            },
+            "attempt_subordinate_allocations": {
+              "difficulty": {
+                "complete_packages": {
+                  "easy": 24,
+                  "hard": 24,
+                  "medium": 23
+                },
+                "dual_capacity": {
+                  "easy": 12,
+                  "hard": 12,
+                  "medium": 12
+                },
+                "equal_distribution": {
+                  "easy": 24,
+                  "hard": 24,
+                  "medium": 24
+                },
+                "two_type_allocation": {
+                  "easy": 24,
+                  "hard": 23,
+                  "medium": 24
+                }
+              },
+              "future_split": {
+                "complete_packages": {
+                  "synthetic_validation": 7,
+                  "training": 64
+                },
+                "dual_capacity": {
+                  "synthetic_validation": 4,
+                  "training": 32
+                },
+                "equal_distribution": {
+                  "synthetic_validation": 7,
+                  "training": 65
+                },
+                "two_type_allocation": {
+                  "synthetic_validation": 7,
+                  "training": 64
+                }
+              },
+              "output_contract": {
+                "complete_packages": {
+                  "disabled": 57,
+                  "enabled": 14
+                },
+                "dual_capacity": {
+                  "disabled": 29,
+                  "enabled": 7
+                },
+                "equal_distribution": {
+                  "disabled": 57,
+                  "enabled": 15
+                },
+                "two_type_allocation": {
+                  "disabled": 57,
+                  "enabled": 14
+                }
+              }
+            },
+            "required_accepted": 217,
+            "required_attempts": 250
+          },
+          "multi_step_bookkeeping_or_omission": {
+            "accepted_modes": {
+              "grouping": 275,
+              "inventory": 275
+            },
+            "accepted_subordinate_allocations": {
+              "difficulty": {
+                "grouping": {
+                  "easy": 92,
+                  "hard": 92,
+                  "medium": 91
+                },
+                "inventory": {
+                  "easy": 92,
+                  "hard": 91,
+                  "medium": 92
+                }
+              }
+            },
+            "attempt_modes": {
+              "grouping": 317,
+              "inventory": 316
+            },
+            "attempt_subordinate_allocations": {
+              "difficulty": {
+                "grouping": {
+                  "easy": 106,
+                  "hard": 105,
+                  "medium": 106
+                },
+                "inventory": {
+                  "easy": 105,
+                  "hard": 106,
+                  "medium": 105
+                }
+              },
+              "future_split": {
+                "grouping": {
+                  "synthetic_validation": 32,
+                  "training": 285
+                },
+                "inventory": {
+                  "synthetic_validation": 31,
+                  "training": 285
+                }
+              },
+              "output_contract": {
+                "grouping": {
+                  "disabled": 254,
+                  "enabled": 63
+                },
+                "inventory": {
+                  "disabled": 253,
+                  "enabled": 63
+                }
+              }
+            },
+            "required_accepted": 550,
+            "required_attempts": 633
+          },
+          "rate_ratio_percentage_or_average": {
+            "accepted_modes": {
+              "combined_rate": 50,
+              "percentage": 43,
+              "rate_total": 40,
+              "ratio_scale": 50,
+              "weighted_average": 50
+            },
+            "accepted_subordinate_allocations": {
+              "difficulty": {
+                "combined_rate": {
+                  "easy": 17,
+                  "hard": 16,
+                  "medium": 17
+                },
+                "percentage": {
+                  "easy": 14,
+                  "hard": 15,
+                  "medium": 14
+                },
+                "rate_total": {
+                  "easy": 13,
+                  "hard": 14,
+                  "medium": 13
+                },
+                "ratio_scale": {
+                  "easy": 17,
+                  "hard": 16,
+                  "medium": 17
+                },
+                "weighted_average": {
+                  "easy": 17,
+                  "hard": 16,
+                  "medium": 17
+                }
+              }
+            },
+            "attempt_modes": {
+              "combined_rate": 62,
+              "percentage": 43,
+              "rate_total": 40,
+              "ratio_scale": 62,
+              "weighted_average": 61
+            },
+            "attempt_subordinate_allocations": {
+              "difficulty": {
+                "combined_rate": {
+                  "easy": 21,
+                  "hard": 20,
+                  "medium": 21
+                },
+                "percentage": {
+                  "easy": 14,
+                  "hard": 15,
+                  "medium": 14
+                },
+                "rate_total": {
+                  "easy": 13,
+                  "hard": 14,
+                  "medium": 13
+                },
+                "ratio_scale": {
+                  "easy": 22,
+                  "hard": 19,
+                  "medium": 21
+                },
+                "weighted_average": {
+                  "easy": 20,
+                  "hard": 21,
+                  "medium": 20
+                }
+              },
+              "future_split": {
+                "combined_rate": {
+                  "synthetic_validation": 6,
+                  "training": 56
+                },
+                "percentage": {
+                  "synthetic_validation": 4,
+                  "training": 39
+                },
+                "rate_total": {
+                  "synthetic_validation": 4,
+                  "training": 36
+                },
+                "ratio_scale": {
+                  "synthetic_validation": 6,
+                  "training": 56
+                },
+                "weighted_average": {
+                  "synthetic_validation": 6,
+                  "training": 55
+                }
+              },
+              "output_contract": {
+                "combined_rate": {
+                  "disabled": 49,
+                  "enabled": 13
+                },
+                "percentage": {
+                  "disabled": 34,
+                  "enabled": 9
+                },
+                "rate_total": {
+                  "disabled": 32,
+                  "enabled": 8
+                },
+                "ratio_scale": {
+                  "disabled": 50,
+                  "enabled": 12
+                },
+                "weighted_average": {
+                  "disabled": 49,
+                  "enabled": 12
+                }
+              }
+            },
+            "required_accepted": 233,
+            "required_attempts": 268
+          }
+        }
+      },
+      "denominator": 20,
+      "difficulty_required_moves": {
+        "generic_control": 3,
+        "targeted": 1
+      },
+      "exact_schedule_attempted": true,
+      "exact_schedule_feasible": false,
+      "generic_attempts": {
+        "constraint_distribution_or_discrete_reasoning": 383,
+        "multi_step_bookkeeping_or_omission": 385,
+        "rate_ratio_percentage_or_average": 383
+      },
+      "global_attempt_modes": {
+        "constraint_distribution_or_discrete_reasoning": {
+          "complete_packages": 181,
+          "dual_capacity": 90,
+          "equal_distribution": 181,
+          "two_type_allocation": 181
+        },
+        "multi_step_bookkeeping_or_omission": {
+          "grouping": 509,
+          "inventory": 509
+        },
+        "rate_ratio_percentage_or_average": {
+          "combined_rate": 150,
+          "percentage": 104,
+          "rate_total": 96,
+          "ratio_scale": 151,
+          "weighted_average": 150
+        }
+      },
+      "label": "1.15",
+      "numerator": 23,
+      "schedule_sha256": null,
+      "schedule_summary_sha256": null,
+      "targeted_attempts": {
+        "constraint_distribution_or_discrete_reasoning": 250,
+        "multi_step_bookkeeping_or_omission": 633,
+        "rate_ratio_percentage_or_average": 268
+      },
+      "total_attempts": 2302
+    },
+    {
+      "allocation_sha256": "464fe2277b6e10c65f10c3715d8a1189c23e27a92265a3ea368b3fe9b9f4031c",
+      "blocker": "generic_control/rate_ratio_percentage_or_average/percentage: exact deterministic surface matching is infeasible",
+      "candidate_sha256": "69c2540c428ad7bb0382e397d6873c977685c730f80ca33c77eded7f5551eade",
+      "config_sha256": "48a3c4658e35e07a0ca71b0b18c9d983de0000515cd7eccfe66ec49ebbc673fa",
+      "datasets": {
+        "generic_control": {
+          "constraint_distribution_or_discrete_reasoning": {
+            "accepted_modes": {
+              "complete_packages": 93,
+              "dual_capacity": 54,
+              "equal_distribution": 93,
+              "two_type_allocation": 93
+            },
+            "accepted_subordinate_allocations": {
+              "difficulty": {
+                "complete_packages": {
+                  "easy": 42,
+                  "hard": 23,
+                  "medium": 28
+                },
+                "dual_capacity": {
+                  "easy": 18,
+                  "hard": 18,
+                  "medium": 18
+                },
+                "equal_distribution": {
+                  "easy": 10,
+                  "hard": 46,
+                  "medium": 37
+                },
+                "two_type_allocation": {
+                  "easy": 41,
+                  "hard": 24,
+                  "medium": 28
+                }
+              }
+            },
+            "attempt_modes": {
+              "complete_packages": 107,
+              "dual_capacity": 54,
+              "equal_distribution": 107,
+              "two_type_allocation": 107
+            },
+            "attempt_subordinate_allocations": {
+              "difficulty": {
+                "complete_packages": {
+                  "easy": 49,
+                  "hard": 23,
+                  "medium": 35
+                },
+                "dual_capacity": {
+                  "easy": 18,
+                  "hard": 18,
+                  "medium": 18
+                },
+                "equal_distribution": {
+                  "easy": 10,
+                  "hard": 60,
+                  "medium": 37
+                },
+                "two_type_allocation": {
+                  "easy": 48,
+                  "hard": 24,
+                  "medium": 35
+                }
+              },
+              "future_split": {
+                "complete_packages": {
+                  "synthetic_validation": 11,
+                  "training": 96
+                },
+                "dual_capacity": {
+                  "synthetic_validation": 5,
+                  "training": 49
+                },
+                "equal_distribution": {
+                  "synthetic_validation": 10,
+                  "training": 97
+                },
+                "two_type_allocation": {
+                  "synthetic_validation": 11,
+                  "training": 96
+                }
+              },
+              "output_contract": {
+                "complete_packages": {
+                  "disabled": 86,
+                  "enabled": 21
+                },
+                "dual_capacity": {
+                  "disabled": 43,
+                  "enabled": 11
+                },
+                "equal_distribution": {
+                  "disabled": 85,
+                  "enabled": 22
+                },
+                "two_type_allocation": {
+                  "disabled": 86,
+                  "enabled": 21
+                }
+              }
+            },
+            "required_accepted": 333,
+            "required_attempts": 375
+          },
+          "multi_step_bookkeeping_or_omission": {
+            "accepted_modes": {
+              "grouping": 167,
+              "inventory": 167
+            },
+            "accepted_subordinate_allocations": {
+              "difficulty": {
+                "grouping": {
+                  "easy": 56,
+                  "hard": 56,
+                  "medium": 55
+                },
+                "inventory": {
+                  "easy": 56,
+                  "hard": 55,
+                  "medium": 56
+                }
+              }
+            },
+            "attempt_modes": {
+              "grouping": 188,
+              "inventory": 188
+            },
+            "attempt_subordinate_allocations": {
+              "difficulty": {
+                "grouping": {
+                  "easy": 63,
+                  "hard": 63,
+                  "medium": 62
+                },
+                "inventory": {
+                  "easy": 63,
+                  "hard": 62,
+                  "medium": 63
+                }
+              },
+              "future_split": {
+                "grouping": {
+                  "synthetic_validation": 19,
+                  "training": 169
+                },
+                "inventory": {
+                  "synthetic_validation": 19,
+                  "training": 169
+                }
+              },
+              "output_contract": {
+                "grouping": {
+                  "disabled": 151,
+                  "enabled": 37
+                },
+                "inventory": {
+                  "disabled": 150,
+                  "enabled": 38
+                }
+              }
+            },
+            "required_accepted": 334,
+            "required_attempts": 376
+          },
+          "rate_ratio_percentage_or_average": {
+            "accepted_modes": {
+              "combined_rate": 72,
+              "percentage": 61,
+              "rate_total": 56,
+              "ratio_scale": 72,
+              "weighted_average": 72
+            },
+            "accepted_subordinate_allocations": {
+              "difficulty": {
+                "combined_rate": {
+                  "easy": 24,
+                  "hard": 24,
+                  "medium": 24
+                },
+                "percentage": {
+                  "easy": 20,
+                  "hard": 21,
+                  "medium": 20
+                },
+                "rate_total": {
+                  "easy": 19,
+                  "hard": 19,
+                  "medium": 18
+                },
+                "ratio_scale": {
+                  "easy": 24,
+                  "hard": 23,
+                  "medium": 25
+                },
+                "weighted_average": {
+                  "easy": 24,
+                  "hard": 24,
+                  "medium": 24
+                }
+              }
+            },
+            "attempt_modes": {
+              "combined_rate": 86,
+              "percentage": 61,
+              "rate_total": 56,
+              "ratio_scale": 86,
+              "weighted_average": 86
+            },
+            "attempt_subordinate_allocations": {
+              "difficulty": {
+                "combined_rate": {
+                  "easy": 29,
+                  "hard": 27,
+                  "medium": 30
+                },
+                "percentage": {
+                  "easy": 20,
+                  "hard": 21,
+                  "medium": 20
+                },
+                "rate_total": {
+                  "easy": 19,
+                  "hard": 19,
+                  "medium": 18
+                },
+                "ratio_scale": {
+                  "easy": 29,
+                  "hard": 28,
+                  "medium": 29
+                },
+                "weighted_average": {
+                  "easy": 28,
+                  "hard": 30,
+                  "medium": 28
+                }
+              },
+              "future_split": {
+                "combined_rate": {
+                  "synthetic_validation": 9,
+                  "training": 77
+                },
+                "percentage": {
+                  "synthetic_validation": 6,
+                  "training": 55
+                },
+                "rate_total": {
+                  "synthetic_validation": 6,
+                  "training": 50
+                },
+                "ratio_scale": {
+                  "synthetic_validation": 8,
+                  "training": 78
+                },
+                "weighted_average": {
+                  "synthetic_validation": 8,
+                  "training": 78
+                }
+              },
+              "output_contract": {
+                "combined_rate": {
+                  "disabled": 68,
+                  "enabled": 18
+                },
+                "percentage": {
+                  "disabled": 49,
+                  "enabled": 12
+                },
+                "rate_total": {
+                  "disabled": 45,
+                  "enabled": 11
+                },
+                "ratio_scale": {
+                  "disabled": 69,
+                  "enabled": 17
+                },
+                "weighted_average": {
+                  "disabled": 69,
+                  "enabled": 17
+                }
+              }
+            },
+            "required_accepted": 333,
+            "required_attempts": 375
+          }
+        },
+        "targeted": {
+          "constraint_distribution_or_discrete_reasoning": {
+            "accepted_modes": {
+              "complete_packages": 60,
+              "dual_capacity": 36,
+              "equal_distribution": 60,
+              "two_type_allocation": 61
+            },
+            "accepted_subordinate_allocations": {
+              "difficulty": {
+                "complete_packages": {
+                  "easy": 20,
+                  "hard": 20,
+                  "medium": 20
+                },
+                "dual_capacity": {
+                  "easy": 12,
+                  "hard": 12,
+                  "medium": 12
+                },
+                "equal_distribution": {
+                  "easy": 20,
+                  "hard": 20,
+                  "medium": 20
+                },
+                "two_type_allocation": {
+                  "easy": 21,
+                  "hard": 20,
+                  "medium": 20
+                }
+              }
+            },
+            "attempt_modes": {
+              "complete_packages": 70,
+              "dual_capacity": 36,
+              "equal_distribution": 69,
+              "two_type_allocation": 70
+            },
+            "attempt_subordinate_allocations": {
+              "difficulty": {
+                "complete_packages": {
+                  "easy": 23,
+                  "hard": 23,
+                  "medium": 24
+                },
+                "dual_capacity": {
+                  "easy": 12,
+                  "hard": 12,
+                  "medium": 12
+                },
+                "equal_distribution": {
+                  "easy": 23,
+                  "hard": 23,
+                  "medium": 23
+                },
+                "two_type_allocation": {
+                  "easy": 24,
+                  "hard": 23,
+                  "medium": 23
+                }
+              },
+              "future_split": {
+                "complete_packages": {
+                  "synthetic_validation": 7,
+                  "training": 63
+                },
+                "dual_capacity": {
+                  "synthetic_validation": 4,
+                  "training": 32
+                },
+                "equal_distribution": {
+                  "synthetic_validation": 7,
+                  "training": 62
+                },
+                "two_type_allocation": {
+                  "synthetic_validation": 7,
+                  "training": 63
+                }
+              },
+              "output_contract": {
+                "complete_packages": {
+                  "disabled": 56,
+                  "enabled": 14
+                },
+                "dual_capacity": {
+                  "disabled": 29,
+                  "enabled": 7
+                },
+                "equal_distribution": {
+                  "disabled": 55,
+                  "enabled": 14
+                },
+                "two_type_allocation": {
+                  "disabled": 56,
+                  "enabled": 14
+                }
+              }
+            },
+            "required_accepted": 217,
+            "required_attempts": 245
+          },
+          "multi_step_bookkeeping_or_omission": {
+            "accepted_modes": {
+              "grouping": 275,
+              "inventory": 275
+            },
+            "accepted_subordinate_allocations": {
+              "difficulty": {
+                "grouping": {
+                  "easy": 92,
+                  "hard": 92,
+                  "medium": 91
+                },
+                "inventory": {
+                  "easy": 92,
+                  "hard": 91,
+                  "medium": 92
+                }
+              }
+            },
+            "attempt_modes": {
+              "grouping": 309,
+              "inventory": 310
+            },
+            "attempt_subordinate_allocations": {
+              "difficulty": {
+                "grouping": {
+                  "easy": 103,
+                  "hard": 103,
+                  "medium": 103
+                },
+                "inventory": {
+                  "easy": 104,
+                  "hard": 103,
+                  "medium": 103
+                }
+              },
+              "future_split": {
+                "grouping": {
+                  "synthetic_validation": 31,
+                  "training": 278
+                },
+                "inventory": {
+                  "synthetic_validation": 31,
+                  "training": 279
+                }
+              },
+              "output_contract": {
+                "grouping": {
+                  "disabled": 247,
+                  "enabled": 62
+                },
+                "inventory": {
+                  "disabled": 248,
+                  "enabled": 62
+                }
+              }
+            },
+            "required_accepted": 550,
+            "required_attempts": 619
+          },
+          "rate_ratio_percentage_or_average": {
+            "accepted_modes": {
+              "combined_rate": 50,
+              "percentage": 43,
+              "rate_total": 40,
+              "ratio_scale": 50,
+              "weighted_average": 50
+            },
+            "accepted_subordinate_allocations": {
+              "difficulty": {
+                "combined_rate": {
+                  "easy": 17,
+                  "hard": 16,
+                  "medium": 17
+                },
+                "percentage": {
+                  "easy": 15,
+                  "hard": 14,
+                  "medium": 14
+                },
+                "rate_total": {
+                  "easy": 13,
+                  "hard": 13,
+                  "medium": 14
+                },
+                "ratio_scale": {
+                  "easy": 16,
+                  "hard": 17,
+                  "medium": 17
+                },
+                "weighted_average": {
+                  "easy": 17,
+                  "hard": 17,
+                  "medium": 16
+                }
+              }
+            },
+            "attempt_modes": {
+              "combined_rate": 60,
+              "percentage": 43,
+              "rate_total": 40,
+              "ratio_scale": 60,
+              "weighted_average": 60
+            },
+            "attempt_subordinate_allocations": {
+              "difficulty": {
+                "combined_rate": {
+                  "easy": 20,
+                  "hard": 20,
+                  "medium": 20
+                },
+                "percentage": {
+                  "easy": 15,
+                  "hard": 14,
+                  "medium": 14
+                },
+                "rate_total": {
+                  "easy": 13,
+                  "hard": 13,
+                  "medium": 14
+                },
+                "ratio_scale": {
+                  "easy": 20,
+                  "hard": 20,
+                  "medium": 20
+                },
+                "weighted_average": {
+                  "easy": 20,
+                  "hard": 20,
+                  "medium": 20
+                }
+              },
+              "future_split": {
+                "combined_rate": {
+                  "synthetic_validation": 6,
+                  "training": 54
+                },
+                "percentage": {
+                  "synthetic_validation": 4,
+                  "training": 39
+                },
+                "rate_total": {
+                  "synthetic_validation": 4,
+                  "training": 36
+                },
+                "ratio_scale": {
+                  "synthetic_validation": 6,
+                  "training": 54
+                },
+                "weighted_average": {
+                  "synthetic_validation": 6,
+                  "training": 54
+                }
+              },
+              "output_contract": {
+                "combined_rate": {
+                  "disabled": 48,
+                  "enabled": 12
+                },
+                "percentage": {
+                  "disabled": 35,
+                  "enabled": 8
+                },
+                "rate_total": {
+                  "disabled": 32,
+                  "enabled": 8
+                },
+                "ratio_scale": {
+                  "disabled": 48,
+                  "enabled": 12
+                },
+                "weighted_average": {
+                  "disabled": 48,
+                  "enabled": 12
+                }
+              }
+            },
+            "required_accepted": 233,
+            "required_attempts": 263
+          }
+        }
+      },
+      "denominator": 8,
+      "difficulty_required_moves": {
+        "generic_control": 2,
+        "targeted": 0
+      },
+      "exact_schedule_attempted": true,
+      "exact_schedule_feasible": false,
+      "generic_attempts": {
+        "constraint_distribution_or_discrete_reasoning": 375,
+        "multi_step_bookkeeping_or_omission": 376,
+        "rate_ratio_percentage_or_average": 375
+      },
+      "global_attempt_modes": {
+        "constraint_distribution_or_discrete_reasoning": {
+          "complete_packages": 177,
+          "dual_capacity": 90,
+          "equal_distribution": 176,
+          "two_type_allocation": 177
+        },
+        "multi_step_bookkeeping_or_omission": {
+          "grouping": 497,
+          "inventory": 498
+        },
+        "rate_ratio_percentage_or_average": {
+          "combined_rate": 146,
+          "percentage": 104,
+          "rate_total": 96,
+          "ratio_scale": 146,
+          "weighted_average": 146
+        }
+      },
+      "label": "1.125",
+      "numerator": 9,
+      "schedule_sha256": null,
+      "schedule_summary_sha256": null,
+      "targeted_attempts": {
+        "constraint_distribution_or_discrete_reasoning": 245,
+        "multi_step_bookkeeping_or_omission": 619,
+        "rate_ratio_percentage_or_average": 263
+      },
+      "total_attempts": 2253
+    },
+    {
+      "allocation_sha256": "93b8dfd0e8aa3c540e23413539e01fa9057f08b3b057c517445214fa6c866c42",
+      "blocker": "generic_control/rate_ratio_percentage_or_average/percentage: exact deterministic surface matching is infeasible",
+      "candidate_sha256": "d05a981e4fcf0f4eb843672db3296528f38eb8c3be542a5aa7964e5a38897d6f",
+      "config_sha256": "ab2ba9db8ef038aa5f2b6e0e6580d2d5a06cb123f1faf6ad8d54e9e88effaa32",
+      "datasets": {
+        "generic_control": {
+          "constraint_distribution_or_discrete_reasoning": {
+            "accepted_modes": {
+              "complete_packages": 93,
+              "dual_capacity": 54,
+              "equal_distribution": 93,
+              "two_type_allocation": 93
+            },
+            "accepted_subordinate_allocations": {
+              "difficulty": {
+                "complete_packages": {
+                  "easy": 41,
+                  "hard": 24,
+                  "medium": 28
+                },
+                "dual_capacity": {
+                  "easy": 18,
+                  "hard": 18,
+                  "medium": 18
+                },
+                "equal_distribution": {
+                  "easy": 10,
+                  "hard": 46,
+                  "medium": 37
+                },
+                "two_type_allocation": {
+                  "easy": 42,
+                  "hard": 23,
+                  "medium": 28
+                }
+              }
+            },
+            "attempt_modes": {
+              "complete_packages": 104,
+              "dual_capacity": 54,
+              "equal_distribution": 104,
+              "two_type_allocation": 105
+            },
+            "attempt_subordinate_allocations": {
+              "difficulty": {
+                "complete_packages": {
+                  "easy": 47,
+                  "hard": 24,
+                  "medium": 33
+                },
+                "dual_capacity": {
+                  "easy": 18,
+                  "hard": 18,
+                  "medium": 18
+                },
+                "equal_distribution": {
+                  "easy": 10,
+                  "hard": 57,
+                  "medium": 37
+                },
+                "two_type_allocation": {
+                  "easy": 48,
+                  "hard": 23,
+                  "medium": 34
+                }
+              },
+              "future_split": {
+                "complete_packages": {
+                  "synthetic_validation": 10,
+                  "training": 94
+                },
+                "dual_capacity": {
+                  "synthetic_validation": 5,
+                  "training": 49
+                },
+                "equal_distribution": {
+                  "synthetic_validation": 11,
+                  "training": 93
+                },
+                "two_type_allocation": {
+                  "synthetic_validation": 11,
+                  "training": 94
+                }
+              },
+              "output_contract": {
+                "complete_packages": {
+                  "disabled": 83,
+                  "enabled": 21
+                },
+                "dual_capacity": {
+                  "disabled": 43,
+                  "enabled": 11
+                },
+                "equal_distribution": {
+                  "disabled": 84,
+                  "enabled": 20
+                },
+                "two_type_allocation": {
+                  "disabled": 84,
+                  "enabled": 21
+                }
+              }
+            },
+            "required_accepted": 333,
+            "required_attempts": 367
+          },
+          "multi_step_bookkeeping_or_omission": {
+            "accepted_modes": {
+              "grouping": 167,
+              "inventory": 167
+            },
+            "accepted_subordinate_allocations": {
+              "difficulty": {
+                "grouping": {
+                  "easy": 56,
+                  "hard": 56,
+                  "medium": 55
+                },
+                "inventory": {
+                  "easy": 56,
+                  "hard": 55,
+                  "medium": 56
+                }
+              }
+            },
+            "attempt_modes": {
+              "grouping": 184,
+              "inventory": 184
+            },
+            "attempt_subordinate_allocations": {
+              "difficulty": {
+                "grouping": {
+                  "easy": 61,
+                  "hard": 62,
+                  "medium": 61
+                },
+                "inventory": {
+                  "easy": 62,
+                  "hard": 60,
+                  "medium": 62
+                }
+              },
+              "future_split": {
+                "grouping": {
+                  "synthetic_validation": 19,
+                  "training": 165
+                },
+                "inventory": {
+                  "synthetic_validation": 19,
+                  "training": 165
+                }
+              },
+              "output_contract": {
+                "grouping": {
+                  "disabled": 147,
+                  "enabled": 37
+                },
+                "inventory": {
+                  "disabled": 147,
+                  "enabled": 37
+                }
+              }
+            },
+            "required_accepted": 334,
+            "required_attempts": 368
+          },
+          "rate_ratio_percentage_or_average": {
+            "accepted_modes": {
+              "combined_rate": 72,
+              "percentage": 61,
+              "rate_total": 56,
+              "ratio_scale": 72,
+              "weighted_average": 72
+            },
+            "accepted_subordinate_allocations": {
+              "difficulty": {
+                "combined_rate": {
+                  "easy": 24,
+                  "hard": 24,
+                  "medium": 24
+                },
+                "percentage": {
+                  "easy": 21,
+                  "hard": 20,
+                  "medium": 20
+                },
+                "rate_total": {
+                  "easy": 19,
+                  "hard": 18,
+                  "medium": 19
+                },
+                "ratio_scale": {
+                  "easy": 23,
+                  "hard": 25,
+                  "medium": 24
+                },
+                "weighted_average": {
+                  "easy": 24,
+                  "hard": 24,
+                  "medium": 24
+                }
+              }
+            },
+            "attempt_modes": {
+              "combined_rate": 83,
+              "percentage": 61,
+              "rate_total": 56,
+              "ratio_scale": 84,
+              "weighted_average": 83
+            },
+            "attempt_subordinate_allocations": {
+              "difficulty": {
+                "combined_rate": {
+                  "easy": 28,
+                  "hard": 27,
+                  "medium": 28
+                },
+                "percentage": {
+                  "easy": 21,
+                  "hard": 20,
+                  "medium": 20
+                },
+                "rate_total": {
+                  "easy": 19,
+                  "hard": 18,
+                  "medium": 19
+                },
+                "ratio_scale": {
+                  "easy": 29,
+                  "hard": 26,
+                  "medium": 29
+                },
+                "weighted_average": {
+                  "easy": 26,
+                  "hard": 31,
+                  "medium": 26
+                }
+              },
+              "future_split": {
+                "combined_rate": {
+                  "synthetic_validation": 8,
+                  "training": 75
+                },
+                "percentage": {
+                  "synthetic_validation": 6,
+                  "training": 55
+                },
+                "rate_total": {
+                  "synthetic_validation": 6,
+                  "training": 50
+                },
+                "ratio_scale": {
+                  "synthetic_validation": 9,
+                  "training": 75
+                },
+                "weighted_average": {
+                  "synthetic_validation": 8,
+                  "training": 75
+                }
+              },
+              "output_contract": {
+                "combined_rate": {
+                  "disabled": 67,
+                  "enabled": 16
+                },
+                "percentage": {
+                  "disabled": 49,
+                  "enabled": 12
+                },
+                "rate_total": {
+                  "disabled": 45,
+                  "enabled": 11
+                },
+                "ratio_scale": {
+                  "disabled": 67,
+                  "enabled": 17
+                },
+                "weighted_average": {
+                  "disabled": 66,
+                  "enabled": 17
+                }
+              }
+            },
+            "required_accepted": 333,
+            "required_attempts": 367
+          }
+        },
+        "targeted": {
+          "constraint_distribution_or_discrete_reasoning": {
+            "accepted_modes": {
+              "complete_packages": 60,
+              "dual_capacity": 36,
+              "equal_distribution": 60,
+              "two_type_allocation": 61
+            },
+            "accepted_subordinate_allocations": {
+              "difficulty": {
+                "complete_packages": {
+                  "easy": 20,
+                  "hard": 20,
+                  "medium": 20
+                },
+                "dual_capacity": {
+                  "easy": 12,
+                  "hard": 12,
+                  "medium": 12
+                },
+                "equal_distribution": {
+                  "easy": 20,
+                  "hard": 20,
+                  "medium": 20
+                },
+                "two_type_allocation": {
+                  "easy": 21,
+                  "hard": 20,
+                  "medium": 20
+                }
+              }
+            },
+            "attempt_modes": {
+              "complete_packages": 68,
+              "dual_capacity": 36,
+              "equal_distribution": 68,
+              "two_type_allocation": 67
+            },
+            "attempt_subordinate_allocations": {
+              "difficulty": {
+                "complete_packages": {
+                  "easy": 23,
+                  "hard": 22,
+                  "medium": 23
+                },
+                "dual_capacity": {
+                  "easy": 12,
+                  "hard": 12,
+                  "medium": 12
+                },
+                "equal_distribution": {
+                  "easy": 23,
+                  "hard": 22,
+                  "medium": 23
+                },
+                "two_type_allocation": {
+                  "easy": 22,
+                  "hard": 23,
+                  "medium": 22
+                }
+              },
+              "future_split": {
+                "complete_packages": {
+                  "synthetic_validation": 7,
+                  "training": 61
+                },
+                "dual_capacity": {
+                  "synthetic_validation": 3,
+                  "training": 33
+                },
+                "equal_distribution": {
+                  "synthetic_validation": 7,
+                  "training": 61
+                },
+                "two_type_allocation": {
+                  "synthetic_validation": 7,
+                  "training": 60
+                }
+              },
+              "output_contract": {
+                "complete_packages": {
+                  "disabled": 54,
+                  "enabled": 14
+                },
+                "dual_capacity": {
+                  "disabled": 29,
+                  "enabled": 7
+                },
+                "equal_distribution": {
+                  "disabled": 54,
+                  "enabled": 14
+                },
+                "two_type_allocation": {
+                  "disabled": 54,
+                  "enabled": 13
+                }
+              }
+            },
+            "required_accepted": 217,
+            "required_attempts": 239
+          },
+          "multi_step_bookkeeping_or_omission": {
+            "accepted_modes": {
+              "grouping": 275,
+              "inventory": 275
+            },
+            "accepted_subordinate_allocations": {
+              "difficulty": {
+                "grouping": {
+                  "easy": 92,
+                  "hard": 92,
+                  "medium": 91
+                },
+                "inventory": {
+                  "easy": 92,
+                  "hard": 91,
+                  "medium": 92
+                }
+              }
+            },
+            "attempt_modes": {
+              "grouping": 302,
+              "inventory": 303
+            },
+            "attempt_subordinate_allocations": {
+              "difficulty": {
+                "grouping": {
+                  "easy": 101,
+                  "hard": 100,
+                  "medium": 101
+                },
+                "inventory": {
+                  "easy": 101,
+                  "hard": 101,
+                  "medium": 101
+                }
+              },
+              "future_split": {
+                "grouping": {
+                  "synthetic_validation": 30,
+                  "training": 272
+                },
+                "inventory": {
+                  "synthetic_validation": 30,
+                  "training": 273
+                }
+              },
+              "output_contract": {
+                "grouping": {
+                  "disabled": 242,
+                  "enabled": 60
+                },
+                "inventory": {
+                  "disabled": 242,
+                  "enabled": 61
+                }
+              }
+            },
+            "required_accepted": 550,
+            "required_attempts": 605
+          },
+          "rate_ratio_percentage_or_average": {
+            "accepted_modes": {
+              "combined_rate": 50,
+              "percentage": 43,
+              "rate_total": 40,
+              "ratio_scale": 50,
+              "weighted_average": 50
+            },
+            "accepted_subordinate_allocations": {
+              "difficulty": {
+                "combined_rate": {
+                  "easy": 17,
+                  "hard": 16,
+                  "medium": 17
+                },
+                "percentage": {
+                  "easy": 14,
+                  "hard": 14,
+                  "medium": 15
+                },
+                "rate_total": {
+                  "easy": 13,
+                  "hard": 14,
+                  "medium": 13
+                },
+                "ratio_scale": {
+                  "easy": 17,
+                  "hard": 17,
+                  "medium": 16
+                },
+                "weighted_average": {
+                  "easy": 17,
+                  "hard": 16,
+                  "medium": 17
+                }
+              }
+            },
+            "attempt_modes": {
+              "combined_rate": 58,
+              "percentage": 43,
+              "rate_total": 40,
+              "ratio_scale": 58,
+              "weighted_average": 58
+            },
+            "attempt_subordinate_allocations": {
+              "difficulty": {
+                "combined_rate": {
+                  "easy": 19,
+                  "hard": 19,
+                  "medium": 20
+                },
+                "percentage": {
+                  "easy": 14,
+                  "hard": 14,
+                  "medium": 15
+                },
+                "rate_total": {
+                  "easy": 13,
+                  "hard": 14,
+                  "medium": 13
+                },
+                "ratio_scale": {
+                  "easy": 20,
+                  "hard": 19,
+                  "medium": 19
+                },
+                "weighted_average": {
+                  "easy": 20,
+                  "hard": 19,
+                  "medium": 19
+                }
+              },
+              "future_split": {
+                "combined_rate": {
+                  "synthetic_validation": 6,
+                  "training": 52
+                },
+                "percentage": {
+                  "synthetic_validation": 4,
+                  "training": 39
+                },
+                "rate_total": {
+                  "synthetic_validation": 4,
+                  "training": 36
+                },
+                "ratio_scale": {
+                  "synthetic_validation": 6,
+                  "training": 52
+                },
+                "weighted_average": {
+                  "synthetic_validation": 6,
+                  "training": 52
+                }
+              },
+              "output_contract": {
+                "combined_rate": {
+                  "disabled": 47,
+                  "enabled": 11
+                },
+                "percentage": {
+                  "disabled": 34,
+                  "enabled": 9
+                },
+                "rate_total": {
+                  "disabled": 32,
+                  "enabled": 8
+                },
+                "ratio_scale": {
+                  "disabled": 46,
+                  "enabled": 12
+                },
+                "weighted_average": {
+                  "disabled": 47,
+                  "enabled": 11
+                }
+              }
+            },
+            "required_accepted": 233,
+            "required_attempts": 257
+          }
+        }
+      },
+      "denominator": 10,
+      "difficulty_required_moves": {
+        "generic_control": 3,
+        "targeted": 0
+      },
+      "exact_schedule_attempted": true,
+      "exact_schedule_feasible": false,
+      "generic_attempts": {
+        "constraint_distribution_or_discrete_reasoning": 367,
+        "multi_step_bookkeeping_or_omission": 368,
+        "rate_ratio_percentage_or_average": 367
+      },
+      "global_attempt_modes": {
+        "constraint_distribution_or_discrete_reasoning": {
+          "complete_packages": 172,
+          "dual_capacity": 90,
+          "equal_distribution": 172,
+          "two_type_allocation": 172
+        },
+        "multi_step_bookkeeping_or_omission": {
+          "grouping": 486,
+          "inventory": 487
+        },
+        "rate_ratio_percentage_or_average": {
+          "combined_rate": 141,
+          "percentage": 104,
+          "rate_total": 96,
+          "ratio_scale": 142,
+          "weighted_average": 141
+        }
+      },
+      "label": "1.10",
+      "numerator": 11,
+      "schedule_sha256": null,
+      "schedule_summary_sha256": null,
+      "targeted_attempts": {
+        "constraint_distribution_or_discrete_reasoning": 239,
+        "multi_step_bookkeeping_or_omission": 605,
+        "rate_ratio_percentage_or_average": 257
+      },
+      "total_attempts": 2203
+    }
+  ],
+  "review_packet_created": false,
+  "schema_version": 1,
+  "sealed_final_accessed": false,
+  "selected_fixed_attempts": null,
+  "selected_multiplier": null,
+  "selection_config_sha256": "c5840a94319351d59dcc1cac9a0b7aae9977928d53518044613c19f7161c707e",
+  "selection_gate_passed": false,
+  "template_wording_changed": false
+}

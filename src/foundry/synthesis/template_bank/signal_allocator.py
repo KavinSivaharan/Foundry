@@ -1,4 +1,4 @@
-"""Deterministic global allocation for the 2,504-attempt signal-first pilot."""
+"""Deterministic global allocation for a fixed-attempt signal-first pilot."""
 
 from __future__ import annotations
 
@@ -22,11 +22,10 @@ from foundry.synthesis.generators.rates import generate_rates
 from foundry.synthesis.pipeline import _verify
 from foundry.synthesis.schema import DifficultyLevel
 from foundry.synthesis.taxonomy import FailureCategory
+from foundry.synthesis.template_bank.attempt_pool import build_attempt_pool_allocation
 from foundry.synthesis.template_bank.bank import build_template_bank
 from foundry.synthesis.template_bank.contracts import SentencePlanSpec, TemplateSpec
 from foundry.synthesis.template_bank.difficulty_reallocation import (
-    build_corrected_capacity_audit,
-    corrected_subordinate_audit,
     load_difficulty_reallocation_config,
 )
 from foundry.synthesis.template_bank.renderer import render_with_template
@@ -314,10 +313,10 @@ def build_slot_requests(config_path: Path, policy_path: Path) -> tuple[SlotReque
     config = load_signal_pilot_config(config_path)
     if not policy_path.is_file():
         raise ValueError("frozen submode-policy configuration is missing")
-    capacity = build_corrected_capacity_audit(config.difficulty_reallocation_path)
+    capacity = build_attempt_pool_allocation(config_path, policy_path)
     if capacity["capacity_gate_passed"] is not True:
         raise ValueError("allocator cannot run before the revised capacity gate passes")
-    audit = corrected_subordinate_audit(config.difficulty_reallocation_path)
+    audit = capacity
     requests: list[SlotRequest] = []
     slot_index = 1
     for group in GROUP_ORDER:
@@ -372,8 +371,13 @@ def build_slot_requests(config_path: Path, policy_path: Path) -> tuple[SlotReque
                     slot_index += 1
                     group_index += 1
                     family_index += 1
-    if len(requests) != 2_504:
-        raise ValueError("global request schedule does not contain 2,504 slots")
+    expected_total = sum(
+        quota.attempts
+        for dataset in config.datasets.values()
+        for quota in dataset.families.values()
+    )
+    if len(requests) != expected_total:
+        raise ValueError("global request schedule does not contain the selected attempt pool")
     return tuple(requests)
 
 
@@ -766,7 +770,7 @@ def build_full_schedule(
     *,
     progress: bool = False,
 ) -> tuple[PilotScheduleRecord, ...]:
-    """Build all 2,504 content-free records from fixed candidate pools."""
+    """Build every content-free record in the selected fixed candidate pool."""
 
     config = load_signal_pilot_config(config_path)
     requests = build_slot_requests(config_path, policy_path)
@@ -852,7 +856,7 @@ def build_full_schedule(
                     ),
                     flush=True,
                 )
-    if len({item.latent_sha256 for item in latent_for_slot.values()}) != 2_504:
+    if len({item.latent_sha256 for item in latent_for_slot.values()}) != len(requests):
         raise ValueError("global latent-program uniqueness failed")
     plan_use: Counter[tuple[str, str, str]] = Counter()
     plan_scenario_use: Counter[tuple[str, str, str, str]] = Counter()
@@ -879,9 +883,8 @@ def build_full_schedule(
         ),
     )
     exact_matches: dict[str, _SurfaceChoice] = {}
-    constrained_modes = (
-        (CATEGORY_ORDER[1], "weighted_average"),
-        (CATEGORY_ORDER[2], "complete_packages"),
+    constrained_modes = tuple(
+        (family, mode) for family in CATEGORY_ORDER[1:] for mode in MODE_ORDER[family]
     )
     for group in GROUP_ORDER:
         for family, mode in constrained_modes:
@@ -1034,8 +1037,13 @@ def validate_full_schedule(
     """Validate quota, isolation, identity, cap, and deterministic-order contracts."""
 
     config = load_signal_pilot_config(config_path)
-    if len(records) != 2_504 or tuple(record.slot_index for record in records) != tuple(
-        range(1, 2_505)
+    expected_total = sum(
+        quota.attempts
+        for dataset in config.datasets.values()
+        for quota in dataset.families.values()
+    )
+    if len(records) != expected_total or tuple(record.slot_index for record in records) != tuple(
+        range(1, expected_total + 1)
     ):
         raise ValueError("schedule count or stable order differs")
     unique_fields = (
@@ -1169,7 +1177,7 @@ def validate_full_schedule(
     schedule_hash = canonical_sha256([asdict(record) for record in records])
     payload: dict[str, object] = {
         "schema_version": 1,
-        "schedule_id": "foundry-signal-first-dry-schedule-v1",
+        "schedule_id": "foundry-signal-first-dry-schedule-v2",
         "allocator_version": ALLOCATOR_VERSION,
         "signal_config_sha256": config.config_sha256,
         "record_count": len(records),
@@ -1196,9 +1204,9 @@ def validate_full_schedule(
             {record.number_neutral_sha256 for record in records}
         ),
         "schedule_identity_contract_sha256": number_neutral_identity_contract_sha256(),
-        "difficulty_reallocation_policy_sha256": build_corrected_capacity_audit(
-            config.difficulty_reallocation_path
-        )["policy_sha256"],
+        "attempt_pool_allocation_sha256": build_attempt_pool_allocation(config_path, policy_path)[
+            "allocation_sha256"
+        ],
         "surface_reuse_policy_sha256": surface_policy.config_sha256,
         "schedule_runtime_identity_mismatches": 0,
         "targeted_generic_latent_overlap": len(

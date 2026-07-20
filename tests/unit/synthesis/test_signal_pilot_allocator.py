@@ -151,6 +151,6 @@ def test_bookkeeping_frame_cap_covers_both_shared_modes() -> None:
 def test_complete_schedule_fails_closed_on_joint_surface_compatibility() -> None:
     with pytest.raises(
         ValueError,
-        match=("generic_control/constraint_distribution_or_discrete_reasoning/complete_packages"),
+        match=("generic_control/constraint_distribution_or_discrete_reasoning/"),
     ):
         build_full_schedule(_CONFIG, _POLICY)
