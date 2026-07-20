@@ -1,0 +1,90 @@
+{
+  "benchmark_or_result_dependent": false,
+  "calibration_sha256": "ccbf360f293dd7cd1d243dcfc0632ca8cd97e249ed86686727c4aeb588fc46a8",
+  "candidate_results": {
+    "equal-style-uniform-caps-v1": {
+      "exact_matches": 5,
+      "mismatched_fixture_ids": [
+        "one_low_capacity_mode",
+        "two_saturated_modes",
+        "impossible_total_capacity",
+        "low_mode_still_covered"
+      ]
+    },
+    "maximally-balanced-feasible-submodes-v1": {
+      "exact_matches": 9,
+      "mismatched_fixture_ids": []
+    },
+    "proportional-to-capacity-v1": {
+      "exact_matches": 6,
+      "mismatched_fixture_ids": [
+        "one_low_capacity_mode",
+        "two_saturated_modes",
+        "low_mode_still_covered"
+      ]
+    }
+  },
+  "config_sha256": "cd298e0c52aac09b6d8b8651e6d537dbb9f39e7952cc312496ae9d430cd28c6a",
+  "fixture_count": 9,
+  "fixture_set_id": "foundry-signal-pilot-submode-fixtures-v1",
+  "fixture_set_sha256": "5101e3b2d89010a8325694a855de193a094efb9f492758fcb7589f28b3a8bd47",
+  "rejected_alternatives": {
+    "equal-style-uniform-caps-v1": "fails when a low-capacity mode needs redistribution",
+    "proportional-to-capacity-v1": "feasible but concentrates attempts in large modes beyond necessity"
+  },
+  "schema_version": 1,
+  "sealed_final_accessed": false,
+  "selected_contract": {
+    "algorithm": "iterative deterministic water-filling",
+    "dataset_split": "stable largest remainder",
+    "family_order": [
+      "multi_step_bookkeeping_or_omission",
+      "rate_ratio_percentage_or_average",
+      "constraint_distribution_or_discrete_reasoning"
+    ],
+    "mode_order": {
+      "constraint_distribution_or_discrete_reasoning": [
+        "two_type_allocation",
+        "complete_packages",
+        "equal_distribution",
+        "dual_capacity"
+      ],
+      "multi_step_bookkeeping_or_omission": [
+        "inventory",
+        "grouping"
+      ],
+      "rate_ratio_percentage_or_average": [
+        "rate_total",
+        "ratio_scale",
+        "percentage",
+        "weighted_average",
+        "combined_rate"
+      ]
+    },
+    "policy_id": "maximally-balanced-feasible-submodes-v1",
+    "subordinate_allocation": "integer minimum squared proportional deviation",
+    "tie_break": "declared mode and column order",
+    "verified_capacity": {
+      "constraint_distribution_or_discrete_reasoning": {
+        "complete_packages": 865,
+        "dual_capacity": 90,
+        "equal_distribution": 253,
+        "two_type_allocation": 865
+      },
+      "multi_step_bookkeeping_or_omission": {
+        "grouping": 2762,
+        "inventory": 2762
+      },
+      "rate_ratio_percentage_or_average": {
+        "combined_rate": 384,
+        "percentage": 104,
+        "rate_total": 96,
+        "ratio_scale": 336,
+        "weighted_average": 712
+      }
+    }
+  },
+  "selected_policy_id": "maximally-balanced-feasible-submodes-v1",
+  "selected_policy_sha256": "75a47622b2af3f91ea4440f6e95449969e6236d4f815bf1c2517df7e56c43ce9",
+  "selection_rationale": "complete feasible allocation with minimal concentration and stable broad coverage"
+}

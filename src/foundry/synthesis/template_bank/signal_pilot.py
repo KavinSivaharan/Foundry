@@ -148,7 +148,9 @@ class SignalPilotConfig:
     attempt_denominator: int
     datasets: dict[str, DatasetQuota]
     full_schedule_master_seed: str
-    full_schedule_candidate_pool_per_slot: int
+    full_schedule_candidate_pool_per_mode_difficulty: int
+    full_schedule_raw_path: Path
+    full_schedule_summary_path: Path
     smoke: SmokeContract
 
 
@@ -381,8 +383,15 @@ def load_signal_pilot_config(path: Path) -> SignalPilotConfig:
         full_schedule_master_seed=_string(
             root.get("full_schedule_master_seed"), "full schedule master seed"
         ),
-        full_schedule_candidate_pool_per_slot=_integer(
-            root.get("full_schedule_candidate_pool_per_slot"), "candidate pool per slot"
+        full_schedule_candidate_pool_per_mode_difficulty=_integer(
+            root.get("full_schedule_candidate_pool_per_mode_difficulty"),
+            "candidate pool per mode/difficulty",
+        ),
+        full_schedule_raw_path=Path(
+            _string(root.get("full_schedule_raw_path"), "full schedule raw path")
+        ),
+        full_schedule_summary_path=Path(
+            _string(root.get("full_schedule_summary_path"), "full schedule summary path")
         ),
         smoke=smoke,
     )

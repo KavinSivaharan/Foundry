@@ -1,0 +1,80 @@
+schema_version: 1
+policy_id: maximally-balanced-feasible-submodes-v1
+fixture_path: configs/synthesis/signal_pilot_submode_policy_fixtures.json
+signal_pilot_config: configs/synthesis/signal_pilot.yaml
+source_capacity_audit: results/synthesis_smoke/template_bank_bounded_reuse_capacity_audit.json
+superseded_capacity_audit: results/synthesis_smoke/signal_pilot_capacity_audit.json
+candidate_policies:
+  - equal-style-uniform-caps-v1
+  - maximally-balanced-feasible-submodes-v1
+  - proportional-to-capacity-v1
+stable_family_order:
+  - multi_step_bookkeeping_or_omission
+  - rate_ratio_percentage_or_average
+  - constraint_distribution_or_discrete_reasoning
+stable_mode_order:
+  multi_step_bookkeeping_or_omission:
+    - inventory
+    - grouping
+  rate_ratio_percentage_or_average:
+    - rate_total
+    - ratio_scale
+    - percentage
+    - weighted_average
+    - combined_rate
+  constraint_distribution_or_discrete_reasoning:
+    - two_type_allocation
+    - complete_packages
+    - equal_distribution
+    - dual_capacity
+verified_unique_attempt_capacity:
+  multi_step_bookkeeping_or_omission:
+    inventory: 2762
+    grouping: 2762
+  rate_ratio_percentage_or_average:
+    rate_total: 96
+    ratio_scale: 336
+    percentage: 104
+    weighted_average: 712
+    combined_rate: 384
+  constraint_distribution_or_discrete_reasoning:
+    two_type_allocation: 865
+    complete_packages: 865
+    equal_distribution: 253
+    dual_capacity: 90
+verified_unique_attempt_capacity_by_difficulty:
+  multi_step_bookkeeping_or_omission:
+    inventory: {easy: 2762, medium: 2762, hard: 2762}
+    grouping: {easy: 2762, medium: 2762, hard: 2762}
+  rate_ratio_percentage_or_average:
+    rate_total: {easy: 72, medium: 72, hard: 72}
+    ratio_scale: {easy: 336, medium: 336, hard: 336}
+    percentage: {easy: 104, medium: 104, hard: 104}
+    weighted_average: {easy: 712, medium: 712, hard: 712}
+    combined_rate: {easy: 384, medium: 384, hard: 384}
+  constraint_distribution_or_discrete_reasoning:
+    two_type_allocation: {easy: 865, medium: 865, hard: 865}
+    complete_packages: {easy: 189, medium: 315, hard: 835}
+    equal_distribution: {easy: 33, medium: 60, hard: 160}
+    dual_capacity: {easy: 30, medium: 30, hard: 30}
+allocation:
+  global_method: deterministic-water-filling
+  dataset_split_method: largest-remainder
+  subordinate_method: stable-minimum-deviation
+  integer_tie_break: stable-mode-id-order
+  unordered_iteration_allowed: false
+  result_or_benchmark_dependent_weights_allowed: false
+  manual_weights_allowed: false
+preserved_controls:
+  exact_question_uniqueness: true
+  global_latent_program_uniqueness: true
+  targeted_generic_isolation: true
+  train_validation_isolation: true
+  sentence_plan_caps: unchanged
+  number_neutral_caps: unchanged
+  plan_scenario_caps: unchanged
+  benchmark_contamination: unchanged
+  generator_modes: unchanged
+  generator_ranges: unchanged
+  labels_and_verifiers: unchanged
+  sealed_final_access: false

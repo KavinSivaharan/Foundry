@@ -1,6 +1,10 @@
 # Foundry Project Plan
 
-Last updated: 2026-07-18
+Last updated: 2026-07-19
+
+## Current milestone status: signal-first allocation blocked at review identity
+
+Milestone 7B verified that the reduced 1,000-targeted plus 1,000-generic signal experiment is mathematically schedulable. A deterministic allocator produced 2,504 unique latent programs with exact dataset, family, difficulty, output-contract, and future split margins. The 120-question review smoke accepted 115 automatically, but five number-neutral runtime collisions failed the zero-duplicate review gate. No review packet, complete dataset, or training run was authorized. The next approved work must align scheduling with the unchanged runtime identity before another smoke.
 
 ## Project objective
 

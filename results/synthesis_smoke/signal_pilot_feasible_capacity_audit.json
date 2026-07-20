@@ -1,0 +1,1666 @@
+{
+  "allocator_implemented": false,
+  "audit_id": "foundry-signal-pilot-feasible-capacity-v1",
+  "benchmark_contamination_changed": false,
+  "capacity_audit_sha256": "7c1d87d7ed43b71343a1af68c531f3d747f9d46c0ef3d6268b380213e830aa0c",
+  "capacity_gate_passed": true,
+  "cross_dataset_isolation_required": true,
+  "datasets": {
+    "generic_control": {
+      "constraint_distribution_or_discrete_reasoning": {
+        "accepted_subordinate_allocations": {
+          "difficulty": {
+            "complete_packages": {
+              "easy": 43,
+              "hard": 21,
+              "medium": 29
+            },
+            "dual_capacity": {
+              "easy": 18,
+              "hard": 18,
+              "medium": 18
+            },
+            "equal_distribution": {
+              "easy": 7,
+              "hard": 52,
+              "medium": 34
+            },
+            "two_type_allocation": {
+              "easy": 43,
+              "hard": 20,
+              "medium": 30
+            }
+          },
+          "future_split": {
+            "complete_packages": {
+              "synthetic_validation": 9,
+              "training": 84
+            },
+            "dual_capacity": {
+              "synthetic_validation": 6,
+              "training": 48
+            },
+            "equal_distribution": {
+              "synthetic_validation": 9,
+              "training": 84
+            },
+            "two_type_allocation": {
+              "synthetic_validation": 9,
+              "training": 84
+            }
+          },
+          "output_contract": {
+            "complete_packages": {
+              "disabled": 75,
+              "enabled": 18
+            },
+            "dual_capacity": {
+              "disabled": 43,
+              "enabled": 11
+            },
+            "equal_distribution": {
+              "disabled": 74,
+              "enabled": 19
+            },
+            "two_type_allocation": {
+              "disabled": 75,
+              "enabled": 18
+            }
+          }
+        },
+        "assigned_accepted_modes": {
+          "complete_packages": 93,
+          "dual_capacity": 54,
+          "equal_distribution": 93,
+          "two_type_allocation": 93
+        },
+        "assigned_attempt_modes": {
+          "complete_packages": 121,
+          "dual_capacity": 54,
+          "equal_distribution": 121,
+          "two_type_allocation": 121
+        },
+        "attempt_subordinate_allocations": {
+          "difficulty": {
+            "complete_packages": {
+              "easy": 57,
+              "hard": 21,
+              "medium": 43
+            },
+            "dual_capacity": {
+              "easy": 18,
+              "hard": 18,
+              "medium": 18
+            },
+            "equal_distribution": {
+              "easy": 7,
+              "hard": 80,
+              "medium": 34
+            },
+            "two_type_allocation": {
+              "easy": 57,
+              "hard": 20,
+              "medium": 44
+            }
+          },
+          "future_split": {
+            "complete_packages": {
+              "synthetic_validation": 12,
+              "training": 109
+            },
+            "dual_capacity": {
+              "synthetic_validation": 6,
+              "training": 48
+            },
+            "equal_distribution": {
+              "synthetic_validation": 12,
+              "training": 109
+            },
+            "two_type_allocation": {
+              "synthetic_validation": 12,
+              "training": 109
+            }
+          },
+          "output_contract": {
+            "complete_packages": {
+              "disabled": 97,
+              "enabled": 24
+            },
+            "dual_capacity": {
+              "disabled": 43,
+              "enabled": 11
+            },
+            "equal_distribution": {
+              "disabled": 97,
+              "enabled": 24
+            },
+            "two_type_allocation": {
+              "disabled": 97,
+              "enabled": 24
+            }
+          }
+        },
+        "difficulty_cells_fit_attempt_pool": true,
+        "gate_passed": true,
+        "maximum_submode_concentration": 0.290167865707434,
+        "normalized_submode_entropy": 0.967885503451942,
+        "number_neutral_attempt_cap": 2,
+        "plan_scenario_attempt_cap": 1,
+        "required_accepted": 333,
+        "required_attempts": 417,
+        "retained_surface_accepted_capacity": 480,
+        "retained_surface_attempt_capacity": 560,
+        "semantic_frame_accepted_distribution": {
+          "complete_packages": {
+            "frame_1": 19,
+            "frame_2": 19,
+            "frame_3": 19,
+            "frame_4": 18,
+            "frame_5": 18
+          },
+          "dual_capacity": {
+            "frame_1": 11,
+            "frame_2": 11,
+            "frame_3": 11,
+            "frame_4": 11,
+            "frame_5": 10
+          },
+          "equal_distribution": {
+            "frame_1": 19,
+            "frame_2": 19,
+            "frame_3": 19,
+            "frame_4": 18,
+            "frame_5": 18
+          },
+          "two_type_allocation": {
+            "frame_1": 19,
+            "frame_2": 19,
+            "frame_3": 19,
+            "frame_4": 18,
+            "frame_5": 18
+          }
+        },
+        "semantic_frame_attempt_distribution": {
+          "complete_packages": {
+            "frame_1": 25,
+            "frame_2": 24,
+            "frame_3": 24,
+            "frame_4": 24,
+            "frame_5": 24
+          },
+          "dual_capacity": {
+            "frame_1": 11,
+            "frame_2": 11,
+            "frame_3": 11,
+            "frame_4": 11,
+            "frame_5": 10
+          },
+          "equal_distribution": {
+            "frame_1": 25,
+            "frame_2": 24,
+            "frame_3": 24,
+            "frame_4": 24,
+            "frame_5": 24
+          },
+          "two_type_allocation": {
+            "frame_1": 25,
+            "frame_2": 24,
+            "frame_3": 24,
+            "frame_4": 24,
+            "frame_5": 24
+          }
+        },
+        "sentence_plan_attempt_cap": 7,
+        "target_type_accepted": {
+          "capacity": 54,
+          "count": 186,
+          "group_count": 93
+        },
+        "target_type_attempts": {
+          "capacity": 54,
+          "count": 242,
+          "group_count": 121
+        }
+      },
+      "multi_step_bookkeeping_or_omission": {
+        "accepted_subordinate_allocations": {
+          "difficulty": {
+            "grouping": {
+              "easy": 56,
+              "hard": 56,
+              "medium": 55
+            },
+            "inventory": {
+              "easy": 56,
+              "hard": 55,
+              "medium": 56
+            }
+          },
+          "future_split": {
+            "grouping": {
+              "synthetic_validation": 17,
+              "training": 150
+            },
+            "inventory": {
+              "synthetic_validation": 17,
+              "training": 150
+            }
+          },
+          "output_contract": {
+            "grouping": {
+              "disabled": 134,
+              "enabled": 33
+            },
+            "inventory": {
+              "disabled": 133,
+              "enabled": 34
+            }
+          }
+        },
+        "assigned_accepted_modes": {
+          "grouping": 167,
+          "inventory": 167
+        },
+        "assigned_attempt_modes": {
+          "grouping": 209,
+          "inventory": 209
+        },
+        "attempt_subordinate_allocations": {
+          "difficulty": {
+            "grouping": {
+              "easy": 70,
+              "hard": 69,
+              "medium": 70
+            },
+            "inventory": {
+              "easy": 70,
+              "hard": 70,
+              "medium": 69
+            }
+          },
+          "future_split": {
+            "grouping": {
+              "synthetic_validation": 22,
+              "training": 187
+            },
+            "inventory": {
+              "synthetic_validation": 21,
+              "training": 188
+            }
+          },
+          "output_contract": {
+            "grouping": {
+              "disabled": 167,
+              "enabled": 42
+            },
+            "inventory": {
+              "disabled": 167,
+              "enabled": 42
+            }
+          }
+        },
+        "difficulty_cells_fit_attempt_pool": true,
+        "gate_passed": true,
+        "maximum_submode_concentration": 0.5,
+        "normalized_submode_entropy": 1.0,
+        "number_neutral_attempt_cap": 1,
+        "plan_scenario_attempt_cap": 1,
+        "required_accepted": 334,
+        "required_attempts": 418,
+        "retained_surface_accepted_capacity": 432,
+        "retained_surface_attempt_capacity": 576,
+        "semantic_frame_accepted_distribution": {
+          "grouping": {
+            "frame_1": 10,
+            "frame_10": 9,
+            "frame_11": 9,
+            "frame_12": 9,
+            "frame_13": 9,
+            "frame_14": 9,
+            "frame_15": 9,
+            "frame_16": 9,
+            "frame_17": 9,
+            "frame_18": 9,
+            "frame_2": 10,
+            "frame_3": 10,
+            "frame_4": 10,
+            "frame_5": 10,
+            "frame_6": 9,
+            "frame_7": 9,
+            "frame_8": 9,
+            "frame_9": 9
+          },
+          "inventory": {
+            "frame_1": 10,
+            "frame_10": 9,
+            "frame_11": 9,
+            "frame_12": 9,
+            "frame_13": 9,
+            "frame_14": 9,
+            "frame_15": 9,
+            "frame_16": 9,
+            "frame_17": 9,
+            "frame_18": 9,
+            "frame_2": 10,
+            "frame_3": 10,
+            "frame_4": 10,
+            "frame_5": 10,
+            "frame_6": 9,
+            "frame_7": 9,
+            "frame_8": 9,
+            "frame_9": 9
+          }
+        },
+        "semantic_frame_attempt_distribution": {
+          "grouping": {
+            "frame_1": 12,
+            "frame_10": 12,
+            "frame_11": 12,
+            "frame_12": 11,
+            "frame_13": 11,
+            "frame_14": 11,
+            "frame_15": 11,
+            "frame_16": 11,
+            "frame_17": 11,
+            "frame_18": 11,
+            "frame_2": 12,
+            "frame_3": 12,
+            "frame_4": 12,
+            "frame_5": 12,
+            "frame_6": 12,
+            "frame_7": 12,
+            "frame_8": 12,
+            "frame_9": 12
+          },
+          "inventory": {
+            "frame_1": 12,
+            "frame_10": 12,
+            "frame_11": 12,
+            "frame_12": 11,
+            "frame_13": 11,
+            "frame_14": 11,
+            "frame_15": 11,
+            "frame_16": 11,
+            "frame_17": 11,
+            "frame_18": 11,
+            "frame_2": 12,
+            "frame_3": 12,
+            "frame_4": 12,
+            "frame_5": 12,
+            "frame_6": 12,
+            "frame_7": 12,
+            "frame_8": 12,
+            "frame_9": 12
+          }
+        },
+        "sentence_plan_attempt_cap": 8,
+        "target_type_accepted": {
+          "group_count": 167,
+          "remaining_quantity": 167
+        },
+        "target_type_attempts": {
+          "group_count": 209,
+          "remaining_quantity": 209
+        }
+      },
+      "rate_ratio_percentage_or_average": {
+        "accepted_subordinate_allocations": {
+          "difficulty": {
+            "combined_rate": {
+              "easy": 24,
+              "hard": 24,
+              "medium": 24
+            },
+            "percentage": {
+              "easy": 20,
+              "hard": 20,
+              "medium": 21
+            },
+            "rate_total": {
+              "easy": 19,
+              "hard": 19,
+              "medium": 18
+            },
+            "ratio_scale": {
+              "easy": 24,
+              "hard": 24,
+              "medium": 24
+            },
+            "weighted_average": {
+              "easy": 24,
+              "hard": 24,
+              "medium": 24
+            }
+          },
+          "future_split": {
+            "combined_rate": {
+              "synthetic_validation": 7,
+              "training": 65
+            },
+            "percentage": {
+              "synthetic_validation": 6,
+              "training": 55
+            },
+            "rate_total": {
+              "synthetic_validation": 6,
+              "training": 50
+            },
+            "ratio_scale": {
+              "synthetic_validation": 7,
+              "training": 65
+            },
+            "weighted_average": {
+              "synthetic_validation": 7,
+              "training": 65
+            }
+          },
+          "output_contract": {
+            "combined_rate": {
+              "disabled": 57,
+              "enabled": 15
+            },
+            "percentage": {
+              "disabled": 49,
+              "enabled": 12
+            },
+            "rate_total": {
+              "disabled": 45,
+              "enabled": 11
+            },
+            "ratio_scale": {
+              "disabled": 58,
+              "enabled": 14
+            },
+            "weighted_average": {
+              "disabled": 57,
+              "enabled": 15
+            }
+          }
+        },
+        "assigned_accepted_modes": {
+          "combined_rate": 72,
+          "percentage": 61,
+          "rate_total": 56,
+          "ratio_scale": 72,
+          "weighted_average": 72
+        },
+        "assigned_attempt_modes": {
+          "combined_rate": 100,
+          "percentage": 61,
+          "rate_total": 56,
+          "ratio_scale": 100,
+          "weighted_average": 100
+        },
+        "attempt_subordinate_allocations": {
+          "difficulty": {
+            "combined_rate": {
+              "easy": 34,
+              "hard": 33,
+              "medium": 33
+            },
+            "percentage": {
+              "easy": 20,
+              "hard": 20,
+              "medium": 21
+            },
+            "rate_total": {
+              "easy": 19,
+              "hard": 19,
+              "medium": 18
+            },
+            "ratio_scale": {
+              "easy": 33,
+              "hard": 33,
+              "medium": 34
+            },
+            "weighted_average": {
+              "easy": 33,
+              "hard": 34,
+              "medium": 33
+            }
+          },
+          "future_split": {
+            "combined_rate": {
+              "synthetic_validation": 10,
+              "training": 90
+            },
+            "percentage": {
+              "synthetic_validation": 6,
+              "training": 55
+            },
+            "rate_total": {
+              "synthetic_validation": 6,
+              "training": 50
+            },
+            "ratio_scale": {
+              "synthetic_validation": 10,
+              "training": 90
+            },
+            "weighted_average": {
+              "synthetic_validation": 10,
+              "training": 90
+            }
+          },
+          "output_contract": {
+            "combined_rate": {
+              "disabled": 80,
+              "enabled": 20
+            },
+            "percentage": {
+              "disabled": 49,
+              "enabled": 12
+            },
+            "rate_total": {
+              "disabled": 45,
+              "enabled": 11
+            },
+            "ratio_scale": {
+              "disabled": 80,
+              "enabled": 20
+            },
+            "weighted_average": {
+              "disabled": 80,
+              "enabled": 20
+            }
+          }
+        },
+        "difficulty_cells_fit_attempt_pool": true,
+        "gate_passed": true,
+        "maximum_submode_concentration": 0.23980815347721823,
+        "normalized_submode_entropy": 0.980521505635622,
+        "number_neutral_attempt_cap": 6,
+        "plan_scenario_attempt_cap": 2,
+        "required_accepted": 333,
+        "required_attempts": 417,
+        "retained_surface_accepted_capacity": 440,
+        "retained_surface_attempt_capacity": 528,
+        "semantic_frame_accepted_distribution": {
+          "combined_rate": {
+            "frame_1": 18,
+            "frame_2": 18,
+            "frame_3": 18,
+            "frame_4": 18
+          },
+          "percentage": {
+            "frame_1": 16,
+            "frame_2": 15,
+            "frame_3": 15,
+            "frame_4": 15
+          },
+          "rate_total": {
+            "frame_1": 14,
+            "frame_2": 14,
+            "frame_3": 14,
+            "frame_4": 14
+          },
+          "ratio_scale": {
+            "frame_1": 18,
+            "frame_2": 18,
+            "frame_3": 18,
+            "frame_4": 18
+          },
+          "weighted_average": {
+            "frame_1": 18,
+            "frame_2": 18,
+            "frame_3": 18,
+            "frame_4": 18
+          }
+        },
+        "semantic_frame_attempt_distribution": {
+          "combined_rate": {
+            "frame_1": 25,
+            "frame_2": 25,
+            "frame_3": 25,
+            "frame_4": 25
+          },
+          "percentage": {
+            "frame_1": 16,
+            "frame_2": 15,
+            "frame_3": 15,
+            "frame_4": 15
+          },
+          "rate_total": {
+            "frame_1": 14,
+            "frame_2": 14,
+            "frame_3": 14,
+            "frame_4": 14
+          },
+          "ratio_scale": {
+            "frame_1": 25,
+            "frame_2": 25,
+            "frame_3": 25,
+            "frame_4": 25
+          },
+          "weighted_average": {
+            "frame_1": 25,
+            "frame_2": 25,
+            "frame_3": 25,
+            "frame_4": 25
+          }
+        },
+        "sentence_plan_attempt_cap": 7,
+        "target_type_accepted": {
+          "percentage": 61,
+          "ratio": 72,
+          "total_quantity": 128,
+          "weighted_mean": 72
+        },
+        "target_type_attempts": {
+          "percentage": 61,
+          "ratio": 100,
+          "total_quantity": 156,
+          "weighted_mean": 100
+        }
+      }
+    },
+    "targeted": {
+      "constraint_distribution_or_discrete_reasoning": {
+        "accepted_subordinate_allocations": {
+          "difficulty": {
+            "complete_packages": {
+              "easy": 20,
+              "hard": 20,
+              "medium": 20
+            },
+            "dual_capacity": {
+              "easy": 12,
+              "hard": 12,
+              "medium": 12
+            },
+            "equal_distribution": {
+              "easy": 20,
+              "hard": 20,
+              "medium": 20
+            },
+            "two_type_allocation": {
+              "easy": 21,
+              "hard": 20,
+              "medium": 20
+            }
+          },
+          "future_split": {
+            "complete_packages": {
+              "synthetic_validation": 6,
+              "training": 54
+            },
+            "dual_capacity": {
+              "synthetic_validation": 4,
+              "training": 32
+            },
+            "equal_distribution": {
+              "synthetic_validation": 6,
+              "training": 54
+            },
+            "two_type_allocation": {
+              "synthetic_validation": 6,
+              "training": 55
+            }
+          },
+          "output_contract": {
+            "complete_packages": {
+              "disabled": 48,
+              "enabled": 12
+            },
+            "dual_capacity": {
+              "disabled": 29,
+              "enabled": 7
+            },
+            "equal_distribution": {
+              "disabled": 48,
+              "enabled": 12
+            },
+            "two_type_allocation": {
+              "disabled": 49,
+              "enabled": 12
+            }
+          }
+        },
+        "assigned_accepted_modes": {
+          "complete_packages": 60,
+          "dual_capacity": 36,
+          "equal_distribution": 60,
+          "two_type_allocation": 61
+        },
+        "assigned_attempt_modes": {
+          "complete_packages": 79,
+          "dual_capacity": 36,
+          "equal_distribution": 78,
+          "two_type_allocation": 79
+        },
+        "attempt_subordinate_allocations": {
+          "difficulty": {
+            "complete_packages": {
+              "easy": 26,
+              "hard": 26,
+              "medium": 27
+            },
+            "dual_capacity": {
+              "easy": 12,
+              "hard": 12,
+              "medium": 12
+            },
+            "equal_distribution": {
+              "easy": 26,
+              "hard": 26,
+              "medium": 26
+            },
+            "two_type_allocation": {
+              "easy": 27,
+              "hard": 26,
+              "medium": 26
+            }
+          },
+          "future_split": {
+            "complete_packages": {
+              "synthetic_validation": 8,
+              "training": 71
+            },
+            "dual_capacity": {
+              "synthetic_validation": 4,
+              "training": 32
+            },
+            "equal_distribution": {
+              "synthetic_validation": 8,
+              "training": 70
+            },
+            "two_type_allocation": {
+              "synthetic_validation": 8,
+              "training": 71
+            }
+          },
+          "output_contract": {
+            "complete_packages": {
+              "disabled": 63,
+              "enabled": 16
+            },
+            "dual_capacity": {
+              "disabled": 29,
+              "enabled": 7
+            },
+            "equal_distribution": {
+              "disabled": 63,
+              "enabled": 15
+            },
+            "two_type_allocation": {
+              "disabled": 63,
+              "enabled": 16
+            }
+          }
+        },
+        "difficulty_cells_fit_attempt_pool": true,
+        "gate_passed": true,
+        "maximum_submode_concentration": 0.29044117647058826,
+        "normalized_submode_entropy": 0.969510774788477,
+        "number_neutral_attempt_cap": 2,
+        "plan_scenario_attempt_cap": 1,
+        "required_accepted": 217,
+        "required_attempts": 272,
+        "retained_surface_accepted_capacity": 320,
+        "retained_surface_attempt_capacity": 400,
+        "semantic_frame_accepted_distribution": {
+          "complete_packages": {
+            "frame_1": 12,
+            "frame_2": 12,
+            "frame_3": 12,
+            "frame_4": 12,
+            "frame_5": 12
+          },
+          "dual_capacity": {
+            "frame_1": 8,
+            "frame_2": 7,
+            "frame_3": 7,
+            "frame_4": 7,
+            "frame_5": 7
+          },
+          "equal_distribution": {
+            "frame_1": 12,
+            "frame_2": 12,
+            "frame_3": 12,
+            "frame_4": 12,
+            "frame_5": 12
+          },
+          "two_type_allocation": {
+            "frame_1": 13,
+            "frame_2": 12,
+            "frame_3": 12,
+            "frame_4": 12,
+            "frame_5": 12
+          }
+        },
+        "semantic_frame_attempt_distribution": {
+          "complete_packages": {
+            "frame_1": 16,
+            "frame_2": 16,
+            "frame_3": 16,
+            "frame_4": 16,
+            "frame_5": 15
+          },
+          "dual_capacity": {
+            "frame_1": 8,
+            "frame_2": 7,
+            "frame_3": 7,
+            "frame_4": 7,
+            "frame_5": 7
+          },
+          "equal_distribution": {
+            "frame_1": 16,
+            "frame_2": 16,
+            "frame_3": 16,
+            "frame_4": 15,
+            "frame_5": 15
+          },
+          "two_type_allocation": {
+            "frame_1": 16,
+            "frame_2": 16,
+            "frame_3": 16,
+            "frame_4": 16,
+            "frame_5": 15
+          }
+        },
+        "sentence_plan_attempt_cap": 5,
+        "target_type_accepted": {
+          "capacity": 36,
+          "count": 121,
+          "group_count": 60
+        },
+        "target_type_attempts": {
+          "capacity": 36,
+          "count": 157,
+          "group_count": 79
+        }
+      },
+      "multi_step_bookkeeping_or_omission": {
+        "accepted_subordinate_allocations": {
+          "difficulty": {
+            "grouping": {
+              "easy": 92,
+              "hard": 92,
+              "medium": 91
+            },
+            "inventory": {
+              "easy": 92,
+              "hard": 91,
+              "medium": 92
+            }
+          },
+          "future_split": {
+            "grouping": {
+              "synthetic_validation": 28,
+              "training": 247
+            },
+            "inventory": {
+              "synthetic_validation": 27,
+              "training": 248
+            }
+          },
+          "output_contract": {
+            "grouping": {
+              "disabled": 220,
+              "enabled": 55
+            },
+            "inventory": {
+              "disabled": 220,
+              "enabled": 55
+            }
+          }
+        },
+        "assigned_accepted_modes": {
+          "grouping": 275,
+          "inventory": 275
+        },
+        "assigned_attempt_modes": {
+          "grouping": 344,
+          "inventory": 344
+        },
+        "attempt_subordinate_allocations": {
+          "difficulty": {
+            "grouping": {
+              "easy": 115,
+              "hard": 115,
+              "medium": 114
+            },
+            "inventory": {
+              "easy": 115,
+              "hard": 114,
+              "medium": 115
+            }
+          },
+          "future_split": {
+            "grouping": {
+              "synthetic_validation": 35,
+              "training": 309
+            },
+            "inventory": {
+              "synthetic_validation": 34,
+              "training": 310
+            }
+          },
+          "output_contract": {
+            "grouping": {
+              "disabled": 275,
+              "enabled": 69
+            },
+            "inventory": {
+              "disabled": 275,
+              "enabled": 69
+            }
+          }
+        },
+        "difficulty_cells_fit_attempt_pool": true,
+        "gate_passed": true,
+        "maximum_submode_concentration": 0.5,
+        "normalized_submode_entropy": 1.0,
+        "number_neutral_attempt_cap": 2,
+        "plan_scenario_attempt_cap": 1,
+        "required_accepted": 550,
+        "required_attempts": 688,
+        "retained_surface_accepted_capacity": 720,
+        "retained_surface_attempt_capacity": 864,
+        "semantic_frame_accepted_distribution": {
+          "grouping": {
+            "frame_1": 16,
+            "frame_10": 15,
+            "frame_11": 15,
+            "frame_12": 15,
+            "frame_13": 15,
+            "frame_14": 15,
+            "frame_15": 15,
+            "frame_16": 15,
+            "frame_17": 15,
+            "frame_18": 15,
+            "frame_2": 16,
+            "frame_3": 16,
+            "frame_4": 16,
+            "frame_5": 16,
+            "frame_6": 15,
+            "frame_7": 15,
+            "frame_8": 15,
+            "frame_9": 15
+          },
+          "inventory": {
+            "frame_1": 16,
+            "frame_10": 15,
+            "frame_11": 15,
+            "frame_12": 15,
+            "frame_13": 15,
+            "frame_14": 15,
+            "frame_15": 15,
+            "frame_16": 15,
+            "frame_17": 15,
+            "frame_18": 15,
+            "frame_2": 16,
+            "frame_3": 16,
+            "frame_4": 16,
+            "frame_5": 16,
+            "frame_6": 15,
+            "frame_7": 15,
+            "frame_8": 15,
+            "frame_9": 15
+          }
+        },
+        "semantic_frame_attempt_distribution": {
+          "grouping": {
+            "frame_1": 20,
+            "frame_10": 19,
+            "frame_11": 19,
+            "frame_12": 19,
+            "frame_13": 19,
+            "frame_14": 19,
+            "frame_15": 19,
+            "frame_16": 19,
+            "frame_17": 19,
+            "frame_18": 19,
+            "frame_2": 20,
+            "frame_3": 19,
+            "frame_4": 19,
+            "frame_5": 19,
+            "frame_6": 19,
+            "frame_7": 19,
+            "frame_8": 19,
+            "frame_9": 19
+          },
+          "inventory": {
+            "frame_1": 20,
+            "frame_10": 19,
+            "frame_11": 19,
+            "frame_12": 19,
+            "frame_13": 19,
+            "frame_14": 19,
+            "frame_15": 19,
+            "frame_16": 19,
+            "frame_17": 19,
+            "frame_18": 19,
+            "frame_2": 20,
+            "frame_3": 19,
+            "frame_4": 19,
+            "frame_5": 19,
+            "frame_6": 19,
+            "frame_7": 19,
+            "frame_8": 19,
+            "frame_9": 19
+          }
+        },
+        "sentence_plan_attempt_cap": 12,
+        "target_type_accepted": {
+          "group_count": 275,
+          "remaining_quantity": 275
+        },
+        "target_type_attempts": {
+          "group_count": 344,
+          "remaining_quantity": 344
+        }
+      },
+      "rate_ratio_percentage_or_average": {
+        "accepted_subordinate_allocations": {
+          "difficulty": {
+            "combined_rate": {
+              "easy": 17,
+              "hard": 16,
+              "medium": 17
+            },
+            "percentage": {
+              "easy": 14,
+              "hard": 15,
+              "medium": 14
+            },
+            "rate_total": {
+              "easy": 13,
+              "hard": 13,
+              "medium": 14
+            },
+            "ratio_scale": {
+              "easy": 17,
+              "hard": 17,
+              "medium": 16
+            },
+            "weighted_average": {
+              "easy": 17,
+              "hard": 16,
+              "medium": 17
+            }
+          },
+          "future_split": {
+            "combined_rate": {
+              "synthetic_validation": 5,
+              "training": 45
+            },
+            "percentage": {
+              "synthetic_validation": 4,
+              "training": 39
+            },
+            "rate_total": {
+              "synthetic_validation": 4,
+              "training": 36
+            },
+            "ratio_scale": {
+              "synthetic_validation": 5,
+              "training": 45
+            },
+            "weighted_average": {
+              "synthetic_validation": 5,
+              "training": 45
+            }
+          },
+          "output_contract": {
+            "combined_rate": {
+              "disabled": 40,
+              "enabled": 10
+            },
+            "percentage": {
+              "disabled": 34,
+              "enabled": 9
+            },
+            "rate_total": {
+              "disabled": 32,
+              "enabled": 8
+            },
+            "ratio_scale": {
+              "disabled": 40,
+              "enabled": 10
+            },
+            "weighted_average": {
+              "disabled": 40,
+              "enabled": 10
+            }
+          }
+        },
+        "assigned_accepted_modes": {
+          "combined_rate": 50,
+          "percentage": 43,
+          "rate_total": 40,
+          "ratio_scale": 50,
+          "weighted_average": 50
+        },
+        "assigned_attempt_modes": {
+          "combined_rate": 69,
+          "percentage": 43,
+          "rate_total": 40,
+          "ratio_scale": 70,
+          "weighted_average": 70
+        },
+        "attempt_subordinate_allocations": {
+          "difficulty": {
+            "combined_rate": {
+              "easy": 23,
+              "hard": 23,
+              "medium": 23
+            },
+            "percentage": {
+              "easy": 14,
+              "hard": 15,
+              "medium": 14
+            },
+            "rate_total": {
+              "easy": 13,
+              "hard": 13,
+              "medium": 14
+            },
+            "ratio_scale": {
+              "easy": 24,
+              "hard": 23,
+              "medium": 23
+            },
+            "weighted_average": {
+              "easy": 24,
+              "hard": 23,
+              "medium": 23
+            }
+          },
+          "future_split": {
+            "combined_rate": {
+              "synthetic_validation": 7,
+              "training": 62
+            },
+            "percentage": {
+              "synthetic_validation": 4,
+              "training": 39
+            },
+            "rate_total": {
+              "synthetic_validation": 4,
+              "training": 36
+            },
+            "ratio_scale": {
+              "synthetic_validation": 7,
+              "training": 63
+            },
+            "weighted_average": {
+              "synthetic_validation": 7,
+              "training": 63
+            }
+          },
+          "output_contract": {
+            "combined_rate": {
+              "disabled": 55,
+              "enabled": 14
+            },
+            "percentage": {
+              "disabled": 35,
+              "enabled": 8
+            },
+            "rate_total": {
+              "disabled": 32,
+              "enabled": 8
+            },
+            "ratio_scale": {
+              "disabled": 56,
+              "enabled": 14
+            },
+            "weighted_average": {
+              "disabled": 56,
+              "enabled": 14
+            }
+          }
+        },
+        "difficulty_cells_fit_attempt_pool": true,
+        "gate_passed": true,
+        "maximum_submode_concentration": 0.23972602739726026,
+        "normalized_submode_entropy": 0.9817573807428712,
+        "number_neutral_attempt_cap": 5,
+        "plan_scenario_attempt_cap": 1,
+        "required_accepted": 233,
+        "required_attempts": 292,
+        "retained_surface_accepted_capacity": 320,
+        "retained_surface_attempt_capacity": 400,
+        "semantic_frame_accepted_distribution": {
+          "combined_rate": {
+            "frame_1": 13,
+            "frame_2": 13,
+            "frame_3": 12,
+            "frame_4": 12
+          },
+          "percentage": {
+            "frame_1": 11,
+            "frame_2": 11,
+            "frame_3": 11,
+            "frame_4": 10
+          },
+          "rate_total": {
+            "frame_1": 10,
+            "frame_2": 10,
+            "frame_3": 10,
+            "frame_4": 10
+          },
+          "ratio_scale": {
+            "frame_1": 13,
+            "frame_2": 13,
+            "frame_3": 12,
+            "frame_4": 12
+          },
+          "weighted_average": {
+            "frame_1": 13,
+            "frame_2": 13,
+            "frame_3": 12,
+            "frame_4": 12
+          }
+        },
+        "semantic_frame_attempt_distribution": {
+          "combined_rate": {
+            "frame_1": 18,
+            "frame_2": 17,
+            "frame_3": 17,
+            "frame_4": 17
+          },
+          "percentage": {
+            "frame_1": 11,
+            "frame_2": 11,
+            "frame_3": 11,
+            "frame_4": 10
+          },
+          "rate_total": {
+            "frame_1": 10,
+            "frame_2": 10,
+            "frame_3": 10,
+            "frame_4": 10
+          },
+          "ratio_scale": {
+            "frame_1": 18,
+            "frame_2": 18,
+            "frame_3": 17,
+            "frame_4": 17
+          },
+          "weighted_average": {
+            "frame_1": 18,
+            "frame_2": 18,
+            "frame_3": 17,
+            "frame_4": 17
+          }
+        },
+        "sentence_plan_attempt_cap": 5,
+        "target_type_accepted": {
+          "percentage": 43,
+          "ratio": 50,
+          "total_quantity": 90,
+          "weighted_mean": 50
+        },
+        "target_type_attempts": {
+          "percentage": 43,
+          "ratio": 70,
+          "total_quantity": 109,
+          "weighted_mean": 70
+        }
+      }
+    }
+  },
+  "difficulty_totals_exact": true,
+  "exact_question_uniqueness_required": true,
+  "families": {
+    "constraint_distribution_or_discrete_reasoning": {
+      "assigned_accepted_modes": {
+        "complete_packages": 153,
+        "dual_capacity": 90,
+        "equal_distribution": 153,
+        "two_type_allocation": 154
+      },
+      "assigned_attempt_modes": {
+        "complete_packages": 200,
+        "dual_capacity": 90,
+        "equal_distribution": 199,
+        "two_type_allocation": 200
+      },
+      "available_unique_capacity": 2073,
+      "gate_passed": true,
+      "maximum_submode_concentration": 0.29027576197387517,
+      "mode_details": {
+        "complete_packages": {
+          "assigned_attempts_by_difficulty": {
+            "easy": 83,
+            "hard": 47,
+            "medium": 70
+          },
+          "compatible_capacity_by_difficulty": {
+            "easy": 189,
+            "hard": 835,
+            "medium": 315
+          },
+          "compatible_unique_capacity": 865,
+          "coverage_nonzero": true,
+          "remaining_attempt_headroom": 665,
+          "remaining_difficulty_headroom": {
+            "easy": 106,
+            "hard": 788,
+            "medium": 245
+          },
+          "required_accepted": 153,
+          "required_attempts": 200,
+          "target_type": "group_count"
+        },
+        "dual_capacity": {
+          "assigned_attempts_by_difficulty": {
+            "easy": 30,
+            "hard": 30,
+            "medium": 30
+          },
+          "compatible_capacity_by_difficulty": {
+            "easy": 30,
+            "hard": 30,
+            "medium": 30
+          },
+          "compatible_unique_capacity": 90,
+          "coverage_nonzero": true,
+          "remaining_attempt_headroom": 0,
+          "remaining_difficulty_headroom": {
+            "easy": 0,
+            "hard": 0,
+            "medium": 0
+          },
+          "required_accepted": 90,
+          "required_attempts": 90,
+          "target_type": "capacity"
+        },
+        "equal_distribution": {
+          "assigned_attempts_by_difficulty": {
+            "easy": 33,
+            "hard": 106,
+            "medium": 60
+          },
+          "compatible_capacity_by_difficulty": {
+            "easy": 33,
+            "hard": 160,
+            "medium": 60
+          },
+          "compatible_unique_capacity": 253,
+          "coverage_nonzero": true,
+          "remaining_attempt_headroom": 54,
+          "remaining_difficulty_headroom": {
+            "easy": 0,
+            "hard": 54,
+            "medium": 0
+          },
+          "required_accepted": 153,
+          "required_attempts": 199,
+          "target_type": "count"
+        },
+        "two_type_allocation": {
+          "assigned_attempts_by_difficulty": {
+            "easy": 84,
+            "hard": 46,
+            "medium": 70
+          },
+          "compatible_capacity_by_difficulty": {
+            "easy": 865,
+            "hard": 865,
+            "medium": 865
+          },
+          "compatible_unique_capacity": 865,
+          "coverage_nonzero": true,
+          "remaining_attempt_headroom": 665,
+          "remaining_difficulty_headroom": {
+            "easy": 781,
+            "hard": 819,
+            "medium": 795
+          },
+          "required_accepted": 154,
+          "required_attempts": 200,
+          "target_type": "count"
+        }
+      },
+      "normalized_submode_entropy": 0.9685359977688752,
+      "remaining_family_headroom": 1384,
+      "required_accepted": 550,
+      "required_attempts": 689,
+      "target_type_attempts": {
+        "capacity": 90,
+        "count": 399,
+        "group_count": 200
+      }
+    },
+    "multi_step_bookkeeping_or_omission": {
+      "assigned_accepted_modes": {
+        "grouping": 442,
+        "inventory": 442
+      },
+      "assigned_attempt_modes": {
+        "grouping": 553,
+        "inventory": 553
+      },
+      "available_unique_capacity": 5524,
+      "gate_passed": true,
+      "maximum_submode_concentration": 0.5,
+      "mode_details": {
+        "grouping": {
+          "assigned_attempts_by_difficulty": {
+            "easy": 185,
+            "hard": 184,
+            "medium": 184
+          },
+          "compatible_capacity_by_difficulty": {
+            "easy": 2762,
+            "hard": 2762,
+            "medium": 2762
+          },
+          "compatible_unique_capacity": 2762,
+          "coverage_nonzero": true,
+          "remaining_attempt_headroom": 2209,
+          "remaining_difficulty_headroom": {
+            "easy": 2577,
+            "hard": 2578,
+            "medium": 2578
+          },
+          "required_accepted": 442,
+          "required_attempts": 553,
+          "target_type": "group_count"
+        },
+        "inventory": {
+          "assigned_attempts_by_difficulty": {
+            "easy": 185,
+            "hard": 184,
+            "medium": 184
+          },
+          "compatible_capacity_by_difficulty": {
+            "easy": 2762,
+            "hard": 2762,
+            "medium": 2762
+          },
+          "compatible_unique_capacity": 2762,
+          "coverage_nonzero": true,
+          "remaining_attempt_headroom": 2209,
+          "remaining_difficulty_headroom": {
+            "easy": 2577,
+            "hard": 2578,
+            "medium": 2578
+          },
+          "required_accepted": 442,
+          "required_attempts": 553,
+          "target_type": "remaining_quantity"
+        }
+      },
+      "normalized_submode_entropy": 1.0,
+      "remaining_family_headroom": 4418,
+      "required_accepted": 884,
+      "required_attempts": 1106,
+      "target_type_attempts": {
+        "group_count": 553,
+        "remaining_quantity": 553
+      }
+    },
+    "rate_ratio_percentage_or_average": {
+      "assigned_accepted_modes": {
+        "combined_rate": 122,
+        "percentage": 104,
+        "rate_total": 96,
+        "ratio_scale": 122,
+        "weighted_average": 122
+      },
+      "assigned_attempt_modes": {
+        "combined_rate": 169,
+        "percentage": 104,
+        "rate_total": 96,
+        "ratio_scale": 170,
+        "weighted_average": 170
+      },
+      "available_unique_capacity": 1632,
+      "gate_passed": true,
+      "maximum_submode_concentration": 0.2397743300423131,
+      "mode_details": {
+        "combined_rate": {
+          "assigned_attempts_by_difficulty": {
+            "easy": 57,
+            "hard": 56,
+            "medium": 56
+          },
+          "compatible_capacity_by_difficulty": {
+            "easy": 384,
+            "hard": 384,
+            "medium": 384
+          },
+          "compatible_unique_capacity": 384,
+          "coverage_nonzero": true,
+          "remaining_attempt_headroom": 215,
+          "remaining_difficulty_headroom": {
+            "easy": 327,
+            "hard": 328,
+            "medium": 328
+          },
+          "required_accepted": 122,
+          "required_attempts": 169,
+          "target_type": "total_quantity"
+        },
+        "percentage": {
+          "assigned_attempts_by_difficulty": {
+            "easy": 34,
+            "hard": 35,
+            "medium": 35
+          },
+          "compatible_capacity_by_difficulty": {
+            "easy": 104,
+            "hard": 104,
+            "medium": 104
+          },
+          "compatible_unique_capacity": 104,
+          "coverage_nonzero": true,
+          "remaining_attempt_headroom": 0,
+          "remaining_difficulty_headroom": {
+            "easy": 70,
+            "hard": 69,
+            "medium": 69
+          },
+          "required_accepted": 104,
+          "required_attempts": 104,
+          "target_type": "percentage"
+        },
+        "rate_total": {
+          "assigned_attempts_by_difficulty": {
+            "easy": 32,
+            "hard": 32,
+            "medium": 32
+          },
+          "compatible_capacity_by_difficulty": {
+            "easy": 72,
+            "hard": 72,
+            "medium": 72
+          },
+          "compatible_unique_capacity": 96,
+          "coverage_nonzero": true,
+          "remaining_attempt_headroom": 0,
+          "remaining_difficulty_headroom": {
+            "easy": 40,
+            "hard": 40,
+            "medium": 40
+          },
+          "required_accepted": 96,
+          "required_attempts": 96,
+          "target_type": "total_quantity"
+        },
+        "ratio_scale": {
+          "assigned_attempts_by_difficulty": {
+            "easy": 57,
+            "hard": 56,
+            "medium": 57
+          },
+          "compatible_capacity_by_difficulty": {
+            "easy": 336,
+            "hard": 336,
+            "medium": 336
+          },
+          "compatible_unique_capacity": 336,
+          "coverage_nonzero": true,
+          "remaining_attempt_headroom": 166,
+          "remaining_difficulty_headroom": {
+            "easy": 279,
+            "hard": 280,
+            "medium": 279
+          },
+          "required_accepted": 122,
+          "required_attempts": 170,
+          "target_type": "ratio"
+        },
+        "weighted_average": {
+          "assigned_attempts_by_difficulty": {
+            "easy": 57,
+            "hard": 57,
+            "medium": 56
+          },
+          "compatible_capacity_by_difficulty": {
+            "easy": 712,
+            "hard": 712,
+            "medium": 712
+          },
+          "compatible_unique_capacity": 712,
+          "coverage_nonzero": true,
+          "remaining_attempt_headroom": 542,
+          "remaining_difficulty_headroom": {
+            "easy": 655,
+            "hard": 655,
+            "medium": 656
+          },
+          "required_accepted": 122,
+          "required_attempts": 170,
+          "target_type": "weighted_mean"
+        }
+      },
+      "normalized_submode_entropy": 0.981038905910682,
+      "remaining_family_headroom": 923,
+      "required_accepted": 566,
+      "required_attempts": 709,
+      "target_type_attempts": {
+        "percentage": 104,
+        "ratio": 170,
+        "total_quantity": 265,
+        "weighted_mean": 170
+      }
+    }
+  },
+  "fixture_set_sha256": "5101e3b2d89010a8325694a855de193a094efb9f492758fcb7589f28b3a8bd47",
+  "fresh_smoke_run": false,
+  "full_2504_schedule_feasible": true,
+  "full_schedule_created": false,
+  "future_split_totals_exact": true,
+  "generator_modes_changed": false,
+  "generator_ranges_changed": false,
+  "global_latent_uniqueness_required": true,
+  "labels_or_verifiers_changed": false,
+  "output_contract_totals_exact": true,
+  "policy_config_sha256": "cd298e0c52aac09b6d8b8651e6d537dbb9f39e7952cc312496ae9d430cd28c6a",
+  "policy_id": "maximally-balanced-feasible-submodes-v1",
+  "policy_sha256": "75a47622b2af3f91ea4440f6e95449969e6236d4f815bf1c2517df7e56c43ce9",
+  "required_accepted_total": 2000,
+  "required_attempt_total": 2504,
+  "retained_template_scenario_caps_passed": true,
+  "review_packet_created": false,
+  "schema_version": 1,
+  "sealed_final_accessed": false,
+  "signal_config_sha256": "f962dfe0b2c282fe2ea25eb9370aca131e5a4133e4093ff1d18c2b78d556a68f",
+  "superseded_audit_sha256": "522b5b4eaeaea3fe7c29542afd78a62532ead6d8c5fa6356abd7db125a307aaf",
+  "templates_changed": false,
+  "train_validation_isolation_required": true
+}

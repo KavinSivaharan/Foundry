@@ -1,0 +1,120 @@
+{
+  "acceptance_by_category": {
+    "constraint_distribution_or_discrete_reasoning": {
+      "accepted": 30,
+      "attempted": 33,
+      "rejected": 3
+    },
+    "multi_step_bookkeeping_or_omission": {
+      "accepted": 52,
+      "attempted": 53,
+      "rejected": 1
+    },
+    "rate_ratio_percentage_or_average": {
+      "accepted": 33,
+      "attempted": 34,
+      "rejected": 1
+    }
+  },
+  "acceptance_by_difficulty": {
+    "easy": {
+      "accepted": 39,
+      "attempted": 42,
+      "rejected": 3
+    },
+    "hard": {
+      "accepted": 36,
+      "attempted": 37,
+      "rejected": 1
+    },
+    "medium": {
+      "accepted": 40,
+      "attempted": 41,
+      "rejected": 1
+    }
+  },
+  "acceptance_by_group": {
+    "generic_control": {
+      "accepted": 56,
+      "attempted": 60,
+      "rejected": 4
+    },
+    "targeted": {
+      "accepted": 59,
+      "attempted": 60,
+      "rejected": 1
+    }
+  },
+  "acceptance_by_output_contract": {
+    "False": {
+      "accepted": 93,
+      "attempted": 96,
+      "rejected": 3
+    },
+    "True": {
+      "accepted": 22,
+      "attempted": 24,
+      "rejected": 2
+    }
+  },
+  "accepted": 115,
+  "allocation_by_category": {
+    "constraint_distribution_or_discrete_reasoning": 33,
+    "multi_step_bookkeeping_or_omission": 53,
+    "rate_ratio_percentage_or_average": 34
+  },
+  "allocation_by_difficulty": {
+    "easy": 42,
+    "hard": 37,
+    "medium": 41
+  },
+  "allocation_by_group": {
+    "generic_control": 60,
+    "targeted": 60
+  },
+  "attempted": 120,
+  "benchmark_lexical_rejections": 0,
+  "benchmark_semantic_rejections": 0,
+  "benchmark_semantic_review_rejections": 0,
+  "codex_assisted_html": null,
+  "codex_audit": null,
+  "complete_datasets_generated": false,
+  "counted_decision_sha256": "7bc2250d189602f955853797141aa8557ea236a68e9ae01cd8f2a867fb7b1ec1",
+  "counted_runtime_seconds": 1.4241059999985737,
+  "deterministic_language_defects": 0,
+  "deterministic_replay_match": true,
+  "duplicate_latent_programs": 0,
+  "exact_duplicates": 0,
+  "false_labels": 0,
+  "full_schedule_gate_passed": true,
+  "full_schedule_sha256": "63f3d631aacd38cbd9a365ad0f4333e1fa565c28985b1c38baa142fa6d4e84e1",
+  "human_review_export_filename": null,
+  "human_review_html": null,
+  "human_review_markdown": null,
+  "human_review_status": "not_created_technical_gate_failed",
+  "independent_verifier_failures": 0,
+  "internal_review_records": 57,
+  "master_seed": "foundry-signal-pilot-review-smoke-20260719-v1",
+  "number_neutral_duplicates": 5,
+  "output_contract_attempts": 24,
+  "peak_process_rss_bytes": 917786624,
+  "primary_verifier_failures": 0,
+  "raw_artifact_bytes": 382171,
+  "rejected": 5,
+  "rejection_reasons": {
+    "number_neutral_signature_copy": 5
+  },
+  "render_signature_duplicates": 0,
+  "replay_decision_sha256": "7bc2250d189602f955853797141aa8557ea236a68e9ae01cd8f2a867fb7b1ec1",
+  "replay_runtime_seconds": 1.3018845999977202,
+  "run_id": "foundry-template-bank-signal-pilot-review-v1",
+  "schedule_sha256": "021956fff2321bd28779390870b5d90030806cb69d8b97d18165b4aea3f67332",
+  "schema_version": 1,
+  "sealed_final_accessed": false,
+  "summary_sha256": "6ca52da47a8e5daf72c3a82e634d469d6591b40b8ae916f987d49ed583270c34",
+  "target_mismatches": 0,
+  "technical_gate_passed": false,
+  "technical_status": "TECHNICAL GATE FAILED",
+  "unresolved_contamination_cases": 0,
+  "verifier_disagreements": 0
+}

@@ -1,6 +1,10 @@
 # Foundry Learning Notes
 
-Last updated: 2026-07-17
+Last updated: 2026-07-19
+
+## Scheduling identity must match enforcement identity
+
+Milestone 7B exposed a general lesson: metadata can be useful for balancing, but it cannot stand in for the identity actually enforced at runtime. Two candidates may have different frame, scenario, or template metadata while normalizing to the same surface pattern. A scheduler that predicts uniqueness from metadata can therefore overestimate diversity. The safe contract is to render deterministically, compute the exact production identity, and freeze that same identity into the schedule.
 
 These notes explain the ideas in the context of Foundry's proposed first experiment. They describe the plan, not completed implementation or measured results.
 

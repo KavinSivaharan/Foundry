@@ -4,6 +4,15 @@ Five bounded real-model experiment groups have completed: the ten-example Milest
 
 Every future experiment must be registered here before a costly run begins. Its machine-readable configuration must be saved under `configs/`, raw evaluation outputs under `results/raw/`, and reviewable summaries under `results/`.
 
+## EXP-20260719-007B — Signal-first feasible allocation and review smoke
+
+- **Status:** completed with technical-gate failure
+- **Scope:** content-free 2,504-slot allocation plus one 120-question offline-template smoke; no dataset generation or training
+- **Dry schedule:** 2,504/2,504 unique latent programs and semantic IRs; zero targeted/generic or future train/validation overlap; exact replay
+- **Smoke:** 120 attempted, 115 automatically accepted, five rejected for runtime number-neutral collisions
+- **Other failures:** zero false labels, verifier disagreements, target mismatches, deterministic language defects, exact duplicates, latent duplicates, benchmark findings, or unresolved contamination cases
+- **Decision:** preserve the runtime normalizer and block review-packet creation until scheduler/runtime identity is unified
+
 ## Experiment template
 
 ### EXP-YYYYMMDD-NNN — Short name

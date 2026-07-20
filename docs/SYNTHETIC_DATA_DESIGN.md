@@ -5,6 +5,10 @@ Status: frozen design only; no synthetic dataset or training run exists
 Design version: `foundry-synthesis-design-v1`
 Date: 2026-07-18
 
+## Signal-first allocation status
+
+The first controlled experiment is frozen at 1,000 accepted targeted and 1,000 accepted generic-control examples, backed by 2,504 fixed attempts. Milestone 7B proved latent capacity and allocation feasibility using `maximally-balanced-feasible-submodes-v1`. The dry schedule has 2,504 unique latent programs and no dataset or future-split overlap. Surface scheduling remains blocked because five pairs in the review smoke shared the runtime number-neutral identity despite distinct scheduler metadata. Runtime normalization remains unchanged and authoritative.
+
 ## Purpose and boundary
 
 This design converts aggregate weaknesses from Foundry's trusted 814-example development

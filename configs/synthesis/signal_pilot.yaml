@@ -37,9 +37,9 @@ datasets:
         output_contract_accepted: 47
         output_contract_attempts: 58
         accepted_modes:
-          {rate_total: 27, ratio_scale: 60, percentage: 27, weighted_average: 60, combined_rate: 59}
+          {rate_total: 40, ratio_scale: 50, percentage: 43, weighted_average: 50, combined_rate: 50}
         attempt_modes:
-          {rate_total: 33, ratio_scale: 76, percentage: 33, weighted_average: 76, combined_rate: 74}
+          {rate_total: 40, ratio_scale: 70, percentage: 43, weighted_average: 70, combined_rate: 69}
       constraint_distribution_or_discrete_reasoning:
         accepted: 217
         attempts: 272
@@ -50,9 +50,9 @@ datasets:
         output_contract_accepted: 43
         output_contract_attempts: 54
         accepted_modes:
-          {two_type_allocation: 60, complete_packages: 60, equal_distribution: 60, dual_capacity: 37}
+          {two_type_allocation: 61, complete_packages: 60, equal_distribution: 60, dual_capacity: 36}
         attempt_modes:
-          {two_type_allocation: 79, complete_packages: 78, equal_distribution: 78, dual_capacity: 37}
+          {two_type_allocation: 79, complete_packages: 79, equal_distribution: 78, dual_capacity: 36}
   generic_control:
     accepted_total: 1000
     training_accepted: 900
@@ -80,9 +80,9 @@ datasets:
         output_contract_accepted: 67
         output_contract_attempts: 83
         accepted_modes:
-          {rate_total: 40, ratio_scale: 84, percentage: 41, weighted_average: 84, combined_rate: 84}
+          {rate_total: 56, ratio_scale: 72, percentage: 61, weighted_average: 72, combined_rate: 72}
         attempt_modes:
-          {rate_total: 47, ratio_scale: 108, percentage: 47, weighted_average: 108, combined_rate: 107}
+          {rate_total: 56, ratio_scale: 100, percentage: 61, weighted_average: 100, combined_rate: 100}
       constraint_distribution_or_discrete_reasoning:
         accepted: 333
         attempts: 417
@@ -93,13 +93,15 @@ datasets:
         output_contract_accepted: 66
         output_contract_attempts: 83
         accepted_modes:
-          {two_type_allocation: 100, complete_packages: 100, equal_distribution: 100, dual_capacity: 33}
+          {two_type_allocation: 93, complete_packages: 93, equal_distribution: 93, dual_capacity: 54}
         attempt_modes:
-          {two_type_allocation: 127, complete_packages: 128, equal_distribution: 127, dual_capacity: 35}
+          {two_type_allocation: 121, complete_packages: 121, equal_distribution: 121, dual_capacity: 54}
 difficulty_order: [easy, medium, hard]
 split_order: [training, synthetic_validation]
 full_schedule_master_seed: foundry-signal-first-full-schedule-20260719-v1
-full_schedule_candidate_pool_per_slot: 256
+full_schedule_candidate_pool_per_mode_difficulty: 4096
+full_schedule_raw_path: results/raw/signal_pilot/full_schedule.jsonl
+full_schedule_summary_path: results/synthesis_smoke/signal_pilot_schedule_summary.json
 smoke:
   run_id: foundry-template-bank-signal-pilot-review-v1
   master_seed: foundry-signal-pilot-review-smoke-20260719-v1

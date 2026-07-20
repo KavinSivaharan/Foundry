@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "fixture_set_id": "foundry-signal-pilot-submode-fixtures-v1",
+  "fixtures": [
+    {
+      "fixture_id": "ample_equal_with_remainder",
+      "total": 11,
+      "capacities": {"alpha": 20, "beta": 20, "gamma": 20},
+      "expected_selected": {"alpha": 4, "beta": 4, "gamma": 3}
+    },
+    {
+      "fixture_id": "one_low_capacity_mode",
+      "total": 10,
+      "capacities": {"alpha": 1, "beta": 10, "gamma": 10},
+      "expected_selected": {"alpha": 1, "beta": 5, "gamma": 4}
+    },
+    {
+      "fixture_id": "two_saturated_modes",
+      "total": 17,
+      "capacities": {"alpha": 2, "beta": 4, "gamma": 20, "delta": 20},
+      "expected_selected": {"alpha": 2, "beta": 4, "gamma": 6, "delta": 5}
+    },
+    {
+      "fixture_id": "impossible_total_capacity",
+      "total": 8,
+      "capacities": {"alpha": 2, "beta": 2, "gamma": 2},
+      "expected_error": "insufficient_total_capacity"
+    },
+    {
+      "fixture_id": "deterministic_remainder_order",
+      "total": 8,
+      "capacities": {"zeta": 10, "eta": 10, "theta": 10},
+      "expected_selected": {"zeta": 3, "eta": 3, "theta": 2}
+    },
+    {
+      "fixture_id": "low_mode_still_covered",
+      "total": 13,
+      "capacities": {"small": 2, "large_a": 50, "large_b": 50},
+      "expected_selected": {"small": 2, "large_a": 6, "large_b": 5}
+    },
+    {
+      "fixture_id": "targeted_generic_largest_remainder",
+      "global_allocation": {"alpha": 7, "beta": 5, "gamma": 4},
+      "targeted_total": 7,
+      "combined_total": 16,
+      "expected_targeted": {"alpha": 3, "beta": 2, "gamma": 2},
+      "expected_generic": {"alpha": 4, "beta": 3, "gamma": 2}
+    },
+    {
+      "fixture_id": "subordinate_three_way_balance",
+      "mode_allocation": {"alpha": 5, "beta": 4, "gamma": 3},
+      "column_totals": {"easy": 4, "medium": 4, "hard": 4},
+      "expected_row_totals": {"alpha": 5, "beta": 4, "gamma": 3},
+      "expected_column_totals": {"easy": 4, "medium": 4, "hard": 4}
+    },
+    {
+      "fixture_id": "impossible_subordinate_capacity",
+      "mode_allocation": {"alpha": 3, "beta": 3},
+      "column_totals": {"enabled": 4, "disabled": 2},
+      "cell_capacities": {
+        "alpha": {"enabled": 1, "disabled": 2},
+        "beta": {"enabled": 1, "disabled": 2}
+      },
+      "expected_error": "impossible_subordinate_compatibility"
+    }
+  ]
+}

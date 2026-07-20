@@ -1,5 +1,9 @@
 # Offline Template-Bank Design and Milestone 6A Smoke
 
+## Milestone 7B allocation and identity result
+
+The bounded template-reuse architecture supports the reduced signal-first pilot. Deterministic water-filling and constrained difficulty allocation produced a valid 2,504-slot latent schedule under all frozen caps. A 120-question surface smoke produced 115 automatic acceptances and no language defects, but five number-neutral collision pairs crossed distinct template or frame metadata. This is a scheduling-identity defect, not permission to weaken the reviewed templates or runtime duplicate detector. No second human-review packet was issued.
+
 ## Status
 
 Milestone 6A implemented and tested `foundry-template-bank-v1`. The automatic pipeline accepted

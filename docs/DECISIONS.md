@@ -2,6 +2,14 @@
 
 This log separates proposals from approved decisions. A proposal does not authorize implementation.
 
+## D-029 — Use feasible submode balancing; retain runtime identity as authoritative
+
+- **Date:** 2026-07-19
+- **Status:** implemented in Milestone 7B; review gate failed
+- **Decision:** Allocate frozen rate and discrete submodes by deterministic water-filling with constrained difficulty assignment instead of infeasible equal-style caps. Preserve the runtime number-neutral normalizer as the source of truth.
+- **Evidence:** The 2,504-slot dry schedule was feasible and exactly replayable. Its 120-question smoke accepted 115, with zero mathematical, language, target, or contamination failures, but found five number-neutral collisions that scheduler-only metadata had predicted as distinct.
+- **Consequence:** Do not issue a human-review packet until scheduling computes the exact runtime identity and a newly approved smoke has zero collisions.
+
 ## D-001 — Recommend arithmetic reasoning for Phase 1
 
 - **Date:** 2026-07-16
