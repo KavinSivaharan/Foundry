@@ -1,0 +1,55 @@
+{
+  "adapter_hash_checks": {
+    "generic_control": true,
+    "targeted": true
+  },
+  "adapter_sha256": {
+    "generic_control": "a86e450af1bf3671c8578d28cad45d6507f919e305dc62c552d27dc5bda7c17e",
+    "targeted": "f8af4ad4e38271b986a8e5744f7ed3939232067a648cdbe0ab80b6f2b6d87811"
+  },
+  "benchmark_evaluation_authorized": false,
+  "comparison": {
+    "absolute_token_difference": 24,
+    "equal_fields": {
+      "base_loaded_in_4bit": true,
+      "base_model_id": true,
+      "base_recipe_sha256": true,
+      "base_revision": true,
+      "cuda_runtime": true,
+      "gpu_name": true,
+      "only_lora_trainable": true,
+      "optimizer_steps": true,
+      "recipe_id": true,
+      "recipe_sha256": true,
+      "requirements_lock_sha256": true,
+      "scheduler_steps": true,
+      "selected_method": true,
+      "sft_format_sha256": true,
+      "software_versions": true,
+      "total_parameters": true,
+      "trainable_parameters": true,
+      "training_source_records": true,
+      "training_truncated_records": true,
+      "validation_source_records": true,
+      "validation_truncated_records": true
+    },
+    "gate_checks": {
+      "actual_token_parity_within_0_5_percent": true,
+      "actual_tokens_match_schedules": true,
+      "gradients_finite": true,
+      "losses_finite": true,
+      "metadata_parity": true,
+      "no_development_exposure": true,
+      "offline_reload_passed": true
+    },
+    "generic_actual_loss_bearing_tokens": 5464,
+    "parity_gate_passed": true,
+    "parity_limit": 0.005,
+    "relative_token_difference": 0.004392386530014641,
+    "targeted_actual_loss_bearing_tokens": 5440
+  },
+  "parity_gate_passed": true,
+  "run_kind": "token_matched_parity_smoke",
+  "schema_version": 1,
+  "summary_sha256": "6913bda010c407f5e79ce8647ae317771c61858a048a79ea986819577c7ac4d9"
+}

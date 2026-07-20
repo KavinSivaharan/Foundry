@@ -1,0 +1,36 @@
+schema_version: 1
+recipe_id: foundry-token-matched-qlora-v2
+selected_method: whole_example_token_budgeted_gradient_accumulation
+base_recipe:
+  path: configs/training/qwen2_5_1_5b_signal_qlora.yaml
+  recipe_sha256: 4a9c6043f72d4f5b83dad774ffcd208e17f8c9738c9b34b0ab06919ba2620590
+token_matching:
+  nominal_loss_bearing_tokens: 271200
+  nominal_tokens_per_step: 1356
+  optimizer_steps: 200
+  micro_batch_size: 1
+  parity_limit: 0.005
+  loss_weighting: microexample_mean_times_loss_tokens_over_step_loss_tokens
+  whole_examples_only: true
+  split_examples: false
+  packed_examples: false
+  arms:
+    generic_control:
+      schedule_path: results/raw/training/token_matched_v2/method_b_generic_control_schedule.json
+      schedule_sha256: 38c030d703268e7046a8fa73dd63eceb54f98b52b1d0720a1d0188621992d7f0
+      occurrences: 1578
+      loss_bearing_tokens: 271292
+      first_four_step_tokens: 5464
+    targeted:
+      schedule_path: results/raw/training/token_matched_v2/method_b_targeted_schedule.json
+      schedule_sha256: 76f4382505e8985c04d997759f01c508d14784d9e0e1f31e9d2d26eab1decc44
+      occurrences: 1398
+      loss_bearing_tokens: 271150
+      first_four_step_tokens: 5440
+census_sha256:
+  generic_control: eee9b961e28066f7954790d99b94dfd1f05aa28e4da5dd2a326c1124b261e6a3
+  targeted: 3782412c5b0eeba303c7e4c51a1f963bc35082523a18d980fda590f032eb59f8
+evidence_sha256:
+  method_a_summary_sha256: a7a68503e9f028e74e6559ab354487c08d067567be03a585991fc4adc271fca5
+  method_b_summary_sha256: 13d3c75e59ea1e182a6934bffedfcd50ccfa2a34e0300719ffa8fa7c4a6efaf5
+recipe_sha256: df7c7b8d7b402683a550fb11ebbe4ceb633ed47597c98ea661affa7876d6fa54

@@ -655,3 +655,20 @@ Every future experiment must be registered here before a costly run begins. Its 
   score exists. This is an experimental-control blocker, not a model-performance result.
 - **Next experiment:** none automatically. A separately approved token-budget-matched retraining
   design is required before the research question can be evaluated.
+
+### EXP-TRAIN-003: token-matching protocol and parity smoke
+
+- **Status:** protocol frozen; four-step parity smoke passed; full retraining pending publication
+- **Census:** 450 generic records total 77,348 tokens (111-323; mean 171.8844); 450 targeted total
+  87,317 (111-320; mean 194.0378). Zero truncation and zero fully masked records; census hashes are
+  `eee9b961...e6a3` and `3782412c...9f8`.
+- **Method A:** failed. Exact stratified 3/4-repeat boundary was 278,167 generic versus 307,144
+  targeted, a 9.4343% difference.
+- **Method B:** selected. Whole-example balanced cycles schedule 271,292 generic versus 271,150
+  targeted tokens, a 0.05234% difference, across 200 steps. Recipe is
+  `foundry-token-matched-qlora-v2` at `df7c7b8d...fa54`.
+- **Parity smoke:** fresh adapters processed 5,464 and 5,440 scheduled/actual tokens over four
+  steps, a 0.43924% difference. Losses and gradients were finite; scheduler counts, adapter hashes,
+  and offline reload passed. Peak reserved VRAM was 3,577,741,312 bytes in both runs.
+- **Next experiment:** publish the protocol; then retrain generic followed by targeted from the
+  untouched pinned base. Development evaluation remains prohibited until full-run parity passes.

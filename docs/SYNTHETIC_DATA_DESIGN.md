@@ -816,3 +816,18 @@ The frozen datasets are matched in accepted examples but not in SFT sequence len
 adapter 306,766. Their 11.5299% relative difference fails the experiment's 2% parity contract. This
 does not invalidate label or language quality, but it prevents these trained adapters from serving
 as a controlled targeted-versus-generic benchmark comparison.
+
+### Frozen token-matched training extension
+
+The dataset and SFT text remain byte-for-byte unchanged. A deterministic census measures loss
+tokens using the same tokenizer, chat template, 512-token limit, truncation, padding, and label
+masking as training. Method B repeats whole records through balanced cycles within
+family x difficulty x output-contract strata, then partitions them into 200 token-balanced steps.
+Generic contains 1,578 scheduled occurrences / 271,292 loss tokens; targeted contains 1,398 /
+271,150. Each source record appears three or four times, no record is split or packed, and no
+development example influences scheduling.
+
+Within a step, each microexample mean causal-LM loss is multiplied by
+`microexample_loss_tokens / optimizer_step_loss_tokens`. Gradients are clipped once, the optimizer
+and cosine scheduler advance once, and gradients clear once per step. All original QLoRA, LoRA,
+optimizer, learning-rate, seed, validation-cadence, and final-adapter-only controls remain frozen.

@@ -70,9 +70,25 @@ The frozen 814-example development evaluator was not run for either adapter. Con
 - one-seed signal gate: not evaluated;
 - sealed-final evaluation: not run.
 
+## Token-matched v2 protocol
+
+> **Provisional one-seed result pending stratified human language review and second-seed
+> confirmation.**
+
+The deterministic census found 77,348 unique-record tokens in generic and 87,317 in targeted, with
+zero truncation. Fixed-occurrence Method A failed at an exact best-case 9.4343% difference.
+Whole-example token-budgeted Method B passed: its 200-step schedules contain 271,292 generic and
+271,150 targeted tokens, a 0.05234% difference. The v2 recipe SHA-256 is
+`df7c7b8d7b402683a550fb11ebbe4ceb633ed47597c98ea661affa7876d6fa54`.
+
+The four-step parity smoke passed at 5,464 versus 5,440 actual tokens (0.43924%), finite losses and
+gradients, identical optimizer/scheduler counts, and successful offline reload. Full token-matched
+retraining, final parity, generic/targeted evaluations, the paired bootstrap interval, category
+effects, and one-seed signal decision remain pending.
+
 ## Next decision
 
-The narrowest valid next step is a separately approved experimental redesign that freezes equal
-loss-bearing token budgets before training, then retrains both conditions from the same base. The
-current adapters must not be benchmark-compared or presented as evidence for or against Foundry's
-targeted-data hypothesis. The pending stratified human language review remains independently useful.
+Publish the verified token-matched protocol, then run generic and targeted v2 retraining from the
+same untouched base. The frozen development evaluator remains blocked until final actual token
+parity passes at `<=0.5%`. The old adapters remain invalid for comparative evaluation, and the
+stratified human language review remains pending.

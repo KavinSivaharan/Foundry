@@ -1,0 +1,378 @@
+{
+  "all_examples_have_loss_bearing_tokens": true,
+  "arms": {
+    "generic_control": {
+      "by_difficulty": {
+        "easy": {
+          "count": 152,
+          "entirely_masked_examples": 0,
+          "maximum": 236,
+          "mean": 157.45394736842104,
+          "median": 142.0,
+          "minimum": 113,
+          "percentiles": {
+            "25": 129.75,
+            "50": 142.0,
+            "75": 183.0,
+            "90": 219.9,
+            "95": 227.45,
+            "99": 230.49
+          },
+          "total": 23933,
+          "truncated_examples": 0,
+          "truncated_tokens": 0
+        },
+        "hard": {
+          "count": 149,
+          "entirely_masked_examples": 0,
+          "maximum": 323,
+          "mean": 186.63758389261744,
+          "median": 150,
+          "minimum": 113,
+          "percentiles": {
+            "25": 131.0,
+            "50": 150.0,
+            "75": 257.0,
+            "90": 295.2,
+            "95": 300.4,
+            "99": 312.56000000000006
+          },
+          "total": 27809,
+          "truncated_examples": 0,
+          "truncated_tokens": 0
+        },
+        "medium": {
+          "count": 149,
+          "entirely_masked_examples": 0,
+          "maximum": 279,
+          "mean": 171.8523489932886,
+          "median": 143,
+          "minimum": 111,
+          "percentiles": {
+            "25": 131.0,
+            "50": 143.0,
+            "75": 220.0,
+            "90": 256.2,
+            "95": 259.2,
+            "99": 272.68000000000006
+          },
+          "total": 25606,
+          "truncated_examples": 0,
+          "truncated_tokens": 0
+        }
+      },
+      "by_family": {
+        "constraint_distribution_or_discrete_reasoning": {
+          "count": 150,
+          "entirely_masked_examples": 0,
+          "maximum": 183,
+          "mean": 140.98,
+          "median": 135.5,
+          "minimum": 115,
+          "percentiles": {
+            "25": 123.0,
+            "50": 135.5,
+            "75": 163.0,
+            "90": 175.0,
+            "95": 176.55,
+            "99": 179.0
+          },
+          "total": 21147,
+          "truncated_examples": 0,
+          "truncated_tokens": 0
+        },
+        "multi_step_bookkeeping_or_omission": {
+          "count": 150,
+          "entirely_masked_examples": 0,
+          "maximum": 323,
+          "mean": 240.48666666666668,
+          "median": 242.0,
+          "minimum": 173,
+          "percentiles": {
+            "25": 217.0,
+            "50": 242.0,
+            "75": 264.0,
+            "90": 295.1,
+            "95": 300.20000000000005,
+            "99": 312.53
+          },
+          "total": 36073,
+          "truncated_examples": 0,
+          "truncated_tokens": 0
+        },
+        "rate_ratio_percentage_or_average": {
+          "count": 150,
+          "entirely_masked_examples": 0,
+          "maximum": 165,
+          "mean": 134.18666666666667,
+          "median": 136.0,
+          "minimum": 111,
+          "percentiles": {
+            "25": 130.0,
+            "50": 136.0,
+            "75": 141.0,
+            "90": 147.0,
+            "95": 147.55,
+            "99": 159.54999999999995
+          },
+          "total": 20128,
+          "truncated_examples": 0,
+          "truncated_tokens": 0
+        }
+      },
+      "by_output_contract": {
+        "False": {
+          "count": 358,
+          "entirely_masked_examples": 0,
+          "maximum": 323,
+          "mean": 170.0558659217877,
+          "median": 143.0,
+          "minimum": 111,
+          "percentiles": {
+            "25": 130.0,
+            "50": 143.0,
+            "75": 212.75,
+            "90": 257.0,
+            "95": 277.15,
+            "99": 298.0
+          },
+          "total": 60880,
+          "truncated_examples": 0,
+          "truncated_tokens": 0
+        },
+        "True": {
+          "count": 92,
+          "entirely_masked_examples": 0,
+          "maximum": 314,
+          "mean": 179.0,
+          "median": 148.5,
+          "minimum": 118,
+          "percentiles": {
+            "25": 133.75,
+            "50": 148.5,
+            "75": 222.5,
+            "90": 266.8,
+            "95": 298.6,
+            "99": 311.27000000000004
+          },
+          "total": 16468,
+          "truncated_examples": 0,
+          "truncated_tokens": 0
+        }
+      },
+      "census_sha256": "eee9b961e28066f7954790d99b94dfd1f05aa28e4da5dd2a326c1124b261e6a3",
+      "loss_bearing_tokens": {
+        "count": 450,
+        "entirely_masked_examples": 0,
+        "maximum": 323,
+        "mean": 171.88444444444445,
+        "median": 144.0,
+        "minimum": 111,
+        "percentiles": {
+          "25": 130.25,
+          "50": 144.0,
+          "75": 216.75,
+          "90": 258.20000000000005,
+          "95": 278.55,
+          "99": 305.51
+        },
+        "total": 77348,
+        "truncated_examples": 0,
+        "truncated_tokens": 0
+      }
+    },
+    "targeted": {
+      "by_difficulty": {
+        "easy": {
+          "count": 147,
+          "entirely_masked_examples": 0,
+          "maximum": 236,
+          "mean": 171.79591836734693,
+          "median": 178,
+          "minimum": 114,
+          "percentiles": {
+            "25": 135.5,
+            "50": 178.0,
+            "75": 207.0,
+            "90": 221.4,
+            "95": 224.7,
+            "99": 234.61999999999998
+          },
+          "total": 25254,
+          "truncated_examples": 0,
+          "truncated_tokens": 0
+        },
+        "hard": {
+          "count": 153,
+          "entirely_masked_examples": 0,
+          "maximum": 320,
+          "mean": 216.40522875816993,
+          "median": 253,
+          "minimum": 111,
+          "percentiles": {
+            "25": 141.0,
+            "50": 253.0,
+            "75": 282.0,
+            "90": 297.0,
+            "95": 302.0,
+            "99": 314.3599999999999
+          },
+          "total": 33110,
+          "truncated_examples": 0,
+          "truncated_tokens": 0
+        },
+        "medium": {
+          "count": 150,
+          "entirely_masked_examples": 0,
+          "maximum": 287,
+          "mean": 193.02,
+          "median": 212.5,
+          "minimum": 113,
+          "percentiles": {
+            "25": 138.0,
+            "50": 212.5,
+            "75": 247.0,
+            "90": 262.1,
+            "95": 267.0,
+            "99": 278.0
+          },
+          "total": 28953,
+          "truncated_examples": 0,
+          "truncated_tokens": 0
+        }
+      },
+      "by_family": {
+        "constraint_distribution_or_discrete_reasoning": {
+          "count": 97,
+          "entirely_masked_examples": 0,
+          "maximum": 184,
+          "mean": 141.0721649484536,
+          "median": 138,
+          "minimum": 115,
+          "percentiles": {
+            "25": 122.0,
+            "50": 138.0,
+            "75": 152.0,
+            "90": 175.4,
+            "95": 178.2,
+            "99": 183.04000000000002
+          },
+          "total": 13684,
+          "truncated_examples": 0,
+          "truncated_tokens": 0
+        },
+        "multi_step_bookkeeping_or_omission": {
+          "count": 248,
+          "entirely_masked_examples": 0,
+          "maximum": 320,
+          "mean": 240.03629032258064,
+          "median": 245.5,
+          "minimum": 170,
+          "percentiles": {
+            "25": 215.0,
+            "50": 245.5,
+            "75": 265.0,
+            "90": 293.0,
+            "95": 299.0,
+            "99": 308.65
+          },
+          "total": 59529,
+          "truncated_examples": 0,
+          "truncated_tokens": 0
+        },
+        "rate_ratio_percentage_or_average": {
+          "count": 105,
+          "entirely_masked_examples": 0,
+          "maximum": 164,
+          "mean": 134.32380952380953,
+          "median": 136,
+          "minimum": 111,
+          "percentiles": {
+            "25": 130.0,
+            "50": 136.0,
+            "75": 141.0,
+            "90": 147.0,
+            "95": 149.8,
+            "99": 157.88
+          },
+          "total": 14104,
+          "truncated_examples": 0,
+          "truncated_tokens": 0
+        }
+      },
+      "by_output_contract": {
+        "False": {
+          "count": 354,
+          "entirely_masked_examples": 0,
+          "maximum": 320,
+          "mean": 193.9632768361582,
+          "median": 183.5,
+          "minimum": 111,
+          "percentiles": {
+            "25": 137.0,
+            "50": 183.5,
+            "75": 254.5,
+            "90": 282.0,
+            "95": 296.0,
+            "99": 304.4100000000001
+          },
+          "total": 68663,
+          "truncated_examples": 0,
+          "truncated_tokens": 0
+        },
+        "True": {
+          "count": 96,
+          "entirely_masked_examples": 0,
+          "maximum": 311,
+          "mean": 194.3125,
+          "median": 187.0,
+          "minimum": 119,
+          "percentiles": {
+            "25": 144.75,
+            "50": 187.0,
+            "75": 236.0,
+            "90": 266.5,
+            "95": 283.25,
+            "99": 302.45
+          },
+          "total": 18654,
+          "truncated_examples": 0,
+          "truncated_tokens": 0
+        }
+      },
+      "census_sha256": "3782412c5b0eeba303c7e4c51a1f963bc35082523a18d980fda590f032eb59f8",
+      "loss_bearing_tokens": {
+        "count": 450,
+        "entirely_masked_examples": 0,
+        "maximum": 320,
+        "mean": 194.0377777777778,
+        "median": 184.0,
+        "minimum": 111,
+        "percentiles": {
+          "25": 139.0,
+          "50": 184.0,
+          "75": 252.0,
+          "90": 275.30000000000007,
+          "95": 294.55,
+          "99": 304.53
+        },
+        "total": 87317,
+        "truncated_examples": 0,
+        "truncated_tokens": 0
+      }
+    }
+  },
+  "base_model_id": "Qwen/Qwen2.5-1.5B-Instruct",
+  "base_revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+  "census_id": "foundry-token-census-v1",
+  "chat_template_sha256": "cd8e9439f0570856fd70470bf8889ebd8b5d1107207f67a5efb46e342330527f",
+  "deterministic_reconstruction_match": true,
+  "label_construction": "input_token_when_attention_mask_else_minus_100",
+  "max_sequence_length": 512,
+  "schema_version": 1,
+  "sft_format_sha256": "34d894187c86e47538dd422b2487de6802627a2435ce216dd69f76a2ed568f14",
+  "summary_sha256": "59ffbd01ba613d567eea82d31288b2c006e1d1a0817820ebb3e2d5f0d6e547e7",
+  "tokenizer_config_sha256": "5b5d4f65d0acd3b2d56a35b56d374a36cbc1c8fa5cf3b3febbbfabf22f359583",
+  "tokenizer_sha256": "c0382117ea329cdf097041132f6d735924b697924d6f6fc3945713e96ce87539",
+  "total_training_examples": 900
+}

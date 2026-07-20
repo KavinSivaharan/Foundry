@@ -1,0 +1,288 @@
+{
+  "arms": {
+    "generic_control": {
+      "first_four_step_tokens": 5464,
+      "loss_bearing_tokens": 271292,
+      "maximum_repeat_count": 4,
+      "maximum_step_tokens": 1373,
+      "mean_step_tokens": 1356.46,
+      "minimum_repeat_count": 3,
+      "minimum_step_tokens": 1254,
+      "nominal_token_difference": 92,
+      "nominal_token_relative_difference": 0.0003392330383480826,
+      "occurrences": 1578,
+      "optimizer_steps": 200,
+      "schedule_file_sha256": "3652a2a63e3af2505b5987e1ae0f0023d892ddcbc80117b6f6c4bcd70b4bd0b1",
+      "schedule_sha256": "38c030d703268e7046a8fa73dd63eceb54f98b52b1d0720a1d0188621992d7f0",
+      "smoke_prefix_source_start": 31,
+      "step_token_population_variance": 1288.7384,
+      "stratum_repeat_balance": {
+        "constraint_distribution_or_discrete_reasoning|easy|false": {
+          "examples": 39,
+          "maximum_repeats": 4,
+          "minimum_repeats": 3,
+          "total_occurrences": 137
+        },
+        "constraint_distribution_or_discrete_reasoning|easy|true": {
+          "examples": 11,
+          "maximum_repeats": 4,
+          "minimum_repeats": 3,
+          "total_occurrences": 39
+        },
+        "constraint_distribution_or_discrete_reasoning|hard|false": {
+          "examples": 37,
+          "maximum_repeats": 4,
+          "minimum_repeats": 3,
+          "total_occurrences": 130
+        },
+        "constraint_distribution_or_discrete_reasoning|hard|true": {
+          "examples": 14,
+          "maximum_repeats": 4,
+          "minimum_repeats": 3,
+          "total_occurrences": 49
+        },
+        "constraint_distribution_or_discrete_reasoning|medium|false": {
+          "examples": 44,
+          "maximum_repeats": 4,
+          "minimum_repeats": 3,
+          "total_occurrences": 154
+        },
+        "constraint_distribution_or_discrete_reasoning|medium|true": {
+          "examples": 5,
+          "maximum_repeats": 4,
+          "minimum_repeats": 3,
+          "total_occurrences": 17
+        },
+        "multi_step_bookkeeping_or_omission|easy|false": {
+          "examples": 37,
+          "maximum_repeats": 4,
+          "minimum_repeats": 3,
+          "total_occurrences": 130
+        },
+        "multi_step_bookkeeping_or_omission|easy|true": {
+          "examples": 11,
+          "maximum_repeats": 4,
+          "minimum_repeats": 3,
+          "total_occurrences": 39
+        },
+        "multi_step_bookkeeping_or_omission|hard|false": {
+          "examples": 38,
+          "maximum_repeats": 4,
+          "minimum_repeats": 3,
+          "total_occurrences": 133
+        },
+        "multi_step_bookkeeping_or_omission|hard|true": {
+          "examples": 13,
+          "maximum_repeats": 4,
+          "minimum_repeats": 3,
+          "total_occurrences": 46
+        },
+        "multi_step_bookkeeping_or_omission|medium|false": {
+          "examples": 43,
+          "maximum_repeats": 4,
+          "minimum_repeats": 3,
+          "total_occurrences": 151
+        },
+        "multi_step_bookkeeping_or_omission|medium|true": {
+          "examples": 8,
+          "maximum_repeats": 4,
+          "minimum_repeats": 3,
+          "total_occurrences": 28
+        },
+        "rate_ratio_percentage_or_average|easy|false": {
+          "examples": 45,
+          "maximum_repeats": 4,
+          "minimum_repeats": 3,
+          "total_occurrences": 158
+        },
+        "rate_ratio_percentage_or_average|easy|true": {
+          "examples": 9,
+          "maximum_repeats": 4,
+          "minimum_repeats": 3,
+          "total_occurrences": 31
+        },
+        "rate_ratio_percentage_or_average|hard|false": {
+          "examples": 37,
+          "maximum_repeats": 4,
+          "minimum_repeats": 3,
+          "total_occurrences": 130
+        },
+        "rate_ratio_percentage_or_average|hard|true": {
+          "examples": 10,
+          "maximum_repeats": 4,
+          "minimum_repeats": 3,
+          "total_occurrences": 35
+        },
+        "rate_ratio_percentage_or_average|medium|false": {
+          "examples": 38,
+          "maximum_repeats": 4,
+          "minimum_repeats": 3,
+          "total_occurrences": 133
+        },
+        "rate_ratio_percentage_or_average|medium|true": {
+          "examples": 11,
+          "maximum_repeats": 4,
+          "minimum_repeats": 3,
+          "total_occurrences": 38
+        }
+      },
+      "unique_examples": 450
+    },
+    "targeted": {
+      "first_four_step_tokens": 5440,
+      "loss_bearing_tokens": 271150,
+      "maximum_repeat_count": 4,
+      "maximum_step_tokens": 1360,
+      "mean_step_tokens": 1355.75,
+      "minimum_repeat_count": 3,
+      "minimum_step_tokens": 1245,
+      "nominal_token_difference": 50,
+      "nominal_token_relative_difference": 0.00018436578171091445,
+      "occurrences": 1398,
+      "optimizer_steps": 200,
+      "schedule_file_sha256": "a2cceee84fd478ab7a933756e03429c795b0a1d58918b4fd023f347b961a38a7",
+      "schedule_sha256": "76f4382505e8985c04d997759f01c508d14784d9e0e1f31e9d2d26eab1decc44",
+      "smoke_prefix_source_start": 22,
+      "step_token_population_variance": 125.4275,
+      "stratum_repeat_balance": {
+        "constraint_distribution_or_discrete_reasoning|easy|false": {
+          "examples": 26,
+          "maximum_repeats": 4,
+          "minimum_repeats": 3,
+          "total_occurrences": 81
+        },
+        "constraint_distribution_or_discrete_reasoning|easy|true": {
+          "examples": 4,
+          "maximum_repeats": 3,
+          "minimum_repeats": 3,
+          "total_occurrences": 12
+        },
+        "constraint_distribution_or_discrete_reasoning|hard|false": {
+          "examples": 24,
+          "maximum_repeats": 4,
+          "minimum_repeats": 3,
+          "total_occurrences": 74
+        },
+        "constraint_distribution_or_discrete_reasoning|hard|true": {
+          "examples": 10,
+          "maximum_repeats": 4,
+          "minimum_repeats": 3,
+          "total_occurrences": 31
+        },
+        "constraint_distribution_or_discrete_reasoning|medium|false": {
+          "examples": 26,
+          "maximum_repeats": 4,
+          "minimum_repeats": 3,
+          "total_occurrences": 81
+        },
+        "constraint_distribution_or_discrete_reasoning|medium|true": {
+          "examples": 7,
+          "maximum_repeats": 4,
+          "minimum_repeats": 3,
+          "total_occurrences": 22
+        },
+        "multi_step_bookkeeping_or_omission|easy|false": {
+          "examples": 61,
+          "maximum_repeats": 4,
+          "minimum_repeats": 3,
+          "total_occurrences": 189
+        },
+        "multi_step_bookkeeping_or_omission|easy|true": {
+          "examples": 21,
+          "maximum_repeats": 4,
+          "minimum_repeats": 3,
+          "total_occurrences": 65
+        },
+        "multi_step_bookkeeping_or_omission|hard|false": {
+          "examples": 73,
+          "maximum_repeats": 4,
+          "minimum_repeats": 3,
+          "total_occurrences": 227
+        },
+        "multi_step_bookkeeping_or_omission|hard|true": {
+          "examples": 12,
+          "maximum_repeats": 4,
+          "minimum_repeats": 3,
+          "total_occurrences": 37
+        },
+        "multi_step_bookkeeping_or_omission|medium|false": {
+          "examples": 62,
+          "maximum_repeats": 4,
+          "minimum_repeats": 3,
+          "total_occurrences": 193
+        },
+        "multi_step_bookkeeping_or_omission|medium|true": {
+          "examples": 19,
+          "maximum_repeats": 4,
+          "minimum_repeats": 3,
+          "total_occurrences": 59
+        },
+        "rate_ratio_percentage_or_average|easy|false": {
+          "examples": 29,
+          "maximum_repeats": 4,
+          "minimum_repeats": 3,
+          "total_occurrences": 90
+        },
+        "rate_ratio_percentage_or_average|easy|true": {
+          "examples": 6,
+          "maximum_repeats": 4,
+          "minimum_repeats": 3,
+          "total_occurrences": 19
+        },
+        "rate_ratio_percentage_or_average|hard|false": {
+          "examples": 26,
+          "maximum_repeats": 4,
+          "minimum_repeats": 3,
+          "total_occurrences": 81
+        },
+        "rate_ratio_percentage_or_average|hard|true": {
+          "examples": 8,
+          "maximum_repeats": 4,
+          "minimum_repeats": 3,
+          "total_occurrences": 25
+        },
+        "rate_ratio_percentage_or_average|medium|false": {
+          "examples": 27,
+          "maximum_repeats": 4,
+          "minimum_repeats": 3,
+          "total_occurrences": 84
+        },
+        "rate_ratio_percentage_or_average|medium|true": {
+          "examples": 9,
+          "maximum_repeats": 4,
+          "minimum_repeats": 3,
+          "total_occurrences": 28
+        }
+      },
+      "unique_examples": 450
+    }
+  },
+  "four_step_smoke_relative_difference": 0.004392386530014641,
+  "four_step_smoke_tokens": {
+    "generic_control": 5464,
+    "targeted": 5440
+  },
+  "gate_checks": {
+    "deterministic_reconstruction": true,
+    "every_example_appears": true,
+    "four_step_smoke_parity_within_0_5_percent": true,
+    "no_data_content_changed": true,
+    "optimizer_steps_exact": true,
+    "pairwise_parity_within_0_5_percent": true,
+    "step_safety_within_observed_padded_envelope": true,
+    "stratum_repeat_counts_balanced": true,
+    "totals_within_0_5_percent_of_nominal": true,
+    "whole_examples_only": true
+  },
+  "method": "whole_example_token_budgeted_gradient_accumulation",
+  "method_b_schedule_gate_passed": true,
+  "nominal_loss_bearing_tokens": 271200,
+  "nominal_tokens_per_step": 1356,
+  "pairwise_absolute_token_difference": 142,
+  "pairwise_relative_token_difference": 0.0005234212582752164,
+  "parity_limit": 0.005,
+  "safety_envelope_loss_tokens": 4096,
+  "schema_version": 1,
+  "selection_seed": 20260720,
+  "summary_sha256": "13d3c75e59ea1e182a6934bffedfcd50ccfa2a34e0300719ffa8fa7c4a6efaf5"
+}

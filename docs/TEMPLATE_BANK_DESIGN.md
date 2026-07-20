@@ -396,3 +396,11 @@ The unchanged bank produced valid reviewed surfaces, but the targeted family mix
 sequences than the generic mix. No wording is being edited in response. Any future matched training
 design must account for this length distribution outside the template-review process while retaining
 the same bank and quality evidence.
+
+### Token matching does not alter language evidence
+
+Milestone 8D measures and schedules the already frozen SFT records only. It does not rewrite,
+filter, regenerate, or preferentially accept a template based on token length or model behavior.
+Balanced repetition occurs inside family x difficulty x output-contract strata, so the reviewed
+language machinery and curriculum composition remain intact. The stratified human review is still
+pending and any downstream score remains provisional.

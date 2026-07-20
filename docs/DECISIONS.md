@@ -630,3 +630,23 @@ This log separates proposals from approved decisions. A proposal does not author
 - **Consequence:** The frozen 814-example evaluator remains unused for both adapters; no one-seed
   result or category effect exists. Do not tune or retrain without a separately approved design that
   freezes equal loss-bearing token budgets before optimizer execution.
+
+## 2026-07-20: select whole-example token-budgeted QLoRA v2
+
+- **Status:** selected; four-step parity smoke passed; full retraining pending protocol publication
+- **Decision:** Preserve the parity-failed adapters as negative controls and use
+  `foundry-token-matched-qlora-v2` at SHA-256 `df7c7b8d...fa54`. Method A is rejected because its
+  exact minimum gap is 9.4343%. Method B schedules 271,292 generic and 271,150 targeted
+  loss-bearing tokens across 200 updates, scales every microexample mean loss by its fraction of
+  the step's loss-bearing tokens, and keeps whole-example boundaries.
+- **Evidence:** The complete 900-record census replays exactly and has zero truncation/masked-only
+  records. Schedule hashes are `38c030d7...d7f0` and `76f43825...cc44`; scheduled parity is
+  0.05234%. Numerical fixture gradients match a combined-token reference. Fresh four-step GPU
+  smokes processed 5,464 and 5,440 actual tokens (0.43924%), with finite losses/gradients and
+  successful offline reload.
+- **Rationale:** Variable whole-example accumulation equalizes the actual supervised token volume
+  without editing data, splitting examples, packing boundaries, or changing the optimizer, LoRA,
+  learning rate, base checkpoint, seed, or 200-step budget.
+- **Consequence:** Publish the verified protocol before retraining. Then train generic first and
+  targeted second from the untouched base. The frozen development evaluator remains blocked until
+  final actual-token parity is at most 0.5%.

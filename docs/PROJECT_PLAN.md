@@ -719,3 +719,17 @@ The training-parity gate therefore failed before development evaluation. Neither
 the frozen 814 examples; there is no generic, targeted, category-level, or one-seed signal result.
 The next plan decision is whether to approve a fresh token-budget-matched experimental design and
 retraining. These adapters cannot answer the research question.
+
+### Milestone 8D: token-matched retraining protocol (GPU smoke passed)
+
+The frozen 900-record census confirms that sequence length is the only material exposure mismatch:
+generic records contain 77,348 loss-bearing tokens once each and targeted records contain 87,317;
+no record truncates or masks every label. Fixed 1,600-occurrence Method A cannot close the gap: its
+exact favorable boundary remains 278,167 versus 307,144 tokens (9.4343%).
+
+The selected `foundry-token-matched-qlora-v2` Method B schedule uses whole examples, variable
+microexample counts, and a token-weighted mean within each of 200 optimizer steps. Generic schedules
+271,292 tokens over 1,578 occurrences; targeted schedules 271,150 over 1,398, a 0.05234% difference.
+Recipe SHA-256 is `df7c7b8d...fa54`. Both four-step fresh-adapter smokes passed at 5,464 versus
+5,440 actual tokens, finite loss/gradients, four scheduler updates, and offline reload. Next is to
+publish this protocol, then retrain generic followed by targeted without development exposure.

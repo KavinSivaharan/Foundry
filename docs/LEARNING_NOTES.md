@@ -668,3 +668,17 @@ tokens versus 306,766 targeted tokens. The curriculum itself changes sequence le
 contains more bookkeeping and longer traces. A fair future comparison must freeze the loss-bearing
 token budget before training rather than infer parity from example counts or padded shapes. Catching
 this before benchmark evaluation prevents an attractive but confounded result.
+
+## Whole-example token weighting can restore exposure parity without editing data
+
+The token census made the structural cause measurable: the targeted curriculum contains more long
+bookkeeping traces, so equal example counts cannot be fair. Stratified 3/4 repetition could not
+remove that gap even under the most favorable token selection. Balanced whole-example cycles can:
+each optimizer update accumulates a variable number of intact records and weights each record's mean
+loss by its loss-bearing token share of that update. A numerical fixture confirms that this equals a
+single mean over the combined unmasked tokens, while padding labels contribute nothing.
+
+The schedule, not training feedback, chooses every occurrence before optimization. This keeps
+family/difficulty/output proportions faithful, avoids retry-until-parity behavior, and makes actual
+token accounting a runtime invariant. Smoke prefixes are frozen from real schedule steps; choosing
+independent closest windows gives a fair machinery check without inventing another distribution.
