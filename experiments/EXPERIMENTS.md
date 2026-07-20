@@ -672,3 +672,28 @@ Every future experiment must be registered here before a costly run begins. Its 
   and offline reload passed. Peak reserved VRAM was 3,577,741,312 bytes in both runs.
 - **Next experiment:** publish the protocol; then retrain generic followed by targeted from the
   untouched pinned base. Development evaluation remains prohibited until full-run parity passes.
+
+### EXP-TRAIN-004: token-matched one-seed targeted-versus-generic comparison
+
+- **Status:** complete; final one-seed signal gate failed
+- **Protocol:** `foundry-token-matched-qlora-v2` (`df7c7b8d...fa54`), Method B, seed
+  `20260720`, identical pinned base and software, 200 optimizer/scheduler steps per arm.
+- **Training parity:** Generic processed 1,578 occurrences / 271,292 actual loss tokens; targeted
+  processed 1,398 / 271,150. Difference: 142 tokens, or 0.052342%. Both adapters load offline and
+  all final parity fields pass.
+- **Generic evaluation:** 15/814 (1.8428%); 167 extractable (20.5160%); 137 exact-format; zero
+  backend failures; 1,357.107 seconds. Adapter `c039612d...5df1`.
+- **Targeted evaluation:** 14/814 (1.7199%); 180 extractable (22.1130%); 157 exact-format; zero
+  backend failures; 1,359.252 seconds. Adapter `b4a2e55d...b02e`.
+- **Paired result:** Targeted wins 11 rows and generic wins 12 (net -1). Targeted-minus-generic is
+  -0.12285 percentage points with a fixed-seed 10,000-replicate paired-bootstrap 95% interval of
+  [-1.22850, +0.98280] points. The frozen 293-row failure taxonomy shows 0 selected-category fixes
+  for either arm; targeted fixes two untargeted rows and generic fixes one.
+- **Gate:** Failed the targeted >=529, targeted >=generic+4, and targeted extractability >=91.38%
+  clauses. It passed actual-token parity, zero backend failures, and the frozen taxonomy's
+  untargeted-decline clause. The result remains provisional pending stratified human language
+  review and second-seed confirmation, but a second seed is not recommended from this failure.
+- **Interpretation:** The shared extractability collapse is a common training-format or
+  instruction-retention failure, not positive or negative evidence about targeted curriculum.
+- **Next experiment:** none approved. The narrowest possible next approval would diagnose SFT label
+  scope/completion behavior without tuning, retraining, or sealed-final access.

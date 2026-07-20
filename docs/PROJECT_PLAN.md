@@ -2,7 +2,7 @@
 
 Last updated: 2026-07-19
 
-## Current milestone status: signal-first allocation blocked by runtime surface capacity
+## Current milestone status: token-matched one-seed signal failed; diagnosis required
 
 Milestone 7C unified scheduling and runtime behind the unchanged canonical number-neutral normalizer, then proved that the previous metadata prediction had overstated usable surface capacity. The fixed weighted-average pool has 16 internal render signatures but only eight actual runtime number-neutral identities. Under the frozen reuse caps, targeted weighted-average capacity is 40 for 70 required attempts and generic capacity is 48 for 100 required attempts. The required 2,504-slot reconstruction therefore failed before a fresh review schedule or smoke was authorized. No review packet, complete dataset, or training run exists. The next decision must address this measured surface-capacity shortfall without weakening the normalizer or duplicate gate.
 
@@ -733,3 +733,18 @@ microexample counts, and a token-weighted mean within each of 200 optimizer step
 Recipe SHA-256 is `df7c7b8d...fa54`. Both four-step fresh-adapter smokes passed at 5,464 versus
 5,440 actual tokens, finite loss/gradients, four scheduler updates, and offline reload. Next is to
 publish this protocol, then retrain generic followed by targeted without development exposure.
+
+#### Completed token-matched comparison
+
+Protocol commit `02a7a3f1...2638` was published before either full run. Fresh generic and targeted
+adapters then processed 271,292 and 271,150 actual loss-bearing tokens over the same 200 updates, a
+0.05234% difference; both saved, hashed, and reloaded offline. The frozen 814-example development
+evaluation produced 15 correct / 20.52% extractable for generic and 14 correct / 22.11%
+extractable for targeted, versus the frozen base's 521 correct / 92.38% extractable. Targeted's
+paired difference from generic is -1 answer, with a fixed-seed 95% bootstrap interval of -1.2285
+to +0.9828 percentage points.
+
+The one-seed signal gate therefore failed. No second seed, tuning, retraining, sealed-final
+evaluation, or GRPO is planned automatically. The next decision is whether to approve a narrow
+training-format/instruction-retention diagnosis; stratified human language review also remains
+pending. The result is provisional and cannot support the targeted-data hypothesis.

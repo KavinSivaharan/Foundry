@@ -404,3 +404,9 @@ filter, regenerate, or preferentially accept a template based on token length or
 Balanced repetition occurs inside family x difficulty x output-contract strata, so the reviewed
 language machinery and curriculum composition remain intact. The stratified human review is still
 pending and any downstream score remains provisional.
+
+The completed v2 comparison did not alter this bank. Both token-matched adapters showed a common
+development output/extractability collapse, so the failed one-seed signal cannot be attributed to
+a measured template difference. The ignored stratified packet remains available at
+`results/raw/foundry_500x2_signal_review/codex_assisted_review.html`; no user decisions have been
+imported, and the bank is not newly claimed as human-vetted.

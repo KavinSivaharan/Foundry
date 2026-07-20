@@ -650,3 +650,22 @@ This log separates proposals from approved decisions. A proposal does not author
 - **Consequence:** Publish the verified protocol before retraining. Then train generic first and
   targeted second from the untouched base. The frozen development evaluator remains blocked until
   final actual-token parity is at most 0.5%.
+
+## 2026-07-20: stop after the token-matched one-seed signal failure
+
+- **Status:** final Milestone 8D signal gate failed
+- **Decision:** Preserve the fresh v2 adapters and evaluation evidence, but do not tune, retrain,
+  run a second seed, or access sealed-final. Generic scored 15/814 and targeted 14/814 after final
+  actual-token parity passed at 0.05234%. Targeted is one answer below generic, its extractability
+  is 22.11%, and it misses the frozen 529-correct, +4-over-generic, and 91.38%-extractability gates.
+- **Evidence:** Both 814-example runs completed with zero backend failures under the same frozen
+  evaluator. The paired targeted-minus-generic estimate is -0.12285 percentage points; its
+  fixed-seed 10,000-replicate 95% bootstrap interval is [-1.22850, +0.98280] points. On the frozen
+  taxonomy's 293 base-failure rows, neither arm fixes a selected-category example.
+- **Rationale:** The shared collapse from 92.38% base extractability to roughly 21% after either
+  adapter is evidence of a common instruction/output-contract retention failure. It prevents this
+  run from measuring the intended curriculum effect and is not a reason to adjust the signal gate.
+- **Consequence:** The narrowest next decision is whether to approve a read-only/focused audit of
+  SFT label scope, completion format, and adapter behavior before any new training. Stratified
+  human language review remains pending. This result is provisional and no later milestone begins
+  without explicit approval.

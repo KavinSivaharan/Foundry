@@ -831,3 +831,15 @@ Within a step, each microexample mean causal-LM loss is multiplied by
 `microexample_loss_tokens / optimizer_step_loss_tokens`. Gradients are clipped once, the optimizer
 and cosine scheduler advance once, and gradients clear once per step. All original QLoRA, LoRA,
 optimizer, learning-rate, seed, validation-cadence, and final-adapter-only controls remain frozen.
+
+### Observed token-matched result
+
+The v2 runtime exactly matched its frozen schedules: 271,292 generic and 271,150 targeted actual
+loss-bearing tokens, a 0.05234% difference across 200 updates. This removes the prior exposure
+confound but did not produce a usable model comparison. Generic scored 15/814 and targeted 14/814;
+their extractability rates were 20.52% and 22.11%, compared with 92.38% for the frozen base.
+
+No synthetic example, template, label, or split was changed in response. The evidence indicates a
+shared SFT instruction/output-format retention problem upstream of the curriculum contrast. The
+one-seed signal gate failed, so data regeneration, a second seed, tuning, sealed-final evaluation,
+and GRPO remain blocked pending an explicitly approved diagnosis.

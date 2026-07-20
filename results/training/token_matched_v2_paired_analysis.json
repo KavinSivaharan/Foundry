@@ -1,0 +1,186 @@
+{
+  "accuracy": {
+    "base": 0.64004914004914,
+    "generic_control": 0.018427518427518427,
+    "targeted": 0.0171990171990172
+  },
+  "aggregate_untargeted_category_set": {
+    "base_accuracy": 0.0,
+    "base_correct": 0,
+    "examples": 170,
+    "generic_accuracy": 0.0058823529411764705,
+    "generic_correct": 1,
+    "maximum_allowed_absolute_decline": 0.02,
+    "no_greater_than_two_point_decline": true,
+    "targeted_accuracy": 0.011764705882352941,
+    "targeted_correct": 2,
+    "targeted_delta_vs_base": 0.011764705882352941
+  },
+  "analysis_sha256": "dc9e2a767d8a39fef1373b4d3b1c4ca3d922ad2257238e2a2e4cd7c6a240ac9c",
+  "category_results": {
+    "arithmetic_execution": {
+      "base_accuracy": 0.0,
+      "base_correct": 0,
+      "examples": 22,
+      "generic_accuracy": 0.0,
+      "generic_correct": 0,
+      "targeted_accuracy": 0.0,
+      "targeted_correct": 0,
+      "targeted_delta_vs_base": 0.0,
+      "targeted_delta_vs_generic": 0.0
+    },
+    "benchmark_ambiguity_or_annotation_risk": {
+      "base_accuracy": 0.0,
+      "base_correct": 0,
+      "examples": 2,
+      "generic_accuracy": 0.0,
+      "generic_correct": 0,
+      "targeted_accuracy": 0.0,
+      "targeted_correct": 0,
+      "targeted_delta_vs_base": 0.0,
+      "targeted_delta_vs_generic": 0.0
+    },
+    "constraint_distribution_or_discrete_reasoning": {
+      "base_accuracy": 0.0,
+      "base_correct": 0,
+      "examples": 27,
+      "generic_accuracy": 0.0,
+      "generic_correct": 0,
+      "targeted_accuracy": 0.0,
+      "targeted_correct": 0,
+      "targeted_delta_vs_base": 0.0,
+      "targeted_delta_vs_generic": 0.0
+    },
+    "multi_step_bookkeeping_or_omission": {
+      "base_accuracy": 0.0,
+      "base_correct": 0,
+      "examples": 68,
+      "generic_accuracy": 0.0,
+      "generic_correct": 0,
+      "targeted_accuracy": 0.0,
+      "targeted_correct": 0,
+      "targeted_delta_vs_base": 0.0,
+      "targeted_delta_vs_generic": 0.0
+    },
+    "output_format_or_answer_extraction": {
+      "base_accuracy": 0.0,
+      "base_correct": 0,
+      "examples": 69,
+      "generic_accuracy": 0.014492753623188406,
+      "generic_correct": 1,
+      "targeted_accuracy": 0.014492753623188406,
+      "targeted_correct": 1,
+      "targeted_delta_vs_base": 0.014492753623188406,
+      "targeted_delta_vs_generic": 0.0
+    },
+    "rate_ratio_percentage_or_average": {
+      "base_accuracy": 0.0,
+      "base_correct": 0,
+      "examples": 28,
+      "generic_accuracy": 0.0,
+      "generic_correct": 0,
+      "targeted_accuracy": 0.0,
+      "targeted_correct": 0,
+      "targeted_delta_vs_base": 0.0,
+      "targeted_delta_vs_generic": 0.0
+    },
+    "target_or_language_interpretation": {
+      "base_accuracy": 0.0,
+      "base_correct": 0,
+      "examples": 53,
+      "generic_accuracy": 0.0,
+      "generic_correct": 0,
+      "targeted_accuracy": 0.018867924528301886,
+      "targeted_correct": 1,
+      "targeted_delta_vs_base": 0.018867924528301886,
+      "targeted_delta_vs_generic": 0.018867924528301886
+    },
+    "time_unit_or_sequence_reasoning": {
+      "base_accuracy": 0.0,
+      "base_correct": 0,
+      "examples": 24,
+      "generic_accuracy": 0.0,
+      "generic_correct": 0,
+      "targeted_accuracy": 0.0,
+      "targeted_correct": 0,
+      "targeted_delta_vs_base": 0.0,
+      "targeted_delta_vs_generic": 0.0
+    }
+  },
+  "correct": {
+    "base": 521,
+    "generic_control": 15,
+    "targeted": 14
+  },
+  "correct_deltas": {
+    "generic_vs_base": -506,
+    "targeted_vs_base": -507,
+    "targeted_vs_generic": -1
+  },
+  "examples": 814,
+  "frozen_taxonomy_scope": {
+    "classified_examples": 293,
+    "scope": "development_failures_only",
+    "targeted_categories": [
+      "constraint_distribution_or_discrete_reasoning",
+      "multi_step_bookkeeping_or_omission",
+      "rate_ratio_percentage_or_average"
+    ]
+  },
+  "input_sha256": {
+    "base_predictions": "73d52dace0f27577b1177bdfa81dfbb4c88252107c9b04e2ff49dbbd93da6cc0",
+    "final_parity": "0a178f232aecb51f915ae2c6021aae079c95ae698cf52adc6a34fbd4f144353a",
+    "frozen_taxonomy": "964d0c18b60d4f0262f0ec711b2f13b396ca4fa1c921f0dc2e91205d393cb692",
+    "generic_predictions": "0081115fdec4f432c23a1f2f178b4d7bfe94cad7cf10a8216757b2ea47fbfeb8",
+    "generic_summary": "cfe895c1a04d82659a4637f88eae0e87c5acca0339a200a8c316fffe96ece861",
+    "targeted_predictions": "1a387fdd3b1d93e4eb2a161e7cee5d008b275b94060dc17775e2e7fd8783a604",
+    "targeted_summary": "ec15ee015e4e43a5644af42dcbaa8416aeb6c07571c7a79742585dd9fdbb1ba8"
+  },
+  "one_seed_signal_gate_passed": false,
+  "paired_bootstrap": {
+    "confidence_level": 0.95,
+    "estimand": "targeted_accuracy_minus_generic_accuracy",
+    "interval": [
+      -0.012285012285012283,
+      0.009828009828009828
+    ],
+    "method": "paired_nonparametric_percentile_bootstrap",
+    "point_estimate": -0.0012285012285012285,
+    "replicates": 10000,
+    "seed": 20260720,
+    "stable_order": "lexicographic_stable_id"
+  },
+  "paired_changes": {
+    "generic_broke_base_successes": 507,
+    "generic_fixed_base_failures": 1,
+    "generic_only_broken": 9,
+    "generic_only_fixed": 1,
+    "generic_wins_over_targeted": 12,
+    "targeted_broke_base_successes": 509,
+    "targeted_fixed_base_failures": 2,
+    "targeted_net_wins": -1,
+    "targeted_only_broken": 11,
+    "targeted_only_fixed": 2,
+    "targeted_wins_over_generic": 11,
+    "transition_counts": {
+      "base_0_generic_0_targeted_0": 290,
+      "base_0_generic_0_targeted_1": 2,
+      "base_0_generic_1_targeted_0": 1,
+      "base_1_generic_0_targeted_0": 498,
+      "base_1_generic_0_targeted_1": 9,
+      "base_1_generic_1_targeted_0": 11,
+      "base_1_generic_1_targeted_1": 3
+    }
+  },
+  "schema_version": 1,
+  "sealed_final_accessed": false,
+  "signal_gate_checks": {
+    "final_training_parity_passed": true,
+    "targeted_at_least_529_correct": false,
+    "targeted_at_least_four_over_generic": false,
+    "targeted_extractability_at_least_91_38_percent": false,
+    "targeted_zero_backend_failures": true,
+    "untargeted_aggregate_decline_within_two_points": true
+  },
+  "status_label": "Provisional one-seed result pending stratified human language review and second-seed confirmation."
+}

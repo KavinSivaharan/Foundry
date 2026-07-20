@@ -682,3 +682,16 @@ The schedule, not training feedback, chooses every occurrence before optimizatio
 family/difficulty/output proportions faithful, avoids retry-until-parity behavior, and makes actual
 token accounting a runtime invariant. Smoke prefixes are frozen from real schedule steps; choosing
 independent closest windows gives a fair machinery check without inventing another distribution.
+
+## Exposure parity is necessary but does not guarantee retained instruction behavior
+
+Milestone 8D successfully isolated loss-token volume: the fresh adapters differed by only 142 of
+roughly 271,000 supervised tokens. Yet both lost nearly all frozen development performance. The
+most diagnostic shared symptom is extractability: the base produced an extractable terminal answer
+on 92.38% of examples, while generic and targeted produced one on only 20.52% and 22.11%.
+
+This distinguishes two questions. Token matching answers whether the arms received comparable
+supervised volume; it does not prove that the chosen SFT label scope and completion distribution
+preserve the base model's instruction-following behavior. Because both arms fail in the same way,
+the right next inquiry is a common training-format and behavior audit, not a curriculum tweak or a
+second seed. Synthetic-validation loss alone cannot certify transfer to the frozen benchmark.
