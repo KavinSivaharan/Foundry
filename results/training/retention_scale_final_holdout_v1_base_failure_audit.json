@@ -1,0 +1,36 @@
+{
+  "adapter_outputs_inspected": false,
+  "audit_id": "foundry-scale-final-holdout-base-failure-inspection-v1",
+  "base_raw_packet_sha256": "3d26b509a38743eba0bfcc91f05a46569e0ac4853f6b5a219134013ef420c15f",
+  "base_summary_sha256": "dc48cd7656de41ffb0f50103e81a55dd29b8e5c90a620a2a30fd9e8a0897add5",
+  "classification_packet_sha256": "9186b2c7a35ceb4ad376e4f6f0649bcc78674ece839c4aa32394e7649a446877",
+  "failure_categories": {
+    "genuine_arithmetic_or_terminal_contract_noncompliance": 38,
+    "genuine_format_noncompliance": 23,
+    "genuine_instruction_noncompliance": 71
+  },
+  "failures_by_skill": {
+    "arithmetic/addition": 7,
+    "arithmetic/exact_division": 8,
+    "arithmetic/multiplication": 9,
+    "arithmetic/percentage": 9,
+    "arithmetic/ratio": 1,
+    "arithmetic/subtraction": 4,
+    "format/casing_punctuation": 1,
+    "format/exact_integer": 1,
+    "format/small_json": 21,
+    "instruction/concise_text_operation": 19,
+    "instruction/deterministic_transformation": 8,
+    "instruction/exact_substitution": 6,
+    "instruction/select_exact_rule": 9,
+    "instruction/stable_sort": 8,
+    "instruction/symbol_count": 21
+  },
+  "failures_inspected": 132,
+  "objectively_defective_prompts_references_or_scorers": 0,
+  "reference_self_score_failures": 0,
+  "schema_version": 1,
+  "sealed_final_accessed": false,
+  "suite_sha256": "b856c8ce8e56d98eb7e3fbffdead07ffde7091ab2a20abe5a22ada598136353e",
+  "summary_sha256": "98b96c15934964d47817cb2d9650e21e7290789e6906f224c5cf0c8a3f2239c0"
+}

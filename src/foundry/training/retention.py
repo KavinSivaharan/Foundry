@@ -12,6 +12,7 @@ import random
 import re
 import time
 from collections import Counter
+from contextlib import nullcontext
 from dataclasses import dataclass
 from fractions import Fraction
 from pathlib import Path
@@ -22,6 +23,7 @@ from foundry.evaluation.answer_extraction import (
     extract_canonical_number,
 )
 from foundry.training.config import canonical_sha256
+from foundry.training.lora_scaling import ScalingEvidence, scaled_lora_adapter
 from foundry.training.qlora import directory_sha256, file_sha256
 
 Section = Literal["arithmetic", "format", "instruction"]
@@ -40,6 +42,11 @@ SUITE_LAYOUTS = {
         "format": 100,
         "instruction": 100,
     },
+    "foundry-retention-scale-final-holdout-v1": {
+        "arithmetic": 150,
+        "format": 150,
+        "instruction": 150,
+    },
 }
 EVALUATION_IDS = {
     "foundry-original-retention-suite-v1": "foundry-original-retention-evaluation-v1",
@@ -47,6 +54,9 @@ EVALUATION_IDS = {
     "foundry-retention-final-holdout-v1": "foundry-retention-final-holdout-evaluation-v1",
     "foundry-retention-adjudication-v2": "foundry-retention-adjudication-evaluation-v2",
     "foundry-retention-anchor-holdout-v1": ("foundry-retention-anchor-holdout-evaluation-v1"),
+    "foundry-retention-scale-final-holdout-v1": (
+        "foundry-retention-scale-final-holdout-evaluation-v1"
+    ),
 }
 
 
@@ -307,6 +317,7 @@ def evaluate_suite(
     raw_path: Path,
     output_path: Path,
     subset_manifest_path: Path | None = None,
+    adapter_scale: float | None = None,
 ) -> dict[str, Any]:
     """Evaluate one base or adapter on a frozen suite or base-correct subset."""
 
@@ -339,60 +350,69 @@ def evaluate_suite(
         torch=torch,
         transformers=transformers,
     )
+    if adapter_scale is not None and adapter_sha256 is None:
+        raise ValueError("runtime LoRA scaling requires an adapter")
     started = time.perf_counter()
     rows: list[dict[str, Any]] = []
     backend_failures = 0
     input_tokens = 0
     output_tokens = 0
-    for item in evaluated_items:
-        response = ""
-        try:
-            input_ids = tokenizer.apply_chat_template(
-                [
-                    {"role": "system", "content": suite.system_prompt},
-                    {"role": "user", "content": item.prompt},
-                ],
-                tokenize=True,
-                add_generation_prompt=True,
-                return_tensors="pt",
-            ).to("cuda:0")
-            attention_mask = torch.ones_like(input_ids)
-            with torch.inference_mode():
-                generated = model.generate(
-                    input_ids=input_ids,
-                    attention_mask=attention_mask,
-                    do_sample=suite.do_sample,
-                    max_new_tokens=suite.max_new_tokens,
-                    pad_token_id=tokenizer.pad_token_id,
-                    eos_token_id=tokenizer.eos_token_id,
-                )
-            generated_ids = generated[0, input_ids.shape[-1] :]
-            response = tokenizer.decode(generated_ids, skip_special_tokens=True)
-            input_tokens += int(input_ids.shape[-1])
-            output_tokens += int(generated_ids.shape[-1])
-            score = score_response(item, response)
-        except Exception as error:  # pragma: no cover - hardware/backend guard
-            backend_failures += 1
-            score = {
-                "correct": False,
-                "extractable": False,
-                "malformed": True,
-                "prompt_echo": False,
-                "question_generation": False,
-                "exact_format": False,
-                "extracted_hash": None,
-                "backend_error_type": type(error).__name__,
-            }
-        rows.append(
-            {
-                "id": item.item_id,
-                "section": item.section,
-                "skill": item.skill,
-                "response": response,
-                "response_sha256": hashlib.sha256(response.encode("utf-8")).hexdigest(),
-                "score": score,
-            }
-        )
+    scale_context = (
+        scaled_lora_adapter(model, adapter_scale)
+        if adapter_scale is not None
+        else nullcontext(None)
+    )
+    scale_evidence: ScalingEvidence | None
+    with scale_context as scale_evidence:
+        for item in evaluated_items:
+            response = ""
+            try:
+                input_ids = tokenizer.apply_chat_template(
+                    [
+                        {"role": "system", "content": suite.system_prompt},
+                        {"role": "user", "content": item.prompt},
+                    ],
+                    tokenize=True,
+                    add_generation_prompt=True,
+                    return_tensors="pt",
+                ).to("cuda:0")
+                attention_mask = torch.ones_like(input_ids)
+                with torch.inference_mode():
+                    generated = model.generate(
+                        input_ids=input_ids,
+                        attention_mask=attention_mask,
+                        do_sample=suite.do_sample,
+                        max_new_tokens=suite.max_new_tokens,
+                        pad_token_id=tokenizer.pad_token_id,
+                        eos_token_id=tokenizer.eos_token_id,
+                    )
+                generated_ids = generated[0, input_ids.shape[-1] :]
+                response = tokenizer.decode(generated_ids, skip_special_tokens=True)
+                input_tokens += int(input_ids.shape[-1])
+                output_tokens += int(generated_ids.shape[-1])
+                score = score_response(item, response)
+            except Exception as error:  # pragma: no cover - hardware/backend guard
+                backend_failures += 1
+                score = {
+                    "correct": False,
+                    "extractable": False,
+                    "malformed": True,
+                    "prompt_echo": False,
+                    "question_generation": False,
+                    "exact_format": False,
+                    "extracted_hash": None,
+                    "backend_error_type": type(error).__name__,
+                }
+            rows.append(
+                {
+                    "id": item.item_id,
+                    "section": item.section,
+                    "skill": item.skill,
+                    "response": response,
+                    "response_sha256": hashlib.sha256(response.encode("utf-8")).hexdigest(),
+                    "score": score,
+                }
+            )
     runtime = time.perf_counter() - started
     raw_path.parent.mkdir(parents=True, exist_ok=True)
     raw_path.write_text(json.dumps(rows, indent=2) + "\n", encoding="utf-8")
@@ -421,6 +441,8 @@ def evaluate_suite(
         "suite_file_sha256": file_sha256(suite_path),
         "base_revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
         "adapter_sha256": adapter_sha256,
+        "adapter_scale": adapter_scale,
+        "adapter_scale_evidence": None if scale_evidence is None else scale_evidence.as_dict(),
         "section_metrics": section_metrics,
         "total": total,
         "extractable": extractable,
@@ -477,6 +499,7 @@ def main() -> None:
     parser.add_argument("--raw-path", type=Path, required=True)
     parser.add_argument("--output-path", type=Path, required=True)
     parser.add_argument("--subset-manifest", type=Path)
+    parser.add_argument("--adapter-scale", type=float)
     args = parser.parse_args()
     result = evaluate_suite(
         suite_path=args.suite,
@@ -485,6 +508,7 @@ def main() -> None:
         raw_path=args.raw_path,
         output_path=args.output_path,
         subset_manifest_path=args.subset_manifest,
+        adapter_scale=args.adapter_scale,
     )
     print(json.dumps(result, indent=2, sort_keys=True))
 

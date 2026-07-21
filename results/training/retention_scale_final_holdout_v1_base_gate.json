@@ -1,0 +1,33 @@
+{
+  "adapter_outputs_read": false,
+  "ambiguous_reference_answers": 0,
+  "artifact_evidence_sha256": "6a627756f573d3f998f6046b13d8baa2ddee3167054b3a6ffc9b3b4936b87647",
+  "backend_failures": 0,
+  "base_summary_sha256": "dc48cd7656de41ffb0f50103e81a55dd29b8e5c90a620a2a30fd9e8a0897add5",
+  "extractable": 393,
+  "gate_checks": {
+    "arithmetic_at_least_60": true,
+    "format_at_least_60": true,
+    "instruction_at_least_60": true,
+    "overall_at_least_250": true,
+    "zero_backend_failures": true,
+    "zero_reference_or_scorer_defects": true
+  },
+  "gate_id": "foundry-scale-final-holdout-instrument-usability-gate-v1",
+  "gate_passed": true,
+  "malformed_outputs": 57,
+  "overall_correct": 318,
+  "prompt_echo": 0,
+  "question_generation": 0,
+  "reference_self_score_failures": 0,
+  "schema_version": 1,
+  "sealed_final_accessed": false,
+  "section_correct": {
+    "arithmetic": 112,
+    "format": 127,
+    "instruction": 79
+  },
+  "suite_id": "foundry-retention-scale-final-holdout-v1",
+  "suite_sha256": "b856c8ce8e56d98eb7e3fbffdead07ffde7091ab2a20abe5a22ada598136353e",
+  "summary_sha256": "38c87e2f1db61067156b2a07e18be80a066e9373eb6cc1b4f5462644242e9a62"
+}

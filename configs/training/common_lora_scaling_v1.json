@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "config_id": "foundry-common-lora-runtime-scaling-v1",
+  "selection_scales_descending": [
+    1.0,
+    0.75,
+    0.5,
+    0.25
+  ],
+  "sanity_control_scale": 0.0,
+  "common_scale_required": true,
+  "scale_zero_selectable": false,
+  "stop_after_first_common_pass": true,
+  "selection_subset_sha256s": [
+    "c76df74b911b96ca43c2663a123e41347fd544bf6644f15522ccaad7b77099e1",
+    "36be91d08f2ab0e05c491094c53965d1aa4f989a730347768877a2548a62c7a9"
+  ],
+  "retention_gate": {
+    "overall_preservation_minimum": 0.9,
+    "category_preservation_minimum": 0.9,
+    "overall_wilson_95_lower_bound_minimum": 0.85,
+    "prompt_echo_maximum": 0.02,
+    "question_generation_maximum": 0,
+    "backend_failures_maximum": 0,
+    "instruction_family_adapter_only_failure_maximum": 3
+  },
+  "adapter_mutation_allowed": false,
+  "merge_allowed": false,
+  "different_arm_scales_allowed": false,
+  "gsm1k_selection_allowed": false,
+  "config_sha256": "938ec15a61831208dfc138b7829619f801af1205bc6f165a84083b8a64b0ddfc"
+}

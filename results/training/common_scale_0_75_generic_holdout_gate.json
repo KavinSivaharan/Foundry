@@ -1,0 +1,80 @@
+{
+  "adapter_scale": 0.75,
+  "adapter_scale_evidence_sha256": "1ac0726479dd7083a19b6668393967477fddfef946568b91ab8dab0c1aa0f9e2",
+  "adapter_sha256": "faa4b72bd0046fbd8d94fc3f364cb7078259403131ea16cd136fdfbbe5408f35",
+  "assessment_id": "foundry-base-conditioned-retention-assessment-v1",
+  "backend_failures": 0,
+  "broken": 14,
+  "broken_item_ids": [
+    "anchor-holdout-arithmetic-016",
+    "anchor-holdout-arithmetic-017",
+    "anchor-holdout-arithmetic-018",
+    "anchor-holdout-arithmetic-019",
+    "anchor-holdout-arithmetic-020",
+    "anchor-holdout-arithmetic-021",
+    "anchor-holdout-arithmetic-022",
+    "anchor-holdout-arithmetic-027",
+    "anchor-holdout-arithmetic-029",
+    "anchor-holdout-format-035",
+    "anchor-holdout-format-040",
+    "anchor-holdout-format-043",
+    "anchor-holdout-format-057",
+    "anchor-holdout-format-063"
+  ],
+  "evaluation_summary_sha256": "bf3918e6f973e035f62ca1a93d24795be3fc691cd958d2aea61327b2a68fc8de",
+  "extractability": 0.9571428571428572,
+  "extractable": 201,
+  "gate_checks": {
+    "arithmetic_preservation_at_least_90_percent": true,
+    "format_preservation_at_least_90_percent": true,
+    "instruction_family_adapter_only_failures_at_most_3": true,
+    "instruction_preservation_at_least_90_percent": true,
+    "overall_preservation_at_least_90_percent": true,
+    "overall_wilson_lower_bound_at_least_85_percent": true,
+    "prompt_echo_at_most_2_percent": true,
+    "zero_backend_failures": true,
+    "zero_question_generation": false
+  },
+  "gate_passed": false,
+  "instruction_family_adapter_only_failures": {},
+  "instrument_id": "foundry-base-conditioned-retention-v1",
+  "malformed_outputs": 9,
+  "maximum_instruction_family_adapter_only_failures": 0,
+  "overall_preservation": 0.9333333333333333,
+  "overall_wilson_95_lower_bound": 0.8912216570902916,
+  "paired_transitions": {
+    "base_pass_adapter_fail": 14,
+    "base_pass_adapter_pass": 196
+  },
+  "preserved": 196,
+  "prompt_echo": 0,
+  "prompt_echo_rate": 0.0,
+  "question_generation": 3,
+  "raw_packet_sha256": "063c052bee2bbe7d2d7b6d630c931bc36607c1db6455fa1b61f96f338e0b6567",
+  "scaling_implementation_id": "foundry-common-lora-runtime-scaling-v1",
+  "schema_version": 1,
+  "section_preservation": {
+    "arithmetic": {
+      "preserved": 87,
+      "rate": 0.90625,
+      "total": 96
+    },
+    "format": {
+      "preserved": 55,
+      "rate": 0.9166666666666666,
+      "total": 60
+    },
+    "instruction": {
+      "preserved": 54,
+      "rate": 1.0,
+      "total": 54
+    }
+  },
+  "state_restoration_verified": true,
+  "subset_id": "retention-anchor-holdout-v1-base-correct",
+  "subset_sha256": "36be91d08f2ab0e05c491094c53965d1aa4f989a730347768877a2548a62c7a9",
+  "suite_id": "foundry-retention-anchor-holdout-v1",
+  "suite_sha256": "bff18b434a284d848387262dde201601278e5c8b573937b3486bed2bf925696e",
+  "summary_sha256": "d2b1c464ab3ef76505f4103ab0850b640b8a8c59593ed4118d6af576dc502a42",
+  "total": 210
+}

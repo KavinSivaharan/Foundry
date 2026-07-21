@@ -127,15 +127,31 @@ def assess_holdout_instrument_usability(
         raise ValueError("holdout usability must be assessed on the untouched base")
     if summary.get("suite_sha256") != suite.suite_sha256:
         raise ValueError("holdout base result suite identity differs")
-    if len(suite.items) != 300 or summary.get("total") != 300:
-        raise ValueError("holdout usability requires exactly 300 items")
-    suites = evidence.get("suites")
-    cross_artifact = evidence.get("cross_artifact")
-    if not isinstance(suites, dict) or not isinstance(cross_artifact, dict):
-        raise ValueError("powered-artifact evidence is incomplete")
-    holdout = suites.get("anchor_holdout")
-    if not isinstance(holdout, dict) or holdout.get("suite_sha256") != suite.suite_sha256:
-        raise ValueError("powered-artifact evidence holdout identity differs")
+    if suite.suite_id == "foundry-retention-anchor-holdout-v1":
+        required_total = 300
+        section_minimum = 40
+        overall_minimum = 150
+        gate_id = "foundry-anchor-holdout-instrument-usability-gate-v1"
+        suites = evidence.get("suites")
+        cross_artifact = evidence.get("cross_artifact")
+        if not isinstance(suites, dict) or not isinstance(cross_artifact, dict):
+            raise ValueError("powered-artifact evidence is incomplete")
+        holdout = suites.get("anchor_holdout")
+        if not isinstance(holdout, dict) or holdout.get("suite_sha256") != suite.suite_sha256:
+            raise ValueError("powered-artifact evidence holdout identity differs")
+        ambiguous_references = int(cross_artifact.get("ambiguous_reference_answers", -1))
+    elif suite.suite_id == "foundry-retention-scale-final-holdout-v1":
+        required_total = 450
+        section_minimum = 60
+        overall_minimum = 250
+        gate_id = "foundry-scale-final-holdout-instrument-usability-gate-v1"
+        if evidence.get("suite_sha256") != suite.suite_sha256:
+            raise ValueError("final-holdout artifact evidence identity differs")
+        ambiguous_references = int(evidence.get("ambiguous_reference_answers", -1))
+    else:
+        raise ValueError("suite has no predeclared instrument-usability gate")
+    if len(suite.items) != required_total or summary.get("total") != required_total:
+        raise ValueError(f"holdout usability requires exactly {required_total} items")
     self_score_failures = sum(
         not bool(score_response(item, item.expected)["correct"]) for item in suite.items
     )
@@ -146,18 +162,18 @@ def assess_holdout_instrument_usability(
         section: int(cast(dict[str, Any], section_metrics[section])["correct"])
         for section in SECTION_ORDER
     }
-    ambiguous_references = int(cross_artifact.get("ambiguous_reference_answers", -1))
     gate_checks = {
-        "arithmetic_at_least_40": section_correct["arithmetic"] >= 40,
-        "format_at_least_40": section_correct["format"] >= 40,
-        "instruction_at_least_40": section_correct["instruction"] >= 40,
-        "overall_at_least_150": sum(section_correct.values()) >= 150,
+        f"arithmetic_at_least_{section_minimum}": section_correct["arithmetic"] >= section_minimum,
+        f"format_at_least_{section_minimum}": section_correct["format"] >= section_minimum,
+        f"instruction_at_least_{section_minimum}": section_correct["instruction"]
+        >= section_minimum,
+        f"overall_at_least_{overall_minimum}": sum(section_correct.values()) >= overall_minimum,
         "zero_backend_failures": summary.get("backend_failures") == 0,
         "zero_reference_or_scorer_defects": self_score_failures == 0 and ambiguous_references == 0,
     }
     result: dict[str, Any] = {
         "schema_version": 1,
-        "gate_id": "foundry-anchor-holdout-instrument-usability-gate-v1",
+        "gate_id": gate_id,
         "suite_id": suite.suite_id,
         "suite_sha256": suite.suite_sha256,
         "base_summary_sha256": summary["summary_sha256"],
@@ -216,6 +232,30 @@ def _validate_adapter_result(
         raise ValueError("adapter result does not cover the complete subset")
     if [row.get("id") for row in rows] != expected_ids:
         raise ValueError("adapter result order or IDs differ from the subset")
+    adapter_scale = summary.get("adapter_scale")
+    if adapter_scale is not None:
+        if isinstance(adapter_scale, bool) or not isinstance(adapter_scale, int | float):
+            raise ValueError("scaled adapter result lacks a numeric scale")
+        scale_evidence = summary.get("adapter_scale_evidence")
+        if not isinstance(scale_evidence, dict) or scale_evidence.get("scale") != float(
+            adapter_scale
+        ):
+            raise ValueError("scaled adapter result evidence differs")
+        if not all(
+            scale_evidence.get(key) is True
+            for key in (
+                "original_scaling_restored",
+                "adapter_state_unchanged",
+                "base_parameter_signature_unchanged",
+            )
+        ):
+            raise ValueError("scaled adapter result did not restore model state")
+        if scale_evidence.get("adapter_state_sha256_before") != scale_evidence.get(
+            "adapter_state_sha256_after"
+        ) or scale_evidence.get("base_parameter_signature_before") != scale_evidence.get(
+            "base_parameter_signature_after"
+        ):
+            raise ValueError("scaled adapter result state hashes differ")
     return summary, rows
 
 
@@ -318,6 +358,16 @@ def assess_preservation(
         "gate_checks": gate_checks,
         "gate_passed": all(gate_checks.values()),
     }
+    if summary.get("adapter_scale") is not None:
+        scale_evidence = cast(dict[str, Any], summary["adapter_scale_evidence"])
+        result.update(
+            {
+                "adapter_scale": summary["adapter_scale"],
+                "scaling_implementation_id": scale_evidence["implementation_id"],
+                "adapter_scale_evidence_sha256": canonical_sha256(scale_evidence),
+                "state_restoration_verified": True,
+            }
+        )
     result["summary_sha256"] = canonical_sha256(result)
     return result
 

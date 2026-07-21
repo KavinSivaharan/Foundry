@@ -751,3 +751,26 @@ This log separates proposals from approved decisions. A proposal does not author
 - **Consequence:** The SFT adaptation line stops. The frozen 521/814 GSM1K base result is not rerun;
   neither adapter is evaluated on GSM1K in this milestone. Human language review remains pending,
   and any next work requires explicit approval for project interpretation or stop.
+
+## 2026-07-21: approve a common runtime LoRA scale of 0.50 by retention
+
+- **Status:** Milestone 8M independent retention gate passed; GSM1K becomes eligible only after the
+  retention decision is published
+- **Decision:** Keep both Variant A step-32 adapters byte-identical and unmerged; apply the same
+  reversible runtime factor `0.50` to every active LoRA module. Approve the pair as
+  `retention_approved_common_scaled_short_run_adapters`. Skip scale 0.25 under the frozen
+  first-passing selection rule.
+- **Evidence:** Scale 0.0/1.0 reproduce base/unscaled outputs exactly. Scale 0.75 passes both
+  adjudication cells but fails the holdout zero-question-generation clause (3 generic, 4 targeted).
+  Scale 0.50 passes all four selection cells: adjudication generic `182/187`, targeted `183/187`;
+  holdout `205/210` for each. The new 318-item base-correct final holdout yields generic `314/318`
+  and targeted `315/318`, with both at `127/127` format and zero forbidden output behavior.
+  Selection SHA-256 is `d7455a57001acf68f37369503cce9ef4e3fc30755b2f7f3fd8b7c7055a0b986c`;
+  final validation SHA-256 is `6f3e7a29dfbb184f5b6b5eb09fd52060c3c2465c5da2343f85d62d05f8589cc7`.
+- **Rationale:** A common inference-strength factor tests whether the learned signal can coexist
+  with demonstrated base behavior without another training or checkpoint search. Selection used
+  only the two existing subsets; the newly frozen holdout was a one-way independent validation.
+- **Consequence:** After an atomic verified retention commit is pushed, evaluate generic then
+  targeted once on the frozen 814-item development evaluator at scale 0.50. Do not rerun the base,
+  tune the factor, train another adapter, access sealed-final, or treat the result as confirmed
+  before human review and a separately approved second seed.

@@ -269,3 +269,33 @@ benchmark result exists. Human review remains pending at
 The exact next decision is whether to stop the project or approve interpretation of the negative
 adaptation result. Another SFT method, second seed, and sealed-final evaluation are not recommended
 or authorized.
+
+## Milestone 8M common-scale retention calibration
+
+> **Provisional one-seed result pending stratified human language review and second-seed
+> confirmation.**
+
+The historical full-strength failure remains valid. A reversible runtime mechanism now applies one
+common factor to all 196 active LoRA modules while leaving adapter tensors, base parameters, and
+checkpoint files unchanged. Scale 0.0 exactly matches the untouched-base diagnostic output and
+scale 1.0 exactly matches each unscaled adapter; scaling-source SHA-256 is
+`1e0506ce89a65ab2699f514730eec0437788fe35d55eeb31e299bdd60fa5ceff`.
+
+An original final holdout was frozen before scaled-adapter exposure: 450 prompts split equally
+across arithmetic, format, and instruction, suite SHA-256
+`b856c8ce8e56d98eb7e3fbffdead07ffde7091ab2a20abe5a22ada598136353e`. The untouched base scored
+`112/150`, `127/150`, and `79/150` (318/450 overall), so the 318 correct IDs were frozen as subset
+`0884923ce7ab39f1080282dab0ce51aff7063270d6c97f5c1d70370256012ded`.
+
+Scale 1.00 reconstructed the prior four-cell failure. Scale 0.75 passed both adjudication cells but
+failed the anchor holdout zero-question-generation rule. Scale 0.50 passed all four selection
+cells: generic/targeted adjudication `182/187` and `183/187`; both anchor holdout `205/210`.
+Independent validation then passed at generic `314/318` and targeted `315/318`, with format
+`127/127` for both and no echo, question generation, malformed output, or backend failure. Scale
+0.25 was not run. Decision SHA-256 is
+`6f3e7a29dfbb184f5b6b5eb09fd52060c3c2465c5da2343f85d62d05f8589cc7`.
+
+The retention result authorizes a frozen development comparison only after its own verified commit
+and push. No new GSM1K adapter score is recorded in this section yet; the frozen base remains
+521/814. Human review remains pending at
+`file:///C:/Users/Admin/Projects/Foundry/results/raw/foundry_500x2_signal_review/codex_assisted_review.html`.

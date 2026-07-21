@@ -1,0 +1,73 @@
+{
+  "adapter_scale": 0.5,
+  "adapter_scale_evidence_sha256": "80faab03c6a008af0c7154cc65955fe07d6e31c08e8edf2a91ead249faee1483",
+  "adapter_sha256": "faa4b72bd0046fbd8d94fc3f364cb7078259403131ea16cd136fdfbbe5408f35",
+  "assessment_id": "foundry-base-conditioned-retention-assessment-v1",
+  "backend_failures": 0,
+  "broken": 4,
+  "broken_item_ids": [
+    "scale-final-arithmetic-109",
+    "scale-final-arithmetic-113",
+    "scale-final-instruction-020",
+    "scale-final-instruction-046"
+  ],
+  "evaluation_summary_sha256": "31db14893acccb948c352b4115b3821491ef9dbbe066e1a0f46b2f700053966c",
+  "extractability": 1.0,
+  "extractable": 318,
+  "gate_checks": {
+    "arithmetic_preservation_at_least_90_percent": true,
+    "format_preservation_at_least_90_percent": true,
+    "instruction_family_adapter_only_failures_at_most_3": true,
+    "instruction_preservation_at_least_90_percent": true,
+    "overall_preservation_at_least_90_percent": true,
+    "overall_wilson_lower_bound_at_least_85_percent": true,
+    "prompt_echo_at_most_2_percent": true,
+    "zero_backend_failures": true,
+    "zero_question_generation": true
+  },
+  "gate_passed": true,
+  "instruction_family_adapter_only_failures": {
+    "deterministic_transformation": 1,
+    "symbol_count": 1
+  },
+  "instrument_id": "foundry-base-conditioned-retention-v1",
+  "malformed_outputs": 0,
+  "maximum_instruction_family_adapter_only_failures": 1,
+  "overall_preservation": 0.9874213836477987,
+  "overall_wilson_95_lower_bound": 0.9681093239385609,
+  "paired_transitions": {
+    "base_pass_adapter_fail": 4,
+    "base_pass_adapter_pass": 314
+  },
+  "preserved": 314,
+  "prompt_echo": 0,
+  "prompt_echo_rate": 0.0,
+  "question_generation": 0,
+  "raw_packet_sha256": "a488ea00ab920cf68a89e4da88453193e476ae01815558301d5a815beecb2d4e",
+  "scaling_implementation_id": "foundry-common-lora-runtime-scaling-v1",
+  "schema_version": 1,
+  "section_preservation": {
+    "arithmetic": {
+      "preserved": 110,
+      "rate": 0.9821428571428571,
+      "total": 112
+    },
+    "format": {
+      "preserved": 127,
+      "rate": 1.0,
+      "total": 127
+    },
+    "instruction": {
+      "preserved": 77,
+      "rate": 0.9746835443037974,
+      "total": 79
+    }
+  },
+  "state_restoration_verified": true,
+  "subset_id": "retention-scale-final-holdout-v1-base-correct",
+  "subset_sha256": "0884923ce7ab39f1080282dab0ce51aff7063270d6c97f5c1d70370256012ded",
+  "suite_id": "foundry-retention-scale-final-holdout-v1",
+  "suite_sha256": "b856c8ce8e56d98eb7e3fbffdead07ffde7091ab2a20abe5a22ada598136353e",
+  "summary_sha256": "f0441002370b6a396b4c43857c122a6f8b48daad26a99f4648b92d68f6a75772",
+  "total": 318
+}

@@ -834,3 +834,23 @@ did not all pass.
 line is closed. GSM1K was not run. The exact next decision is whether to end the project or approve
 an interpretation-only milestone; no further SFT method, tuning, or second seed is recommended by
 this result. The stratified human language review remains pending independently.
+
+## Milestone 8M retention outcome: common scale 0.50 approved
+
+Milestone 8M tested a reversible inference-only reduction in LoRA contribution without changing or
+merging either trained adapter. Scale 0.0 reproduced the untouched base exactly, scale 1.0
+reproduced each unscaled adapter exactly, and every evaluation restored all 196 per-module scaling
+values plus unchanged adapter/base state hashes.
+
+The descending retention-only search reconstructed the failed 1.00 decision, rejected 0.75 because
+the two anchor-holdout cells generated 3 and 4 questions, and selected 0.50 after all four existing
+subset cells passed. At 0.50, generic/targeted preserve `182/187` and `183/187` on adjudication;
+both preserve `205/210` on anchor holdout. A separately authored 450-item final holdout yielded 318
+base-correct IDs (`112/127/79`). Generic preserves `314/318` and targeted `315/318`, including
+`127/127` format for both, with zero question generation, prompt echo, or backend failure.
+
+**Current gate:** retention is approved as
+`retention_approved_common_scaled_short_run_adapters` at common scale 0.50. The next authorized
+action is the frozen generic-then-targeted 814-item development evaluation, but only after this
+retention decision is verified, committed, pushed, and synchronized. Human language review remains
+pending, and any later benchmark result remains provisional pending that review and a second seed.

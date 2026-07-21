@@ -1,0 +1,68 @@
+{
+  "adapter_scale": 0.5,
+  "adapter_scale_evidence": {
+    "adapter_name": "default",
+    "adapter_state_sha256_after": "4c2309d96f7cd7a5f27392c70d3232709a5a9af095eb8897694314288da0d5cd",
+    "adapter_state_sha256_before": "4c2309d96f7cd7a5f27392c70d3232709a5a9af095eb8897694314288da0d5cd",
+    "adapter_state_unchanged": true,
+    "applied_scaling_sha256": "595f1ae2cfa6633ab671d645639e9b388882cf94bd83bb593bccf021a507c342",
+    "base_parameter_signature_after": "841fb1c79f7ff1e0a8e9689b5e1e0a8dedae24fcbc44a4a09527cc998755680d",
+    "base_parameter_signature_before": "841fb1c79f7ff1e0a8e9689b5e1e0a8dedae24fcbc44a4a09527cc998755680d",
+    "base_parameter_signature_unchanged": true,
+    "implementation_id": "foundry-common-lora-runtime-scaling-v1",
+    "lora_module_count": 196,
+    "original_scaling_restored": true,
+    "original_scaling_sha256": "1968d545f9f9ce6fb96288264e034058ffc2fd8e7f6bda7af8d5c19908d6c398",
+    "scale": 0.5
+  },
+  "adapter_sha256": "faa4b72bd0046fbd8d94fc3f364cb7078259403131ea16cd136fdfbbe5408f35",
+  "backend_failures": 0,
+  "base_conditioned_instrument_id": "foundry-base-conditioned-retention-v1",
+  "base_conditioned_subset_file_sha256": "ee0d5f59513bf25d59be1cc1b667c87c40ab35519476750e3eba22bce7ffc347",
+  "base_conditioned_subset_id": "retention-anchor-holdout-v1-base-correct",
+  "base_conditioned_subset_sha256": "36be91d08f2ab0e05c491094c53965d1aa4f989a730347768877a2548a62c7a9",
+  "base_revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+  "evaluation_id": "foundry-retention-anchor-holdout-evaluation-v1",
+  "exact_format": 192,
+  "exact_format_rate": 0.9142857142857143,
+  "examples_per_second": 1.1722305017947918,
+  "extractability": 0.9904761904761905,
+  "extractable": 208,
+  "generation_sha256": "f628fe7faafe94040de3df696a63d98494525cd1a57487b718fd9a86b5292093",
+  "gpu_name": "NVIDIA GeForce RTX 3080",
+  "input_tokens": 14454,
+  "load_seconds": 3.800874799999292,
+  "malformed_outputs": 2,
+  "output_tokens": 5503,
+  "peak_vram_allocated_bytes": 3554672640,
+  "peak_vram_reserved_bytes": 3751804928,
+  "per_item_decision_sha256": "db6b25c6d7ea98d443ca4ad55f3f493dbce810ee116bd11fe963e19ac20057de",
+  "prompt_echo": 0,
+  "prompt_echo_rate": 0.0,
+  "prompt_sha256": "15c6c993b75f69a90ae422e7facb8ae264768275d2d08364259502dd23e57782",
+  "question_generation": 0,
+  "raw_packet_sha256": "31435dbb201f466994bee95478dd75f488568ba6d219c8b39853f68fa26af463",
+  "runtime_seconds": 179.14565410000068,
+  "schema_version": 1,
+  "section_metrics": {
+    "arithmetic": {
+      "accuracy": 0.9791666666666666,
+      "correct": 94,
+      "total": 96
+    },
+    "format": {
+      "accuracy": 0.95,
+      "correct": 57,
+      "total": 60
+    },
+    "instruction": {
+      "accuracy": 1.0,
+      "correct": 54,
+      "total": 54
+    }
+  },
+  "suite_file_sha256": "16e9e56cda2d806a1196b60cc4e087e28e356139319b80141c9b89a2e6859cf6",
+  "suite_sha256": "bff18b434a284d848387262dde201601278e5c8b573937b3486bed2bf925696e",
+  "summary_sha256": "804e19f48c5dab0b914a73e63dcc24b41499048f136b7b6a6b006aba45da39e5",
+  "total": 210
+}

@@ -752,3 +752,18 @@ than 93% overall on both subsets and cleared every overall Wilson requirement, y
 fixed 90% format threshold on both independent subsets. One or both also generated a question where
 none was allowed. Agreement across arms points to the common SFT method rather than the targeted
 curriculum. Overall averages alone would have hidden this repeatable category-specific loss.
+
+## Runtime LoRA strength can recover retention without changing learned weights
+
+LoRA's contribution is multiplied by a per-module scaling value at inference. Multiplying every
+active module by one common factor is therefore a reversible test of adaptation strength, provided
+the implementation snapshots and restores all values and proves adapter/base state identity. Here,
+0.50 recovered the frozen category and output-behavior gates for both arms while 0.75 still produced
+question-like responses on the independent anchor holdout.
+
+The scale search remained scientifically bounded because its order and stop rule were frozen, both
+arms shared one factor, GSM1K was hidden, and a newly authored 450-item suite was used only after
+selection. The new holdout also illustrates why conditioning matters: the untouched base answered
+318/450 objective prompts, and retention was measured only over those demonstrated capabilities.
+Passing retention does not imply task improvement; it only opens the separately frozen benchmark
+comparison. Human language review and second-seed uncertainty remain unresolved.

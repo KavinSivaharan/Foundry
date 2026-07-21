@@ -1,0 +1,113 @@
+{
+  "arms": {
+    "generic_control": {
+      "active_adapters_after": [
+        "default"
+      ],
+      "active_adapters_before": [
+        "default"
+      ],
+      "adapter_sha256_after": "faa4b72bd0046fbd8d94fc3f364cb7078259403131ea16cd136fdfbbe5408f35",
+      "adapter_sha256_before": "faa4b72bd0046fbd8d94fc3f364cb7078259403131ea16cd136fdfbbe5408f35",
+      "arm": "generic_control",
+      "gate_passed": true,
+      "load_seconds": 1.6965391999983694,
+      "raw_packet_sha256": "ab460f19a3b35eaf738e86e2186c7ed6b5a425619ada39623fc7808a02959056",
+      "scale_one_matches_unscaled_adapter": true,
+      "scale_one_output_sha256": "e2fcda470fdbabaed5fab564e284875e4319386b208ea0b9cbb62539173cfb32",
+      "scale_one_state": {
+        "adapter_name": "default",
+        "adapter_state_sha256_after": "4c2309d96f7cd7a5f27392c70d3232709a5a9af095eb8897694314288da0d5cd",
+        "adapter_state_sha256_before": "4c2309d96f7cd7a5f27392c70d3232709a5a9af095eb8897694314288da0d5cd",
+        "adapter_state_unchanged": true,
+        "applied_scaling_sha256": "1968d545f9f9ce6fb96288264e034058ffc2fd8e7f6bda7af8d5c19908d6c398",
+        "base_parameter_signature_after": "841fb1c79f7ff1e0a8e9689b5e1e0a8dedae24fcbc44a4a09527cc998755680d",
+        "base_parameter_signature_before": "841fb1c79f7ff1e0a8e9689b5e1e0a8dedae24fcbc44a4a09527cc998755680d",
+        "base_parameter_signature_unchanged": true,
+        "implementation_id": "foundry-common-lora-runtime-scaling-v1",
+        "lora_module_count": 196,
+        "original_scaling_restored": true,
+        "original_scaling_sha256": "1968d545f9f9ce6fb96288264e034058ffc2fd8e7f6bda7af8d5c19908d6c398",
+        "scale": 1.0
+      },
+      "scale_zero_matches_untouched_base": true,
+      "scale_zero_output_sha256": "d2b230f9174c2adeb33b258b0ab83014190d4b7a0ec9e42403c580614d23abff",
+      "scale_zero_state": {
+        "adapter_name": "default",
+        "adapter_state_sha256_after": "4c2309d96f7cd7a5f27392c70d3232709a5a9af095eb8897694314288da0d5cd",
+        "adapter_state_sha256_before": "4c2309d96f7cd7a5f27392c70d3232709a5a9af095eb8897694314288da0d5cd",
+        "adapter_state_unchanged": true,
+        "applied_scaling_sha256": "f4b3ec30815f6a7c2ebb8d253370f8f89e1f422d0020e8e7995d565c39d122bd",
+        "base_parameter_signature_after": "841fb1c79f7ff1e0a8e9689b5e1e0a8dedae24fcbc44a4a09527cc998755680d",
+        "base_parameter_signature_before": "841fb1c79f7ff1e0a8e9689b5e1e0a8dedae24fcbc44a4a09527cc998755680d",
+        "base_parameter_signature_unchanged": true,
+        "implementation_id": "foundry-common-lora-runtime-scaling-v1",
+        "lora_module_count": 196,
+        "original_scaling_restored": true,
+        "original_scaling_sha256": "1968d545f9f9ce6fb96288264e034058ffc2fd8e7f6bda7af8d5c19908d6c398",
+        "scale": 0.0
+      },
+      "unscaled_output_sha256": "e2fcda470fdbabaed5fab564e284875e4319386b208ea0b9cbb62539173cfb32",
+      "untouched_base_output_sha256": "d2b230f9174c2adeb33b258b0ab83014190d4b7a0ec9e42403c580614d23abff"
+    },
+    "targeted": {
+      "active_adapters_after": [
+        "default"
+      ],
+      "active_adapters_before": [
+        "default"
+      ],
+      "adapter_sha256_after": "c4e455432b9a3b17ae077dafdaa1c9391ab67b7350628f3aa5f9787677d8bb5b",
+      "adapter_sha256_before": "c4e455432b9a3b17ae077dafdaa1c9391ab67b7350628f3aa5f9787677d8bb5b",
+      "arm": "targeted",
+      "gate_passed": true,
+      "load_seconds": 1.4946727999995346,
+      "raw_packet_sha256": "523971a00eec8f7e438500789fc67eaaef67e1a76149727466706a75a347e3f8",
+      "scale_one_matches_unscaled_adapter": true,
+      "scale_one_output_sha256": "375f57e4ff1932da2f733e966886192a142ea60a69cfc99d8a17960ea98f308e",
+      "scale_one_state": {
+        "adapter_name": "default",
+        "adapter_state_sha256_after": "4849ce516a7aecb9df7d0dbaade3e1797879c174c9995518cdca4625f1ab7eb9",
+        "adapter_state_sha256_before": "4849ce516a7aecb9df7d0dbaade3e1797879c174c9995518cdca4625f1ab7eb9",
+        "adapter_state_unchanged": true,
+        "applied_scaling_sha256": "1968d545f9f9ce6fb96288264e034058ffc2fd8e7f6bda7af8d5c19908d6c398",
+        "base_parameter_signature_after": "841fb1c79f7ff1e0a8e9689b5e1e0a8dedae24fcbc44a4a09527cc998755680d",
+        "base_parameter_signature_before": "841fb1c79f7ff1e0a8e9689b5e1e0a8dedae24fcbc44a4a09527cc998755680d",
+        "base_parameter_signature_unchanged": true,
+        "implementation_id": "foundry-common-lora-runtime-scaling-v1",
+        "lora_module_count": 196,
+        "original_scaling_restored": true,
+        "original_scaling_sha256": "1968d545f9f9ce6fb96288264e034058ffc2fd8e7f6bda7af8d5c19908d6c398",
+        "scale": 1.0
+      },
+      "scale_zero_matches_untouched_base": true,
+      "scale_zero_output_sha256": "d2b230f9174c2adeb33b258b0ab83014190d4b7a0ec9e42403c580614d23abff",
+      "scale_zero_state": {
+        "adapter_name": "default",
+        "adapter_state_sha256_after": "4849ce516a7aecb9df7d0dbaade3e1797879c174c9995518cdca4625f1ab7eb9",
+        "adapter_state_sha256_before": "4849ce516a7aecb9df7d0dbaade3e1797879c174c9995518cdca4625f1ab7eb9",
+        "adapter_state_unchanged": true,
+        "applied_scaling_sha256": "f4b3ec30815f6a7c2ebb8d253370f8f89e1f422d0020e8e7995d565c39d122bd",
+        "base_parameter_signature_after": "841fb1c79f7ff1e0a8e9689b5e1e0a8dedae24fcbc44a4a09527cc998755680d",
+        "base_parameter_signature_before": "841fb1c79f7ff1e0a8e9689b5e1e0a8dedae24fcbc44a4a09527cc998755680d",
+        "base_parameter_signature_unchanged": true,
+        "implementation_id": "foundry-common-lora-runtime-scaling-v1",
+        "lora_module_count": 196,
+        "original_scaling_restored": true,
+        "original_scaling_sha256": "1968d545f9f9ce6fb96288264e034058ffc2fd8e7f6bda7af8d5c19908d6c398",
+        "scale": 0.0
+      },
+      "unscaled_output_sha256": "375f57e4ff1932da2f733e966886192a142ea60a69cfc99d8a17960ea98f308e",
+      "untouched_base_output_sha256": "d2b230f9174c2adeb33b258b0ab83014190d4b7a0ec9e42403c580614d23abff"
+    }
+  },
+  "audit_id": "foundry-common-lora-runtime-scaling-sanity-v1",
+  "base_revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+  "base_snapshot_sha256": "ccc7ba57b35dd471dedfc0dd4b6edb1c23179a2a094e46dee45ca42e803a1815",
+  "gate_passed": true,
+  "gpu_name": "NVIDIA GeForce RTX 3080",
+  "scale_config_sha256": "938ec15a61831208dfc138b7829619f801af1205bc6f165a84083b8a64b0ddfc",
+  "scaling_source_sha256": "1e0506ce89a65ab2699f514730eec0437788fe35d55eeb31e299bdd60fa5ceff",
+  "schema_version": 1,
+  "summary_sha256": "9f7605fe9f8bac8fc763e67636cd2513dcf932a177d2eae451697c9d87420dea"
+}

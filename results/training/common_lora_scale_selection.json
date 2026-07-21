@@ -1,0 +1,63 @@
+{
+  "decision_id": "foundry-common-lora-scale-selection-v1",
+  "lower_scales_skipped_after_first_pass": true,
+  "new_final_holdout_used_for_selection": false,
+  "scale_config_sha256": "938ec15a61831208dfc138b7829619f801af1205bc6f165a84083b8a64b0ddfc",
+  "scale_zero_selectable": false,
+  "scales": [
+    {
+      "assessment_summary_sha256s": [
+        "e3258d2b617f3a21da87a47d1d22f6046a137dbde5aa7399b4a53bfaf70d21a4",
+        "bc1e7b5d9a587153027bcf0d24cdd3a256ec003fde86a972f422b7ba92be026e",
+        "ee21496cdcfd74b7c2148c2c3dc38078f324db5316423076ebd19fc29cc4cac6",
+        "8ce046c848fa09025dc5b69e59dee3589754f2340d4656cccdcad3fdbb7187d4"
+      ],
+      "cell_gate_passed": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "matrix_passed": false,
+      "scale": 1.0
+    },
+    {
+      "assessment_summary_sha256s": [
+        "6e228b9b49ea7bf083a4b78d9f16fa9a8c229eba72ead73e8a0e84a30aebbf31",
+        "2f7d98688658d03d9c4be6866013e7a9e7f323009d2a3410d6792ca92af8420e",
+        "d2b1c464ab3ef76505f4103ab0850b640b8a8c59593ed4118d6af576dc502a42",
+        "d8e27bb6135a52f325c058b7b0233dc8de0081d7c678e3125f546acf5bd817ec"
+      ],
+      "cell_gate_passed": [
+        true,
+        true,
+        false,
+        false
+      ],
+      "matrix_passed": false,
+      "scale": 0.75
+    },
+    {
+      "assessment_summary_sha256s": [
+        "9cce2ca00c1e13cfc3d32508310f5c28854ddaa8c6df09389b96a28f3fc3b3ee",
+        "0f8e9e05e3e880b3f0d309c5ce77f969da8942c4435aad6cfeaa9570d757bbd9",
+        "d9de41c4ed68f451a22009f7688d2329bb1b85b93318899743c4ef52d46786fb",
+        "6adcf3b983d35df9ee051840161b6c9a42b079c0c9218d1eea2d5e6b999632bc"
+      ],
+      "cell_gate_passed": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "matrix_passed": true,
+      "scale": 0.5
+    }
+  ],
+  "schema_version": 1,
+  "sealed_final_accessed": false,
+  "selected_common_scale": 0.5,
+  "selection_passed": true,
+  "selection_used_gsm1k": false,
+  "summary_sha256": "d7455a57001acf68f37369503cce9ef4e3fc30755b2f7f3fd8b7c7055a0b986c"
+}

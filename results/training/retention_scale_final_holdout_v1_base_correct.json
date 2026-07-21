@@ -1,0 +1,1615 @@
+{
+  "adapter_outputs_read": false,
+  "base_evaluation_id": "foundry-retention-scale-final-holdout-evaluation-v1",
+  "base_raw_packet_sha256": "3d26b509a38743eba0bfcc91f05a46569e0ac4853f6b5a219134013ef420c15f",
+  "base_summary_file_sha256": "f69510b11ce40e83b0bd507aba2f73ee47a0b2a2feb600ac5c1592e384821dc1",
+  "base_summary_sha256": "dc48cd7656de41ffb0f50103e81a55dd29b8e5c90a620a2a30fd9e8a0897add5",
+  "definition": "frozen_scorer_correct_on_untouched_base",
+  "instrument_id": "foundry-base-conditioned-retention-v1",
+  "items": [
+    {
+      "id": "scale-final-arithmetic-002",
+      "section": "arithmetic",
+      "skill": "addition"
+    },
+    {
+      "id": "scale-final-arithmetic-003",
+      "section": "arithmetic",
+      "skill": "addition"
+    },
+    {
+      "id": "scale-final-arithmetic-005",
+      "section": "arithmetic",
+      "skill": "addition"
+    },
+    {
+      "id": "scale-final-arithmetic-006",
+      "section": "arithmetic",
+      "skill": "addition"
+    },
+    {
+      "id": "scale-final-arithmetic-007",
+      "section": "arithmetic",
+      "skill": "addition"
+    },
+    {
+      "id": "scale-final-arithmetic-008",
+      "section": "arithmetic",
+      "skill": "addition"
+    },
+    {
+      "id": "scale-final-arithmetic-009",
+      "section": "arithmetic",
+      "skill": "addition"
+    },
+    {
+      "id": "scale-final-arithmetic-013",
+      "section": "arithmetic",
+      "skill": "addition"
+    },
+    {
+      "id": "scale-final-arithmetic-015",
+      "section": "arithmetic",
+      "skill": "addition"
+    },
+    {
+      "id": "scale-final-arithmetic-016",
+      "section": "arithmetic",
+      "skill": "addition"
+    },
+    {
+      "id": "scale-final-arithmetic-017",
+      "section": "arithmetic",
+      "skill": "addition"
+    },
+    {
+      "id": "scale-final-arithmetic-018",
+      "section": "arithmetic",
+      "skill": "addition"
+    },
+    {
+      "id": "scale-final-arithmetic-019",
+      "section": "arithmetic",
+      "skill": "addition"
+    },
+    {
+      "id": "scale-final-arithmetic-021",
+      "section": "arithmetic",
+      "skill": "addition"
+    },
+    {
+      "id": "scale-final-arithmetic-022",
+      "section": "arithmetic",
+      "skill": "addition"
+    },
+    {
+      "id": "scale-final-arithmetic-023",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "id": "scale-final-arithmetic-024",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "id": "scale-final-arithmetic-025",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "id": "scale-final-arithmetic-026",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "id": "scale-final-arithmetic-027",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "id": "scale-final-arithmetic-029",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "id": "scale-final-arithmetic-030",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "id": "scale-final-arithmetic-031",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "id": "scale-final-arithmetic-032",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "id": "scale-final-arithmetic-033",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "id": "scale-final-arithmetic-037",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "id": "scale-final-arithmetic-038",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "id": "scale-final-arithmetic-039",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "id": "scale-final-arithmetic-040",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "id": "scale-final-arithmetic-041",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "id": "scale-final-arithmetic-042",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "id": "scale-final-arithmetic-043",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "id": "scale-final-arithmetic-044",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "id": "scale-final-arithmetic-048",
+      "section": "arithmetic",
+      "skill": "multiplication"
+    },
+    {
+      "id": "scale-final-arithmetic-049",
+      "section": "arithmetic",
+      "skill": "multiplication"
+    },
+    {
+      "id": "scale-final-arithmetic-052",
+      "section": "arithmetic",
+      "skill": "multiplication"
+    },
+    {
+      "id": "scale-final-arithmetic-053",
+      "section": "arithmetic",
+      "skill": "multiplication"
+    },
+    {
+      "id": "scale-final-arithmetic-054",
+      "section": "arithmetic",
+      "skill": "multiplication"
+    },
+    {
+      "id": "scale-final-arithmetic-055",
+      "section": "arithmetic",
+      "skill": "multiplication"
+    },
+    {
+      "id": "scale-final-arithmetic-056",
+      "section": "arithmetic",
+      "skill": "multiplication"
+    },
+    {
+      "id": "scale-final-arithmetic-057",
+      "section": "arithmetic",
+      "skill": "multiplication"
+    },
+    {
+      "id": "scale-final-arithmetic-058",
+      "section": "arithmetic",
+      "skill": "multiplication"
+    },
+    {
+      "id": "scale-final-arithmetic-061",
+      "section": "arithmetic",
+      "skill": "multiplication"
+    },
+    {
+      "id": "scale-final-arithmetic-062",
+      "section": "arithmetic",
+      "skill": "multiplication"
+    },
+    {
+      "id": "scale-final-arithmetic-064",
+      "section": "arithmetic",
+      "skill": "multiplication"
+    },
+    {
+      "id": "scale-final-arithmetic-066",
+      "section": "arithmetic",
+      "skill": "multiplication"
+    },
+    {
+      "id": "scale-final-arithmetic-068",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "id": "scale-final-arithmetic-069",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "id": "scale-final-arithmetic-070",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "id": "scale-final-arithmetic-071",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "id": "scale-final-arithmetic-072",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "id": "scale-final-arithmetic-073",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "id": "scale-final-arithmetic-076",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "id": "scale-final-arithmetic-078",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "id": "scale-final-arithmetic-079",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "id": "scale-final-arithmetic-080",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "id": "scale-final-arithmetic-081",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "id": "scale-final-arithmetic-082",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "id": "scale-final-arithmetic-084",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "id": "scale-final-arithmetic-088",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "id": "scale-final-arithmetic-090",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "id": "scale-final-arithmetic-091",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "id": "scale-final-arithmetic-093",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "id": "scale-final-arithmetic-094",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "id": "scale-final-arithmetic-096",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "id": "scale-final-arithmetic-098",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "id": "scale-final-arithmetic-101",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "id": "scale-final-arithmetic-103",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "id": "scale-final-arithmetic-105",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "id": "scale-final-arithmetic-106",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "id": "scale-final-arithmetic-108",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "id": "scale-final-arithmetic-109",
+      "section": "arithmetic",
+      "skill": "ratio"
+    },
+    {
+      "id": "scale-final-arithmetic-111",
+      "section": "arithmetic",
+      "skill": "ratio"
+    },
+    {
+      "id": "scale-final-arithmetic-112",
+      "section": "arithmetic",
+      "skill": "ratio"
+    },
+    {
+      "id": "scale-final-arithmetic-113",
+      "section": "arithmetic",
+      "skill": "ratio"
+    },
+    {
+      "id": "scale-final-arithmetic-114",
+      "section": "arithmetic",
+      "skill": "ratio"
+    },
+    {
+      "id": "scale-final-arithmetic-115",
+      "section": "arithmetic",
+      "skill": "ratio"
+    },
+    {
+      "id": "scale-final-arithmetic-116",
+      "section": "arithmetic",
+      "skill": "ratio"
+    },
+    {
+      "id": "scale-final-arithmetic-117",
+      "section": "arithmetic",
+      "skill": "ratio"
+    },
+    {
+      "id": "scale-final-arithmetic-118",
+      "section": "arithmetic",
+      "skill": "ratio"
+    },
+    {
+      "id": "scale-final-arithmetic-119",
+      "section": "arithmetic",
+      "skill": "ratio"
+    },
+    {
+      "id": "scale-final-arithmetic-120",
+      "section": "arithmetic",
+      "skill": "ratio"
+    },
+    {
+      "id": "scale-final-arithmetic-121",
+      "section": "arithmetic",
+      "skill": "ratio"
+    },
+    {
+      "id": "scale-final-arithmetic-122",
+      "section": "arithmetic",
+      "skill": "ratio"
+    },
+    {
+      "id": "scale-final-arithmetic-123",
+      "section": "arithmetic",
+      "skill": "ratio"
+    },
+    {
+      "id": "scale-final-arithmetic-124",
+      "section": "arithmetic",
+      "skill": "ratio"
+    },
+    {
+      "id": "scale-final-arithmetic-125",
+      "section": "arithmetic",
+      "skill": "ratio"
+    },
+    {
+      "id": "scale-final-arithmetic-126",
+      "section": "arithmetic",
+      "skill": "ratio"
+    },
+    {
+      "id": "scale-final-arithmetic-127",
+      "section": "arithmetic",
+      "skill": "ratio"
+    },
+    {
+      "id": "scale-final-arithmetic-128",
+      "section": "arithmetic",
+      "skill": "ratio"
+    },
+    {
+      "id": "scale-final-arithmetic-129",
+      "section": "arithmetic",
+      "skill": "ratio"
+    },
+    {
+      "id": "scale-final-arithmetic-130",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "scale-final-arithmetic-131",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "scale-final-arithmetic-132",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "scale-final-arithmetic-133",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "scale-final-arithmetic-134",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "scale-final-arithmetic-135",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "scale-final-arithmetic-136",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "scale-final-arithmetic-137",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "scale-final-arithmetic-138",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "scale-final-arithmetic-139",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "scale-final-arithmetic-140",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "scale-final-arithmetic-141",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "scale-final-arithmetic-142",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "scale-final-arithmetic-143",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "scale-final-arithmetic-144",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "scale-final-arithmetic-145",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "scale-final-arithmetic-146",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "scale-final-arithmetic-147",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "scale-final-arithmetic-148",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "scale-final-arithmetic-149",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "scale-final-arithmetic-150",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "scale-final-format-001",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "scale-final-format-002",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "scale-final-format-003",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "scale-final-format-004",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "scale-final-format-005",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "scale-final-format-006",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "scale-final-format-007",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "scale-final-format-008",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "scale-final-format-009",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "scale-final-format-010",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "scale-final-format-011",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "scale-final-format-012",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "scale-final-format-013",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "scale-final-format-014",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "scale-final-format-015",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "scale-final-format-016",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "scale-final-format-017",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "scale-final-format-018",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "scale-final-format-019",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "scale-final-format-020",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "scale-final-format-021",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "scale-final-format-022",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "scale-final-format-023",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "scale-final-format-024",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "scale-final-format-025",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "scale-final-format-026",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "scale-final-format-027",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "scale-final-format-028",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "scale-final-format-029",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "scale-final-format-030",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "scale-final-format-031",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "scale-final-format-032",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "scale-final-format-033",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "scale-final-format-034",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "scale-final-format-035",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "scale-final-format-036",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "scale-final-format-037",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "scale-final-format-039",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "scale-final-format-040",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "scale-final-format-041",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "scale-final-format-042",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "scale-final-format-043",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "scale-final-format-044",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "scale-final-format-045",
+      "section": "format",
+      "skill": "exact_line"
+    },
+    {
+      "id": "scale-final-format-046",
+      "section": "format",
+      "skill": "exact_line"
+    },
+    {
+      "id": "scale-final-format-047",
+      "section": "format",
+      "skill": "exact_line"
+    },
+    {
+      "id": "scale-final-format-048",
+      "section": "format",
+      "skill": "exact_line"
+    },
+    {
+      "id": "scale-final-format-049",
+      "section": "format",
+      "skill": "exact_line"
+    },
+    {
+      "id": "scale-final-format-050",
+      "section": "format",
+      "skill": "exact_line"
+    },
+    {
+      "id": "scale-final-format-051",
+      "section": "format",
+      "skill": "exact_line"
+    },
+    {
+      "id": "scale-final-format-052",
+      "section": "format",
+      "skill": "exact_line"
+    },
+    {
+      "id": "scale-final-format-053",
+      "section": "format",
+      "skill": "exact_line"
+    },
+    {
+      "id": "scale-final-format-054",
+      "section": "format",
+      "skill": "exact_line"
+    },
+    {
+      "id": "scale-final-format-055",
+      "section": "format",
+      "skill": "exact_line"
+    },
+    {
+      "id": "scale-final-format-056",
+      "section": "format",
+      "skill": "exact_line"
+    },
+    {
+      "id": "scale-final-format-057",
+      "section": "format",
+      "skill": "exact_line"
+    },
+    {
+      "id": "scale-final-format-058",
+      "section": "format",
+      "skill": "exact_line"
+    },
+    {
+      "id": "scale-final-format-059",
+      "section": "format",
+      "skill": "exact_line"
+    },
+    {
+      "id": "scale-final-format-060",
+      "section": "format",
+      "skill": "exact_line"
+    },
+    {
+      "id": "scale-final-format-061",
+      "section": "format",
+      "skill": "exact_line"
+    },
+    {
+      "id": "scale-final-format-062",
+      "section": "format",
+      "skill": "exact_line"
+    },
+    {
+      "id": "scale-final-format-063",
+      "section": "format",
+      "skill": "exact_line"
+    },
+    {
+      "id": "scale-final-format-064",
+      "section": "format",
+      "skill": "exact_line"
+    },
+    {
+      "id": "scale-final-format-065",
+      "section": "format",
+      "skill": "exact_line"
+    },
+    {
+      "id": "scale-final-format-066",
+      "section": "format",
+      "skill": "exact_line"
+    },
+    {
+      "id": "scale-final-format-067",
+      "section": "format",
+      "skill": "constrained_list"
+    },
+    {
+      "id": "scale-final-format-068",
+      "section": "format",
+      "skill": "constrained_list"
+    },
+    {
+      "id": "scale-final-format-069",
+      "section": "format",
+      "skill": "constrained_list"
+    },
+    {
+      "id": "scale-final-format-070",
+      "section": "format",
+      "skill": "constrained_list"
+    },
+    {
+      "id": "scale-final-format-071",
+      "section": "format",
+      "skill": "constrained_list"
+    },
+    {
+      "id": "scale-final-format-072",
+      "section": "format",
+      "skill": "constrained_list"
+    },
+    {
+      "id": "scale-final-format-073",
+      "section": "format",
+      "skill": "constrained_list"
+    },
+    {
+      "id": "scale-final-format-074",
+      "section": "format",
+      "skill": "constrained_list"
+    },
+    {
+      "id": "scale-final-format-075",
+      "section": "format",
+      "skill": "constrained_list"
+    },
+    {
+      "id": "scale-final-format-076",
+      "section": "format",
+      "skill": "constrained_list"
+    },
+    {
+      "id": "scale-final-format-077",
+      "section": "format",
+      "skill": "constrained_list"
+    },
+    {
+      "id": "scale-final-format-078",
+      "section": "format",
+      "skill": "constrained_list"
+    },
+    {
+      "id": "scale-final-format-079",
+      "section": "format",
+      "skill": "constrained_list"
+    },
+    {
+      "id": "scale-final-format-080",
+      "section": "format",
+      "skill": "constrained_list"
+    },
+    {
+      "id": "scale-final-format-081",
+      "section": "format",
+      "skill": "constrained_list"
+    },
+    {
+      "id": "scale-final-format-082",
+      "section": "format",
+      "skill": "constrained_list"
+    },
+    {
+      "id": "scale-final-format-083",
+      "section": "format",
+      "skill": "constrained_list"
+    },
+    {
+      "id": "scale-final-format-084",
+      "section": "format",
+      "skill": "constrained_list"
+    },
+    {
+      "id": "scale-final-format-085",
+      "section": "format",
+      "skill": "constrained_list"
+    },
+    {
+      "id": "scale-final-format-086",
+      "section": "format",
+      "skill": "constrained_list"
+    },
+    {
+      "id": "scale-final-format-087",
+      "section": "format",
+      "skill": "constrained_list"
+    },
+    {
+      "id": "scale-final-format-109",
+      "section": "format",
+      "skill": "required_affixes"
+    },
+    {
+      "id": "scale-final-format-110",
+      "section": "format",
+      "skill": "required_affixes"
+    },
+    {
+      "id": "scale-final-format-111",
+      "section": "format",
+      "skill": "required_affixes"
+    },
+    {
+      "id": "scale-final-format-112",
+      "section": "format",
+      "skill": "required_affixes"
+    },
+    {
+      "id": "scale-final-format-113",
+      "section": "format",
+      "skill": "required_affixes"
+    },
+    {
+      "id": "scale-final-format-114",
+      "section": "format",
+      "skill": "required_affixes"
+    },
+    {
+      "id": "scale-final-format-115",
+      "section": "format",
+      "skill": "required_affixes"
+    },
+    {
+      "id": "scale-final-format-116",
+      "section": "format",
+      "skill": "required_affixes"
+    },
+    {
+      "id": "scale-final-format-117",
+      "section": "format",
+      "skill": "required_affixes"
+    },
+    {
+      "id": "scale-final-format-118",
+      "section": "format",
+      "skill": "required_affixes"
+    },
+    {
+      "id": "scale-final-format-119",
+      "section": "format",
+      "skill": "required_affixes"
+    },
+    {
+      "id": "scale-final-format-120",
+      "section": "format",
+      "skill": "required_affixes"
+    },
+    {
+      "id": "scale-final-format-121",
+      "section": "format",
+      "skill": "required_affixes"
+    },
+    {
+      "id": "scale-final-format-122",
+      "section": "format",
+      "skill": "required_affixes"
+    },
+    {
+      "id": "scale-final-format-123",
+      "section": "format",
+      "skill": "required_affixes"
+    },
+    {
+      "id": "scale-final-format-124",
+      "section": "format",
+      "skill": "required_affixes"
+    },
+    {
+      "id": "scale-final-format-125",
+      "section": "format",
+      "skill": "required_affixes"
+    },
+    {
+      "id": "scale-final-format-126",
+      "section": "format",
+      "skill": "required_affixes"
+    },
+    {
+      "id": "scale-final-format-127",
+      "section": "format",
+      "skill": "required_affixes"
+    },
+    {
+      "id": "scale-final-format-128",
+      "section": "format",
+      "skill": "required_affixes"
+    },
+    {
+      "id": "scale-final-format-129",
+      "section": "format",
+      "skill": "required_affixes"
+    },
+    {
+      "id": "scale-final-format-130",
+      "section": "format",
+      "skill": "casing_punctuation"
+    },
+    {
+      "id": "scale-final-format-131",
+      "section": "format",
+      "skill": "casing_punctuation"
+    },
+    {
+      "id": "scale-final-format-133",
+      "section": "format",
+      "skill": "casing_punctuation"
+    },
+    {
+      "id": "scale-final-format-134",
+      "section": "format",
+      "skill": "casing_punctuation"
+    },
+    {
+      "id": "scale-final-format-135",
+      "section": "format",
+      "skill": "casing_punctuation"
+    },
+    {
+      "id": "scale-final-format-136",
+      "section": "format",
+      "skill": "casing_punctuation"
+    },
+    {
+      "id": "scale-final-format-137",
+      "section": "format",
+      "skill": "casing_punctuation"
+    },
+    {
+      "id": "scale-final-format-138",
+      "section": "format",
+      "skill": "casing_punctuation"
+    },
+    {
+      "id": "scale-final-format-139",
+      "section": "format",
+      "skill": "casing_punctuation"
+    },
+    {
+      "id": "scale-final-format-140",
+      "section": "format",
+      "skill": "casing_punctuation"
+    },
+    {
+      "id": "scale-final-format-141",
+      "section": "format",
+      "skill": "casing_punctuation"
+    },
+    {
+      "id": "scale-final-format-142",
+      "section": "format",
+      "skill": "casing_punctuation"
+    },
+    {
+      "id": "scale-final-format-143",
+      "section": "format",
+      "skill": "casing_punctuation"
+    },
+    {
+      "id": "scale-final-format-144",
+      "section": "format",
+      "skill": "casing_punctuation"
+    },
+    {
+      "id": "scale-final-format-145",
+      "section": "format",
+      "skill": "casing_punctuation"
+    },
+    {
+      "id": "scale-final-format-146",
+      "section": "format",
+      "skill": "casing_punctuation"
+    },
+    {
+      "id": "scale-final-format-147",
+      "section": "format",
+      "skill": "casing_punctuation"
+    },
+    {
+      "id": "scale-final-format-148",
+      "section": "format",
+      "skill": "casing_punctuation"
+    },
+    {
+      "id": "scale-final-format-149",
+      "section": "format",
+      "skill": "casing_punctuation"
+    },
+    {
+      "id": "scale-final-format-150",
+      "section": "format",
+      "skill": "casing_punctuation"
+    },
+    {
+      "id": "scale-final-instruction-001",
+      "section": "instruction",
+      "skill": "deterministic_transformation"
+    },
+    {
+      "id": "scale-final-instruction-002",
+      "section": "instruction",
+      "skill": "deterministic_transformation"
+    },
+    {
+      "id": "scale-final-instruction-004",
+      "section": "instruction",
+      "skill": "deterministic_transformation"
+    },
+    {
+      "id": "scale-final-instruction-005",
+      "section": "instruction",
+      "skill": "deterministic_transformation"
+    },
+    {
+      "id": "scale-final-instruction-007",
+      "section": "instruction",
+      "skill": "deterministic_transformation"
+    },
+    {
+      "id": "scale-final-instruction-008",
+      "section": "instruction",
+      "skill": "deterministic_transformation"
+    },
+    {
+      "id": "scale-final-instruction-010",
+      "section": "instruction",
+      "skill": "deterministic_transformation"
+    },
+    {
+      "id": "scale-final-instruction-011",
+      "section": "instruction",
+      "skill": "deterministic_transformation"
+    },
+    {
+      "id": "scale-final-instruction-013",
+      "section": "instruction",
+      "skill": "deterministic_transformation"
+    },
+    {
+      "id": "scale-final-instruction-014",
+      "section": "instruction",
+      "skill": "deterministic_transformation"
+    },
+    {
+      "id": "scale-final-instruction-016",
+      "section": "instruction",
+      "skill": "deterministic_transformation"
+    },
+    {
+      "id": "scale-final-instruction-019",
+      "section": "instruction",
+      "skill": "deterministic_transformation"
+    },
+    {
+      "id": "scale-final-instruction-020",
+      "section": "instruction",
+      "skill": "deterministic_transformation"
+    },
+    {
+      "id": "scale-final-instruction-022",
+      "section": "instruction",
+      "skill": "deterministic_transformation"
+    },
+    {
+      "id": "scale-final-instruction-023",
+      "section": "instruction",
+      "skill": "stable_sort"
+    },
+    {
+      "id": "scale-final-instruction-032",
+      "section": "instruction",
+      "skill": "stable_sort"
+    },
+    {
+      "id": "scale-final-instruction-033",
+      "section": "instruction",
+      "skill": "stable_sort"
+    },
+    {
+      "id": "scale-final-instruction-034",
+      "section": "instruction",
+      "skill": "stable_sort"
+    },
+    {
+      "id": "scale-final-instruction-035",
+      "section": "instruction",
+      "skill": "stable_sort"
+    },
+    {
+      "id": "scale-final-instruction-036",
+      "section": "instruction",
+      "skill": "stable_sort"
+    },
+    {
+      "id": "scale-final-instruction-037",
+      "section": "instruction",
+      "skill": "stable_sort"
+    },
+    {
+      "id": "scale-final-instruction-038",
+      "section": "instruction",
+      "skill": "stable_sort"
+    },
+    {
+      "id": "scale-final-instruction-039",
+      "section": "instruction",
+      "skill": "stable_sort"
+    },
+    {
+      "id": "scale-final-instruction-040",
+      "section": "instruction",
+      "skill": "stable_sort"
+    },
+    {
+      "id": "scale-final-instruction-041",
+      "section": "instruction",
+      "skill": "stable_sort"
+    },
+    {
+      "id": "scale-final-instruction-042",
+      "section": "instruction",
+      "skill": "stable_sort"
+    },
+    {
+      "id": "scale-final-instruction-043",
+      "section": "instruction",
+      "skill": "stable_sort"
+    },
+    {
+      "id": "scale-final-instruction-044",
+      "section": "instruction",
+      "skill": "stable_sort"
+    },
+    {
+      "id": "scale-final-instruction-046",
+      "section": "instruction",
+      "skill": "symbol_count"
+    },
+    {
+      "id": "scale-final-instruction-067",
+      "section": "instruction",
+      "skill": "select_exact_rule"
+    },
+    {
+      "id": "scale-final-instruction-068",
+      "section": "instruction",
+      "skill": "select_exact_rule"
+    },
+    {
+      "id": "scale-final-instruction-069",
+      "section": "instruction",
+      "skill": "select_exact_rule"
+    },
+    {
+      "id": "scale-final-instruction-070",
+      "section": "instruction",
+      "skill": "select_exact_rule"
+    },
+    {
+      "id": "scale-final-instruction-072",
+      "section": "instruction",
+      "skill": "select_exact_rule"
+    },
+    {
+      "id": "scale-final-instruction-074",
+      "section": "instruction",
+      "skill": "select_exact_rule"
+    },
+    {
+      "id": "scale-final-instruction-077",
+      "section": "instruction",
+      "skill": "select_exact_rule"
+    },
+    {
+      "id": "scale-final-instruction-078",
+      "section": "instruction",
+      "skill": "select_exact_rule"
+    },
+    {
+      "id": "scale-final-instruction-082",
+      "section": "instruction",
+      "skill": "select_exact_rule"
+    },
+    {
+      "id": "scale-final-instruction-083",
+      "section": "instruction",
+      "skill": "select_exact_rule"
+    },
+    {
+      "id": "scale-final-instruction-084",
+      "section": "instruction",
+      "skill": "select_exact_rule"
+    },
+    {
+      "id": "scale-final-instruction-087",
+      "section": "instruction",
+      "skill": "select_exact_rule"
+    },
+    {
+      "id": "scale-final-instruction-088",
+      "section": "instruction",
+      "skill": "copy_token"
+    },
+    {
+      "id": "scale-final-instruction-089",
+      "section": "instruction",
+      "skill": "copy_token"
+    },
+    {
+      "id": "scale-final-instruction-090",
+      "section": "instruction",
+      "skill": "copy_token"
+    },
+    {
+      "id": "scale-final-instruction-091",
+      "section": "instruction",
+      "skill": "copy_token"
+    },
+    {
+      "id": "scale-final-instruction-092",
+      "section": "instruction",
+      "skill": "copy_token"
+    },
+    {
+      "id": "scale-final-instruction-093",
+      "section": "instruction",
+      "skill": "copy_token"
+    },
+    {
+      "id": "scale-final-instruction-094",
+      "section": "instruction",
+      "skill": "copy_token"
+    },
+    {
+      "id": "scale-final-instruction-095",
+      "section": "instruction",
+      "skill": "copy_token"
+    },
+    {
+      "id": "scale-final-instruction-096",
+      "section": "instruction",
+      "skill": "copy_token"
+    },
+    {
+      "id": "scale-final-instruction-097",
+      "section": "instruction",
+      "skill": "copy_token"
+    },
+    {
+      "id": "scale-final-instruction-098",
+      "section": "instruction",
+      "skill": "copy_token"
+    },
+    {
+      "id": "scale-final-instruction-099",
+      "section": "instruction",
+      "skill": "copy_token"
+    },
+    {
+      "id": "scale-final-instruction-100",
+      "section": "instruction",
+      "skill": "copy_token"
+    },
+    {
+      "id": "scale-final-instruction-101",
+      "section": "instruction",
+      "skill": "copy_token"
+    },
+    {
+      "id": "scale-final-instruction-102",
+      "section": "instruction",
+      "skill": "copy_token"
+    },
+    {
+      "id": "scale-final-instruction-103",
+      "section": "instruction",
+      "skill": "copy_token"
+    },
+    {
+      "id": "scale-final-instruction-104",
+      "section": "instruction",
+      "skill": "copy_token"
+    },
+    {
+      "id": "scale-final-instruction-105",
+      "section": "instruction",
+      "skill": "copy_token"
+    },
+    {
+      "id": "scale-final-instruction-106",
+      "section": "instruction",
+      "skill": "copy_token"
+    },
+    {
+      "id": "scale-final-instruction-107",
+      "section": "instruction",
+      "skill": "copy_token"
+    },
+    {
+      "id": "scale-final-instruction-108",
+      "section": "instruction",
+      "skill": "copy_token"
+    },
+    {
+      "id": "scale-final-instruction-109",
+      "section": "instruction",
+      "skill": "exact_substitution"
+    },
+    {
+      "id": "scale-final-instruction-110",
+      "section": "instruction",
+      "skill": "exact_substitution"
+    },
+    {
+      "id": "scale-final-instruction-115",
+      "section": "instruction",
+      "skill": "exact_substitution"
+    },
+    {
+      "id": "scale-final-instruction-116",
+      "section": "instruction",
+      "skill": "exact_substitution"
+    },
+    {
+      "id": "scale-final-instruction-117",
+      "section": "instruction",
+      "skill": "exact_substitution"
+    },
+    {
+      "id": "scale-final-instruction-118",
+      "section": "instruction",
+      "skill": "exact_substitution"
+    },
+    {
+      "id": "scale-final-instruction-119",
+      "section": "instruction",
+      "skill": "exact_substitution"
+    },
+    {
+      "id": "scale-final-instruction-120",
+      "section": "instruction",
+      "skill": "exact_substitution"
+    },
+    {
+      "id": "scale-final-instruction-121",
+      "section": "instruction",
+      "skill": "exact_substitution"
+    },
+    {
+      "id": "scale-final-instruction-122",
+      "section": "instruction",
+      "skill": "exact_substitution"
+    },
+    {
+      "id": "scale-final-instruction-124",
+      "section": "instruction",
+      "skill": "exact_substitution"
+    },
+    {
+      "id": "scale-final-instruction-126",
+      "section": "instruction",
+      "skill": "exact_substitution"
+    },
+    {
+      "id": "scale-final-instruction-127",
+      "section": "instruction",
+      "skill": "exact_substitution"
+    },
+    {
+      "id": "scale-final-instruction-128",
+      "section": "instruction",
+      "skill": "exact_substitution"
+    },
+    {
+      "id": "scale-final-instruction-129",
+      "section": "instruction",
+      "skill": "exact_substitution"
+    },
+    {
+      "id": "scale-final-instruction-140",
+      "section": "instruction",
+      "skill": "concise_text_operation"
+    },
+    {
+      "id": "scale-final-instruction-141",
+      "section": "instruction",
+      "skill": "concise_text_operation"
+    }
+  ],
+  "prompt_reference_or_scorer_modified": false,
+  "prompts_or_references_in_manifest": false,
+  "schema_version": 1,
+  "section_counts": {
+    "arithmetic": 112,
+    "format": 127,
+    "instruction": 79
+  },
+  "subset_id": "retention-scale-final-holdout-v1-base-correct",
+  "subset_sha256": "0884923ce7ab39f1080282dab0ce51aff7063270d6c97f5c1d70370256012ded",
+  "suite_file_sha256": "9f42c6c4ed3fe6b712ea4cb96d666fbea138ae653112a62244568371ddda8939",
+  "suite_id": "foundry-retention-scale-final-holdout-v1",
+  "suite_sha256": "b856c8ce8e56d98eb7e3fbffdead07ffde7091ab2a20abe5a22ada598136353e",
+  "total": 318
+}

@@ -144,6 +144,32 @@ def test_preservation_gate_and_instruction_family_concentration(tmp_path: Path) 
     assert result["preserved"] == 60
     assert result["overall_wilson_95_lower_bound"] > 0.93
 
+    state_hash = "c" * 64
+    summary["adapter_scale"] = 0.75
+    summary["adapter_scale_evidence"] = {
+        "implementation_id": "foundry-common-lora-runtime-scaling-v1",
+        "scale": 0.75,
+        "adapter_state_sha256_before": state_hash,
+        "adapter_state_sha256_after": state_hash,
+        "base_parameter_signature_before": state_hash,
+        "base_parameter_signature_after": state_hash,
+        "original_scaling_restored": True,
+        "adapter_state_unchanged": True,
+        "base_parameter_signature_unchanged": True,
+    }
+    summary["summary_sha256"] = canonical_sha256(
+        {key: value for key, value in summary.items() if key != "summary_sha256"}
+    )
+    _write_json(adapter_summary, summary)
+    scaled = assess_preservation(
+        suite_path=suite_path,
+        subset_manifest_path=manifest_path,
+        summary_path=adapter_summary,
+        raw_path=adapter_raw,
+    )
+    assert scaled["adapter_scale"] == 0.75
+    assert scaled["state_restoration_verified"] is True
+
     instruction_skill = "shared-fixture-family"
     failures = {
         item.item_id
@@ -238,3 +264,55 @@ def test_holdout_usability_gate_uses_sample_size_and_reference_integrity(
     assert result["gate_passed"] is True
     assert result["overall_correct"] == 150
     assert result["reference_self_score_failures"] == 0
+
+
+def test_scale_final_holdout_uses_predeclared_larger_gate(tmp_path: Path) -> None:
+    root = json.loads(SUITE_PATH.read_text(encoding="utf-8"))
+    source_by_section = {
+        section: [item for item in root["items"] if item["section"] == section]
+        for section in ("arithmetic", "format", "instruction")
+    }
+    items = []
+    for section, source in source_by_section.items():
+        for index in range(150):
+            item = dict(source[index % len(source)])
+            item["id"] = f"scale-{section}-{index:03d}"
+            items.append(item)
+    root["suite_id"] = "foundry-retention-scale-final-holdout-v1"
+    root["items"] = items
+    suite_path = tmp_path / "scale_holdout.json"
+    _write_json(suite_path, root)
+    suite = load_suite(suite_path)
+    summary: dict[str, object] = {
+        "adapter_sha256": None,
+        "suite_sha256": suite.suite_sha256,
+        "total": 450,
+        "section_metrics": {
+            "arithmetic": {"correct": 60},
+            "format": {"correct": 70},
+            "instruction": {"correct": 120},
+        },
+        "extractable": 400,
+        "prompt_echo": 0,
+        "question_generation": 0,
+        "malformed_outputs": 0,
+        "backend_failures": 0,
+    }
+    summary["summary_sha256"] = canonical_sha256(summary)
+    summary_path = tmp_path / "summary.json"
+    _write_json(summary_path, summary)
+    evidence = {
+        "suite_sha256": suite.suite_sha256,
+        "ambiguous_reference_answers": 0,
+        "summary_sha256": "f" * 64,
+    }
+    evidence_path = tmp_path / "evidence.json"
+    _write_json(evidence_path, evidence)
+    result = assess_holdout_instrument_usability(
+        suite_path=suite_path,
+        base_summary_path=summary_path,
+        artifact_evidence_path=evidence_path,
+    )
+    assert result["gate_passed"] is True
+    assert result["overall_correct"] == 250
+    assert result["gate_checks"]["arithmetic_at_least_60"] is True

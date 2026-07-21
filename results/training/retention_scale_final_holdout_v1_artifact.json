@@ -1,0 +1,65 @@
+{
+  "adapter_outputs_accessed": false,
+  "ambiguous_reference_answers": 0,
+  "answer_sha256": "7e3300038720b536728252eeed85bd115213c0d9e26f88092d65916ad4d14da4",
+  "artifact_id": "foundry-retention-scale-final-holdout-v1-artifact",
+  "benchmark_answers_accessed": false,
+  "builder_source_sha256": "ff0bc0d34b83f61add7ec7c7c836b98de982c50acd6959a87757cd8a6db51f5f",
+  "evaluator_source_sha256": "ba46c60f2d050d59128066b96c3a0d465a89a8d0e5b98b71895fc50b067096c0",
+  "frozen_before_scaled_adapter_evaluation": true,
+  "generation_sha256": "05f0fdc0707a830c6ec38b8ea7165b6c0f8da34c8ded87dd1a6b3e10102f511b",
+  "items": 450,
+  "overlaps": {
+    "development": {
+      "exact": 0,
+      "twelve_token": 0
+    },
+    "prior_retention": {
+      "exact": 0,
+      "twelve_token": 0
+    },
+    "synthetic_training": {
+      "exact": 0,
+      "twelve_token": 0
+    }
+  },
+  "prompt_file_tracked": false,
+  "prompt_sha256": "f9fe2ce26afc8c8b4f53cc91f587c24cab0d292bd84c22b602201275602cdfa6",
+  "reference_self_score_failures": 0,
+  "schema_version": 1,
+  "sealed_final_accessed": false,
+  "section_counts": {
+    "arithmetic": 150,
+    "format": 150,
+    "instruction": 150
+  },
+  "skill_counts": {
+    "arithmetic/addition": 22,
+    "arithmetic/exact_division": 21,
+    "arithmetic/multiplication": 22,
+    "arithmetic/percentage": 21,
+    "arithmetic/ratio": 21,
+    "arithmetic/short_multi_step": 21,
+    "arithmetic/subtraction": 22,
+    "format/casing_punctuation": 21,
+    "format/constrained_list": 21,
+    "format/exact_integer": 22,
+    "format/exact_line": 22,
+    "format/exact_word": 22,
+    "format/required_affixes": 21,
+    "format/small_json": 21,
+    "instruction/concise_text_operation": 21,
+    "instruction/copy_token": 21,
+    "instruction/deterministic_transformation": 22,
+    "instruction/exact_substitution": 21,
+    "instruction/select_exact_rule": 21,
+    "instruction/stable_sort": 22,
+    "instruction/symbol_count": 22
+  },
+  "suite_file_sha256": "9f42c6c4ed3fe6b712ea4cb96d666fbea138ae653112a62244568371ddda8939",
+  "suite_id": "foundry-retention-scale-final-holdout-v1",
+  "suite_sha256": "b856c8ce8e56d98eb7e3fbffdead07ffde7091ab2a20abe5a22ada598136353e",
+  "summary_sha256": "6a627756f573d3f998f6046b13d8baa2ddee3167054b3a6ffc9b3b4936b87647",
+  "unique_ids": 450,
+  "unique_normalized_prompts": 450
+}

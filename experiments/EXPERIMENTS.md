@@ -777,3 +777,25 @@ Every future experiment must be registered here before a costly run begins. Its 
 - **Gate:** Failed. Both arms miss >=90% format preservation on both independent subsets, and three
   cells have nonzero question generation. Pair-decision SHA-256 is `433c911d...a237`. GSM1K,
   paired bootstrap, category signal analysis, second seed, and sealed-final access were not run.
+
+### EXP-TRAIN-009: common runtime LoRA-scale calibration
+
+- **Status:** common scale 0.50 passed three retention subsets; frozen GSM1K comparison pending
+  publication of the retention decision
+- **Mechanism:** `foundry-common-lora-runtime-scaling-v1`, identical common scale for both arms,
+  no adapter/base tensor mutation or merge. Scale 0/1 sanity exactly reproduced base/unscaled
+  outputs. Source/config/sanity hashes are `1e0506ce...eff`, `938ec15a...dfc`, and
+  `9f7605fe...dea`.
+- **New instrument:** 450 original prompts (`150/150/150`), suite `b856c8ce...353e`, zero exact or
+  12-token overlap with prior retention, synthetic training, or development prompts. Untouched base
+  scored `318/450` (`112/127/79`); subset `0884923c...2ded` contains those 318 correct IDs.
+- **Search:** Historical 1.00 failed. Scale 0.75 adjudication is `182/187` for each arm and passes,
+  but generic/targeted holdout generate 3/4 questions and fail. Scale 0.50 passes all cells:
+  adjudication generic `182/187`, targeted `183/187`; holdout `205/210` for both. Scale 0.25 was
+  skipped. Selection SHA-256 is `d7455a57...986c`.
+- **Independent validation:** Generic `314/318` (`110/112`, `127/127`, `77/79`); targeted
+  `315/318` (`111/112`, `127/127`, `77/79`). Both have zero malformed output, question generation,
+  echo, and backend failures. Final validation SHA-256 is `6f3e7a29...9cc7`.
+- **Gate:** Passed as `retention_approved_common_scaled_short_run_adapters`. Generic then targeted
+  frozen 814-item development evaluation is eligible only after this evidence is verified,
+  committed, pushed, and synchronized. Human review and second-seed confirmation remain pending.

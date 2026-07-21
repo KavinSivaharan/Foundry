@@ -1,0 +1,22 @@
+{
+  "adapter_sha256s": [
+    "faa4b72bd0046fbd8d94fc3f364cb7078259403131ea16cd136fdfbbe5408f35",
+    "c4e455432b9a3b17ae077dafdaa1c9391ab67b7350628f3aa5f9787677d8bb5b"
+  ],
+  "assessment_summary_sha256s": [
+    "f0441002370b6a396b4c43857c122a6f8b48daad26a99f4648b92d68f6a75772",
+    "d6eb33f60773d4ff2697e50ce8e6650b5790ebecbb23baacb4e9672e1db059d9"
+  ],
+  "decision_id": "foundry-common-lora-scale-final-validation-v1",
+  "gsm1k_authorized": true,
+  "retention_decision": "retention_approved_common_scaled_short_run_adapters",
+  "retention_passed": true,
+  "schema_version": 1,
+  "sealed_final_accessed": false,
+  "selected_common_scale": 0.5,
+  "selection_summary_sha256": "d7455a57001acf68f37369503cce9ef4e3fc30755b2f7f3fd8b7c7055a0b986c",
+  "sft_adaptation_line_stopped": false,
+  "suite_id": "foundry-retention-scale-final-holdout-v1",
+  "suite_sha256": "b856c8ce8e56d98eb7e3fbffdead07ffde7091ab2a20abe5a22ada598136353e",
+  "summary_sha256": "6f3e7a29dfbb184f5b6b5eb09fd52060c3c2465c5da2343f85d62d05f8589cc7"
+}
