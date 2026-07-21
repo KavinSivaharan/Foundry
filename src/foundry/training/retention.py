@@ -30,11 +30,23 @@ SUITE_LAYOUTS = {
     "foundry-original-retention-suite-v1": {"arithmetic": 30, "format": 15, "instruction": 15},
     "foundry-retention-validation-v1": {"arithmetic": 45, "format": 20, "instruction": 25},
     "foundry-retention-final-holdout-v1": {"arithmetic": 45, "format": 20, "instruction": 25},
+    "foundry-retention-adjudication-v2": {
+        "arithmetic": 100,
+        "format": 100,
+        "instruction": 100,
+    },
+    "foundry-retention-anchor-holdout-v1": {
+        "arithmetic": 100,
+        "format": 100,
+        "instruction": 100,
+    },
 }
 EVALUATION_IDS = {
     "foundry-original-retention-suite-v1": "foundry-original-retention-evaluation-v1",
     "foundry-retention-validation-v1": "foundry-retention-validation-evaluation-v1",
     "foundry-retention-final-holdout-v1": "foundry-retention-final-holdout-evaluation-v1",
+    "foundry-retention-adjudication-v2": "foundry-retention-adjudication-evaluation-v2",
+    "foundry-retention-anchor-holdout-v1": ("foundry-retention-anchor-holdout-evaluation-v1"),
 }
 
 

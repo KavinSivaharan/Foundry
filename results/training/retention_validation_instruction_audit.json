@@ -1,0 +1,41 @@
+{
+  "adapter_failure_item_ids": [
+    "validation-instruction-01",
+    "validation-instruction-06",
+    "validation-instruction-20",
+    "validation-instruction-24"
+  ],
+  "audit_id": "foundry-retention-validation-instruction-transition-audit-v1",
+  "base_only_successes": 2,
+  "confirmed_prompt_or_scorer_defects": 0,
+  "correct": {
+    "base": 23,
+    "generic_control": 21,
+    "targeted": 21
+  },
+  "failure_categories": {
+    "genuine_instruction_noncompliance": 4
+  },
+  "generic_only_successes": 0,
+  "generic_unique_failures": 0,
+  "genuine_behavior_regression_item_ids": [
+    "validation-instruction-01",
+    "validation-instruction-24"
+  ],
+  "genuine_behavior_regressions": 2,
+  "gsm1k_consulted": false,
+  "instruction_items": 25,
+  "old_validation_gate_preserved_failed": true,
+  "raw_packet_sha256": "d09f4ed60db2c83c5a94b9ad014ad37ff9e913a456e7c12af1c6775b169599dc",
+  "schema_version": 1,
+  "shared_adapter_failures": 4,
+  "suite_sha256": "96e88c82fbe903c78b7226ae9e54b5619f3d630fa499af91989afdb8c6c41d10",
+  "summary_sha256": "06434e8d9325e8c6ed4aa8d86a19fdf049d5d43c739621f36b7fce03454c4a6e",
+  "targeted_only_successes": 0,
+  "targeted_unique_failures": 0,
+  "transitions": {
+    "fail/fail/fail": 2,
+    "pass/fail/fail": 2,
+    "pass/pass/pass": 21
+  }
+}

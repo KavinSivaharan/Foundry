@@ -1,0 +1,87 @@
+{
+  "anchor": {
+    "anchor_id": "foundry-shared-retention-anchor-v1",
+    "anchor_sha256": "a15df37c7318432576878ff86e567a0f0bac050cc62e2af61081a937f2c1740c",
+    "answer_sha256": "b748ed3f321ae195f4044c28113296f2f55757577b8e1ce92126a221fd21c9a1",
+    "file_sha256": "b8d6e27184b9d1b65de6a63059ae907b25763c6001e60dc1f4a27532760fd593",
+    "gold_response_sha256": "9634f8cbf5490ef3ca237ce07ff5f142f118dbf891c9b448a9eda214ebde13a6",
+    "items": 120,
+    "prompt_sha256": "aca5eef33cc48aee74080d6408eff40b06df60108933a70c5739214773394fb9",
+    "section_counts": {
+      "arithmetic": 40,
+      "format": 40,
+      "instruction": 40
+    }
+  },
+  "cross_artifact": {
+    "ambiguous_reference_answers": 0,
+    "benchmark_answers_accessed": false,
+    "pairwise_exact_overlaps": {
+      "adjudication/anchor": 0,
+      "adjudication/anchor_holdout": 0,
+      "anchor_holdout/anchor": 0
+    },
+    "reference_exact_overlaps": {
+      "adjudication/development": 0,
+      "adjudication/prior_retention": 0,
+      "adjudication/synthetic_training": 0,
+      "anchor/development": 0,
+      "anchor/prior_retention": 0,
+      "anchor/synthetic_training": 0,
+      "anchor_holdout/development": 0,
+      "anchor_holdout/prior_retention": 0,
+      "anchor_holdout/synthetic_training": 0
+    },
+    "reference_twelve_token_overlap_prompts": {
+      "adjudication/development": 0,
+      "adjudication/prior_retention": 0,
+      "adjudication/synthetic_training": 0,
+      "anchor/development": 0,
+      "anchor/prior_retention": 0,
+      "anchor/synthetic_training": 0,
+      "anchor_holdout/development": 0,
+      "anchor_holdout/prior_retention": 0,
+      "anchor_holdout/synthetic_training": 0
+    },
+    "sealed_final_accessed": false,
+    "total_items": 720,
+    "unique_item_ids": 720,
+    "unique_normalized_prompts": 720
+  },
+  "evaluator_source_sha256": "bb7016ecfa6a2a9de326b5dc2ca41f5f7dc406f2023be768e5a487667eecea2f",
+  "evidence_id": "foundry-powered-retention-artifacts-v1",
+  "frozen_before_adapter_evaluation": true,
+  "prompt_files_tracked": false,
+  "schema_version": 1,
+  "suites": {
+    "adjudication": {
+      "answer_sha256": "cd0b39765760fb63fd90ee8c9eb8aaa47902da9c596b2e6134e80e39281e54e1",
+      "file_sha256": "710e6030594eff5e0847f0f032bb8f1f71cd496030f72a9b371bb5919f5b6174",
+      "generation_sha256": "f628fe7faafe94040de3df696a63d98494525cd1a57487b718fd9a86b5292093",
+      "items": 300,
+      "prompt_sha256": "a94e0f81c845f9af83bc339d411158f628f1eb95103c6e9375326c0a7c214b42",
+      "section_counts": {
+        "arithmetic": 100,
+        "format": 100,
+        "instruction": 100
+      },
+      "suite_id": "foundry-retention-adjudication-v2",
+      "suite_sha256": "5caf23be79fa01151af6f7db8d45c2b85bfe24b03a29589e482d51731c8358af"
+    },
+    "anchor_holdout": {
+      "answer_sha256": "da30196c0821f8f1bc083ac6fbf5a99a194eae4a68f55bc5bfd75e420ccf2379",
+      "file_sha256": "16e9e56cda2d806a1196b60cc4e087e28e356139319b80141c9b89a2e6859cf6",
+      "generation_sha256": "f628fe7faafe94040de3df696a63d98494525cd1a57487b718fd9a86b5292093",
+      "items": 300,
+      "prompt_sha256": "15c6c993b75f69a90ae422e7facb8ae264768275d2d08364259502dd23e57782",
+      "section_counts": {
+        "arithmetic": 100,
+        "format": 100,
+        "instruction": 100
+      },
+      "suite_id": "foundry-retention-anchor-holdout-v1",
+      "suite_sha256": "bff18b434a284d848387262dde201601278e5c8b573937b3486bed2bf925696e"
+    }
+  },
+  "summary_sha256": "5f19ec7601e101f278c9e1ab6e48446ec3b23cb39c513185f874a395fd529e06"
+}

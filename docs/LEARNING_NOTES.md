@@ -398,6 +398,20 @@ before inserting real values. The original exact program and independent verifie
 the label. A model failure can therefore reduce yield, but it cannot legitimately establish
 correctness.
 
+## A powered comparison suite must first be valid for the reference model
+
+Increasing a retention slice from 25 to 300 items improves statistical resolution only if the
+reference model can reliably perform the instrument. Here the larger suite was original,
+deterministic, disjoint, and objectively scored, yet the untouched base missed all four positive
+thresholds: its section scores were 84%, 48%, and 55%, and extractability was 89.33%.
+
+This failure is not evidence about either adapter because neither adapter saw the suite. It is also
+not a license to simplify correct prompts until the base passes. Direct inspection found clear
+terminal-line, exact-format, and deterministic-transformation noncompliance rather than ambiguity or
+bad references. The scientific response is therefore to stop the predeclared comparison, preserve
+the negative instrument result, and seek a new explicit design decision instead of converting base
+evaluation into prompt tuning.
+
 Round-trip validation is a stack, not a second request to the same model. Schema, slots, nodes,
 targets, units, filled surfaces, exact execution, independent execution, answer contracts,
 language rules, contamination checks, and answer-blind human audit each cover a different failure

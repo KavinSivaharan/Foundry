@@ -706,3 +706,26 @@ This log separates proposals from approved decisions. A proposal does not author
   adapter evaluation, GSM1K evaluation, paired signal analysis, second seed, or sealed-final access
   is authorized. The result remains a training-method blocker, not evidence about targeted versus
   generic curriculum quality.
+
+## 2026-07-20: stop powered adjudication at the untouched-base usability gate
+
+- **Status:** Fast-Track 8I–8K Stage D gate failed before adapter exposure
+- **Decision:** Preserve the old 25-item failure audit and the three newly frozen original
+  artifacts, but do not use the 300-item adjudication suite for adapter noninferiority and do not
+  proceed to the holdout, fallback training, or GSM1K.
+- **Evidence:** The old instruction transitions are 21 pass/pass/pass, two fail/fail/fail, and two
+  pass/fail/fail; all four adapter failures are genuine instruction noncompliance. The new artifacts
+  have 720 unique IDs and normalized prompts with zero exact or 12-token overlap against prior
+  retention, synthetic, or development prompts. On adjudication, the untouched base scored
+  arithmetic `84/100`, format `48/100`, instruction `55/100`, and extractable `268/300`, below every
+  fixed usability threshold. Backend failures, prompt echo, question generation, ambiguous prompts,
+  reference defects, and scorer defects were zero. Base-gate evidence SHA-256 is
+  `fa1fec57e87a03f390eb4944427f10c4cf0a716c2938447c922070a451067d48`.
+- **Rationale:** A noninferiority instrument must first be demonstrably usable by the untouched base.
+  The failures are direct noncompliance with unambiguous objective contracts, not repairable prompt
+  defects. Rewriting valid prompts after observing base behavior would calibrate the gate to the
+  model and violate the predeclared stop rule.
+- **Consequence:** No adapter has seen either new evaluation suite. Variant A remains
+  `diagnostic_only_pending_powered_retention_adjudication`; no shared-anchor adapter, retention
+  decision, benchmark comparison, paired interval, or one-seed signal result exists from this fast
+  track. Further work requires a separately approved decision.

@@ -794,3 +794,23 @@ for both generic and targeted, below the required 90%. Generic otherwise scored 
 holdout adapter evaluation, GSM1K evaluation, paired analysis, second seed, or sealed-final access
 was run. The narrowest next decision is an evidence-based training-method diagnosis; the pending
 human language review remains separate and unchanged.
+
+## Fast-Track 8I–8K outcome: powered instrument failed its base-usability gate
+
+The prior 25-item instruction failure was audited without benchmark access. Base/generic/targeted
+remains `23/25`, `21/25`, and `21/25`; the two base-only successes are genuine shared adapter
+regressions, while two other instructions fail in all three systems. No prompt, reference, or
+scorer defect was found, so the original failed gate remains unchanged.
+
+Three original disjoint artifacts were then frozen before any new adapter evaluation: a 300-item
+adjudication suite, a 120-item shared anchor, and a 300-item anchor holdout. The untouched base
+scored only `84/100` arithmetic, `48/100` format, and `55/100` instruction on adjudication, with
+`268/300` extractable. All zero-error backend, echo, question-generation, and ambiguity checks
+passed, but every required score threshold failed. Direct blind inspection classified all 113
+failures as genuine terminal-contract, format, or deterministic-instruction noncompliance; no
+original prompt was objectively defective.
+
+**Current stop:** the powered suite cannot serve as the approved noninferiority instrument for this
+base model. The holdout was not evaluated, neither adapter saw adjudication, shared-anchor training
+did not run, and GSM1K was not run. A new explicit decision is required; the present fast track
+cannot continue by tuning the suite to the model.

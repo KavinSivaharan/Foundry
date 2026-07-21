@@ -217,3 +217,21 @@ analysis, or new one-seed signal decision exists. The frozen historical base/gen
 numbers above remain evidence of prior collapse, not a corrected curriculum comparison. The next
 decision must diagnose the training method without reusing validation for selection; human review
 remains pending at the same local URL.
+
+## Fast-Track 8I–8K powered-adjudication stop
+
+> **Provisional one-seed result pending stratified human language review and second-seed
+> confirmation.**
+
+The old 25-item instruction failure was audited as 21 shared passes, two shared failures, and two
+base-only successes lost by both adapters. All four adapter failures are genuine instruction
+noncompliance; prompt/scorer defects are zero. The powered artifacts were frozen before any adapter
+evaluation, but the untouched base failed the adjudication suite's prerequisite usability gate:
+`84/100` arithmetic, `48/100` format, `55/100` instruction, and `268/300` extractable.
+
+Accordingly, neither existing A/32 adapter was evaluated on the new suite, the untouched anchor
+holdout was not consumed, the shared-anchor fallback was not trained, and GSM1K was not rerun. No
+selected branch, new adapter hash, paired bootstrap interval, or new signal-gate result exists. The
+historical collapsed one-seed numbers remain non-comparative evidence; the next decision must address
+the unusable powered instrument or stop SFT adaptation without treating development or validation as
+a tuning set.

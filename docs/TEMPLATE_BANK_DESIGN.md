@@ -426,3 +426,11 @@ review decision, canonical answer, or dataset split changed. The selected calibr
 failed disjoint instruction retention, so no new model score can be attributed to template quality.
 The existing assisted review remains pending at
 `file:///C:/Users/Admin/Projects/Foundry/results/raw/foundry_500x2_signal_review/codex_assisted_review.html`.
+
+## Powered-retention adjudication does not alter template evidence
+
+The new retention suites and anchor are original abstract post-training instruments, not template-
+bank questions. Their untouched-base gate failed before adapter exposure. No sentence plan,
+rendered synthetic question, review decision, canonical answer, or split changed, and no new model
+result can be attributed to template wording. The existing stratified human review remains pending
+at the same ignored local page.

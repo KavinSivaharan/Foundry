@@ -864,3 +864,11 @@ calibration-safe choice, v3 at `5e-5` step 32, failed the separately frozen vali
 gate in both arms at 21/25. Therefore the full synthetic datasets remain valid inputs whose model
 effect is unmeasured: no clean targeted-versus-generic comparison was produced, and no data change
 is justified by this training-method failure.
+
+## Powered-retention stop leaves the synthetic corpus unchanged
+
+Fast-Track 8I–8K created only original post-training retention instruments. It did not change any
+synthetic question, deterministic trace, canonical answer, template, dataset membership, split, or
+curriculum allocation. The 300-item adjudication instrument failed its untouched-base usability
+gate before either selected adapter was evaluated, so it produced no evidence for or against the
+targeted curriculum. Shared-anchor training and benchmark evaluation did not occur.

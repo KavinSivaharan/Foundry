@@ -738,3 +738,22 @@ Every future experiment must be registered here before a costly run begins. Its 
   21/25, 89/90. Both fail the >=90% instruction requirement. Gate SHA-256 `0dc0a92d...19e4`.
 - **Stop:** Full schedules/training, final-holdout adapter evaluation, GSM1K, paired analysis, second
   seed, and sealed-final access were not run. No alternative was selected after validation.
+
+### EXP-TRAIN-007: powered retention adjudication instrument
+
+- **Status:** stopped at untouched-base usability gate; no adapter adjudication or benchmark run
+- **Old-slice audit:** Base/generic/targeted instruction scores remain `23/25`, `21/25`, `21/25`.
+  Transitions are 21 pass/pass/pass, two fail/fail/fail, and two pass/fail/fail; all four adapter
+  failures are genuine instruction noncompliance and prompt/reference/scorer defects are zero.
+- **Frozen artifacts:** Adjudication/anchor/holdout contain `300/120/300` items with section layouts
+  `100/100/100`, `40/40/40`, and `100/100/100`. All 720 IDs and normalized prompts are unique;
+  exact and 12-token overlap with prior retention, synthetic, and development prompts is zero.
+  Artifact evidence SHA-256 is `5f19ec76...29e06`.
+- **Untouched base:** Adjudication arithmetic `84/100`, format `48/100`, instruction `55/100`,
+  overall `187/300`, extractable `268/300`; 32 malformed outputs, zero backend failures, prompt
+  echoes, or question generation. Blind failure inspection found 16 terminal-contract failures, 52
+  format failures, and 45 deterministic-instruction failures, with zero defective prompts or
+  scorers. Gate SHA-256 is `fa1fec57...67d48`.
+- **Gate:** Failed. The untouched holdout, both selected A/32 adapters, shared-anchor fallback,
+  parity gate, GSM1K, paired analysis, second seed, and sealed-final partition were not run. A new
+  explicit experimental decision is required.

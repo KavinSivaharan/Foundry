@@ -43,6 +43,16 @@ def test_disjoint_retention_suite_layouts_are_frozen() -> None:
             "format": 20,
             "instruction": 25,
         },
+        "foundry-retention-adjudication-v2": {
+            "arithmetic": 100,
+            "format": 100,
+            "instruction": 100,
+        },
+        "foundry-retention-anchor-holdout-v1": {
+            "arithmetic": 100,
+            "format": 100,
+            "instruction": 100,
+        },
     }
 
 

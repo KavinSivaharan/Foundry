@@ -1,0 +1,59 @@
+{
+  "adapter_outputs_inspected": false,
+  "audit_id": "foundry-retention-adjudication-v2-base-usability-gate-v1",
+  "backend_failures": 0,
+  "classification_packet_sha256": "d95974763a4c24a7bfd151d9e873519e583dcd1f1ac3a494675ae962887c4041",
+  "confirmed_prompt_reference_or_scorer_defects": 0,
+  "correct": 187,
+  "decision": "STOP_BEFORE_ADAPTER_ADJUDICATION",
+  "evaluation_summary_sha256": "977dcf32458159f56c711def4b06c454ef24f747c7cc0b36965c0e7fb4f7589e",
+  "extractable": 268,
+  "failure_categories": {
+    "genuine_format_noncompliance": 52,
+    "genuine_instruction_noncompliance": 45,
+    "genuine_terminal_contract_noncompliance": 16
+  },
+  "failures_by_skill": {
+    "arithmetic/addition": 7,
+    "arithmetic/multiplication": 6,
+    "arithmetic/subtraction": 3,
+    "format/constrained_list": 13,
+    "format/exact_line": 15,
+    "format/json_object": 16,
+    "format/required_affixes": 8,
+    "instruction/copy_token": 7,
+    "instruction/initials": 4,
+    "instruction/numeric_selection": 2,
+    "instruction/reverse": 9,
+    "instruction/select_position": 5,
+    "instruction/stable_sort": 9,
+    "instruction/symbol_count": 9
+  },
+  "gate_checks": {
+    "arithmetic_at_least_90": false,
+    "extractable_at_least_285": false,
+    "format_at_least_90": false,
+    "instruction_at_least_90": false,
+    "zero_ambiguous_reference_answers": true,
+    "zero_backend_failures": true,
+    "zero_prompt_echo": true
+  },
+  "gate_passed": false,
+  "gsm1k_evaluated": false,
+  "holdout_evaluated": false,
+  "items": 300,
+  "malformed_outputs": 32,
+  "prompt_echo": 0,
+  "question_generation": 0,
+  "raw_packet_sha256": "b73292451d03793a49dd7fa67a30b068c517047b1dcf2a1e79cecd1e6de644e9",
+  "schema_version": 1,
+  "sealed_final_accessed": false,
+  "section_correct": {
+    "arithmetic": 84,
+    "format": 48,
+    "instruction": 55
+  },
+  "suite_file_sha256": "710e6030594eff5e0847f0f032bb8f1f71cd496030f72a9b371bb5919f5b6174",
+  "suite_sha256": "5caf23be79fa01151af6f7db8d45c2b85bfe24b03a29589e482d51731c8358af",
+  "summary_sha256": "fa1fec57e87a03f390eb4944427f10c4cf0a716c2938447c922070a451067d48"
+}
