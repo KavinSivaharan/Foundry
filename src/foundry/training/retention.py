@@ -26,6 +26,16 @@ from foundry.training.qlora import directory_sha256, file_sha256
 
 Section = Literal["arithmetic", "format", "instruction"]
 Kind = Literal["numeric_terminal", "exact_text", "json_exact"]
+SUITE_LAYOUTS = {
+    "foundry-original-retention-suite-v1": {"arithmetic": 30, "format": 15, "instruction": 15},
+    "foundry-retention-validation-v1": {"arithmetic": 45, "format": 20, "instruction": 25},
+    "foundry-retention-final-holdout-v1": {"arithmetic": 45, "format": 20, "instruction": 25},
+}
+EVALUATION_IDS = {
+    "foundry-original-retention-suite-v1": "foundry-original-retention-evaluation-v1",
+    "foundry-retention-validation-v1": "foundry-retention-validation-evaluation-v1",
+    "foundry-retention-final-holdout-v1": "foundry-retention-final-holdout-evaluation-v1",
+}
 
 
 @dataclass(frozen=True)
@@ -56,15 +66,14 @@ class RetentionSuite:
 
 
 def load_suite(path: Path) -> RetentionSuite:
-    """Load and strictly validate the frozen 60-prompt suite."""
+    """Load and strictly validate one recognized frozen retention suite."""
 
     value: object = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(value, dict):
         raise ValueError("retention suite must be an object")
     root = cast(dict[str, Any], value)
-    if root.get("schema_version") != 1 or root.get("suite_id") != (
-        "foundry-original-retention-suite-v1"
-    ):
+    suite_id = str(root.get("suite_id"))
+    if root.get("schema_version") != 1 or suite_id not in SUITE_LAYOUTS:
         raise ValueError("retention suite identity differs")
     generation = root.get("generation")
     raw_items = root.get("items")
@@ -90,9 +99,10 @@ def load_suite(path: Path) -> RetentionSuite:
             raise ValueError("retention item fields must be non-empty")
         items.append(item)
     counts = Counter(item.section for item in items)
-    if counts != {"arithmetic": 30, "format": 15, "instruction": 15}:
-        raise ValueError("retention suite requires 30/15/15 prompts")
-    if len({item.item_id for item in items}) != 60:
+    expected_counts = SUITE_LAYOUTS[suite_id]
+    if counts != expected_counts:
+        raise ValueError(f"retention suite requires {expected_counts}")
+    if len({item.item_id for item in items}) != sum(expected_counts.values()):
         raise ValueError("retention IDs must be unique")
     payload = {
         "suite_id": root["suite_id"],
@@ -313,7 +323,7 @@ def evaluate_suite(
     exact_format = sum(bool(row["score"]["exact_format"]) for row in rows)
     summary: dict[str, Any] = {
         "schema_version": 1,
-        "evaluation_id": "foundry-original-retention-evaluation-v1",
+        "evaluation_id": EVALUATION_IDS[suite.suite_id],
         "suite_sha256": suite.suite_sha256,
         "prompt_sha256": suite.prompt_sha256,
         "generation_sha256": suite.generation_sha256,

@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "evidence_id": "foundry-retention-suites-v2",
+  "generation_sha256": "f628fe7faafe94040de3df696a63d98494525cd1a57487b718fd9a86b5292093",
+  "evaluator_source_sha256": "884c0d10c346e5b85742aca1c3c950acecfaef470a75e4b33cfb290691bc69d1",
+  "cross_suite": {
+    "total_prompts": 240,
+    "unique_normalized_prompts": 240,
+    "training_and_development_reference_questions": 1904,
+    "exact_reference_overlaps": 0,
+    "twelve_token_reference_overlaps": 0,
+    "ambiguous_reference_answers": 0
+  },
+  "validation": {
+    "suite_id": "foundry-retention-validation-v1",
+    "suite_sha256": "96e88c82fbe903c78b7226ae9e54b5619f3d630fa499af91989afdb8c6c41d10",
+    "prompt_sha256": "624cf46746549b9f3676cd13ceadd3843496b5011e5a80768389ae737d900663",
+    "suite_file_sha256": "846a84670fad8dd14769332f3b6d4991e11012f9ac924a8e3e612f54b67699f6",
+    "base_summary_file_sha256": "a8eca9c3a6643ee0e8cd232e8600a71e997e9b86efc63538ba7e2907453deefc",
+    "base_summary_sha256": "9afac1e6fd6af60daefd339103d6d334338af0549dd2fb62ab0425ad09bd0f44",
+    "base": {
+      "arithmetic": {"correct": 45, "total": 45, "accuracy": 1.0},
+      "format": {"correct": 20, "total": 20, "accuracy": 1.0},
+      "instruction": {"correct": 23, "total": 25, "accuracy": 0.92},
+      "extractability": 1.0,
+      "prompt_echo": 0,
+      "question_generation": 0,
+      "backend_failures": 0
+    },
+    "base_gate_passed": true
+  },
+  "final_holdout": {
+    "suite_id": "foundry-retention-final-holdout-v1",
+    "suite_sha256": "3af7b87c4714b8f96da29296cf2414b0ef48e66fb856fc22e8b73afd600b227d",
+    "prompt_sha256": "f3fee91548f7d1ce3b313b9fe7832238617c22b91064d4406284cc76feb06868",
+    "suite_file_sha256": "ea1e1a5de53a0e743c6b0496c63ff2752eb949d98ce78367fd2513b473c697ab",
+    "base_summary_file_sha256": "6187a0a62399957f60470bf4d28a51ffbb4da197fa63026005482ba4cfff5e9c",
+    "base_summary_sha256": "54ea07456de6d8d18f48873b682ac40c7f1cc17e8cdfec04a4b0f04498d012bc",
+    "base": {
+      "arithmetic": {"correct": 44, "total": 45, "accuracy": 0.9777777777777777},
+      "format": {"correct": 20, "total": 20, "accuracy": 1.0},
+      "instruction": {"correct": 23, "total": 25, "accuracy": 0.92},
+      "extractability": 0.9888888888888889,
+      "prompt_echo": 0,
+      "question_generation": 0,
+      "backend_failures": 0
+    },
+    "base_gate_passed": true
+  },
+  "prompt_files_tracked": false,
+  "frozen_before_adapter_evaluation": true
+}

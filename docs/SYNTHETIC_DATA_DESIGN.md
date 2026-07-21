@@ -855,3 +855,12 @@ This blocks full adapter training and benchmark comparison but does not invalida
 verification or contamination evidence. It also supplies no clean targeted-versus-generic result:
 training-method retention must be solved under separate approval before curriculum effects can be
 measured.
+
+## Retention-safe ladder leaves the synthetic data frozen
+
+Fast-Track 8F-H changed no generated question, answer, split, template, or curriculum membership.
+It compared target formats and learning rates using exact assistant-token parity. The only
+calibration-safe choice, v3 at `5e-5` step 32, failed the separately frozen validation instruction
+gate in both arms at 21/25. Therefore the full synthetic datasets remain valid inputs whose model
+effect is unmeasured: no clean targeted-versus-generic comparison was produced, and no data change
+is justified by this training-method failure.

@@ -1,0 +1,68 @@
+{
+  "final_holdout_opened": false,
+  "full_retraining_authorized": false,
+  "gate_id": "foundry-retention-safe-validation-gate-v1",
+  "generic_control": {
+    "adapter_sha256": "faa4b72bd0046fbd8d94fc3f364cb7078259403131ea16cd136fdfbbe5408f35",
+    "checks": {
+      "arithmetic_retention": true,
+      "backend_failures": true,
+      "extractability": true,
+      "format_following": true,
+      "instruction_following": false,
+      "prompt_echo": true,
+      "question_generation": true
+    },
+    "failed_checks": [
+      "instruction_following"
+    ],
+    "metrics": {
+      "arithmetic_absolute_drop": 0.0,
+      "arithmetic_accuracy": 1.0,
+      "backend_failures": 0,
+      "extractability": 1.0,
+      "format_accuracy": 1.0,
+      "instruction_accuracy": 0.84,
+      "prompt_echo_rate": 0.0,
+      "question_generation": 0
+    },
+    "passed": false
+  },
+  "gsm1k_evaluation_authorized": false,
+  "ladder_result_sha256": "bb1808486798a606e5be1dc1e2ca66533eca45dfd6790e953369fe8244237739",
+  "passed": false,
+  "protocol_commit_authorized": false,
+  "schema_version": 1,
+  "selected_checkpoint": 32,
+  "selected_variant": "a",
+  "stop_reason": "both selected arms failed the 90% disjoint instruction-retention threshold",
+  "summary_sha256": "0dc0a92da70a0086bfbd9382b83d0a4bf129b191f16d96e17a4ba27dadf319e4",
+  "targeted": {
+    "adapter_sha256": "c4e455432b9a3b17ae077dafdaa1c9391ab67b7350628f3aa5f9787677d8bb5b",
+    "checks": {
+      "arithmetic_retention": true,
+      "backend_failures": true,
+      "extractability": true,
+      "format_following": true,
+      "instruction_following": false,
+      "prompt_echo": true,
+      "question_generation": true
+    },
+    "failed_checks": [
+      "instruction_following"
+    ],
+    "metrics": {
+      "arithmetic_absolute_drop": 0.022222222222222254,
+      "arithmetic_accuracy": 0.9777777777777777,
+      "backend_failures": 0,
+      "extractability": 0.9888888888888889,
+      "format_accuracy": 1.0,
+      "instruction_accuracy": 0.84,
+      "prompt_echo_rate": 0.0,
+      "question_generation": 0
+    },
+    "passed": false
+  },
+  "validation_base_summary_sha256": "9afac1e6fd6af60daefd339103d6d334338af0549dd2fb62ab0425ad09bd0f44",
+  "validation_suite_sha256": "96e88c82fbe903c78b7226ae9e54b5619f3d630fa499af91989afdb8c6c41d10"
+}

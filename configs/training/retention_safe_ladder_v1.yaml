@@ -1,0 +1,88 @@
+schema_version: 1
+protocol_id: foundry-retention-safe-adaptation-ladder-v1
+protocol_sha256: 6b9127020340b81cb0c906515b9d24ab44725b117e495c1ee02075e26c5617d6
+base_recipe:
+  path: configs/training/qwen2_5_1_5b_signal_qlora.yaml
+  recipe_sha256: 4a9c6043f72d4f5b83dad774ffcd208e17f8c9738c9b34b0ab06919ba2620590
+base_model:
+  model_id: Qwen/Qwen2.5-1.5B-Instruct
+  revision: 989aa7980e4cf806f80c7fef2b1adb7bc71aa306
+seed: 20260720
+optimizer_steps: 32
+checkpoints: [8, 16, 24, 32]
+whole_example_accumulation: true
+pairwise_token_parity_limit: 0.005
+formats:
+  v3:
+    format_id: foundry-assistant-only-sft-v3
+    format_sha256: 3ffba98610f0575e49e686c6d036e2c18963f3d9411b1f682fe07c009b535329
+    census:
+      generic_control: c272533e992357e2c2da52de070c85ed9a82ce4dfb10c3842f2bce29132499e9
+      targeted: 59871e458eb1908d225e6a277527557a52981ff1f34882da7b23c45eab7a071d
+    schedules:
+      generic_control:
+        path: results/raw/training/retention_safe_ladder/schedules/variant_a_generic_control.json
+        sha256: 38ac583ba058415d5b2ddb42f73c2578b1c3fa0db3a427c249d2083090fc979a
+      targeted:
+        path: results/raw/training/retention_safe_ladder/schedules/variant_a_targeted.json
+        sha256: 0fb6b40bee70e1b2c82c5b8d10746269dff36c807e919cafd437eb098c49b0c6
+  v4:
+    format_id: foundry-concise-assistant-sft-v4
+    format_sha256: 0d7b8fbd8ac03060a53e517acfd96afa976dec3f7548a16ebfdc7fcaaa6415a1
+    census:
+      generic_control: 7f91bb51aa44966c258896d8e561fd97ec51133c99106d840a6cf6bb7f116be4
+      targeted: 817518b5845389596d429982a09c9202b7ed41e4e0d3b66855dadd6fded6a68a
+    schedules:
+      generic_control:
+        path: results/raw/training/retention_safe_ladder/schedules/variant_b_generic_control.json
+        sha256: af163d08ce430a6b333c40e384c40b66b8280151b658ea3e60fcc5c20e701d6e
+      targeted:
+        path: results/raw/training/retention_safe_ladder/schedules/variant_b_targeted.json
+        sha256: 1d424317221a5515ac2bf5948528a913cbdf5b1f36fd6278b668011405b57018
+variants:
+  a:
+    format: v3
+    learning_rate: 0.00005
+    generic_schedule_path: results/raw/training/retention_safe_ladder/schedules/variant_a_generic_control.json
+    targeted_schedule_path: results/raw/training/retention_safe_ladder/schedules/variant_a_targeted.json
+  b:
+    format: v4
+    learning_rate: 0.00005
+    generic_schedule_path: results/raw/training/retention_safe_ladder/schedules/variant_b_generic_control.json
+    targeted_schedule_path: results/raw/training/retention_safe_ladder/schedules/variant_b_targeted.json
+  c:
+    format: v4
+    learning_rate: 0.00002
+    generic_schedule_path: results/raw/training/retention_safe_ladder/schedules/variant_c_generic_control.json
+    targeted_schedule_path: results/raw/training/retention_safe_ladder/schedules/variant_c_targeted.json
+  d:
+    format: v4
+    learning_rate: 0.00001
+    generic_schedule_path: results/raw/training/retention_safe_ladder/schedules/variant_d_generic_control.json
+    targeted_schedule_path: results/raw/training/retention_safe_ladder/schedules/variant_d_targeted.json
+retention:
+  calibration:
+    suite_path: configs/training/assistant_only_v3_retention_suite.json
+    suite_sha256: 0f0b73d8cd920f20998ba00c81ac6ead4c45f04c972c033e5c30a95bfee63eb9
+    base_arithmetic_accuracy: 1.0
+  validation:
+    suite_path: results/raw/training/assistant_only_v4/retention_suites/validation.json
+    suite_sha256: 96e88c82fbe903c78b7226ae9e54b5619f3d630fa499af91989afdb8c6c41d10
+  final_holdout:
+    suite_path: results/raw/training/assistant_only_v4/retention_suites/final_holdout.json
+    suite_sha256: 3af7b87c4714b8f96da29296cf2414b0ef48e66fb856fc22e8b73afd600b227d
+calibration_gate:
+  maximum_arithmetic_drop: 0.10
+  minimum_format_accuracy: 0.90
+  minimum_instruction_accuracy: 0.90
+  minimum_extractability: 0.90
+  maximum_prompt_echo_rate: 0.05
+  maximum_question_generation: 0
+  maximum_backend_failures: 0
+  require_finite_loss: true
+selection_hierarchy:
+  - latest_common_passing_checkpoint
+  - highest_minimum_retention_margin
+  - prefer_concise_v4
+  - prefer_higher_learning_rate
+schedule_summary_sha256: 73089c23777782c991f2b8f66c7e1532a236eaaeb8bd0b2b9ba05e0646db47a3

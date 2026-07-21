@@ -687,3 +687,22 @@ This log separates proposals from approved decisions. A proposal does not author
 - **Consequence:** Stages J through P are blocked. Any next experiment requires explicit approval
   and a new design; it may not silently add a learning rate, change LoRA settings, rerun GSM1K, or
   treat the collapsed Milestone 8D comparison as a curriculum result.
+
+## 2026-07-20: stop the retention-safe ladder at disjoint validation
+
+- **Status:** Fast-Track 8F-H validation gate failed
+- **Decision:** Preserve all four predeclared ladder variants as diagnostic-only artifacts. Select
+  Variant A step 32 exactly as prescribed by the calibration hierarchy, but do not promote it to a
+  full-training protocol because both arms fail the unseen validation instruction threshold.
+- **Evidence:** Every ladder pair received 14,400 assistant tokens with exact 8/16/24/32 prefix
+  parity. Variant A passed calibration at all four common checkpoints; concise-v4 Variants B-D did
+  not. On `foundry-retention-validation-v1`, generic scored 45/45 arithmetic, 20/20 format, 21/25
+  instruction, and 90/90 extractable; targeted scored 44/45, 20/20, 21/25, and 89/90. Echo,
+  question generation, and backend failures were zero. Gate SHA-256 is `0dc0a92d...19e4`.
+- **Rationale:** Calibration-only checkpoint selection is valid only if it transfers to the
+  separately frozen validation suite. Selecting another variant or checkpoint after this failure
+  would turn validation into a tuning set and violate the predeclared protocol.
+- **Consequence:** No protocol commit claiming retention safety, 200-step retraining, final-holdout
+  adapter evaluation, GSM1K evaluation, paired signal analysis, second seed, or sealed-final access
+  is authorized. The result remains a training-method blocker, not evidence about targeted versus
+  generic curriculum quality.

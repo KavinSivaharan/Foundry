@@ -20,6 +20,7 @@ SFT_USER_SUFFIX = (
     "\n\nEnd with exactly one final line in this form:\nFinal answer: <canonical-number>"
 )
 ASSISTANT_ONLY_V3_FORMAT_ID = "foundry-assistant-only-sft-v3"
+CONCISE_ASSISTANT_V4_FORMAT_ID = "foundry-concise-assistant-sft-v4"
 ASSISTANT_ONLY_V3_SYSTEM_PROMPT = (
     "You solve grade-school arithmetic word problems carefully. Use the information "
     "in the problem, show concise reasoning, and follow the required final-answer format."
@@ -77,6 +78,39 @@ def assistant_only_v3_format_contract_sha256() -> str:
                 "assistant_header",
                 "padding",
                 "post_eos_newline",
+            ],
+        }
+    )
+
+
+def concise_assistant_v4_format_contract_sha256() -> str:
+    """Hash the concise equation-grounded assistant-only format contract."""
+
+    return canonical_sha256(
+        {
+            "format_id": CONCISE_ASSISTANT_V4_FORMAT_ID,
+            "messages": {
+                "assistant": "one to four equation-grounded lines plus one terminal line",
+                "system": ASSISTANT_ONLY_V3_SYSTEM_PROMPT,
+                "user_prefix": SFT_USER_PREFIX,
+                "user_suffix": ASSISTANT_ONLY_V3_USER_SUFFIX,
+            },
+            "assistant_target_max_tokens": 128,
+            "loss_bearing": ["assistant_completion_content", "final_eos"],
+            "masked": [
+                "system",
+                "user",
+                "assistant_header",
+                "padding",
+                "post_eos_newline",
+            ],
+            "forbidden": [
+                "question_restatement",
+                "internal_trace_terminology",
+                "code_block",
+                "json",
+                "duplicate_conclusion",
+                "multiple_final_answer_lines",
             ],
         }
     )

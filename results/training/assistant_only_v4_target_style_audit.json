@@ -1,0 +1,173 @@
+{
+  "arms": {
+    "generic_control": {
+      "aggregate_sha256": "34cb1e3c52b66f0cb3d7ad9e145fb12ffae42c952f20d96115b83ed3c0a0799a",
+      "assistant_tokens": {
+        "maximum": 124.0,
+        "mean": 49.128,
+        "median": 35.0,
+        "minimum": 18.0,
+        "total": 24564.0
+      },
+      "blind_sample_records": 50,
+      "blind_sample_sha256": "17401ef6c240b246d07563c3f36eb5e4271b246536dcfaae6749c4a0b99ef7ee",
+      "category_counts": {
+        "answer_before_final_line": 297,
+        "concise_equation_based_reasoning": 41,
+        "concise_natural_reasoning": 83,
+        "internal_operation_terminology": 167,
+        "procedural_or_program_trace_style": 376
+      },
+      "equation_count": {
+        "maximum": 1.0,
+        "mean": 0.082,
+        "median": 0.0,
+        "minimum": 0.0,
+        "total": 41.0
+      },
+      "final_answer_is_last_records": 500,
+      "final_answer_line_count": {
+        "maximum": 1.0,
+        "mean": 1.0,
+        "median": 1.0,
+        "minimum": 1.0,
+        "total": 500.0
+      },
+      "internal_term_count": {
+        "maximum": 5.0,
+        "mean": 1.334,
+        "median": 0.0,
+        "minimum": 0.0,
+        "total": 667.0
+      },
+      "line_count": {
+        "maximum": 7.0,
+        "mean": 3.768,
+        "median": 3.5,
+        "minimum": 2.0,
+        "total": 1884.0
+      },
+      "procedural_ratio": {
+        "maximum": 1.0,
+        "mean": 0.752,
+        "median": 1.0,
+        "minimum": 0.0,
+        "total": 376.0
+      },
+      "records": 500,
+      "repeated_structural_phrases": {
+        "maximum": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "minimum": 0.0,
+        "total": 0.0
+      },
+      "sentence_count": {
+        "maximum": 6.0,
+        "mean": 2.768,
+        "median": 2.5,
+        "minimum": 1.0,
+        "total": 1384.0
+      }
+    },
+    "targeted": {
+      "aggregate_sha256": "2459417e4f03649da0d95644f00d9ce6a9afcbee4740cc7334ad40f2683aff3a",
+      "assistant_tokens": {
+        "maximum": 127.0,
+        "mean": 61.246,
+        "median": 56.0,
+        "minimum": 19.0,
+        "total": 30623.0
+      },
+      "blind_sample_records": 50,
+      "blind_sample_sha256": "51f5e173aafbf27ef662c3552f15b1d734fd23c3a73e614456b829626b1f8bf2",
+      "category_counts": {
+        "answer_before_final_line": 360,
+        "concise_equation_based_reasoning": 27,
+        "concise_natural_reasoning": 54,
+        "internal_operation_terminology": 275,
+        "procedural_or_program_trace_style": 419
+      },
+      "equation_count": {
+        "maximum": 1.0,
+        "mean": 0.054,
+        "median": 0.0,
+        "minimum": 0.0,
+        "total": 27.0
+      },
+      "final_answer_is_last_records": 500,
+      "final_answer_line_count": {
+        "maximum": 1.0,
+        "mean": 1.0,
+        "median": 1.0,
+        "minimum": 1.0,
+        "total": 500.0
+      },
+      "internal_term_count": {
+        "maximum": 5.0,
+        "mean": 2.198,
+        "median": 3.0,
+        "minimum": 0.0,
+        "total": 1099.0
+      },
+      "line_count": {
+        "maximum": 7.0,
+        "mean": 4.324,
+        "median": 4.0,
+        "minimum": 2.0,
+        "total": 2162.0
+      },
+      "procedural_ratio": {
+        "maximum": 1.0,
+        "mean": 0.838,
+        "median": 1.0,
+        "minimum": 0.0,
+        "total": 419.0
+      },
+      "records": 500,
+      "repeated_structural_phrases": {
+        "maximum": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "minimum": 0.0,
+        "total": 0.0
+      },
+      "sentence_count": {
+        "maximum": 6.0,
+        "mean": 3.324,
+        "median": 3.0,
+        "minimum": 1.0,
+        "total": 1662.0
+      }
+    }
+  },
+  "audit_id": "foundry-assistant-target-style-audit-v1",
+  "classification_is_deterministic_and_content_free": true,
+  "codex_blind_inspection": {
+    "ai_assisted_not_human_review": true,
+    "arms": {
+      "generic_control": {
+        "clear_terminal_contract": 50,
+        "explicit_internal_trace_terms": 20,
+        "natural_assistant_style": 0,
+        "procedural_or_terse_trace_style": 50,
+        "records": 50,
+        "sample_sha256": "17401ef6c240b246d07563c3f36eb5e4271b246536dcfaae6749c4a0b99ef7ee"
+      },
+      "targeted": {
+        "clear_terminal_contract": 50,
+        "explicit_internal_trace_terms": 25,
+        "natural_assistant_style": 0,
+        "procedural_or_terse_trace_style": 50,
+        "records": 50,
+        "sample_sha256": "51f5e173aafbf27ef662c3552f15b1d734fd23c3a73e614456b829626b1f8bf2"
+      }
+    },
+    "inspection_id": "foundry-v3-target-style-codex-blind-inspection-v1",
+    "inspection_sha256": "4f28c3bffa7f788a475915602ae77446d5e52b556a2bc5f5678d225debcae73b"
+  },
+  "codex_blind_inspection_status": "complete_ai_assisted_not_human_review",
+  "records": 1000,
+  "schema_version": 1,
+  "summary_sha256": "f852c157a568bef5f4c6e61fc40b4d935dbcf79f984dbd3dbcf0fc2afb49d6e3"
+}

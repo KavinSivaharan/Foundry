@@ -1,0 +1,111 @@
+{
+  "arms": {
+    "generic_control": {
+      "aggregate_sha256": "cab84f01a58589dcb12a96263cd8f2885fd89171f5590e3ebfa5030d86f6337d",
+      "assistant_tokens": {
+        "count": 500,
+        "maximum": 40,
+        "mean": 24.872,
+        "median": 25.0,
+        "minimum": 14,
+        "total": 12436
+      },
+      "mode_counts": {
+        "combined_rate": 33,
+        "complete_packages": 42,
+        "dual_capacity": 41,
+        "equal_distribution": 41,
+        "grouping": 84,
+        "inventory": 83,
+        "percentage": 34,
+        "rate_total": 33,
+        "ratio_scale": 33,
+        "two_type_allocation": 42,
+        "weighted_average": 34
+      },
+      "reasoning_line_counts": {
+        "1": 425,
+        "2": 75
+      },
+      "records": 500,
+      "training_assistant_tokens": {
+        "count": 450,
+        "maximum": 38,
+        "mean": 24.88,
+        "median": 25.0,
+        "minimum": 14,
+        "total": 11196
+      },
+      "training_records": 450,
+      "validation_assistant_tokens": {
+        "count": 50,
+        "maximum": 40,
+        "mean": 24.8,
+        "median": 25.0,
+        "minimum": 15,
+        "total": 1240
+      },
+      "validation_records": 50
+    },
+    "targeted": {
+      "aggregate_sha256": "8f9e282c59a9c291ed9dd69e5fd55f8b695e2b860967d3756fb3e71e656bb53c",
+      "assistant_tokens": {
+        "count": 500,
+        "maximum": 41,
+        "mean": 26.576,
+        "median": 27.0,
+        "minimum": 15,
+        "total": 13288
+      },
+      "mode_counts": {
+        "combined_rate": 23,
+        "complete_packages": 27,
+        "dual_capacity": 27,
+        "equal_distribution": 27,
+        "grouping": 137,
+        "inventory": 138,
+        "percentage": 23,
+        "rate_total": 24,
+        "ratio_scale": 24,
+        "two_type_allocation": 27,
+        "weighted_average": 23
+      },
+      "reasoning_line_counts": {
+        "1": 449,
+        "2": 51
+      },
+      "records": 500,
+      "training_assistant_tokens": {
+        "count": 450,
+        "maximum": 41,
+        "mean": 26.63111111111111,
+        "median": 27.0,
+        "minimum": 15,
+        "total": 11984
+      },
+      "training_records": 450,
+      "validation_assistant_tokens": {
+        "count": 50,
+        "maximum": 38,
+        "mean": 26.08,
+        "median": 26.0,
+        "minimum": 15,
+        "total": 1304
+      },
+      "validation_records": 50
+    }
+  },
+  "assistant_only_masking_passed": true,
+  "deterministic_reconstruction_match": true,
+  "exact_canonical_answer_replay_passed": true,
+  "format_id": "foundry-concise-assistant-sft-v4",
+  "format_sha256": "0d7b8fbd8ac03060a53e517acfd96afa976dec3f7548a16ebfdc7fcaaa6415a1",
+  "maximum_assistant_loss_tokens": 128,
+  "primary_and_independent_verification_passed": true,
+  "raw_reconstruction_sha256": "c1418bf16157496334c0ed2e85829a83356f3852ace65e8e7fc6b35177672d1c",
+  "reconstruction_sha256": "0ee6bca9c19a99875a3e7e8c482da4c0b61747bca666c2902726e927d6daed31",
+  "records": 1000,
+  "rejected_records": 0,
+  "schema_version": 1,
+  "summary_sha256": "d8630cdad57120a3fdeb1db1fa7b02adff29d3bea0b71fbcf9bab8417f711755"
+}

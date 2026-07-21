@@ -1,10 +1,17 @@
 # Foundry Project Plan
 
-Last updated: 2026-07-19
+Last updated: 2026-07-20
 
-## Current milestone status: token-matched one-seed signal failed; diagnosis required
+## Current milestone status: retention ladder failed disjoint validation; full retraining blocked
 
-Milestone 7C unified scheduling and runtime behind the unchanged canonical number-neutral normalizer, then proved that the previous metadata prediction had overstated usable surface capacity. The fixed weighted-average pool has 16 internal render signatures but only eight actual runtime number-neutral identities. Under the frozen reuse caps, targeted weighted-average capacity is 40 for 70 required attempts and generic capacity is 48 for 100 required attempts. The required 2,504-slot reconstruction therefore failed before a fresh review schedule or smoke was authorized. No review packet, complete dataset, or training run exists. The next decision must address this measured surface-capacity shortfall without weakening the normalizer or duplicate gate.
+Fast-Track 8F-8H compared four predeclared, token-matched adaptation variants without consulting
+GSM1K. Variant A (assistant-only v3 at `5e-5`) was the only variant with common calibration passes,
+so the frozen hierarchy selected step 32. On the separately frozen validation suite, however, both
+arms scored 21/25 (84%) on instruction following, below the required 90%. The mandatory stop rule
+therefore blocks protocol promotion, full retraining, final-holdout adapter evaluation, GSM1K,
+paired analysis, and a second seed. The next decision must address the training method without
+reusing validation for model or checkpoint selection; the pending human language review remains
+separate and unchanged.
 
 ## Project objective
 
@@ -769,3 +776,21 @@ development exposure.
 second seed, or sealed-final evaluation is authorized. The next decision must be a separately
 approved training-method investigation, not automatic tuning. Stratified human language review
 remains pending at the existing ignored local review page.
+
+## Fast-Track 8F-8H outcome: calibration success did not generalize
+
+The approved retention-safe ladder audited all 1,000 v3 targets, froze concise equation-grounded
+v4, and added two original ignored 90-prompt retention suites. The untouched base passed both new
+suites. Four predeclared 32-step pairs then received exactly 14,400 assistant loss tokens per arm,
+with exact checkpoint-prefix parity at steps 8, 16, 24, and 32.
+
+Only Variant A (v3, `5e-5`) passed calibration for both arms; its latest common checkpoint was 32.
+Variants B-D (concise-v4 at `5e-5`, `2e-5`, and `1e-5`) all missed calibration instruction
+retention. On the disjoint validation suite, selected Variant A scored 21/25 instruction prompts
+for both generic and targeted, below the required 90%. Generic otherwise scored 45/45 arithmetic,
+20/20 format, and 90/90 extractable; targeted scored 44/45, 20/20, and 89/90 extractable.
+
+**Current stop:** the disjoint validation gate failed. No 200-step schedule, full retraining, final
+holdout adapter evaluation, GSM1K evaluation, paired analysis, second seed, or sealed-final access
+was run. The narrowest next decision is an evidence-based training-method diagnosis; the pending
+human language review remains separate and unchanged.

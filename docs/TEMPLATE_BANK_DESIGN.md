@@ -417,3 +417,12 @@ during the SFT-collapse diagnosis. The template-bank datasets remain frozen. Bot
 retention recipes failed before full training, so no new evidence about template wording or the
 targeted curriculum was produced. Genuine stratified human language review remains pending at the
 existing ignored review interface.
+
+## Fast-Track 8F-H does not alter template evidence
+
+The target-style audit, concise-v4 compiler, retention suites, and adaptation ladder operate only
+after the template bank has produced frozen records. No sentence plan, rendered question, human
+review decision, canonical answer, or dataset split changed. The selected calibration checkpoint
+failed disjoint instruction retention, so no new model score can be attributed to template quality.
+The existing assisted review remains pending at
+`file:///C:/Users/Admin/Projects/Foundry/results/raw/foundry_500x2_signal_review/codex_assisted_review.html`.

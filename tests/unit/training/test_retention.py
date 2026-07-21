@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from foundry.training.retention import RetentionItem, load_suite, score_response
+from foundry.training.retention import SUITE_LAYOUTS, RetentionItem, load_suite, score_response
 
 SUITE = Path("configs/training/assistant_only_v3_retention_suite.json")
 
@@ -13,6 +13,37 @@ def test_frozen_retention_suite_has_required_balance() -> None:
     assert sum(item.section == "instruction" for item in suite.items) == 15
     assert len(suite.suite_sha256) == 64
     assert len(suite.prompt_sha256) == 64
+
+
+def test_unknown_retention_suite_identity_rejects(tmp_path: Path) -> None:
+    path = tmp_path / "suite.json"
+    path.write_text('{"schema_version":1,"suite_id":"unknown"}', encoding="utf-8")
+    try:
+        load_suite(path)
+    except ValueError as error:
+        assert "identity differs" in str(error)
+    else:
+        raise AssertionError("unknown suite identity should reject")
+
+
+def test_disjoint_retention_suite_layouts_are_frozen() -> None:
+    assert SUITE_LAYOUTS == {
+        "foundry-original-retention-suite-v1": {
+            "arithmetic": 30,
+            "format": 15,
+            "instruction": 15,
+        },
+        "foundry-retention-validation-v1": {
+            "arithmetic": 45,
+            "format": 20,
+            "instruction": 25,
+        },
+        "foundry-retention-final-holdout-v1": {
+            "arithmetic": 45,
+            "format": 20,
+            "instruction": 25,
+        },
+    }
 
 
 def test_numeric_terminal_scoring_uses_exact_extractor() -> None:

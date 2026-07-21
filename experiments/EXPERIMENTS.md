@@ -719,3 +719,22 @@ Every future experiment must be registered here before a costly run begins. Its 
 - **Gate:** Failed. Summary SHA-256 `5d1d5f0d...1201`. No recipe, full adapter, common checkpoint,
   final parity result, corrected GSM1K result, bootstrap interval, or new one-seed signal decision
   exists. A separately approved training-method design is required before further model work.
+
+### EXP-TRAIN-006: retention-safe adaptation ladder
+
+- **Status:** selected calibration variant failed disjoint retention validation; mandatory stop
+- **Target audit:** v3 procedural/program-trace style in 376/500 generic and 419/500 targeted;
+  concise natural classification in 83 and 54. Blind Codex sample: 100/100 procedural or terse
+  trace, explicitly AI-assisted rather than human review.
+- **Concise-v4:** All 1,000 records reconstruct, replay, verify, and tokenize with one terminal line;
+  maximum target length 41. Format SHA-256 `0d7b8fbd...415a1`.
+- **New instruments:** Validation base 45/45 arithmetic, 20/20 format, 23/25 instruction, 90/90
+  extractable. Final-holdout base 44/45, 20/20, 23/25 instruction, 89/90 extractable. Suite hashes
+  are `96e88c82...1d10` and `3af7b87c...227d`; neither suite overlaps training/development text.
+- **Ladder:** Every arm/checkpoint uses exact 3,600-token increments to 14,400. Variant A (v3,
+  `5e-5`) passes calibration at 8/16/24/32. Variants B-D (v4 at `5e-5`, `2e-5`, `1e-5`) fail
+  instruction retention at all checkpoints. Ladder result SHA-256 `bb180848...7739` selects A/32.
+- **Disjoint validation:** Generic 45/45, 20/20, 21/25, 90/90 extractable; targeted 44/45, 20/20,
+  21/25, 89/90. Both fail the >=90% instruction requirement. Gate SHA-256 `0dc0a92d...19e4`.
+- **Stop:** Full schedules/training, final-holdout adapter evaluation, GSM1K, paired analysis, second
+  seed, and sealed-final access were not run. No alternative was selected after validation.

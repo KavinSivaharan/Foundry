@@ -710,3 +710,17 @@ following by one of 15 prompts, while targeted lost five of 30 arithmetic prompt
 arms must pass the same frozen gate, neither recipe is usable. Small objective suites therefore
 serve as a useful pre-benchmark checkpoint-selection firewall, provided they are frozen before
 adapter evaluation and failures are not tuned away.
+
+## Calibration success must generalize to a disjoint retention suite
+
+The four-variant ladder separated three plausible causes: duration, target verbosity, and learning
+rate. Concise-v4 greatly reduced synthetic-validation loss, but every concise variant missed the
+calibration instruction gate. Full-trace v3 at `5e-5` passed calibration through step 32 for both
+arms, demonstrating that the adaptation can look safe on the suite already used for recipe work.
+
+That success did not transfer. Both selected adapters scored 21/25 on a new instruction suite whose
+prompts were frozen before adapter evaluation. This is precisely why a calibration/validation split
+is useful: choosing a different checkpoint after this observation would overfit the instrument.
+Lower synthetic-validation loss also did not predict retention safety. The remaining uncertainty is
+about the adaptation method and objective, not token parity, label masking, or mathematical data
+correctness.

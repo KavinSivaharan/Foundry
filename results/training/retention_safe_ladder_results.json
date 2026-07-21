@@ -1,0 +1,1440 @@
+{
+  "base_retention_summary_sha256": "83858c632dfce15ecd88ac568b88d9145e150330303e1b6b2ab1e2ed6a683e0a",
+  "gsm1k_consulted_for_selection": false,
+  "result_id": "foundry-retention-safe-adaptation-ladder-result-v1",
+  "retention_safe_variant_found": true,
+  "schema_version": 1,
+  "selected_checkpoint": 32,
+  "selected_format_id": "v3",
+  "selected_learning_rate": 5e-05,
+  "selected_variant": "a",
+  "selection_hierarchy": [
+    "latest_common_passing_checkpoint",
+    "highest_minimum_retention_margin",
+    "prefer_concise_v4",
+    "prefer_higher_learning_rate"
+  ],
+  "summary_sha256": "bb1808486798a606e5be1dc1e2ca66533eca45dfd6790e953369fe8244237739",
+  "variants": {
+    "a": {
+      "arms": {
+        "generic_control": {
+          "16": {
+            "adapter_sha256": "91242ee510e652856eade1887bef8ef492609fc0fe661615d53461291e74ac7a",
+            "checks": {
+              "arithmetic_retention": true,
+              "backend_failures": true,
+              "extractability": true,
+              "finite_training_losses": true,
+              "finite_validation_loss": true,
+              "format_following": true,
+              "instruction_following": true,
+              "prompt_echo": true,
+              "question_generation": true,
+              "token_count_matches_schedule": true
+            },
+            "cumulative_actual_loss_bearing_tokens": 7200,
+            "failed_checks": [],
+            "margins": {
+              "arithmetic": 0.09999999999999998,
+              "extractability": 0.09999999999999998,
+              "format": 0.09999999999999998,
+              "instruction": 0.033333333333333326,
+              "prompt_echo": 0.05
+            },
+            "metrics": {
+              "arithmetic_absolute_drop": 0.0,
+              "arithmetic_accuracy": 1.0,
+              "backend_failures": 0,
+              "extractability": 1.0,
+              "format_accuracy": 1.0,
+              "instruction_accuracy": 0.9333333333333333,
+              "prompt_echo_rate": 0.0,
+              "question_generation": 0,
+              "synthetic_validation_loss": 1.030771240646497
+            },
+            "minimum_retention_margin": 0.033333333333333326,
+            "passed": true
+          },
+          "24": {
+            "adapter_sha256": "278e37e1f13ce0554a4025716141ea1653965de852882e02263802bdc7b750d8",
+            "checks": {
+              "arithmetic_retention": true,
+              "backend_failures": true,
+              "extractability": true,
+              "finite_training_losses": true,
+              "finite_validation_loss": true,
+              "format_following": true,
+              "instruction_following": true,
+              "prompt_echo": true,
+              "question_generation": true,
+              "token_count_matches_schedule": true
+            },
+            "cumulative_actual_loss_bearing_tokens": 10800,
+            "failed_checks": [],
+            "margins": {
+              "arithmetic": 0.09999999999999998,
+              "extractability": 0.09999999999999998,
+              "format": 0.09999999999999998,
+              "instruction": 0.09999999999999998,
+              "prompt_echo": 0.05
+            },
+            "metrics": {
+              "arithmetic_absolute_drop": 0.0,
+              "arithmetic_accuracy": 1.0,
+              "backend_failures": 0,
+              "extractability": 1.0,
+              "format_accuracy": 1.0,
+              "instruction_accuracy": 1.0,
+              "prompt_echo_rate": 0.0,
+              "question_generation": 0,
+              "synthetic_validation_loss": 0.8394156264270626
+            },
+            "minimum_retention_margin": 0.05,
+            "passed": true
+          },
+          "32": {
+            "adapter_sha256": "faa4b72bd0046fbd8d94fc3f364cb7078259403131ea16cd136fdfbbe5408f35",
+            "checks": {
+              "arithmetic_retention": true,
+              "backend_failures": true,
+              "extractability": true,
+              "finite_training_losses": true,
+              "finite_validation_loss": true,
+              "format_following": true,
+              "instruction_following": true,
+              "prompt_echo": true,
+              "question_generation": true,
+              "token_count_matches_schedule": true
+            },
+            "cumulative_actual_loss_bearing_tokens": 14400,
+            "failed_checks": [],
+            "margins": {
+              "arithmetic": 0.06666666666666665,
+              "extractability": 0.08333333333333326,
+              "format": 0.09999999999999998,
+              "instruction": 0.09999999999999998,
+              "prompt_echo": 0.05
+            },
+            "metrics": {
+              "arithmetic_absolute_drop": 0.033333333333333326,
+              "arithmetic_accuracy": 0.9666666666666667,
+              "backend_failures": 0,
+              "extractability": 0.9833333333333333,
+              "format_accuracy": 1.0,
+              "instruction_accuracy": 1.0,
+              "prompt_echo_rate": 0.0,
+              "question_generation": 0,
+              "synthetic_validation_loss": 0.8045144205604904
+            },
+            "minimum_retention_margin": 0.05,
+            "passed": true
+          },
+          "8": {
+            "adapter_sha256": "ad1a774c80cd9960e673572c351e0b48dcefe12215152ab198fdbd9a474ae3c4",
+            "checks": {
+              "arithmetic_retention": true,
+              "backend_failures": true,
+              "extractability": true,
+              "finite_training_losses": true,
+              "finite_validation_loss": true,
+              "format_following": true,
+              "instruction_following": true,
+              "prompt_echo": true,
+              "question_generation": true,
+              "token_count_matches_schedule": true
+            },
+            "cumulative_actual_loss_bearing_tokens": 3600,
+            "failed_checks": [],
+            "margins": {
+              "arithmetic": 0.09999999999999998,
+              "extractability": 0.08333333333333326,
+              "format": 0.033333333333333326,
+              "instruction": 0.033333333333333326,
+              "prompt_echo": 0.05
+            },
+            "metrics": {
+              "arithmetic_absolute_drop": 0.0,
+              "arithmetic_accuracy": 1.0,
+              "backend_failures": 0,
+              "extractability": 0.9833333333333333,
+              "format_accuracy": 0.9333333333333333,
+              "instruction_accuracy": 0.9333333333333333,
+              "prompt_echo_rate": 0.0,
+              "question_generation": 0,
+              "synthetic_validation_loss": 1.3766894367641185
+            },
+            "minimum_retention_margin": 0.033333333333333326,
+            "passed": true
+          }
+        },
+        "targeted": {
+          "16": {
+            "adapter_sha256": "495c85329bd93d7f0210a251d249109866477078945bb1a3acbf0372ef2b5ef8",
+            "checks": {
+              "arithmetic_retention": true,
+              "backend_failures": true,
+              "extractability": true,
+              "finite_training_losses": true,
+              "finite_validation_loss": true,
+              "format_following": true,
+              "instruction_following": true,
+              "prompt_echo": true,
+              "question_generation": true,
+              "token_count_matches_schedule": true
+            },
+            "cumulative_actual_loss_bearing_tokens": 7200,
+            "failed_checks": [],
+            "margins": {
+              "arithmetic": 0.09999999999999998,
+              "extractability": 0.09999999999999998,
+              "format": 0.09999999999999998,
+              "instruction": 0.033333333333333326,
+              "prompt_echo": 0.05
+            },
+            "metrics": {
+              "arithmetic_absolute_drop": 0.0,
+              "arithmetic_accuracy": 1.0,
+              "backend_failures": 0,
+              "extractability": 1.0,
+              "format_accuracy": 1.0,
+              "instruction_accuracy": 0.9333333333333333,
+              "prompt_echo_rate": 0.0,
+              "question_generation": 0,
+              "synthetic_validation_loss": 0.8696890453875443
+            },
+            "minimum_retention_margin": 0.033333333333333326,
+            "passed": true
+          },
+          "24": {
+            "adapter_sha256": "279cc3ddffa97037902c2b5e4a9f511b704f064f2af9e5f047aee3853d35e603",
+            "checks": {
+              "arithmetic_retention": true,
+              "backend_failures": true,
+              "extractability": true,
+              "finite_training_losses": true,
+              "finite_validation_loss": true,
+              "format_following": true,
+              "instruction_following": true,
+              "prompt_echo": true,
+              "question_generation": true,
+              "token_count_matches_schedule": true
+            },
+            "cumulative_actual_loss_bearing_tokens": 10800,
+            "failed_checks": [],
+            "margins": {
+              "arithmetic": 0.06666666666666665,
+              "extractability": 0.08333333333333326,
+              "format": 0.09999999999999998,
+              "instruction": 0.09999999999999998,
+              "prompt_echo": 0.05
+            },
+            "metrics": {
+              "arithmetic_absolute_drop": 0.033333333333333326,
+              "arithmetic_accuracy": 0.9666666666666667,
+              "backend_failures": 0,
+              "extractability": 0.9833333333333333,
+              "format_accuracy": 1.0,
+              "instruction_accuracy": 1.0,
+              "prompt_echo_rate": 0.0,
+              "question_generation": 0,
+              "synthetic_validation_loss": 0.6815051163658923
+            },
+            "minimum_retention_margin": 0.05,
+            "passed": true
+          },
+          "32": {
+            "adapter_sha256": "c4e455432b9a3b17ae077dafdaa1c9391ab67b7350628f3aa5f9787677d8bb5b",
+            "checks": {
+              "arithmetic_retention": true,
+              "backend_failures": true,
+              "extractability": true,
+              "finite_training_losses": true,
+              "finite_validation_loss": true,
+              "format_following": true,
+              "instruction_following": true,
+              "prompt_echo": true,
+              "question_generation": true,
+              "token_count_matches_schedule": true
+            },
+            "cumulative_actual_loss_bearing_tokens": 14400,
+            "failed_checks": [],
+            "margins": {
+              "arithmetic": 0.06666666666666665,
+              "extractability": 0.08333333333333326,
+              "format": 0.09999999999999998,
+              "instruction": 0.09999999999999998,
+              "prompt_echo": 0.05
+            },
+            "metrics": {
+              "arithmetic_absolute_drop": 0.033333333333333326,
+              "arithmetic_accuracy": 0.9666666666666667,
+              "backend_failures": 0,
+              "extractability": 0.9833333333333333,
+              "format_accuracy": 1.0,
+              "instruction_accuracy": 1.0,
+              "prompt_echo_rate": 0.0,
+              "question_generation": 0,
+              "synthetic_validation_loss": 0.6448333575938756
+            },
+            "minimum_retention_margin": 0.05,
+            "passed": true
+          },
+          "8": {
+            "adapter_sha256": "e5dcc2b5f688552895e30aa8fdba69cb525e609a9a1abef71077b4a01f91fc7e",
+            "checks": {
+              "arithmetic_retention": true,
+              "backend_failures": true,
+              "extractability": true,
+              "finite_training_losses": true,
+              "finite_validation_loss": true,
+              "format_following": true,
+              "instruction_following": true,
+              "prompt_echo": true,
+              "question_generation": true,
+              "token_count_matches_schedule": true
+            },
+            "cumulative_actual_loss_bearing_tokens": 3600,
+            "failed_checks": [],
+            "margins": {
+              "arithmetic": 0.09999999999999998,
+              "extractability": 0.08333333333333326,
+              "format": 0.033333333333333326,
+              "instruction": 0.033333333333333326,
+              "prompt_echo": 0.05
+            },
+            "metrics": {
+              "arithmetic_absolute_drop": 0.0,
+              "arithmetic_accuracy": 1.0,
+              "backend_failures": 0,
+              "extractability": 0.9833333333333333,
+              "format_accuracy": 0.9333333333333333,
+              "instruction_accuracy": 0.9333333333333333,
+              "prompt_echo_rate": 0.0,
+              "question_generation": 0,
+              "synthetic_validation_loss": 1.1898217592034135
+            },
+            "minimum_retention_margin": 0.033333333333333326,
+            "passed": true
+          }
+        }
+      },
+      "common_checkpoints": {
+        "16": {
+          "generic_control_passed": true,
+          "minimum_retention_margin": 0.033333333333333326,
+          "passed": true,
+          "targeted_passed": true,
+          "token_parity_passed": true,
+          "token_parity_relative_difference": 0.0
+        },
+        "24": {
+          "generic_control_passed": true,
+          "minimum_retention_margin": 0.05,
+          "passed": true,
+          "targeted_passed": true,
+          "token_parity_passed": true,
+          "token_parity_relative_difference": 0.0
+        },
+        "32": {
+          "generic_control_passed": true,
+          "minimum_retention_margin": 0.05,
+          "passed": true,
+          "targeted_passed": true,
+          "token_parity_passed": true,
+          "token_parity_relative_difference": 0.0
+        },
+        "8": {
+          "generic_control_passed": true,
+          "minimum_retention_margin": 0.033333333333333326,
+          "passed": true,
+          "targeted_passed": true,
+          "token_parity_passed": true,
+          "token_parity_relative_difference": 0.0
+        }
+      },
+      "format_id": "v3",
+      "latest_common_passing_checkpoint": 32,
+      "learning_rate": 5e-05,
+      "selection_margin": 0.05,
+      "variant": "a"
+    },
+    "b": {
+      "arms": {
+        "generic_control": {
+          "16": {
+            "adapter_sha256": "3df4a56862656e5f7db40c08ee0f26db85838034fd040c28b650054f01cfb578",
+            "checks": {
+              "arithmetic_retention": true,
+              "backend_failures": true,
+              "extractability": true,
+              "finite_training_losses": true,
+              "finite_validation_loss": true,
+              "format_following": true,
+              "instruction_following": false,
+              "prompt_echo": true,
+              "question_generation": true,
+              "token_count_matches_schedule": true
+            },
+            "cumulative_actual_loss_bearing_tokens": 7200,
+            "failed_checks": [
+              "instruction_following"
+            ],
+            "margins": {
+              "arithmetic": 0.09999999999999998,
+              "extractability": 0.09999999999999998,
+              "format": 0.09999999999999998,
+              "instruction": -0.033333333333333326,
+              "prompt_echo": 0.05
+            },
+            "metrics": {
+              "arithmetic_absolute_drop": 0.0,
+              "arithmetic_accuracy": 1.0,
+              "backend_failures": 0,
+              "extractability": 1.0,
+              "format_accuracy": 1.0,
+              "instruction_accuracy": 0.8666666666666667,
+              "prompt_echo_rate": 0.0,
+              "question_generation": 0,
+              "synthetic_validation_loss": 0.3153930570960285
+            },
+            "minimum_retention_margin": -0.033333333333333326,
+            "passed": false
+          },
+          "24": {
+            "adapter_sha256": "135fee010257d0f7cb104328bbf484e3d2886b7fa3d41b09328b23b6264dcba0",
+            "checks": {
+              "arithmetic_retention": true,
+              "backend_failures": true,
+              "extractability": true,
+              "finite_training_losses": true,
+              "finite_validation_loss": true,
+              "format_following": true,
+              "instruction_following": false,
+              "prompt_echo": true,
+              "question_generation": true,
+              "token_count_matches_schedule": true
+            },
+            "cumulative_actual_loss_bearing_tokens": 10800,
+            "failed_checks": [
+              "instruction_following"
+            ],
+            "margins": {
+              "arithmetic": 0.033333333333333326,
+              "extractability": 0.06666666666666665,
+              "format": 0.09999999999999998,
+              "instruction": -0.033333333333333326,
+              "prompt_echo": 0.05
+            },
+            "metrics": {
+              "arithmetic_absolute_drop": 0.06666666666666665,
+              "arithmetic_accuracy": 0.9333333333333333,
+              "backend_failures": 0,
+              "extractability": 0.9666666666666667,
+              "format_accuracy": 1.0,
+              "instruction_accuracy": 0.8666666666666667,
+              "prompt_echo_rate": 0.0,
+              "question_generation": 0,
+              "synthetic_validation_loss": 0.24955660173248861
+            },
+            "minimum_retention_margin": -0.033333333333333326,
+            "passed": false
+          },
+          "32": {
+            "adapter_sha256": "54016d6c6dd651b2736fa80a09ad751b55d3f9d7c45ace748b07c3dc1d432a29",
+            "checks": {
+              "arithmetic_retention": true,
+              "backend_failures": true,
+              "extractability": true,
+              "finite_training_losses": true,
+              "finite_validation_loss": true,
+              "format_following": true,
+              "instruction_following": false,
+              "prompt_echo": true,
+              "question_generation": true,
+              "token_count_matches_schedule": true
+            },
+            "cumulative_actual_loss_bearing_tokens": 14400,
+            "failed_checks": [
+              "instruction_following"
+            ],
+            "margins": {
+              "arithmetic": 0.033333333333333326,
+              "extractability": 0.06666666666666665,
+              "format": 0.09999999999999998,
+              "instruction": -0.033333333333333326,
+              "prompt_echo": 0.05
+            },
+            "metrics": {
+              "arithmetic_absolute_drop": 0.06666666666666665,
+              "arithmetic_accuracy": 0.9333333333333333,
+              "backend_failures": 0,
+              "extractability": 0.9666666666666667,
+              "format_accuracy": 1.0,
+              "instruction_accuracy": 0.8666666666666667,
+              "prompt_echo_rate": 0.0,
+              "question_generation": 0,
+              "synthetic_validation_loss": 0.23806780174434666
+            },
+            "minimum_retention_margin": -0.033333333333333326,
+            "passed": false
+          },
+          "8": {
+            "adapter_sha256": "2548a195f07ad1f0125bff08a1017de9688e5e98cd611cefe10bb09b60b86f55",
+            "checks": {
+              "arithmetic_retention": true,
+              "backend_failures": true,
+              "extractability": true,
+              "finite_training_losses": true,
+              "finite_validation_loss": true,
+              "format_following": true,
+              "instruction_following": false,
+              "prompt_echo": true,
+              "question_generation": true,
+              "token_count_matches_schedule": true
+            },
+            "cumulative_actual_loss_bearing_tokens": 3600,
+            "failed_checks": [
+              "instruction_following"
+            ],
+            "margins": {
+              "arithmetic": 0.033333333333333326,
+              "extractability": 0.06666666666666665,
+              "format": 0.033333333333333326,
+              "instruction": -0.09999999999999998,
+              "prompt_echo": 0.05
+            },
+            "metrics": {
+              "arithmetic_absolute_drop": 0.06666666666666665,
+              "arithmetic_accuracy": 0.9333333333333333,
+              "backend_failures": 0,
+              "extractability": 0.9666666666666667,
+              "format_accuracy": 0.9333333333333333,
+              "instruction_accuracy": 0.8,
+              "prompt_echo_rate": 0.0,
+              "question_generation": 0,
+              "synthetic_validation_loss": 0.511709935626676
+            },
+            "minimum_retention_margin": -0.09999999999999998,
+            "passed": false
+          }
+        },
+        "targeted": {
+          "16": {
+            "adapter_sha256": "1936243a3d981551590696a1a45c1ed4dab4f2eef98c22c524626083a5199f39",
+            "checks": {
+              "arithmetic_retention": true,
+              "backend_failures": true,
+              "extractability": true,
+              "finite_training_losses": true,
+              "finite_validation_loss": true,
+              "format_following": true,
+              "instruction_following": false,
+              "prompt_echo": true,
+              "question_generation": true,
+              "token_count_matches_schedule": true
+            },
+            "cumulative_actual_loss_bearing_tokens": 7200,
+            "failed_checks": [
+              "instruction_following"
+            ],
+            "margins": {
+              "arithmetic": 0.06666666666666665,
+              "extractability": 0.09999999999999998,
+              "format": 0.09999999999999998,
+              "instruction": -0.033333333333333326,
+              "prompt_echo": 0.05
+            },
+            "metrics": {
+              "arithmetic_absolute_drop": 0.033333333333333326,
+              "arithmetic_accuracy": 0.9666666666666667,
+              "backend_failures": 0,
+              "extractability": 1.0,
+              "format_accuracy": 1.0,
+              "instruction_accuracy": 0.8666666666666667,
+              "prompt_echo_rate": 0.0,
+              "question_generation": 0,
+              "synthetic_validation_loss": 0.2120886415963067
+            },
+            "minimum_retention_margin": -0.033333333333333326,
+            "passed": false
+          },
+          "24": {
+            "adapter_sha256": "7e66ba8b448c98a908717a2b48cca5367fc494e7d97bc706d0d9e568f7dfd721",
+            "checks": {
+              "arithmetic_retention": true,
+              "backend_failures": true,
+              "extractability": true,
+              "finite_training_losses": true,
+              "finite_validation_loss": true,
+              "format_following": true,
+              "instruction_following": false,
+              "prompt_echo": true,
+              "question_generation": true,
+              "token_count_matches_schedule": true
+            },
+            "cumulative_actual_loss_bearing_tokens": 10800,
+            "failed_checks": [
+              "instruction_following"
+            ],
+            "margins": {
+              "arithmetic": 0.09999999999999998,
+              "extractability": 0.09999999999999998,
+              "format": 0.09999999999999998,
+              "instruction": -0.033333333333333326,
+              "prompt_echo": 0.05
+            },
+            "metrics": {
+              "arithmetic_absolute_drop": 0.0,
+              "arithmetic_accuracy": 1.0,
+              "backend_failures": 0,
+              "extractability": 1.0,
+              "format_accuracy": 1.0,
+              "instruction_accuracy": 0.8666666666666667,
+              "prompt_echo_rate": 0.0,
+              "question_generation": 0,
+              "synthetic_validation_loss": 0.17262238437278435
+            },
+            "minimum_retention_margin": -0.033333333333333326,
+            "passed": false
+          },
+          "32": {
+            "adapter_sha256": "9be6588e89fb1702ffc5c8287bf6114e979741dbccbf55125e058670151c2000",
+            "checks": {
+              "arithmetic_retention": true,
+              "backend_failures": true,
+              "extractability": true,
+              "finite_training_losses": true,
+              "finite_validation_loss": true,
+              "format_following": true,
+              "instruction_following": false,
+              "prompt_echo": true,
+              "question_generation": true,
+              "token_count_matches_schedule": true
+            },
+            "cumulative_actual_loss_bearing_tokens": 14400,
+            "failed_checks": [
+              "instruction_following"
+            ],
+            "margins": {
+              "arithmetic": 0.06666666666666665,
+              "extractability": 0.08333333333333326,
+              "format": 0.09999999999999998,
+              "instruction": -0.033333333333333326,
+              "prompt_echo": 0.05
+            },
+            "metrics": {
+              "arithmetic_absolute_drop": 0.033333333333333326,
+              "arithmetic_accuracy": 0.9666666666666667,
+              "backend_failures": 0,
+              "extractability": 0.9833333333333333,
+              "format_accuracy": 1.0,
+              "instruction_accuracy": 0.8666666666666667,
+              "prompt_echo_rate": 0.0,
+              "question_generation": 0,
+              "synthetic_validation_loss": 0.16515280632944948
+            },
+            "minimum_retention_margin": -0.033333333333333326,
+            "passed": false
+          },
+          "8": {
+            "adapter_sha256": "32c48ff714739fe60026c9649b9a08db11e540ed226e1a68fef5996d457b9d5d",
+            "checks": {
+              "arithmetic_retention": true,
+              "backend_failures": true,
+              "extractability": true,
+              "finite_training_losses": true,
+              "finite_validation_loss": true,
+              "format_following": true,
+              "instruction_following": false,
+              "prompt_echo": true,
+              "question_generation": true,
+              "token_count_matches_schedule": true
+            },
+            "cumulative_actual_loss_bearing_tokens": 3600,
+            "failed_checks": [
+              "instruction_following"
+            ],
+            "margins": {
+              "arithmetic": 0.033333333333333326,
+              "extractability": 0.06666666666666665,
+              "format": 0.033333333333333326,
+              "instruction": -0.09999999999999998,
+              "prompt_echo": 0.05
+            },
+            "metrics": {
+              "arithmetic_absolute_drop": 0.06666666666666665,
+              "arithmetic_accuracy": 0.9333333333333333,
+              "backend_failures": 0,
+              "extractability": 0.9666666666666667,
+              "format_accuracy": 0.9333333333333333,
+              "instruction_accuracy": 0.8,
+              "prompt_echo_rate": 0.0,
+              "question_generation": 0,
+              "synthetic_validation_loss": 0.38351690063561583
+            },
+            "minimum_retention_margin": -0.09999999999999998,
+            "passed": false
+          }
+        }
+      },
+      "common_checkpoints": {
+        "16": {
+          "generic_control_passed": false,
+          "minimum_retention_margin": -0.033333333333333326,
+          "passed": false,
+          "targeted_passed": false,
+          "token_parity_passed": true,
+          "token_parity_relative_difference": 0.0
+        },
+        "24": {
+          "generic_control_passed": false,
+          "minimum_retention_margin": -0.033333333333333326,
+          "passed": false,
+          "targeted_passed": false,
+          "token_parity_passed": true,
+          "token_parity_relative_difference": 0.0
+        },
+        "32": {
+          "generic_control_passed": false,
+          "minimum_retention_margin": -0.033333333333333326,
+          "passed": false,
+          "targeted_passed": false,
+          "token_parity_passed": true,
+          "token_parity_relative_difference": 0.0
+        },
+        "8": {
+          "generic_control_passed": false,
+          "minimum_retention_margin": -0.09999999999999998,
+          "passed": false,
+          "targeted_passed": false,
+          "token_parity_passed": true,
+          "token_parity_relative_difference": 0.0
+        }
+      },
+      "format_id": "v4",
+      "latest_common_passing_checkpoint": null,
+      "learning_rate": 5e-05,
+      "selection_margin": null,
+      "variant": "b"
+    },
+    "c": {
+      "arms": {
+        "generic_control": {
+          "16": {
+            "adapter_sha256": "e0d60158cf595abf867d400ab66ddc5eac27f4bcf32207142a5c8f2e13fe5464",
+            "checks": {
+              "arithmetic_retention": true,
+              "backend_failures": true,
+              "extractability": true,
+              "finite_training_losses": true,
+              "finite_validation_loss": true,
+              "format_following": true,
+              "instruction_following": false,
+              "prompt_echo": true,
+              "question_generation": true,
+              "token_count_matches_schedule": true
+            },
+            "cumulative_actual_loss_bearing_tokens": 7200,
+            "failed_checks": [
+              "instruction_following"
+            ],
+            "margins": {
+              "arithmetic": 0.033333333333333326,
+              "extractability": 0.06666666666666665,
+              "format": 0.033333333333333326,
+              "instruction": -0.09999999999999998,
+              "prompt_echo": 0.05
+            },
+            "metrics": {
+              "arithmetic_absolute_drop": 0.06666666666666665,
+              "arithmetic_accuracy": 0.9333333333333333,
+              "backend_failures": 0,
+              "extractability": 0.9666666666666667,
+              "format_accuracy": 0.9333333333333333,
+              "instruction_accuracy": 0.8,
+              "prompt_echo_rate": 0.0,
+              "question_generation": 0,
+              "synthetic_validation_loss": 0.5440824634726009
+            },
+            "minimum_retention_margin": -0.09999999999999998,
+            "passed": false
+          },
+          "24": {
+            "adapter_sha256": "f53d44fd408378d418801c6a8399551c8a1fe8dad80f18b17d6d5c318990b7e7",
+            "checks": {
+              "arithmetic_retention": true,
+              "backend_failures": true,
+              "extractability": true,
+              "finite_training_losses": true,
+              "finite_validation_loss": true,
+              "format_following": true,
+              "instruction_following": false,
+              "prompt_echo": true,
+              "question_generation": true,
+              "token_count_matches_schedule": true
+            },
+            "cumulative_actual_loss_bearing_tokens": 10800,
+            "failed_checks": [
+              "instruction_following"
+            ],
+            "margins": {
+              "arithmetic": 0.0,
+              "extractability": 0.04999999999999993,
+              "format": 0.033333333333333326,
+              "instruction": -0.033333333333333326,
+              "prompt_echo": 0.05
+            },
+            "metrics": {
+              "arithmetic_absolute_drop": 0.09999999999999998,
+              "arithmetic_accuracy": 0.9,
+              "backend_failures": 0,
+              "extractability": 0.95,
+              "format_accuracy": 0.9333333333333333,
+              "instruction_accuracy": 0.8666666666666667,
+              "prompt_echo_rate": 0.0,
+              "question_generation": 0,
+              "synthetic_validation_loss": 0.4685310793800219
+            },
+            "minimum_retention_margin": -0.033333333333333326,
+            "passed": false
+          },
+          "32": {
+            "adapter_sha256": "6cf41330136601d1407acd1d02e8813ffdaf6199f7bb8dae2b0ad45d57b09807",
+            "checks": {
+              "arithmetic_retention": true,
+              "backend_failures": true,
+              "extractability": true,
+              "finite_training_losses": true,
+              "finite_validation_loss": true,
+              "format_following": true,
+              "instruction_following": false,
+              "prompt_echo": true,
+              "question_generation": true,
+              "token_count_matches_schedule": true
+            },
+            "cumulative_actual_loss_bearing_tokens": 14400,
+            "failed_checks": [
+              "instruction_following"
+            ],
+            "margins": {
+              "arithmetic": 0.06666666666666665,
+              "extractability": 0.06666666666666665,
+              "format": 0.033333333333333326,
+              "instruction": -0.033333333333333326,
+              "prompt_echo": 0.05
+            },
+            "metrics": {
+              "arithmetic_absolute_drop": 0.033333333333333326,
+              "arithmetic_accuracy": 0.9666666666666667,
+              "backend_failures": 0,
+              "extractability": 0.9666666666666667,
+              "format_accuracy": 0.9333333333333333,
+              "instruction_accuracy": 0.8666666666666667,
+              "prompt_echo_rate": 0.0,
+              "question_generation": 0,
+              "synthetic_validation_loss": 0.4554354370121033
+            },
+            "minimum_retention_margin": -0.033333333333333326,
+            "passed": false
+          },
+          "8": {
+            "adapter_sha256": "11f29dc455771b2ab6380addaa0f95f71208e53cc684946eceff253c62352fe4",
+            "checks": {
+              "arithmetic_retention": true,
+              "backend_failures": true,
+              "extractability": true,
+              "finite_training_losses": true,
+              "finite_validation_loss": true,
+              "format_following": true,
+              "instruction_following": false,
+              "prompt_echo": true,
+              "question_generation": true,
+              "token_count_matches_schedule": true
+            },
+            "cumulative_actual_loss_bearing_tokens": 3600,
+            "failed_checks": [
+              "instruction_following"
+            ],
+            "margins": {
+              "arithmetic": 0.09999999999999998,
+              "extractability": 0.08333333333333326,
+              "format": 0.033333333333333326,
+              "instruction": -0.033333333333333326,
+              "prompt_echo": 0.05
+            },
+            "metrics": {
+              "arithmetic_absolute_drop": 0.0,
+              "arithmetic_accuracy": 1.0,
+              "backend_failures": 0,
+              "extractability": 0.9833333333333333,
+              "format_accuracy": 0.9333333333333333,
+              "instruction_accuracy": 0.8666666666666667,
+              "prompt_echo_rate": 0.0,
+              "question_generation": 0,
+              "synthetic_validation_loss": 0.7736936270229278
+            },
+            "minimum_retention_margin": -0.033333333333333326,
+            "passed": false
+          }
+        },
+        "targeted": {
+          "16": {
+            "adapter_sha256": "dfe31c43c328ae1ef0f610bffb05c6cf278a085cc7ba530061d3f30751f9a7db",
+            "checks": {
+              "arithmetic_retention": true,
+              "backend_failures": true,
+              "extractability": true,
+              "finite_training_losses": true,
+              "finite_validation_loss": true,
+              "format_following": true,
+              "instruction_following": false,
+              "prompt_echo": true,
+              "question_generation": true,
+              "token_count_matches_schedule": true
+            },
+            "cumulative_actual_loss_bearing_tokens": 7200,
+            "failed_checks": [
+              "instruction_following"
+            ],
+            "margins": {
+              "arithmetic": 0.033333333333333326,
+              "extractability": 0.06666666666666665,
+              "format": 0.033333333333333326,
+              "instruction": -0.09999999999999998,
+              "prompt_echo": 0.05
+            },
+            "metrics": {
+              "arithmetic_absolute_drop": 0.06666666666666665,
+              "arithmetic_accuracy": 0.9333333333333333,
+              "backend_failures": 0,
+              "extractability": 0.9666666666666667,
+              "format_accuracy": 0.9333333333333333,
+              "instruction_accuracy": 0.8,
+              "prompt_echo_rate": 0.0,
+              "question_generation": 0,
+              "synthetic_validation_loss": 0.4057061451378684
+            },
+            "minimum_retention_margin": -0.09999999999999998,
+            "passed": false
+          },
+          "24": {
+            "adapter_sha256": "ab70c42cda8a3a418dc58b48fb5fcdf4ea3df1b50af7c15cec8d71a97784f799",
+            "checks": {
+              "arithmetic_retention": true,
+              "backend_failures": true,
+              "extractability": true,
+              "finite_training_losses": true,
+              "finite_validation_loss": true,
+              "format_following": true,
+              "instruction_following": false,
+              "prompt_echo": true,
+              "question_generation": true,
+              "token_count_matches_schedule": true
+            },
+            "cumulative_actual_loss_bearing_tokens": 10800,
+            "failed_checks": [
+              "instruction_following"
+            ],
+            "margins": {
+              "arithmetic": 0.033333333333333326,
+              "extractability": 0.06666666666666665,
+              "format": 0.033333333333333326,
+              "instruction": -0.033333333333333326,
+              "prompt_echo": 0.05
+            },
+            "metrics": {
+              "arithmetic_absolute_drop": 0.06666666666666665,
+              "arithmetic_accuracy": 0.9333333333333333,
+              "backend_failures": 0,
+              "extractability": 0.9666666666666667,
+              "format_accuracy": 0.9333333333333333,
+              "instruction_accuracy": 0.8666666666666667,
+              "prompt_echo_rate": 0.0,
+              "question_generation": 0,
+              "synthetic_validation_loss": 0.33786647330878156
+            },
+            "minimum_retention_margin": -0.033333333333333326,
+            "passed": false
+          },
+          "32": {
+            "adapter_sha256": "68476533b69f88c88997f618b3c694c7e7719049fcaf02376be6b01a66bf11a5",
+            "checks": {
+              "arithmetic_retention": true,
+              "backend_failures": true,
+              "extractability": true,
+              "finite_training_losses": true,
+              "finite_validation_loss": true,
+              "format_following": true,
+              "instruction_following": false,
+              "prompt_echo": true,
+              "question_generation": true,
+              "token_count_matches_schedule": true
+            },
+            "cumulative_actual_loss_bearing_tokens": 14400,
+            "failed_checks": [
+              "instruction_following"
+            ],
+            "margins": {
+              "arithmetic": 0.033333333333333326,
+              "extractability": 0.06666666666666665,
+              "format": 0.033333333333333326,
+              "instruction": -0.033333333333333326,
+              "prompt_echo": 0.05
+            },
+            "metrics": {
+              "arithmetic_absolute_drop": 0.06666666666666665,
+              "arithmetic_accuracy": 0.9333333333333333,
+              "backend_failures": 0,
+              "extractability": 0.9666666666666667,
+              "format_accuracy": 0.9333333333333333,
+              "instruction_accuracy": 0.8666666666666667,
+              "prompt_echo_rate": 0.0,
+              "question_generation": 0,
+              "synthetic_validation_loss": 0.32587025179727674
+            },
+            "minimum_retention_margin": -0.033333333333333326,
+            "passed": false
+          },
+          "8": {
+            "adapter_sha256": "036e38a815214c83d69f89ec3e5b2536eab28ab4a5680ffcd99ebf8fc976714c",
+            "checks": {
+              "arithmetic_retention": true,
+              "backend_failures": true,
+              "extractability": true,
+              "finite_training_losses": true,
+              "finite_validation_loss": true,
+              "format_following": true,
+              "instruction_following": false,
+              "prompt_echo": true,
+              "question_generation": true,
+              "token_count_matches_schedule": true
+            },
+            "cumulative_actual_loss_bearing_tokens": 3600,
+            "failed_checks": [
+              "instruction_following"
+            ],
+            "margins": {
+              "arithmetic": 0.09999999999999998,
+              "extractability": 0.08333333333333326,
+              "format": 0.033333333333333326,
+              "instruction": -0.09999999999999998,
+              "prompt_echo": 0.05
+            },
+            "metrics": {
+              "arithmetic_absolute_drop": 0.0,
+              "arithmetic_accuracy": 1.0,
+              "backend_failures": 0,
+              "extractability": 0.9833333333333333,
+              "format_accuracy": 0.9333333333333333,
+              "instruction_accuracy": 0.8,
+              "prompt_echo_rate": 0.0,
+              "question_generation": 0,
+              "synthetic_validation_loss": 0.612765696151125
+            },
+            "minimum_retention_margin": -0.09999999999999998,
+            "passed": false
+          }
+        }
+      },
+      "common_checkpoints": {
+        "16": {
+          "generic_control_passed": false,
+          "minimum_retention_margin": -0.09999999999999998,
+          "passed": false,
+          "targeted_passed": false,
+          "token_parity_passed": true,
+          "token_parity_relative_difference": 0.0
+        },
+        "24": {
+          "generic_control_passed": false,
+          "minimum_retention_margin": -0.033333333333333326,
+          "passed": false,
+          "targeted_passed": false,
+          "token_parity_passed": true,
+          "token_parity_relative_difference": 0.0
+        },
+        "32": {
+          "generic_control_passed": false,
+          "minimum_retention_margin": -0.033333333333333326,
+          "passed": false,
+          "targeted_passed": false,
+          "token_parity_passed": true,
+          "token_parity_relative_difference": 0.0
+        },
+        "8": {
+          "generic_control_passed": false,
+          "minimum_retention_margin": -0.09999999999999998,
+          "passed": false,
+          "targeted_passed": false,
+          "token_parity_passed": true,
+          "token_parity_relative_difference": 0.0
+        }
+      },
+      "format_id": "v4",
+      "latest_common_passing_checkpoint": null,
+      "learning_rate": 2e-05,
+      "selection_margin": null,
+      "variant": "c"
+    },
+    "d": {
+      "arms": {
+        "generic_control": {
+          "16": {
+            "adapter_sha256": "64ecff6d09db40e07f90daf309475b6b701ae749150a7ae8784b0c290bebf830",
+            "checks": {
+              "arithmetic_retention": true,
+              "backend_failures": true,
+              "extractability": true,
+              "finite_training_losses": true,
+              "finite_validation_loss": true,
+              "format_following": true,
+              "instruction_following": false,
+              "prompt_echo": true,
+              "question_generation": true,
+              "token_count_matches_schedule": true
+            },
+            "cumulative_actual_loss_bearing_tokens": 7200,
+            "failed_checks": [
+              "instruction_following"
+            ],
+            "margins": {
+              "arithmetic": 0.09999999999999998,
+              "extractability": 0.08333333333333326,
+              "format": 0.033333333333333326,
+              "instruction": -0.033333333333333326,
+              "prompt_echo": 0.05
+            },
+            "metrics": {
+              "arithmetic_absolute_drop": 0.0,
+              "arithmetic_accuracy": 1.0,
+              "backend_failures": 0,
+              "extractability": 0.9833333333333333,
+              "format_accuracy": 0.9333333333333333,
+              "instruction_accuracy": 0.8666666666666667,
+              "prompt_echo_rate": 0.0,
+              "question_generation": 0,
+              "synthetic_validation_loss": 0.7586086014225598
+            },
+            "minimum_retention_margin": -0.033333333333333326,
+            "passed": false
+          },
+          "24": {
+            "adapter_sha256": "9c79a9c313a2157629b3a89f16ec81083b0a1b5732f9896bb3862d22569d085f",
+            "checks": {
+              "arithmetic_retention": true,
+              "backend_failures": true,
+              "extractability": true,
+              "finite_training_losses": true,
+              "finite_validation_loss": true,
+              "format_following": true,
+              "instruction_following": false,
+              "prompt_echo": true,
+              "question_generation": true,
+              "token_count_matches_schedule": true
+            },
+            "cumulative_actual_loss_bearing_tokens": 10800,
+            "failed_checks": [
+              "instruction_following"
+            ],
+            "margins": {
+              "arithmetic": 0.06666666666666665,
+              "extractability": 0.06666666666666665,
+              "format": 0.033333333333333326,
+              "instruction": -0.09999999999999998,
+              "prompt_echo": 0.05
+            },
+            "metrics": {
+              "arithmetic_absolute_drop": 0.033333333333333326,
+              "arithmetic_accuracy": 0.9666666666666667,
+              "backend_failures": 0,
+              "extractability": 0.9666666666666667,
+              "format_accuracy": 0.9333333333333333,
+              "instruction_accuracy": 0.8,
+              "prompt_echo_rate": 0.0,
+              "question_generation": 0,
+              "synthetic_validation_loss": 0.6799983487734872
+            },
+            "minimum_retention_margin": -0.09999999999999998,
+            "passed": false
+          },
+          "32": {
+            "adapter_sha256": "479442b502bb32f9ab4b8e710c14e6b970a3b85e40ab60c2f8b3c9b9cc2a5bcb",
+            "checks": {
+              "arithmetic_retention": true,
+              "backend_failures": true,
+              "extractability": true,
+              "finite_training_losses": true,
+              "finite_validation_loss": true,
+              "format_following": true,
+              "instruction_following": false,
+              "prompt_echo": true,
+              "question_generation": true,
+              "token_count_matches_schedule": true
+            },
+            "cumulative_actual_loss_bearing_tokens": 14400,
+            "failed_checks": [
+              "instruction_following"
+            ],
+            "margins": {
+              "arithmetic": 0.06666666666666665,
+              "extractability": 0.06666666666666665,
+              "format": 0.033333333333333326,
+              "instruction": -0.09999999999999998,
+              "prompt_echo": 0.05
+            },
+            "metrics": {
+              "arithmetic_absolute_drop": 0.033333333333333326,
+              "arithmetic_accuracy": 0.9666666666666667,
+              "backend_failures": 0,
+              "extractability": 0.9666666666666667,
+              "format_accuracy": 0.9333333333333333,
+              "instruction_accuracy": 0.8,
+              "prompt_echo_rate": 0.0,
+              "question_generation": 0,
+              "synthetic_validation_loss": 0.6670145517876072
+            },
+            "minimum_retention_margin": -0.09999999999999998,
+            "passed": false
+          },
+          "8": {
+            "adapter_sha256": "790cc6e1e78d75584f1c0e1476dc495b0ab1c4ac3fc839576d4d3677a11af7cb",
+            "checks": {
+              "arithmetic_retention": true,
+              "backend_failures": true,
+              "extractability": true,
+              "finite_training_losses": true,
+              "finite_validation_loss": true,
+              "format_following": true,
+              "instruction_following": false,
+              "prompt_echo": true,
+              "question_generation": true,
+              "token_count_matches_schedule": true
+            },
+            "cumulative_actual_loss_bearing_tokens": 3600,
+            "failed_checks": [
+              "instruction_following"
+            ],
+            "margins": {
+              "arithmetic": 0.06666666666666665,
+              "extractability": 0.06666666666666665,
+              "format": 0.033333333333333326,
+              "instruction": -0.033333333333333326,
+              "prompt_echo": 0.05
+            },
+            "metrics": {
+              "arithmetic_absolute_drop": 0.033333333333333326,
+              "arithmetic_accuracy": 0.9666666666666667,
+              "backend_failures": 0,
+              "extractability": 0.9666666666666667,
+              "format_accuracy": 0.9333333333333333,
+              "instruction_accuracy": 0.8666666666666667,
+              "prompt_echo_rate": 0.0,
+              "question_generation": 0,
+              "synthetic_validation_loss": 0.9570575284621408
+            },
+            "minimum_retention_margin": -0.033333333333333326,
+            "passed": false
+          }
+        },
+        "targeted": {
+          "16": {
+            "adapter_sha256": "9aa755901587ba452baab912b51a8f8c5cf9ae5e0f9710e1335a432352faf51c",
+            "checks": {
+              "arithmetic_retention": true,
+              "backend_failures": true,
+              "extractability": true,
+              "finite_training_losses": true,
+              "finite_validation_loss": true,
+              "format_following": true,
+              "instruction_following": false,
+              "prompt_echo": true,
+              "question_generation": true,
+              "token_count_matches_schedule": true
+            },
+            "cumulative_actual_loss_bearing_tokens": 7200,
+            "failed_checks": [
+              "instruction_following"
+            ],
+            "margins": {
+              "arithmetic": 0.09999999999999998,
+              "extractability": 0.08333333333333326,
+              "format": 0.033333333333333326,
+              "instruction": -0.09999999999999998,
+              "prompt_echo": 0.05
+            },
+            "metrics": {
+              "arithmetic_absolute_drop": 0.0,
+              "arithmetic_accuracy": 1.0,
+              "backend_failures": 0,
+              "extractability": 0.9833333333333333,
+              "format_accuracy": 0.9333333333333333,
+              "instruction_accuracy": 0.8,
+              "prompt_echo_rate": 0.0,
+              "question_generation": 0,
+              "synthetic_validation_loss": 0.5956555398443908
+            },
+            "minimum_retention_margin": -0.09999999999999998,
+            "passed": false
+          },
+          "24": {
+            "adapter_sha256": "50266a6bc9425f6a3550ce2f66898b1958ba917b005703d8b2858b83deb00010",
+            "checks": {
+              "arithmetic_retention": true,
+              "backend_failures": true,
+              "extractability": true,
+              "finite_training_losses": true,
+              "finite_validation_loss": true,
+              "format_following": true,
+              "instruction_following": false,
+              "prompt_echo": true,
+              "question_generation": true,
+              "token_count_matches_schedule": true
+            },
+            "cumulative_actual_loss_bearing_tokens": 10800,
+            "failed_checks": [
+              "instruction_following"
+            ],
+            "margins": {
+              "arithmetic": 0.06666666666666665,
+              "extractability": 0.06666666666666665,
+              "format": 0.033333333333333326,
+              "instruction": -0.09999999999999998,
+              "prompt_echo": 0.05
+            },
+            "metrics": {
+              "arithmetic_absolute_drop": 0.033333333333333326,
+              "arithmetic_accuracy": 0.9666666666666667,
+              "backend_failures": 0,
+              "extractability": 0.9666666666666667,
+              "format_accuracy": 0.9333333333333333,
+              "instruction_accuracy": 0.8,
+              "prompt_echo_rate": 0.0,
+              "question_generation": 0,
+              "synthetic_validation_loss": 0.5244821405689593
+            },
+            "minimum_retention_margin": -0.09999999999999998,
+            "passed": false
+          },
+          "32": {
+            "adapter_sha256": "fc83f1fc476d156032f8fedcca48538fdbd1d0e19a34db01ad7d4118cd0d5987",
+            "checks": {
+              "arithmetic_retention": true,
+              "backend_failures": true,
+              "extractability": true,
+              "finite_training_losses": true,
+              "finite_validation_loss": true,
+              "format_following": true,
+              "instruction_following": false,
+              "prompt_echo": true,
+              "question_generation": true,
+              "token_count_matches_schedule": true
+            },
+            "cumulative_actual_loss_bearing_tokens": 14400,
+            "failed_checks": [
+              "instruction_following"
+            ],
+            "margins": {
+              "arithmetic": 0.06666666666666665,
+              "extractability": 0.06666666666666665,
+              "format": 0.033333333333333326,
+              "instruction": -0.09999999999999998,
+              "prompt_echo": 0.05
+            },
+            "metrics": {
+              "arithmetic_absolute_drop": 0.033333333333333326,
+              "arithmetic_accuracy": 0.9666666666666667,
+              "backend_failures": 0,
+              "extractability": 0.9666666666666667,
+              "format_accuracy": 0.9333333333333333,
+              "instruction_accuracy": 0.8,
+              "prompt_echo_rate": 0.0,
+              "question_generation": 0,
+              "synthetic_validation_loss": 0.512540875814078
+            },
+            "minimum_retention_margin": -0.09999999999999998,
+            "passed": false
+          },
+          "8": {
+            "adapter_sha256": "a0de01da650597d905d2bcc3b54132240960a16e940f5eee5d27c1818c9d1742",
+            "checks": {
+              "arithmetic_retention": true,
+              "backend_failures": true,
+              "extractability": true,
+              "finite_training_losses": true,
+              "finite_validation_loss": true,
+              "format_following": true,
+              "instruction_following": false,
+              "prompt_echo": true,
+              "question_generation": true,
+              "token_count_matches_schedule": true
+            },
+            "cumulative_actual_loss_bearing_tokens": 3600,
+            "failed_checks": [
+              "instruction_following"
+            ],
+            "margins": {
+              "arithmetic": 0.06666666666666665,
+              "extractability": 0.06666666666666665,
+              "format": 0.033333333333333326,
+              "instruction": -0.033333333333333326,
+              "prompt_echo": 0.05
+            },
+            "metrics": {
+              "arithmetic_absolute_drop": 0.033333333333333326,
+              "arithmetic_accuracy": 0.9666666666666667,
+              "backend_failures": 0,
+              "extractability": 0.9666666666666667,
+              "format_accuracy": 0.9333333333333333,
+              "instruction_accuracy": 0.8666666666666667,
+              "prompt_echo_rate": 0.0,
+              "question_generation": 0,
+              "synthetic_validation_loss": 0.7732037276121005
+            },
+            "minimum_retention_margin": -0.033333333333333326,
+            "passed": false
+          }
+        }
+      },
+      "common_checkpoints": {
+        "16": {
+          "generic_control_passed": false,
+          "minimum_retention_margin": -0.09999999999999998,
+          "passed": false,
+          "targeted_passed": false,
+          "token_parity_passed": true,
+          "token_parity_relative_difference": 0.0
+        },
+        "24": {
+          "generic_control_passed": false,
+          "minimum_retention_margin": -0.09999999999999998,
+          "passed": false,
+          "targeted_passed": false,
+          "token_parity_passed": true,
+          "token_parity_relative_difference": 0.0
+        },
+        "32": {
+          "generic_control_passed": false,
+          "minimum_retention_margin": -0.09999999999999998,
+          "passed": false,
+          "targeted_passed": false,
+          "token_parity_passed": true,
+          "token_parity_relative_difference": 0.0
+        },
+        "8": {
+          "generic_control_passed": false,
+          "minimum_retention_margin": -0.033333333333333326,
+          "passed": false,
+          "targeted_passed": false,
+          "token_parity_passed": true,
+          "token_parity_relative_difference": 0.0
+        }
+      },
+      "format_id": "v4",
+      "latest_common_passing_checkpoint": null,
+      "learning_rate": 1e-05,
+      "selection_margin": null,
+      "variant": "d"
+    }
+  }
+}

@@ -195,3 +195,25 @@ development evaluation, paired analysis, and a new signal decision were not run.
 and Milestone 8D numbers above remain historical evidence of the collapse, not a valid curriculum
 comparison. Human review is still pending at
 `file:///C:/Users/Admin/Projects/Foundry/results/raw/foundry_500x2_signal_review/codex_assisted_review.html`.
+
+## Fast-Track 8F-H retention ladder and validation stop
+
+> **Provisional one-seed result pending stratified human language review and second-seed
+> confirmation.**
+
+The v3 target audit found procedural trace style in 376/500 generic and 419/500 targeted
+completions. Deterministic concise-v4 reconstructed all 1,000 records with zero rejection and a
+maximum of 41 assistant tokens. Two original ignored 90-prompt suites were frozen; the untouched
+base passed both.
+
+The ladder compared exactly four pairs at steps 8/16/24/32 with 14,400 tokens per arm. Only
+Variant A (v3, `5e-5`) had common calibration passes, so the hierarchy selected step 32 without
+GSM1K access. Disjoint validation then failed: generic scored 45/45 arithmetic, 20/20 format,
+21/25 instruction, 90/90 extractable; targeted scored 44/45, 20/20, 21/25, 89/90. Both instruction
+scores are 84%, below the fixed 90% gate.
+
+No 200-step retraining, final-holdout adapter evaluation, parity promotion, GSM1K rerun, paired
+analysis, or new one-seed signal decision exists. The frozen historical base/generic/targeted
+numbers above remain evidence of prior collapse, not a corrected curriculum comparison. The next
+decision must diagnose the training method without reusing validation for selection; human review
+remains pending at the same local URL.

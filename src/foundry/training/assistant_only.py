@@ -54,8 +54,16 @@ def assistant_only_tokenize(
 ) -> tuple[dict[str, list[int]], AssistantOnlyEvidence]:
     """Tokenize a corrected record with loss only on assistant content and final EOS."""
 
-    question = str(record["rendered_question"])
     completion = normalized_assistant_completion(record)
+    return tokenize_assistant_completion(record, completion, tokenizer, max_length=max_length)
+
+
+def tokenize_assistant_completion(
+    record: dict[str, Any], completion: str, tokenizer: Any, *, max_length: int
+) -> tuple[dict[str, list[int]], AssistantOnlyEvidence]:
+    """Tokenize one validated completion with the shared assistant-only loss boundary."""
+
+    question = str(record["rendered_question"])
     messages = assistant_only_v3_messages(question, completion)
     generation_prefix = cast(
         str,
