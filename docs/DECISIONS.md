@@ -774,3 +774,21 @@ This log separates proposals from approved decisions. A proposal does not author
   targeted once on the frozen 814-item development evaluator at scale 0.50. Do not rerun the base,
   tune the factor, train another adapter, access sealed-final, or treat the result as confirmed
   before human review and a separately approved second seed.
+
+## 2026-07-21: stop the common-scaled one-seed line after absolute signal failure
+
+- **Status:** frozen development comparison complete; one-seed signal gate failed.
+- **Decision:** Record common-scale `0.50` targeted-versus-generic results as a provisional negative
+  adaptation result. Do not tune scale, retrain, run a second seed, access sealed-final, or begin
+  another SFT/GRPO method automatically.
+- **Evidence:** Generic is `387/814`; targeted is `414/814`; frozen base is `521/814`. Targeted is
+  +27 versus generic, with paired 95% interval `[+1.3514, +5.2826]` points, but remains -107 versus
+  base and fails the frozen `>=529` absolute floor. All other signal clauses pass. Decision summary
+  SHA-256 is `2b4f39b542ebe16a4cdfd4835856b9965de9dc04c2384fffaf12a064d736a0ed`.
+- **Rationale:** The positive paired curriculum contrast does not compensate for the large absolute
+  regression. Retention suites measured demonstrated capability preservation on their own domains;
+  they did not guarantee broad GSM1K retention.
+- **Next user decision:** Complete the pending stratified human language review for dataset
+  provenance, then decide whether to stop the adaptation project or separately design a materially
+  different retention-preserving training architecture. A second seed is not justified by the
+  frozen gate failure.

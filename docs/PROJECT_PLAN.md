@@ -854,3 +854,22 @@ base-correct IDs (`112/127/79`). Generic preserves `314/318` and targeted `315/3
 action is the frozen generic-then-targeted 814-item development evaluation, but only after this
 retention decision is verified, committed, pushed, and synchronized. Human language review remains
 pending, and any later benchmark result remains provisional pending that review and a second seed.
+
+## Milestone 8M final outcome: targeted beats generic but signal gate fails
+
+> **Provisional one-seed result pending stratified human language review and second-seed
+> confirmation.**
+
+After the retention decision was independently committed and pushed, the unchanged frozen
+development evaluator ran generic then targeted at common scale 0.50. Generic scored `387/814`
+(`47.5430%`) and targeted `414/814` (`50.8600%`), versus the frozen base `521/814` (`64.0049%`).
+Targeted therefore gains 27 correct answers over generic, and the paired 10,000-replicate interval
+for targeted minus generic is `[+1.3514, +5.2826]` percentage points. Nevertheless, generic is 134
+below base and targeted is 107 below base.
+
+**Final gate:** failed only the absolute clause requiring targeted at least `529/814`; the
+targeted-over-generic, extractability, backend, untargeted-taxonomy, token-parity, and all-three-
+subset retention clauses pass. This is evidence that targeted curriculum allocation outperformed
+the matched generic curriculum within this adaptation method, but the method still caused a large
+absolute capability regression. Do not run a second seed, sealed-final evaluation, another scale,
+or further SFT automatically. Human language review remains pending at the frozen local review URL.

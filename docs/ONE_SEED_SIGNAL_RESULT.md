@@ -295,7 +295,56 @@ Independent validation then passed at generic `314/318` and targeted `315/318`, 
 0.25 was not run. Decision SHA-256 is
 `6f3e7a29dfbb184f5b6b5eb09fd52060c3c2465c5da2343f85d62d05f8589cc7`.
 
-The retention result authorizes a frozen development comparison only after its own verified commit
-and push. No new GSM1K adapter score is recorded in this section yet; the frozen base remains
-521/814. Human review remains pending at
+The retention decision was committed and pushed before generic then targeted were evaluated once at
+common scale `0.50` on the unchanged 814-ID evaluator. The base was not rerun.
+
+### Common-scale frozen development result
+
+| Measurement | Frozen base | Generic scaled | Targeted scaled |
+|---|---:|---:|---:|
+| Correct | 521/814 | 387/814 | 414/814 |
+| End-to-end accuracy | 64.0049% | 47.5430% | 50.8600% |
+| Extractable | 752/814 | 768/814 | 767/814 |
+| Extractability | 92.38% | 94.3489% | 94.2260% |
+| Exact-format compliant | 130/814 | 482/814 | 479/814 |
+| Accuracy among extractable | 69.2819% | 50.3906% | 53.9765% |
+| Extractable but incorrect | 231 | 381 | 353 |
+| Unextractable | 62 | 46 | 47 |
+| Truncated | 3 | 2 | 3 |
+| Backend failures | 0 | 0 | 0 |
+| Delta versus base | - | -134 | -107 |
+
+Both runs preserve the frozen manifest, prompt, extractor, model revision, greedy 768-token
+generation, and adapter hashes. All 196 LoRA scaling values and adapter/base signatures restore
+exactly. Generic used 113,720 input and 139,720 output tokens; targeted used 113,720 and 145,865.
+Peak allocated/reserved VRAM was 3,248,531,968/3,512,729,600 bytes in both arms. Generic measured
+4,412.066 seconds. Targeted's measured 33,838.811-second wall interval includes an observed host
+suspension/long scheduling pause and must not be interpreted as active GPU compute throughput.
+
+### Common-scale paired result and final gate
+
+Targeted wins 47 rows generic misses; generic wins 20 rows targeted misses, for a net targeted win
+of 27. Generic fixes 54 base failures and breaks 188 base successes; targeted fixes 58 and breaks
+165. The paired targeted-minus-generic point estimate is +3.3170 points; the 10,000-replicate 95%
+interval is **[+1.3514, +5.2826] points** with seed `20260720`.
+
+On the frozen failure taxonomy, targeted versus generic changes are: bookkeeping `14/68` versus
+`12/68`; rate/ratio `4/28` versus `5/28`; discrete `4/27` versus `3/27`; arithmetic execution
+`3/22` versus `2/22`; output format `20/69` versus `18/69`; interpretation `8/53` versus `11/53`;
+time/unit `5/24` versus `3/24`; ambiguity risk `0/2` for both. Across the 170 untargeted taxonomy
+rows, targeted fixes 36 and generic 34. The taxonomy covers base failures only and cannot describe
+regressions among the 521 base-success rows.
+
+The one-seed signal gate **fails solely because targeted has 414 rather than at least 529 correct**.
+Targeted is at least four above generic, extractability exceeds 91.38%, backend failures are zero,
+the frozen untargeted-taxonomy clause passes, actual assistant-token parity is exactly
+14,400/14,400, and common-scale retention passes on all three subsets. Decision SHA-256 is
+`2b4f39b542ebe16a4cdfd4835856b9965de9dc04c2384fffaf12a064d736a0ed`.
+
+The narrow conclusion is that targeted data outperformed matched generic data within this method,
+but neither scaled adapter retained acceptable absolute GSM1K capability. Human review remains
+pending at
 `file:///C:/Users/Admin/Projects/Foundry/results/raw/foundry_500x2_signal_review/codex_assisted_review.html`.
+Do not tune the scale, retrain, run a second seed, or access sealed-final automatically. Complete
+the pending human review, then decide whether to stop or separately approve a materially different
+retention-preserving architecture.

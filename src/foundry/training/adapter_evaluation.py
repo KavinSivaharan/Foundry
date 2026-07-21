@@ -27,6 +27,7 @@ from foundry.evaluation.validation import (
     load_answer_validation_manifest,
     load_final_evaluator_manifest,
 )
+from foundry.training.lora_scaling import ScalingEvidence, scaled_lora_adapter
 from foundry.training.qlora import directory_sha256
 
 
@@ -40,6 +41,7 @@ class PeftCudaBackend:
         model_path: Path,
         adapter_path: Path,
         expected_adapter_sha256: str,
+        adapter_scale: float = 1.0,
     ) -> None:
         if config.model.device != "cuda" or config.model.dtype != "float16":
             raise BackendError("frozen adapter evaluation requires CUDA float16")
@@ -86,14 +88,20 @@ class PeftCudaBackend:
         if offloaded:
             raise BackendError(f"CPU or disk offloading is prohibited: {offloaded[:3]}")
         model.eval()
+        scaling_context = scaled_lora_adapter(model, adapter_scale)
+        scaling_evidence = scaling_context.__enter__()
         self._torch = torch
         self._tokenizer = tokenizer
         self._model = model
+        self._scaling_context = scaling_context
+        self._scaling_evidence = scaling_evidence
+        self._closed = False
         self._adapter_sha256 = actual_adapter_sha256
+        self._adapter_scale = float(adapter_scale)
         self._load_seconds = time.perf_counter() - load_started
         self._name = (
             f"peft-cuda:{config.model.repo_id}@{config.model.revision}"
-            f"+adapter@{actual_adapter_sha256}"
+            f"+adapter@{actual_adapter_sha256}+scale@{self._adapter_scale:.8g}"
         )
 
     @property
@@ -138,11 +146,23 @@ class PeftCudaBackend:
             "peak_vram_allocated_bytes": int(self._torch.cuda.max_memory_allocated(0)),
             "peak_vram_reserved_bytes": int(self._torch.cuda.max_memory_reserved(0)),
             "adapter_sha256": self._adapter_sha256,
+            "adapter_scale": self._adapter_scale,
+            "lora_module_count": self._scaling_evidence.lora_module_count,
         }
+
+    @property
+    def scaling_evidence(self) -> ScalingEvidence:
+        """Return reversible scaling evidence for the active adapter."""
+
+        return self._scaling_evidence
 
     def close(self) -> None:
         """Release model memory before another arm loads."""
 
+        if self._closed:
+            return
+        self._scaling_context.__exit__(None, None, None)
+        self._closed = True
         del self._model
         gc.collect()
         self._torch.cuda.empty_cache()
@@ -170,6 +190,7 @@ def run_adapter_evaluation(
     model_path: Path,
     adapter_path: Path,
     expected_adapter_sha256: str,
+    adapter_scale: float,
     output_dir: Path,
     tracked_summary_path: Path,
 ) -> dict[str, object]:
@@ -192,6 +213,7 @@ def run_adapter_evaluation(
         model_path=model_path,
         adapter_path=adapter_path,
         expected_adapter_sha256=expected_adapter_sha256,
+        adapter_scale=adapter_scale,
     )
     try:
         examples = load_huggingface_examples(config, manifest)
@@ -207,6 +229,8 @@ def run_adapter_evaluation(
         backend.close()
     result = asdict(summary)
     result["adapter_sha256"] = expected_adapter_sha256
+    result["adapter_scale"] = adapter_scale
+    result["runtime_scaling"] = backend.scaling_evidence.as_dict()
     result["frozen_base_correct"] = 521
     result["frozen_base_accuracy"] = 521 / 814
     result["correct_delta_vs_base"] = int(result["correct_examples"]) - 521
@@ -230,6 +254,7 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--model-path", required=True, type=Path)
     parser.add_argument("--adapter", required=True, type=Path)
     parser.add_argument("--adapter-sha256", required=True)
+    parser.add_argument("--adapter-scale", required=True, type=float)
     parser.add_argument("--output-dir", required=True, type=Path)
     parser.add_argument("--tracked-summary", required=True, type=Path)
     return parser
@@ -247,6 +272,7 @@ def main() -> int:
         model_path=args.model_path,
         adapter_path=args.adapter,
         expected_adapter_sha256=args.adapter_sha256,
+        adapter_scale=args.adapter_scale,
         output_dir=args.output_dir,
         tracked_summary_path=args.tracked_summary,
     )

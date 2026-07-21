@@ -63,6 +63,11 @@ def test_analysis_validates_alignment_and_applies_frozen_gate(tmp_path: Path) ->
     )
     parity = tmp_path / "parity.json"
     parity.write_text(json.dumps({"benchmark_evaluation_authorized": True}), encoding="utf-8")
+    retention = tmp_path / "retention.json"
+    retention.write_text(
+        json.dumps({"retention_passed": True, "gsm1k_authorized": True}),
+        encoding="utf-8",
+    )
     output = tmp_path / "result.json"
 
     result = analyze_paired_results(
@@ -73,12 +78,14 @@ def test_analysis_validates_alignment_and_applies_frozen_gate(tmp_path: Path) ->
         targeted_summary_path=targeted_summary,
         taxonomy_path=taxonomy_path,
         final_parity_path=parity,
+        retention_decision_path=retention,
         output_path=output,
         expected_examples=4,
     )
 
     assert result["correct"] == {"base": 2, "generic_control": 2, "targeted": 2}
     assert result["paired_changes"]["targeted_net_wins"] == 0
+    assert result["signal_gate_checks"]["common_scale_retention_passed_on_all_three_subsets"]
     assert result["one_seed_signal_gate_passed"] is False
     assert output.exists()
 
@@ -105,6 +112,7 @@ def test_analysis_rejects_different_stable_id_sets(tmp_path: Path) -> None:
             targeted_summary_path=placeholder,
             taxonomy_path=placeholder,
             final_parity_path=placeholder,
+            retention_decision_path=placeholder,
             output_path=tmp_path / "result.json",
             expected_examples=2,
         )

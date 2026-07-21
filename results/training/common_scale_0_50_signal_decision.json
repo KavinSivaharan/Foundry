@@ -1,0 +1,39 @@
+{
+  "common_scale": 0.5,
+  "decision_id": "foundry-common-scale-0-50-one-seed-signal-v1",
+  "frozen_base_correct": 521,
+  "generic_correct": 387,
+  "generic_delta_vs_base": -134,
+  "human_review_status": "pending",
+  "human_review_url": "file:///C:/Users/Admin/Projects/Foundry/results/raw/foundry_500x2_signal_review/codex_assisted_review.html",
+  "interpretation": "targeted_outperformed_generic_but_both_regressed_vs_base_and_absolute_targeted_floor_failed",
+  "one_seed_signal_gate_passed": false,
+  "paired_bootstrap_interval": [
+    0.013513513513513514,
+    0.052825552825552825
+  ],
+  "retention_decision": "retention_approved_common_scaled_short_run_adapters",
+  "schema_version": 1,
+  "sealed_final_accessed": false,
+  "signal_gate_checks": {
+    "common_scale_retention_passed_on_all_three_subsets": true,
+    "final_training_parity_passed": true,
+    "targeted_at_least_529_correct": false,
+    "targeted_at_least_four_over_generic": true,
+    "targeted_extractability_at_least_91_38_percent": true,
+    "targeted_zero_backend_failures": true,
+    "untargeted_aggregate_decline_within_two_points": true
+  },
+  "source_sha256": {
+    "generic_summary": "a6d2f049b77e06f6ce5f8fda6da0b3ebca3fc88e2b168d6c849b62be43c2452b",
+    "paired_analysis": "fc60e71055eeacb53a52a1ea0fbe6f151b0b75a0fc39c0f53d82b5dd3d331538",
+    "retention_decision": "b1ef3f4680f9ad6bc2c07a37b6fd074d08da37f3c2b2c3bc56e3b6f3bc8aa81c",
+    "targeted_summary": "bc0710c9a1fc79274204d5a39ab8f7fa241d8a52238d4e90a4f579a2208273a5",
+    "training_parity": "469f69eba280f0d68be80b4fc75ea23d85d7ec1a66241d44d8026d5354867479"
+  },
+  "status_label": "Provisional one-seed result pending stratified human language review and second-seed confirmation.",
+  "summary_sha256": "2b4f39b542ebe16a4cdfd4835856b9965de9dc04c2384fffaf12a064d736a0ed",
+  "targeted_correct": 414,
+  "targeted_delta_vs_base": -107,
+  "targeted_delta_vs_generic": 27
+}

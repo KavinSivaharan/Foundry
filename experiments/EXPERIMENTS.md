@@ -799,3 +799,22 @@ Every future experiment must be registered here before a costly run begins. Its 
 - **Gate:** Passed as `retention_approved_common_scaled_short_run_adapters`. Generic then targeted
   frozen 814-item development evaluation is eligible only after this evidence is verified,
   committed, pushed, and synchronized. Human review and second-seed confirmation remain pending.
+
+### EXP-TRAIN-010: common-scale frozen one-seed comparison
+
+- **Status:** complete; frozen signal gate failed on absolute targeted accuracy.
+- **Label:** Provisional one-seed result pending stratified human language review and second-seed
+  confirmation.
+- **Arms:** unchanged Variant A step-32 generic/targeted adapters at common runtime scale `0.50`;
+  actual assistant-token exposure `14,400/14,400`; frozen base not rerun.
+- **Results:** base `521/814`; generic `387/814` with 94.3489% extractability; targeted `414/814`
+  with 94.2260% extractability. Generic/targeted deltas versus base are -134/-107; targeted is +27
+  versus generic.
+- **Paired analysis:** targeted wins 47, generic wins 20, net +27; point estimate +3.3170 points;
+  10,000-replicate paired 95% interval `[+1.3514, +5.2826]` points, seed `20260720`.
+- **Gate:** six of seven clauses pass. Targeted fails only the `>=529/814` absolute floor at 414.
+  Paired-analysis SHA-256 is `8cd2e7c9556e08850345166b89ed5c1d2c932b96f7ed203e59ef43f50cfcb9ed`;
+  decision SHA-256 is `2b4f39b542ebe16a4cdfd4835856b9965de9dc04c2384fffaf12a064d736a0ed`.
+- **Next experiment:** none approved. Complete the pending stratified human review, then decide
+  whether to stop adaptation or separately authorize a materially different retention-preserving
+  architecture. Do not run a second seed from this failed frozen gate.

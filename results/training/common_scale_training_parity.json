@@ -1,0 +1,20 @@
+{
+  "absolute_token_difference": 0,
+  "adapter_scale": 0.5,
+  "benchmark_evaluation_authorized": true,
+  "generic_actual_loss_bearing_tokens": 14400,
+  "parity_id": "foundry-retention-safe-variant-a-step-32-parity-v1",
+  "relative_token_difference": 0.0,
+  "retention_validation_passed": true,
+  "schema_version": 1,
+  "selected_checkpoint": 32,
+  "selected_variant": "a",
+  "source_sha256": {
+    "ladder_results": "968f09a071b367e72f654b9d5c30123c62928e1089ad850db50ec048c715c55e",
+    "ladder_schedules": "6d6ed5f730f0c34c6a90e2d592b15d4cccca485046aa839123beee3938ad9f53"
+  },
+  "summary_sha256": "3fb6db8ff1f0dfcc10a49cea3d27e2ae83fddb77cfc78c9fc1f037865a08fe73",
+  "targeted_actual_loss_bearing_tokens": 14400,
+  "token_parity_limit": 0.005,
+  "training_token_parity_passed": true
+}

@@ -171,6 +171,7 @@ def analyze_paired_results(
     targeted_summary_path: Path,
     taxonomy_path: Path,
     final_parity_path: Path,
+    retention_decision_path: Path,
     output_path: Path,
     expected_examples: int = EXPECTED_EXAMPLES,
 ) -> dict[str, Any]:
@@ -187,6 +188,7 @@ def analyze_paired_results(
     generic_summary = _load_object(generic_summary_path)
     targeted_summary = _load_object(targeted_summary_path)
     final_parity = _load_object(final_parity_path)
+    retention_decision = _load_object(retention_decision_path)
     if int(generic_summary["correct_examples"]) != sum(generic.values()):
         raise ValueError("generic summary and predictions disagree")
     if int(targeted_summary["correct_examples"]) != sum(targeted.values()):
@@ -234,6 +236,9 @@ def analyze_paired_results(
             untargeted["no_greater_than_two_point_decline"]
         ),
         "final_training_parity_passed": bool(final_parity["benchmark_evaluation_authorized"]),
+        "common_scale_retention_passed_on_all_three_subsets": bool(
+            retention_decision["retention_passed"] and retention_decision["gsm1k_authorized"]
+        ),
     }
 
     result: dict[str, Any] = {
@@ -250,6 +255,7 @@ def analyze_paired_results(
             "generic_summary": _sha256(generic_summary_path),
             "targeted_summary": _sha256(targeted_summary_path),
             "final_parity": _sha256(final_parity_path),
+            "retention_decision": _sha256(retention_decision_path),
         },
         "examples": expected_examples,
         "correct": {
@@ -318,6 +324,7 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--targeted-summary", required=True, type=Path)
     parser.add_argument("--taxonomy", required=True, type=Path)
     parser.add_argument("--final-parity", required=True, type=Path)
+    parser.add_argument("--retention-decision", required=True, type=Path)
     parser.add_argument("--output", required=True, type=Path)
     return parser
 
@@ -332,6 +339,7 @@ def main() -> int:
         targeted_summary_path=args.targeted_summary,
         taxonomy_path=args.taxonomy,
         final_parity_path=args.final_parity,
+        retention_decision_path=args.retention_decision,
         output_path=args.output,
     )
     print(json.dumps(result, sort_keys=True))

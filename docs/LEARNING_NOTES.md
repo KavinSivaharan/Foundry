@@ -767,3 +767,17 @@ selection. The new holdout also illustrates why conditioning matters: the untouc
 318/450 objective prompts, and retention was measured only over those demonstrated capabilities.
 Passing retention does not imply task improvement; it only opens the separately frozen benchmark
 comparison. Human language review and second-seed uncertainty remain unresolved.
+
+## Local retention can pass while broad benchmark capability still regresses
+
+Common scale 0.50 preserved `314/318` and `315/318` newly demonstrated holdout capabilities, yet
+the same adapters scored only `387/814` and `414/814` on frozen GSM1K versus the base's `521/814`.
+Retention suites are therefore necessary safeguards, not sufficient evidence of broad capability
+retention. Their scoped objective tasks did not fully represent the base model's long-form
+arithmetic reasoning distribution.
+
+The targeted curriculum still shows a meaningful within-method advantage: +27 correct examples
+over generic, with a paired 95% interval wholly above zero. Scientifically, that supports the
+directional curriculum hypothesis within this seed while simultaneously rejecting the practical
+adaptation result because absolute performance collapsed. Both statements are needed; reporting
+only the paired win or only the absolute failure would discard useful evidence.

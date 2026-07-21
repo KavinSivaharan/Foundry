@@ -3,6 +3,7 @@ from pathlib import Path
 import pytest
 
 from foundry.config import load_config
+from foundry.training import adapter_evaluation
 from foundry.training.adapter_evaluation import PeftCudaBackend
 
 
@@ -18,3 +19,10 @@ def test_adapter_backend_rejects_hash_before_model_load(tmp_path: Path) -> None:
             adapter_path=adapter,
             expected_adapter_sha256="0" * 64,
         )
+
+
+def test_adapter_evaluation_parser_requires_runtime_scale() -> None:
+    parser = adapter_evaluation._parser()
+    scale_action = next(action for action in parser._actions if action.dest == "adapter_scale")
+    assert scale_action.required is True
+    assert scale_action.type is float

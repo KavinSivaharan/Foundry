@@ -1,0 +1,189 @@
+{
+  "accuracy": {
+    "base": 0.64004914004914,
+    "generic_control": 0.47542997542997545,
+    "targeted": 0.5085995085995086
+  },
+  "aggregate_untargeted_category_set": {
+    "base_accuracy": 0.0,
+    "base_correct": 0,
+    "examples": 170,
+    "generic_accuracy": 0.2,
+    "generic_correct": 34,
+    "maximum_allowed_absolute_decline": 0.02,
+    "no_greater_than_two_point_decline": true,
+    "targeted_accuracy": 0.21176470588235294,
+    "targeted_correct": 36,
+    "targeted_delta_vs_base": 0.21176470588235294
+  },
+  "analysis_sha256": "8cd2e7c9556e08850345166b89ed5c1d2c932b96f7ed203e59ef43f50cfcb9ed",
+  "category_results": {
+    "arithmetic_execution": {
+      "base_accuracy": 0.0,
+      "base_correct": 0,
+      "examples": 22,
+      "generic_accuracy": 0.09090909090909091,
+      "generic_correct": 2,
+      "targeted_accuracy": 0.13636363636363635,
+      "targeted_correct": 3,
+      "targeted_delta_vs_base": 0.13636363636363635,
+      "targeted_delta_vs_generic": 0.045454545454545456
+    },
+    "benchmark_ambiguity_or_annotation_risk": {
+      "base_accuracy": 0.0,
+      "base_correct": 0,
+      "examples": 2,
+      "generic_accuracy": 0.0,
+      "generic_correct": 0,
+      "targeted_accuracy": 0.0,
+      "targeted_correct": 0,
+      "targeted_delta_vs_base": 0.0,
+      "targeted_delta_vs_generic": 0.0
+    },
+    "constraint_distribution_or_discrete_reasoning": {
+      "base_accuracy": 0.0,
+      "base_correct": 0,
+      "examples": 27,
+      "generic_accuracy": 0.1111111111111111,
+      "generic_correct": 3,
+      "targeted_accuracy": 0.14814814814814814,
+      "targeted_correct": 4,
+      "targeted_delta_vs_base": 0.14814814814814814,
+      "targeted_delta_vs_generic": 0.037037037037037035
+    },
+    "multi_step_bookkeeping_or_omission": {
+      "base_accuracy": 0.0,
+      "base_correct": 0,
+      "examples": 68,
+      "generic_accuracy": 0.17647058823529413,
+      "generic_correct": 12,
+      "targeted_accuracy": 0.20588235294117646,
+      "targeted_correct": 14,
+      "targeted_delta_vs_base": 0.20588235294117646,
+      "targeted_delta_vs_generic": 0.029411764705882353
+    },
+    "output_format_or_answer_extraction": {
+      "base_accuracy": 0.0,
+      "base_correct": 0,
+      "examples": 69,
+      "generic_accuracy": 0.2608695652173913,
+      "generic_correct": 18,
+      "targeted_accuracy": 0.2898550724637681,
+      "targeted_correct": 20,
+      "targeted_delta_vs_base": 0.2898550724637681,
+      "targeted_delta_vs_generic": 0.028985507246376812
+    },
+    "rate_ratio_percentage_or_average": {
+      "base_accuracy": 0.0,
+      "base_correct": 0,
+      "examples": 28,
+      "generic_accuracy": 0.17857142857142858,
+      "generic_correct": 5,
+      "targeted_accuracy": 0.14285714285714285,
+      "targeted_correct": 4,
+      "targeted_delta_vs_base": 0.14285714285714285,
+      "targeted_delta_vs_generic": -0.03571428571428571
+    },
+    "target_or_language_interpretation": {
+      "base_accuracy": 0.0,
+      "base_correct": 0,
+      "examples": 53,
+      "generic_accuracy": 0.20754716981132076,
+      "generic_correct": 11,
+      "targeted_accuracy": 0.1509433962264151,
+      "targeted_correct": 8,
+      "targeted_delta_vs_base": 0.1509433962264151,
+      "targeted_delta_vs_generic": -0.05660377358490566
+    },
+    "time_unit_or_sequence_reasoning": {
+      "base_accuracy": 0.0,
+      "base_correct": 0,
+      "examples": 24,
+      "generic_accuracy": 0.125,
+      "generic_correct": 3,
+      "targeted_accuracy": 0.20833333333333334,
+      "targeted_correct": 5,
+      "targeted_delta_vs_base": 0.20833333333333334,
+      "targeted_delta_vs_generic": 0.08333333333333333
+    }
+  },
+  "correct": {
+    "base": 521,
+    "generic_control": 387,
+    "targeted": 414
+  },
+  "correct_deltas": {
+    "generic_vs_base": -134,
+    "targeted_vs_base": -107,
+    "targeted_vs_generic": 27
+  },
+  "examples": 814,
+  "frozen_taxonomy_scope": {
+    "classified_examples": 293,
+    "scope": "development_failures_only",
+    "targeted_categories": [
+      "constraint_distribution_or_discrete_reasoning",
+      "multi_step_bookkeeping_or_omission",
+      "rate_ratio_percentage_or_average"
+    ]
+  },
+  "input_sha256": {
+    "base_predictions": "73d52dace0f27577b1177bdfa81dfbb4c88252107c9b04e2ff49dbbd93da6cc0",
+    "final_parity": "469f69eba280f0d68be80b4fc75ea23d85d7ec1a66241d44d8026d5354867479",
+    "frozen_taxonomy": "964d0c18b60d4f0262f0ec711b2f13b396ca4fa1c921f0dc2e91205d393cb692",
+    "generic_predictions": "78ff3ea263d490cb6d4550a1a3d6ca9c4acd3706a436e24ecf7a5f8513bfa17d",
+    "generic_summary": "a6d2f049b77e06f6ce5f8fda6da0b3ebca3fc88e2b168d6c849b62be43c2452b",
+    "retention_decision": "b1ef3f4680f9ad6bc2c07a37b6fd074d08da37f3c2b2c3bc56e3b6f3bc8aa81c",
+    "targeted_predictions": "9205e2dd06941a2e4a6aa2e42cda154288c6ff81d9e6937d34e7e8c97784db49",
+    "targeted_summary": "bc0710c9a1fc79274204d5a39ab8f7fa241d8a52238d4e90a4f579a2208273a5"
+  },
+  "one_seed_signal_gate_passed": false,
+  "paired_bootstrap": {
+    "confidence_level": 0.95,
+    "estimand": "targeted_accuracy_minus_generic_accuracy",
+    "interval": [
+      0.013513513513513514,
+      0.052825552825552825
+    ],
+    "method": "paired_nonparametric_percentile_bootstrap",
+    "point_estimate": 0.033169533169533166,
+    "replicates": 10000,
+    "seed": 20260720,
+    "stable_order": "lexicographic_stable_id"
+  },
+  "paired_changes": {
+    "generic_broke_base_successes": 188,
+    "generic_fixed_base_failures": 54,
+    "generic_only_broken": 36,
+    "generic_only_fixed": 7,
+    "generic_wins_over_targeted": 20,
+    "targeted_broke_base_successes": 165,
+    "targeted_fixed_base_failures": 58,
+    "targeted_net_wins": 27,
+    "targeted_only_broken": 13,
+    "targeted_only_fixed": 11,
+    "targeted_wins_over_generic": 47,
+    "transition_counts": {
+      "base_0_generic_0_targeted_0": 228,
+      "base_0_generic_0_targeted_1": 11,
+      "base_0_generic_1_targeted_0": 7,
+      "base_0_generic_1_targeted_1": 47,
+      "base_1_generic_0_targeted_0": 152,
+      "base_1_generic_0_targeted_1": 36,
+      "base_1_generic_1_targeted_0": 13,
+      "base_1_generic_1_targeted_1": 320
+    }
+  },
+  "schema_version": 1,
+  "sealed_final_accessed": false,
+  "signal_gate_checks": {
+    "common_scale_retention_passed_on_all_three_subsets": true,
+    "final_training_parity_passed": true,
+    "targeted_at_least_529_correct": false,
+    "targeted_at_least_four_over_generic": true,
+    "targeted_extractability_at_least_91_38_percent": true,
+    "targeted_zero_backend_failures": true,
+    "untargeted_aggregate_decline_within_two_points": true
+  },
+  "status_label": "Provisional one-seed result pending stratified human language review and second-seed confirmation."
+}
