@@ -781,3 +781,27 @@ over generic, with a paired 95% interval wholly above zero. Scientifically, that
 directional curriculum hypothesis within this seed while simultaneously rejecting the practical
 adaptation result because absolute performance collapsed. Both statements are needed; reporting
 only the paired win or only the absolute failure would discard useful evidence.
+
+## Exact task-vector arithmetic does not guarantee retention safety
+
+The generic and targeted LoRA updates are strongly aligned: their global dense cosine similarity is
+`0.93991`, while the targeted-minus-generic difference has only about `34.6%` of the targeted
+update's Frobenius norm. That supports the original decomposition intuition: much of the two SFT
+updates is shared, and exact subtraction isolates a materially smaller differential component.
+PEFT concatenation represented that difference reversibly at rank 32; all 196 dense comparisons and
+the independent functional-logit comparison passed with errors far below their frozen tolerances.
+
+Algebraic exactness still did not make the differential adapter retention-safe. Every tested scale
+passed the 187-item adjudication subset, and the 210-item anchor subsets preserved between 204 and
+208 demonstrated base behaviors with strong category rates and Wilson bounds. Yet every anchor run
+generated at least one forbidden question-like response. The smallest scale did not monotonically
+remove this behavior: question-generation counts across descending scales were `1`, `2`, `1`, and
+`2`. A strict behavioral clause can therefore remain the decisive safety signal even when aggregate
+preservation improves and the parameter arithmetic is exact.
+
+The correct scientific response is to preserve the negative result and stop, not reinterpret the
+holdout as another tuning set. No scale was selected, so the independent final holdout and GSM1K
+remained unopened for this adapter. Future work must change the retention mechanism materially—such
+as KL/replay regularization or verifier-reward GRPO under a separately approved design—rather than
+continue adapter arithmetic or post-hoc scale search. The dataset's stratified human language review
+and second-seed uncertainty also remain unresolved.

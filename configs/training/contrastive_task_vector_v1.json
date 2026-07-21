@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "protocol_id": "foundry-targeted-minus-generic-task-vector-v1",
+  "base_model": {
+    "model_id": "Qwen/Qwen2.5-1.5B-Instruct",
+    "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+    "snapshot_sha256": "ccc7ba57b35dd471dedfc0dd4b6edb1c23179a2a094e46dee45ca42e803a1815",
+    "untouched_diagnostic_output_sha256": "d2b230f9174c2adeb33b258b0ab83014190d4b7a0ec9e42403c580614d23abff"
+  },
+  "source_adapters": {
+    "generic_source": {
+      "directory_sha256": "faa4b72bd0046fbd8d94fc3f364cb7078259403131ea16cd136fdfbbe5408f35",
+      "diagnostic_output_sha256": "e2fcda470fdbabaed5fab564e284875e4319386b208ea0b9cbb62539173cfb32"
+    },
+    "targeted_source": {
+      "directory_sha256": "c4e455432b9a3b17ae077dafdaa1c9391ab67b7350628f3aa5f9787677d8bb5b",
+      "diagnostic_output_sha256": "375f57e4ff1932da2f733e966886192a142ea60a69cfc99d8a17960ea98f308e"
+    }
+  },
+  "source_contract": {
+    "rank": 16,
+    "alpha": 32,
+    "dropout": 0.05,
+    "bias": "none",
+    "modules_to_save": null,
+    "target_modules": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj",
+      "gate_proj",
+      "up_proj",
+      "down_proj"
+    ],
+    "lora_module_count": 196,
+    "saved_tensor_count": 392,
+    "inventory_sha256": "c3334a15154beae94d6b4bd043d24742cf522b86f48efd044e3a9fe7e1f978b9"
+  },
+  "composition": {
+    "adapter_name": "targeted_minus_generic_v1",
+    "adapters": [
+      "targeted_source",
+      "generic_source"
+    ],
+    "weights": [
+      1.0,
+      -1.0
+    ],
+    "combination_type": "cat",
+    "expected_rank": 32,
+    "expected_alpha": 32,
+    "expected_scaling": 1.0,
+    "factor_dtype": "float32",
+    "merge_allowed": false,
+    "compression_allowed": false
+  },
+  "equivalence": {
+    "dense_maximum_absolute_error": 1e-05,
+    "dense_relative_frobenius_error": 1e-05,
+    "functional_maximum_absolute_logit_error": 0.125,
+    "functional_relative_frobenius_error": 0.001,
+    "functional_verification_base_dtype": "float32",
+    "diagnostic_prompt_count": 3
+  },
+  "scale_selection": {
+    "scales_descending": [
+      1.0,
+      0.75,
+      0.5,
+      0.25
+    ],
+    "zero_sanity_control": 0.0,
+    "select_first_passing": true,
+    "selection_subset_sha256s": [
+      "c76df74b911b96ca43c2663a123e41347fd544bf6644f15522ccaad7b77099e1",
+      "36be91d08f2ab0e05c491094c53965d1aa4f989a730347768877a2548a62c7a9"
+    ],
+    "independent_final_subset_sha256": "0884923ce7ab39f1080282dab0ce51aff7063270d6c97f5c1d70370256012ded"
+  },
+  "retention_gate": {
+    "overall_preservation_minimum": 0.9,
+    "category_preservation_minimum": 0.9,
+    "overall_wilson_95_lower_bound_minimum": 0.85,
+    "prompt_echo_maximum": 0.02,
+    "question_generation_maximum": 0,
+    "backend_failures_maximum": 0,
+    "instruction_family_adapter_only_failure_maximum": 3
+  },
+  "frozen_evaluator": {
+    "semantic_config_sha256": "5f315d5de645f9563b8d1e61bc8e02c3513c453238ad9e1d6f9473489b5a622b",
+    "prompt_sha256": "738ea5a3b94e7c75ac0bd50a229bbf04f3fc5d773e14658bc6728bc7a4b18350",
+    "extractor_sha256": "e099d1c247968fed982cb849022ec3137b1694c15f23a65663a127b8158c06df",
+    "development_manifest_sha256": "5e810d3ab644bef1d43c598a14a6164ba6464b27fde50e92a2f241816ce87897"
+  },
+  "sealed_final_allowed": false,
+  "config_sha256": "b4914d5a95bb46a52374b9a390038634f01df99f69a4ef6f79c5bfe4f8d983fa"
+}

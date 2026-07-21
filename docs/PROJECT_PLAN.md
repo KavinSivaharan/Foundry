@@ -873,3 +873,49 @@ subset retention clauses pass. This is evidence that targeted curriculum allocat
 the matched generic curriculum within this adaptation method, but the method still caused a large
 absolute capability regression. Do not run a second seed, sealed-final evaluation, another scale,
 or further SFT automatically. Human language review remains pending at the frozen local review URL.
+
+## Milestone 8N outcome: exact task vector failed retention selection
+
+> **Provisional one-seed result pending stratified human language review and second-seed
+> confirmation.**
+
+Milestone 8N constructed the frozen targeted-minus-generic update without retraining. The generic
+and targeted dense LoRA updates have Frobenius norms `1.6918784364` and `1.6980775191`, with cosine
+similarity `0.9399098552`. Their exact difference has norm `0.5876302228`, or `34.7324%` of the
+generic norm and `34.6056%` of the targeted norm; its largest absolute element is
+`0.0007056529`. Attention and feed-forward contrastive norms are `0.2377137337` and
+`0.5374025117`. The dense-analysis SHA-256 is
+`36ce1b90beee7499aa33e11dacbe163e107a98bda5f1065e3f7841fbd85fbaa2`; compatibility and
+contrastive-definition hashes are `1c921ad51219131857475c569f52492977eaf8dcf0f3ab6aca305f4df48d3092`
+and `c711c3f97ec750f1dd3471822b1be76edca4668ec9ed50bab828c749b843f3e6`.
+
+PEFT `cat` composition produced one unmerged, reversible rank-32, alpha-32 adapter with SHA-256
+`84f02df1cbc5ec1015d096164dbfe3833e166a14eda9ffadf62b5d2d2527c961` under final protocol
+`b4914d5a95bb46a52374b9a390038634f01df99f69a4ef6f79c5bfe4f8d983fa`. Across all 196 modules,
+the maximum dense error was `1.7462298274e-10` and relative Frobenius error was
+`2.9353350496e-7`; the functional logit comparison measured `5.6266784668e-5` maximum absolute
+error and `1.9593861237e-6` relative error. Scale-zero/base and scale-one/unscaled sanity checks,
+source-adapter immutability, and base-state restoration all passed. Construction summary SHA-256 is
+`07a99bde03339494cc1ce9cf8428d7ecf7ad35aef58b55038389a3888d2c586c`.
+
+Retention-only selection then tested every predeclared scale:
+
+| Scale | Adjudication preservation | Anchor preservation | Anchor question generation | Result |
+| --- | ---: | ---: | ---: | --- |
+| `1.00` | `181/187` | `204/210` | `1` | fail |
+| `0.75` | `182/187` | `207/210` | `2` | fail |
+| `0.50` | `183/187` | `207/210` | `1` | fail |
+| `0.25` | `184/187` | `208/210` | `2` | fail |
+
+Every adjudication cell passed, and every anchor cell met the overall, category, Wilson-bound,
+extractability, prompt-echo, backend, and failure-concentration clauses. Each anchor cell failed the
+unchanged requirement of zero question generation, so no contrastive scale was selected. Selection
+summary SHA-256 is `b41d975f342820ac34ca693d599677994e3f272243c114c313605beb020ad49a`.
+
+**Current stop:** the contrastive adapter-arithmetic route is closed for this project version. The
+independent final retention holdout was not evaluated, GSM1K development was not run, no paired
+benchmark analysis exists, and sealed-final remained untouched. The stratified human language
+review remains pending at
+`file:///C:/Users/Admin/Projects/Foundry/results/raw/foundry_500x2_signal_review/codex_assisted_review.html`.
+Any next adaptation experiment requires separate approval and a materially different retention
+architecture: either KL/replay-regularized adaptation or verifier-reward GRPO.

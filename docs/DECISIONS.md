@@ -792,3 +792,33 @@ This log separates proposals from approved decisions. A proposal does not author
   provenance, then decide whether to stop the adaptation project or separately design a materially
   different retention-preserving training architecture. A second seed is not justified by the
   frozen gate failure.
+
+## 2026-07-21: close adapter arithmetic after contrastive retention failure
+
+- **Status:** Milestone 8N exact construction passed; retention-only scale selection failed.
+- **Decision:** Preserve the exact rank-32 `targeted_minus_generic_v1` adapter and content-free
+  evidence as a negative result, select no runtime scale, and close the current adapter-arithmetic
+  route. Do not use the independent final holdout, run GSM1K, tune another scale, try another merge
+  algorithm, retrain, or access sealed-final.
+- **Evidence:** Generic and targeted dense-update norms are `1.6918784364` and `1.6980775191`,
+  their cosine similarity is `0.9399098552`, and the contrastive norm is `0.5876302228`
+  (`34.6056%` of targeted). Dense-analysis SHA-256 is
+  `36ce1b90beee7499aa33e11dacbe163e107a98bda5f1065e3f7841fbd85fbaa2`. The adapter SHA-256 is
+  `84f02df1cbc5ec1015d096164dbfe3833e166a14eda9ffadf62b5d2d2527c961`; all 196 module-level
+  comparisons passed with maximum dense error `1.7462298274e-10`, relative error
+  `2.9353350496e-7`, and functional maximum logit error `5.6266784668e-5`. Construction summary
+  SHA-256 is `07a99bde03339494cc1ce9cf8428d7ecf7ad35aef58b55038389a3888d2c586c`.
+- **Retention result:** Scales `1.00`, `0.75`, `0.50`, and `0.25` respectively preserved
+  `181`, `182`, `183`, and `184` of 187 adjudication items; all four cells passed. They preserved
+  `204`, `207`, `207`, and `208` of 210 anchor items, but emitted `1`, `2`, `1`, and `2`
+  question-generation outputs. Thus every anchor cell failed only the frozen zero-question clause.
+  No scale passed both subsets; selection SHA-256 is
+  `b41d975f342820ac34ca693d599677994e3f272243c114c313605beb020ad49a`.
+- **Rationale:** Exact low-rank subtraction can isolate a small differential update algebraically,
+  but exact arithmetic is not evidence of behavioral safety. Allowing a forbidden question-like
+  response after observing it, or selecting against a later holdout or GSM1K result, would relax the
+  predeclared retention firewall post hoc.
+- **Consequence:** No independent-final-holdout or GSM1K contrastive result exists. Human language
+  review remains pending at the frozen local review page, and the result retains its provisional
+  one-seed label. Any continuation requires separate approval for KL/replay-regularized adaptation
+  or verifier-reward GRPO; neither begins automatically.

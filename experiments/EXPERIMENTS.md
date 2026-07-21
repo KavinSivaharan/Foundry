@@ -818,3 +818,31 @@ Every future experiment must be registered here before a costly run begins. Its 
 - **Next experiment:** none approved. Complete the pending stratified human review, then decide
   whether to stop adaptation or separately authorize a materially different retention-preserving
   architecture. Do not run a second seed from this failed frozen gate.
+
+### EXP-TRAIN-011: contrastive curriculum task vector
+
+- **Status:** exact adapter arithmetic passed; all predeclared scales failed retention; no GSM1K
+  evaluation was authorized.
+- **Label:** Provisional one-seed result pending stratified human language review and second-seed
+  confirmation.
+- **Sources:** unchanged Variant A step-32 generic and targeted adapters with exact 14,400-token
+  parity. Dense norms are generic `1.6918784364`, targeted `1.6980775191`, and contrastive
+  `0.5876302228`; generic-targeted cosine similarity is `0.9399098552`. The differential is
+  `34.6056%` of the targeted norm.
+- **Construction:** exact `Delta_targeted - Delta_generic` PEFT concatenation, rank 32, unmerged
+  and reversible. Ignored adapter SHA-256 is
+  `84f02df1cbc5ec1015d096164dbfe3833e166a14eda9ffadf62b5d2d2527c961`.
+- **Equivalence:** layerwise maximum absolute error `1.7462298274e-10`; maximum relative
+  Frobenius error `2.935335e-7`. FP32 functional maximum/relative logit error
+  `5.626678e-5`/`1.959386e-6`. Both equivalence gates passed, with source and base state unchanged.
+- **Retention ladder:** Scale 1.00 scored adjudication/anchor `181/187` and `204/210`; 0.75 scored
+  `182/187` and `207/210`; 0.50 scored `183/187` and `207/210`; 0.25 scored `184/187` and
+  `208/210`. Every adjudication cell passed. Anchor failed solely on nonzero question generation,
+  with counts `1`, `2`, `1`, and `2` in descending scale order.
+- **Gate:** failed. No scale was selected, no independent final-holdout adapter evaluation occurred,
+  and GSM1K development remained untouched. Selection SHA-256 is
+  `b41d975f342820ac34ca693d599677994e3f272243c114c313605beb020ad49a`.
+- **Decision:** close adapter arithmetic for this project version. Do not tune on GSM1K, test
+  another merge method, retrain, or run a second seed automatically. Complete the pending human
+  review, then decide between project stop and a separately approved KL/replay-regularized or
+  verifier-reward architecture.

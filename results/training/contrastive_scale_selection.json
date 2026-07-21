@@ -1,0 +1,97 @@
+{
+  "adapter_sha256": "84f02df1cbc5ec1015d096164dbfe3833e166a14eda9ffadf62b5d2d2527c961",
+  "construction_summary_sha256": "07a99bde03339494cc1ce9cf8428d7ecf7ad35aef58b55038389a3888d2c586c",
+  "contrastive_adapter_route_stopped": true,
+  "decision_id": "foundry-contrastive-lora-scale-selection-v1",
+  "gsm1k_authorized": false,
+  "independent_final_holdout_used_for_selection": false,
+  "lower_scales_skipped_after_first_pass": false,
+  "scale_config_sha256": "b4914d5a95bb46a52374b9a390038634f01df99f69a4ef6f79c5bfe4f8d983fa",
+  "scale_zero_selectable": false,
+  "scales": [
+    {
+      "assessment_summary_sha256s": [
+        "3e9ee9f0071b6902cd385ce87a7caa7a521921d7ae8b1225346935f5bb4eb4a4",
+        "4a3e7b06df1be2dd0c787eeb8d01d57a1190654584f847c8b70cbbad55493ee1"
+      ],
+      "cell_gate_passed": [
+        true,
+        false
+      ],
+      "evaluation_summary_sha256s": [
+        "21fbfbdd62daeb5ec83cc12c7e933b914a218e6cc73fa99ef7f147fc72102071",
+        "a85820263147bf937c25c144a6bb5a317b945eb3f4ed03b635c3c85903a15454"
+      ],
+      "matrix_passed": false,
+      "scale": 1.0
+    },
+    {
+      "assessment_summary_sha256s": [
+        "503300a7ca3706813a255c873f6017666bdb3e88d679ce3582bbb6006f04ea40",
+        "edac709957a61fe72b05ff7c793bea312df08dda343e1c2cbdc9daac01532db2"
+      ],
+      "cell_gate_passed": [
+        true,
+        false
+      ],
+      "evaluation_summary_sha256s": [
+        "660ee821afd2fc01b88fd176b16aaa3e58b28e11b6b2682363ad7005ddbc5dff",
+        "9c78a1f19f52c72fa761ab83b469aab2ffebc70f4a449d06d0247d7859866c3c"
+      ],
+      "matrix_passed": false,
+      "scale": 0.75
+    },
+    {
+      "assessment_summary_sha256s": [
+        "8dca6f488f68a1ef41a69006a1b1c0f6cf441d4710c97421d23c23bc47caa70f",
+        "7b561acc9fa2e9bb48da3779c08a94110386e5e95e51ae7ed0f7f0f634f4311f"
+      ],
+      "cell_gate_passed": [
+        true,
+        false
+      ],
+      "evaluation_summary_sha256s": [
+        "1d2f4caef9b0d9ffa3d23cc6763423c0dd1a3d62e763457ea9c87c5321b1fb83",
+        "7ad3629914905e187f79938550cb9a4fd907366c86197556acafa3ba7254a398"
+      ],
+      "matrix_passed": false,
+      "scale": 0.5
+    },
+    {
+      "assessment_summary_sha256s": [
+        "080f44931a4b95be36a3c0e8582243a0d69f6cfadd4189744591efbafc445bf0",
+        "853531884fc2a356f8862d89ee449cd4d73bcf12aab1fd714213af599c5809e6"
+      ],
+      "cell_gate_passed": [
+        true,
+        false
+      ],
+      "evaluation_summary_sha256s": [
+        "27b6373574c7489466e68e23f70b964f7241b98c2fb7c5b81d14c7a5c53401c5",
+        "6d910b91b105bc6c78671c1e7918015a387e7682492999373673ca8a3bfd567c"
+      ],
+      "matrix_passed": false,
+      "scale": 0.25
+    }
+  ],
+  "schema_version": 1,
+  "sealed_final_accessed": false,
+  "selected_contrastive_scale": null,
+  "selection_passed": false,
+  "selection_suites": [
+    {
+      "subset_id": "retention-adjudication-v2-base-correct",
+      "subset_sha256": "c76df74b911b96ca43c2663a123e41347fd544bf6644f15522ccaad7b77099e1",
+      "suite_id": "foundry-retention-adjudication-v2",
+      "suite_sha256": "5caf23be79fa01151af6f7db8d45c2b85bfe24b03a29589e482d51731c8358af"
+    },
+    {
+      "subset_id": "retention-anchor-holdout-v1-base-correct",
+      "subset_sha256": "36be91d08f2ab0e05c491094c53965d1aa4f989a730347768877a2548a62c7a9",
+      "suite_id": "foundry-retention-anchor-holdout-v1",
+      "suite_sha256": "bff18b434a284d848387262dde201601278e5c8b573937b3486bed2bf925696e"
+    }
+  ],
+  "selection_used_gsm1k": false,
+  "summary_sha256": "b41d975f342820ac34ca693d599677994e3f272243c114c313605beb020ad49a"
+}

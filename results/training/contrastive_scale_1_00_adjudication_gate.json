@@ -1,0 +1,72 @@
+{
+  "adapter_scale": 1.0,
+  "adapter_scale_evidence_sha256": "a183ae079694d67726957948f3fb3d0116ea1af719e7a1c1401e302276d3dc10",
+  "adapter_sha256": "84f02df1cbc5ec1015d096164dbfe3833e166a14eda9ffadf62b5d2d2527c961",
+  "assessment_id": "foundry-base-conditioned-retention-assessment-v1",
+  "backend_failures": 0,
+  "broken": 6,
+  "broken_item_ids": [
+    "adjudication-arithmetic-001",
+    "adjudication-arithmetic-009",
+    "adjudication-arithmetic-014",
+    "adjudication-arithmetic-052",
+    "adjudication-format-007",
+    "adjudication-format-098"
+  ],
+  "evaluation_summary_sha256": "21fbfbdd62daeb5ec83cc12c7e933b914a218e6cc73fa99ef7f147fc72102071",
+  "extractability": 0.9786096256684492,
+  "extractable": 183,
+  "gate_checks": {
+    "arithmetic_preservation_at_least_90_percent": true,
+    "format_preservation_at_least_90_percent": true,
+    "instruction_family_adapter_only_failures_at_most_3": true,
+    "instruction_preservation_at_least_90_percent": true,
+    "overall_preservation_at_least_90_percent": true,
+    "overall_wilson_lower_bound_at_least_85_percent": true,
+    "prompt_echo_at_most_2_percent": true,
+    "zero_backend_failures": true,
+    "zero_question_generation": true
+  },
+  "gate_passed": true,
+  "instruction_family_adapter_only_failures": {},
+  "instrument_id": "foundry-base-conditioned-retention-v1",
+  "malformed_outputs": 4,
+  "maximum_instruction_family_adapter_only_failures": 0,
+  "overall_preservation": 0.9679144385026738,
+  "overall_wilson_95_lower_bound": 0.9317779570159489,
+  "paired_transitions": {
+    "base_pass_adapter_fail": 6,
+    "base_pass_adapter_pass": 181
+  },
+  "preserved": 181,
+  "prompt_echo": 0,
+  "prompt_echo_rate": 0.0,
+  "question_generation": 0,
+  "raw_packet_sha256": "d6faf1545ff51e2e04ec0041d7de01d1bf3a97644574c64f57022186ab93ff67",
+  "scaling_implementation_id": "foundry-common-lora-runtime-scaling-v1",
+  "schema_version": 1,
+  "section_preservation": {
+    "arithmetic": {
+      "preserved": 80,
+      "rate": 0.9523809523809523,
+      "total": 84
+    },
+    "format": {
+      "preserved": 46,
+      "rate": 0.9583333333333334,
+      "total": 48
+    },
+    "instruction": {
+      "preserved": 55,
+      "rate": 1.0,
+      "total": 55
+    }
+  },
+  "state_restoration_verified": true,
+  "subset_id": "retention-adjudication-v2-base-correct",
+  "subset_sha256": "c76df74b911b96ca43c2663a123e41347fd544bf6644f15522ccaad7b77099e1",
+  "suite_id": "foundry-retention-adjudication-v2",
+  "suite_sha256": "5caf23be79fa01151af6f7db8d45c2b85bfe24b03a29589e482d51731c8358af",
+  "summary_sha256": "3e9ee9f0071b6902cd385ce87a7caa7a521921d7ae8b1225346935f5bb4eb4a4",
+  "total": 187
+}

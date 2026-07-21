@@ -348,3 +348,45 @@ pending at
 Do not tune the scale, retrain, run a second seed, or access sealed-final automatically. Complete
 the pending human review, then decide whether to stop or separately approve a materially different
 retention-preserving architecture.
+
+## Milestone 8N contrastive curriculum task-vector result
+
+> **Provisional one-seed result pending stratified human language review and second-seed
+> confirmation.**
+
+The unchanged Variant A step-32 adapters were compatible for exact PEFT composition. Their dense
+updates have global Frobenius norms `1.6918784364` for generic and `1.6980775191` for targeted,
+with cosine similarity `0.9399098552`. The exact targeted-minus-generic differential has norm
+`0.5876302228`, or `34.6056%` of the targeted update norm. These measurements support the
+predeclared interpretation that the two adapters contain a large shared update plus a smaller
+curriculum-specific differential; they do not by themselves establish benchmark improvement.
+
+The differential was represented without retraining as the reversible rank-32
+`targeted_minus_generic_v1` LoRA adapter. Its ignored local artifact SHA-256 is
+`84f02df1cbc5ec1015d096164dbfe3833e166a14eda9ffadf62b5d2d2527c961`. Layerwise reconstruction
+against `Delta_targeted - Delta_generic` passed: maximum absolute error was
+`1.7462298274e-10` and maximum relative Frobenius error was `2.935335e-7`. The independent FP32
+functional check also passed, with maximum logit error `5.626678e-5` and relative logit error
+`1.959386e-6`. Source-adapter and base state remained unchanged.
+
+Retention-only scale selection evaluated exactly the predeclared descending ladder:
+
+| Contrastive scale | Adjudication | Anchor holdout | Decision |
+|---:|---:|---:|---|
+| 1.00 | 181/187; passed | 204/210; failed with 1 question-generation output | Failed |
+| 0.75 | 182/187; passed | 207/210; failed with 2 question-generation outputs | Failed |
+| 0.50 | 183/187; passed | 207/210; failed with 1 question-generation output | Failed |
+| 0.25 | 184/187; passed | 208/210; failed with 2 question-generation outputs | Failed |
+
+All four anchor cells failed the unchanged zero-question-generation clause. Consequently, no
+contrastive scale was selected, the independent final holdout was not exposed to the adapter, and
+GSM1K development was not run. The selection decision SHA-256 is
+`b41d975f342820ac34ca693d599677994e3f272243c114c313605beb020ad49a`.
+
+The exact arithmetic and numerical-equivalence gates passed, but the retention gate did not. The
+contrastive adapter-arithmetic route is therefore closed for this project version: do not tune a
+scale using GSM1K, retry another merge algorithm, retrain, or run a second seed automatically.
+Human language review remains pending at
+`file:///C:/Users/Admin/Projects/Foundry/results/raw/foundry_500x2_signal_review/codex_assisted_review.html`.
+The next decision is whether to stop adaptation or separately design a materially different
+retention-preserving approach such as KL/replay regularization or verifier-reward optimization.
