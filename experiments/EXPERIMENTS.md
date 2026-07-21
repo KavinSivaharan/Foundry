@@ -757,3 +757,23 @@ Every future experiment must be registered here before a costly run begins. Its 
 - **Gate:** Failed. The untouched holdout, both selected A/32 adapters, shared-anchor fallback,
   parity gate, GSM1K, paired analysis, second seed, and sealed-final partition were not run. A new
   explicit experimental decision is required.
+
+### EXP-TRAIN-008: base-conditioned retention adjudication
+
+- **Status:** both existing adapters failed; current SFT line stopped before GSM1K
+- **Instrument:** `foundry-base-conditioned-retention-v1` freezes scorer-correct untouched-base IDs
+  before any adapter exposure. Adjudication has 187 IDs (`84/48/55`) with subset SHA-256
+  `c76df74b...99e1`. Holdout base scored `96/100`, `60/100`, `54/100`, 210/300 overall and 283/300
+  extractable; its 210-ID subset (`96/60/54`) has SHA-256 `36be91d0...c7a9`.
+- **Generic A/32:** Adjudication `181/187`, Wilson lower `93.18%`, sections `84/84`, `43/48`,
+  `54/55`, question generation one. Holdout `197/210`, Wilson lower `89.70%`, sections `90/96`,
+  `53/60`, `54/54`, question generation one.
+- **Targeted A/32:** Adjudication `181/187`, Wilson lower `93.18%`, sections `84/84`, `43/48`,
+  `54/55`, question generation one. Holdout `200/210`, Wilson lower `91.46%`, sections `93/96`,
+  `53/60`, `54/54`, question generation zero.
+- **Safety:** All four cells have zero prompt echo and backend failures; instruction-family failure
+  concentration is at most one on adjudication and zero on holdout. Adapter hashes remain
+  `faa4b72b...8f35` and `c4e45543...bb5b`; exact 14,400-token parity is unchanged.
+- **Gate:** Failed. Both arms miss >=90% format preservation on both independent subsets, and three
+  cells have nonzero question generation. Pair-decision SHA-256 is `433c911d...a237`. GSM1K,
+  paired bootstrap, category signal analysis, second seed, and sealed-final access were not run.

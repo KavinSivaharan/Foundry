@@ -1,0 +1,75 @@
+{
+  "adapter_sha256": "faa4b72bd0046fbd8d94fc3f364cb7078259403131ea16cd136fdfbbe5408f35",
+  "assessment_id": "foundry-base-conditioned-retention-assessment-v1",
+  "backend_failures": 0,
+  "broken": 13,
+  "broken_item_ids": [
+    "anchor-holdout-arithmetic-017",
+    "anchor-holdout-arithmetic-018",
+    "anchor-holdout-arithmetic-020",
+    "anchor-holdout-arithmetic-021",
+    "anchor-holdout-arithmetic-027",
+    "anchor-holdout-arithmetic-029",
+    "anchor-holdout-format-035",
+    "anchor-holdout-format-040",
+    "anchor-holdout-format-043",
+    "anchor-holdout-format-057",
+    "anchor-holdout-format-061",
+    "anchor-holdout-format-063",
+    "anchor-holdout-format-067"
+  ],
+  "evaluation_summary_sha256": "f6e9892432b29b0058796e688aef68302d28d13483510b4db429dd8f90e1bf8e",
+  "extractability": 0.9714285714285714,
+  "extractable": 204,
+  "gate_checks": {
+    "arithmetic_preservation_at_least_90_percent": true,
+    "format_preservation_at_least_90_percent": false,
+    "instruction_family_adapter_only_failures_at_most_3": true,
+    "instruction_preservation_at_least_90_percent": true,
+    "overall_preservation_at_least_90_percent": true,
+    "overall_wilson_lower_bound_at_least_85_percent": true,
+    "prompt_echo_at_most_2_percent": true,
+    "zero_backend_failures": true,
+    "zero_question_generation": false
+  },
+  "gate_passed": false,
+  "instruction_family_adapter_only_failures": {},
+  "instrument_id": "foundry-base-conditioned-retention-v1",
+  "malformed_outputs": 6,
+  "maximum_instruction_family_adapter_only_failures": 0,
+  "overall_preservation": 0.9380952380952381,
+  "overall_wilson_95_lower_bound": 0.896981404265016,
+  "paired_transitions": {
+    "base_pass_adapter_fail": 13,
+    "base_pass_adapter_pass": 197
+  },
+  "preserved": 197,
+  "prompt_echo": 0,
+  "prompt_echo_rate": 0.0,
+  "question_generation": 1,
+  "raw_packet_sha256": "3526a879ff43e146b95cbb25a3a9867419f7bacc2ae060e6c97a916cf3c4ac6c",
+  "schema_version": 1,
+  "section_preservation": {
+    "arithmetic": {
+      "preserved": 90,
+      "rate": 0.9375,
+      "total": 96
+    },
+    "format": {
+      "preserved": 53,
+      "rate": 0.8833333333333333,
+      "total": 60
+    },
+    "instruction": {
+      "preserved": 54,
+      "rate": 1.0,
+      "total": 54
+    }
+  },
+  "subset_id": "retention-anchor-holdout-v1-base-correct",
+  "subset_sha256": "36be91d08f2ab0e05c491094c53965d1aa4f989a730347768877a2548a62c7a9",
+  "suite_id": "foundry-retention-anchor-holdout-v1",
+  "suite_sha256": "bff18b434a284d848387262dde201601278e5c8b573937b3486bed2bf925696e",
+  "summary_sha256": "ee21496cdcfd74b7c2148c2c3dc38078f324db5316423076ebd19fc29cc4cac6",
+  "total": 210
+}

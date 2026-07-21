@@ -77,6 +77,18 @@ class RetentionSuite:
     generation_sha256: str
 
 
+@dataclass(frozen=True)
+class BaseConditionedSubset:
+    """Content-free ordered IDs selected from untouched-base successes."""
+
+    instrument_id: str
+    subset_id: str
+    suite_sha256: str
+    base_summary_sha256: str
+    items: tuple[tuple[str, Section, str], ...]
+    subset_sha256: str
+
+
 def load_suite(path: Path) -> RetentionSuite:
     """Load and strictly validate one recognized frozen retention suite."""
 
@@ -134,6 +146,62 @@ def load_suite(path: Path) -> RetentionSuite:
             {"system": root["system_prompt"], "prompts": [item.prompt for item in items]}
         ),
         generation_sha256=canonical_sha256(generation),
+    )
+
+
+def load_base_conditioned_subset(path: Path, suite: RetentionSuite) -> BaseConditionedSubset:
+    """Load one frozen base-correct ID manifest without prompt or answer content."""
+
+    value: object = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(value, dict):
+        raise ValueError("base-conditioned subset must be an object")
+    root = cast(dict[str, Any], value)
+    expected_hash = root.get("subset_sha256")
+    payload = {key: item for key, item in root.items() if key != "subset_sha256"}
+    if (
+        root.get("schema_version") != 1
+        or root.get("instrument_id") != "foundry-base-conditioned-retention-v1"
+        or not isinstance(expected_hash, str)
+        or expected_hash != canonical_sha256(payload)
+    ):
+        raise ValueError("base-conditioned subset identity or hash differs")
+    if root.get("suite_sha256") != suite.suite_sha256:
+        raise ValueError("base-conditioned subset suite differs")
+    raw_items = root.get("items")
+    if not isinstance(raw_items, list) or not raw_items:
+        raise ValueError("base-conditioned subset requires ordered items")
+    suite_index = {item.item_id: item for item in suite.items}
+    items: list[tuple[str, Section, str]] = []
+    for raw in raw_items:
+        if not isinstance(raw, dict):
+            raise ValueError("base-conditioned subset item must be an object")
+        item_id = str(raw.get("id"))
+        suite_item = suite_index.get(item_id)
+        if suite_item is None:
+            raise ValueError("base-conditioned subset contains an unknown ID")
+        if raw.get("section") != suite_item.section or raw.get("skill") != suite_item.skill:
+            raise ValueError("base-conditioned category label differs from suite")
+        items.append((item_id, suite_item.section, suite_item.skill))
+    if len({item[0] for item in items}) != len(items):
+        raise ValueError("base-conditioned subset IDs must be unique")
+    if root.get("total") != len(items) or not str(root.get("subset_id", "")):
+        raise ValueError("base-conditioned subset total or ID differs")
+    counts = Counter(item[1] for item in items)
+    if root.get("section_counts") != {
+        section: counts[cast(Section, section)]
+        for section in ("arithmetic", "format", "instruction")
+    }:
+        raise ValueError("base-conditioned subset counts differ")
+    base_summary_sha256 = root.get("base_summary_sha256")
+    if not isinstance(base_summary_sha256, str) or len(base_summary_sha256) != 64:
+        raise ValueError("base-conditioned base summary hash is required")
+    return BaseConditionedSubset(
+        instrument_id=str(root["instrument_id"]),
+        subset_id=str(root["subset_id"]),
+        suite_sha256=suite.suite_sha256,
+        base_summary_sha256=base_summary_sha256,
+        items=tuple(items),
+        subset_sha256=expected_hash,
     )
 
 
@@ -238,10 +306,21 @@ def evaluate_suite(
     adapter_path: Path | None,
     raw_path: Path,
     output_path: Path,
+    subset_manifest_path: Path | None = None,
 ) -> dict[str, Any]:
-    """Evaluate one base or adapter on exactly the frozen retention suite."""
+    """Evaluate one base or adapter on a frozen suite or base-correct subset."""
 
     suite = load_suite(suite_path)
+    subset = (
+        None
+        if subset_manifest_path is None
+        else load_base_conditioned_subset(subset_manifest_path, suite)
+    )
+    if subset is None:
+        evaluated_items = suite.items
+    else:
+        suite_index = {item.item_id: item for item in suite.items}
+        evaluated_items = tuple(suite_index[item_id] for item_id, _, _ in subset.items)
     os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
     os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
     torch = importlib.import_module("torch")
@@ -265,7 +344,7 @@ def evaluate_suite(
     backend_failures = 0
     input_tokens = 0
     output_tokens = 0
-    for item in suite.items:
+    for item in evaluated_items:
         response = ""
         try:
             input_ids = tokenizer.apply_chat_template(
@@ -362,6 +441,12 @@ def evaluate_suite(
         "peak_vram_allocated_bytes": int(torch.cuda.max_memory_allocated(0)),
         "peak_vram_reserved_bytes": int(torch.cuda.max_memory_reserved(0)),
         "raw_packet_sha256": file_sha256(raw_path),
+        "base_conditioned_instrument_id": None if subset is None else subset.instrument_id,
+        "base_conditioned_subset_id": None if subset is None else subset.subset_id,
+        "base_conditioned_subset_sha256": None if subset is None else subset.subset_sha256,
+        "base_conditioned_subset_file_sha256": None
+        if subset_manifest_path is None
+        else file_sha256(subset_manifest_path),
         "per_item_decision_sha256": canonical_sha256(
             [
                 {
@@ -391,6 +476,7 @@ def main() -> None:
     parser.add_argument("--adapter", type=Path)
     parser.add_argument("--raw-path", type=Path, required=True)
     parser.add_argument("--output-path", type=Path, required=True)
+    parser.add_argument("--subset-manifest", type=Path)
     args = parser.parse_args()
     result = evaluate_suite(
         suite_path=args.suite,
@@ -398,6 +484,7 @@ def main() -> None:
         adapter_path=args.adapter,
         raw_path=args.raw_path,
         output_path=args.output_path,
+        subset_manifest_path=args.subset_manifest,
     )
     print(json.dumps(result, indent=2, sort_keys=True))
 

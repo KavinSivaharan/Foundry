@@ -1,0 +1,33 @@
+{
+  "adapter_outputs_read": false,
+  "ambiguous_reference_answers": 0,
+  "artifact_evidence_sha256": "5f19ec7601e101f278c9e1ab6e48446ec3b23cb39c513185f874a395fd529e06",
+  "backend_failures": 0,
+  "base_summary_sha256": "83afe1ba34c45761d0498764ee72c0c1788762626d0c76431cbc499439c290b9",
+  "extractable": 283,
+  "gate_checks": {
+    "arithmetic_at_least_40": true,
+    "format_at_least_40": true,
+    "instruction_at_least_40": true,
+    "overall_at_least_150": true,
+    "zero_backend_failures": true,
+    "zero_reference_or_scorer_defects": true
+  },
+  "gate_id": "foundry-anchor-holdout-instrument-usability-gate-v1",
+  "gate_passed": true,
+  "malformed_outputs": 17,
+  "overall_correct": 210,
+  "prompt_echo": 0,
+  "question_generation": 1,
+  "reference_self_score_failures": 0,
+  "schema_version": 1,
+  "sealed_final_accessed": false,
+  "section_correct": {
+    "arithmetic": 96,
+    "format": 60,
+    "instruction": 54
+  },
+  "suite_id": "foundry-retention-anchor-holdout-v1",
+  "suite_sha256": "bff18b434a284d848387262dde201601278e5c8b573937b3486bed2bf925696e",
+  "summary_sha256": "2f866dbc5a0b006fbb0a4b07acc1513a60e25bf1aab80e0c90040e335797c13b"
+}

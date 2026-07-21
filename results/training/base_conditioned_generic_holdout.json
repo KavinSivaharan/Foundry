@@ -1,0 +1,52 @@
+{
+  "adapter_sha256": "faa4b72bd0046fbd8d94fc3f364cb7078259403131ea16cd136fdfbbe5408f35",
+  "backend_failures": 0,
+  "base_conditioned_instrument_id": "foundry-base-conditioned-retention-v1",
+  "base_conditioned_subset_file_sha256": "ee0d5f59513bf25d59be1cc1b667c87c40ab35519476750e3eba22bce7ffc347",
+  "base_conditioned_subset_id": "retention-anchor-holdout-v1-base-correct",
+  "base_conditioned_subset_sha256": "36be91d08f2ab0e05c491094c53965d1aa4f989a730347768877a2548a62c7a9",
+  "base_revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+  "evaluation_id": "foundry-retention-anchor-holdout-evaluation-v1",
+  "exact_format": 195,
+  "exact_format_rate": 0.9285714285714286,
+  "examples_per_second": 1.5443956110148067,
+  "extractability": 0.9714285714285714,
+  "extractable": 204,
+  "generation_sha256": "f628fe7faafe94040de3df696a63d98494525cd1a57487b718fd9a86b5292093",
+  "gpu_name": "NVIDIA GeForce RTX 3080",
+  "input_tokens": 14454,
+  "load_seconds": 3.9742365999991307,
+  "malformed_outputs": 6,
+  "output_tokens": 4052,
+  "peak_vram_allocated_bytes": 3554672640,
+  "peak_vram_reserved_bytes": 3751804928,
+  "per_item_decision_sha256": "2980585037f468268e064274133f70fc4486e139f59ee88290bdada3b91e5796",
+  "prompt_echo": 0,
+  "prompt_echo_rate": 0.0,
+  "prompt_sha256": "15c6c993b75f69a90ae422e7facb8ae264768275d2d08364259502dd23e57782",
+  "question_generation": 1,
+  "raw_packet_sha256": "3526a879ff43e146b95cbb25a3a9867419f7bacc2ae060e6c97a916cf3c4ac6c",
+  "runtime_seconds": 135.9755223999964,
+  "schema_version": 1,
+  "section_metrics": {
+    "arithmetic": {
+      "accuracy": 0.9375,
+      "correct": 90,
+      "total": 96
+    },
+    "format": {
+      "accuracy": 0.8833333333333333,
+      "correct": 53,
+      "total": 60
+    },
+    "instruction": {
+      "accuracy": 1.0,
+      "correct": 54,
+      "total": 54
+    }
+  },
+  "suite_file_sha256": "16e9e56cda2d806a1196b60cc4e087e28e356139319b80141c9b89a2e6859cf6",
+  "suite_sha256": "bff18b434a284d848387262dde201601278e5c8b573937b3486bed2bf925696e",
+  "summary_sha256": "f6e9892432b29b0058796e688aef68302d28d13483510b4db429dd8f90e1bf8e",
+  "total": 210
+}

@@ -729,3 +729,25 @@ This log separates proposals from approved decisions. A proposal does not author
   `diagnostic_only_pending_powered_retention_adjudication`; no shared-anchor adapter, retention
   decision, benchmark comparison, paired interval, or one-seed signal result exists from this fast
   track. Further work requires a separately approved decision.
+
+## 2026-07-20: stop the SFT line after base-conditioned retention failure
+
+- **Status:** Milestone 8L retention matrix completed; GSM1K gate did not open
+- **Decision:** Adopt `foundry-base-conditioned-retention-v1` as the approved conditional
+  preservation instrument, freeze both base-correct subsets, and mark the existing A/32 adapter
+  pair `failed_base_conditioned_retention`. Do not run GSM1K or train another adapter.
+- **Evidence:** Adjudication contains 187 base-correct items (`84/48/55`); holdout contains 210
+  (`96/60/54`). Generic and targeted each preserve `181/187` adjudication items with Wilson lower
+  bound `93.18%`, but format is `43/48` and question generation is one. Generic preserves
+  `197/210` holdout items (Wilson `89.70%`) and targeted `200/210` (Wilson `91.46%`); both have
+  format `53/60`, while generic has one question-generation output. Backend failures and prompt
+  echo are zero throughout. Pair-decision SHA-256 is
+  `433c911d89925b2359c1aeb2bca03bc48eac10842034c1ea9cfb846c1fe0a237`.
+- **Rationale:** Conditional preservation asks whether adaptation retained demonstrated base
+  behavior without rewarding the adapter for tasks the base failed. The four-cell matrix is large
+  enough for the predeclared bounds, and its consistent exact-format regressions are genuine gate
+  failures. Lowering category thresholds or ignoring question generation after inference would be
+  post hoc relaxation.
+- **Consequence:** The SFT adaptation line stops. The frozen 521/814 GSM1K base result is not rerun;
+  neither adapter is evaluated on GSM1K in this milestone. Human language review remains pending,
+  and any next work requires explicit approval for project interpretation or stop.

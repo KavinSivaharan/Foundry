@@ -235,3 +235,37 @@ selected branch, new adapter hash, paired bootstrap interval, or new signal-gate
 historical collapsed one-seed numbers remain non-comparative evidence; the next decision must address
 the unusable powered instrument or stop SFT adaptation without treating development or validation as
 a tuning set.
+
+## Milestone 8L base-conditioned retention adjudication
+
+> **Provisional one-seed result pending stratified human language review and second-seed
+> confirmation.**
+
+`foundry-base-conditioned-retention-v1` measures only preservation of prompts that the untouched
+base answered correctly under the frozen scorer. The adjudication subset contains 187 IDs:
+84 arithmetic, 48 format, and 55 instruction; subset SHA-256 is
+`c76df74b911b96ca43c2663a123e41347fd544bf6644f15522ccaad7b77099e1`.
+
+The untouched base was evaluated exactly once on the frozen anchor holdout and scored 96/100
+arithmetic, 60/100 format, and 54/100 instruction (210/300 overall), with 283/300 extractable,
+zero echo, zero backend failures, and one question-generation output. The 210 correct IDs were
+frozen as the independent holdout subset; its SHA-256 is
+`36be91d08f2ab0e05c491094c53965d1aa4f989a730347768877a2548a62c7a9`.
+
+Generic and targeted each preserved 181/187 adjudication items (96.79%; Wilson lower 93.18%), with
+84/84 arithmetic, 43/48 format, and 54/55 instruction. Each emitted one question-generation
+output. On holdout, generic preserved 197/210 (93.81%; Wilson lower 89.70%) and targeted preserved
+200/210 (95.24%; Wilson lower 91.46%). Their section scores were generic 90/96, 53/60, 54/54 and
+targeted 93/96, 53/60, 54/54. Generic emitted one question-generation output; targeted emitted zero.
+Echo and backend failures were zero in all four cells.
+
+The retention gate failed because both adapters were below 90% format preservation on both subsets;
+the adjudication cells and generic holdout also violated the zero-question-generation clause. The
+pair is `failed_base_conditioned_retention`, so GSM1K was not run and no paired/category signal
+analysis was authorized. The historical frozen base remains 521/814; no new generic or targeted
+benchmark result exists. Human review remains pending at
+`file:///C:/Users/Admin/Projects/Foundry/results/raw/foundry_500x2_signal_review/codex_assisted_review.html`.
+
+The exact next decision is whether to stop the project or approve interpretation of the negative
+adaptation result. Another SFT method, second seed, and sealed-final evaluation are not recommended
+or authorized.

@@ -738,3 +738,17 @@ is useful: choosing a different checkpoint after this observation would overfit 
 Lower synthetic-validation loss also did not predict retention safety. The remaining uncertainty is
 about the adaptation method and objective, not token parity, label masking, or mathematical data
 correctness.
+
+## Base-conditioned retention separates capability from preservation
+
+An absolute score on a difficult original suite confounds two things: capabilities the base never
+had and capabilities adaptation may have damaged. Freezing only scorer-correct base IDs before any
+adapter result is read produces a transparent conditional question: among behaviors the base
+demonstrated, what fraction survives adaptation? This does not measure general intelligence and
+cannot replace the task benchmark, but it is an appropriate safety gate before benchmark access.
+
+The larger conditional samples made the common regression clearer. Both adapters preserved more
+than 93% overall on both subsets and cleared every overall Wilson requirement, yet each missed the
+fixed 90% format threshold on both independent subsets. One or both also generated a question where
+none was allowed. Agreement across arms points to the common SFT method rather than the targeted
+curriculum. Overall averages alone would have hidden this repeatable category-specific loss.

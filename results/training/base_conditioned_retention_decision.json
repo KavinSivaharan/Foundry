@@ -1,0 +1,25 @@
+{
+  "adapter_sha256s": [
+    "c4e455432b9a3b17ae077dafdaa1c9391ab67b7350628f3aa5f9787677d8bb5b",
+    "faa4b72bd0046fbd8d94fc3f364cb7078259403131ea16cd136fdfbbe5408f35"
+  ],
+  "all_four_assessments_passed": false,
+  "assessment_summary_sha256s": [
+    "e3258d2b617f3a21da87a47d1d22f6046a137dbde5aa7399b4a53bfaf70d21a4",
+    "bc1e7b5d9a587153027bcf0d24cdd3a256ec003fde86a972f422b7ba92be026e",
+    "ee21496cdcfd74b7c2148c2c3dc38078f324db5316423076ebd19fc29cc4cac6",
+    "8ce046c848fa09025dc5b69e59dee3589754f2340d4656cccdcad3fdbb7187d4"
+  ],
+  "decision": "failed_base_conditioned_retention",
+  "decision_id": "foundry-base-conditioned-retention-pair-decision-v1",
+  "gsm1k_authorized": false,
+  "instrument_id": "foundry-base-conditioned-retention-v1",
+  "schema_version": 1,
+  "sealed_final_accessed": false,
+  "sft_adaptation_line_stopped": true,
+  "suite_ids": [
+    "foundry-retention-adjudication-v2",
+    "foundry-retention-anchor-holdout-v1"
+  ],
+  "summary_sha256": "433c911d89925b2359c1aeb2bca03bc48eac10842034c1ea9cfb846c1fe0a237"
+}

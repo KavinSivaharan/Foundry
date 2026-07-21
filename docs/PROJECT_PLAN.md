@@ -814,3 +814,23 @@ original prompt was objectively defective.
 base model. The holdout was not evaluated, neither adapter saw adjudication, shared-anchor training
 did not run, and GSM1K was not run. A new explicit decision is required; the present fast track
 cannot continue by tuning the suite to the model.
+
+## Milestone 8L outcome: base-conditioned retention failed
+
+Milestone 8L replaced the unsuitable absolute-capability question with a conditional preservation
+instrument. It froze every adjudication item the untouched base answered correctly (187 items:
+84 arithmetic, 48 format, 55 instruction), then evaluated the untouched base once on the already
+frozen anchor holdout. The holdout passed its sample-size gate at 210/300 correct (96 arithmetic,
+60 format, 54 instruction), so those 210 IDs were frozen before adapter exposure.
+
+Both existing A/32 adapters were evaluated on both immutable subsets. Generic and targeted each
+preserved 181/187 adjudication items, but each preserved only 43/48 format items (89.58%) and emitted
+one question-generation output. On holdout, generic preserved 197/210 and targeted 200/210; both
+preserved only 53/60 format items (88.33%). Generic also emitted one question-generation output.
+Every overall Wilson lower bound exceeded 85%, but the fixed category and output-behavior clauses
+did not all pass.
+
+**Current stop:** the pair is `failed_base_conditioned_retention`, and the current SFT adaptation
+line is closed. GSM1K was not run. The exact next decision is whether to end the project or approve
+an interpretation-only milestone; no further SFT method, tuning, or second seed is recommended by
+this result. The stratified human language review remains pending independently.

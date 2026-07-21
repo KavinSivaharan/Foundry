@@ -1,0 +1,1075 @@
+{
+  "adapter_outputs_read": false,
+  "base_evaluation_id": "foundry-retention-anchor-holdout-evaluation-v1",
+  "base_raw_packet_sha256": "bf26c4f0efebf921af9a34c0a0bd2cd627fb684108771e6519eeda37e808ca64",
+  "base_summary_file_sha256": "3f15bb7b04d56f5059a98275292ff9e8500995eb5dbfbcaec7ef8826250dd10a",
+  "base_summary_sha256": "83afe1ba34c45761d0498764ee72c0c1788762626d0c76431cbc499439c290b9",
+  "definition": "frozen_scorer_correct_on_untouched_base",
+  "instrument_id": "foundry-base-conditioned-retention-v1",
+  "items": [
+    {
+      "id": "anchor-holdout-arithmetic-001",
+      "section": "arithmetic",
+      "skill": "addition"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-002",
+      "section": "arithmetic",
+      "skill": "addition"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-003",
+      "section": "arithmetic",
+      "skill": "addition"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-004",
+      "section": "arithmetic",
+      "skill": "addition"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-005",
+      "section": "arithmetic",
+      "skill": "addition"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-006",
+      "section": "arithmetic",
+      "skill": "addition"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-007",
+      "section": "arithmetic",
+      "skill": "addition"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-008",
+      "section": "arithmetic",
+      "skill": "addition"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-009",
+      "section": "arithmetic",
+      "skill": "addition"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-010",
+      "section": "arithmetic",
+      "skill": "addition"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-011",
+      "section": "arithmetic",
+      "skill": "addition"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-012",
+      "section": "arithmetic",
+      "skill": "addition"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-014",
+      "section": "arithmetic",
+      "skill": "addition"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-015",
+      "section": "arithmetic",
+      "skill": "addition"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-016",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-017",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-018",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-019",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-020",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-021",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-022",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-023",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-025",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-026",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-027",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-028",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-029",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-030",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-031",
+      "section": "arithmetic",
+      "skill": "multiplication"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-032",
+      "section": "arithmetic",
+      "skill": "multiplication"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-033",
+      "section": "arithmetic",
+      "skill": "multiplication"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-034",
+      "section": "arithmetic",
+      "skill": "multiplication"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-035",
+      "section": "arithmetic",
+      "skill": "multiplication"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-036",
+      "section": "arithmetic",
+      "skill": "multiplication"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-037",
+      "section": "arithmetic",
+      "skill": "multiplication"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-038",
+      "section": "arithmetic",
+      "skill": "multiplication"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-039",
+      "section": "arithmetic",
+      "skill": "multiplication"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-040",
+      "section": "arithmetic",
+      "skill": "multiplication"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-041",
+      "section": "arithmetic",
+      "skill": "multiplication"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-042",
+      "section": "arithmetic",
+      "skill": "multiplication"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-043",
+      "section": "arithmetic",
+      "skill": "multiplication"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-044",
+      "section": "arithmetic",
+      "skill": "multiplication"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-045",
+      "section": "arithmetic",
+      "skill": "multiplication"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-046",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-047",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-048",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-050",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-051",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-052",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-053",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-054",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-055",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-056",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-057",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-058",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-059",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-060",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-061",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-062",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-063",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-064",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-065",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-066",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-067",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-068",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-069",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-070",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-071",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-072",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-073",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-074",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-075",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-076",
+      "section": "arithmetic",
+      "skill": "ratio"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-077",
+      "section": "arithmetic",
+      "skill": "ratio"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-078",
+      "section": "arithmetic",
+      "skill": "ratio"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-080",
+      "section": "arithmetic",
+      "skill": "ratio"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-081",
+      "section": "arithmetic",
+      "skill": "ratio"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-082",
+      "section": "arithmetic",
+      "skill": "ratio"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-083",
+      "section": "arithmetic",
+      "skill": "ratio"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-084",
+      "section": "arithmetic",
+      "skill": "ratio"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-085",
+      "section": "arithmetic",
+      "skill": "ratio"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-086",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-087",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-088",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-089",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-090",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-091",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-092",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-093",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-094",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-095",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-096",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-097",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-098",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-099",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "anchor-holdout-arithmetic-100",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "anchor-holdout-format-001",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "anchor-holdout-format-002",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "anchor-holdout-format-003",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "anchor-holdout-format-004",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "anchor-holdout-format-005",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "anchor-holdout-format-006",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "anchor-holdout-format-008",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "anchor-holdout-format-009",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "anchor-holdout-format-010",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "anchor-holdout-format-011",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "anchor-holdout-format-012",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "anchor-holdout-format-013",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "anchor-holdout-format-014",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "anchor-holdout-format-015",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "anchor-holdout-format-016",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "anchor-holdout-format-017",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "anchor-holdout-format-018",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "anchor-holdout-format-019",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "anchor-holdout-format-020",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "anchor-holdout-format-021",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "anchor-holdout-format-022",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "anchor-holdout-format-023",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "anchor-holdout-format-024",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "anchor-holdout-format-025",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "anchor-holdout-format-026",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "anchor-holdout-format-027",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "anchor-holdout-format-028",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "anchor-holdout-format-029",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "anchor-holdout-format-030",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "anchor-holdout-format-031",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "anchor-holdout-format-032",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "anchor-holdout-format-033",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "anchor-holdout-format-034",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "anchor-holdout-format-035",
+      "section": "format",
+      "skill": "exact_line"
+    },
+    {
+      "id": "anchor-holdout-format-036",
+      "section": "format",
+      "skill": "exact_line"
+    },
+    {
+      "id": "anchor-holdout-format-037",
+      "section": "format",
+      "skill": "exact_line"
+    },
+    {
+      "id": "anchor-holdout-format-039",
+      "section": "format",
+      "skill": "exact_line"
+    },
+    {
+      "id": "anchor-holdout-format-040",
+      "section": "format",
+      "skill": "exact_line"
+    },
+    {
+      "id": "anchor-holdout-format-043",
+      "section": "format",
+      "skill": "exact_line"
+    },
+    {
+      "id": "anchor-holdout-format-045",
+      "section": "format",
+      "skill": "exact_line"
+    },
+    {
+      "id": "anchor-holdout-format-047",
+      "section": "format",
+      "skill": "exact_line"
+    },
+    {
+      "id": "anchor-holdout-format-049",
+      "section": "format",
+      "skill": "exact_line"
+    },
+    {
+      "id": "anchor-holdout-format-053",
+      "section": "format",
+      "skill": "constrained_list"
+    },
+    {
+      "id": "anchor-holdout-format-056",
+      "section": "format",
+      "skill": "constrained_list"
+    },
+    {
+      "id": "anchor-holdout-format-057",
+      "section": "format",
+      "skill": "constrained_list"
+    },
+    {
+      "id": "anchor-holdout-format-059",
+      "section": "format",
+      "skill": "constrained_list"
+    },
+    {
+      "id": "anchor-holdout-format-061",
+      "section": "format",
+      "skill": "constrained_list"
+    },
+    {
+      "id": "anchor-holdout-format-063",
+      "section": "format",
+      "skill": "constrained_list"
+    },
+    {
+      "id": "anchor-holdout-format-067",
+      "section": "format",
+      "skill": "constrained_list"
+    },
+    {
+      "id": "anchor-holdout-format-085",
+      "section": "format",
+      "skill": "required_affixes"
+    },
+    {
+      "id": "anchor-holdout-format-087",
+      "section": "format",
+      "skill": "required_affixes"
+    },
+    {
+      "id": "anchor-holdout-format-088",
+      "section": "format",
+      "skill": "required_affixes"
+    },
+    {
+      "id": "anchor-holdout-format-091",
+      "section": "format",
+      "skill": "required_affixes"
+    },
+    {
+      "id": "anchor-holdout-format-093",
+      "section": "format",
+      "skill": "required_affixes"
+    },
+    {
+      "id": "anchor-holdout-format-094",
+      "section": "format",
+      "skill": "required_affixes"
+    },
+    {
+      "id": "anchor-holdout-format-095",
+      "section": "format",
+      "skill": "required_affixes"
+    },
+    {
+      "id": "anchor-holdout-format-096",
+      "section": "format",
+      "skill": "required_affixes"
+    },
+    {
+      "id": "anchor-holdout-format-097",
+      "section": "format",
+      "skill": "required_affixes"
+    },
+    {
+      "id": "anchor-holdout-format-098",
+      "section": "format",
+      "skill": "required_affixes"
+    },
+    {
+      "id": "anchor-holdout-format-100",
+      "section": "format",
+      "skill": "required_affixes"
+    },
+    {
+      "id": "anchor-holdout-instruction-001",
+      "section": "instruction",
+      "skill": "uppercase"
+    },
+    {
+      "id": "anchor-holdout-instruction-002",
+      "section": "instruction",
+      "skill": "uppercase"
+    },
+    {
+      "id": "anchor-holdout-instruction-003",
+      "section": "instruction",
+      "skill": "uppercase"
+    },
+    {
+      "id": "anchor-holdout-instruction-004",
+      "section": "instruction",
+      "skill": "uppercase"
+    },
+    {
+      "id": "anchor-holdout-instruction-005",
+      "section": "instruction",
+      "skill": "uppercase"
+    },
+    {
+      "id": "anchor-holdout-instruction-006",
+      "section": "instruction",
+      "skill": "uppercase"
+    },
+    {
+      "id": "anchor-holdout-instruction-007",
+      "section": "instruction",
+      "skill": "uppercase"
+    },
+    {
+      "id": "anchor-holdout-instruction-008",
+      "section": "instruction",
+      "skill": "uppercase"
+    },
+    {
+      "id": "anchor-holdout-instruction-009",
+      "section": "instruction",
+      "skill": "uppercase"
+    },
+    {
+      "id": "anchor-holdout-instruction-010",
+      "section": "instruction",
+      "skill": "uppercase"
+    },
+    {
+      "id": "anchor-holdout-instruction-011",
+      "section": "instruction",
+      "skill": "lowercase"
+    },
+    {
+      "id": "anchor-holdout-instruction-012",
+      "section": "instruction",
+      "skill": "lowercase"
+    },
+    {
+      "id": "anchor-holdout-instruction-013",
+      "section": "instruction",
+      "skill": "lowercase"
+    },
+    {
+      "id": "anchor-holdout-instruction-014",
+      "section": "instruction",
+      "skill": "lowercase"
+    },
+    {
+      "id": "anchor-holdout-instruction-015",
+      "section": "instruction",
+      "skill": "lowercase"
+    },
+    {
+      "id": "anchor-holdout-instruction-016",
+      "section": "instruction",
+      "skill": "lowercase"
+    },
+    {
+      "id": "anchor-holdout-instruction-017",
+      "section": "instruction",
+      "skill": "lowercase"
+    },
+    {
+      "id": "anchor-holdout-instruction-018",
+      "section": "instruction",
+      "skill": "lowercase"
+    },
+    {
+      "id": "anchor-holdout-instruction-019",
+      "section": "instruction",
+      "skill": "lowercase"
+    },
+    {
+      "id": "anchor-holdout-instruction-020",
+      "section": "instruction",
+      "skill": "lowercase"
+    },
+    {
+      "id": "anchor-holdout-instruction-032",
+      "section": "instruction",
+      "skill": "stable_sort"
+    },
+    {
+      "id": "anchor-holdout-instruction-052",
+      "section": "instruction",
+      "skill": "select_position"
+    },
+    {
+      "id": "anchor-holdout-instruction-054",
+      "section": "instruction",
+      "skill": "select_position"
+    },
+    {
+      "id": "anchor-holdout-instruction-057",
+      "section": "instruction",
+      "skill": "select_position"
+    },
+    {
+      "id": "anchor-holdout-instruction-058",
+      "section": "instruction",
+      "skill": "select_position"
+    },
+    {
+      "id": "anchor-holdout-instruction-060",
+      "section": "instruction",
+      "skill": "select_position"
+    },
+    {
+      "id": "anchor-holdout-instruction-061",
+      "section": "instruction",
+      "skill": "copy_token"
+    },
+    {
+      "id": "anchor-holdout-instruction-066",
+      "section": "instruction",
+      "skill": "copy_token"
+    },
+    {
+      "id": "anchor-holdout-instruction-068",
+      "section": "instruction",
+      "skill": "copy_token"
+    },
+    {
+      "id": "anchor-holdout-instruction-071",
+      "section": "instruction",
+      "skill": "exact_substitution"
+    },
+    {
+      "id": "anchor-holdout-instruction-072",
+      "section": "instruction",
+      "skill": "exact_substitution"
+    },
+    {
+      "id": "anchor-holdout-instruction-073",
+      "section": "instruction",
+      "skill": "exact_substitution"
+    },
+    {
+      "id": "anchor-holdout-instruction-074",
+      "section": "instruction",
+      "skill": "exact_substitution"
+    },
+    {
+      "id": "anchor-holdout-instruction-075",
+      "section": "instruction",
+      "skill": "exact_substitution"
+    },
+    {
+      "id": "anchor-holdout-instruction-076",
+      "section": "instruction",
+      "skill": "exact_substitution"
+    },
+    {
+      "id": "anchor-holdout-instruction-077",
+      "section": "instruction",
+      "skill": "exact_substitution"
+    },
+    {
+      "id": "anchor-holdout-instruction-078",
+      "section": "instruction",
+      "skill": "exact_substitution"
+    },
+    {
+      "id": "anchor-holdout-instruction-079",
+      "section": "instruction",
+      "skill": "exact_substitution"
+    },
+    {
+      "id": "anchor-holdout-instruction-080",
+      "section": "instruction",
+      "skill": "exact_substitution"
+    },
+    {
+      "id": "anchor-holdout-instruction-082",
+      "section": "instruction",
+      "skill": "initials"
+    },
+    {
+      "id": "anchor-holdout-instruction-083",
+      "section": "instruction",
+      "skill": "initials"
+    },
+    {
+      "id": "anchor-holdout-instruction-085",
+      "section": "instruction",
+      "skill": "initials"
+    },
+    {
+      "id": "anchor-holdout-instruction-086",
+      "section": "instruction",
+      "skill": "initials"
+    },
+    {
+      "id": "anchor-holdout-instruction-088",
+      "section": "instruction",
+      "skill": "initials"
+    },
+    {
+      "id": "anchor-holdout-instruction-089",
+      "section": "instruction",
+      "skill": "initials"
+    },
+    {
+      "id": "anchor-holdout-instruction-091",
+      "section": "instruction",
+      "skill": "numeric_selection"
+    },
+    {
+      "id": "anchor-holdout-instruction-092",
+      "section": "instruction",
+      "skill": "numeric_selection"
+    },
+    {
+      "id": "anchor-holdout-instruction-093",
+      "section": "instruction",
+      "skill": "numeric_selection"
+    },
+    {
+      "id": "anchor-holdout-instruction-095",
+      "section": "instruction",
+      "skill": "numeric_selection"
+    },
+    {
+      "id": "anchor-holdout-instruction-096",
+      "section": "instruction",
+      "skill": "numeric_selection"
+    },
+    {
+      "id": "anchor-holdout-instruction-097",
+      "section": "instruction",
+      "skill": "numeric_selection"
+    },
+    {
+      "id": "anchor-holdout-instruction-098",
+      "section": "instruction",
+      "skill": "numeric_selection"
+    },
+    {
+      "id": "anchor-holdout-instruction-099",
+      "section": "instruction",
+      "skill": "numeric_selection"
+    },
+    {
+      "id": "anchor-holdout-instruction-100",
+      "section": "instruction",
+      "skill": "numeric_selection"
+    }
+  ],
+  "prompt_reference_or_scorer_modified": false,
+  "prompts_or_references_in_manifest": false,
+  "schema_version": 1,
+  "section_counts": {
+    "arithmetic": 96,
+    "format": 60,
+    "instruction": 54
+  },
+  "subset_id": "retention-anchor-holdout-v1-base-correct",
+  "subset_sha256": "36be91d08f2ab0e05c491094c53965d1aa4f989a730347768877a2548a62c7a9",
+  "suite_file_sha256": "16e9e56cda2d806a1196b60cc4e087e28e356139319b80141c9b89a2e6859cf6",
+  "suite_id": "foundry-retention-anchor-holdout-v1",
+  "suite_sha256": "bff18b434a284d848387262dde201601278e5c8b573937b3486bed2bf925696e",
+  "total": 210
+}

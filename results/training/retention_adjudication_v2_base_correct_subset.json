@@ -1,0 +1,960 @@
+{
+  "adapter_outputs_read": false,
+  "base_evaluation_id": "foundry-retention-adjudication-evaluation-v2",
+  "base_raw_packet_sha256": "b73292451d03793a49dd7fa67a30b068c517047b1dcf2a1e79cecd1e6de644e9",
+  "base_summary_file_sha256": "350b8d0b7be69e263ea8e80523a9d74ed64e5c1d53f8aecabd9e19535f332c29",
+  "base_summary_sha256": "977dcf32458159f56c711def4b06c454ef24f747c7cc0b36965c0e7fb4f7589e",
+  "definition": "frozen_scorer_correct_on_untouched_base",
+  "instrument_id": "foundry-base-conditioned-retention-v1",
+  "items": [
+    {
+      "id": "adjudication-arithmetic-001",
+      "section": "arithmetic",
+      "skill": "addition"
+    },
+    {
+      "id": "adjudication-arithmetic-003",
+      "section": "arithmetic",
+      "skill": "addition"
+    },
+    {
+      "id": "adjudication-arithmetic-005",
+      "section": "arithmetic",
+      "skill": "addition"
+    },
+    {
+      "id": "adjudication-arithmetic-009",
+      "section": "arithmetic",
+      "skill": "addition"
+    },
+    {
+      "id": "adjudication-arithmetic-011",
+      "section": "arithmetic",
+      "skill": "addition"
+    },
+    {
+      "id": "adjudication-arithmetic-013",
+      "section": "arithmetic",
+      "skill": "addition"
+    },
+    {
+      "id": "adjudication-arithmetic-014",
+      "section": "arithmetic",
+      "skill": "addition"
+    },
+    {
+      "id": "adjudication-arithmetic-015",
+      "section": "arithmetic",
+      "skill": "addition"
+    },
+    {
+      "id": "adjudication-arithmetic-018",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "id": "adjudication-arithmetic-019",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "id": "adjudication-arithmetic-020",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "id": "adjudication-arithmetic-021",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "id": "adjudication-arithmetic-023",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "id": "adjudication-arithmetic-024",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "id": "adjudication-arithmetic-025",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "id": "adjudication-arithmetic-026",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "id": "adjudication-arithmetic-027",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "id": "adjudication-arithmetic-028",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "id": "adjudication-arithmetic-029",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "id": "adjudication-arithmetic-030",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "id": "adjudication-arithmetic-031",
+      "section": "arithmetic",
+      "skill": "multiplication"
+    },
+    {
+      "id": "adjudication-arithmetic-036",
+      "section": "arithmetic",
+      "skill": "multiplication"
+    },
+    {
+      "id": "adjudication-arithmetic-037",
+      "section": "arithmetic",
+      "skill": "multiplication"
+    },
+    {
+      "id": "adjudication-arithmetic-038",
+      "section": "arithmetic",
+      "skill": "multiplication"
+    },
+    {
+      "id": "adjudication-arithmetic-039",
+      "section": "arithmetic",
+      "skill": "multiplication"
+    },
+    {
+      "id": "adjudication-arithmetic-041",
+      "section": "arithmetic",
+      "skill": "multiplication"
+    },
+    {
+      "id": "adjudication-arithmetic-042",
+      "section": "arithmetic",
+      "skill": "multiplication"
+    },
+    {
+      "id": "adjudication-arithmetic-043",
+      "section": "arithmetic",
+      "skill": "multiplication"
+    },
+    {
+      "id": "adjudication-arithmetic-044",
+      "section": "arithmetic",
+      "skill": "multiplication"
+    },
+    {
+      "id": "adjudication-arithmetic-046",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "id": "adjudication-arithmetic-047",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "id": "adjudication-arithmetic-048",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "id": "adjudication-arithmetic-049",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "id": "adjudication-arithmetic-050",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "id": "adjudication-arithmetic-051",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "id": "adjudication-arithmetic-052",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "id": "adjudication-arithmetic-053",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "id": "adjudication-arithmetic-054",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "id": "adjudication-arithmetic-055",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "id": "adjudication-arithmetic-056",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "id": "adjudication-arithmetic-057",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "id": "adjudication-arithmetic-058",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "id": "adjudication-arithmetic-059",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "id": "adjudication-arithmetic-060",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "id": "adjudication-arithmetic-061",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "id": "adjudication-arithmetic-062",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "id": "adjudication-arithmetic-063",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "id": "adjudication-arithmetic-064",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "id": "adjudication-arithmetic-065",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "id": "adjudication-arithmetic-066",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "id": "adjudication-arithmetic-067",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "id": "adjudication-arithmetic-068",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "id": "adjudication-arithmetic-069",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "id": "adjudication-arithmetic-070",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "id": "adjudication-arithmetic-071",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "id": "adjudication-arithmetic-072",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "id": "adjudication-arithmetic-073",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "id": "adjudication-arithmetic-074",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "id": "adjudication-arithmetic-075",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "id": "adjudication-arithmetic-076",
+      "section": "arithmetic",
+      "skill": "ratio"
+    },
+    {
+      "id": "adjudication-arithmetic-077",
+      "section": "arithmetic",
+      "skill": "ratio"
+    },
+    {
+      "id": "adjudication-arithmetic-078",
+      "section": "arithmetic",
+      "skill": "ratio"
+    },
+    {
+      "id": "adjudication-arithmetic-079",
+      "section": "arithmetic",
+      "skill": "ratio"
+    },
+    {
+      "id": "adjudication-arithmetic-080",
+      "section": "arithmetic",
+      "skill": "ratio"
+    },
+    {
+      "id": "adjudication-arithmetic-081",
+      "section": "arithmetic",
+      "skill": "ratio"
+    },
+    {
+      "id": "adjudication-arithmetic-082",
+      "section": "arithmetic",
+      "skill": "ratio"
+    },
+    {
+      "id": "adjudication-arithmetic-083",
+      "section": "arithmetic",
+      "skill": "ratio"
+    },
+    {
+      "id": "adjudication-arithmetic-084",
+      "section": "arithmetic",
+      "skill": "ratio"
+    },
+    {
+      "id": "adjudication-arithmetic-085",
+      "section": "arithmetic",
+      "skill": "ratio"
+    },
+    {
+      "id": "adjudication-arithmetic-086",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "adjudication-arithmetic-087",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "adjudication-arithmetic-088",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "adjudication-arithmetic-089",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "adjudication-arithmetic-090",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "adjudication-arithmetic-091",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "adjudication-arithmetic-092",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "adjudication-arithmetic-093",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "adjudication-arithmetic-094",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "adjudication-arithmetic-095",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "adjudication-arithmetic-096",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "adjudication-arithmetic-097",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "adjudication-arithmetic-098",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "adjudication-arithmetic-099",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "adjudication-arithmetic-100",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "id": "adjudication-format-001",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "adjudication-format-002",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "adjudication-format-003",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "adjudication-format-004",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "adjudication-format-005",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "adjudication-format-006",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "adjudication-format-007",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "adjudication-format-008",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "adjudication-format-009",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "adjudication-format-010",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "adjudication-format-011",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "adjudication-format-012",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "adjudication-format-013",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "adjudication-format-014",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "adjudication-format-015",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "adjudication-format-016",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "adjudication-format-017",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "id": "adjudication-format-018",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "adjudication-format-019",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "adjudication-format-020",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "adjudication-format-021",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "adjudication-format-022",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "adjudication-format-023",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "adjudication-format-024",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "adjudication-format-025",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "adjudication-format-026",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "adjudication-format-027",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "adjudication-format-028",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "adjudication-format-029",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "adjudication-format-030",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "adjudication-format-031",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "adjudication-format-032",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "adjudication-format-033",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "adjudication-format-034",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "id": "adjudication-format-048",
+      "section": "format",
+      "skill": "exact_line"
+    },
+    {
+      "id": "adjudication-format-049",
+      "section": "format",
+      "skill": "exact_line"
+    },
+    {
+      "id": "adjudication-format-056",
+      "section": "format",
+      "skill": "constrained_list"
+    },
+    {
+      "id": "adjudication-format-057",
+      "section": "format",
+      "skill": "constrained_list"
+    },
+    {
+      "id": "adjudication-format-059",
+      "section": "format",
+      "skill": "constrained_list"
+    },
+    {
+      "id": "adjudication-format-067",
+      "section": "format",
+      "skill": "constrained_list"
+    },
+    {
+      "id": "adjudication-format-085",
+      "section": "format",
+      "skill": "required_affixes"
+    },
+    {
+      "id": "adjudication-format-087",
+      "section": "format",
+      "skill": "required_affixes"
+    },
+    {
+      "id": "adjudication-format-089",
+      "section": "format",
+      "skill": "required_affixes"
+    },
+    {
+      "id": "adjudication-format-093",
+      "section": "format",
+      "skill": "required_affixes"
+    },
+    {
+      "id": "adjudication-format-094",
+      "section": "format",
+      "skill": "required_affixes"
+    },
+    {
+      "id": "adjudication-format-096",
+      "section": "format",
+      "skill": "required_affixes"
+    },
+    {
+      "id": "adjudication-format-098",
+      "section": "format",
+      "skill": "required_affixes"
+    },
+    {
+      "id": "adjudication-format-100",
+      "section": "format",
+      "skill": "required_affixes"
+    },
+    {
+      "id": "adjudication-instruction-001",
+      "section": "instruction",
+      "skill": "uppercase"
+    },
+    {
+      "id": "adjudication-instruction-002",
+      "section": "instruction",
+      "skill": "uppercase"
+    },
+    {
+      "id": "adjudication-instruction-003",
+      "section": "instruction",
+      "skill": "uppercase"
+    },
+    {
+      "id": "adjudication-instruction-004",
+      "section": "instruction",
+      "skill": "uppercase"
+    },
+    {
+      "id": "adjudication-instruction-005",
+      "section": "instruction",
+      "skill": "uppercase"
+    },
+    {
+      "id": "adjudication-instruction-006",
+      "section": "instruction",
+      "skill": "uppercase"
+    },
+    {
+      "id": "adjudication-instruction-007",
+      "section": "instruction",
+      "skill": "uppercase"
+    },
+    {
+      "id": "adjudication-instruction-008",
+      "section": "instruction",
+      "skill": "uppercase"
+    },
+    {
+      "id": "adjudication-instruction-009",
+      "section": "instruction",
+      "skill": "uppercase"
+    },
+    {
+      "id": "adjudication-instruction-010",
+      "section": "instruction",
+      "skill": "uppercase"
+    },
+    {
+      "id": "adjudication-instruction-011",
+      "section": "instruction",
+      "skill": "lowercase"
+    },
+    {
+      "id": "adjudication-instruction-012",
+      "section": "instruction",
+      "skill": "lowercase"
+    },
+    {
+      "id": "adjudication-instruction-013",
+      "section": "instruction",
+      "skill": "lowercase"
+    },
+    {
+      "id": "adjudication-instruction-014",
+      "section": "instruction",
+      "skill": "lowercase"
+    },
+    {
+      "id": "adjudication-instruction-015",
+      "section": "instruction",
+      "skill": "lowercase"
+    },
+    {
+      "id": "adjudication-instruction-016",
+      "section": "instruction",
+      "skill": "lowercase"
+    },
+    {
+      "id": "adjudication-instruction-017",
+      "section": "instruction",
+      "skill": "lowercase"
+    },
+    {
+      "id": "adjudication-instruction-018",
+      "section": "instruction",
+      "skill": "lowercase"
+    },
+    {
+      "id": "adjudication-instruction-019",
+      "section": "instruction",
+      "skill": "lowercase"
+    },
+    {
+      "id": "adjudication-instruction-020",
+      "section": "instruction",
+      "skill": "lowercase"
+    },
+    {
+      "id": "adjudication-instruction-022",
+      "section": "instruction",
+      "skill": "reverse"
+    },
+    {
+      "id": "adjudication-instruction-035",
+      "section": "instruction",
+      "skill": "stable_sort"
+    },
+    {
+      "id": "adjudication-instruction-041",
+      "section": "instruction",
+      "skill": "symbol_count"
+    },
+    {
+      "id": "adjudication-instruction-052",
+      "section": "instruction",
+      "skill": "select_position"
+    },
+    {
+      "id": "adjudication-instruction-054",
+      "section": "instruction",
+      "skill": "select_position"
+    },
+    {
+      "id": "adjudication-instruction-057",
+      "section": "instruction",
+      "skill": "select_position"
+    },
+    {
+      "id": "adjudication-instruction-058",
+      "section": "instruction",
+      "skill": "select_position"
+    },
+    {
+      "id": "adjudication-instruction-060",
+      "section": "instruction",
+      "skill": "select_position"
+    },
+    {
+      "id": "adjudication-instruction-061",
+      "section": "instruction",
+      "skill": "copy_token"
+    },
+    {
+      "id": "adjudication-instruction-065",
+      "section": "instruction",
+      "skill": "copy_token"
+    },
+    {
+      "id": "adjudication-instruction-068",
+      "section": "instruction",
+      "skill": "copy_token"
+    },
+    {
+      "id": "adjudication-instruction-071",
+      "section": "instruction",
+      "skill": "exact_substitution"
+    },
+    {
+      "id": "adjudication-instruction-072",
+      "section": "instruction",
+      "skill": "exact_substitution"
+    },
+    {
+      "id": "adjudication-instruction-073",
+      "section": "instruction",
+      "skill": "exact_substitution"
+    },
+    {
+      "id": "adjudication-instruction-074",
+      "section": "instruction",
+      "skill": "exact_substitution"
+    },
+    {
+      "id": "adjudication-instruction-075",
+      "section": "instruction",
+      "skill": "exact_substitution"
+    },
+    {
+      "id": "adjudication-instruction-076",
+      "section": "instruction",
+      "skill": "exact_substitution"
+    },
+    {
+      "id": "adjudication-instruction-077",
+      "section": "instruction",
+      "skill": "exact_substitution"
+    },
+    {
+      "id": "adjudication-instruction-078",
+      "section": "instruction",
+      "skill": "exact_substitution"
+    },
+    {
+      "id": "adjudication-instruction-079",
+      "section": "instruction",
+      "skill": "exact_substitution"
+    },
+    {
+      "id": "adjudication-instruction-080",
+      "section": "instruction",
+      "skill": "exact_substitution"
+    },
+    {
+      "id": "adjudication-instruction-082",
+      "section": "instruction",
+      "skill": "initials"
+    },
+    {
+      "id": "adjudication-instruction-083",
+      "section": "instruction",
+      "skill": "initials"
+    },
+    {
+      "id": "adjudication-instruction-085",
+      "section": "instruction",
+      "skill": "initials"
+    },
+    {
+      "id": "adjudication-instruction-086",
+      "section": "instruction",
+      "skill": "initials"
+    },
+    {
+      "id": "adjudication-instruction-088",
+      "section": "instruction",
+      "skill": "initials"
+    },
+    {
+      "id": "adjudication-instruction-089",
+      "section": "instruction",
+      "skill": "initials"
+    },
+    {
+      "id": "adjudication-instruction-093",
+      "section": "instruction",
+      "skill": "numeric_selection"
+    },
+    {
+      "id": "adjudication-instruction-094",
+      "section": "instruction",
+      "skill": "numeric_selection"
+    },
+    {
+      "id": "adjudication-instruction-095",
+      "section": "instruction",
+      "skill": "numeric_selection"
+    },
+    {
+      "id": "adjudication-instruction-096",
+      "section": "instruction",
+      "skill": "numeric_selection"
+    },
+    {
+      "id": "adjudication-instruction-097",
+      "section": "instruction",
+      "skill": "numeric_selection"
+    },
+    {
+      "id": "adjudication-instruction-098",
+      "section": "instruction",
+      "skill": "numeric_selection"
+    },
+    {
+      "id": "adjudication-instruction-099",
+      "section": "instruction",
+      "skill": "numeric_selection"
+    },
+    {
+      "id": "adjudication-instruction-100",
+      "section": "instruction",
+      "skill": "numeric_selection"
+    }
+  ],
+  "prompt_reference_or_scorer_modified": false,
+  "prompts_or_references_in_manifest": false,
+  "schema_version": 1,
+  "section_counts": {
+    "arithmetic": 84,
+    "format": 48,
+    "instruction": 55
+  },
+  "subset_id": "retention-adjudication-v2-base-correct",
+  "subset_sha256": "c76df74b911b96ca43c2663a123e41347fd544bf6644f15522ccaad7b77099e1",
+  "suite_file_sha256": "710e6030594eff5e0847f0f032bb8f1f71cd496030f72a9b371bb5919f5b6174",
+  "suite_id": "foundry-retention-adjudication-v2",
+  "suite_sha256": "5caf23be79fa01151af6f7db8d45c2b85bfe24b03a29589e482d51731c8358af",
+  "total": 187
+}
