@@ -453,3 +453,16 @@ SHA-256 is `eff84b9ec92715eeb74a6c74bcad5980dded9c4b5482012fd8e2438857f24598`.
 The predeclared stop rule therefore closed verifier-GRPO. Fresh-process and two-step replay, G1/G2,
 retention, and GSM1K were not run. No adapter or new benchmark result exists. The earlier one-seed
 curriculum comparison and its provisional human-review/second-seed label remain unchanged.
+
+## Milestone 10G orchestration correction does not create a signal result
+
+The newly authorized source/interpreter/artifact-root decoupling changes only how the immutable
+experiment is launched and where writable evidence is stored. It does not alter the frozen sampler,
+rewards, reference policy, optimizer, schedules, retention thresholds, or GSM1K evaluator. The
+original `165` focused GRPO tests and all `17` new path-contract tests pass, but no model process has
+run in this phase.
+
+Accordingly, the one-seed GRPO signal gate remains **not reached**. There is no new adapter,
+retention result, or generic-versus-targeted benchmark comparison. The historical base remains
+`521/814`; the existing result remains **Provisional one-seed result pending stratified human
+language review and second-seed confirmation**, with review still pending at the frozen local URL.

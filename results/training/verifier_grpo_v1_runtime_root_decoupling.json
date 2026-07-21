@@ -1,0 +1,42 @@
+{
+  "artifact_id": "foundry-verifier-grpo-runtime-root-decoupling-v1",
+  "expanded_focused_grpo_tests_passed": 182,
+  "full_unit_and_integration_tests_passed": 693,
+  "milestone": "10G",
+  "model_generation_occurred": false,
+  "optimizer_steps": 0,
+  "orchestration_source_sha256": {
+    "src/foundry/training/grpo_paths.py": {
+      "new": "8d4c24e4b961755e0959d078e6d1224ba85b39d6f6019b789b56a8664c8e404f",
+      "prior": null
+    },
+    "src/foundry/training/grpo_replay_runtime.py": {
+      "new": "758dc1fbd5016b45d40012b5ec42aac8339ef087563b8f0654a74c45e4c5e5b6",
+      "prior": "db3803856de4666228f5759ec8fb164051e3cd8a425021afe10458043e28bdbb"
+    },
+    "src/foundry/training/grpo_runtime.py": {
+      "new": "d92fc9923900ed6861864197ec099179b9149296c7be0f04e125faee85cf1323",
+      "prior": "52a602b36975b582cc75e9d227bcb977042776ba540aeb53e6307801d18d24b9"
+    },
+    "src/foundry/training/grpo_two_step_runtime.py": {
+      "new": "61b429e7bac4098f4930ec63ea618ddc1c38cd15fc1e7b2e390d3a2d0c00920c",
+      "prior": "0694d00c5fbcee5e8b12a4b6396c153b9a794d9624f87531e75cabfd51fa7ea1"
+    }
+  },
+  "phase": "orchestration_patch",
+  "process_command_template_sha256": "6680c2c4d713882877d1c7e2ab1c47211ec07f2c84cee0464964e4de7b1d3498",
+  "process_environment_sha256": "f888e1e7bb96e24dda66e04b973682494016e37ecd6f8c326bb031d4d4fb644b",
+  "protected_scientific_artifact_manifest_sha256": "96fa43b4839424c6e47a445bcd7127bd4c275aff999545449b52fbb86c892446",
+  "protected_scientific_paths_changed": 0,
+  "python_executable_sha256": "0b471133e110cfb53a061cad528ce8e517d7b9ac41a0a396c39ad795a487fc14",
+  "python_executable_size_bytes": 274424,
+  "runtime_path_contract_definition_sha256": "8d4c24e4b961755e0959d078e6d1224ba85b39d6f6019b789b56a8664c8e404f",
+  "runtime_path_contract_freeze_stage": "external_v2_after_atomic_patch_commit",
+  "runtime_path_contract_sha256": null,
+  "schema_version": 1,
+  "scientific_contract_changed": false,
+  "sealed_final_accessed": false,
+  "starting_commit": "8f67e46262b7edafc57861aaf185efa345228179",
+  "summary_sha256": "9d7e1c9994999ee568551e44fee9300a1711e54766de60e13332dd87c8ead3bb",
+  "unchanged_focused_grpo_tests_passed": 165
+}

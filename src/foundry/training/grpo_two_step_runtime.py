@@ -28,6 +28,13 @@ from foundry.training.grpo_compatibility import (
     model_adapter_state,
 )
 from foundry.training.grpo_config import BASE_REVISION, load_grpo_config
+from foundry.training.grpo_paths import (
+    GrpoRuntimePaths,
+    assert_artifact_path,
+    assert_source_path,
+    load_runtime_paths,
+    validate_runtime_paths,
+)
 from foundry.training.grpo_reference import assert_only_lora_trainable
 from foundry.training.grpo_replay_evidence import (
     CompatibilityStepEvidence,
@@ -47,7 +54,6 @@ from foundry.training.grpo_replay_evidence import (
 from foundry.training.grpo_runtime import (
     MAX_RESERVED_VRAM_BYTES,
     VerifierRewardCallback,
-    _assert_git_ignored,
     _assert_offline_model_snapshot,
     _base_reference_hash,
     _completion_token_counter,
@@ -547,13 +553,17 @@ def make_two_step_evidence_trainer(
 
 def _single_two_step_run(
     *,
-    repository_root: Path,
+    runtime_paths: GrpoRuntimePaths,
     config_path: Path,
-    model_path: Path,
     packet_path: Path,
     manifest_path: Path,
     trainer_output_dir: Path,
 ) -> tuple[dict[str, object], dict[str, object]]:
+    assert_source_path(runtime_paths, config_path, "two-step configuration")
+    assert_source_path(runtime_paths, manifest_path, "two-step schedule manifest")
+    assert_artifact_path(runtime_paths, packet_path, "two-step schedule packet")
+    assert_artifact_path(runtime_paths, trainer_output_dir, "two-step trainer state")
+    model_path = runtime_paths.model_snapshot_root
     config = load_grpo_config(config_path)
     if config.base_model.revision != BASE_REVISION:
         raise ValueError("base revision differs from the frozen Qwen checkpoint")
@@ -561,13 +571,13 @@ def _single_two_step_run(
         raise ValueError("G1 execution contract differs")
     external_process = replay_runtime._external_process_evidence(
         config.grpo.seed,
+        runtime_paths,
         expected_entry_cublas_workspace_config=(
             replay_runtime.FROZEN_PROCESS_START_CUBLAS_WORKSPACE_CONFIG
         ),
     )
     reward_contract = replay_runtime._assert_frozen_reward_contract()
     _assert_offline_model_snapshot(model_path, config)
-    _assert_git_ignored(repository_root, trainer_output_dir, "two-step trainer state")
     if trainer_output_dir.exists():
         raise FileExistsError("two-step trainer path must be unused")
     schedule = load_runtime_schedule(
@@ -595,7 +605,7 @@ def _single_two_step_run(
     peft = modules["peft"]
     psutil = modules["psutil"]
     numpy = replay_runtime._seed_everything(modules, config.grpo.seed)
-    runtime_environment = replay_runtime._runtime_environment_evidence(repository_root, numpy)
+    runtime_environment = replay_runtime._runtime_environment_evidence(runtime_paths, numpy)
     cuda = replay_runtime._validate_frozen_cuda(torch)
     replay_runtime._prepare_cuda_replay(torch)
     process = psutil.Process()
@@ -800,6 +810,7 @@ def _single_two_step_run(
         "finite_history_metric_names": sorted(metrics),
         "warning_contract": warning_evidence,
         "external_process_contract": external_process,
+        "runtime_paths": runtime_paths.evidence(),
         "runtime_environment": runtime_environment,
         "environment_variable_sha256": environment_sha256,
         "environment_variable_count": environment_count,
@@ -858,11 +869,10 @@ def _single_two_step_run(
     return packet, resource
 
 
-def run_one_fresh_process(
+def _run_one_fresh_process_impl(
     *,
-    repository_root: Path,
+    runtime_paths: GrpoRuntimePaths,
     config_path: Path,
-    model_path: Path,
     packet_path: Path,
     manifest_path: Path,
     raw_packet_path: Path,
@@ -871,14 +881,15 @@ def run_one_fresh_process(
 ) -> dict[str, object]:
     """Run one exact two-step smoke and write ignored packet/metadata evidence."""
 
-    _assert_git_ignored(repository_root, raw_packet_path, "two-step replay packet")
-    _assert_git_ignored(repository_root, metadata_path, "two-step replay metadata")
+    validate_runtime_paths(runtime_paths)
+    assert_artifact_path(runtime_paths, raw_packet_path, "two-step replay packet")
+    assert_artifact_path(runtime_paths, trainer_output_dir, "two-step trainer state")
+    assert_artifact_path(runtime_paths, metadata_path, "two-step replay metadata")
     if raw_packet_path.exists() or metadata_path.exists():
         raise FileExistsError("two-step packet and metadata paths must start unused")
     packet, resource = _single_two_step_run(
-        repository_root=repository_root,
+        runtime_paths=runtime_paths,
         config_path=config_path,
-        model_path=model_path,
         packet_path=packet_path,
         manifest_path=manifest_path,
         trainer_output_dir=trainer_output_dir,
@@ -890,11 +901,42 @@ def run_one_fresh_process(
         "packet_sha256": packet_hash,
         "process_instance_sha256": _PROCESS_INSTANCE_SHA256,
         "process_command_sha256": canonical_sha256(sys.argv),
+        "runtime_path_contract_sha256": runtime_paths.contract_sha256,
+        "process_environment_sha256": runtime_paths.process_environment_sha256,
+        "process_command_template_sha256": runtime_paths.process_command_template_sha256,
         "resource_measurement": resource,
     }
     metadata["metadata_sha256"] = canonical_sha256(metadata)
     _write_json_new(metadata_path, metadata)
+    validate_runtime_paths(runtime_paths)
     return metadata
+
+
+def run_one_fresh_process(
+    *,
+    runtime_paths: GrpoRuntimePaths,
+    config_path: Path,
+    packet_path: Path,
+    manifest_path: Path,
+    raw_packet_path: Path,
+    trainer_output_dir: Path,
+    metadata_path: Path,
+) -> dict[str, object]:
+    """Validate immutable roots on every two-step exit path."""
+
+    validate_runtime_paths(runtime_paths)
+    try:
+        return _run_one_fresh_process_impl(
+            runtime_paths=runtime_paths,
+            config_path=config_path,
+            packet_path=packet_path,
+            manifest_path=manifest_path,
+            raw_packet_path=raw_packet_path,
+            trainer_output_dir=trainer_output_dir,
+            metadata_path=metadata_path,
+        )
+    finally:
+        validate_runtime_paths(runtime_paths)
 
 
 def _load_metadata(path: Path) -> dict[str, object]:
@@ -916,6 +958,7 @@ def _load_metadata(path: Path) -> dict[str, object]:
 
 def combine_fresh_process_runs(
     *,
+    runtime_paths: GrpoRuntimePaths,
     packet_paths: Sequence[Path],
     metadata_paths: Sequence[Path],
     summary_path: Path,
@@ -924,6 +967,9 @@ def combine_fresh_process_runs(
 
     if len(packet_paths) != FRESH_PROCESS_RUNS or len(metadata_paths) != FRESH_PROCESS_RUNS:
         raise ValueError("two-step replay requires exactly two packets and metadata files")
+    validate_runtime_paths(runtime_paths)
+    for path in (*packet_paths, *metadata_paths, summary_path):
+        assert_artifact_path(runtime_paths, path, "two-step replay artifact")
     if len({path.resolve() for path in packet_paths}) != FRESH_PROCESS_RUNS:
         raise ValueError("two-step packet paths must be distinct")
     if len({path.resolve() for path in metadata_paths}) != FRESH_PROCESS_RUNS:
@@ -934,6 +980,15 @@ def combine_fresh_process_runs(
     metadata = [_load_metadata(path) for path in metadata_paths]
     if any(row.get("packet_sha256") != common_hash for row in metadata):
         raise ValueError("two-step metadata packet hash differs")
+    expected_runtime_fields = {
+        "runtime_path_contract_sha256": runtime_paths.contract_sha256,
+        "process_environment_sha256": runtime_paths.process_environment_sha256,
+        "process_command_template_sha256": runtime_paths.process_command_template_sha256,
+    }
+    if any(
+        row.get(key) != value for row in metadata for key, value in expected_runtime_fields.items()
+    ):
+        raise RuntimeError("two-step runtime path, environment, or command template differs")
     process_identities = [str(row.get("process_instance_sha256")) for row in metadata]
     if len(set(process_identities)) != FRESH_PROCESS_RUNS or any(
         len(value) != 64 or any(character not in _SHA256_CHARACTERS for character in value)
@@ -965,6 +1020,7 @@ def combine_fresh_process_runs(
         ],
         "process_identity_sha256s": process_identities,
         "process_command_sha256s": [row["process_command_sha256"] for row in metadata],
+        "runtime_paths": runtime_paths.evidence(),
         "process_metadata_sha256s": [row["metadata_sha256"] for row in metadata],
         "resource_measurements": resources,
         "exact_replay_passed": True,
@@ -979,6 +1035,7 @@ def combine_fresh_process_runs(
     }
     summary["summary_sha256"] = canonical_sha256(summary)
     _write_json_new(summary_path, summary)
+    validate_runtime_paths(runtime_paths)
     return summary
 
 
@@ -986,15 +1043,15 @@ def _build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     subparsers = parser.add_subparsers(dest="command", required=True)
     one = subparsers.add_parser("one-run")
-    one.add_argument("--repository-root", type=Path, required=True)
+    one.add_argument("--runtime-paths", type=Path, required=True)
     one.add_argument("--config", type=Path, required=True)
-    one.add_argument("--model-path", type=Path, required=True)
     one.add_argument("--packet", type=Path, required=True)
     one.add_argument("--manifest", type=Path, required=True)
     one.add_argument("--raw-packet", type=Path, required=True)
     one.add_argument("--trainer-output", type=Path, required=True)
     one.add_argument("--metadata", type=Path, required=True)
     combine = subparsers.add_parser("combine")
+    combine.add_argument("--runtime-paths", type=Path, required=True)
     combine.add_argument("--packets", type=Path, nargs=FRESH_PROCESS_RUNS, required=True)
     combine.add_argument("--metadata", type=Path, nargs=FRESH_PROCESS_RUNS, required=True)
     combine.add_argument("--summary", type=Path, required=True)
@@ -1003,11 +1060,11 @@ def _build_parser() -> argparse.ArgumentParser:
 
 def main(argv: Sequence[str] | None = None) -> int:
     args = _build_parser().parse_args(argv)
+    runtime_paths = load_runtime_paths(args.runtime_paths)
     if args.command == "one-run":
         result = run_one_fresh_process(
-            repository_root=args.repository_root,
+            runtime_paths=runtime_paths,
             config_path=args.config,
-            model_path=args.model_path,
             packet_path=args.packet,
             manifest_path=args.manifest,
             raw_packet_path=args.raw_packet,
@@ -1016,6 +1073,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         )
     else:
         result = combine_fresh_process_runs(
+            runtime_paths=runtime_paths,
             packet_paths=args.packets,
             metadata_paths=args.metadata,
             summary_path=args.summary,

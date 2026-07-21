@@ -993,3 +993,27 @@ the tracked failure-artifact file SHA-256 is
 smokes, G1/G2 training, retention selection, independent retention, GSM1K evaluation, bootstrap,
 and signal adjudication were not run. The Milestone 10E stop rule closes verifier-GRPO for this
 project version. Do not retry the replay, train an adapter, or open another GRPO configuration.
+
+## Milestone 10G authorization: immutable runtime-root decoupling
+
+Milestone 10G explicitly authorizes one orchestration-only correction before replaying the unchanged
+scientific contract. `GrpoRuntimePaths` now freezes five independent identities: the detached source
+root, mutable primary repository, exact training interpreter, external writable artifact root, and
+read-only model cache. Fresh processes use the configured absolute interpreter; all generated state
+must resolve beneath the external artifact root; imports must resolve beneath the detached source;
+and source, executable, cache, environment, and command identities are revalidated before and after
+execution.
+
+The original `165` focused GRPO tests still pass under `PYTHONHASHSEED=20260720`; `17` new path and
+orchestration cases bring the focused total to `182`. The patch changes no generator, sampler,
+reward, reference-policy, optimizer, schedule, retention, evaluator, synthesis, or dependency file.
+The approved CPython executable remains SHA-256
+`0b471133e110cfb53a061cad528ce8e517d7b9ac41a0a396c39ad795a487fc14`, and the planned V2 process
+command-template SHA-256 is
+`6680c2c4d713882877d1c7e2ab1c47211ec07f2c84cee0464964e4de7b1d3498`.
+
+After the atomic orchestration commit is pushed, the only authorized continuation is a detached V2
+worktree plus external V2 runtime manifest. The actual runtime-path-contract hash is frozen there
+because it binds the new commit and complete tracked-source manifest. No model generation,
+backward pass, optimizer step, checkpoint, adapter, retention evaluation, or GSM1K evaluation has
+occurred during this patch phase.

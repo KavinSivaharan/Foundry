@@ -45,6 +45,14 @@ from foundry.training.grpo_config import (
     VerifierGRPOConfig,
     load_grpo_config,
 )
+from foundry.training.grpo_paths import (
+    GrpoRuntimePaths,
+    assert_artifact_path,
+    assert_source_path,
+    load_runtime_paths,
+    same_canonical_path,
+    validate_runtime_paths,
+)
 from foundry.training.grpo_reference import (
     FROZEN_CHECKPOINT_STEPS,
     assert_only_lora_trainable,
@@ -1025,7 +1033,7 @@ def _peak_process_ram(process: Any) -> int:
     raise RuntimeError("process memory information lacks a positive RAM measurement")
 
 
-def _external_process_evidence(seed: int) -> dict[str, object]:
+def _external_process_evidence(seed: int, runtime_paths: GrpoRuntimePaths) -> dict[str, object]:
     """Prove that process-start hash and cuBLAS settings match the frozen run."""
 
     if seed != FROZEN_PROCESS_SEED:
@@ -1040,9 +1048,16 @@ def _external_process_evidence(seed: int) -> dict[str, object]:
             f"CUBLAS_WORKSPACE_CONFIG must equal {FROZEN_CUBLAS_WORKSPACE_CONFIG!r} "
             "before process launch"
         )
+    if not same_canonical_path(Path(sys.executable), runtime_paths.python_executable):
+        raise RuntimeError("GRPO process did not use the configured Python executable")
     current_hash = hash(_PYTHON_HASH_PROBE)
     completed = subprocess.run(
-        [sys.executable, "-S", "-c", f"print(hash({_PYTHON_HASH_PROBE!r}))"],
+        [
+            str(runtime_paths.python_executable),
+            "-S",
+            "-c",
+            f"print(hash({_PYTHON_HASH_PROBE!r}))",
+        ],
         check=True,
         capture_output=True,
         text=True,
@@ -1140,7 +1155,9 @@ def _software_versions() -> dict[str, str]:
     return versions
 
 
-def _runtime_environment_evidence(modules: Mapping[str, Any]) -> dict[str, object]:
+def _runtime_environment_evidence(
+    modules: Mapping[str, Any], runtime_paths: GrpoRuntimePaths
+) -> dict[str, object]:
     """Require exact runtime-visible Python and package versions."""
 
     python = {
@@ -1153,6 +1170,9 @@ def _runtime_environment_evidence(modules: Mapping[str, Any]) -> dict[str, objec
     }
     if python != expected_python:
         raise RuntimeError(f"Python runtime differs from the frozen contract: {python}")
+    executable = Path(sys.executable).resolve(strict=True)
+    if not same_canonical_path(executable, runtime_paths.python_executable):
+        raise RuntimeError("running interpreter differs from the runtime-path contract")
     versions = _software_versions()
     imported_versions: dict[str, str] = {}
     for name in ("datasets", "numpy", "peft", "psutil", "torch", "transformers", "trl"):
@@ -1165,6 +1185,8 @@ def _runtime_environment_evidence(modules: Mapping[str, Any]) -> dict[str, objec
             raise RuntimeError(f"imported {name} version differs from package metadata")
     return {
         "python": python,
+        "sys_executable": str(executable),
+        "sys_executable_file_sha256": hashlib.sha256(executable.read_bytes()).hexdigest(),
         "software_versions": versions,
         "imported_software_versions": imported_versions,
     }
@@ -1365,11 +1387,10 @@ def _repeat_row(group: RuntimePromptGroup) -> list[dict[str, object]]:
     return [group.policy_row() for _ in range(COMPLETIONS_PER_GROUP)]
 
 
-def run_grpo(
+def _run_grpo_impl(
     *,
-    repository_root: Path,
+    runtime_paths: GrpoRuntimePaths,
     config_path: Path,
-    model_path: Path,
     packet_path: Path,
     manifest_path: Path,
     arm: Arm,
@@ -1383,15 +1404,20 @@ def run_grpo(
 
     if mode not in {"compatibility", "train"}:
         raise ValueError("runtime mode must be compatibility or train")
-    external_process = _external_process_evidence(FROZEN_PROCESS_SEED)
+    assert_source_path(runtime_paths, config_path, "GRPO configuration")
+    assert_source_path(runtime_paths, manifest_path, "GRPO schedule manifest")
+    assert_artifact_path(runtime_paths, packet_path, "GRPO schedule packet")
+    assert_artifact_path(runtime_paths, output_dir, "GRPO adapter/checkpoint")
+    assert_artifact_path(runtime_paths, raw_evidence_path, "raw GRPO evidence")
+    assert_artifact_path(runtime_paths, summary_path, "GRPO summary")
+    model_path = runtime_paths.model_snapshot_root
+    external_process = _external_process_evidence(FROZEN_PROCESS_SEED, runtime_paths)
     config = load_grpo_config(config_path)
     if config.grpo.seed != FROZEN_PROCESS_SEED:
         raise ValueError("configured GRPO seed differs from the frozen process seed")
     if config.base_model.revision != BASE_REVISION:
         raise ValueError("base revision differs from the frozen Qwen checkpoint")
     _assert_offline_model_snapshot(model_path, config)
-    _assert_git_ignored(repository_root, output_dir, "GRPO adapter/checkpoint")
-    _assert_git_ignored(repository_root, raw_evidence_path, "raw GRPO evidence")
     if output_dir.exists() or raw_evidence_path.exists() or summary_path.exists():
         raise FileExistsError("GRPO run outputs must start from unused paths")
     schedule = load_runtime_schedule(packet_path, manifest_path, expected_arm=arm)
@@ -1415,7 +1441,7 @@ def run_grpo(
     peft = modules["peft"]
     datasets = modules["datasets"]
     psutil = modules["psutil"]
-    runtime_environment = _runtime_environment_evidence(modules)
+    runtime_environment = _runtime_environment_evidence(modules, runtime_paths)
     full_determinism_source = _stock_full_determinism_source_evidence(transformers)
     _seed_everything(modules, config.grpo.seed)
     cuda = _validate_cuda(torch)
@@ -1617,6 +1643,7 @@ def run_grpo(
         "reference_policy": "untouched_base_with_active_adapter_disabled",
         "reference_implementation_audit": asdict(reference_audit),
         "external_process_contract": external_process,
+        "runtime_paths": runtime_paths.evidence(),
         "runtime_environment": runtime_environment,
         "stock_full_determinism_transition": full_determinism_transition,
         "warning_only_generation_contract": warning_evidence,
@@ -1669,11 +1696,43 @@ def run_grpo(
     return summary
 
 
+def run_grpo(
+    *,
+    runtime_paths: GrpoRuntimePaths,
+    config_path: Path,
+    packet_path: Path,
+    manifest_path: Path,
+    arm: Arm,
+    variant_id: str,
+    mode: RuntimeMode,
+    output_dir: Path,
+    raw_evidence_path: Path,
+    summary_path: Path,
+) -> dict[str, object]:
+    """Validate immutable roots before and after one GRPO process."""
+
+    validate_runtime_paths(runtime_paths)
+    try:
+        return _run_grpo_impl(
+            runtime_paths=runtime_paths,
+            config_path=config_path,
+            packet_path=packet_path,
+            manifest_path=manifest_path,
+            arm=arm,
+            variant_id=variant_id,
+            mode=mode,
+            output_dir=output_dir,
+            raw_evidence_path=raw_evidence_path,
+            summary_path=summary_path,
+        )
+    finally:
+        validate_runtime_paths(runtime_paths)
+
+
 def _build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--repository-root", type=Path, required=True)
+    parser.add_argument("--runtime-paths", type=Path, required=True)
     parser.add_argument("--config", type=Path, required=True)
-    parser.add_argument("--model-path", type=Path, required=True)
     parser.add_argument("--packet", type=Path, required=True)
     parser.add_argument("--manifest", type=Path, required=True)
     parser.add_argument("--arm", choices=("generic_control", "targeted"), required=True)
@@ -1687,10 +1746,10 @@ def _build_parser() -> argparse.ArgumentParser:
 
 def main(argv: Sequence[str] | None = None) -> int:
     args = _build_parser().parse_args(argv)
+    runtime_paths = load_runtime_paths(args.runtime_paths)
     summary = run_grpo(
-        repository_root=args.repository_root,
+        runtime_paths=runtime_paths,
         config_path=args.config,
-        model_path=args.model_path,
         packet_path=args.packet,
         manifest_path=args.manifest,
         arm=cast(Arm, args.arm),

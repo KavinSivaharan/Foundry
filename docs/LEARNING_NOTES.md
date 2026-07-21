@@ -860,3 +860,17 @@ The operational lesson is to serialize decision-bearing GPU experiments with sou
 finish and hash the implementation first, prohibit edits during all compared runs, and only then
 launch the replay. The scientific lesson is equally important: diagnostic equivalence can explain a
 failure, but it cannot silently replace a predeclared exactness criterion.
+
+## Immutable source does not imply a self-contained runtime root
+
+A detached worktree is the right boundary for executable source, but it is deliberately the wrong
+place to infer an interpreter or store generated state. The interpreter belongs to an independently
+frozen environment; artifacts belong to a writable external root; a populated offline model cache
+is a third read-only concern. Collapsing these identities into one repository-root argument turns
+source immutability into an accidental deployment constraint.
+
+The safer pattern is an explicit typed contract whose canonical paths and identities are frozen
+once and revalidated around every process. Import provenance proves which source executed, the
+executable hash proves which CPython launched it, the cache manifest proves which model bytes were
+read, and artifact containment proves where mutations may occur. These checks strengthen the
+experiment boundary without changing generation, rewards, gradients, or any scientific threshold.

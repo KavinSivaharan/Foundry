@@ -374,7 +374,11 @@ def test_external_process_contract_requires_effective_hash_seed_and_exact_cublas
         return SimpleNamespace(stdout=f"{hash(runtime._PYTHON_HASH_PROBE)}\n")
 
     monkeypatch.setattr(subprocess, "run", fake_run)
-    evidence = runtime._external_process_evidence(runtime.FROZEN_PROCESS_SEED)
+    runtime_paths = SimpleNamespace(python_executable=Path(sys.executable))
+    evidence = runtime._external_process_evidence(  # type: ignore[arg-type]
+        runtime.FROZEN_PROCESS_SEED,
+        runtime_paths,
+    )
     assert evidence["python_hash_seed"] == str(runtime.FROZEN_PROCESS_SEED)
     assert evidence["cublas_workspace_config"] == ":4096:8"
     assert len(str(evidence["python_hash_probe_sha256"])) == 64
@@ -383,11 +387,11 @@ def test_external_process_contract_requires_effective_hash_seed_and_exact_cublas
 
     environment["CUBLAS_WORKSPACE_CONFIG"] = ":16:8"
     with pytest.raises(RuntimeError, match="CUBLAS_WORKSPACE_CONFIG"):
-        runtime._external_process_evidence(runtime.FROZEN_PROCESS_SEED)
+        runtime._external_process_evidence(runtime.FROZEN_PROCESS_SEED, runtime_paths)
     environment["CUBLAS_WORKSPACE_CONFIG"] = runtime.FROZEN_CUBLAS_WORKSPACE_CONFIG
     environment["PYTHONHASHSEED"] = "7"
     with pytest.raises(RuntimeError, match="exported before launching"):
-        runtime._external_process_evidence(runtime.FROZEN_PROCESS_SEED)
+        runtime._external_process_evidence(runtime.FROZEN_PROCESS_SEED, runtime_paths)
     environment["PYTHONHASHSEED"] = str(runtime.FROZEN_PROCESS_SEED)
     monkeypatch.setattr(
         subprocess,
@@ -395,7 +399,7 @@ def test_external_process_contract_requires_effective_hash_seed_and_exact_cublas
         lambda *args, **kwargs: SimpleNamespace(stdout="different\n"),
     )
     with pytest.raises(RuntimeError, match="running interpreter hash seed"):
-        runtime._external_process_evidence(runtime.FROZEN_PROCESS_SEED)
+        runtime._external_process_evidence(runtime.FROZEN_PROCESS_SEED, runtime_paths)
 
 
 def _full_determinism_fixture(seed: int, warn_only: bool = False) -> None:
@@ -458,17 +462,21 @@ def test_runtime_environment_requires_exact_python_and_stack_versions(
         name: SimpleNamespace(__version__=versions[name])
         for name in ("datasets", "numpy", "peft", "psutil", "torch", "transformers", "trl")
     }
-    evidence = runtime._runtime_environment_evidence(modules)
+    runtime_paths = SimpleNamespace(python_executable=Path(sys.executable))
+    evidence = runtime._runtime_environment_evidence(  # type: ignore[arg-type]
+        modules,
+        runtime_paths,
+    )
     assert evidence["python"] == {"implementation": "CPython", "version": "3.12.10"}
     assert evidence["software_versions"] == runtime.FROZEN_SOFTWARE_VERSIONS
 
     modules["torch"].__version__ = "2.5.2"
     with pytest.raises(RuntimeError, match="imported torch version"):
-        runtime._runtime_environment_evidence(modules)
+        runtime._runtime_environment_evidence(modules, runtime_paths)
     modules["torch"].__version__ = versions["torch"]
     monkeypatch.setattr(platform, "python_version", lambda: "3.12.11")
     with pytest.raises(RuntimeError, match="Python runtime differs"):
-        runtime._runtime_environment_evidence(modules)
+        runtime._runtime_environment_evidence(modules, runtime_paths)
 
 
 class _SeedRecorder:

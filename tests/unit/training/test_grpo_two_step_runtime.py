@@ -14,6 +14,25 @@ from foundry.training import grpo_two_step_runtime as runtime
 from foundry.training.config import canonical_sha256
 
 
+def _runtime_paths(tmp_path: Path) -> SimpleNamespace:
+    return SimpleNamespace(
+        source_root=tmp_path / "source",
+        primary_repository_root=tmp_path / "primary",
+        python_executable=Path("C:/Python/python.exe"),
+        artifact_root=tmp_path,
+        model_cache_root=tmp_path / "cache",
+        model_snapshot_root=tmp_path / "cache" / "snapshot",
+        contract_sha256=canonical_sha256("runtime-path-contract"),
+        process_environment_sha256=canonical_sha256("process-environment"),
+        process_command_template_sha256=canonical_sha256("process-command-template"),
+        evidence=lambda: {
+            "runtime_path_contract_sha256": canonical_sha256("runtime-path-contract"),
+            "source_manifest_sha256": canonical_sha256("source-manifest"),
+            "model_artifact_manifest_sha256": canonical_sha256("model-artifacts"),
+        },
+    )
+
+
 class _StrictTorch:
     def __init__(self, *, strict: bool) -> None:
         self.strict = strict
@@ -239,6 +258,7 @@ def _write_metadata(
     *,
     packet_hash: str,
     process_hash: str,
+    runtime_paths: SimpleNamespace,
 ) -> None:
     value: dict[str, object] = {
         "schema_version": runtime.TWO_STEP_RUNTIME_SCHEMA_VERSION,
@@ -246,6 +266,9 @@ def _write_metadata(
         "packet_sha256": packet_hash,
         "process_instance_sha256": process_hash,
         "process_command_sha256": canonical_sha256([process_hash]),
+        "runtime_path_contract_sha256": runtime_paths.contract_sha256,
+        "process_environment_sha256": runtime_paths.process_environment_sha256,
+        "process_command_template_sha256": (runtime_paths.process_command_template_sha256),
         "resource_measurement": {
             "reserved_vram_gate_passed": True,
             "peak_reserved_vram_bytes": 123,
@@ -262,21 +285,35 @@ def _write_metadata(
 def test_combine_requires_two_distinct_processes_and_writes_content_free_summary(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
+    runtime_paths = _runtime_paths(tmp_path)
     packet_hash = "a" * 64
     packet_paths = [tmp_path / "one.packet", tmp_path / "two.packet"]
     metadata_paths = [tmp_path / "one.meta", tmp_path / "two.meta"]
     for path in packet_paths:
         path.write_bytes(b"same-packet")
-    _write_metadata(metadata_paths[0], packet_hash=packet_hash, process_hash="b" * 64)
-    _write_metadata(metadata_paths[1], packet_hash=packet_hash, process_hash="c" * 64)
+    _write_metadata(
+        metadata_paths[0],
+        packet_hash=packet_hash,
+        process_hash="b" * 64,
+        runtime_paths=runtime_paths,
+    )
+    _write_metadata(
+        metadata_paths[1],
+        packet_hash=packet_hash,
+        process_hash="c" * 64,
+        runtime_paths=runtime_paths,
+    )
     monkeypatch.setattr(
         runtime,
         "compare_fresh_process_packets",
         lambda paths, expected_kind: packet_hash,
     )
+    monkeypatch.setattr(runtime, "validate_runtime_paths", lambda paths: None)
+    monkeypatch.setattr(runtime, "assert_artifact_path", lambda paths, path, label: path)
 
     summary_path = tmp_path / "summary.json"
     summary = runtime.combine_fresh_process_runs(
+        runtime_paths=runtime_paths,
         packet_paths=packet_paths,
         metadata_paths=metadata_paths,
         summary_path=summary_path,
@@ -296,9 +333,11 @@ def test_combine_requires_two_distinct_processes_and_writes_content_free_summary
         tmp_path / "same.meta",
         packet_hash=packet_hash,
         process_hash="b" * 64,
+        runtime_paths=runtime_paths,
     )
     with pytest.raises(ValueError, match="distinct process identities"):
         runtime.combine_fresh_process_runs(
+            runtime_paths=runtime_paths,
             packet_paths=packet_paths,
             metadata_paths=[metadata_paths[0], tmp_path / "same.meta"],
             summary_path=tmp_path / "not-written.json",
@@ -307,7 +346,12 @@ def test_combine_requires_two_distinct_processes_and_writes_content_free_summary
 
 def test_metadata_is_self_hashed_and_tamper_evident(tmp_path: Path) -> None:
     path = tmp_path / "metadata.json"
-    _write_metadata(path, packet_hash="a" * 64, process_hash="b" * 64)
+    _write_metadata(
+        path,
+        packet_hash="a" * 64,
+        process_hash="b" * 64,
+        runtime_paths=_runtime_paths(tmp_path),
+    )
     assert runtime._load_metadata(path)["packet_sha256"] == "a" * 64
     value = json.loads(path.read_text(encoding="utf-8"))
     value["packet_sha256"] = "c" * 64

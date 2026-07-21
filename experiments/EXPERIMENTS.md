@@ -926,3 +926,24 @@ Every future experiment must be registered here before a costly run begins. Its 
   category analysis, and bootstrap were not run. No adapter exists.
 - **Decision:** Enforce the predeclared hard stop. Do not retry after source stabilization or open
   another verifier-GRPO variant for this project version.
+
+### EXP-TRAIN-015: source-immutable GRPO runtime-root decoupling
+
+- **Status:** orchestration patch verified; immutable V2 replay not yet started.
+- **Authorization:** One new experiment may replay the unchanged Milestone 10F scientific contract
+  from a detached V2 worktree after an atomic orchestration commit and push.
+- **Mechanical correction:** A typed path contract separates immutable source, mutable primary
+  repository, exact external interpreter, writable external artifact root, and read-only model
+  cache. Canonical traversal, symlink/junction escapes, wrong imports, alternate interpreters, root
+  replacement, source drift, cache drift, environment drift, and command-template drift fail closed.
+- **Verification:** The prior `165` focused GRPO cases and `17` new path-contract cases pass under
+  `PYTHONHASHSEED=20260720` (`182` total). Protected scientific, evaluator, synthesis, and dependency
+  files have zero diff from the prior commit.
+- **Frozen mechanical identities:** CPython executable SHA-256
+  `0b471133e110cfb53a061cad528ce8e517d7b9ac41a0a396c39ad795a487fc14`;
+  planned V2 command-template SHA-256
+  `6680c2c4d713882877d1c7e2ab1c47211ec07f2c84cee0464964e4de7b1d3498`.
+- **Scientific activity:** zero generation, completions, rewards, backward passes, optimizer steps,
+  adapters, checkpoints, retention evaluations, or GSM1K evaluations in this patch phase.
+- **Next gate:** Push the single orchestration commit, create the new detached V2 worktree and
+  external runtime root, then freeze the complete contract/source manifests before any model load.

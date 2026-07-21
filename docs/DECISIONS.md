@@ -909,3 +909,24 @@ This log separates proposals from approved decisions. A proposal does not author
   when model/evidence payloads otherwise matched.
 - **Consequence:** No optimizer step, adapter, checkpoint, retention result, or new benchmark
   result exists. This is a project stop, not an invitation to rerun after the source settles.
+
+## 2026-07-21: decouple immutable GRPO source, interpreter, and artifact roots
+
+- **Status:** Milestone 10G orchestration correction authorized; scientific contract unchanged.
+- **Decision:** Replace the two invalid same-root assumptions with one typed, hashable
+  `GrpoRuntimePaths` contract. Bind imports to a detached source worktree, process launch to the
+  approved primary-repository CPython executable, all writable state to a disjoint external artifact
+  root, and model reads to a frozen read-only cache manifest.
+- **Rationale:** A detached immutable worktree intentionally has neither the primary training
+  environment nor a writable in-repository output area. Interpreter selection and output safety are
+  separate contracts from source identity; inferring either from `source_root` makes the approved
+  topology impossible without improving scientific reproducibility.
+- **Evidence:** All original `165` focused tests and `17` new path-contract tests pass with hash seed
+  `20260720`; the expanded slice is `182`. Canonical traversal, case, symlink/junction, import-origin,
+  binary-identity, root-replacement, command-hash, and environment-hash failures are fail-closed.
+  Protected scientific and dependency paths have zero diff from commit
+  `8f67e46262b7edafc57861aaf185efa345228179`.
+- **Consequence:** The orchestration patch may be committed once as
+  `fix: decouple GRPO runtime roots`. Only after that commit is pushed may a new detached V2
+  experiment freeze the complete runtime contract and source manifest. This decision authorizes no
+  sampling, reward, optimizer, schedule, retention, evaluator, dependency, or benchmark change.

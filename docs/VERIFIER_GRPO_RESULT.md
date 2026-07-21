@@ -244,3 +244,21 @@ The exact next action is project stop for verifier-GRPO. Preserve and publish th
 do not rerun after source stabilization, start training, alter the equality criterion, or evaluate
 GSM1K under this route. Human language review of the existing synthetic data remains independently
 pending at the frozen local review URL.
+
+## Milestone 10G source-immutable orchestration correction
+
+The user subsequently authorized exactly one new immutable experiment after correcting a mechanical
+root-coupling defect. The patch introduces a typed contract for detached source, primary repository,
+approved CPython, external artifacts, and the existing offline model cache. It removes the invalid
+assumptions that the detached source owns `.venv-training` and that writable output must remain
+beneath the source repository. Canonical containment, import provenance, Git source identity,
+interpreter binary identity, read-only model identity, root identity, environment, and command
+templates now fail closed independently.
+
+This phase produced no model output and made no scientific change. The unchanged `165` focused GRPO
+tests pass with `PYTHONHASHSEED=20260720`; the expanded path-aware suite passes `182` tests. The
+approved interpreter SHA-256 is
+`0b471133e110cfb53a061cad528ce8e517d7b9ac41a0a396c39ad795a487fc14`; the planned V2 command-template
+SHA-256 is `6680c2c4d713882877d1c7e2ab1c47211ec07f2c84cee0464964e4de7b1d3498`.
+The actual V2 runtime-contract and source-manifest hashes must be frozen externally after the atomic
+patch commit because both bind that new immutable commit.

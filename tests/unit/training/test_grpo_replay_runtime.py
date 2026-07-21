@@ -17,6 +17,33 @@ def _hash(label: str) -> str:
     return hashlib.sha256(label.encode("utf-8")).hexdigest()
 
 
+def _runtime_paths(tmp_path: Path, *, python_executable: Path | None = None) -> SimpleNamespace:
+    contract = _hash("runtime-path-contract")
+    environment = _hash("process-environment")
+    command_template = _hash("process-command-template")
+    evidence = {
+        "runtime_path_contract_sha256": contract,
+        "source_commit": "a" * 40,
+        "source_tree": "b" * 40,
+        "source_tracked_manifest_sha256": _hash("source-manifest"),
+        "python_executable_sha256": _hash("python"),
+        "model_artifact_manifest_sha256": _hash("model"),
+        "process_environment_sha256": environment,
+        "process_command_template_sha256": command_template,
+    }
+    return SimpleNamespace(
+        source_root=tmp_path / "source",
+        primary_repository_root=tmp_path / "primary",
+        python_executable=(python_executable or Path(runtime.sys.executable)),
+        artifact_root=tmp_path,
+        model_snapshot_root=tmp_path / "model",
+        contract_sha256=contract,
+        process_environment_sha256=environment,
+        process_command_template_sha256=command_template,
+        evidence=lambda: evidence,
+    )
+
+
 class _FakeCuda:
     def __init__(self) -> None:
         self.manual_seeds: list[int] = []
@@ -149,8 +176,10 @@ def test_external_process_evidence_proves_hash_seed_and_exact_cublas(
         return SimpleNamespace(stdout=f"{hash(runtime._PYTHON_HASH_PROBE)}\n")
 
     monkeypatch.setattr(runtime.subprocess, "run", fake_run)
+    runtime_paths = _runtime_paths(Path.cwd())
     first = runtime._external_process_evidence(
         5172026,
+        runtime_paths,  # type: ignore[arg-type]
         expected_entry_cublas_workspace_config=(
             runtime.FROZEN_PROCESS_START_CUBLAS_WORKSPACE_CONFIG
         ),
@@ -165,6 +194,7 @@ def test_external_process_evidence_proves_hash_seed_and_exact_cublas(
     environment["CUBLAS_WORKSPACE_CONFIG"] = runtime.FROZEN_ACTIVE_CUBLAS_WORKSPACE_CONFIG
     subsequent = runtime._external_process_evidence(
         5172026,
+        runtime_paths,  # type: ignore[arg-type]
         expected_entry_cublas_workspace_config=(runtime.FROZEN_ACTIVE_CUBLAS_WORKSPACE_CONFIG),
     )
     assert subsequent == first
@@ -173,11 +203,13 @@ def test_external_process_evidence_proves_hash_seed_and_exact_cublas(
     with pytest.raises(RuntimeError, match="CUBLAS_WORKSPACE_CONFIG"):
         runtime._external_process_evidence(
             5172026,
+            runtime_paths,  # type: ignore[arg-type]
             expected_entry_cublas_workspace_config=(runtime.FROZEN_ACTIVE_CUBLAS_WORKSPACE_CONFIG),
         )
     with pytest.raises(ValueError, match="not frozen"):
         runtime._external_process_evidence(
             5172026,
+            runtime_paths,  # type: ignore[arg-type]
             expected_entry_cublas_workspace_config=":32:8",
         )
     environment["CUBLAS_WORKSPACE_CONFIG"] = runtime.FROZEN_ACTIVE_CUBLAS_WORKSPACE_CONFIG
@@ -185,6 +217,7 @@ def test_external_process_evidence_proves_hash_seed_and_exact_cublas(
     with pytest.raises(RuntimeError, match="exported before launching"):
         runtime._external_process_evidence(
             5172026,
+            runtime_paths,  # type: ignore[arg-type]
             expected_entry_cublas_workspace_config=(runtime.FROZEN_ACTIVE_CUBLAS_WORKSPACE_CONFIG),
         )
     environment["PYTHONHASHSEED"] = "5172026"
@@ -196,6 +229,7 @@ def test_external_process_evidence_proves_hash_seed_and_exact_cublas(
     with pytest.raises(RuntimeError, match="running interpreter hash seed"):
         runtime._external_process_evidence(
             5172026,
+            runtime_paths,  # type: ignore[arg-type]
             expected_entry_cublas_workspace_config=(runtime.FROZEN_ACTIVE_CUBLAS_WORKSPACE_CONFIG),
         )
 
@@ -203,6 +237,7 @@ def test_external_process_evidence_proves_hash_seed_and_exact_cublas(
     with pytest.raises(RuntimeError, match="module must be imported"):
         runtime._external_process_evidence(
             5172026,
+            runtime_paths,  # type: ignore[arg-type]
             expected_entry_cublas_workspace_config=(runtime.FROZEN_ACTIVE_CUBLAS_WORKSPACE_CONFIG),
         )
 
@@ -268,8 +303,9 @@ def test_runtime_environment_evidence_binds_interpreter_packages_and_os(
         lambda name: SimpleNamespace(__version__=versions["tokenizers"]),
     )
 
-    value = runtime._runtime_environment_evidence(
-        tmp_path,
+    runtime_paths = _runtime_paths(tmp_path, python_executable=executable)
+    value = runtime._runtime_environment_evidence(  # type: ignore[arg-type]
+        runtime_paths,
         SimpleNamespace(__version__="2.5.1"),
     )
     assert value["sys_executable"] == str(executable.resolve())
@@ -283,7 +319,7 @@ def test_runtime_environment_evidence_binds_interpreter_packages_and_os(
     versions["tokenizers"] = "0.0.0"
     with pytest.raises(RuntimeError, match="software versions differ"):
         runtime._runtime_environment_evidence(
-            tmp_path,
+            runtime_paths,  # type: ignore[arg-type]
             SimpleNamespace(__version__="2.5.1"),
         )
 
@@ -386,10 +422,11 @@ def test_single_replay_cleanup_runs_on_success_and_failure(
         "_single_generation_replay_impl",
         lambda **kwargs: ({"packet_sha256": _hash("packet")}, {"runtime_seconds": 1.0}),
     )
+    monkeypatch.setattr(runtime, "validate_runtime_paths", lambda paths: {})
+    runtime_paths = _runtime_paths(tmp_path)
     _, resource = runtime._single_generation_replay(
-        repository_root=tmp_path,
+        runtime_paths=runtime_paths,  # type: ignore[arg-type]
         config_path=tmp_path / "config.json",
-        model_path=tmp_path / "model",
         packet_path=tmp_path / "packet.json",
         manifest_path=tmp_path / "manifest.json",
         arm="generic_control",
@@ -407,9 +444,8 @@ def test_single_replay_cleanup_runs_on_success_and_failure(
     monkeypatch.setattr(runtime, "_single_generation_replay_impl", fail)
     with pytest.raises(RuntimeError, match="fixture failure"):
         runtime._single_generation_replay(
-            repository_root=tmp_path,
+            runtime_paths=runtime_paths,  # type: ignore[arg-type]
             config_path=tmp_path / "config.json",
-            model_path=tmp_path / "model",
             packet_path=tmp_path / "packet.json",
             manifest_path=tmp_path / "manifest.json",
             arm="generic_control",
@@ -679,13 +715,14 @@ def test_write_json_new_round_trips_and_refuses_overwrite(tmp_path: Path) -> Non
 def test_same_process_replay_runs_exactly_three_fresh_trainers(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    ignored: list[tuple[Path, Path, str]] = []
+    validated: list[tuple[Path, str]] = []
     trainer_paths: list[Path] = []
     cublas_entries: list[str] = []
     written_packets: list[tuple[Path, str, str]] = []
 
-    def fake_ignored(root: Path, path: Path, label: str) -> None:
-        ignored.append((root, path, label))
+    def fake_artifact(paths: object, path: Path, label: str) -> Path:
+        validated.append((path, label))
+        return path
 
     def fake_single(**kwargs: object) -> tuple[dict[str, object], dict[str, object]]:
         trainer_path = kwargs["trainer_output_dir"]
@@ -707,16 +744,17 @@ def test_same_process_replay_runs_exactly_three_fresh_trainers(
         assert expected_kind == "generation_only"
         return _hash("common")
 
-    monkeypatch.setattr(runtime, "_assert_git_ignored", fake_ignored)
+    monkeypatch.setattr(runtime, "assert_artifact_path", fake_artifact)
+    monkeypatch.setattr(runtime, "validate_runtime_paths", lambda paths: {})
     monkeypatch.setattr(runtime, "_single_generation_replay", fake_single)
     monkeypatch.setattr(runtime, "write_replay_packet_new", fake_write)
     monkeypatch.setattr(runtime, "assert_exact_replay", fake_exact)
     raw_directory = tmp_path / "raw"
     summary_path = tmp_path / "summary.json"
+    runtime_paths = _runtime_paths(tmp_path)
     summary = runtime.run_same_process_replay(
-        repository_root=tmp_path,
+        runtime_paths=runtime_paths,  # type: ignore[arg-type]
         config_path=tmp_path / "config.yaml",
-        model_path=tmp_path / "model",
         packet_path=tmp_path / "packet.json",
         manifest_path=tmp_path / "manifest.json",
         arm="generic_control",
@@ -724,7 +762,10 @@ def test_same_process_replay_runs_exactly_three_fresh_trainers(
         summary_path=summary_path,
     )
 
-    assert ignored == [(tmp_path, raw_directory, "same-process replay evidence")]
+    assert validated == [
+        (raw_directory, "same-process replay evidence"),
+        (summary_path, "same-process replay summary"),
+    ]
     assert trainer_paths == [
         raw_directory / "run_1" / "trainer",
         raw_directory / "run_2" / "trainer",
@@ -749,9 +790,8 @@ def test_same_process_replay_runs_exactly_three_fresh_trainers(
     assert json.loads(summary_path.read_text(encoding="utf-8")) == summary
     with pytest.raises(FileExistsError, match="must start unused"):
         runtime.run_same_process_replay(
-            repository_root=tmp_path,
+            runtime_paths=runtime_paths,  # type: ignore[arg-type]
             config_path=tmp_path / "config.yaml",
-            model_path=tmp_path / "model",
             packet_path=tmp_path / "packet.json",
             manifest_path=tmp_path / "manifest.json",
             arm="generic_control",
@@ -763,15 +803,16 @@ def test_same_process_replay_runs_exactly_three_fresh_trainers(
 def test_one_fresh_process_packet_writes_self_hashed_metadata(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    ignored_paths: list[Path] = []
+    validated_paths: list[Path] = []
     trainer_output = tmp_path / "trainer"
     packet_hash = _hash("packet")
 
     monkeypatch.setattr(
         runtime,
-        "_assert_git_ignored",
-        lambda root, path, label: ignored_paths.append(path),
+        "assert_artifact_path",
+        lambda paths, path, label: validated_paths.append(path) or path,
     )
+    monkeypatch.setattr(runtime, "validate_runtime_paths", lambda paths: {})
 
     def fake_single(**kwargs: object) -> tuple[dict[str, object], dict[str, object]]:
         assert kwargs["trainer_output_dir"] == trainer_output
@@ -789,10 +830,10 @@ def test_one_fresh_process_packet_writes_self_hashed_metadata(
     monkeypatch.setattr(runtime.sys, "argv", ["python", "-m", "foundry.replay", "one-process"])
     metadata_path = tmp_path / "metadata.json"
     raw_packet_path = tmp_path / "packet.json"
+    runtime_paths = _runtime_paths(tmp_path)
     metadata = runtime.run_one_fresh_process_packet(
-        repository_root=tmp_path,
+        runtime_paths=runtime_paths,  # type: ignore[arg-type]
         config_path=tmp_path / "config.yaml",
-        model_path=tmp_path / "model",
         packet_path=tmp_path / "schedule.json",
         manifest_path=tmp_path / "manifest.json",
         arm="generic_control",
@@ -801,7 +842,7 @@ def test_one_fresh_process_packet_writes_self_hashed_metadata(
         metadata_path=metadata_path,
     )
 
-    assert ignored_paths == [raw_packet_path, metadata_path]
+    assert validated_paths == [raw_packet_path, trainer_output, metadata_path]
     assert metadata["packet_sha256"] == packet_hash
     assert metadata["process_command_sha256"] == canonical_sha256(runtime.sys.argv)
     assert metadata["process_id"] == runtime.os.getpid()
@@ -830,6 +871,9 @@ def _write_metadata(
         "process_id": 1000 + process,
         "parent_process_id": 900,
         "process_instance_sha256": _hash(f"process-{process}"),
+        "runtime_path_contract_sha256": _hash("runtime-path-contract"),
+        "process_environment_sha256": _hash("process-environment"),
+        "process_command_template_sha256": _hash("process-command-template"),
         "raw_packet_path_sha256": runtime._resolved_path_sha256(packet_path),
         "trainer_output_dir_sha256": runtime._resolved_path_sha256(trainer_path),
         "metadata_path_sha256": runtime._resolved_path_sha256(path),
@@ -860,8 +904,12 @@ def test_combine_fresh_process_replay_validates_metadata_and_self_hashes_summary
         "compare_fresh_process_packets",
         lambda paths, *, expected_kind: common_hash,
     )
+    monkeypatch.setattr(runtime, "validate_runtime_paths", lambda paths: {})
+    monkeypatch.setattr(runtime, "assert_artifact_path", lambda paths, path, label: path)
     summary_path = tmp_path / "summary.json"
+    runtime_paths = _runtime_paths(tmp_path)
     summary = runtime.combine_fresh_process_replay(
+        runtime_paths=runtime_paths,  # type: ignore[arg-type]
         packet_paths=packet_paths,
         metadata_paths=metadata_paths,
         summary_path=summary_path,
@@ -886,12 +934,14 @@ def test_combine_fresh_process_replay_validates_metadata_and_self_hashes_summary
 
     with pytest.raises(ValueError, match="exactly three"):
         runtime.combine_fresh_process_replay(
+            runtime_paths=runtime_paths,  # type: ignore[arg-type]
             packet_paths=packet_paths[:2],
             metadata_paths=metadata_paths[:2],
             summary_path=tmp_path / "short.json",
         )
     with pytest.raises(ValueError, match="paths must be distinct"):
         runtime.combine_fresh_process_replay(
+            runtime_paths=runtime_paths,  # type: ignore[arg-type]
             packet_paths=[packet_paths[0], packet_paths[0], packet_paths[2]],
             metadata_paths=metadata_paths,
             summary_path=tmp_path / "duplicate-path.json",
@@ -903,6 +953,7 @@ def test_combine_fresh_process_replay_validates_metadata_and_self_hashes_summary
     metadata_paths[2].write_text(json.dumps(duplicate_process), encoding="utf-8")
     with pytest.raises(RuntimeError, match="three distinct processes"):
         runtime.combine_fresh_process_replay(
+            runtime_paths=runtime_paths,  # type: ignore[arg-type]
             packet_paths=packet_paths,
             metadata_paths=metadata_paths,
             summary_path=tmp_path / "duplicate-process.json",
@@ -919,6 +970,7 @@ def test_combine_fresh_process_replay_validates_metadata_and_self_hashes_summary
     metadata_paths[0].write_text(json.dumps(tampered), encoding="utf-8")
     with pytest.raises(ValueError, match="self-hash differs"):
         runtime.combine_fresh_process_replay(
+            runtime_paths=runtime_paths,  # type: ignore[arg-type]
             packet_paths=packet_paths,
             metadata_paths=metadata_paths,
             summary_path=tmp_path / "tampered.json",
@@ -945,13 +997,13 @@ def test_main_dispatches_all_replay_commands(
     monkeypatch.setattr(runtime, "run_same_process_replay", same_process)
     monkeypatch.setattr(runtime, "run_one_fresh_process_packet", one_process)
     monkeypatch.setattr(runtime, "combine_fresh_process_replay", combine)
+    runtime_paths = _runtime_paths(tmp_path)
+    monkeypatch.setattr(runtime, "load_runtime_paths", lambda path: runtime_paths)
     common = [
-        "--repository-root",
-        str(tmp_path),
+        "--runtime-paths",
+        str(tmp_path / "runtime-paths.json"),
         "--config",
         str(tmp_path / "config.yaml"),
-        "--model-path",
-        str(tmp_path / "model"),
         "--packet",
         str(tmp_path / "packet.json"),
         "--manifest",
@@ -997,6 +1049,8 @@ def test_main_dispatches_all_replay_commands(
         runtime.main(
             [
                 "combine",
+                "--runtime-paths",
+                str(tmp_path / "runtime-paths.json"),
                 "--packets",
                 *(str(path) for path in packets),
                 "--metadata",
@@ -1023,12 +1077,10 @@ def test_cli_rejects_the_nonfrozen_targeted_arm(tmp_path: Path) -> None:
         runtime.main(
             [
                 "same-process",
-                "--repository-root",
-                str(tmp_path),
+                "--runtime-paths",
+                str(tmp_path / "runtime-paths.json"),
                 "--config",
                 str(tmp_path / "config.yaml"),
-                "--model-path",
-                str(tmp_path / "model"),
                 "--packet",
                 str(tmp_path / "packet.json"),
                 "--manifest",

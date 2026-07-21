@@ -27,6 +27,14 @@ from foundry.training.grpo_compatibility import (
     model_adapter_state,
 )
 from foundry.training.grpo_config import BASE_REVISION, load_grpo_config
+from foundry.training.grpo_paths import (
+    GrpoRuntimePaths,
+    assert_artifact_path,
+    assert_source_path,
+    load_runtime_paths,
+    same_canonical_path,
+    validate_runtime_paths,
+)
 from foundry.training.grpo_reference import assert_only_lora_trainable
 from foundry.training.grpo_replay_evidence import (
     GenerationEvidence,
@@ -45,7 +53,6 @@ from foundry.training.grpo_reward import (
 )
 from foundry.training.grpo_runtime import (
     VerifierRewardCallback,
-    _assert_git_ignored,
     _assert_offline_model_snapshot,
     _base_reference_hash,
     _completion_token_counter,
@@ -214,6 +221,7 @@ def _filtered_environment_sha256() -> tuple[str, int, int]:
 
 def _external_process_evidence(
     seed: int,
+    runtime_paths: GrpoRuntimePaths,
     *,
     expected_entry_cublas_workspace_config: str,
 ) -> dict[str, object]:
@@ -241,9 +249,16 @@ def _external_process_evidence(
             "CUBLAS_WORKSPACE_CONFIG differs from the expected replay-entry state: "
             f"expected {expected_entry_cublas_workspace_config!r}, got {actual_entry!r}"
         )
+    if not same_canonical_path(Path(sys.executable), runtime_paths.python_executable):
+        raise RuntimeError("replay process did not use the configured Python executable")
     current_hash = hash(_PYTHON_HASH_PROBE)
     completed = subprocess.run(
-        [sys.executable, "-S", "-c", f"print(hash({_PYTHON_HASH_PROBE!r}))"],
+        [
+            str(runtime_paths.python_executable),
+            "-S",
+            "-c",
+            f"print(hash({_PYTHON_HASH_PROBE!r}))",
+        ],
         check=True,
         capture_output=True,
         text=True,
@@ -276,16 +291,16 @@ def _external_process_evidence(
 
 
 def _runtime_environment_evidence(
-    repository_root: Path,
+    runtime_paths: GrpoRuntimePaths,
     numpy: Any,
 ) -> dict[str, object]:
     """Require and record the exact frozen interpreter, packages, and OS."""
 
     executable = Path(sys.executable).resolve()
-    expected_executable = (repository_root / ".venv-training" / "Scripts" / "python.exe").resolve()
-    if executable != expected_executable:
+    expected_executable = runtime_paths.python_executable.resolve(strict=True)
+    if not same_canonical_path(executable, expected_executable):
         raise RuntimeError(
-            f"replay must use the frozen training interpreter: {expected_executable}"
+            f"replay must use the configured training interpreter: {expected_executable}"
         )
     if not executable.is_file():
         raise FileNotFoundError("frozen training interpreter is missing")
@@ -580,9 +595,8 @@ def _policy_and_kl(trainer: Any, result: Mapping[str, Any], torch: Any) -> tuple
 
 def _single_generation_replay_impl(
     *,
-    repository_root: Path,
+    runtime_paths: GrpoRuntimePaths,
     config_path: Path,
-    model_path: Path,
     packet_path: Path,
     manifest_path: Path,
     arm: Arm,
@@ -591,16 +605,22 @@ def _single_generation_replay_impl(
 ) -> tuple[dict[str, object], dict[str, object]]:
     if arm != FROZEN_REPLAY_ARM:
         raise ValueError("generation replay is bound to the frozen generic-control arm")
+    validate_runtime_paths(runtime_paths)
+    assert_source_path(runtime_paths, config_path, "replay configuration")
+    assert_source_path(runtime_paths, manifest_path, "replay schedule manifest")
+    assert_artifact_path(runtime_paths, packet_path, "replay schedule packet")
+    assert_artifact_path(runtime_paths, trainer_output_dir, "generation replay state")
+    model_path = runtime_paths.model_snapshot_root
     config = load_grpo_config(config_path)
     if config.base_model.revision != BASE_REVISION:
         raise ValueError("base revision differs from the frozen Qwen checkpoint")
     external_process = _external_process_evidence(
         config.grpo.seed,
+        runtime_paths,
         expected_entry_cublas_workspace_config=(expected_entry_cublas_workspace_config),
     )
     reward_contract = _assert_frozen_reward_contract()
     _assert_offline_model_snapshot(model_path, config)
-    _assert_git_ignored(repository_root, trainer_output_dir, "generation replay state")
     if trainer_output_dir.exists():
         raise FileExistsError("generation replay trainer path must be unused")
     schedule = load_runtime_schedule(
@@ -627,7 +647,7 @@ def _single_generation_replay_impl(
     psutil = modules["psutil"]
     numpy = _seed_everything(modules, config.grpo.seed)
     full_determinism = _full_determinism_evidence(modules, config.grpo.seed)
-    runtime_environment = _runtime_environment_evidence(repository_root, numpy)
+    runtime_environment = _runtime_environment_evidence(runtime_paths, numpy)
     cuda = _validate_frozen_cuda(torch)
     _prepare_cuda_replay(torch)
     process = psutil.Process()
@@ -785,6 +805,7 @@ def _single_generation_replay_impl(
         "base_output_sha256": base_output_before,
         "warning_contract": warning_evidence,
         "external_process_contract": external_process,
+        "runtime_paths": runtime_paths.evidence(),
         "full_determinism_transition": full_determinism,
         "runtime_environment": runtime_environment,
         "environment_variable_sha256": environment_sha256,
@@ -816,9 +837,8 @@ def _single_generation_replay_impl(
 
 def _single_generation_replay(
     *,
-    repository_root: Path,
+    runtime_paths: GrpoRuntimePaths,
     config_path: Path,
-    model_path: Path,
     packet_path: Path,
     manifest_path: Path,
     arm: Arm,
@@ -828,11 +848,11 @@ def _single_generation_replay(
     """Run one replay and synchronize/clear CUDA on every exit path."""
 
     result: tuple[dict[str, object], dict[str, object]] | None = None
+    validate_runtime_paths(runtime_paths)
     try:
         result = _single_generation_replay_impl(
-            repository_root=repository_root,
+            runtime_paths=runtime_paths,
             config_path=config_path,
-            model_path=model_path,
             packet_path=packet_path,
             manifest_path=manifest_path,
             arm=arm,
@@ -848,13 +868,13 @@ def _single_generation_replay(
             cleanup = _cleanup_cuda_replay(torch)
             if result is not None:
                 result[1].update(cleanup)
+        validate_runtime_paths(runtime_paths)
 
 
 def run_same_process_replay(
     *,
-    repository_root: Path,
+    runtime_paths: GrpoRuntimePaths,
     config_path: Path,
-    model_path: Path,
     packet_path: Path,
     manifest_path: Path,
     arm: Arm,
@@ -865,11 +885,13 @@ def run_same_process_replay(
 
     if arm != FROZEN_REPLAY_ARM:
         raise ValueError("generation replay is bound to the frozen generic-control arm")
+    validate_runtime_paths(runtime_paths)
     _require_distinct_paths(
         [raw_directory, summary_path],
         label="same-process replay output",
     )
-    _assert_git_ignored(repository_root, raw_directory, "same-process replay evidence")
+    assert_artifact_path(runtime_paths, raw_directory, "same-process replay evidence")
+    assert_artifact_path(runtime_paths, summary_path, "same-process replay summary")
     if raw_directory.exists() or summary_path.exists():
         raise FileExistsError("same-process replay outputs must start unused")
     raw_directory.mkdir(parents=True)
@@ -882,9 +904,8 @@ def run_same_process_replay(
             else FROZEN_ACTIVE_CUBLAS_WORKSPACE_CONFIG
         )
         packet, resource = _single_generation_replay(
-            repository_root=repository_root,
+            runtime_paths=runtime_paths,
             config_path=config_path,
-            model_path=model_path,
             packet_path=packet_path,
             manifest_path=manifest_path,
             arm=arm,
@@ -912,19 +933,20 @@ def run_same_process_replay(
         "process_id": os.getpid(),
         "process_instance_sha256": _PROCESS_INSTANCE_SHA256,
         "resource_measurements": resources,
-        "raw_directory_ignored": True,
+        "external_artifact_root_validated": True,
+        "runtime_paths": runtime_paths.evidence(),
         "prompts_or_completions_in_summary": False,
     }
     summary["summary_sha256"] = canonical_sha256(summary)
     _write_json_new(summary_path, summary)
+    validate_runtime_paths(runtime_paths)
     return summary
 
 
 def run_one_fresh_process_packet(
     *,
-    repository_root: Path,
+    runtime_paths: GrpoRuntimePaths,
     config_path: Path,
-    model_path: Path,
     packet_path: Path,
     manifest_path: Path,
     arm: Arm,
@@ -942,12 +964,12 @@ def run_one_fresh_process_packet(
     )
     if raw_packet_path.exists() or trainer_output_dir.exists() or metadata_path.exists():
         raise FileExistsError("fresh-process replay outputs must start unused")
-    _assert_git_ignored(repository_root, raw_packet_path, "fresh-process replay packet")
-    _assert_git_ignored(repository_root, metadata_path, "fresh-process replay metadata")
+    assert_artifact_path(runtime_paths, raw_packet_path, "fresh-process replay packet")
+    assert_artifact_path(runtime_paths, trainer_output_dir, "fresh-process trainer state")
+    assert_artifact_path(runtime_paths, metadata_path, "fresh-process replay metadata")
     packet, resource = _single_generation_replay(
-        repository_root=repository_root,
+        runtime_paths=runtime_paths,
         config_path=config_path,
-        model_path=model_path,
         packet_path=packet_path,
         manifest_path=manifest_path,
         arm=arm,
@@ -963,6 +985,9 @@ def run_one_fresh_process_packet(
         "process_id": os.getpid(),
         "parent_process_id": os.getppid(),
         "process_instance_sha256": _PROCESS_INSTANCE_SHA256,
+        "runtime_path_contract_sha256": runtime_paths.contract_sha256,
+        "process_environment_sha256": runtime_paths.process_environment_sha256,
+        "process_command_template_sha256": runtime_paths.process_command_template_sha256,
         "raw_packet_path_sha256": _resolved_path_sha256(raw_packet_path),
         "trainer_output_dir_sha256": _resolved_path_sha256(trainer_output_dir),
         "metadata_path_sha256": _resolved_path_sha256(metadata_path),
@@ -970,11 +995,13 @@ def run_one_fresh_process_packet(
     }
     metadata["metadata_sha256"] = canonical_sha256(metadata)
     _write_json_new(metadata_path, metadata)
+    validate_runtime_paths(runtime_paths)
     return metadata
 
 
 def combine_fresh_process_replay(
     *,
+    runtime_paths: GrpoRuntimePaths,
     packet_paths: Sequence[Path],
     metadata_paths: Sequence[Path],
     summary_path: Path,
@@ -983,6 +1010,9 @@ def combine_fresh_process_replay(
 
     if len(packet_paths) != REPLAY_RUNS or len(metadata_paths) != REPLAY_RUNS:
         raise ValueError("fresh-process replay requires exactly three packets and metadata files")
+    validate_runtime_paths(runtime_paths)
+    for path in (*packet_paths, *metadata_paths, summary_path):
+        assert_artifact_path(runtime_paths, path, "fresh-process replay artifact")
     _require_distinct_paths(
         [*packet_paths, *metadata_paths, summary_path],
         label="fresh-process replay input and output",
@@ -997,6 +1027,9 @@ def combine_fresh_process_replay(
         "process_id",
         "parent_process_id",
         "process_instance_sha256",
+        "runtime_path_contract_sha256",
+        "process_environment_sha256",
+        "process_command_template_sha256",
         "raw_packet_path_sha256",
         "trainer_output_dir_sha256",
         "metadata_path_sha256",
@@ -1024,6 +1057,9 @@ def combine_fresh_process_replay(
             "packet_sha256",
             "process_command_sha256",
             "process_instance_sha256",
+            "runtime_path_contract_sha256",
+            "process_environment_sha256",
+            "process_command_template_sha256",
             "raw_packet_path_sha256",
             "trainer_output_dir_sha256",
             "metadata_path_sha256",
@@ -1031,6 +1067,15 @@ def combine_fresh_process_replay(
             _require_sha256(row.get(field), label=field)
         if not isinstance(row.get("resource_measurement"), Mapping):
             raise ValueError("fresh-process resource measurement must contain an object")
+        expected_runtime_fields = {
+            "runtime_path_contract_sha256": runtime_paths.contract_sha256,
+            "process_environment_sha256": runtime_paths.process_environment_sha256,
+            "process_command_template_sha256": runtime_paths.process_command_template_sha256,
+        }
+        if any(row.get(key) != value for key, value in expected_runtime_fields.items()):
+            raise RuntimeError(
+                "fresh-process runtime path, environment, or command template differs"
+            )
         process_id = row.get("process_id")
         parent_process_id = row.get("parent_process_id")
         if (
@@ -1073,6 +1118,7 @@ def combine_fresh_process_replay(
             hashlib.sha256(path.read_bytes()).hexdigest() for path in packet_paths
         ],
         "process_command_sha256s": [value["process_command_sha256"] for value in metadata_values],
+        "runtime_paths": runtime_paths.evidence(),
         "process_metadata_sha256s": [value["metadata_sha256"] for value in metadata_values],
         "resource_measurements": [value["resource_measurement"] for value in metadata_values],
         "exact_replay_passed": True,
@@ -1080,13 +1126,13 @@ def combine_fresh_process_replay(
     }
     summary["summary_sha256"] = canonical_sha256(summary)
     _write_json_new(summary_path, summary)
+    validate_runtime_paths(runtime_paths)
     return summary
 
 
 def _common_run_arguments(parser: argparse.ArgumentParser) -> None:
-    parser.add_argument("--repository-root", type=Path, required=True)
+    parser.add_argument("--runtime-paths", type=Path, required=True)
     parser.add_argument("--config", type=Path, required=True)
-    parser.add_argument("--model-path", type=Path, required=True)
     parser.add_argument("--packet", type=Path, required=True)
     parser.add_argument("--manifest", type=Path, required=True)
     parser.add_argument("--arm", choices=(FROZEN_REPLAY_ARM,), required=True)
@@ -1105,6 +1151,7 @@ def _build_parser() -> argparse.ArgumentParser:
     one.add_argument("--trainer-output", type=Path, required=True)
     one.add_argument("--metadata", type=Path, required=True)
     combine = subparsers.add_parser("combine")
+    combine.add_argument("--runtime-paths", type=Path, required=True)
     combine.add_argument("--packets", type=Path, nargs=REPLAY_RUNS, required=True)
     combine.add_argument("--metadata", type=Path, nargs=REPLAY_RUNS, required=True)
     combine.add_argument("--summary", type=Path, required=True)
@@ -1113,11 +1160,11 @@ def _build_parser() -> argparse.ArgumentParser:
 
 def main(argv: Sequence[str] | None = None) -> int:
     args = _build_parser().parse_args(argv)
+    runtime_paths = load_runtime_paths(args.runtime_paths)
     if args.command == "same-process":
         result = run_same_process_replay(
-            repository_root=args.repository_root,
+            runtime_paths=runtime_paths,
             config_path=args.config,
-            model_path=args.model_path,
             packet_path=args.packet,
             manifest_path=args.manifest,
             arm=cast(Arm, args.arm),
@@ -1126,9 +1173,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         )
     elif args.command == "one-process":
         result = run_one_fresh_process_packet(
-            repository_root=args.repository_root,
+            runtime_paths=runtime_paths,
             config_path=args.config,
-            model_path=args.model_path,
             packet_path=args.packet,
             manifest_path=args.manifest,
             arm=cast(Arm, args.arm),
@@ -1138,6 +1184,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         )
     else:
         result = combine_fresh_process_replay(
+            runtime_paths=runtime_paths,
             packet_paths=args.packets,
             metadata_paths=args.metadata,
             summary_path=args.summary,
