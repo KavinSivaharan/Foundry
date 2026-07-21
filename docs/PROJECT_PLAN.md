@@ -917,6 +917,7 @@ independent final retention holdout was not evaluated, GSM1K development was not
 benchmark analysis exists, and sealed-final remained untouched. The stratified human language
 review remains pending at
 `file:///C:/Users/Admin/Projects/Foundry/results/raw/foundry_500x2_signal_review/codex_assisted_review.html`.
+
 Any next adaptation experiment requires separate approval and a materially different retention
 architecture: either KL/replay-regularized adaptation or verifier-reward GRPO.
 
@@ -968,3 +969,27 @@ silently weaken determinism, alter sampling, change the dependency stack, or ret
 benchmark label remains **Provisional one-seed result pending stratified human language review and
 second-seed confirmation**; no new benchmark result was created. Human review remains pending at
 `file:///C:/Users/Admin/Projects/Foundry/results/raw/foundry_500x2_signal_review/codex_assisted_review.html`.
+
+## Milestone 10E outcome: exact warning-only replay failed; verifier-GRPO closed
+
+The approved `foundry-warning-only-top-p-replay-v1` contract preserved temperature `0.8`, top-p
+`0.95`, top-k `50`, four generations, and strict deterministic enforcement outside the actual
+`GenerationMixin.generate` call. Its final warning-contract summary SHA-256 is
+`eff84b9ec92715eeb74a6c74bcad5980dded9c4b5482012fd8e2438857f24598`; the tracked artifact file
+SHA-256 is `f473149d963b8a81bef69f4d13ce9f22ccfbf6b965a9b44fafad89eba84c90af`.
+
+The official same-process replay completed three runs of the exact frozen three-group schedule,
+producing `36` total completions. All warnings were the approved CUDA-cumsum class, warning-only
+state did not leak, and the diagnostic projection of tokens, completions, rewards, log probabilities,
+KL, RNG transitions, base state, and LoRA state was equal. Exact replay nevertheless failed because
+shared source changed while the run was active: compatibility-source SHA-256 changed from
+`da03f405...e6704` to `58358c39...a939`, and replay-evidence source SHA-256 changed from
+`4f5bd8ec...c9ce0` to `7cc32841...77e1`. The three exact packet SHA-256 values therefore differed.
+Failure-summary SHA-256 is `8501b7681262ceca002659978c07c688a6f7baa45923ebb3c06e6134adabebe4`;
+the tracked failure-artifact file SHA-256 is
+`ea9b7323e9565d2f2514c53849d53ebb503bb924d9b5e857923ef4676437e05b`.
+
+**Final project stop:** the exact same-process gate failed, so fresh-process replay, both two-step
+smokes, G1/G2 training, retention selection, independent retention, GSM1K evaluation, bootstrap,
+and signal adjudication were not run. The Milestone 10E stop rule closes verifier-GRPO for this
+project version. Do not retry the replay, train an adapter, or open another GRPO configuration.

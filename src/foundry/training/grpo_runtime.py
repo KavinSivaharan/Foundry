@@ -20,18 +20,26 @@ import importlib.metadata
 import json
 import math
 import os
+import platform
 import random
 import subprocess
+import sys
 import sysconfig
 import time
 from collections import Counter, defaultdict
 from collections.abc import Callable, Mapping, Sequence
 from dataclasses import asdict, dataclass
+from functools import partial
 from pathlib import Path
 from statistics import fmean, pstdev
 from typing import Any, Literal, cast
 
 from foundry.training.config import canonical_sha256
+from foundry.training.grpo_compatibility import (
+    TopPWarningOnlyGenerationContract,
+    callable_source_sha256,
+    model_adapter_state,
+)
 from foundry.training.grpo_config import (
     BASE_REVISION,
     VerifierGRPOConfig,
@@ -44,6 +52,7 @@ from foundry.training.grpo_reference import (
     run_adapter_disabled_reference,
     validate_installed_reference_contract,
 )
+from foundry.training.grpo_replay_evidence import capture_base_parameter_state
 from foundry.training.grpo_reward import (
     ReplayRewardMetadata,
     RewardBreakdown,
@@ -84,6 +93,32 @@ COMPATIBILITY_COMPLETIONS = 12
 FULL_COMPLETIONS = GROUPS_PER_ARM * COMPLETIONS_PER_GROUP
 MAX_RESERVED_VRAM_BYTES = int(9.6 * 1024**3)
 EXPECTED_GPU_NAME_FRAGMENT = "RTX 3080"
+FROZEN_PROCESS_SEED = 20_260_720
+FROZEN_CUBLAS_WORKSPACE_CONFIG = ":4096:8"
+FROZEN_TRANSFORMERS_CUBLAS_WORKSPACE_CONFIG = ":16:8"
+FROZEN_FULL_DETERMINISM_SOURCE_SHA256 = (
+    "1893964197a05bfd07d1477815b58e42e883b9e64985f0e795b4562fc9f84834"
+)
+FROZEN_FULL_DETERMINISM_MODULE = "transformers.trainer_utils"
+FROZEN_FULL_DETERMINISM_QUALNAME = "enable_full_determinism"
+FROZEN_GPU_TOTAL_MEMORY_BYTES = 10_736_893_952
+FROZEN_NVIDIA_DRIVER_VERSION = "610.47"
+FROZEN_TORCH_CUDA_RUNTIME = "12.1"
+FROZEN_PYTHON_IMPLEMENTATION = "CPython"
+FROZEN_PYTHON_VERSION = "3.12.10"
+_PYTHON_HASH_PROBE = "foundry-verifier-grpo-python-hash-probe-v1"
+FROZEN_SOFTWARE_VERSIONS = {
+    "accelerate": "1.7.0",
+    "bitsandbytes": "0.49.2",
+    "datasets": "5.0.0",
+    "numpy": "2.5.1",
+    "peft": "0.15.2",
+    "psutil": "7.2.2",
+    "tokenizers": "0.21.4",
+    "torch": "2.5.1+cu121",
+    "transformers": "4.51.3",
+    "trl": "0.17.0",
+}
 
 _SHA256 = frozenset("0123456789abcdef")
 _SYNTHETIC_METADATA_FIELDS = frozenset(
@@ -904,6 +939,40 @@ def _base_reference_hash(model: Any, tokenizer: Any, group: RuntimePromptGroup, 
     return hashlib.sha256(values).hexdigest()
 
 
+def _capture_base_tensor_state(model: object, torch: Any) -> dict[str, object]:
+    """Capture a compact exact-byte identity for every non-LoRA parameter."""
+
+    _synchronize_cuda(torch)
+    state = capture_base_parameter_state(model)
+    _synchronize_cuda(torch)
+    required = (
+        "parameter_count",
+        "total_numel",
+        "total_bytes",
+        "base_parameter_state_sha256",
+    )
+    if any(name not in state for name in required):
+        raise RuntimeError("exact base-parameter evidence is incomplete")
+    digest = _require_sha256(state["base_parameter_state_sha256"], "base parameter state")
+    counts: dict[str, int] = {}
+    for name in required[:3]:
+        value = state[name]
+        if isinstance(value, bool) or not isinstance(value, int) or value <= 0:
+            raise RuntimeError(f"exact base-parameter evidence has invalid {name}")
+        counts[name] = value
+    return {**counts, "base_parameter_state_sha256": digest}
+
+
+def _assert_base_tensor_state_unchanged(
+    before: Mapping[str, object],
+    after: Mapping[str, object],
+    *,
+    stage: str,
+) -> None:
+    if dict(after) != dict(before):
+        raise RuntimeError(f"exact non-LoRA base tensor bytes changed during {stage}")
+
+
 def adapter_artifact_sha256(path: Path) -> str:
     """Hash adapter weights/config only, excluding optimizer and Trainer state."""
 
@@ -956,9 +1025,196 @@ def _peak_process_ram(process: Any) -> int:
     raise RuntimeError("process memory information lacks a positive RAM measurement")
 
 
+def _external_process_evidence(seed: int) -> dict[str, object]:
+    """Prove that process-start hash and cuBLAS settings match the frozen run."""
+
+    if seed != FROZEN_PROCESS_SEED:
+        raise ValueError("GRPO seed differs from the frozen process seed")
+    expected_seed = str(seed)
+    if os.environ.get("PYTHONHASHSEED") != expected_seed:
+        raise RuntimeError("PYTHONHASHSEED must be exported before launching the GRPO process")
+    if not bool(sys.flags.hash_randomization):
+        raise RuntimeError("the GRPO interpreter has Python hash randomization disabled")
+    if os.environ.get("CUBLAS_WORKSPACE_CONFIG") != FROZEN_CUBLAS_WORKSPACE_CONFIG:
+        raise RuntimeError(
+            f"CUBLAS_WORKSPACE_CONFIG must equal {FROZEN_CUBLAS_WORKSPACE_CONFIG!r} "
+            "before process launch"
+        )
+    current_hash = hash(_PYTHON_HASH_PROBE)
+    completed = subprocess.run(
+        [sys.executable, "-S", "-c", f"print(hash({_PYTHON_HASH_PROBE!r}))"],
+        check=True,
+        capture_output=True,
+        text=True,
+        timeout=30,
+        env=dict(os.environ),
+    )
+    values = [line.strip() for line in completed.stdout.splitlines() if line.strip()]
+    if values != [str(current_hash)]:
+        raise RuntimeError(
+            "PYTHONHASHSEED environment does not match the running interpreter hash seed"
+        )
+    return {
+        "python_hash_randomization": True,
+        "python_hash_seed": expected_seed,
+        "python_hash_probe_sha256": canonical_sha256(
+            {
+                "probe_text_sha256": hashlib.sha256(_PYTHON_HASH_PROBE.encode("utf-8")).hexdigest(),
+                "probe_value": str(current_hash),
+            }
+        ),
+        "cublas_workspace_config": FROZEN_CUBLAS_WORKSPACE_CONFIG,
+    }
+
+
+def _stock_full_determinism_source_evidence(
+    transformers: Any,
+    *,
+    expected_source_sha256: str = FROZEN_FULL_DETERMINISM_SOURCE_SHA256,
+    expected_module: str = FROZEN_FULL_DETERMINISM_MODULE,
+    expected_qualname: str = FROZEN_FULL_DETERMINISM_QUALNAME,
+) -> dict[str, str]:
+    """Pin the stock function that performs the approved cuBLAS transition."""
+
+    trainer_utils = getattr(transformers, "trainer_utils", None)
+    function = getattr(trainer_utils, "enable_full_determinism", None)
+    if not callable(function):
+        raise RuntimeError("Transformers full-determinism function is unavailable")
+    module = str(getattr(function, "__module__", ""))
+    qualname = str(getattr(function, "__qualname__", ""))
+    if module != expected_module or qualname != expected_qualname:
+        raise RuntimeError("Transformers full-determinism callable identity differs")
+    source_sha256 = callable_source_sha256(function)
+    if source_sha256 != expected_source_sha256:
+        raise RuntimeError("Transformers full-determinism source hash differs")
+    if os.environ.get("CUBLAS_WORKSPACE_CONFIG") != FROZEN_CUBLAS_WORKSPACE_CONFIG:
+        raise RuntimeError("stock full-determinism transition did not start from :4096:8")
+    return {
+        "callable_module": module,
+        "callable_qualname": qualname,
+        "source_sha256": source_sha256,
+        "prelaunch_cublas_workspace_config": FROZEN_CUBLAS_WORKSPACE_CONFIG,
+        "expected_active_cublas_workspace_config": (FROZEN_TRANSFORMERS_CUBLAS_WORKSPACE_CONFIG),
+    }
+
+
+def _require_transformers_cublas(stage: str) -> str:
+    """Require the active value written by stock Transformers determinism setup."""
+
+    value = os.environ.get("CUBLAS_WORKSPACE_CONFIG")
+    if value != FROZEN_TRANSFORMERS_CUBLAS_WORKSPACE_CONFIG:
+        raise RuntimeError(
+            f"CUBLAS_WORKSPACE_CONFIG after {stage} must equal "
+            f"{FROZEN_TRANSFORMERS_CUBLAS_WORKSPACE_CONFIG!r}, got {value!r}"
+        )
+    return value
+
+
+def _full_determinism_transition_evidence(
+    source_evidence: Mapping[str, str],
+    *,
+    after_arguments: str,
+    after_trainer: str,
+) -> dict[str, object]:
+    """Bind the source-pinned prelaunch-to-active cuBLAS transition."""
+
+    if (
+        after_arguments != FROZEN_TRANSFORMERS_CUBLAS_WORKSPACE_CONFIG
+        or after_trainer != FROZEN_TRANSFORMERS_CUBLAS_WORKSPACE_CONFIG
+    ):
+        raise RuntimeError("stock Transformers cuBLAS transition evidence is inconsistent")
+    value: dict[str, object] = {
+        **source_evidence,
+        "after_grpo_arguments_cublas_workspace_config": after_arguments,
+        "after_trainer_construction_cublas_workspace_config": after_trainer,
+        "environment_restored": False,
+    }
+    value["transition_sha256"] = canonical_sha256(value)
+    return value
+
+
 def _software_versions() -> dict[str, str]:
-    names = ("accelerate", "bitsandbytes", "datasets", "peft", "torch", "transformers", "trl")
-    return {name: importlib.metadata.version(name) for name in names}
+    versions = {name: importlib.metadata.version(name) for name in FROZEN_SOFTWARE_VERSIONS}
+    if versions != FROZEN_SOFTWARE_VERSIONS:
+        raise RuntimeError(f"GRPO software versions differ from the frozen stack: {versions}")
+    return versions
+
+
+def _runtime_environment_evidence(modules: Mapping[str, Any]) -> dict[str, object]:
+    """Require exact runtime-visible Python and package versions."""
+
+    python = {
+        "implementation": platform.python_implementation(),
+        "version": platform.python_version(),
+    }
+    expected_python = {
+        "implementation": FROZEN_PYTHON_IMPLEMENTATION,
+        "version": FROZEN_PYTHON_VERSION,
+    }
+    if python != expected_python:
+        raise RuntimeError(f"Python runtime differs from the frozen contract: {python}")
+    versions = _software_versions()
+    imported_versions: dict[str, str] = {}
+    for name in ("datasets", "numpy", "peft", "psutil", "torch", "transformers", "trl"):
+        module = modules[name]
+        value = str(getattr(module, "__version__", ""))
+        if not value:
+            raise RuntimeError(f"imported {name} does not expose a runtime version")
+        imported_versions[name] = value
+        if value != versions[name]:
+            raise RuntimeError(f"imported {name} version differs from package metadata")
+    return {
+        "python": python,
+        "software_versions": versions,
+        "imported_software_versions": imported_versions,
+    }
+
+
+def _strict_determinism(torch: Any) -> bool:
+    return bool(torch.are_deterministic_algorithms_enabled()) and not bool(
+        torch.is_deterministic_algorithms_warn_only_enabled()
+    )
+
+
+def _seed_everything(modules: Mapping[str, Any], seed: int) -> None:
+    """Seed every frozen RNG surface and enable strict deterministic execution."""
+
+    if seed != FROZEN_PROCESS_SEED:
+        raise ValueError("GRPO seed differs from the frozen process seed")
+    numpy = modules["numpy"]
+    torch = modules["torch"]
+    transformers = modules["transformers"]
+    random.seed(seed)
+    numpy.random.seed(seed)
+    transformers.set_seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+    torch.use_deterministic_algorithms(True, warn_only=False)
+    torch.backends.cudnn.benchmark = False
+    torch.backends.cuda.matmul.allow_tf32 = False
+    if not _strict_determinism(torch):
+        raise RuntimeError("strict deterministic mode was not enabled before GRPO")
+
+
+def _synchronize_cuda(torch: Any) -> None:
+    torch.cuda.synchronize(0)
+
+
+def _prepare_cuda_resources(torch: Any) -> None:
+    _synchronize_cuda(torch)
+    gc.collect()
+    torch.cuda.empty_cache()
+    torch.cuda.ipc_collect()
+    _synchronize_cuda(torch)
+    torch.cuda.reset_peak_memory_stats(0)
+
+
+def _cleanup_cuda_resources(torch: Any) -> None:
+    _synchronize_cuda(torch)
+    gc.collect()
+    torch.cuda.empty_cache()
+    torch.cuda.ipc_collect()
+    _synchronize_cuda(torch)
 
 
 def _write_json_new(path: Path, value: object) -> None:
@@ -994,7 +1250,7 @@ def _assert_checkpoint_set(output_dir: Path) -> dict[str, str]:
 def _runtime_modules() -> dict[str, Any]:
     return {
         name: importlib.import_module(name)
-        for name in ("datasets", "peft", "psutil", "torch", "transformers", "trl")
+        for name in ("datasets", "numpy", "peft", "psutil", "torch", "transformers", "trl")
     }
 
 
@@ -1003,6 +1259,7 @@ def _load_quantized_base(
 ) -> tuple[Any, Any, float]:
     torch = modules["torch"]
     transformers = modules["transformers"]
+    _synchronize_cuda(torch)
     started = time.perf_counter()
     tokenizer = transformers.AutoTokenizer.from_pretrained(
         str(model_path),
@@ -1033,6 +1290,7 @@ def _load_quantized_base(
         raise RuntimeError("base model did not load in frozen 4-bit mode")
     assert_cuda_only_model(model)
     model.config.use_cache = False
+    _synchronize_cuda(torch)
     return model, tokenizer, time.perf_counter() - started
 
 
@@ -1061,6 +1319,24 @@ def _prepare_runtime(
     return model, tokenizer, lora_config, load_seconds
 
 
+def _driver_version() -> str:
+    completed = subprocess.run(
+        [
+            "nvidia-smi",
+            "--query-gpu=driver_version",
+            "--format=csv,noheader,nounits",
+        ],
+        check=True,
+        capture_output=True,
+        text=True,
+        timeout=30,
+    )
+    values = [line.strip() for line in completed.stdout.splitlines() if line.strip()]
+    if len(values) != 1:
+        raise RuntimeError("expected exactly one NVIDIA driver version")
+    return values[0]
+
+
 def _validate_cuda(torch: Any) -> dict[str, object]:
     if not bool(torch.cuda.is_available()):
         raise RuntimeError("CUDA is unavailable")
@@ -1068,11 +1344,21 @@ def _validate_cuda(torch: Any) -> dict[str, object]:
     if EXPECTED_GPU_NAME_FRAGMENT not in name:
         raise RuntimeError(f"frozen compatibility target is an RTX 3080, got {name}")
     properties = torch.cuda.get_device_properties(0)
-    return {
+    value = {
         "gpu_name": name,
         "gpu_total_memory_bytes": int(properties.total_memory),
         "torch_cuda_runtime": str(torch.version.cuda),
+        "nvidia_driver_version": _driver_version(),
     }
+    expected = {
+        "gpu_total_memory_bytes": FROZEN_GPU_TOTAL_MEMORY_BYTES,
+        "torch_cuda_runtime": FROZEN_TORCH_CUDA_RUNTIME,
+        "nvidia_driver_version": FROZEN_NVIDIA_DRIVER_VERSION,
+    }
+    observed = {key: value[key] for key in expected}
+    if observed != expected:
+        raise RuntimeError(f"CUDA hardware or runtime differs from the frozen contract: {value}")
+    return value
 
 
 def _repeat_row(group: RuntimePromptGroup) -> list[dict[str, object]]:
@@ -1097,7 +1383,10 @@ def run_grpo(
 
     if mode not in {"compatibility", "train"}:
         raise ValueError("runtime mode must be compatibility or train")
+    external_process = _external_process_evidence(FROZEN_PROCESS_SEED)
     config = load_grpo_config(config_path)
+    if config.grpo.seed != FROZEN_PROCESS_SEED:
+        raise ValueError("configured GRPO seed differs from the frozen process seed")
     if config.base_model.revision != BASE_REVISION:
         raise ValueError("base revision differs from the frozen Qwen checkpoint")
     _assert_offline_model_snapshot(model_path, config)
@@ -1119,7 +1408,6 @@ def run_grpo(
     os.environ["HF_HUB_OFFLINE"] = "1"
     os.environ["TRANSFORMERS_OFFLINE"] = "1"
     os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
-    os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
     modules = _runtime_modules()
     torch = modules["torch"]
     transformers = modules["transformers"]
@@ -1127,17 +1415,13 @@ def run_grpo(
     peft = modules["peft"]
     datasets = modules["datasets"]
     psutil = modules["psutil"]
+    runtime_environment = _runtime_environment_evidence(modules)
+    full_determinism_source = _stock_full_determinism_source_evidence(transformers)
+    _seed_everything(modules, config.grpo.seed)
     cuda = _validate_cuda(torch)
     reference_audit = validate_installed_reference_contract(Path(sysconfig.get_paths()["purelib"]))
 
-    random.seed(config.grpo.seed)
-    torch.manual_seed(config.grpo.seed)
-    torch.cuda.manual_seed_all(config.grpo.seed)
-    torch.use_deterministic_algorithms(True, warn_only=False)
-    torch.backends.cudnn.benchmark = False
-    torch.backends.cuda.matmul.allow_tf32 = False
-    torch.cuda.empty_cache()
-    torch.cuda.reset_peak_memory_stats(0)
+    _prepare_cuda_resources(torch)
     process = psutil.Process()
     run_started = time.perf_counter()
     model, tokenizer, lora_config, model_load_seconds = _prepare_runtime(
@@ -1154,6 +1438,7 @@ def run_grpo(
         config, variant_id=variant_id, output_dir=output_dir, mode=mode
     )
     arguments = trl.GRPOConfig(**argument_values)
+    cublas_after_arguments = _require_transformers_cublas("GRPOConfig full-determinism setup")
     assert_frozen_grpo_arguments(
         arguments,
         config,
@@ -1161,7 +1446,15 @@ def run_grpo(
         output_dir=output_dir,
         mode=mode,
     )
-    trainer_type = make_truncation_aware_grpo_trainer(trl.GRPOTrainer)
+    warning_contract = TopPWarningOnlyGenerationContract(
+        torch_module=torch,
+        generation_owner=transformers.GenerationMixin,
+        top_p_call=transformers.generation.logits_process.TopPLogitsWarper.__call__,
+    )
+    trainer_type = make_truncation_aware_grpo_trainer(
+        trl.GRPOTrainer,
+        generation_scope_factory=warning_contract.install,
+    )
     callbacks: list[object] = []
     if mode == "train":
         callbacks.append(make_exact_checkpoint_callback(transformers.TrainerCallback))
@@ -1175,19 +1468,29 @@ def run_grpo(
         callbacks=callbacks,
         peft_config=lora_config,
     )
+    cublas_after_trainer = _require_transformers_cublas("GRPOTrainer construction")
+    full_determinism_transition = _full_determinism_transition_evidence(
+        full_determinism_source,
+        after_arguments=cublas_after_arguments,
+        after_trainer=cublas_after_trainer,
+    )
     if trainer.ref_model is not None:
         raise RuntimeError(
             "official PEFT reference path unexpectedly created a second reference model"
         )
     if not hasattr(trainer.model, "disable_adapter"):
         raise RuntimeError("GRPO trainer did not create the required PEFT policy adapter")
+    warning_contract.bind_state_probe(partial(model_adapter_state, trainer.model))
     trainability = assert_only_lora_trainable(trainer.model)
     assert_cuda_only_model(trainer.model)
     dropout_module_count = assert_dropout_disabled(trainer.model, torch)
+    base_tensor_state_before = _capture_base_tensor_state(trainer.model, torch)
     base_hash_before = _base_reference_hash(trainer.model, tokenizer, expected_groups[0], torch)
 
+    _synchronize_cuda(torch)
     training_started = time.perf_counter()
     trainer.train()
+    _synchronize_cuda(torch)
     training_seconds = time.perf_counter() - training_started
     if int(trainer.state.global_step) != len(update_groups):
         raise RuntimeError("GRPO optimizer-step count differs from the frozen schedule")
@@ -1208,6 +1511,16 @@ def run_grpo(
     )
     if reward_summary["completions"] != expected_completion_count:
         raise RuntimeError("GRPO completion count differs from the frozen mode")
+    warning_evidence = warning_contract.evidence()
+    expected_generation_calls = len(expected_groups)
+    if warning_evidence["generation_calls"] != expected_generation_calls:
+        raise RuntimeError("warning-only generation call count differs from the schedule")
+    base_tensor_state_after = _capture_base_tensor_state(trainer.model, torch)
+    _assert_base_tensor_state_unchanged(
+        base_tensor_state_before,
+        base_tensor_state_after,
+        stage="GRPO compatibility/train execution",
+    )
     base_hash_after = _base_reference_hash(trainer.model, tokenizer, expected_groups[0], torch)
     if base_hash_after != base_hash_before:
         raise RuntimeError("adapter-disabled base output changed during GRPO")
@@ -1218,12 +1531,12 @@ def run_grpo(
         checkpoint_hashes = _assert_checkpoint_set(output_dir)
     del model
     del trainer
-    gc.collect()
-    torch.cuda.empty_cache()
+    _cleanup_cuda_resources(torch)
 
     reloaded_base, reloaded_tokenizer, reload_base_seconds = _load_quantized_base(
         model_path, config, modules
     )
+    _synchronize_cuda(torch)
     reload_started = time.perf_counter()
     reloaded = peft.PeftModel.from_pretrained(
         reloaded_base,
@@ -1231,21 +1544,34 @@ def run_grpo(
         local_files_only=True,
         is_trainable=False,
     )
+    _synchronize_cuda(torch)
     adapter_reload_seconds = time.perf_counter() - reload_started
     assert_cuda_only_model(reloaded)
     if not any("lora_" in name for name, _ in reloaded.named_parameters()):
         raise RuntimeError("offline adapter reload did not restore LoRA parameters")
     if any(parameter.requires_grad for parameter in reloaded.parameters()):
         raise RuntimeError("offline validation reload unexpectedly left trainable parameters")
+    base_tensor_state_after_reload = _capture_base_tensor_state(reloaded, torch)
+    _assert_base_tensor_state_unchanged(
+        base_tensor_state_before,
+        base_tensor_state_after_reload,
+        stage="offline adapter reload",
+    )
     reloaded_base_hash = _base_reference_hash(
         reloaded, reloaded_tokenizer, expected_groups[0], torch
     )
     if reloaded_base_hash != base_hash_before:
         raise RuntimeError("adapter-disabled hash differs after offline adapter reload")
+    _synchronize_cuda(torch)
     peak_allocated = int(torch.cuda.max_memory_allocated(0))
     peak_reserved = int(torch.cuda.max_memory_reserved(0))
     if peak_reserved >= MAX_RESERVED_VRAM_BYTES:
         raise RuntimeError(f"peak reserved VRAM exceeds the 9.6 GiB gate: {peak_reserved} bytes")
+    del reloaded
+    del reloaded_base
+    _cleanup_cuda_resources(torch)
+    post_cleanup_allocated = int(torch.cuda.memory_allocated(0))
+    post_cleanup_reserved = int(torch.cuda.memory_reserved(0))
     raw_evidence: dict[str, object] = {
         "schema_version": RUNTIME_SCHEMA_VERSION,
         "runtime_id": RUNTIME_ID,
@@ -1256,6 +1582,7 @@ def run_grpo(
         "records": [record.raw_record() for record in reward_callback.records],
     }
     _write_json_new(raw_evidence_path, raw_evidence)
+    _synchronize_cuda(torch)
     total_seconds = time.perf_counter() - run_started
     summary: dict[str, object] = {
         "schema_version": RUNTIME_SCHEMA_VERSION,
@@ -1289,11 +1616,19 @@ def run_grpo(
         "total_parameters": trainability.total_parameters,
         "reference_policy": "untouched_base_with_active_adapter_disabled",
         "reference_implementation_audit": asdict(reference_audit),
+        "external_process_contract": external_process,
+        "runtime_environment": runtime_environment,
+        "stock_full_determinism_transition": full_determinism_transition,
+        "warning_only_generation_contract": warning_evidence,
         "second_reference_model_created": False,
         "cpu_offload": False,
         "base_hash_before": base_hash_before,
         "base_hash_after": base_hash_after,
         "base_hash_after_reload": reloaded_base_hash,
+        "base_tensor_state_before": base_tensor_state_before,
+        "base_tensor_state_after": base_tensor_state_after,
+        "base_tensor_state_after_reload": base_tensor_state_after_reload,
+        "base_tensor_bytes_unchanged": True,
         "base_restoration_passed": True,
         "adapter_sha256": adapter_sha256,
         "adapter_directory_sha256": directory_sha256(adapter_path),
@@ -1308,7 +1643,7 @@ def run_grpo(
         "chat_template_sha256": chat_template_sha256,
         "dropout_disabled": True,
         "dropout_module_count": dropout_module_count,
-        "software_versions": _software_versions(),
+        "software_versions": runtime_environment["software_versions"],
         **cuda,
         "model_load_seconds": model_load_seconds,
         "reload_base_seconds": reload_base_seconds,
@@ -1322,6 +1657,8 @@ def run_grpo(
         "peak_reserved_vram_bytes": peak_reserved,
         "reserved_vram_gate_bytes": MAX_RESERVED_VRAM_BYTES,
         "reserved_vram_gate_passed": True,
+        "post_cleanup_allocated_vram_bytes": post_cleanup_allocated,
+        "post_cleanup_reserved_vram_bytes": post_cleanup_reserved,
         "peak_process_ram_bytes": _peak_process_ram(process),
         "raw_evidence_sha256": hashlib.sha256(raw_evidence_path.read_bytes()).hexdigest(),
         "prompts_completions_or_answers_in_summary": False,

@@ -5,6 +5,7 @@ from __future__ import annotations
 import hashlib
 import inspect
 from collections.abc import Callable, Sequence
+from contextlib import AbstractContextManager, nullcontext
 from contextvars import ContextVar, Token
 from functools import wraps
 from typing import Any
@@ -101,6 +102,7 @@ def make_truncation_aware_grpo_trainer(
     *,
     expected_method_sha256: str = EXPECTED_GENERATE_AND_SCORE_SOURCE_SHA256,
     required_fragments: Sequence[str] = EXPECTED_GENERATE_AND_SCORE_FRAGMENTS,
+    generation_scope_factory: Callable[[], AbstractContextManager[None]] | None = None,
 ) -> type[Any]:
     """Create a subclass that exposes truncation flags without changing stock TRL logic."""
 
@@ -141,7 +143,13 @@ def make_truncation_aware_grpo_trainer(
 
             processing_class.batch_decode = audited_batch_decode
             try:
-                result = super()._generate_and_score_completions(inputs)
+                generation_scope = (
+                    nullcontext()
+                    if generation_scope_factory is None
+                    else generation_scope_factory()
+                )
+                with generation_scope:
+                    result = super()._generate_and_score_completions(inputs)
                 if decode_calls != 1 or context_token is None:
                     raise RuntimeError("stock TRL did not expose one completion decode batch")
                 return result

@@ -840,3 +840,23 @@ an explicit decision. Any continuation must predeclare how stochastic sampling a
 replay will be reconciled, what equality or equivalence criterion will be tested, and why that
 criterion is scientifically adequate. It must not be chosen after observing model rewards or
 benchmark scores.
+
+## Exact replay requires an immutable executable, not only identical model outputs
+
+Milestone 10E demonstrated a separate failure mode from stochastic model divergence. Three official
+same-process runs each completed the same twelve generations, and their diagnostic projections
+matched across tokens, decoded hashes, rewards, log probabilities, KL, RNG transitions, base state,
+and LoRA state. Yet the exact packets differed because two shared evidence modules were edited while
+the replay process was running.
+
+This distinction matters: an exact replay packet binds both behavior and the executable contract
+that produced it. Removing source hashes after seeing otherwise-equal payloads would redefine the
+gate post hoc. A controlled replay therefore needs an immutable source snapshot for its entire
+lifetime, plus process evidence proving that every run used that snapshot. If the frozen rule says
+any exact difference closes the route, concurrent source drift is a real gate failure even when it
+does not reveal model nondeterminism.
+
+The operational lesson is to serialize decision-bearing GPU experiments with source modification:
+finish and hash the implementation first, prohibit edits during all compared runs, and only then
+launch the replay. The scientific lesson is equally important: diagnostic equivalence can explain a
+failure, but it cannot silently replace a predeclared exactness criterion.

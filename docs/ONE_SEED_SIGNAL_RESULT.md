@@ -435,3 +435,21 @@ pending at
 Before another compatibility probe, the user must explicitly approve a frozen way to reconcile
 stochastic sampling with deterministic execution, or stop verifier-GRPO; no deterministic or
 sampling control may be weakened silently.
+
+## Milestone 10E warning-only replay ended verifier-GRPO
+
+The approved warning-only contract successfully limited relaxed deterministic enforcement to the
+frozen top-p generation call. Three official same-process replays each completed `12` outputs using
+the same two synthetic groups and one replay group. All observed warning classes were the approved
+CUDA cumsum warning, no warning-only state leaked, and the diagnostic model/evidence payloads were
+otherwise identical.
+
+Exact replay still failed. Shared compatibility source changed between replay 1 and replay 2, and
+shared replay-evidence source changed between replay 2 and replay 3, yielding three different exact
+packet hashes. The failure-summary SHA-256 is
+`8501b7681262ceca002659978c07c688a6f7baa45923ebb3c06e6134adabebe4`; warning-contract summary
+SHA-256 is `eff84b9ec92715eeb74a6c74bcad5980dded9c4b5482012fd8e2438857f24598`.
+
+The predeclared stop rule therefore closed verifier-GRPO. Fresh-process and two-step replay, G1/G2,
+retention, and GSM1K were not run. No adapter or new benchmark result exists. The earlier one-seed
+curriculum comparison and its provisional human-review/second-seed label remain unchanged.

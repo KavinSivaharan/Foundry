@@ -204,11 +204,43 @@ Codex recommendations are advisory and do not replace genuine user decisions. An
 benchmark interpretation remains **Provisional one-seed result pending stratified human language
 review and second-seed confirmation.**
 
-## Exact next action
+## Milestone 10E exact replay adjudication
 
-Stop and request an explicit user decision. Continuing verifier-GRPO requires a separately approved,
-predeclared reconciliation between stochastic top-p sampling and the deterministic guarantees that
-the installed CUDA stack can actually provide. Treating the exception as a warning, disabling
-deterministic enforcement, changing decoding, sampling on CPU, or changing the dependency stack are
-materially different contracts and were not attempted. No option should be adopted silently or
-selected after observing rewards. The alternative is to stop the verifier-GRPO route.
+`foundry-warning-only-top-p-replay-v1` kept the frozen sampler unchanged and permitted warning-only
+deterministic enforcement only inside `GenerationMixin.generate`. The final contract records:
+
+- implementation source SHA-256:
+  `58358c3960c0a26f28caad2694fcd86f721c5b89490463976cabc46607f9a939`;
+- warning whitelist SHA-256:
+  `79ff68714c1143eca80d368e9432a080e89d2dfcd36de4dde77e951e339caf11`;
+- warning normalization SHA-256:
+  `97d441c7483af09a2b51806bfbcf2afe4a3a72bee8fb9ec62a097808fe6fbcc7`;
+- contract-test evidence SHA-256:
+  `70cb1e22cd9cb9bf804d8a01dd2b9f000c1439780b6a2b3f18d96768bdfbdc7f`;
+- warning-contract summary SHA-256:
+  `eff84b9ec92715eeb74a6c74bcad5980dded9c4b5482012fd8e2438857f24598`.
+
+The official same-process replay completed all three runs and all `36` generations. Diagnostic
+model/evidence projections were equal, with only the approved warning class and no warning-only
+leak. Exact packets differed solely because shared compatibility/replay-evidence source hashes
+changed during the run. The exact packet hashes are:
+
+1. `68ae4849b870d6d64232df83173f8fd560a28c91507383dd75abd2aa46c67d8c`;
+2. `80ad32513dc3a9f0253118f1a55d77eb30621abc4e19443e4013a114914794a7`;
+3. `be3c8aa8f0f684ac3b8a740b3d00a0c6a3db7a979dcb473f5e3225f71177504e`.
+
+Failure-summary SHA-256 is
+`8501b7681262ceca002659978c07c688a6f7baa45923ebb3c06e6134adabebe4`; the tracked failure file
+SHA-256 is `ea9b7323e9565d2f2514c53849d53ebb503bb924d9b5e857923ef4676437e05b`.
+
+## Final gates and exact next action
+
+The exact same-process gate **failed** and the user-approved stop rule closes verifier-GRPO for this
+project version. Fresh-process replay, both complete two-step runs, G1, G2, checkpoint retention,
+independent final retention, generic/targeted GSM1K, category analysis, bootstrap, and the GRPO
+signal gate were not run. No optimizer step, adapter, checkpoint, or new prediction exists.
+
+The exact next action is project stop for verifier-GRPO. Preserve and publish this negative evidence;
+do not rerun after source stabilization, start training, alter the equality criterion, or evaluate
+GSM1K under this route. Human language review of the existing synthetic data remains independently
+pending at the frozen local review URL.

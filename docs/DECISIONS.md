@@ -889,3 +889,23 @@ This log separates proposals from approved decisions. A proposal does not author
   execution with stochastic sampling or to stop verifier-GRPO. No setting may be weakened silently.
   The prior benchmark result retains only its provisional one-seed label, and stratified human
   review remains pending at the frozen local review URL.
+
+## 2026-07-21: close verifier-GRPO after exact warning-only replay failure
+
+- **Status:** Final Milestone 10E compatibility decision; verifier-GRPO closed for this project
+  version.
+- **Decision:** Enforce the predeclared rule that any exact same-process replay difference closes
+  the route. Do not reinterpret diagnostic model-output equality as an exact replay pass, and do not
+  run fresh-process replay, the two-step smoke, G1/G2, retention, or GSM1K.
+- **Evidence:** All three official same-process runs completed the same frozen `3 x 4` generation
+  workload (`36` completions total). The diagnostic payloads were equal and only the approved CUDA
+  cumsum warning occurred, but the shared compatibility source changed after replay 1 and the
+  replay-evidence source changed after replay 2. Exact packet hashes were therefore
+  `68ae4849...d8c`, `80ad3251...a7`, and `be3c8aa8...504e`. Warning-contract summary SHA-256 is
+  `eff84b9ec92715eeb74a6c74bcad5980dded9c4b5482012fd8e2438857f24598`; failure-summary SHA-256 is
+  `8501b7681262ceca002659978c07c688a6f7baa45923ebb3c06e6134adabebe4`.
+- **Rationale:** Source identity is part of the exact packet and cannot change during a controlled
+  replay. The gate did not authorize an equivalence exception for concurrent source edits, even
+  when model/evidence payloads otherwise matched.
+- **Consequence:** No optimizer step, adapter, checkpoint, retention result, or new benchmark
+  result exists. This is a project stop, not an invitation to rerun after the source settles.

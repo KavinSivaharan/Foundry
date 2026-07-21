@@ -902,3 +902,27 @@ Every future experiment must be registered here before a costly run begins. Its 
   weaken determinism or alter decoding. Human review remains pending; the existing benchmark label
   stays **Provisional one-seed result pending stratified human language review and second-seed
   confirmation.**
+
+### EXP-TRAIN-014: warning-only top-p exact replay
+
+- **Status:** official same-process replay completed all three runs but failed exact identity;
+  verifier-GRPO closed before fresh-process replay or training.
+- **Contract:** `foundry-warning-only-top-p-replay-v1`; temperature `0.8`, top-p `0.95`, top-k `50`,
+  four generations, maximum completion length `256`, and seed `20260720` remained unchanged.
+  Warning-only enforcement was confined to stock generation; all other operations remained strict.
+- **Contract evidence:** Implementation SHA-256
+  `58358c3960c0a26f28caad2694fcd86f721c5b89490463976cabc46607f9a939`; whitelist
+  `79ff68714c1143eca80d368e9432a080e89d2dfcd36de4dde77e951e339caf11`; summary
+  `eff84b9ec92715eeb74a6c74bcad5980dded9c4b5482012fd8e2438857f24598`.
+- **Run:** Three same-process replays each processed two synthetic groups and one base-replay group,
+  four completions per group: `36` completions total, zero optimizer steps. The diagnostic projection
+  of all model/evidence fields was equal; every run saw only the approved normalized CUDA-cumsum
+  warning, and no warning-only state leaked.
+- **Exact failure:** Compatibility source changed between runs 1 and 2; replay-evidence source
+  changed between runs 2 and 3. Packet hashes were `68ae4849...d8c`, `80ad3251...a7`, and
+  `be3c8aa8...504e`. Failure-summary SHA-256 is
+  `8501b7681262ceca002659978c07c688a6f7baa45923ebb3c06e6134adabebe4`.
+- **Gate:** failed. Fresh-process replay, both two-step smokes, G1/G2 training, retention, GSM1K,
+  category analysis, and bootstrap were not run. No adapter exists.
+- **Decision:** Enforce the predeclared hard stop. Do not retry after source stabilization or open
+  another verifier-GRPO variant for this project version.

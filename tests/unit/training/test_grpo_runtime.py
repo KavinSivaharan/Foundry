@@ -1,16 +1,28 @@
 from __future__ import annotations
 
+import gc
+import hashlib
+import importlib
 import json
+import os
+import platform
+import random
+import subprocess
+import sys
 from collections import Counter
 from dataclasses import FrozenInstanceError, replace
 from pathlib import Path
 from types import SimpleNamespace
+from typing import cast
 
 import pytest
 
 from foundry.training import grpo_runtime as runtime
 from foundry.training import grpo_schedule as schedule
 from foundry.training.config import canonical_sha256
+from foundry.training.grpo_compatibility import callable_source_sha256
+from foundry.training.grpo_config import load_grpo_config
+from foundry.training.grpo_reward import score_reward
 
 
 def _hash(label: str) -> str:
@@ -78,6 +90,7 @@ def _packet_and_manifest(arm: schedule.Arm) -> tuple[dict[str, object], dict[str
     groups: list[dict[str, object]] = []
     manifest_groups: list[dict[str, object]] = []
     for position in range(1, schedule.GROUPS_PER_ARM + 1):
+        category: str
         if position in schedule.REPLAY_POSITIONS:
             section = schedule.REPLAY_SECTION_ORDER[replay_index % 3]
             replay_index += 1
@@ -159,9 +172,10 @@ def test_runtime_schedule_is_strict_prompt_only_and_manifest_bound(tmp_path: Pat
         group.position for group in loaded.groups if group.source_kind == "base_replay"
     ] == list(schedule.REPLAY_POSITIONS)
     assert all(
-        [item["role"] for item in group.policy_row()["prompt"]] == ["system", "user"]
+        [item["role"] for item in cast(list[dict[str, str]], group.policy_row()["prompt"])]
+        == ["system", "user"]
         for group in loaded.groups
-    )  # type: ignore[index]
+    )
     visible = json.dumps([group.policy_row()["prompt"] for group in loaded.groups])
     hidden = json.dumps([group.reward_metadata_json for group in loaded.groups])
     assert "canonical_final_answer" not in visible
@@ -301,7 +315,7 @@ def test_compatibility_group_selection_and_accounting_are_exact() -> None:
 
 
 def test_frozen_arguments_preserve_all_decision_values() -> None:
-    config = runtime.load_grpo_config(Path("configs/training/verifier_grpo_v1.json"))
+    config = load_grpo_config(Path("configs/training/verifier_grpo_v1.json"))
     values = runtime.frozen_grpo_argument_values(
         config,
         variant_id="G1",
@@ -343,6 +357,293 @@ def test_frozen_arguments_preserve_all_decision_values() -> None:
             output_dir=Path("ignored-output"),
             mode="train",
         )
+
+
+def test_external_process_contract_requires_effective_hash_seed_and_exact_cublas(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    environment = {
+        "PYTHONHASHSEED": str(runtime.FROZEN_PROCESS_SEED),
+        "CUBLAS_WORKSPACE_CONFIG": runtime.FROZEN_CUBLAS_WORKSPACE_CONFIG,
+    }
+    monkeypatch.setattr(os, "environ", environment)
+    calls: list[tuple[list[str], dict[str, object]]] = []
+
+    def fake_run(command: list[str], **kwargs: object) -> SimpleNamespace:
+        calls.append((command, kwargs))
+        return SimpleNamespace(stdout=f"{hash(runtime._PYTHON_HASH_PROBE)}\n")
+
+    monkeypatch.setattr(subprocess, "run", fake_run)
+    evidence = runtime._external_process_evidence(runtime.FROZEN_PROCESS_SEED)
+    assert evidence["python_hash_seed"] == str(runtime.FROZEN_PROCESS_SEED)
+    assert evidence["cublas_workspace_config"] == ":4096:8"
+    assert len(str(evidence["python_hash_probe_sha256"])) == 64
+    assert calls[0][0][:3] == [sys.executable, "-S", "-c"]
+    assert calls[0][1]["env"] == environment
+
+    environment["CUBLAS_WORKSPACE_CONFIG"] = ":16:8"
+    with pytest.raises(RuntimeError, match="CUBLAS_WORKSPACE_CONFIG"):
+        runtime._external_process_evidence(runtime.FROZEN_PROCESS_SEED)
+    environment["CUBLAS_WORKSPACE_CONFIG"] = runtime.FROZEN_CUBLAS_WORKSPACE_CONFIG
+    environment["PYTHONHASHSEED"] = "7"
+    with pytest.raises(RuntimeError, match="exported before launching"):
+        runtime._external_process_evidence(runtime.FROZEN_PROCESS_SEED)
+    environment["PYTHONHASHSEED"] = str(runtime.FROZEN_PROCESS_SEED)
+    monkeypatch.setattr(
+        subprocess,
+        "run",
+        lambda *args, **kwargs: SimpleNamespace(stdout="different\n"),
+    )
+    with pytest.raises(RuntimeError, match="running interpreter hash seed"):
+        runtime._external_process_evidence(runtime.FROZEN_PROCESS_SEED)
+
+
+def _full_determinism_fixture(seed: int, warn_only: bool = False) -> None:
+    del seed, warn_only
+    os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":16:8"
+
+
+def test_stock_full_determinism_transition_is_source_pinned_and_not_restored(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    environment = {"CUBLAS_WORKSPACE_CONFIG": runtime.FROZEN_CUBLAS_WORKSPACE_CONFIG}
+    monkeypatch.setattr(os, "environ", environment)
+    transformers = SimpleNamespace(
+        trainer_utils=SimpleNamespace(enable_full_determinism=_full_determinism_fixture)
+    )
+    expected_source = callable_source_sha256(_full_determinism_fixture)
+    source = runtime._stock_full_determinism_source_evidence(
+        transformers,
+        expected_source_sha256=expected_source,
+        expected_module=__name__,
+        expected_qualname=_full_determinism_fixture.__qualname__,
+    )
+    assert source["prelaunch_cublas_workspace_config"] == ":4096:8"
+    assert source["expected_active_cublas_workspace_config"] == ":16:8"
+    assert source["source_sha256"] == expected_source
+
+    with pytest.raises(RuntimeError, match="source hash differs"):
+        runtime._stock_full_determinism_source_evidence(
+            transformers,
+            expected_source_sha256="0" * 64,
+            expected_module=__name__,
+            expected_qualname=_full_determinism_fixture.__qualname__,
+        )
+
+    _full_determinism_fixture(runtime.FROZEN_PROCESS_SEED)
+    after_arguments = runtime._require_transformers_cublas("fixture arguments")
+    after_trainer = runtime._require_transformers_cublas("fixture trainer")
+    transition = runtime._full_determinism_transition_evidence(
+        source,
+        after_arguments=after_arguments,
+        after_trainer=after_trainer,
+    )
+    assert transition["environment_restored"] is False
+    assert len(str(transition["transition_sha256"])) == 64
+    assert environment["CUBLAS_WORKSPACE_CONFIG"] == ":16:8"
+
+    environment["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
+    with pytest.raises(RuntimeError, match="after fixture"):
+        runtime._require_transformers_cublas("fixture")
+
+
+def test_runtime_environment_requires_exact_python_and_stack_versions(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    versions = dict(runtime.FROZEN_SOFTWARE_VERSIONS)
+    monkeypatch.setattr(platform, "python_implementation", lambda: "CPython")
+    monkeypatch.setattr(platform, "python_version", lambda: "3.12.10")
+    monkeypatch.setattr(importlib.metadata, "version", lambda name: versions[name])
+    modules = {
+        name: SimpleNamespace(__version__=versions[name])
+        for name in ("datasets", "numpy", "peft", "psutil", "torch", "transformers", "trl")
+    }
+    evidence = runtime._runtime_environment_evidence(modules)
+    assert evidence["python"] == {"implementation": "CPython", "version": "3.12.10"}
+    assert evidence["software_versions"] == runtime.FROZEN_SOFTWARE_VERSIONS
+
+    modules["torch"].__version__ = "2.5.2"
+    with pytest.raises(RuntimeError, match="imported torch version"):
+        runtime._runtime_environment_evidence(modules)
+    modules["torch"].__version__ = versions["torch"]
+    monkeypatch.setattr(platform, "python_version", lambda: "3.12.11")
+    with pytest.raises(RuntimeError, match="Python runtime differs"):
+        runtime._runtime_environment_evidence(modules)
+
+
+class _SeedRecorder:
+    def __init__(self) -> None:
+        self.seeds: list[int] = []
+
+    def seed(self, seed: int) -> None:
+        self.seeds.append(seed)
+
+    def set_seed(self, seed: int) -> None:
+        self.seeds.append(seed)
+
+
+class _RuntimeCuda:
+    def __init__(self) -> None:
+        self.manual_seeds: list[int] = []
+        self.events: list[str] = []
+        self.total_memory = runtime.FROZEN_GPU_TOTAL_MEMORY_BYTES
+
+    def is_available(self) -> bool:
+        return True
+
+    def manual_seed_all(self, seed: int) -> None:
+        self.manual_seeds.append(seed)
+
+    def synchronize(self, device: int) -> None:
+        assert device == 0
+        self.events.append("synchronize")
+
+    def empty_cache(self) -> None:
+        self.events.append("empty_cache")
+
+    def ipc_collect(self) -> None:
+        self.events.append("ipc_collect")
+
+    def reset_peak_memory_stats(self, device: int) -> None:
+        assert device == 0
+        self.events.append("reset_peak")
+
+    def get_device_name(self, device: int) -> str:
+        assert device == 0
+        return "NVIDIA GeForce RTX 3080"
+
+    def get_device_properties(self, device: int) -> SimpleNamespace:
+        assert device == 0
+        return SimpleNamespace(total_memory=self.total_memory)
+
+
+class _RuntimeTorch:
+    def __init__(self) -> None:
+        self.cuda = _RuntimeCuda()
+        self.backends = SimpleNamespace(
+            cudnn=SimpleNamespace(benchmark=True),
+            cuda=SimpleNamespace(matmul=SimpleNamespace(allow_tf32=True)),
+        )
+        self.version = SimpleNamespace(cuda=runtime.FROZEN_TORCH_CUDA_RUNTIME)
+        self.manual_seeds: list[int] = []
+        self.enabled = False
+        self.warn_only = True
+
+    def manual_seed(self, seed: int) -> None:
+        self.manual_seeds.append(seed)
+
+    def use_deterministic_algorithms(self, enabled: bool, *, warn_only: bool) -> None:
+        self.enabled = enabled
+        self.warn_only = warn_only
+
+    def are_deterministic_algorithms_enabled(self) -> bool:
+        return self.enabled
+
+    def is_deterministic_algorithms_warn_only_enabled(self) -> bool:
+        return self.warn_only
+
+
+def test_seed_everything_covers_python_numpy_torch_cuda_and_transformers(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    python_seeds: list[int] = []
+    monkeypatch.setattr(random, "seed", python_seeds.append)
+    numpy = SimpleNamespace(random=_SeedRecorder())
+    transformers = _SeedRecorder()
+    torch = _RuntimeTorch()
+    runtime._seed_everything(
+        {"numpy": numpy, "torch": torch, "transformers": transformers},
+        runtime.FROZEN_PROCESS_SEED,
+    )
+    assert python_seeds == [runtime.FROZEN_PROCESS_SEED]
+    assert numpy.random.seeds == [runtime.FROZEN_PROCESS_SEED]
+    assert transformers.seeds == [runtime.FROZEN_PROCESS_SEED]
+    assert torch.manual_seeds == [runtime.FROZEN_PROCESS_SEED]
+    assert torch.cuda.manual_seeds == [runtime.FROZEN_PROCESS_SEED]
+    assert runtime._strict_determinism(torch)
+    assert torch.backends.cudnn.benchmark is False
+    assert torch.backends.cuda.matmul.allow_tf32 is False
+    with pytest.raises(ValueError, match="frozen process seed"):
+        runtime._seed_everything(
+            {"numpy": numpy, "torch": torch, "transformers": transformers},
+            7,
+        )
+
+
+def test_cuda_identity_requires_exact_memory_runtime_and_driver(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    torch = _RuntimeTorch()
+    monkeypatch.setattr(runtime, "_driver_version", lambda: "610.47")
+    evidence = runtime._validate_cuda(torch)
+    assert evidence["gpu_total_memory_bytes"] == 10_736_893_952
+    assert evidence["nvidia_driver_version"] == "610.47"
+
+    torch.cuda.total_memory -= 1
+    with pytest.raises(RuntimeError, match="frozen contract"):
+        runtime._validate_cuda(torch)
+    torch.cuda.total_memory = runtime.FROZEN_GPU_TOTAL_MEMORY_BYTES
+    monkeypatch.setattr(runtime, "_driver_version", lambda: "999.0")
+    with pytest.raises(RuntimeError, match="frozen contract"):
+        runtime._validate_cuda(torch)
+
+
+def test_cuda_resource_boundaries_synchronize_before_and_after_cleanup(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    torch = _RuntimeTorch()
+    monkeypatch.setattr(gc, "collect", lambda: torch.cuda.events.append("gc"))
+    runtime._prepare_cuda_resources(torch)
+    assert torch.cuda.events == [
+        "synchronize",
+        "gc",
+        "empty_cache",
+        "ipc_collect",
+        "synchronize",
+        "reset_peak",
+    ]
+    torch.cuda.events.clear()
+    runtime._cleanup_cuda_resources(torch)
+    assert torch.cuda.events == [
+        "synchronize",
+        "gc",
+        "empty_cache",
+        "ipc_collect",
+        "synchronize",
+    ]
+
+
+def test_exact_base_tensor_state_is_compact_and_fails_on_mutation(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    torch = _RuntimeTorch()
+    exact = {
+        "parameter_count": 2,
+        "total_numel": 8,
+        "total_bytes": 16,
+        "parameters": [{"raw_sha256": hashlib.sha256(b"base").hexdigest()}],
+        "base_parameter_state_sha256": hashlib.sha256(b"state").hexdigest(),
+    }
+    calls: list[object] = []
+
+    def capture(model: object) -> dict[str, object]:
+        calls.append(model)
+        return dict(exact)
+
+    monkeypatch.setattr(runtime, "capture_base_parameter_state", capture)
+    model = object()
+    before = runtime._capture_base_tensor_state(model, torch)
+    assert calls == [model]
+    assert before == {
+        "parameter_count": 2,
+        "total_numel": 8,
+        "total_bytes": 16,
+        "base_parameter_state_sha256": exact["base_parameter_state_sha256"],
+    }
+    runtime._assert_base_tensor_state_unchanged(before, dict(before), stage="fixture")
+    after = {**before, "base_parameter_state_sha256": hashlib.sha256(b"changed").hexdigest()}
+    with pytest.raises(RuntimeError, match="exact non-LoRA base tensor bytes changed"):
+        runtime._assert_base_tensor_state_unchanged(before, after, stage="fixture")
 
 
 class _Parameter:
@@ -411,7 +712,7 @@ def test_final_adapter_save_allows_trainer_created_parent_but_never_overwrites(
 def test_reward_summary_rejects_missing_wrong_order_and_zero_variance() -> None:
     first = _runtime_group("first")
     second = _runtime_group("second", position=2)
-    breakdown = runtime.score_reward(
+    breakdown = score_reward(
         runtime._reward_metadata(first, first.reward_metadata_json, first.policy_row()["prompt"]),
         "Final answer: 1",
     )
