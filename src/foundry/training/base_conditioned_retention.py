@@ -148,6 +148,38 @@ def assess_holdout_instrument_usability(
         if evidence.get("suite_sha256") != suite.suite_sha256:
             raise ValueError("final-holdout artifact evidence identity differs")
         ambiguous_references = int(evidence.get("ambiguous_reference_answers", -1))
+    elif suite.suite_id == "foundry-retention-replay-final-holdout-v1":
+        from foundry.training.replay_holdout import validate_replay_holdout_artifacts
+
+        required_total = 450
+        section_minimum = 60
+        overall_minimum = 250
+        gate_id = "foundry-retention-replay-final-holdout-instrument-usability-gate-v1"
+        validate_replay_holdout_artifacts(_load_object(suite_path), evidence)
+        evidence_hash = evidence.get("summary_sha256")
+        evidence_payload = {
+            key: value for key, value in evidence.items() if key != "summary_sha256"
+        }
+        prompt_audit = evidence.get("prior_prompt_audit")
+        required_hashes = (
+            "suite_sha256",
+            "answer_sha256",
+            "scorer_sha256",
+            "configuration_sha256",
+        )
+        if (
+            evidence.get("suite_sha256") != suite.suite_sha256
+            or not isinstance(evidence_hash, str)
+            or evidence_hash != canonical_sha256(evidence_payload)
+            or any(
+                not isinstance(evidence.get(key), str) or len(str(evidence[key])) != 64
+                for key in required_hashes
+            )
+            or not isinstance(prompt_audit, dict)
+            or prompt_audit.get("status") != "passed"
+        ):
+            raise ValueError("replay final-holdout artifact evidence identity differs")
+        ambiguous_references = int(evidence.get("ambiguous_reference_answers", -1))
     else:
         raise ValueError("suite has no predeclared instrument-usability gate")
     if len(suite.items) != required_total or summary.get("total") != required_total:

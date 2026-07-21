@@ -434,3 +434,12 @@ bank questions. Their untouched-base gate failed before adapter exposure. No sen
 rendered synthetic question, review decision, canonical answer, or split changed, and no new model
 result can be attributed to template wording. The existing stratified human review remains pending
 at the same ignored local page.
+
+## Base-replay instrument failure does not change template evidence
+
+The replay source and independent retention holdout are original post-training instruments, not
+template-bank generations. Their construction and base evaluation changed no sentence plan,
+rendered synthetic question, review decision, canonical answer, or split. The independent
+instrument failed its base-coverage gate before adapter training, so it supplies no new evidence
+about template-bank wording or curriculum effects. Stratified human language review remains pending
+at `file:///C:/Users/Admin/Projects/Foundry/results/raw/foundry_500x2_signal_review/codex_assisted_review.html`.

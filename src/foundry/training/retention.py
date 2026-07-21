@@ -47,6 +47,11 @@ SUITE_LAYOUTS = {
         "format": 150,
         "instruction": 150,
     },
+    "foundry-retention-replay-final-holdout-v1": {
+        "arithmetic": 150,
+        "format": 150,
+        "instruction": 150,
+    },
 }
 EVALUATION_IDS = {
     "foundry-original-retention-suite-v1": "foundry-original-retention-evaluation-v1",
@@ -56,6 +61,9 @@ EVALUATION_IDS = {
     "foundry-retention-anchor-holdout-v1": ("foundry-retention-anchor-holdout-evaluation-v1"),
     "foundry-retention-scale-final-holdout-v1": (
         "foundry-retention-scale-final-holdout-evaluation-v1"
+    ),
+    "foundry-retention-replay-final-holdout-v1": (
+        "foundry-retention-replay-final-holdout-evaluation-v1"
     ),
 }
 

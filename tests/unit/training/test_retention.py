@@ -58,6 +58,11 @@ def test_disjoint_retention_suite_layouts_are_frozen() -> None:
             "format": 150,
             "instruction": 150,
         },
+        "foundry-retention-replay-final-holdout-v1": {
+            "arithmetic": 150,
+            "format": 150,
+            "instruction": 150,
+        },
     }
 
 

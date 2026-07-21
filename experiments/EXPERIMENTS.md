@@ -846,3 +846,23 @@ Every future experiment must be registered here before a costly run begins. Its 
   another merge method, retrain, or run a second seed automatically. Complete the pending human
   review, then decide between project stop and a separately approved KL/replay-regularized or
   verifier-reward architecture.
+
+### EXP-TRAIN-012: base-behavior replay pre-training gates
+
+- **Status:** stopped at the independent holdout's untouched-base usability gate; no adapter
+  training and no GSM1K evaluation.
+- **Replay source:** Shared anchor base result `40/40` arithmetic, `20/40` format, `23/40`
+  instruction, 83/120 total, zero backend failures. The scorer-correct actual base outputs form an
+  83-item replay corpus with SHA-256
+  `b511129f89ce450014b78698e9e439bdaa0947657f301c3e99b2a9955b7ab4d1`.
+- **Independent instrument:** 450 original prompts, 150 per category; suite SHA-256
+  `4f49c42cbae8ce7b5029192786f8ff493a4cc445f940063298e0bd22392b6ef9`. Exact and 12-token audit
+  against 3,314 prior prompts found zero overlaps; references self-score with zero known defects.
+- **Base result:** arithmetic `84/150`, format `27/150`, instruction `30/150`, overall `141/450`;
+  405 extractable, zero prompt echo, zero question generation, and zero backend failures.
+- **Gate:** failed format (`27 < 60`), instruction (`30 < 60`), and overall (`141 < 250`).
+  Gate-summary SHA-256 is
+  `e1bdc1cc14f2e126b8fb43f310b009b47bfef32d31795686259d49c8913d3f8a`.
+- **Decision:** do not freeze a base-correct final subset, schedule R20/R20-KL/R40, train adapters,
+  run retention selection, or inspect GSM1K. Preserve the failed instrument and request an explicit
+  project-stop or new-architecture decision.

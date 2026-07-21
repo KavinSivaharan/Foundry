@@ -390,3 +390,25 @@ Human language review remains pending at
 `file:///C:/Users/Admin/Projects/Foundry/results/raw/foundry_500x2_signal_review/codex_assisted_review.html`.
 The next decision is whether to stop adaptation or separately design a materially different
 retention-preserving approach such as KL/replay regularization or verifier-reward optimization.
+
+## Milestone 9 base-behavior replay experiment stopped before training
+
+> **Provisional one-seed result pending stratified human language review and second-seed
+> confirmation.**
+
+The approved replay architecture first evaluated the untouched base on the existing 120-item shared
+anchor. It froze the 83 scorer-correct actual base outputs—40 arithmetic, 20 format, and 23
+instruction—as a single shared replay corpus. No predefined gold response was substituted for a
+base output.
+
+A newly frozen 450-item independent retention holdout then passed self-score, ambiguity, and
+disjointness checks, including zero exact and 12-token overlap against 3,314 prior prompts. The base
+scored only 84/150 arithmetic, 27/150 format, and 30/150 instruction (141/450 overall), below the
+declared 60-per-category and 250-overall usability requirements. There were zero backend failures,
+prompt echoes, or question-generating outputs.
+
+The experiment therefore stopped before replay/KL scheduling or training, before any of the six
+adapters existed, and before retention selection or GSM1K. There is no new targeted-versus-generic
+benchmark result. The exact next decision is whether to stop conventional adaptation or separately
+approve a new architecture with a new independently frozen retention instrument; the observed
+holdout cannot be revised as a response to its base score.

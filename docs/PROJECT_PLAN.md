@@ -919,3 +919,23 @@ review remains pending at
 `file:///C:/Users/Admin/Projects/Foundry/results/raw/foundry_500x2_signal_review/codex_assisted_review.html`.
 Any next adaptation experiment requires separate approval and a materially different retention
 architecture: either KL/replay-regularized adaptation or verifier-reward GRPO.
+
+## Milestone 9 outcome: replay source passed; independent instrument failed before training
+
+The frozen shared anchor yielded 83 scorer-correct untouched-base behaviors: 40 arithmetic, 20
+format, and 23 instruction. Their actual deterministic base outputs were frozen as replay targets,
+with replay-corpus SHA-256
+`b511129f89ce450014b78698e9e439bdaa0947657f301c3e99b2a9955b7ab4d1` and format SHA-256
+`758dc1f35020e88e04c425b6106e54ea2f577f547afa4762ade9923762af6d66`.
+
+Before training, Foundry froze a new 450-item independent retention holdout and proved zero exact or
+12-token overlap against 3,314 prior retention, synthetic, and development prompts. The untouched
+base then scored 84/150 arithmetic, 27/150 format, and 30/150 instruction, or 141/450 overall. The
+predeclared usability minimums were 60 in every category and 250 overall. Format, instruction, and
+overall therefore failed despite zero backend failures and valid deterministic references/scorers.
+
+**Current stop:** no replay/KL schedule was frozen, no adapter was trained, no retention method was
+selected, and GSM1K was not evaluated. The next project decision is whether to stop conventional
+adaptation or separately approve a new architecture and independently frozen retention instrument;
+the failed holdout may not be edited post hoc. Human language review remains pending at the existing
+local review URL.

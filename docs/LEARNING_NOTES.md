@@ -805,3 +805,17 @@ remained unopened for this adapter. Future work must change the retention mechan
 as KL/replay regularization or verifier-reward GRPO under a separately approved design—rather than
 continue adapter arithmetic or post-hoc scale search. The dataset's stratified human language review
 and second-seed uncertainty also remain unresolved.
+
+## A valid holdout can still be unusable for base-conditioned retention
+
+The new replay holdout passed deterministic construction, self-scoring, ambiguity, and broad
+disjointness checks, yet the untouched base was correct on only 141/450 items. Its arithmetic slice
+was usable at 84/150, while exact format and general instruction slices were only 27/150 and 30/150.
+This distinguishes two properties that are easy to conflate: objective correctness of an instrument
+and sufficient base-correct coverage for measuring preservation.
+
+The result also shows why a holdout must be frozen before training. Once these low base scores were
+observed, rewriting prompts, changing scorers, or lowering the 60/60/60 and 250 thresholds would
+create post-treatment flexibility. The sound outcome is to preserve the negative instrument result
+and stop before adapter training. The 83-item shared replay corpus remains valid evidence, but it
+does not by itself authorize an adaptation comparison.

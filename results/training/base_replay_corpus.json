@@ -1,0 +1,539 @@
+{
+  "adapter_loaded": false,
+  "anchor_id": "foundry-shared-retention-anchor-v1",
+  "anchor_sha256": "a15df37c7318432576878ff86e567a0f0bac050cc62e2af61081a937f2c1740c",
+  "base_model_id": "Qwen/Qwen2.5-1.5B-Instruct",
+  "base_result_sha256": "d35f07647a57b28231598713860478507bee1556c0c2ad89393a261a127c3295",
+  "base_revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+  "base_summary_sha256": "f1f686779ad27dcd26aa9c705cc7be9dc3a5109883a162931709fadba4931db8",
+  "gate_checks": {
+    "arithmetic_at_least_20": true,
+    "format_at_least_20": true,
+    "instruction_at_least_20": true,
+    "overall_at_least_75": true,
+    "zero_backend_failures": true,
+    "zero_objective_prompt_or_scorer_defects": true
+  },
+  "gate_passed": true,
+  "generation_config_sha256": "f628fe7faafe94040de3df696a63d98494525cd1a57487b718fd9a86b5292093",
+  "gold_response_sha256": "9634f8cbf5490ef3ca237ce07ff5f142f118dbf891c9b448a9eda214ebde13a6",
+  "items": [
+    {
+      "base_output_sha256": "f2b75ec84efaa0af05ed0d82c60a980ec4718c72484fc67edc31c1df747d13ad",
+      "id": "anchor-arithmetic-001",
+      "section": "arithmetic",
+      "skill": "addition"
+    },
+    {
+      "base_output_sha256": "41b61bbb5cb7466120d0c4f6f02ad19ad6d3f7f31f98cd0a4838462e7dcde5ca",
+      "id": "anchor-arithmetic-002",
+      "section": "arithmetic",
+      "skill": "addition"
+    },
+    {
+      "base_output_sha256": "a8faddcd54148c2006bec717382a34fdf1a6c4e4c774f2d1f8b0249a7485ee6e",
+      "id": "anchor-arithmetic-003",
+      "section": "arithmetic",
+      "skill": "addition"
+    },
+    {
+      "base_output_sha256": "0a71ea17ed4ba9f4235d85bc3895e3b145c1ce8b144631ad37d06009a6589fcd",
+      "id": "anchor-arithmetic-004",
+      "section": "arithmetic",
+      "skill": "addition"
+    },
+    {
+      "base_output_sha256": "3ced25545016ed64868fe7731dfc7f630474cf14ed1162355d52c0b5769f6e54",
+      "id": "anchor-arithmetic-005",
+      "section": "arithmetic",
+      "skill": "addition"
+    },
+    {
+      "base_output_sha256": "bcde2dea0be5a5e75a941fe51819d62b0fbcab63a17d6389b4ae977f493090ec",
+      "id": "anchor-arithmetic-006",
+      "section": "arithmetic",
+      "skill": "addition"
+    },
+    {
+      "base_output_sha256": "e430424f1509cff21ea8fb55cd7c70a9c868e77f5212b35217777ebf0bf9dc57",
+      "id": "anchor-arithmetic-007",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "base_output_sha256": "08a8a81335a1aa6b95022c97de62584a7a97469f119ac6b06293de9766b2f230",
+      "id": "anchor-arithmetic-008",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "base_output_sha256": "f62dfb9075db3e8503f1d5c5961c37cf10ef15df56af876fb14c9d9cf9b1f409",
+      "id": "anchor-arithmetic-009",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "base_output_sha256": "e9b22fd6b6491851c1cea1bdafed4b37c34a4c59d29f8decffdb26177136b65a",
+      "id": "anchor-arithmetic-010",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "base_output_sha256": "d6f7afa3b64c99404483994f13f30d3d634d257ff5d3364d9c046cab776f7ea8",
+      "id": "anchor-arithmetic-011",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "base_output_sha256": "80f421f75b7e0a5a456fb89418be6ae6b6a9894460e1ffb68cc7873145920bc8",
+      "id": "anchor-arithmetic-012",
+      "section": "arithmetic",
+      "skill": "subtraction"
+    },
+    {
+      "base_output_sha256": "d1ef38b946170b40a8eac60e0952abe34444a690d01334c80c40db84e7bc6078",
+      "id": "anchor-arithmetic-013",
+      "section": "arithmetic",
+      "skill": "multiplication"
+    },
+    {
+      "base_output_sha256": "ca5639d8e30a6e13f3bf6953ea7e4f0d299015972bdcc71c4410e7bce9911056",
+      "id": "anchor-arithmetic-014",
+      "section": "arithmetic",
+      "skill": "multiplication"
+    },
+    {
+      "base_output_sha256": "e02930b9edb3a6f7b054b7b39254c876e631cdbaa4ca30af2a278f590cbfae52",
+      "id": "anchor-arithmetic-015",
+      "section": "arithmetic",
+      "skill": "multiplication"
+    },
+    {
+      "base_output_sha256": "46a8b212369d062590df73cbb98a98ee884f2c7933c2a9172aac7f6c08e2df63",
+      "id": "anchor-arithmetic-016",
+      "section": "arithmetic",
+      "skill": "multiplication"
+    },
+    {
+      "base_output_sha256": "5644da846f16fd56ac1bba1025a991182771fa0acb9ac73117ad269ad2a640cb",
+      "id": "anchor-arithmetic-017",
+      "section": "arithmetic",
+      "skill": "multiplication"
+    },
+    {
+      "base_output_sha256": "ff09a03a2a804b3e32d1616a8d6005c5aa3f2b856284239a51b46bce81b0c0cd",
+      "id": "anchor-arithmetic-018",
+      "section": "arithmetic",
+      "skill": "multiplication"
+    },
+    {
+      "base_output_sha256": "eb05a4a2892305e81ae82e464f919d74160579ec82061ae33d12a90489876ca8",
+      "id": "anchor-arithmetic-019",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "base_output_sha256": "530f7f8cc6380763415725930b5558cbabadfaa785ba416c72ba201466ef0b4a",
+      "id": "anchor-arithmetic-020",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "base_output_sha256": "23e4c478ab507df5991b1842bb84be00707dcbb2384125b5ef219c3abd39b7bd",
+      "id": "anchor-arithmetic-021",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "base_output_sha256": "042969f7cbc223f3e6c511964ea48e06d7f73c3e4a767ad078d9f22aa54f6c5e",
+      "id": "anchor-arithmetic-022",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "base_output_sha256": "5545b798c00436b52d9b2fa14ff64777b912828878fc14ddbde5acd6d02a4959",
+      "id": "anchor-arithmetic-023",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "base_output_sha256": "391cf9460f8d99071378bf09d319013eaf3d2e6c6d6f05b632a5c3f522bc0ee8",
+      "id": "anchor-arithmetic-024",
+      "section": "arithmetic",
+      "skill": "exact_division"
+    },
+    {
+      "base_output_sha256": "ef721069412084e87188313aa365415a29af01a88f6c5203e8170b8f186d1a01",
+      "id": "anchor-arithmetic-025",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "base_output_sha256": "15310a3411657d154d5e3e480a77a78303eaa13b5fd9bc70d465aec3c9dc747c",
+      "id": "anchor-arithmetic-026",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "base_output_sha256": "f7a0648abeaa0de818e5e18ba52ac6277cf97c79cc5b690e95f539dd7ed769e8",
+      "id": "anchor-arithmetic-027",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "base_output_sha256": "3f41c0ad755b0cd34c0746c99fcc46eec59f6b50aef8fdc46658932626eeb11b",
+      "id": "anchor-arithmetic-028",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "base_output_sha256": "d9ade3ea521eaa0fc4e082e2d8f9dca495fefb5dd00cad7098588c32448496a1",
+      "id": "anchor-arithmetic-029",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "base_output_sha256": "d2fcb9b7838be738744b21585ff40fdf0f8378b8be186334fbeb777158316e7c",
+      "id": "anchor-arithmetic-030",
+      "section": "arithmetic",
+      "skill": "percentage"
+    },
+    {
+      "base_output_sha256": "930b2d2c1100f68c58bcf1565da2bf7813ce0513a6559ee30cf220be4893615d",
+      "id": "anchor-arithmetic-031",
+      "section": "arithmetic",
+      "skill": "ratio"
+    },
+    {
+      "base_output_sha256": "5ed5fcaf62e1d120465bfcb3438efeadf3fb6507f3b166768c43590971eaf916",
+      "id": "anchor-arithmetic-032",
+      "section": "arithmetic",
+      "skill": "ratio"
+    },
+    {
+      "base_output_sha256": "f271a6f4705585ba7c378d41e8509d5ef1478bd5aa11208fb70ffdb8d476d877",
+      "id": "anchor-arithmetic-033",
+      "section": "arithmetic",
+      "skill": "ratio"
+    },
+    {
+      "base_output_sha256": "66949ceafb9c0a324ba5b19766432c450438a591bdf2d67445fface9589eae94",
+      "id": "anchor-arithmetic-034",
+      "section": "arithmetic",
+      "skill": "ratio"
+    },
+    {
+      "base_output_sha256": "c4ddff33e1c1446d0784a40f0b1a2321d019f58a63cd95897e4d59aa2724d0d8",
+      "id": "anchor-arithmetic-035",
+      "section": "arithmetic",
+      "skill": "ratio"
+    },
+    {
+      "base_output_sha256": "e14ed62885c57e091072f77c70ce3e7088ec8cf0ce0b97dd8f4603b6a5cea3af",
+      "id": "anchor-arithmetic-036",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "base_output_sha256": "2c494fa8920da80dbf225f17d7361a0d52758d6186e36aff7c9f249d7c3acdf8",
+      "id": "anchor-arithmetic-037",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "base_output_sha256": "8eabe87062ba9e450862094d6802bcdf6dcf04a1b95d65a627ef672637fd6d82",
+      "id": "anchor-arithmetic-038",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "base_output_sha256": "8d60ce8e4f68d16ba340d56358c3700e64822ee010e6df05d6fe3626dfc2dc57",
+      "id": "anchor-arithmetic-039",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "base_output_sha256": "1ed2ae34b92ab9531109dcc657e61432dbcd2d459923a911e4c3a3320f9ff146",
+      "id": "anchor-arithmetic-040",
+      "section": "arithmetic",
+      "skill": "short_multi_step"
+    },
+    {
+      "base_output_sha256": "b1601f694b9d336c35fc456de5697dfde5e1b1ce4e8c40766fb6cb763aba91c7",
+      "id": "anchor-format-001",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "base_output_sha256": "548a42517fa28525d6af7249de69bd6fefb51d10c996bb8135e337a53cf3b4cf",
+      "id": "anchor-format-002",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "base_output_sha256": "0c274639936717793d7695ef0373039e397acdabc247d9953d3c9209a95044cd",
+      "id": "anchor-format-003",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "base_output_sha256": "ab906be12ca6d9f28ad5687f2b0ab8bc5e4535060485ee9c6eec3580777424ee",
+      "id": "anchor-format-004",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "base_output_sha256": "7cadc15d609c4ae9b4be6265b8e1cace16e6fa78a81ab0c7db82e687a7c867a5",
+      "id": "anchor-format-005",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "base_output_sha256": "d7bf0c9ea6ea590ff1a44ef444aa38d0db5491e29fab83efbbbe882ac9314e84",
+      "id": "anchor-format-006",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "base_output_sha256": "8a0e7f923a4d3e55bf8e1db51a54602fb8a3e4f458b7c19f34c360b4525def1f",
+      "id": "anchor-format-007",
+      "section": "format",
+      "skill": "exact_word"
+    },
+    {
+      "base_output_sha256": "2e99a1f37adb615ce73b7dd79cff40f019e0dd509c50b68a5b29504de0fe8235",
+      "id": "anchor-format-008",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "base_output_sha256": "e789d441b19dcbee3d3fb03a95367ba97c19a1a0e6a700b63c34c4d8b7f57708",
+      "id": "anchor-format-009",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "base_output_sha256": "3ed2e4a3503420d5738a8a1619f96f321e5c4ba65736a7bb742b75c483936bf4",
+      "id": "anchor-format-010",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "base_output_sha256": "2e77b490ebebc9dd34af9474d44e0b114c5f092f81bd745db42f8665634c6311",
+      "id": "anchor-format-011",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "base_output_sha256": "4cbb69ea6883d7b972d822b01eb91db3424ccc564ed124889994c7177c1d9990",
+      "id": "anchor-format-012",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "base_output_sha256": "99fb3a5b96a6803b234cbd30ca591c7b70f6e74ab6baef7fff46902055925f42",
+      "id": "anchor-format-013",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "base_output_sha256": "9e54fa93dbad5f80873324fd2efbd2f44003d8f940036983e94bfa6bc7f5c8bc",
+      "id": "anchor-format-014",
+      "section": "format",
+      "skill": "exact_integer"
+    },
+    {
+      "base_output_sha256": "56bca18d8f8c27337f8532640731291f6e485442e0011c5e993feda4e1a37465",
+      "id": "anchor-format-023",
+      "section": "format",
+      "skill": "constrained_list"
+    },
+    {
+      "base_output_sha256": "6d4d687941e71f4be9373b91572d87f23328c12683efa147ef67670f495e7769",
+      "id": "anchor-format-026",
+      "section": "format",
+      "skill": "constrained_list"
+    },
+    {
+      "base_output_sha256": "dafa5485cc712d58134c9c960b8a5d82514356b989464bee2ae0f68b8118dac1",
+      "id": "anchor-format-027",
+      "section": "format",
+      "skill": "constrained_list"
+    },
+    {
+      "base_output_sha256": "bccc0d1b23a36637445727067821c636bf01b8457e82d5cad5c3d2b6ebd01e7e",
+      "id": "anchor-format-035",
+      "section": "format",
+      "skill": "required_affixes"
+    },
+    {
+      "base_output_sha256": "03326f9cad9158b9cec3fc0e5957d4061fb1baddea41e7b3850a2bdb6a086554",
+      "id": "anchor-format-037",
+      "section": "format",
+      "skill": "required_affixes"
+    },
+    {
+      "base_output_sha256": "79f446f421395c31f8ea2ef81f9818f01b2e829dc792eabc6b91c52bc1420a01",
+      "id": "anchor-format-039",
+      "section": "format",
+      "skill": "required_affixes"
+    },
+    {
+      "base_output_sha256": "dcc7ca2352e891f37bd08855a918096171d474483b11c03ba01833738a80dca0",
+      "id": "anchor-instruction-001",
+      "section": "instruction",
+      "skill": "uppercase"
+    },
+    {
+      "base_output_sha256": "48d92fd36d10f65bb45a4626e1c16188fe28a8cfb2b91abc726078d380563cd6",
+      "id": "anchor-instruction-002",
+      "section": "instruction",
+      "skill": "uppercase"
+    },
+    {
+      "base_output_sha256": "50c462086f9a9857fddfb86fe7e9da4f68322ae8c42dc9a8947833c9c8113c05",
+      "id": "anchor-instruction-003",
+      "section": "instruction",
+      "skill": "uppercase"
+    },
+    {
+      "base_output_sha256": "ca8152fba865cbd90490e9ee3788b1f4b5f715847ad8d2f5dc5dd5f0159f0da6",
+      "id": "anchor-instruction-004",
+      "section": "instruction",
+      "skill": "uppercase"
+    },
+    {
+      "base_output_sha256": "d47c40bea34483aafa4af5bd36af4f6adff17bda66d1cedbaf9c93e9bb9cf387",
+      "id": "anchor-instruction-005",
+      "section": "instruction",
+      "skill": "lowercase"
+    },
+    {
+      "base_output_sha256": "f0a5da17e0ffa3a21c2b07c964d465799eb0deb62905ccb1b271ce7716614746",
+      "id": "anchor-instruction-006",
+      "section": "instruction",
+      "skill": "lowercase"
+    },
+    {
+      "base_output_sha256": "9e135ab954828446379a956e7e12eb7254a482059c765a4e055b617ffe624057",
+      "id": "anchor-instruction-007",
+      "section": "instruction",
+      "skill": "lowercase"
+    },
+    {
+      "base_output_sha256": "ab906be12ca6d9f28ad5687f2b0ab8bc5e4535060485ee9c6eec3580777424ee",
+      "id": "anchor-instruction-008",
+      "section": "instruction",
+      "skill": "lowercase"
+    },
+    {
+      "base_output_sha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
+      "id": "anchor-instruction-017",
+      "section": "instruction",
+      "skill": "symbol_count"
+    },
+    {
+      "base_output_sha256": "6d02f7d61e02d070944a9a37856f43d78fb89f8adea6150cd2fdcb53d2a4cc4a",
+      "id": "anchor-instruction-024",
+      "section": "instruction",
+      "skill": "select_position"
+    },
+    {
+      "base_output_sha256": "c2b2e5ddebda4dc3cfa79a51077bf86a1db4b6113760643153f6eeaf768f5864",
+      "id": "anchor-instruction-026",
+      "section": "instruction",
+      "skill": "copy_token"
+    },
+    {
+      "base_output_sha256": "b79624284645b7cba19d76a417e493fe9e767745d4313fdfc35107c92a5db909",
+      "id": "anchor-instruction-028",
+      "section": "instruction",
+      "skill": "copy_token"
+    },
+    {
+      "base_output_sha256": "1a64ff3f9494ad8956f56f45ed8296f329f008360cfdcd85bf25ef8db9f525c8",
+      "id": "anchor-instruction-029",
+      "section": "instruction",
+      "skill": "exact_substitution"
+    },
+    {
+      "base_output_sha256": "9eeed704855d0cdbcd932e1a2995b1e00061f515c27407eec272e17ea4c138d6",
+      "id": "anchor-instruction-030",
+      "section": "instruction",
+      "skill": "exact_substitution"
+    },
+    {
+      "base_output_sha256": "5e4eba9857a833604454cb568c0a9c3456352589dec6aa602b2c1bdc5492c63b",
+      "id": "anchor-instruction-031",
+      "section": "instruction",
+      "skill": "exact_substitution"
+    },
+    {
+      "base_output_sha256": "933b77dfde4f096a4c25025a8751e4dd28de025b336e43ef67ecc93872eac28c",
+      "id": "anchor-instruction-032",
+      "section": "instruction",
+      "skill": "exact_substitution"
+    },
+    {
+      "base_output_sha256": "ae10db2c666f710ef4799010b5f957910917d4e394346d226e41cb77169a464a",
+      "id": "anchor-instruction-033",
+      "section": "instruction",
+      "skill": "initials"
+    },
+    {
+      "base_output_sha256": "ff0e1e1f9b78d34115115f529ef01cbda52ade7ee0bd637f9c7f0c79e77465cd",
+      "id": "anchor-instruction-034",
+      "section": "instruction",
+      "skill": "initials"
+    },
+    {
+      "base_output_sha256": "0c272fe9f89a55ade8cc4289ec56b30aadd97234d4b5cbdcaf0fc57b55ad4e68",
+      "id": "anchor-instruction-035",
+      "section": "instruction",
+      "skill": "initials"
+    },
+    {
+      "base_output_sha256": "349c41201b62db851192665c504b350ff98c6b45fb62a8a2161f78b6534d8de9",
+      "id": "anchor-instruction-037",
+      "section": "instruction",
+      "skill": "numeric_selection"
+    },
+    {
+      "base_output_sha256": "3ada92f28b4ceda38562ebf047c6ff05400d4c572352a1142eedfef67d21e662",
+      "id": "anchor-instruction-038",
+      "section": "instruction",
+      "skill": "numeric_selection"
+    },
+    {
+      "base_output_sha256": "bbb965ab0c80d6538cf2184babad2a564a010376712012bd07b0af92dcd3097d",
+      "id": "anchor-instruction-039",
+      "section": "instruction",
+      "skill": "numeric_selection"
+    },
+    {
+      "base_output_sha256": "0e17daca5f3e175f448bacace3bc0da47d0655a74c8dd0dc497a3afbdad95f1f",
+      "id": "anchor-instruction-040",
+      "section": "instruction",
+      "skill": "numeric_selection"
+    }
+  ],
+  "manifest_sha256": "27ccd1c22bd321d17418ca346e1b3b4022fd696fdde07550e1c56f2864efde18",
+  "predefined_gold_used_as_replay_target": false,
+  "prompt_sha256": "aca5eef33cc48aee74080d6408eff40b06df60108933a70c5739214773394fb9",
+  "prompts_or_outputs_in_manifest": false,
+  "raw_replay_packet_sha256": "a9f25258d23f05a785dfea9f8ae0e05a246b52c9798a0d10e683fdc4e01a87f6",
+  "replay_corpus_id": "foundry-base-correct-replay-corpus-v1",
+  "replay_corpus_sha256": "b511129f89ce450014b78698e9e439bdaa0947657f301c3e99b2a9955b7ab4d1",
+  "replay_format_id": "foundry-shared-base-replay-v1",
+  "replay_format_sha256": "758dc1f35020e88e04c425b6106e54ea2f577f547afa4762ade9923762af6d66",
+  "schema_version": 1,
+  "sealed_final_accessed": false,
+  "section_counts": {
+    "arithmetic": 40,
+    "format": 20,
+    "instruction": 23
+  },
+  "selection": "frozen_scorer_correct_on_untouched_base",
+  "target_source": "actual_deterministic_untouched_base_output",
+  "total": 83
+}

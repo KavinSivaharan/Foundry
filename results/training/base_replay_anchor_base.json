@@ -1,0 +1,59 @@
+{
+  "adapter_loaded": false,
+  "adapter_sha256": null,
+  "anchor_id": "foundry-shared-retention-anchor-v1",
+  "anchor_sha256": "a15df37c7318432576878ff86e567a0f0bac050cc62e2af61081a937f2c1740c",
+  "answer_sha256": "b748ed3f321ae195f4044c28113296f2f55757577b8e1ce92126a221fd21c9a1",
+  "backend_failures": 0,
+  "base_model_id": "Qwen/Qwen2.5-1.5B-Instruct",
+  "base_result_sha256": "d35f07647a57b28231598713860478507bee1556c0c2ad89393a261a127c3295",
+  "base_revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+  "confirmed_prompt_or_scorer_defects": 0,
+  "correct": 83,
+  "evaluation_id": "foundry-base-replay-anchor-evaluation-v1",
+  "extractable": 114,
+  "generation_config": {
+    "do_sample": false,
+    "max_new_tokens": 384,
+    "seed": 20260720
+  },
+  "generation_config_sha256": "f628fe7faafe94040de3df696a63d98494525cd1a57487b718fd9a86b5292093",
+  "gold_response_sha256": "9634f8cbf5490ef3ca237ce07ff5f142f118dbf891c9b448a9eda214ebde13a6",
+  "malformed_outputs": 6,
+  "per_item_evidence_sha256": "369f7828ccd23952264390b5f8ba3a25eda99915982c0a1d1232e3be66b4ceba",
+  "prompt_echo": 0,
+  "prompt_sha256": "aca5eef33cc48aee74080d6408eff40b06df60108933a70c5739214773394fb9",
+  "question_generation": 0,
+  "raw_packet_sha256": "5f96d5a46d306ea8d48c410199cac3c485486a5e7032c71e447be0466ca86fec",
+  "runtime_metrics": {
+    "examples_per_second": 3.9307903257852344,
+    "gpu_name": "NVIDIA GeForce RTX 3080",
+    "input_tokens": 7956,
+    "load_seconds": 3.2215901000017766,
+    "output_tokens": 1733,
+    "peak_vram_allocated_bytes": 3554672640,
+    "peak_vram_reserved_bytes": 3617587200,
+    "runtime_seconds": 30.5282118999894
+  },
+  "schema_version": 1,
+  "sealed_final_accessed": false,
+  "section_metrics": {
+    "arithmetic": {
+      "accuracy": 1.0,
+      "correct": 40,
+      "total": 40
+    },
+    "format": {
+      "accuracy": 0.5,
+      "correct": 20,
+      "total": 40
+    },
+    "instruction": {
+      "accuracy": 0.575,
+      "correct": 23,
+      "total": 40
+    }
+  },
+  "summary_sha256": "f1f686779ad27dcd26aa9c705cc7be9dc3a5109883a162931709fadba4931db8",
+  "total": 120
+}

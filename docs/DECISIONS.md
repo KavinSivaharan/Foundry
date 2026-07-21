@@ -822,3 +822,46 @@ This log separates proposals from approved decisions. A proposal does not author
   review remains pending at the frozen local review page, and the result retains its provisional
   one-seed label. Any continuation requires separate approval for KL/replay-regularized adaptation
   or verifier-reward GRPO; neither begins automatically.
+
+## 2026-07-21: preserve base behavior during adaptation with shared replay
+
+- **Status:** Approved protocol stopped at the independent-instrument gate before training.
+- **Decision:** Conventional unregularized SFT, post-training scale search, adapter arithmetic, and
+  additional merge/composition methods remain closed. The next and only approved conventional
+  adaptation architecture is `foundry-base-replay-kl-v1`: both curriculum arms begin from the
+  untouched base, receive identical frozen base-behavior replay evidence, and use one of exactly
+  three predeclared interventions (`R20`, `R20-KL`, or `R40`).
+- **Evidence:** Common LoRA scaling improved retention but left generic/targeted GSM1K at
+  `387/814` and `414/814`, below the untouched base's `521/814`. Exact rank-32
+  targeted-minus-generic arithmetic passed numerical equivalence but every approved contrastive
+  scale failed the frozen anchor gate on question generation. The targeted curriculum nevertheless
+  retained a paired `+27` advantage over generic, with a 95% interval of
+  `[+1.3514,+5.2826]` percentage points.
+- **Controls:** The replay source is the existing original `shared_retention_anchor_v1`; replay
+  targets are untouched-base deterministic outputs on base-correct items, never benchmark or gold
+  answers. Synthetic questions, labels, membership, splits, learning rate, LoRA recipe, seed,
+  total CE-token budget, retention thresholds, and GSM1K evaluator remain frozen. Method selection
+  uses retention only.
+- **Stop rule:** If none of the three variants passes both calibration subsets, or the selected pair
+  fails the newly frozen independent holdout, stop conventional SFT adaptation and do not inspect
+  GSM1K. Any later continuation requires a separately approved verifier-reward GRPO design or
+  project stop.
+
+## 2026-07-21: stop base-replay adaptation at the independent-instrument gate
+
+- **Status:** Stopped before schedule construction or adapter training.
+- **Decision:** Preserve the valid 83-record base-behavior replay corpus, but do not implement or
+  execute `R20`, `R20-KL`, or `R40` under this milestone because the pre-training independent
+  holdout failed its frozen untouched-base usability gate.
+- **Evidence:** The replay source passed with arithmetic/format/instruction counts `40/20/23` and
+  83 total. The independent 450-item holdout passed reference, scorer, uniqueness, and 3,314-prompt
+  exact/12-token disjointness checks, but the untouched base scored only `84/27/30` by category and
+  `141/450` overall. Gate-summary SHA-256 is
+  `e1bdc1cc14f2e126b8fb43f310b009b47bfef32d31795686259d49c8913d3f8a`.
+- **Rationale:** A base-conditioned preservation instrument cannot support the planned decision if
+  its frozen base-correct population is below the declared coverage floor. Relaxing thresholds or
+  rewriting exact-output prompts after the base result would turn the holdout into a tuning set.
+- **Consequence:** No base-correct subset was frozen, no schedules or adapters are approved, no
+  retention selection or independent adapter validation exists, and GSM1K remains uninspected for
+  this architecture. A continuation requires a separate user decision; this failed suite remains
+  immutable evidence.

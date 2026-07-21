@@ -872,3 +872,15 @@ synthetic question, deterministic trace, canonical answer, template, dataset mem
 curriculum allocation. The 300-item adjudication instrument failed its untouched-base usability
 gate before either selected adapter was evaluated, so it produced no evidence for or against the
 targeted curriculum. Shared-anchor training and benchmark evaluation did not occur.
+
+## Base-replay holdout stop leaves all synthetic data unchanged
+
+Milestone 9 froze 83 demonstrated untouched-base behaviors from an original nonbenchmark anchor and
+created a separate 450-item retention instrument. It did not alter a synthetic question, trace,
+canonical answer, template, dataset membership, or split. The new instrument passed exact and
+12-token disjointness against all 1,000 synthetic questions and all 904 development questions.
+
+The untouched base failed the instrument-usability floor before replay/KL scheduling or training:
+84 arithmetic, 27 format, and 30 instruction prompts were correct, for 141/450 overall. Consequently
+no evidence about targeted versus generic adaptation was created and no synthetic-data design
+change is justified by this stopped training-method experiment.

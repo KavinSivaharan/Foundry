@@ -1,0 +1,96 @@
+{
+  "adapter_outputs_read": false,
+  "ambiguous_reference_answers": 0,
+  "answer_sha256": "c53aff64ef1ac9e50bcfdd76be54bf33d57902ccacc779003ddff68188dff3e3",
+  "artifact_id": "foundry-retention-replay-final-holdout-artifact-v1",
+  "benchmark_content_used": false,
+  "configuration_sha256": "5539b406214379fdb780e4a877ff293c4448c04bdbe9cb82e950443ee8fae661",
+  "generation_sha256": "43a279a5c3a0b1ef2cde520688b6ae8e67e1d9e58ccfbd13cd623d8b46213354",
+  "item_id_sha256": "1e7f2b05af73f6196dc0bf932bddd19f1313317b239ac5205a4eddc700a0973c",
+  "prior_prompt_audit": {
+    "audit_id": "foundry-retention-prompt-disjointness-audit-v1",
+    "audited_prior_prompt_count": 3314,
+    "corpora": [
+      {
+        "corpus_id": "prior-original-retention-v1",
+        "corpus_sha256": "226888a661bf6a156099b007f617497793a8f5ab6bba9ecaa1de3c35e1c5611f",
+        "prompt_count": 60
+      },
+      {
+        "corpus_id": "prior-retention-validation-v1",
+        "corpus_sha256": "b916af3910f27d6ef2d3c302744637a6abf8665c616a4f70714c849dbe8208d2",
+        "prompt_count": 90
+      },
+      {
+        "corpus_id": "prior-retention-final-holdout-v1",
+        "corpus_sha256": "e8adf9078648fedd4aa1067e7a0e063b87c8d85f443e0bdcd497eed1ea6dcc2d",
+        "prompt_count": 90
+      },
+      {
+        "corpus_id": "prior-retention-adjudication-v2",
+        "corpus_sha256": "ed5525263d7ba995d80fd28adaeba428631106692a8c01a7d23bdd764577a03f",
+        "prompt_count": 300
+      },
+      {
+        "corpus_id": "prior-retention-anchor-holdout-v1",
+        "corpus_sha256": "b108de43e3badf49b29d71ea303e0138ac138fff87cd5093de887a999c1c4303",
+        "prompt_count": 300
+      },
+      {
+        "corpus_id": "prior-shared-retention-anchor-v1",
+        "corpus_sha256": "a4c7d05ef7ba90f84bea410efa17f16c0e422833f9985b20c429bad1a56b7a22",
+        "prompt_count": 120
+      },
+      {
+        "corpus_id": "prior-retention-scale-final-holdout-v1",
+        "corpus_sha256": "995103a1f5414501d50adb8992966e977349b31e1c8aac0544829ded4a65632e",
+        "prompt_count": 450
+      },
+      {
+        "corpus_id": "synthetic-generic-training",
+        "corpus_sha256": "e5428c0c76ba02c891588eeca60a424ef0e616713762cb3d811de689c2d90f33",
+        "prompt_count": 450
+      },
+      {
+        "corpus_id": "synthetic-generic-validation",
+        "corpus_sha256": "59f469dfe7b1a4830d051ea107641b6980a761c5f030a0a18c806c58e1fc0870",
+        "prompt_count": 50
+      },
+      {
+        "corpus_id": "synthetic-targeted-training",
+        "corpus_sha256": "176599b8fe235b2f2eea4525ff7213f9e6bafcf031d387df7b22139216486070",
+        "prompt_count": 450
+      },
+      {
+        "corpus_id": "synthetic-targeted-validation",
+        "corpus_sha256": "c671558ae1758b4f3fbe5fd6e760376984fb552bfbc2c1dfefe3cfa345e7f982",
+        "prompt_count": 50
+      },
+      {
+        "corpus_id": "gsm1k-development-904",
+        "corpus_sha256": "a261526d834f59ee62015925d5774af1555643c6075822a9f1a924e7a9a0c2c3",
+        "prompt_count": 904
+      }
+    ],
+    "exact_overlap_count": 0,
+    "normalizer": "lowercase_ascii_alphanumeric_tokens_v1",
+    "status": "passed",
+    "twelve_token_overlap_count": 0,
+    "window_size": 12
+  },
+  "prompt_sha256": "3326e43a7661f50429db3a5efee64396947f6af3e0fe78bf3322e04499ed08af",
+  "schema_version": 1,
+  "scorer_sha256": "171f1a5abfbb4e0ece66732194134fadce9214d6a3ea4eeb45b59146fd9c1137",
+  "sealed_final_accessed": false,
+  "section_counts": {
+    "arithmetic": 150,
+    "format": 150,
+    "instruction": 150
+  },
+  "self_score_failures": 0,
+  "suite_id": "foundry-retention-replay-final-holdout-v1",
+  "suite_sha256": "4f49c42cbae8ce7b5029192786f8ff493a4cc445f940063298e0bd22392b6ef9",
+  "summary_sha256": "0d8ea3b700649bad168446d9e830d434b1131220d7771a680cc9716825e460eb",
+  "synthetic_or_template_content_used": false,
+  "total": 450
+}

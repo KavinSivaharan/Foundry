@@ -1,0 +1,33 @@
+{
+  "adapter_outputs_read": false,
+  "ambiguous_reference_answers": 0,
+  "artifact_evidence_sha256": "0d8ea3b700649bad168446d9e830d434b1131220d7771a680cc9716825e460eb",
+  "backend_failures": 0,
+  "base_summary_sha256": "6da14d0932255181d0ed9f59559b8f02d803dce72543bb4e743c0487724160b1",
+  "extractable": 405,
+  "gate_checks": {
+    "arithmetic_at_least_60": true,
+    "format_at_least_60": false,
+    "instruction_at_least_60": false,
+    "overall_at_least_250": false,
+    "zero_backend_failures": true,
+    "zero_reference_or_scorer_defects": true
+  },
+  "gate_id": "foundry-retention-replay-final-holdout-instrument-usability-gate-v1",
+  "gate_passed": false,
+  "malformed_outputs": 45,
+  "overall_correct": 141,
+  "prompt_echo": 0,
+  "question_generation": 0,
+  "reference_self_score_failures": 0,
+  "schema_version": 1,
+  "sealed_final_accessed": false,
+  "section_correct": {
+    "arithmetic": 84,
+    "format": 27,
+    "instruction": 30
+  },
+  "suite_id": "foundry-retention-replay-final-holdout-v1",
+  "suite_sha256": "4f49c42cbae8ce7b5029192786f8ff493a4cc445f940063298e0bd22392b6ef9",
+  "summary_sha256": "e1bdc1cc14f2e126b8fb43f310b009b47bfef32d31795686259d49c8913d3f8a"
+}
