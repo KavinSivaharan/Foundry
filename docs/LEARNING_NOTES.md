@@ -819,3 +819,24 @@ observed, rewriting prompts, changing scorers, or lowering the 60/60/60 and 250 
 create post-treatment flexibility. The sound outcome is to preserve the negative instrument result
 and stop before adapter training. The 83-item shared replay corpus remains valid evidence, but it
 does not by itself authorize an adaptation comparison.
+
+## Deterministic training and stochastic decoding can conflict below the model layer
+
+Milestone 10's verifier reward, prompt schedules, and adapter-disabled reference design passed their
+static contracts, but the first compatibility generation still could not run. Top-p sampling sorts
+probabilities and computes a cumulative sum. On the pinned PyTorch 2.5.1+cu121 CUDA stack, that
+specific cumulative-sum kernel has no implementation accepted by
+`torch.use_deterministic_algorithms(True)`. The failure happened before model text existed, so it is
+not evidence about reward quality, GRPO learning, curriculum quality, retention, or GPU capacity.
+
+This is a useful distinction between several meanings of reproducibility. A fixed seed and stable
+schedule do not guarantee that every GPU operator has a bitwise deterministic kernel. Conversely,
+allowing a nondeterministic kernel as a warning might permit a practical replay test, but it changes
+the experiment's frozen contract. Greedy decoding, CPU sampling, a framework change, and temporarily
+disabling deterministic enforcement are also different protocols rather than harmless repairs.
+
+The correct fail-closed behavior is to record zero completions and zero optimizer steps and request
+an explicit decision. Any continuation must predeclare how stochastic sampling and deterministic
+replay will be reconciled, what equality or equivalence criterion will be tested, and why that
+criterion is scientifically adequate. It must not be chosen after observing model rewards or
+benchmark scores.

@@ -412,3 +412,26 @@ adapters existed, and before retention selection or GSM1K. There is no new targe
 benchmark result. The exact next decision is whether to stop conventional adaptation or separately
 approve a new architecture with a new independently frozen retention instrument; the observed
 holdout cannot be revised as a response to its base score.
+
+## Milestone 10 verifier-reward GRPO stopped at compatibility
+
+> **Provisional one-seed result pending stratified human language review and second-seed
+> confirmation.**
+
+The verifier-GRPO protocol froze a base-conditioned 141-item final-retention subset and paired
+prompt-only schedules with 64 groups and 256 planned completions per arm. Both arms contain the same
+12 replay groups, 52 synthetic groups, and exactly 6,702 model-visible prompt tokens. The
+deterministic reward and adapter-disabled base-reference contracts passed their focused tests.
+
+The G1 compatibility probe failed before its first completion. Frozen top-p `0.95` sampling invoked
+CUDA cumulative summation while strict deterministic algorithms were enabled; PyTorch 2.5.1+cu121
+reported that this kernel has no deterministic implementation. Consequently, completions, rewards,
+optimizer steps, G1/G2 adapters, retention results, and new GSM1K results are all zero or absent.
+This is a runtime-contract incompatibility, not a new curriculum comparison.
+
+The earlier one-seed benchmark result and its provisional label remain unchanged. Human review is
+pending at
+`file:///C:/Users/Admin/Projects/Foundry/results/raw/foundry_500x2_signal_review/codex_assisted_review.html`.
+Before another compatibility probe, the user must explicitly approve a frozen way to reconcile
+stochastic sampling with deterministic execution, or stop verifier-GRPO; no deterministic or
+sampling control may be weakened silently.

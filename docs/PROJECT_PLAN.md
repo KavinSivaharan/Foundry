@@ -939,3 +939,32 @@ selected, and GSM1K was not evaluated. The next project decision is whether to s
 adaptation or separately approve a new architecture and independently frozen retention instrument;
 the failed holdout may not be edited post hoc. Human language review remains pending at the existing
 local review URL.
+
+## Milestone 10 outcome: verifier-GRPO stopped at CUDA deterministic sampling
+
+Foundry froze the 141 untouched-base-correct rows from the unused final retention holdout
+(`84/27/30` arithmetic/format/instruction). The content-free subset SHA-256 is
+`f56845076a1a59e5ca1a95466541339b56f026e945f86118caec307a690ee4ec`. It also froze paired
+prompt-only GRPO schedules: each arm has 64 groups, comprising 52 synthetic and 12 identical replay
+groups, with four planned completions per group. Generic and targeted each contain exactly 6,702
+model-visible prompt tokens. Their manifest hashes are
+`5848ed6640dda21752ab9692c8e531d9175314a7d5a472616dc19ad834a6351e` and
+`cb13d4d522746bdfa829c9a405defdb0eff0acbd23859dc7fe49457318cc1ccf`; the paired schedule-summary
+hash is `23fede9132f53b7d32f354056c728fc68faa20586a9162e101834db34f71ca64`.
+
+The deterministic verifier reward, official adapter-disabled base-reference path, exact truncation
+hook, and strict GRPO runtime were implemented and passed static/unit verification. The G1
+compatibility probe nevertheless stopped during the first sampled generation: with top-p `0.95`
+and strict deterministic algorithms enabled, PyTorch 2.5.1+cu121 reported that CUDA
+`cumsum_cuda_kernel` has no deterministic implementation. No completion, reward, reference-KL
+pass, backward pass, optimizer step, or adapter artifact was produced. Failure-summary SHA-256 is
+`8b57b6284c1e7dccd978379162de9519b7af30addbbfb9eb4d5a95a7f2b439a6`.
+
+**Current stop:** the compatibility gate failed mechanically. G1 and G2 training, checkpoint
+retention, independent final retention, and GSM1K were not run. Continuing requires explicit
+approval of a revised, predeclared contract that reconciles stochastic top-p sampling with the
+available deterministic CUDA kernels, or a decision to stop verifier-GRPO. Foundry must not
+silently weaken determinism, alter sampling, change the dependency stack, or retry. The existing
+benchmark label remains **Provisional one-seed result pending stratified human language review and
+second-seed confirmation**; no new benchmark result was created. Human review remains pending at
+`file:///C:/Users/Admin/Projects/Foundry/results/raw/foundry_500x2_signal_review/codex_assisted_review.html`.

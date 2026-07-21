@@ -1,0 +1,730 @@
+{
+  "adapter_outputs_read": false,
+  "base_evaluation_id": "foundry-retention-replay-final-holdout-evaluation-v1",
+  "base_raw_packet_sha256": "f5a745dc4bf3e353294b1cb9f2d01ea91791204d24d60f376d4b9feb8f0711fd",
+  "base_summary_file_sha256": "4af552a2d09e8cd7b7d7aa58457c2e30cebc892f82919ac4aac7cad5564d34fd",
+  "base_summary_sha256": "6da14d0932255181d0ed9f59559b8f02d803dce72543bb4e743c0487724160b1",
+  "definition": "frozen_scorer_correct_on_untouched_base",
+  "instrument_id": "foundry-base-conditioned-retention-v1",
+  "items": [
+    {
+      "id": "rrfh-arithmetic-000",
+      "section": "arithmetic",
+      "skill": "sequential_integer_adjustment"
+    },
+    {
+      "id": "rrfh-arithmetic-002",
+      "section": "arithmetic",
+      "skill": "sequential_integer_adjustment"
+    },
+    {
+      "id": "rrfh-arithmetic-005",
+      "section": "arithmetic",
+      "skill": "sequential_integer_adjustment"
+    },
+    {
+      "id": "rrfh-arithmetic-007",
+      "section": "arithmetic",
+      "skill": "sequential_integer_adjustment"
+    },
+    {
+      "id": "rrfh-arithmetic-010",
+      "section": "arithmetic",
+      "skill": "sequential_integer_adjustment"
+    },
+    {
+      "id": "rrfh-arithmetic-012",
+      "section": "arithmetic",
+      "skill": "sequential_integer_adjustment"
+    },
+    {
+      "id": "rrfh-arithmetic-016",
+      "section": "arithmetic",
+      "skill": "sequential_integer_adjustment"
+    },
+    {
+      "id": "rrfh-arithmetic-018",
+      "section": "arithmetic",
+      "skill": "sequential_integer_adjustment"
+    },
+    {
+      "id": "rrfh-arithmetic-021",
+      "section": "arithmetic",
+      "skill": "sequential_integer_adjustment"
+    },
+    {
+      "id": "rrfh-arithmetic-022",
+      "section": "arithmetic",
+      "skill": "sequential_integer_adjustment"
+    },
+    {
+      "id": "rrfh-arithmetic-023",
+      "section": "arithmetic",
+      "skill": "sequential_integer_adjustment"
+    },
+    {
+      "id": "rrfh-arithmetic-024",
+      "section": "arithmetic",
+      "skill": "sequential_integer_adjustment"
+    },
+    {
+      "id": "rrfh-arithmetic-025",
+      "section": "arithmetic",
+      "skill": "sequential_integer_adjustment"
+    },
+    {
+      "id": "rrfh-arithmetic-026",
+      "section": "arithmetic",
+      "skill": "sequential_integer_adjustment"
+    },
+    {
+      "id": "rrfh-arithmetic-028",
+      "section": "arithmetic",
+      "skill": "sequential_integer_adjustment"
+    },
+    {
+      "id": "rrfh-arithmetic-031",
+      "section": "arithmetic",
+      "skill": "scaled_sum_with_offset"
+    },
+    {
+      "id": "rrfh-arithmetic-034",
+      "section": "arithmetic",
+      "skill": "scaled_sum_with_offset"
+    },
+    {
+      "id": "rrfh-arithmetic-035",
+      "section": "arithmetic",
+      "skill": "scaled_sum_with_offset"
+    },
+    {
+      "id": "rrfh-arithmetic-045",
+      "section": "arithmetic",
+      "skill": "scaled_sum_with_offset"
+    },
+    {
+      "id": "rrfh-arithmetic-046",
+      "section": "arithmetic",
+      "skill": "scaled_sum_with_offset"
+    },
+    {
+      "id": "rrfh-arithmetic-048",
+      "section": "arithmetic",
+      "skill": "scaled_sum_with_offset"
+    },
+    {
+      "id": "rrfh-arithmetic-051",
+      "section": "arithmetic",
+      "skill": "scaled_sum_with_offset"
+    },
+    {
+      "id": "rrfh-arithmetic-052",
+      "section": "arithmetic",
+      "skill": "scaled_sum_with_offset"
+    },
+    {
+      "id": "rrfh-arithmetic-053",
+      "section": "arithmetic",
+      "skill": "scaled_sum_with_offset"
+    },
+    {
+      "id": "rrfh-arithmetic-055",
+      "section": "arithmetic",
+      "skill": "scaled_sum_with_offset"
+    },
+    {
+      "id": "rrfh-arithmetic-059",
+      "section": "arithmetic",
+      "skill": "scaled_sum_with_offset"
+    },
+    {
+      "id": "rrfh-arithmetic-061",
+      "section": "arithmetic",
+      "skill": "exact_division_then_adjustment"
+    },
+    {
+      "id": "rrfh-arithmetic-062",
+      "section": "arithmetic",
+      "skill": "exact_division_then_adjustment"
+    },
+    {
+      "id": "rrfh-arithmetic-063",
+      "section": "arithmetic",
+      "skill": "exact_division_then_adjustment"
+    },
+    {
+      "id": "rrfh-arithmetic-065",
+      "section": "arithmetic",
+      "skill": "exact_division_then_adjustment"
+    },
+    {
+      "id": "rrfh-arithmetic-072",
+      "section": "arithmetic",
+      "skill": "exact_division_then_adjustment"
+    },
+    {
+      "id": "rrfh-arithmetic-073",
+      "section": "arithmetic",
+      "skill": "exact_division_then_adjustment"
+    },
+    {
+      "id": "rrfh-arithmetic-075",
+      "section": "arithmetic",
+      "skill": "exact_division_then_adjustment"
+    },
+    {
+      "id": "rrfh-arithmetic-077",
+      "section": "arithmetic",
+      "skill": "exact_division_then_adjustment"
+    },
+    {
+      "id": "rrfh-arithmetic-082",
+      "section": "arithmetic",
+      "skill": "exact_division_then_adjustment"
+    },
+    {
+      "id": "rrfh-arithmetic-083",
+      "section": "arithmetic",
+      "skill": "exact_division_then_adjustment"
+    },
+    {
+      "id": "rrfh-arithmetic-087",
+      "section": "arithmetic",
+      "skill": "exact_division_then_adjustment"
+    },
+    {
+      "id": "rrfh-arithmetic-088",
+      "section": "arithmetic",
+      "skill": "exact_division_then_adjustment"
+    },
+    {
+      "id": "rrfh-arithmetic-090",
+      "section": "arithmetic",
+      "skill": "symmetric_three_value_mean"
+    },
+    {
+      "id": "rrfh-arithmetic-091",
+      "section": "arithmetic",
+      "skill": "symmetric_three_value_mean"
+    },
+    {
+      "id": "rrfh-arithmetic-092",
+      "section": "arithmetic",
+      "skill": "symmetric_three_value_mean"
+    },
+    {
+      "id": "rrfh-arithmetic-094",
+      "section": "arithmetic",
+      "skill": "symmetric_three_value_mean"
+    },
+    {
+      "id": "rrfh-arithmetic-095",
+      "section": "arithmetic",
+      "skill": "symmetric_three_value_mean"
+    },
+    {
+      "id": "rrfh-arithmetic-096",
+      "section": "arithmetic",
+      "skill": "symmetric_three_value_mean"
+    },
+    {
+      "id": "rrfh-arithmetic-097",
+      "section": "arithmetic",
+      "skill": "symmetric_three_value_mean"
+    },
+    {
+      "id": "rrfh-arithmetic-099",
+      "section": "arithmetic",
+      "skill": "symmetric_three_value_mean"
+    },
+    {
+      "id": "rrfh-arithmetic-101",
+      "section": "arithmetic",
+      "skill": "symmetric_three_value_mean"
+    },
+    {
+      "id": "rrfh-arithmetic-102",
+      "section": "arithmetic",
+      "skill": "symmetric_three_value_mean"
+    },
+    {
+      "id": "rrfh-arithmetic-108",
+      "section": "arithmetic",
+      "skill": "symmetric_three_value_mean"
+    },
+    {
+      "id": "rrfh-arithmetic-109",
+      "section": "arithmetic",
+      "skill": "symmetric_three_value_mean"
+    },
+    {
+      "id": "rrfh-arithmetic-112",
+      "section": "arithmetic",
+      "skill": "symmetric_three_value_mean"
+    },
+    {
+      "id": "rrfh-arithmetic-113",
+      "section": "arithmetic",
+      "skill": "symmetric_three_value_mean"
+    },
+    {
+      "id": "rrfh-arithmetic-116",
+      "section": "arithmetic",
+      "skill": "symmetric_three_value_mean"
+    },
+    {
+      "id": "rrfh-arithmetic-117",
+      "section": "arithmetic",
+      "skill": "symmetric_three_value_mean"
+    },
+    {
+      "id": "rrfh-arithmetic-118",
+      "section": "arithmetic",
+      "skill": "symmetric_three_value_mean"
+    },
+    {
+      "id": "rrfh-arithmetic-119",
+      "section": "arithmetic",
+      "skill": "symmetric_three_value_mean"
+    },
+    {
+      "id": "rrfh-arithmetic-121",
+      "section": "arithmetic",
+      "skill": "integer_percentage"
+    },
+    {
+      "id": "rrfh-arithmetic-122",
+      "section": "arithmetic",
+      "skill": "integer_percentage"
+    },
+    {
+      "id": "rrfh-arithmetic-123",
+      "section": "arithmetic",
+      "skill": "integer_percentage"
+    },
+    {
+      "id": "rrfh-arithmetic-124",
+      "section": "arithmetic",
+      "skill": "integer_percentage"
+    },
+    {
+      "id": "rrfh-arithmetic-125",
+      "section": "arithmetic",
+      "skill": "integer_percentage"
+    },
+    {
+      "id": "rrfh-arithmetic-126",
+      "section": "arithmetic",
+      "skill": "integer_percentage"
+    },
+    {
+      "id": "rrfh-arithmetic-127",
+      "section": "arithmetic",
+      "skill": "integer_percentage"
+    },
+    {
+      "id": "rrfh-arithmetic-128",
+      "section": "arithmetic",
+      "skill": "integer_percentage"
+    },
+    {
+      "id": "rrfh-arithmetic-129",
+      "section": "arithmetic",
+      "skill": "integer_percentage"
+    },
+    {
+      "id": "rrfh-arithmetic-130",
+      "section": "arithmetic",
+      "skill": "integer_percentage"
+    },
+    {
+      "id": "rrfh-arithmetic-131",
+      "section": "arithmetic",
+      "skill": "integer_percentage"
+    },
+    {
+      "id": "rrfh-arithmetic-132",
+      "section": "arithmetic",
+      "skill": "integer_percentage"
+    },
+    {
+      "id": "rrfh-arithmetic-133",
+      "section": "arithmetic",
+      "skill": "integer_percentage"
+    },
+    {
+      "id": "rrfh-arithmetic-134",
+      "section": "arithmetic",
+      "skill": "integer_percentage"
+    },
+    {
+      "id": "rrfh-arithmetic-136",
+      "section": "arithmetic",
+      "skill": "integer_percentage"
+    },
+    {
+      "id": "rrfh-arithmetic-137",
+      "section": "arithmetic",
+      "skill": "integer_percentage"
+    },
+    {
+      "id": "rrfh-arithmetic-138",
+      "section": "arithmetic",
+      "skill": "integer_percentage"
+    },
+    {
+      "id": "rrfh-arithmetic-139",
+      "section": "arithmetic",
+      "skill": "integer_percentage"
+    },
+    {
+      "id": "rrfh-arithmetic-140",
+      "section": "arithmetic",
+      "skill": "integer_percentage"
+    },
+    {
+      "id": "rrfh-arithmetic-141",
+      "section": "arithmetic",
+      "skill": "integer_percentage"
+    },
+    {
+      "id": "rrfh-arithmetic-142",
+      "section": "arithmetic",
+      "skill": "integer_percentage"
+    },
+    {
+      "id": "rrfh-arithmetic-143",
+      "section": "arithmetic",
+      "skill": "integer_percentage"
+    },
+    {
+      "id": "rrfh-arithmetic-144",
+      "section": "arithmetic",
+      "skill": "integer_percentage"
+    },
+    {
+      "id": "rrfh-arithmetic-145",
+      "section": "arithmetic",
+      "skill": "integer_percentage"
+    },
+    {
+      "id": "rrfh-arithmetic-146",
+      "section": "arithmetic",
+      "skill": "integer_percentage"
+    },
+    {
+      "id": "rrfh-arithmetic-147",
+      "section": "arithmetic",
+      "skill": "integer_percentage"
+    },
+    {
+      "id": "rrfh-arithmetic-148",
+      "section": "arithmetic",
+      "skill": "integer_percentage"
+    },
+    {
+      "id": "rrfh-arithmetic-149",
+      "section": "arithmetic",
+      "skill": "integer_percentage"
+    },
+    {
+      "id": "rrfh-format-030",
+      "section": "format",
+      "skill": "double_colon_identifier"
+    },
+    {
+      "id": "rrfh-format-031",
+      "section": "format",
+      "skill": "double_colon_identifier"
+    },
+    {
+      "id": "rrfh-format-033",
+      "section": "format",
+      "skill": "double_colon_identifier"
+    },
+    {
+      "id": "rrfh-format-037",
+      "section": "format",
+      "skill": "double_colon_identifier"
+    },
+    {
+      "id": "rrfh-format-038",
+      "section": "format",
+      "skill": "double_colon_identifier"
+    },
+    {
+      "id": "rrfh-format-040",
+      "section": "format",
+      "skill": "double_colon_identifier"
+    },
+    {
+      "id": "rrfh-format-041",
+      "section": "format",
+      "skill": "double_colon_identifier"
+    },
+    {
+      "id": "rrfh-format-042",
+      "section": "format",
+      "skill": "double_colon_identifier"
+    },
+    {
+      "id": "rrfh-format-043",
+      "section": "format",
+      "skill": "double_colon_identifier"
+    },
+    {
+      "id": "rrfh-format-045",
+      "section": "format",
+      "skill": "double_colon_identifier"
+    },
+    {
+      "id": "rrfh-format-047",
+      "section": "format",
+      "skill": "double_colon_identifier"
+    },
+    {
+      "id": "rrfh-format-048",
+      "section": "format",
+      "skill": "double_colon_identifier"
+    },
+    {
+      "id": "rrfh-format-049",
+      "section": "format",
+      "skill": "double_colon_identifier"
+    },
+    {
+      "id": "rrfh-format-051",
+      "section": "format",
+      "skill": "double_colon_identifier"
+    },
+    {
+      "id": "rrfh-format-052",
+      "section": "format",
+      "skill": "double_colon_identifier"
+    },
+    {
+      "id": "rrfh-format-055",
+      "section": "format",
+      "skill": "double_colon_identifier"
+    },
+    {
+      "id": "rrfh-format-056",
+      "section": "format",
+      "skill": "double_colon_identifier"
+    },
+    {
+      "id": "rrfh-format-058",
+      "section": "format",
+      "skill": "double_colon_identifier"
+    },
+    {
+      "id": "rrfh-format-059",
+      "section": "format",
+      "skill": "double_colon_identifier"
+    },
+    {
+      "id": "rrfh-format-120",
+      "section": "format",
+      "skill": "two_line_literal"
+    },
+    {
+      "id": "rrfh-format-122",
+      "section": "format",
+      "skill": "two_line_literal"
+    },
+    {
+      "id": "rrfh-format-124",
+      "section": "format",
+      "skill": "two_line_literal"
+    },
+    {
+      "id": "rrfh-format-126",
+      "section": "format",
+      "skill": "two_line_literal"
+    },
+    {
+      "id": "rrfh-format-134",
+      "section": "format",
+      "skill": "two_line_literal"
+    },
+    {
+      "id": "rrfh-format-137",
+      "section": "format",
+      "skill": "two_line_literal"
+    },
+    {
+      "id": "rrfh-format-138",
+      "section": "format",
+      "skill": "two_line_literal"
+    },
+    {
+      "id": "rrfh-format-147",
+      "section": "format",
+      "skill": "two_line_literal"
+    },
+    {
+      "id": "rrfh-instruction-001",
+      "section": "instruction",
+      "skill": "reverse_token_order"
+    },
+    {
+      "id": "rrfh-instruction-004",
+      "section": "instruction",
+      "skill": "reverse_token_order"
+    },
+    {
+      "id": "rrfh-instruction-005",
+      "section": "instruction",
+      "skill": "reverse_token_order"
+    },
+    {
+      "id": "rrfh-instruction-006",
+      "section": "instruction",
+      "skill": "reverse_token_order"
+    },
+    {
+      "id": "rrfh-instruction-007",
+      "section": "instruction",
+      "skill": "reverse_token_order"
+    },
+    {
+      "id": "rrfh-instruction-009",
+      "section": "instruction",
+      "skill": "reverse_token_order"
+    },
+    {
+      "id": "rrfh-instruction-010",
+      "section": "instruction",
+      "skill": "reverse_token_order"
+    },
+    {
+      "id": "rrfh-instruction-012",
+      "section": "instruction",
+      "skill": "reverse_token_order"
+    },
+    {
+      "id": "rrfh-instruction-014",
+      "section": "instruction",
+      "skill": "reverse_token_order"
+    },
+    {
+      "id": "rrfh-instruction-016",
+      "section": "instruction",
+      "skill": "reverse_token_order"
+    },
+    {
+      "id": "rrfh-instruction-017",
+      "section": "instruction",
+      "skill": "reverse_token_order"
+    },
+    {
+      "id": "rrfh-instruction-029",
+      "section": "instruction",
+      "skill": "reverse_token_order"
+    },
+    {
+      "id": "rrfh-instruction-034",
+      "section": "instruction",
+      "skill": "alphabetical_token_order"
+    },
+    {
+      "id": "rrfh-instruction-038",
+      "section": "instruction",
+      "skill": "alphabetical_token_order"
+    },
+    {
+      "id": "rrfh-instruction-042",
+      "section": "instruction",
+      "skill": "alphabetical_token_order"
+    },
+    {
+      "id": "rrfh-instruction-049",
+      "section": "instruction",
+      "skill": "alphabetical_token_order"
+    },
+    {
+      "id": "rrfh-instruction-057",
+      "section": "instruction",
+      "skill": "alphabetical_token_order"
+    },
+    {
+      "id": "rrfh-instruction-062",
+      "section": "instruction",
+      "skill": "ordered_initial_letters"
+    },
+    {
+      "id": "rrfh-instruction-065",
+      "section": "instruction",
+      "skill": "ordered_initial_letters"
+    },
+    {
+      "id": "rrfh-instruction-070",
+      "section": "instruction",
+      "skill": "ordered_initial_letters"
+    },
+    {
+      "id": "rrfh-instruction-072",
+      "section": "instruction",
+      "skill": "ordered_initial_letters"
+    },
+    {
+      "id": "rrfh-instruction-076",
+      "section": "instruction",
+      "skill": "ordered_initial_letters"
+    },
+    {
+      "id": "rrfh-instruction-079",
+      "section": "instruction",
+      "skill": "ordered_initial_letters"
+    },
+    {
+      "id": "rrfh-instruction-082",
+      "section": "instruction",
+      "skill": "ordered_initial_letters"
+    },
+    {
+      "id": "rrfh-instruction-132",
+      "section": "instruction",
+      "skill": "odd_position_selection"
+    },
+    {
+      "id": "rrfh-instruction-133",
+      "section": "instruction",
+      "skill": "odd_position_selection"
+    },
+    {
+      "id": "rrfh-instruction-137",
+      "section": "instruction",
+      "skill": "odd_position_selection"
+    },
+    {
+      "id": "rrfh-instruction-138",
+      "section": "instruction",
+      "skill": "odd_position_selection"
+    },
+    {
+      "id": "rrfh-instruction-143",
+      "section": "instruction",
+      "skill": "odd_position_selection"
+    },
+    {
+      "id": "rrfh-instruction-144",
+      "section": "instruction",
+      "skill": "odd_position_selection"
+    }
+  ],
+  "prompt_reference_or_scorer_modified": false,
+  "prompts_or_references_in_manifest": false,
+  "schema_version": 1,
+  "section_counts": {
+    "arithmetic": 84,
+    "format": 27,
+    "instruction": 30
+  },
+  "subset_id": "retention-replay-final-holdout-v1-base-correct",
+  "subset_sha256": "f56845076a1a59e5ca1a95466541339b56f026e945f86118caec307a690ee4ec",
+  "suite_file_sha256": "58da5fb52746c1940911cf8fd12d3cc4ce5283df818480be9c9c56fde9708aa4",
+  "suite_id": "foundry-retention-replay-final-holdout-v1",
+  "suite_sha256": "4f49c42cbae8ce7b5029192786f8ff493a4cc445f940063298e0bd22392b6ef9",
+  "total": 141
+}

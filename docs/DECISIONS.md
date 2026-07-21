@@ -865,3 +865,27 @@ This log separates proposals from approved decisions. A proposal does not author
   retention selection or independent adapter validation exists, and GSM1K remains uninspected for
   this architecture. A continuation requires a separate user decision; this failed suite remains
   immutable evidence.
+
+## 2026-07-21: stop verifier-reward GRPO at the compatibility gate
+
+- **Status:** Milestone 10 compatibility gate failed before the first completion.
+- **Decision:** Preserve the frozen 141-item base-correct final-retention subset, prompt-only paired
+  schedules, verifier reward, official PEFT reference contract, and runtime implementation, but do
+  not run G1 or G2 training, retention selection, independent final retention, or GSM1K.
+- **Evidence:** The subset contains `84/27/30 = 141` arithmetic/format/instruction items and has
+  SHA-256 `f56845076a1a59e5ca1a95466541339b56f026e945f86118caec307a690ee4ec`. Both schedules have
+  64 groups, 52 synthetic and 12 shared replay groups, four planned completions per group, and exact
+  `6,702/6,702` prompt-token parity. During the first G1 sampled generation, Transformers' frozen
+  top-p `0.95` path called CUDA cumulative summation. PyTorch 2.5.1+cu121 rejected that operation
+  because strict deterministic algorithms were active and `cumsum_cuda_kernel` has no deterministic
+  implementation. Failure-summary SHA-256 is
+  `8b57b6284c1e7dccd978379162de9519b7af30addbbfb9eb4d5a95a7f2b439a6`.
+- **Rationale:** Treating the exception as a warning, disabling deterministic enforcement around
+  sampling, changing decoding, moving sampling to CPU, or upgrading the stack would change a frozen
+  reproducibility or runtime decision. None is a mechanical retry under the approved protocol.
+- **Consequence:** Zero completions, rewards, reference-KL passes, backward passes, optimizer steps,
+  adapters, retention results, or new benchmark results exist. The next action requires explicit
+  user approval either to freeze a scientifically defensible reconciliation of deterministic
+  execution with stochastic sampling or to stop verifier-GRPO. No setting may be weakened silently.
+  The prior benchmark result retains only its provisional one-seed label, and stratified human
+  review remains pending at the frozen local review URL.

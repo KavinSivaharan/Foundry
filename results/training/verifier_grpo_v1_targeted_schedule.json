@@ -1,0 +1,686 @@
+{
+  "arm": "targeted",
+  "completions_per_group": 4,
+  "family_counts": {
+    "constraint_distribution_or_discrete_reasoning": 11,
+    "multi_step_bookkeeping_or_omission": 29,
+    "rate_ratio_percentage_or_average": 12
+  },
+  "groups": [
+    {
+      "category": "multi_step_bookkeeping_or_omission",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g001",
+      "position": 1,
+      "prompt_sha256": "33e4cff186ee7a9d4be1eb32328b23aecd10765114f4494ae43ced91be079c6c",
+      "prompt_tokens": 128,
+      "source_id": "matched-syn-9330a06b14098fa2746511fd",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "rate_ratio_percentage_or_average",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g002",
+      "position": 2,
+      "prompt_sha256": "58d307edb5bdb319b498bd42a66bc043abc23e268781838d0f0cc5104173921a",
+      "prompt_tokens": 96,
+      "source_id": "matched-syn-93a82f899da965041c353071",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "constraint_distribution_or_discrete_reasoning",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g003",
+      "position": 3,
+      "prompt_sha256": "14ab723f67f708caf602f162dc205392fca960270e80069e7cd0a0cb14219cac",
+      "prompt_tokens": 95,
+      "source_id": "matched-syn-83b8fa14e249f0a270c8d9a0",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "multi_step_bookkeeping_or_omission",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g004",
+      "position": 4,
+      "prompt_sha256": "c64b786397a230d73b98bd8cb39cb9704175e464b1a91ddc1fe095cd71ab746c",
+      "prompt_tokens": 128,
+      "source_id": "matched-syn-6f1935e050d2a7e7753d9b43",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "arithmetic",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g005",
+      "position": 5,
+      "prompt_sha256": "d91be5c6825641ba6919e2a242f15c39fb9b00f9f058a98f5a73953c559f632a",
+      "prompt_tokens": 85,
+      "source_id": "anchor-arithmetic-040",
+      "source_kind": "base_replay"
+    },
+    {
+      "category": "multi_step_bookkeeping_or_omission",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g006",
+      "position": 6,
+      "prompt_sha256": "bdd159a380b87fec862ea27184e7f0e57e0980ff9bf98d308aff87e848ac44fb",
+      "prompt_tokens": 130,
+      "source_id": "matched-syn-e3aef57bc0da5865d51ec916",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "rate_ratio_percentage_or_average",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g007",
+      "position": 7,
+      "prompt_sha256": "f41650d496759d1d95baf2c000df0dcf66977aeab974f6df68c5fa137e2871c0",
+      "prompt_tokens": 95,
+      "source_id": "matched-syn-4a3d23b7d710d21b6f670c05",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "constraint_distribution_or_discrete_reasoning",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g008",
+      "position": 8,
+      "prompt_sha256": "e7f098c4437d3caa8acaa4e14f38578f28149dfbc97b0c7a7a0fddf6a210ec24",
+      "prompt_tokens": 96,
+      "source_id": "matched-syn-b55ebafc6f94b8f381751158",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "multi_step_bookkeeping_or_omission",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g009",
+      "position": 9,
+      "prompt_sha256": "991222851ff47900eeb158c0b8eae90c069ce14a714880a20985b44344a6ac34",
+      "prompt_tokens": 132,
+      "source_id": "matched-syn-8693b1a1085fa7b667ddc243",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "format",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g010",
+      "position": 10,
+      "prompt_sha256": "e1a1a93ab242293d44468ddf19f9d6000adcce96f83b9e540e955789feadfbb3",
+      "prompt_tokens": 70,
+      "source_id": "anchor-format-026",
+      "source_kind": "base_replay"
+    },
+    {
+      "category": "multi_step_bookkeeping_or_omission",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g011",
+      "position": 11,
+      "prompt_sha256": "32e70cb11b789772e8087feaf43a5154fb4c5a05df28b8b55e54d83301dee7ae",
+      "prompt_tokens": 130,
+      "source_id": "matched-syn-b49c196a6646a5be209d1ce9",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "rate_ratio_percentage_or_average",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g012",
+      "position": 12,
+      "prompt_sha256": "bf774f1b25442b95f65070448a2e4c9e935226646dff511d0a43eee93826f28b",
+      "prompt_tokens": 96,
+      "source_id": "matched-syn-0e7d82508206028ef5bb9496",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "multi_step_bookkeeping_or_omission",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g013",
+      "position": 13,
+      "prompt_sha256": "5ee151926923259578f4c85ef1f43475b73fa97a638047d1e93047f94ed1501e",
+      "prompt_tokens": 129,
+      "source_id": "matched-syn-5744c19ed0259ac9596ddea2",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "constraint_distribution_or_discrete_reasoning",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g014",
+      "position": 14,
+      "prompt_sha256": "90b08744a75db52016518553b629b760439e66ebbb006b657b80bec626c5e3fa",
+      "prompt_tokens": 96,
+      "source_id": "matched-syn-4b2bf167c534f630d2cbc20f",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "instruction",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g015",
+      "position": 15,
+      "prompt_sha256": "36ebedf895f35471644d4cf0fe20758ffe8ada9956318e9b70a81d5262b4ff36",
+      "prompt_tokens": 58,
+      "source_id": "anchor-instruction-008",
+      "source_kind": "base_replay"
+    },
+    {
+      "category": "multi_step_bookkeeping_or_omission",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g016",
+      "position": 16,
+      "prompt_sha256": "c527e2e4d615298e88f8ebf186c3517fa92f46315e8bff494b729522d2511c05",
+      "prompt_tokens": 129,
+      "source_id": "matched-syn-5af80b45b4474eaee4dc6077",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "multi_step_bookkeeping_or_omission",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g017",
+      "position": 17,
+      "prompt_sha256": "add7e4b1d39de810318f9f7a4829d9be0e992311945413c84c04e2fa519c28f2",
+      "prompt_tokens": 124,
+      "source_id": "matched-syn-7e64984effec290e8ff82beb",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "rate_ratio_percentage_or_average",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g018",
+      "position": 18,
+      "prompt_sha256": "c3e88bb6e1939414974c203ddd3678b7d508106ce7bd87cf6fded3b1739b5625",
+      "prompt_tokens": 96,
+      "source_id": "matched-syn-f9afcd7bde8a085ef298b0a9",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "constraint_distribution_or_discrete_reasoning",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g019",
+      "position": 19,
+      "prompt_sha256": "1a856fcdaf8bf2564046982b098536b43c867c44c87d528ef1013f4f224ca796",
+      "prompt_tokens": 97,
+      "source_id": "matched-syn-cebc6da87d0048418d379802",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "arithmetic",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g020",
+      "position": 20,
+      "prompt_sha256": "ac540f9824349fc7f8663f6b3fb15d7ca5b396ba88559b3a97c7e766d3d5abbf",
+      "prompt_tokens": 80,
+      "source_id": "anchor-arithmetic-032",
+      "source_kind": "base_replay"
+    },
+    {
+      "category": "multi_step_bookkeeping_or_omission",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g021",
+      "position": 21,
+      "prompt_sha256": "e4b7314895828f4ea6cfa082a428ba1abed5a9d0bc048a89d54131a9e0574af1",
+      "prompt_tokens": 124,
+      "source_id": "matched-syn-dadb74036adfd0c25cacdc31",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "multi_step_bookkeeping_or_omission",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g022",
+      "position": 22,
+      "prompt_sha256": "f00018dc79c576bd8fcf9484921945ba4ebc4e00f307147f1d52c42554cd5639",
+      "prompt_tokens": 127,
+      "source_id": "matched-syn-24ffa166ec6947ad6ac225cf",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "rate_ratio_percentage_or_average",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g023",
+      "position": 23,
+      "prompt_sha256": "c47e691a27071c9e5d88c99b65f1d241669025764c36b71317bb57b9af18f221",
+      "prompt_tokens": 94,
+      "source_id": "matched-syn-0002a3802fac9cc05e2432d6",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "multi_step_bookkeeping_or_omission",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g024",
+      "position": 24,
+      "prompt_sha256": "8029eef8c59fac34b52b4489233c9465216734e44de1ef576b22b49afa6dd566",
+      "prompt_tokens": 130,
+      "source_id": "matched-syn-791ad7258867e27ffbce7fd4",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "format",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g025",
+      "position": 25,
+      "prompt_sha256": "29c88e1f6edb8cfefbf5009ab6e645cdec3a693e2855d556f52b0ae57a8ac5ee",
+      "prompt_tokens": 53,
+      "source_id": "anchor-format-006",
+      "source_kind": "base_replay"
+    },
+    {
+      "category": "constraint_distribution_or_discrete_reasoning",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g026",
+      "position": 26,
+      "prompt_sha256": "3f4c75d1185cc539670b91a6d73afa79330be543c8020c2a0014c4993210cfc3",
+      "prompt_tokens": 96,
+      "source_id": "matched-syn-37fda3859f53d7769fe831b2",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "multi_step_bookkeeping_or_omission",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g027",
+      "position": 27,
+      "prompt_sha256": "90b2104799ec20b7d6e27543fa0a8ab0d3f1acd6ea673743f35c53725a7ca73b",
+      "prompt_tokens": 125,
+      "source_id": "matched-syn-b1bf54b4d490356d9b678d01",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "multi_step_bookkeeping_or_omission",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g028",
+      "position": 28,
+      "prompt_sha256": "9da7735facd92a0a8ba4438822079bbdce882db84c1e141dc0cbaeccc0145014",
+      "prompt_tokens": 129,
+      "source_id": "matched-syn-9e5c543bfcace764cd3523ad",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "rate_ratio_percentage_or_average",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g029",
+      "position": 29,
+      "prompt_sha256": "fb6768fa2490493eee06da294da46305c5de4427db177e4b0ca6bf0c1a0016ce",
+      "prompt_tokens": 96,
+      "source_id": "matched-syn-364f924a813ce709204c67bc",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "instruction",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g030",
+      "position": 30,
+      "prompt_sha256": "a67f60ded7256529a112999add1cecf5cc74bc58be88b208c965f80ea0597b0a",
+      "prompt_tokens": 67,
+      "source_id": "anchor-instruction-037",
+      "source_kind": "base_replay"
+    },
+    {
+      "category": "multi_step_bookkeeping_or_omission",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g031",
+      "position": 31,
+      "prompt_sha256": "00c85873fa00f83a7d238d4a27cdd070fecb67891b351d6e0e2a20d3f2c96f43",
+      "prompt_tokens": 128,
+      "source_id": "matched-syn-865455444eda077b0dea0cc8",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "constraint_distribution_or_discrete_reasoning",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g032",
+      "position": 32,
+      "prompt_sha256": "26884c674eaa0c7d49974a66676259f16587d12df25790d09224ee3981653e81",
+      "prompt_tokens": 97,
+      "source_id": "matched-syn-088ea22ef68252bef843cfad",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "multi_step_bookkeeping_or_omission",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g033",
+      "position": 33,
+      "prompt_sha256": "b666e49365da97a9a90272521d960ec78e847987a617b7eb70a4c9025f1e707c",
+      "prompt_tokens": 125,
+      "source_id": "matched-syn-723cc61cfa8b4f590536484e",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "rate_ratio_percentage_or_average",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g034",
+      "position": 34,
+      "prompt_sha256": "3c03a724f5f159a1d8a1dc02ce25561569252bc17c2c65f9b80a8a691f37f765",
+      "prompt_tokens": 96,
+      "source_id": "matched-syn-b63107b8acf7adf3a8d47400",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "arithmetic",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g035",
+      "position": 35,
+      "prompt_sha256": "aabe5ca8904e3a8afebf3f6edc5109fc58abc99bb3c69ced09ed467c5c6f21d0",
+      "prompt_tokens": 72,
+      "source_id": "anchor-arithmetic-029",
+      "source_kind": "base_replay"
+    },
+    {
+      "category": "multi_step_bookkeeping_or_omission",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g036",
+      "position": 36,
+      "prompt_sha256": "0c26cb863ded484638f211e915d48e49be30ab5bf28b777231662a3ac1d154db",
+      "prompt_tokens": 129,
+      "source_id": "matched-syn-bcc938ac697bfca72c9e8b4d",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "constraint_distribution_or_discrete_reasoning",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g037",
+      "position": 37,
+      "prompt_sha256": "3df10c2151c1fb35cd5ef9094896d0c91f74ba141b1f40ebc30f44c5360986fd",
+      "prompt_tokens": 97,
+      "source_id": "matched-syn-5a028046c04faa0bb7aa6eb4",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "multi_step_bookkeeping_or_omission",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g038",
+      "position": 38,
+      "prompt_sha256": "53ce1f8aeb31fe0f9087cf8d2fd08a47ce9ae76804d08db76af5c200ddbb755d",
+      "prompt_tokens": 127,
+      "source_id": "matched-syn-7723dbfaa0a0bb874df1eb1c",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "rate_ratio_percentage_or_average",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g039",
+      "position": 39,
+      "prompt_sha256": "bcb62cecda0f7afba77f89df5c4b00ff5c97a3c4e54c5ba2de8b37ec3cb9351c",
+      "prompt_tokens": 95,
+      "source_id": "matched-syn-48d8788cd9eca319a37bc2f3",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "format",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g040",
+      "position": 40,
+      "prompt_sha256": "459b4ab854cd8ab2670589241945bcc5090ae1a5146f9de46be86b422826cfbc",
+      "prompt_tokens": 59,
+      "source_id": "anchor-format-010",
+      "source_kind": "base_replay"
+    },
+    {
+      "category": "multi_step_bookkeeping_or_omission",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g041",
+      "position": 41,
+      "prompt_sha256": "ef14b81022082bd8465f24a16f2895f39b047870ef0a48b906a292be7c8a61c4",
+      "prompt_tokens": 120,
+      "source_id": "matched-syn-54621d5d21110f5b46ce9e9b",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "multi_step_bookkeeping_or_omission",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g042",
+      "position": 42,
+      "prompt_sha256": "8fde10c07237a2b07940d04aaeb0265d1e2cae3c2f41767f7c61d8e569c5af3a",
+      "prompt_tokens": 131,
+      "source_id": "matched-syn-f9f49d67851a614cde794043",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "constraint_distribution_or_discrete_reasoning",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g043",
+      "position": 43,
+      "prompt_sha256": "80d35fb78c4b3e56f5756565a48a9d1487d0f2d9ff25a735cac201393b672ec0",
+      "prompt_tokens": 94,
+      "source_id": "matched-syn-8732a7780b0c45f706ad8696",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "multi_step_bookkeeping_or_omission",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g044",
+      "position": 44,
+      "prompt_sha256": "5cc2cb4ce07ebcf20848625d8ceea0200cd7139870a3eb65d1a741f90eb03204",
+      "prompt_tokens": 126,
+      "source_id": "matched-syn-d5e686d9b8f327b1a61da089",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "instruction",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g045",
+      "position": 45,
+      "prompt_sha256": "76ecd084d678a0eb4920a7892dbba570813a7a6578818f51b06fa9a10ad1d1d0",
+      "prompt_tokens": 58,
+      "source_id": "anchor-instruction-006",
+      "source_kind": "base_replay"
+    },
+    {
+      "category": "rate_ratio_percentage_or_average",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g046",
+      "position": 46,
+      "prompt_sha256": "26c9645f191c5e5a389337dfac266960a2a63865c44afd0b53d3620f4cb15ef1",
+      "prompt_tokens": 96,
+      "source_id": "matched-syn-f76c0d548a250214a2451702",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "multi_step_bookkeeping_or_omission",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g047",
+      "position": 47,
+      "prompt_sha256": "42b590c539a379d22407e4194d43209e040cda67e07b89601f0f0a040bf26640",
+      "prompt_tokens": 128,
+      "source_id": "matched-syn-e64d89486d90cc6bb45ab0a4",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "multi_step_bookkeeping_or_omission",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g048",
+      "position": 48,
+      "prompt_sha256": "76cf221baea3ad0f6f6079aa4b85576b5c8f9df4055ff186f91b3369dd49dfc2",
+      "prompt_tokens": 130,
+      "source_id": "matched-syn-88dac7bcb9859aed50ac862b",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "constraint_distribution_or_discrete_reasoning",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g049",
+      "position": 49,
+      "prompt_sha256": "45030ff2ff8f023519cb877c727618055680eb9ae9d4acf886fb15315eebed73",
+      "prompt_tokens": 95,
+      "source_id": "matched-syn-3626e36ebe9d514c323f0803",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "arithmetic",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g050",
+      "position": 50,
+      "prompt_sha256": "45003e975ac19a799514516520aade51cf979c41368e141bebf81c30f912753f",
+      "prompt_tokens": 73,
+      "source_id": "anchor-arithmetic-008",
+      "source_kind": "base_replay"
+    },
+    {
+      "category": "rate_ratio_percentage_or_average",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g051",
+      "position": 51,
+      "prompt_sha256": "34257f0168fb5afb633b99f140dfead69c3c2eed71af9a6fda82c10f3aa6cd85",
+      "prompt_tokens": 96,
+      "source_id": "matched-syn-90c00fa8cc34287e82c9d920",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "multi_step_bookkeeping_or_omission",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g052",
+      "position": 52,
+      "prompt_sha256": "7071242b2805a26cda182015d4378769e1141f16a799d51b025ed7a6f2a85c4d",
+      "prompt_tokens": 125,
+      "source_id": "matched-syn-787ae926e314f62e74f7ec79",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "multi_step_bookkeeping_or_omission",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g053",
+      "position": 53,
+      "prompt_sha256": "77144313522aacd7715d44ba2cfbb55e81bce9adb1a7d222b7c1bcb547b870b8",
+      "prompt_tokens": 130,
+      "source_id": "matched-syn-31d1b51b7b9c82f93f603232",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "constraint_distribution_or_discrete_reasoning",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g054",
+      "position": 54,
+      "prompt_sha256": "cd839a6d9ee83bf5384f311e26181b9527cce9063abf3b7faeee41a5a46fa9b6",
+      "prompt_tokens": 96,
+      "source_id": "matched-syn-f1d060d813944d996c69aafa",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "format",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g055",
+      "position": 55,
+      "prompt_sha256": "97ffd6e640a1a7acca49ba467143fb42cdcf26beee2fb4b75400b857e9a50e1c",
+      "prompt_tokens": 53,
+      "source_id": "anchor-format-002",
+      "source_kind": "base_replay"
+    },
+    {
+      "category": "multi_step_bookkeeping_or_omission",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g056",
+      "position": 56,
+      "prompt_sha256": "1e04d14d7520e850ce18d88bd95751545813858d701a4e1b84af3ec5beafdfc1",
+      "prompt_tokens": 130,
+      "source_id": "matched-syn-e7177b52512c322cb2e20359",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "rate_ratio_percentage_or_average",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g057",
+      "position": 57,
+      "prompt_sha256": "721a5ba25e75144dce67ffd563ec76bb29498cf22889ef9a3bc5b719c4011d8c",
+      "prompt_tokens": 95,
+      "source_id": "matched-syn-7807229e35383f81cfd34fea",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "multi_step_bookkeeping_or_omission",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g058",
+      "position": 58,
+      "prompt_sha256": "121b8b345297f6ca3095a259ef2e99561f1c01abfa5174c20b50de60407ac6e3",
+      "prompt_tokens": 131,
+      "source_id": "matched-syn-fb362d9b7ab8d35ff9bbe376",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "multi_step_bookkeeping_or_omission",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g059",
+      "position": 59,
+      "prompt_sha256": "93737b109cd30f7cf172702e91798ebb3a70d9d14e45c346eeb5dbc9506db335",
+      "prompt_tokens": 132,
+      "source_id": "matched-syn-42cc2eac23d49964cfcafc79",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "instruction",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g060",
+      "position": 60,
+      "prompt_sha256": "62809cd23e12010479091153cc902a92dd62f5f422e990a0239355e86acb3da6",
+      "prompt_tokens": 69,
+      "source_id": "anchor-instruction-017",
+      "source_kind": "base_replay"
+    },
+    {
+      "category": "constraint_distribution_or_discrete_reasoning",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g061",
+      "position": 61,
+      "prompt_sha256": "3b8b64e3b3c1a78961e71173deb4559f20d3d636780abff8808d0dd68113d1d4",
+      "prompt_tokens": 95,
+      "source_id": "matched-syn-40b1fe44587fd98f319c6c6e",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "rate_ratio_percentage_or_average",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g062",
+      "position": 62,
+      "prompt_sha256": "ce1e1e373730f7b6e7b3f26b481e045a160327a4ff9439ef947dfc667ac912a4",
+      "prompt_tokens": 96,
+      "source_id": "matched-syn-0c44a5348aa230376ff013ec",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "multi_step_bookkeeping_or_omission",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g063",
+      "position": 63,
+      "prompt_sha256": "80a5a1fe8ca17981ade537c016724dd17db6deac9b51b4f73d58e2080ee77470",
+      "prompt_tokens": 125,
+      "source_id": "matched-syn-620e33afcc0af14d1ca5d7d9",
+      "source_kind": "synthetic"
+    },
+    {
+      "category": "multi_step_bookkeeping_or_omission",
+      "completions_per_group": 4,
+      "group_id": "grpo-targeted-g064",
+      "position": 64,
+      "prompt_sha256": "78fd279116f2bdb85bb60c518065263505a1c9097c3e99125ffe1a343e02292c",
+      "prompt_tokens": 122,
+      "source_id": "matched-syn-54d4d98560710c982fb8a69b",
+      "source_kind": "synthetic"
+    }
+  ],
+  "groups_fixed_before_generation": true,
+  "groups_per_arm": 64,
+  "manifest_sha256": "cb13d4d522746bdfa829c9a405defdb0eff0acbd23859dc7fe49457318cc1ccf",
+  "model_output_selection": false,
+  "model_outputs_observed_during_scheduling": false,
+  "prompt_packet_sha256": "1d13acb49aeea00bf2c68b6488d225796ee95411f6a79343d969731b6f1a2286",
+  "prompt_token_total": 6702,
+  "prompts_or_outputs_in_manifest": false,
+  "replacement_groups": false,
+  "replay_groups": 12,
+  "replay_positions": [
+    5,
+    10,
+    15,
+    20,
+    25,
+    30,
+    35,
+    40,
+    45,
+    50,
+    55,
+    60
+  ],
+  "replay_section_counts": {
+    "arithmetic": 4,
+    "format": 4,
+    "instruction": 4
+  },
+  "retry_until_success": false,
+  "schedule_id": "foundry-verifier-grpo-schedule-v1",
+  "schema_version": 1,
+  "seed": 20260720,
+  "synthetic_groups": 52,
+  "total_completions": 256
+}

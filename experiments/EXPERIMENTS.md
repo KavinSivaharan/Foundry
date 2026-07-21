@@ -866,3 +866,39 @@ Every future experiment must be registered here before a costly run begins. Its 
 - **Decision:** do not freeze a base-correct final subset, schedule R20/R20-KL/R40, train adapters,
   run retention selection, or inspect GSM1K. Preserve the failed instrument and request an explicit
   project-stop or new-architecture decision.
+
+### EXP-TRAIN-013: verifier-reward GRPO compatibility
+
+- **Status:** stopped at the RTX 3080 compatibility gate before the first completion; no training,
+  retention evaluation, or GSM1K evaluation.
+- **Final retention subset:** `84/27/30 = 141` untouched-base-correct
+  arithmetic/format/instruction rows; subset SHA-256
+  `f56845076a1a59e5ca1a95466541339b56f026e945f86118caec307a690ee4ec`.
+- **Schedules:** Each arm freezes 64 prompt groups (52 synthetic, 12 identical replay), four planned
+  completions per group, and 6,702 prompt tokens. Generic/targeted manifest SHA-256 values are
+  `5848ed6640dda21752ab9692c8e531d9175314a7d5a472616dc19ad834a6351e` and
+  `cb13d4d522746bdfa829c9a405defdb0eff0acbd23859dc7fe49457318cc1ccf`;
+  schedule-summary SHA-256 is
+  `23fede9132f53b7d32f354056c728fc68faa20586a9162e101834db34f71ca64`.
+- **Reward/reference contracts:** `foundry-verifier-grpo-reward-v1` uses only frozen arithmetic or
+  replay scorers, exact-format bonuses, and additive safety penalties. Implementation/configuration
+  hashes are `089650105e29ead3c4ad62f1e0e41263e6c2af5fb8a12cb2851644aca3599616`
+  and `4a47359fa3129b1bfd79dd158ecb609177e9b1642a95368c106e016a1554a965`.
+  The audited TRL/PEFT path uses the same base with the active adapter disabled and no second model.
+- **Frozen runtime:** Configuration SHA-256 is
+  `01515d186f2485662ea20ef0b444902bdf368a2b4a8cde335f34bfe1b9222bda`;
+  G1/G2 execution hashes are `d7023bf6705702a39dfe8d8718db264f6b2c0e2e211753145ad71e2368f4f4c0`
+  and `e31d814fc4bcd9fa94e6b74f48992bb79ec70bcf678e56e620277ea19dbe7bd8`.
+- **Compatibility result:** Model and fresh adapter loaded on CUDA without CPU offload or a second
+  reference model. The first top-p generation failed because PyTorch 2.5.1+cu121 has no
+  deterministic CUDA `cumsum` implementation under strict deterministic algorithms. Counts are
+  zero completions, rewards, reference-KL passes, backward passes, optimizer steps, and adapters.
+  Failure-summary SHA-256 is
+  `8b57b6284c1e7dccd978379162de9519b7af30addbbfb9eb4d5a95a7f2b439a6`.
+- **Gate:** failed and hard stop enforced. G1/G2 training, checkpoint retention, independent final
+  retention, and GSM1K were not run. No new benchmark result exists.
+- **Next decision:** Explicitly approve and freeze a scientifically defensible reconciliation of
+  stochastic top-p sampling and deterministic execution, or stop verifier-GRPO. Do not silently
+  weaken determinism or alter decoding. Human review remains pending; the existing benchmark label
+  stays **Provisional one-seed result pending stratified human language review and second-seed
+  confirmation.**

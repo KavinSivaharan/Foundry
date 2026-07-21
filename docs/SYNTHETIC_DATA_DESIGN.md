@@ -884,3 +884,19 @@ The untouched base failed the instrument-usability floor before replay/KL schedu
 84 arithmetic, 27 format, and 30 instruction prompts were correct, for 141/450 overall. Consequently
 no evidence about targeted versus generic adaptation was created and no synthetic-data design
 change is justified by this stopped training-method experiment.
+
+## Verifier-GRPO compatibility stop leaves the synthetic corpus unchanged
+
+Milestone 10 derived prompt-only local GRPO rows from the already frozen synthetic training splits.
+The model-visible side contains the existing question prompt only; canonical answers and verifier
+metadata remain hidden on the trusted reward side, and deterministic traces or assistant targets are
+not supplied. The paired schedules contain 52 synthetic and 12 shared replay groups per arm, exact
+6,702-token prompt parity, disjoint synthetic IDs, and identical replay IDs, positions, and order.
+Complete prompts and reward metadata remain ignored; only content-free manifests and hashes are
+tracked.
+
+The first compatibility generation failed inside the pinned CUDA top-p implementation before any
+completion or reward existed. Therefore no new evidence supports changing a question, answer,
+template, membership, split, family allocation, or contamination decision. G1/G2 training,
+retention, and GSM1K did not run. The next decision concerns the runtime reproducibility contract,
+not synthetic-data repair.

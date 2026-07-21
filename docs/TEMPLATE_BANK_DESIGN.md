@@ -443,3 +443,16 @@ rendered synthetic question, review decision, canonical answer, or split. The in
 instrument failed its base-coverage gate before adapter training, so it supplies no new evidence
 about template-bank wording or curriculum effects. Stratified human language review remains pending
 at `file:///C:/Users/Admin/Projects/Foundry/results/raw/foundry_500x2_signal_review/codex_assisted_review.html`.
+
+## Verifier-GRPO compatibility does not alter template evidence
+
+Milestone 10 used the frozen rendered questions only as prompt inputs. It changed no reviewed
+sentence plan, surface lexeme, candidate identity, canonical answer, dataset membership, split, or
+review decision. The compatibility probe failed in CUDA top-p sampling before producing its first
+completion, so no language output was available to attribute to the template bank and no model
+training occurred.
+
+The bank's status is unchanged. Stratified human review is still pending at
+`file:///C:/Users/Admin/Projects/Foundry/results/raw/foundry_500x2_signal_review/codex_assisted_review.html`;
+Codex-assisted recommendations are not human decisions. Any previous benchmark result remains
+provisional pending that review and second-seed confirmation.
