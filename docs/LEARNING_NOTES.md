@@ -932,3 +932,17 @@ driver evidence, but only direct `torch.cuda` allocation, arithmetic, matrix mul
 synchronization, device placement, and repeated result hashing decide the child compute gate. This
 preserves the minimized environment without guessing extra inherited variables and makes resource
 measurements follow the same runtime that performs replay and training.
+
+## Milestone 10I: generation-only identity does not prove the training warning topology
+
+V4 proved that the direct CUDA-runtime correction worked: the child compute probe and six
+generation-only replays were exact. The first two-step smoke still exercised a materially different
+model state—gradient checkpointing was active—and its first generation produced more than the one
+frozen CUDA-cumsum warning class. The strict warning guard rejected that path before backward.
+
+The practical lesson is that deterministic stochastic replay has two independent compatibility
+surfaces: tensor/output identity and the warning/state boundary of the real training execution.
+Passing generation-only replay is necessary but not sufficient. The smallest authorized complete
+smoke must exercise gradient checkpointing, generation, backward, optimizer, release, and adapter
+reload before counted training. Here that smoke did its job: it stopped the route at `0/2` steps
+without allowing a changed warning whitelist or cache policy to drift into the experiment.

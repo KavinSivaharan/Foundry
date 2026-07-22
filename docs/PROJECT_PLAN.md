@@ -1089,3 +1089,21 @@ LoRA, retention, evaluation, datasets, and dependencies are unchanged. After pub
 `Foundry-grpo-runtime-v4`, freeze all source/environment/interpreter/cache/host/child evidence, and
 continue through the unchanged replay, duplicate two-step, conditional G1/G2, retention, and GSM1K
 gates only while every preceding gate passes.
+
+## Milestone 10I outcome: V4 stopped at first complete two-step smoke
+
+V4 froze commit `a13c31b43a72c3bec205e440aaf7c424ac487d47`, tree
+`b938e97308d3e73493cf066ed7a656363657f4cb`, runtime contract `a8543712...bc0a`, source
+manifest `dda8cf58...a8b8`, environment `0a5bd3bb...e55d`, and unchanged model manifest
+`5173393f...4006`. Parent GPU monitoring succeeded, and the child direct-CUDA result hash
+`f8850fe4...e5af6` repeated three times without NVML or CPU fallback.
+
+Three same-process and three fresh-process generation replays matched exactly at packet
+`084515f9...ee2f`. The first two-step G1 process reached model generation under gradient
+checkpointing, then its strict warning audit found multiple normalized warning classes and raised
+before backward or optimizer step 1. No two-step packet, metadata, adapter, or checkpoint exists.
+
+**Final Milestone 10I stop:** do not run the duplicate smoke, G1/G2, retention, GSM1K, category
+analysis, bootstrap, or signal gate. Preserve V4 and publish failure summary
+`164d3e35828758d4eff77b21919b9b3b28dee6238135478fcd2b2e5e024c6f91` as
+`analysis: stop verifier GRPO after V4 replay failure`.

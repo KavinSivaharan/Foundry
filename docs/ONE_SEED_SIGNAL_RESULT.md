@@ -501,3 +501,10 @@ The newly authorized V4 source correction changes only GPU orchestration: parent
 separate from an authoritative direct PyTorch CUDA child probe. No model process, adapter, retention
 evaluation, or GSM1K evaluation ran while implementing it. The GRPO one-seed signal gate remains
 **not reached**; the historical frozen base remains `521/814` and was not rerun.
+
+### Milestone 10I stopped before a trainable compatibility pass
+
+V4 passed direct CUDA compute and exact same/fresh generation replay, then failed the first complete
+two-step smoke because the training generation path emitted multiple normalized warning classes.
+No optimizer step, adapter, retention result, or new GSM1K prediction exists. The GRPO one-seed
+signal gate is therefore **not reached**; the historical base remains `521/814` and was not rerun.

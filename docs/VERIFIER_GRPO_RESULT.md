@@ -370,3 +370,37 @@ and the fixed probe configuration to `1fc17a20ab4ae8e7b76f9bd9ccda432169410ba786
 All `213` focused GRPO tests and all `724` repository tests pass. Protected scientific and
 dependency paths are unchanged; no model load, generation, optimizer step, adapter, checkpoint,
 retention result, GSM1K result, or sealed-final access occurred. V4 compatibility has not yet run.
+
+## Milestone 10I V4 immutable replay result
+
+The orchestration fix was published as `a13c31b43a72c3bec205e440aaf7c424ac487d47`. V4 froze tree
+`b938e97308d3e73493cf066ed7a656363657f4cb`, runtime contract
+`a8543712573a19dd4069192a44dd25bbbe249fed205b01606f2582745d98bc0a`, complete source manifest
+`dda8cf58aa59cf6a026632984453b17b3470a3ac1f79103ad597d0cc5f31a8b8`, environment
+`0a5bd3bb12a30819e4abc862e33437cc74ae75ec436b14adea7ad1115f41e55d`, and unchanged model
+manifest `5173393ff459ebe94d4019bf76e129a88022af448e1f24e954a8b9d291184006`.
+
+Host `nvidia-smi` reported the RTX 3080 and driver `610.47` as monitoring-only evidence. The exact
+child used PyTorch 2.5.1+cu121/CUDA 12.1, allocated and computed only on `cuda:0`, invoked no NVML,
+and reproduced `f8850fe41491213fb9617bcf01395b0256f272214cbee85c0cdebfd8dd1e5af6` three times.
+
+Same-process replay passed at summary `319be850...043`; all three packets were byte-identical and
+shared `084515f9...ee2f`. Three distinct fresh processes reproduced that packet and sealed summary
+`de8ca110...dbb9`. Each successful run generated 12 completions / 1,376 completion tokens, mean
+total reward `0.9166667`, zero truncation, and exact KL tensor hashes. Peak allocated/reserved VRAM
+was `2,905,233,408` / `4,097,835,008` bytes; maximum process RAM was `5,358,243,840` bytes.
+
+The first complete two-step G1 smoke failed in its first generation warning audit with
+`RuntimeError: generation emitted multiple distinct normalized warning classes`. The process was at
+`0/2`; no backward, optimizer step, packet, metadata, adapter, or checkpoint occurred. The duplicate
+smoke and all downstream training/evaluation gates were not run. This is a training-path
+compatibility failure, not an exact replay-packet mismatch. Failure-summary SHA-256 is
+`164d3e35828758d4eff77b21919b9b3b28dee6238135478fcd2b2e5e024c6f91`.
+
+### Final gate status
+
+Compatibility **failed closed** at the first complete two-step smoke. G1/G2, retention, new GSM1K,
+category analysis, paired bootstrap, and the one-seed signal gate were not reached; the historical
+base `521/814` was not rerun. Sealed-final remained untouched. Preserve V4 and stop verifier-GRPO.
+Human language review remains pending at
+`file:///C:/Users/Admin/Projects/Foundry/results/raw/foundry_500x2_signal_review/codex_assisted_review.html`.

@@ -1008,3 +1008,13 @@ Every future experiment must be registered here before a costly run begins. Its 
 - **Verification:** `213/213` focused GRPO tests, `724/724` repository tests, Ruff, and strict Mypy pass. Protected scientific and dependency paths changed: zero.
 - **Scientific activity:** zero model loads, generations, optimizer steps, adapters, checkpoints, retention evaluations, GSM1K evaluations, or sealed-final access in this phase.
 - **Next gate:** Publish `fix: validate GRPO GPU through CUDA runtime`, create/freeze only V4, collect host evidence, then run the authoritative fresh child CUDA probe before any model load.
+
+#### EXP-TRAIN-017 outcome
+
+- **Status:** failed closed in the first complete two-step G1 smoke; project stop.
+- **Frozen identities:** orchestration commit `a13c31b43a72c3bec205e440aaf7c424ac487d47`, tree `b938e973...f4cb`, runtime contract `a8543712...bc0a`, source manifest `dda8cf58...a8b8`, environment `0a5bd3bb...e55d`, and model manifest `5173393f...4006`.
+- **CUDA gate:** Parent RTX 3080/driver `610.47` evidence was monitoring-only. The child direct-PyTorch gate passed without NVML or CPU fallback and repeated `f8850fe4...e5af6` three times.
+- **Generation replay:** Three same-process and three distinct fresh-process runs exactly matched common packet `084515f9...ee2f`; summaries are `319be850...043` and `de8ca110...dbb9`.
+- **Two-step run:** The first gradient-checkpointed generation raised `generation emitted multiple distinct normalized warning classes` before backward at `0/2`. No two-step packet/metadata, optimizer step, adapter, or checkpoint exists. The duplicate run was not launched.
+- **Downstream work:** G1/G2 counted training, retention, GSM1K, category analysis, bootstrap, and signal gate were not run. Sealed-final remained untouched.
+- **Decision:** Enforce the no-retry compatibility stop and publish content-free failure summary `164d3e35828758d4eff77b21919b9b3b28dee6238135478fcd2b2e5e024c6f91`.
