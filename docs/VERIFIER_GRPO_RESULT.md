@@ -262,3 +262,39 @@ approved interpreter SHA-256 is
 SHA-256 is `6680c2c4d713882877d1c7e2ab1c47211ec07f2c84cee0464964e4de7b1d3498`.
 The actual V2 runtime-contract and source-manifest hashes must be frozen externally after the atomic
 patch commit because both bind that new immutable commit.
+
+## Milestone 10G immutable replay result
+
+The patch was published at `b647a3dcadcab941359fbecab2b11c8f9f63cb8d`. The V2 source worktree
+was detached and clean at tree `099a9987df1b0a2d4da85eba33b4e22694ef2ab6`. External evidence
+froze:
+
+- runtime-path contract SHA-256:
+  `2400654e155ba7be36aba99ffc4cf7588f80d726ffed59074f0f9955b948d953`;
+- complete source-manifest SHA-256:
+  `72cd61b5f374f95bc7b0dbc1e51c0cafa81ca2cf3979d3d51421f2a1af4e2fab`;
+- combined tracked-source SHA-256:
+  `792230894ed97d0d034ee117b559d0145c1fe5040a40a8efe8bdb7be784c5d8d`;
+- model-artifact manifest SHA-256:
+  `5173393ff459ebe94d4019bf76e129a88022af448e1f24e954a8b9d291184006`;
+- exact CPython executable SHA-256:
+  `0b471133e110cfb53a061cad528ce8e517d7b9ac41a0a396c39ad795a487fc14`.
+
+The first same-process iteration completed the frozen two-synthetic/one-replay,
+four-completions-per-group workload in memory. Its post-run wrapper then called the new general path
+validator. The validator expected launch-time `CUBLAS_WORKSPACE_CONFIG=:4096:8`, but stock
+Transformers had already performed the frozen and tested transition to active value `:16:8`. The
+validator raised before `run_1.json` or the aggregate summary could be written. Thus 12 completions
+ran, but no raw completion, packet, warning/RNG evidence, prompt, or decoded text was persisted.
+
+### Final gate status
+
+Same-process exact comparison **failed before comparison** on an orchestration validator defect.
+Fresh-process replay and both two-step smokes were not run. No model-side replay mismatch was
+observed, but no compatibility pass exists. G1/G2, independent retention, GSM1K, paired bootstrap,
+and the signal gate were not reached. Source, model cache, and both repositories remained unchanged;
+optimizer steps and adapter/checkpoint files remain zero.
+
+The no-retry rule is enforced. Failure-summary SHA-256 is
+`0a1c7085a95fef8138c06b17faaa8e0b5c0af195148012ca9a88c7a07a6d1eeb`; file SHA-256 is
+`d38741f5e24c63279994b2cfd983cb2005c8a5e7d141a30d84dde96585163bb4`.

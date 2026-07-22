@@ -874,3 +874,19 @@ once and revalidated around every process. Import provenance proves which source
 executable hash proves which CPython launched it, the cache manifest proves which model bytes were
 read, and artifact containment proves where mutations may occur. These checks strengthen the
 experiment boundary without changing generation, rewards, gradients, or any scientific threshold.
+
+## Frozen process entry values may still have predeclared state transitions
+
+Milestone 10G exposed a subtle contract-design error after root decoupling succeeded. A process
+environment can contain both immutable entry values and values that a frozen library is expected to
+transition. Transformers' full-determinism setup starts from cuBLAS `:4096:8` and activates
+`:16:8`; both are deterministic, and this exact transition had already been audited and tested.
+Treating the entry value as immutable for the entire process caused post-run source/cache validation
+to reject an otherwise expected state.
+
+The general lesson is to classify environment fields by lifecycle: constant, entry-only, or an
+explicit finite-state transition. A path contract should freeze paths, executable identity, source,
+and read-only artifacts, while delegating scientific runtime-state transitions to their existing
+audited contract. Adding a broad invariant can be just as disruptive as omitting one. Because the
+error surfaced after official model generation began, the no-retry rule correctly preserves the
+failure instead of repairing the validator post hoc.

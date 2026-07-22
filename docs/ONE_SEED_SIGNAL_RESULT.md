@@ -466,3 +466,15 @@ Accordingly, the one-seed GRPO signal gate remains **not reached**. There is no 
 retention result, or generic-versus-targeted benchmark comparison. The historical base remains
 `521/814`; the existing result remains **Provisional one-seed result pending stratified human
 language review and second-seed confirmation**, with review still pending at the frozen local URL.
+
+### Milestone 10G remained pre-signal after immutable replay failure
+
+The V2 experiment reached one official 12-completion generation-only replay but failed in post-run
+orchestration validation before writing or comparing its packet. The failure was the new validator's
+incorrect lifetime treatment of the frozen cuBLAS `:4096:8` to `:16:8` transition. It was not a
+targeted-versus-generic result and exposed no model-side replay difference.
+
+The hard stop leaves G1/G2 optimizer steps, adapters, retention results, generic/targeted GSM1K
+predictions, paired effects, bootstrap intervals, and signal decisions absent. The GRPO one-seed
+signal gate is therefore **not reached**, and the historical provisional label and pending human
+review remain unchanged.

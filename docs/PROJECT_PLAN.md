@@ -1017,3 +1017,26 @@ worktree plus external V2 runtime manifest. The actual runtime-path-contract has
 because it binds the new commit and complete tracked-source manifest. No model generation,
 backward pass, optimizer step, checkpoint, adapter, retention evaluation, or GSM1K evaluation has
 occurred during this patch phase.
+
+## Milestone 10G outcome: immutable replay stopped on environment validation
+
+The orchestration patch was committed and pushed as
+`b647a3dcadcab941359fbecab2b11c8f9f63cb8d`. The detached V2 worktree froze tree
+`099a9987df1b0a2d4da85eba33b4e22694ef2ab6`, runtime-path contract
+`2400654e155ba7be36aba99ffc4cf7588f80d726ffed59074f0f9955b948d953`, and complete 491-file
+source manifest `72cd61b5f374f95bc7b0dbc1e51c0cafa81ca2cf3979d3d51421f2a1af4e2fab` outside Git.
+
+The first official same-process generation replay completed its frozen three-group, 12-completion
+in-memory workload, then failed before its packet could be written. The new path contract treated
+the launch-time cuBLAS value `:4096:8` as a lifetime invariant, while the already frozen stock
+Transformers full-determinism transition correctly changed it to `:16:8` before model operations.
+Post-run validation therefore raised `RuntimeError`. No packet comparison, fresh-process replay,
+two-step smoke, backward pass, optimizer step, adapter, checkpoint, retention evaluation, or GSM1K
+evaluation occurred.
+
+**Final Milestone 10G stop:** this is an orchestration-contract failure, not evidence of a model-side
+replay mismatch. Nevertheless, the authorization forbids patching or retrying after an official
+replay failure. The source manifest, model manifest, detached worktree, and primary repository all
+remained unchanged. Failure-summary SHA-256 is
+`0a1c7085a95fef8138c06b17faaa8e0b5c0af195148012ca9a88c7a07a6d1eeb`; its tracked file SHA-256
+is `d38741f5e24c63279994b2cfd983cb2005c8a5e7d141a30d84dde96585163bb4`.

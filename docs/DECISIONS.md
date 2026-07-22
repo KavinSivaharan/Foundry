@@ -930,3 +930,25 @@ This log separates proposals from approved decisions. A proposal does not author
   `fix: decouple GRPO runtime roots`. Only after that commit is pushed may a new detached V2
   experiment freeze the complete runtime contract and source manifest. This decision authorizes no
   sampling, reward, optimizer, schedule, retention, evaluator, dependency, or benchmark change.
+
+## 2026-07-21: stop Milestone 10G after immutable replay validation failure
+
+- **Status:** Official same-process replay failed; downstream gates permanently closed.
+- **Decision:** Do not patch or retry the immutable experiment. Publish the failure and skip
+  fresh-process replay, both two-step smokes, G1/G2, retention, GSM1K, paired analysis, and the signal
+  gate.
+- **Evidence:** Commit `b647a3d` and tree `099a9987` froze cleanly. Runtime contract
+  `2400654e...d953`, complete source manifest `72cd61b5...2fab`, and model manifest
+  `5173393f...4006` validated before execution. The first 12-completion generation replay returned
+  internally, but its wrapper's final validation rejected `CUBLAS_WORKSPACE_CONFIG=:16:8` because
+  the new path module expected the launch value `:4096:8`. Packet writing occurs after that wrapper,
+  so zero raw packet or summary files were written and no equality comparison occurred.
+- **Rationale:** The `:4096:8` to `:16:8` transition is already part of the frozen Transformers
+  full-determinism contract, not source, model, or scientific drift. The orchestration patch
+  incorrectly conflated a required process-entry value with a required lifetime value. Although no
+  model-side mismatch was observed, the authorization's no-retry rule applies once official replay
+  has started and failed.
+- **Consequence:** Optimizer steps, adapters, checkpoints, retention results, and new benchmark
+  results remain zero. Failure-summary SHA-256 is
+  `0a1c7085a95fef8138c06b17faaa8e0b5c0af195148012ca9a88c7a07a6d1eeb`. The next action is project
+  stop unless a future explicit project-level authorization opens a new experiment.

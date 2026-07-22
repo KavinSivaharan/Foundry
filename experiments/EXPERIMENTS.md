@@ -947,3 +947,19 @@ Every future experiment must be registered here before a costly run begins. Its 
   adapters, checkpoints, retention evaluations, or GSM1K evaluations in this patch phase.
 - **Next gate:** Push the single orchestration commit, create the new detached V2 worktree and
   external runtime root, then freeze the complete contract/source manifests before any model load.
+
+#### EXP-TRAIN-015 outcome
+
+- **Status:** failed closed during official same-process replay; project stop.
+- **Frozen identities:** commit `b647a3dcadcab941359fbecab2b11c8f9f63cb8d`, tree
+  `099a9987df1b0a2d4da85eba33b4e22694ef2ab6`, runtime contract `2400654e...d953`, source manifest
+  `72cd61b5...2fab`, and model manifest `5173393f...4006`.
+- **Run:** The first generation-only iteration completed 3 groups x 4 completions in memory. Its
+  final path-contract validation rejected active cuBLAS `:16:8` after the frozen stock transition
+  from launch value `:4096:8`. The error happened before packet or summary persistence.
+- **Interpretation:** Orchestration validation failure; no model-side replay comparison or mismatch.
+  The source worktree, primary repository, source manifest, and model artifacts remained unchanged.
+- **Downstream work:** Fresh-process replay, both two-step runs, G1/G2, retention, GSM1K, paired
+  analysis, and the signal gate were not run. Optimizer steps, adapters, and checkpoints are zero.
+- **Decision:** Enforce the authorized no-retry rule and publish failure summary
+  `0a1c7085a95fef8138c06b17faaa8e0b5c0af195148012ca9a88c7a07a6d1eeb`.
