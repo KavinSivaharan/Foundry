@@ -478,3 +478,14 @@ The hard stop leaves G1/G2 optimizer steps, adapters, retention results, generic
 predictions, paired effects, bootstrap intervals, and signal decisions absent. The GRPO one-seed
 signal gate is therefore **not reached**, and the historical provisional label and pending human
 review remain unchanged.
+
+### Milestone 10H remains pre-signal during the environment correction
+
+The explicitly authorized V3 correction standardizes all deterministic environment values before
+Python launch and does not change any scientific input or decision threshold. The correction phase
+passed `198` focused GRPO tests and `709` repository tests, but ran no model generation, optimizer,
+retention, or GSM1K process.
+
+The GRPO one-seed signal gate therefore remains **not reached** at this publication point. The
+historical base result remains `521/814`, and the existing result remains **Provisional one-seed
+result pending stratified human language review and second-seed confirmation**.

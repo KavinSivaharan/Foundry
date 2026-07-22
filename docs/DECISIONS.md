@@ -952,3 +952,22 @@ This log separates proposals from approved decisions. A proposal does not author
   results remain zero. Failure-summary SHA-256 is
   `0a1c7085a95fef8138c06b17faaa8e0b5c0af195148012ca9a88c7a07a6d1eeb`. The next action is project
   stop unless a future explicit project-level authorization opens a new experiment.
+
+## 2026-07-21: standardize the Milestone 10H GRPO environment before launch
+
+- **Status:** Explicit project-level authorization supersedes the Milestone 10G no-retry decision
+  for one new V3 experiment; the historical V1/V2 directories remain sealed.
+- **Decision:** Every replay, smoke, training, retention, and evaluation process must begin with the
+  exact five environment values written by Transformers 4.51.3, including
+  `CUBLAS_WORKSPACE_CONFIG=:16:8`. The stock helper may assign those same values, but no effective
+  environment transition is permitted. Child environments use an explicit allowlist and never an
+  uncontrolled parent copy.
+- **Evidence:** The installed `trainer_utils.py` SHA-256 is
+  `33561736fc04ae94729a513845b9bb900637a5eb6a768aabe018494cf631a95e`; the helper source SHA-256 is
+  `1893964197a05bfd07d1477815b58e42e883b9e64985f0e795b4562fc9f84834`. The new V3 environment
+  contract SHA-256 is `1f80b1415fc189488b50d04fc69bb0c0ab098ab4f66d03efebac2b6b95b738af`.
+  All `198` focused GRPO tests and all `709` repository tests pass.
+- **Consequence:** Publish exactly one source correction as
+  `fix: standardize GRPO deterministic environment`, then create a new detached V3 worktree. This
+  decision changes no sampling, reward, reference, KL, optimizer, schedule, LoRA, retention,
+  evaluator, dataset, or dependency setting.

@@ -298,3 +298,23 @@ optimizer steps and adapter/checkpoint files remain zero.
 The no-retry rule is enforced. Failure-summary SHA-256 is
 `0a1c7085a95fef8138c06b17faaa8e0b5c0af195148012ca9a88c7a07a6d1eeb`; file SHA-256 is
 `d38741f5e24c63279994b2cfd983cb2005c8a5e7d141a30d84dde96585163bb4`.
+
+## Milestone 10H deterministic-environment correction
+
+The user explicitly authorized one new V3 experiment after classifying the V2 stop as an
+orchestration-validator defect. The installed Transformers 4.51.3 helper writes
+`CUDA_LAUNCH_BLOCKING=1`, `CUBLAS_WORKSPACE_CONFIG=:16:8`, `ASCEND_LAUNCH_BLOCKING=1`,
+`HCCL_DETERMINISTIC=1`, and `FLASH_ATTENTION_DETERMINISTIC=1`. All five are now present before
+Python starts, so deterministic initialization causes no effective environment transition.
+
+The new typed contract also freezes the approved interpreter, source-first `PYTHONPATH`, source,
+artifact, and model-cache roots, exact process command, and secret-free environment hash. It
+validates around package import, deterministic setup, CUDA initialization, model loading,
+generation, backward, optimizer, adapter reload, cleanup, and exception exits. The environment
+contract SHA-256 is `1f80b1415fc189488b50d04fc69bb0c0ab098ab4f66d03efebac2b6b95b738af`;
+the Transformers file/function hashes are `33561736...a95e` and `18939641...4834`.
+
+All `198` focused GRPO tests and all `709` repository tests pass. Protected scientific and
+dependency paths are byte-identical to the starting commit. No model generation, optimizer step,
+adapter, checkpoint, retention result, GSM1K result, or sealed-final access occurred during this
+correction phase. V3 compatibility remains not yet run.

@@ -19,7 +19,6 @@ import importlib
 import importlib.metadata
 import json
 import math
-import os
 import platform
 import random
 import subprocess
@@ -37,7 +36,6 @@ from typing import Any, Literal, cast
 from foundry.training.config import canonical_sha256
 from foundry.training.grpo_compatibility import (
     TopPWarningOnlyGenerationContract,
-    callable_source_sha256,
     model_adapter_state,
 )
 from foundry.training.grpo_config import (
@@ -45,10 +43,23 @@ from foundry.training.grpo_config import (
     VerifierGRPOConfig,
     load_grpo_config,
 )
+from foundry.training.grpo_environment import (
+    FROZEN_TRANSFORMERS_DETERMINISM_FUNCTION_SHA256,
+    FROZEN_TRANSFORMERS_DETERMINISM_MODULE,
+    FROZEN_TRANSFORMERS_DETERMINISM_QUALNAME,
+    FROZEN_TRANSFORMERS_DETERMINISTIC_ENVIRONMENT,
+    assert_idempotent_deterministic_initialization,
+    make_environment_guarded_trainer,
+    make_environment_validation_callback,
+    transformers_determinism_source_evidence,
+    validate_deterministic_process_environment,
+)
 from foundry.training.grpo_paths import (
     GrpoRuntimePaths,
     assert_artifact_path,
     assert_source_path,
+    deterministic_process_contract,
+    frozen_process_environment,
     load_runtime_paths,
     same_canonical_path,
     validate_runtime_paths,
@@ -102,13 +113,11 @@ FULL_COMPLETIONS = GROUPS_PER_ARM * COMPLETIONS_PER_GROUP
 MAX_RESERVED_VRAM_BYTES = int(9.6 * 1024**3)
 EXPECTED_GPU_NAME_FRAGMENT = "RTX 3080"
 FROZEN_PROCESS_SEED = 20_260_720
-FROZEN_CUBLAS_WORKSPACE_CONFIG = ":4096:8"
-FROZEN_TRANSFORMERS_CUBLAS_WORKSPACE_CONFIG = ":16:8"
-FROZEN_FULL_DETERMINISM_SOURCE_SHA256 = (
-    "1893964197a05bfd07d1477815b58e42e883b9e64985f0e795b4562fc9f84834"
-)
-FROZEN_FULL_DETERMINISM_MODULE = "transformers.trainer_utils"
-FROZEN_FULL_DETERMINISM_QUALNAME = "enable_full_determinism"
+FROZEN_CUBLAS_WORKSPACE_CONFIG = ":16:8"
+FROZEN_TRANSFORMERS_CUBLAS_WORKSPACE_CONFIG = FROZEN_CUBLAS_WORKSPACE_CONFIG
+FROZEN_FULL_DETERMINISM_SOURCE_SHA256 = FROZEN_TRANSFORMERS_DETERMINISM_FUNCTION_SHA256
+FROZEN_FULL_DETERMINISM_MODULE = FROZEN_TRANSFORMERS_DETERMINISM_MODULE
+FROZEN_FULL_DETERMINISM_QUALNAME = FROZEN_TRANSFORMERS_DETERMINISM_QUALNAME
 FROZEN_GPU_TOTAL_MEMORY_BYTES = 10_736_893_952
 FROZEN_NVIDIA_DRIVER_VERSION = "610.47"
 FROZEN_TORCH_CUDA_RUNTIME = "12.1"
@@ -1034,22 +1043,14 @@ def _peak_process_ram(process: Any) -> int:
 
 
 def _external_process_evidence(seed: int, runtime_paths: GrpoRuntimePaths) -> dict[str, object]:
-    """Prove that process-start hash and cuBLAS settings match the frozen run."""
+    """Prove process-start hash seeding and the complete pre-launch contract."""
 
     if seed != FROZEN_PROCESS_SEED:
         raise ValueError("GRPO seed differs from the frozen process seed")
+    launch_evidence = validate_deterministic_process_environment(
+        runtime_paths, "counted_grpo_process_entry"
+    )
     expected_seed = str(seed)
-    if os.environ.get("PYTHONHASHSEED") != expected_seed:
-        raise RuntimeError("PYTHONHASHSEED must be exported before launching the GRPO process")
-    if not bool(sys.flags.hash_randomization):
-        raise RuntimeError("the GRPO interpreter has Python hash randomization disabled")
-    if os.environ.get("CUBLAS_WORKSPACE_CONFIG") != FROZEN_CUBLAS_WORKSPACE_CONFIG:
-        raise RuntimeError(
-            f"CUBLAS_WORKSPACE_CONFIG must equal {FROZEN_CUBLAS_WORKSPACE_CONFIG!r} "
-            "before process launch"
-        )
-    if not same_canonical_path(Path(sys.executable), runtime_paths.python_executable):
-        raise RuntimeError("GRPO process did not use the configured Python executable")
     current_hash = hash(_PYTHON_HASH_PROBE)
     completed = subprocess.run(
         [
@@ -1062,7 +1063,7 @@ def _external_process_evidence(seed: int, runtime_paths: GrpoRuntimePaths) -> di
         capture_output=True,
         text=True,
         timeout=30,
-        env=dict(os.environ),
+        env=frozen_process_environment(runtime_paths),
     )
     values = [line.strip() for line in completed.stdout.splitlines() if line.strip()]
     if values != [str(current_hash)]:
@@ -1079,6 +1080,8 @@ def _external_process_evidence(seed: int, runtime_paths: GrpoRuntimePaths) -> di
             }
         ),
         "cublas_workspace_config": FROZEN_CUBLAS_WORKSPACE_CONFIG,
+        "deterministic_process_environment": launch_evidence,
+        "deterministic_process_contract": deterministic_process_contract(runtime_paths).evidence(),
     }
 
 
@@ -1088,61 +1091,59 @@ def _stock_full_determinism_source_evidence(
     expected_source_sha256: str = FROZEN_FULL_DETERMINISM_SOURCE_SHA256,
     expected_module: str = FROZEN_FULL_DETERMINISM_MODULE,
     expected_qualname: str = FROZEN_FULL_DETERMINISM_QUALNAME,
-) -> dict[str, str]:
-    """Pin the stock function that performs the approved cuBLAS transition."""
+) -> dict[str, object]:
+    """Pin the stock helper and its exact idempotent environment writes."""
 
-    trainer_utils = getattr(transformers, "trainer_utils", None)
-    function = getattr(trainer_utils, "enable_full_determinism", None)
-    if not callable(function):
-        raise RuntimeError("Transformers full-determinism function is unavailable")
-    module = str(getattr(function, "__module__", ""))
-    qualname = str(getattr(function, "__qualname__", ""))
-    if module != expected_module or qualname != expected_qualname:
+    if (
+        expected_module != FROZEN_TRANSFORMERS_DETERMINISM_MODULE
+        or expected_qualname != FROZEN_TRANSFORMERS_DETERMINISM_QUALNAME
+    ):
         raise RuntimeError("Transformers full-determinism callable identity differs")
-    source_sha256 = callable_source_sha256(function)
-    if source_sha256 != expected_source_sha256:
-        raise RuntimeError("Transformers full-determinism source hash differs")
-    if os.environ.get("CUBLAS_WORKSPACE_CONFIG") != FROZEN_CUBLAS_WORKSPACE_CONFIG:
-        raise RuntimeError("stock full-determinism transition did not start from :4096:8")
+    evidence = transformers_determinism_source_evidence(
+        transformers, expected_function_sha256=expected_source_sha256
+    )
     return {
-        "callable_module": module,
-        "callable_qualname": qualname,
-        "source_sha256": source_sha256,
-        "prelaunch_cublas_workspace_config": FROZEN_CUBLAS_WORKSPACE_CONFIG,
-        "expected_active_cublas_workspace_config": (FROZEN_TRANSFORMERS_CUBLAS_WORKSPACE_CONFIG),
+        **evidence,
+        "source_sha256": evidence["function_source_sha256"],
+        "prelaunch_environment": dict(FROZEN_TRANSFORMERS_DETERMINISTIC_ENVIRONMENT),
+        "expected_active_environment": dict(FROZEN_TRANSFORMERS_DETERMINISTIC_ENVIRONMENT),
     }
 
 
-def _require_transformers_cublas(stage: str) -> str:
-    """Require the active value written by stock Transformers determinism setup."""
+def _require_transformers_environment(
+    runtime_paths: GrpoRuntimePaths, stage: str, torch: Any
+) -> dict[str, object]:
+    """Require every Transformers-written field and strict Torch state."""
 
-    value = os.environ.get("CUBLAS_WORKSPACE_CONFIG")
-    if value != FROZEN_TRANSFORMERS_CUBLAS_WORKSPACE_CONFIG:
-        raise RuntimeError(
-            f"CUBLAS_WORKSPACE_CONFIG after {stage} must equal "
-            f"{FROZEN_TRANSFORMERS_CUBLAS_WORKSPACE_CONFIG!r}, got {value!r}"
-        )
-    return value
+    return validate_deterministic_process_environment(
+        runtime_paths,
+        stage,
+        torch_module=torch,
+        require_strict=True,
+    )
 
 
 def _full_determinism_transition_evidence(
-    source_evidence: Mapping[str, str],
+    source_evidence: Mapping[str, object],
     *,
-    after_arguments: str,
-    after_trainer: str,
+    before_initialization: Mapping[str, object],
+    after_arguments: Mapping[str, object],
+    after_trainer: Mapping[str, object],
 ) -> dict[str, object]:
-    """Bind the source-pinned prelaunch-to-active cuBLAS transition."""
+    """Bind source-pinned initialization to a no-transition environment."""
 
-    if (
-        after_arguments != FROZEN_TRANSFORMERS_CUBLAS_WORKSPACE_CONFIG
-        or after_trainer != FROZEN_TRANSFORMERS_CUBLAS_WORKSPACE_CONFIG
-    ):
-        raise RuntimeError("stock Transformers cuBLAS transition evidence is inconsistent")
+    after_arguments_idempotence = assert_idempotent_deterministic_initialization(
+        before_initialization, after_arguments
+    )
+    after_trainer_idempotence = assert_idempotent_deterministic_initialization(
+        before_initialization, after_trainer
+    )
     value: dict[str, object] = {
         **source_evidence,
-        "after_grpo_arguments_cublas_workspace_config": after_arguments,
-        "after_trainer_construction_cublas_workspace_config": after_trainer,
-        "environment_restored": False,
+        "after_grpo_arguments": after_arguments_idempotence,
+        "after_trainer_construction": after_trainer_idempotence,
+        "environment_transition_occurred": False,
+        "environment_restoration_required": False,
     }
     value["transition_sha256"] = canonical_sha256(value)
     return value
@@ -1431,9 +1432,9 @@ def _run_grpo_impl(
         generation_only_group = None
         expected_groups = schedule.groups
 
-    os.environ["HF_HUB_OFFLINE"] = "1"
-    os.environ["TRANSFORMERS_OFFLINE"] = "1"
-    os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
+    deterministic_stages = [
+        validate_deterministic_process_environment(runtime_paths, "before_transformers_import")
+    ]
     modules = _runtime_modules()
     torch = modules["torch"]
     transformers = modules["transformers"]
@@ -1441,17 +1442,56 @@ def _run_grpo_impl(
     peft = modules["peft"]
     datasets = modules["datasets"]
     psutil = modules["psutil"]
+    deterministic_stages.append(
+        validate_deterministic_process_environment(
+            runtime_paths,
+            "after_transformers_import",
+            torch_module=torch,
+        )
+    )
     runtime_environment = _runtime_environment_evidence(modules, runtime_paths)
     full_determinism_source = _stock_full_determinism_source_evidence(transformers)
     _seed_everything(modules, config.grpo.seed)
+    deterministic_stages.append(
+        validate_deterministic_process_environment(
+            runtime_paths,
+            "after_initial_deterministic_setup",
+            torch_module=torch,
+            require_strict=True,
+        )
+    )
     cuda = _validate_cuda(torch)
+    deterministic_stages.append(
+        validate_deterministic_process_environment(
+            runtime_paths,
+            "after_cuda_initialization",
+            torch_module=torch,
+            require_strict=True,
+        )
+    )
     reference_audit = validate_installed_reference_contract(Path(sysconfig.get_paths()["purelib"]))
 
     _prepare_cuda_resources(torch)
     process = psutil.Process()
     run_started = time.perf_counter()
+    deterministic_stages.append(
+        validate_deterministic_process_environment(
+            runtime_paths,
+            "before_model_loading",
+            torch_module=torch,
+            require_strict=True,
+        )
+    )
     model, tokenizer, lora_config, model_load_seconds = _prepare_runtime(
         config, model_path, modules
+    )
+    deterministic_stages.append(
+        validate_deterministic_process_environment(
+            runtime_paths,
+            "after_model_loading",
+            torch_module=torch,
+            require_strict=True,
+        )
     )
     chat_template_sha256 = hashlib.sha256(
         (tokenizer.chat_template or "").encode("utf-8")
@@ -1463,8 +1503,12 @@ def _run_grpo_impl(
     argument_values = frozen_grpo_argument_values(
         config, variant_id=variant_id, output_dir=output_dir, mode=mode
     )
+    before_full_determinism = deterministic_stages[-1]
     arguments = trl.GRPOConfig(**argument_values)
-    cublas_after_arguments = _require_transformers_cublas("GRPOConfig full-determinism setup")
+    environment_after_arguments = _require_transformers_environment(
+        runtime_paths, "after_grpo_config_full_determinism", torch
+    )
+    deterministic_stages.append(environment_after_arguments)
     assert_frozen_grpo_arguments(
         arguments,
         config,
@@ -1477,11 +1521,22 @@ def _run_grpo_impl(
         generation_owner=transformers.GenerationMixin,
         top_p_call=transformers.generation.logits_process.TopPLogitsWarper.__call__,
     )
-    trainer_type = make_truncation_aware_grpo_trainer(
+    boundary_counts: Counter[str] = Counter()
+    boundary_environment_sha256s: set[str] = set()
+
+    def validate_boundary(stage: str) -> None:
+        evidence = _require_transformers_environment(runtime_paths, stage, torch)
+        boundary_counts[stage] += 1
+        boundary_environment_sha256s.add(str(evidence["environment_sha256"]))
+
+    audited_trainer_type = make_truncation_aware_grpo_trainer(
         trl.GRPOTrainer,
         generation_scope_factory=warning_contract.install,
     )
-    callbacks: list[object] = []
+    trainer_type = make_environment_guarded_trainer(audited_trainer_type, validate_boundary)
+    callbacks: list[object] = [
+        make_environment_validation_callback(transformers.TrainerCallback, validate_boundary)
+    ]
     if mode == "train":
         callbacks.append(make_exact_checkpoint_callback(transformers.TrainerCallback))
     train_dataset = datasets.Dataset.from_list([group.policy_row() for group in update_groups])
@@ -1494,11 +1549,15 @@ def _run_grpo_impl(
         callbacks=callbacks,
         peft_config=lora_config,
     )
-    cublas_after_trainer = _require_transformers_cublas("GRPOTrainer construction")
+    environment_after_trainer = _require_transformers_environment(
+        runtime_paths, "after_grpo_trainer_construction", torch
+    )
+    deterministic_stages.append(environment_after_trainer)
     full_determinism_transition = _full_determinism_transition_evidence(
         full_determinism_source,
-        after_arguments=cublas_after_arguments,
-        after_trainer=cublas_after_trainer,
+        before_initialization=before_full_determinism,
+        after_arguments=environment_after_arguments,
+        after_trainer=environment_after_trainer,
     )
     if trainer.ref_model is not None:
         raise RuntimeError(
@@ -1515,7 +1574,9 @@ def _run_grpo_impl(
 
     _synchronize_cuda(torch)
     training_started = time.perf_counter()
+    validate_boundary("before_training")
     trainer.train()
+    validate_boundary("after_training")
     _synchronize_cuda(torch)
     training_seconds = time.perf_counter() - training_started
     if int(trainer.state.global_step) != len(update_groups):
@@ -1559,6 +1620,14 @@ def _run_grpo_impl(
     del trainer
     _cleanup_cuda_resources(torch)
 
+    deterministic_stages.append(
+        validate_deterministic_process_environment(
+            runtime_paths,
+            "before_adapter_reload_model_loading",
+            torch_module=torch,
+            require_strict=True,
+        )
+    )
     reloaded_base, reloaded_tokenizer, reload_base_seconds = _load_quantized_base(
         model_path, config, modules
     )
@@ -1569,6 +1638,14 @@ def _run_grpo_impl(
         str(adapter_path),
         local_files_only=True,
         is_trainable=False,
+    )
+    deterministic_stages.append(
+        validate_deterministic_process_environment(
+            runtime_paths,
+            "after_adapter_reload_model_loading",
+            torch_module=torch,
+            require_strict=True,
+        )
     )
     _synchronize_cuda(torch)
     adapter_reload_seconds = time.perf_counter() - reload_started
@@ -1598,6 +1675,22 @@ def _run_grpo_impl(
     _cleanup_cuda_resources(torch)
     post_cleanup_allocated = int(torch.cuda.memory_allocated(0))
     post_cleanup_reserved = int(torch.cuda.memory_reserved(0))
+    final_deterministic_environment = validate_deterministic_process_environment(
+        runtime_paths,
+        "process_result_publication",
+        torch_module=torch,
+        require_strict=True,
+    )
+    deterministic_stages.append(final_deterministic_environment)
+    deterministic_environment_evidence = {
+        "stages": deterministic_stages,
+        "boundary_validation_counts": dict(sorted(boundary_counts.items())),
+        "boundary_environment_sha256s": sorted(boundary_environment_sha256s),
+        "environment_mutation_observed": False,
+    }
+    deterministic_environment_evidence["evidence_sha256"] = canonical_sha256(
+        deterministic_environment_evidence
+    )
     raw_evidence: dict[str, object] = {
         "schema_version": RUNTIME_SCHEMA_VERSION,
         "runtime_id": RUNTIME_ID,
@@ -1646,6 +1739,7 @@ def _run_grpo_impl(
         "runtime_paths": runtime_paths.evidence(),
         "runtime_environment": runtime_environment,
         "stock_full_determinism_transition": full_determinism_transition,
+        "deterministic_process_environment": deterministic_environment_evidence,
         "warning_only_generation_contract": warning_evidence,
         "second_reference_model_created": False,
         "cpu_offload": False,

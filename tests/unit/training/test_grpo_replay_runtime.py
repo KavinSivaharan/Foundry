@@ -9,6 +9,7 @@ from types import SimpleNamespace
 import pytest
 import torch
 
+from foundry.training import grpo_environment as process_environment
 from foundry.training import grpo_replay_runtime as runtime
 from foundry.training.config import canonical_sha256
 
@@ -36,6 +37,7 @@ def _runtime_paths(tmp_path: Path, *, python_executable: Path | None = None) -> 
         primary_repository_root=tmp_path / "primary",
         python_executable=(python_executable or Path(runtime.sys.executable)),
         artifact_root=tmp_path,
+        model_cache_root=tmp_path / "cache",
         model_snapshot_root=tmp_path / "model",
         contract_sha256=contract,
         process_environment_sha256=environment,
@@ -50,6 +52,10 @@ class _FakeCuda:
 
     def manual_seed_all(self, seed: int) -> None:
         self.manual_seeds.append(seed)
+
+    @staticmethod
+    def is_initialized() -> bool:
+        return False
 
 
 class _FakeTorch:
@@ -96,6 +102,7 @@ def _fake_transformers_with_full_determinism(
     calls: list[tuple[int, bool]],
     *,
     transition_cublas: bool = True,
+    cublas_value: str | None = None,
 ) -> SimpleNamespace:
     def enable_full_determinism(seed: int, warn_only: bool = False) -> None:
         calls.append((seed, warn_only))
@@ -107,6 +114,8 @@ def _fake_transformers_with_full_determinism(
         if transition_cublas:
             runtime.os.environ["CUBLAS_WORKSPACE_CONFIG"] = (
                 runtime.FROZEN_ACTIVE_CUBLAS_WORKSPACE_CONFIG
+                if cublas_value is None
+                else cublas_value
             )
         runtime.os.environ["ASCEND_LAUNCH_BLOCKING"] = "1"
         runtime.os.environ["HCCL_DETERMINISTIC"] = "1"
@@ -130,40 +139,58 @@ def test_strict_determinism_requires_enabled_non_warning_mode() -> None:
 
 
 def test_filtered_environment_hash_excludes_secret_values(
+    tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
+    runtime_paths = _runtime_paths(tmp_path)
     environment = {
-        "FOUNDRY_REPLAY_PUBLIC": "alpha",
+        "PATH": "stable-path",
         "AUTHORIZATION": "secret-one",
         "service_API_TOKEN": "secret-two",
-        "TOKENIZERS_PARALLELISM": "false",
+        "ARBITRARY_PARENT_FIELD": "alpha",
     }
     monkeypatch.setattr(runtime.os, "environ", environment)
-    first_hash, retained, excluded = runtime._filtered_environment_sha256()
+    first_hash, retained, excluded = runtime._filtered_environment_sha256(  # type: ignore[arg-type]
+        runtime_paths
+    )
     environment["AUTHORIZATION"] = "changed-secret"
     environment["service_API_TOKEN"] = "another-secret"
-    second_hash, second_retained, second_excluded = runtime._filtered_environment_sha256()
-    environment["FOUNDRY_REPLAY_PUBLIC"] = "beta"
-    changed_hash, _, _ = runtime._filtered_environment_sha256()
-    environment["FOUNDRY_REPLAY_PUBLIC"] = "alpha"
-    environment["TOKENIZERS_PARALLELISM"] = "true"
-    tokenizers_hash, _, _ = runtime._filtered_environment_sha256()
+    second_hash, second_retained, second_excluded = runtime._filtered_environment_sha256(
+        runtime_paths
+    )  # type: ignore[arg-type]
+    environment["ARBITRARY_PARENT_FIELD"] = "beta"
+    arbitrary_hash, _, _ = runtime._filtered_environment_sha256(  # type: ignore[arg-type]
+        runtime_paths
+    )
+    environment["PATH"] = "changed-allowed-path"
+    changed_hash, _, _ = runtime._filtered_environment_sha256(  # type: ignore[arg-type]
+        runtime_paths
+    )
 
     assert first_hash == second_hash
+    assert first_hash == arbitrary_hash
     assert first_hash != changed_hash
-    assert first_hash != tokenizers_hash
-    assert (retained, excluded) == (2, 2)
-    assert (second_retained, second_excluded) == (2, 2)
+    assert retained == second_retained
+    assert (excluded, second_excluded) == (2, 2)
 
 
 def test_external_process_evidence_proves_hash_seed_and_exact_cublas(
+    tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    environment = {
-        "PYTHONHASHSEED": "5172026",
-        "CUBLAS_WORKSPACE_CONFIG": runtime.FROZEN_PROCESS_START_CUBLAS_WORKSPACE_CONFIG,
-    }
+    runtime_paths = _runtime_paths(tmp_path)
+    environment = process_environment.deterministic_environment_values(runtime_paths)
     monkeypatch.setattr(runtime.os, "environ", environment)
+    monkeypatch.setattr(
+        process_environment,
+        "_PROCESS_START_CORE_ENVIRONMENT",
+        tuple(
+            sorted(
+                (key, environment[key])
+                for key in process_environment.FROZEN_CORE_PROCESS_ENVIRONMENT
+            )
+        ),
+    )
     monkeypatch.setattr(
         runtime,
         "_PROCESS_START_CUBLAS_WORKSPACE_CONFIG",
@@ -176,51 +203,50 @@ def test_external_process_evidence_proves_hash_seed_and_exact_cublas(
         return SimpleNamespace(stdout=f"{hash(runtime._PYTHON_HASH_PROBE)}\n")
 
     monkeypatch.setattr(runtime.subprocess, "run", fake_run)
-    runtime_paths = _runtime_paths(Path.cwd())
     first = runtime._external_process_evidence(
-        5172026,
+        runtime.FROZEN_REPLAY_SEED,
         runtime_paths,  # type: ignore[arg-type]
         expected_entry_cublas_workspace_config=(
             runtime.FROZEN_PROCESS_START_CUBLAS_WORKSPACE_CONFIG
         ),
     )
-    assert first["python_hash_seed"] == "5172026"
-    assert first["process_start_cublas_workspace_config"] == ":4096:8"
+    assert first["python_hash_seed"] == "20260720"
+    assert first["process_start_cublas_workspace_config"] == ":16:8"
     assert first["active_cublas_workspace_config"] == ":16:8"
+    assert first["environment_transition_occurred"] is False
     assert len(str(first["python_hash_probe_sha256"])) == 64
     assert calls[0][0][:3] == [runtime.sys.executable, "-S", "-c"]
     assert calls[0][1]["env"] == environment
 
-    environment["CUBLAS_WORKSPACE_CONFIG"] = runtime.FROZEN_ACTIVE_CUBLAS_WORKSPACE_CONFIG
     subsequent = runtime._external_process_evidence(
-        5172026,
+        runtime.FROZEN_REPLAY_SEED,
         runtime_paths,  # type: ignore[arg-type]
         expected_entry_cublas_workspace_config=(runtime.FROZEN_ACTIVE_CUBLAS_WORKSPACE_CONFIG),
     )
     assert subsequent == first
 
     environment["CUBLAS_WORKSPACE_CONFIG"] = ":32:8"
-    with pytest.raises(RuntimeError, match="CUBLAS_WORKSPACE_CONFIG"):
+    with pytest.raises(RuntimeError, match="deterministic process environment differs"):
         runtime._external_process_evidence(
-            5172026,
+            runtime.FROZEN_REPLAY_SEED,
             runtime_paths,  # type: ignore[arg-type]
             expected_entry_cublas_workspace_config=(runtime.FROZEN_ACTIVE_CUBLAS_WORKSPACE_CONFIG),
         )
     with pytest.raises(ValueError, match="not frozen"):
+        environment["CUBLAS_WORKSPACE_CONFIG"] = runtime.FROZEN_ACTIVE_CUBLAS_WORKSPACE_CONFIG
         runtime._external_process_evidence(
-            5172026,
+            runtime.FROZEN_REPLAY_SEED,
             runtime_paths,  # type: ignore[arg-type]
             expected_entry_cublas_workspace_config=":32:8",
         )
-    environment["CUBLAS_WORKSPACE_CONFIG"] = runtime.FROZEN_ACTIVE_CUBLAS_WORKSPACE_CONFIG
     environment["PYTHONHASHSEED"] = "7"
-    with pytest.raises(RuntimeError, match="exported before launching"):
+    with pytest.raises(RuntimeError, match="deterministic process environment differs"):
         runtime._external_process_evidence(
-            5172026,
+            runtime.FROZEN_REPLAY_SEED,
             runtime_paths,  # type: ignore[arg-type]
             expected_entry_cublas_workspace_config=(runtime.FROZEN_ACTIVE_CUBLAS_WORKSPACE_CONFIG),
         )
-    environment["PYTHONHASHSEED"] = "5172026"
+    environment["PYTHONHASHSEED"] = "20260720"
     monkeypatch.setattr(
         runtime.subprocess,
         "run",
@@ -228,7 +254,7 @@ def test_external_process_evidence_proves_hash_seed_and_exact_cublas(
     )
     with pytest.raises(RuntimeError, match="running interpreter hash seed"):
         runtime._external_process_evidence(
-            5172026,
+            runtime.FROZEN_REPLAY_SEED,
             runtime_paths,  # type: ignore[arg-type]
             expected_entry_cublas_workspace_config=(runtime.FROZEN_ACTIVE_CUBLAS_WORKSPACE_CONFIG),
         )
@@ -236,7 +262,7 @@ def test_external_process_evidence_proves_hash_seed_and_exact_cublas(
     monkeypatch.setattr(runtime, "_PROCESS_START_CUBLAS_WORKSPACE_CONFIG", ":32:8")
     with pytest.raises(RuntimeError, match="module must be imported"):
         runtime._external_process_evidence(
-            5172026,
+            runtime.FROZEN_REPLAY_SEED,
             runtime_paths,  # type: ignore[arg-type]
             expected_entry_cublas_workspace_config=(runtime.FROZEN_ACTIVE_CUBLAS_WORKSPACE_CONFIG),
         )
@@ -528,12 +554,14 @@ def test_seed_everything_configures_every_rng_and_strict_mode(
     transformers = _fake_transformers_with_full_determinism(fake_torch, numpy_random, calls)
     numpy_module = SimpleNamespace(random=numpy_random)
     monkeypatch.setattr(runtime.importlib, "import_module", lambda name: numpy_module)
+    source_evidence = {
+        "function_source_sha256": runtime.FROZEN_ENABLE_FULL_DETERMINISM_SHA256,
+        "source_file_sha256": _hash("trainer-utils"),
+    }
     monkeypatch.setattr(
-        runtime,
-        "callable_source_sha256",
-        lambda helper: runtime.FROZEN_ENABLE_FULL_DETERMINISM_SHA256,
+        runtime, "transformers_determinism_source_evidence", lambda value: source_evidence
     )
-    environment = {"CUBLAS_WORKSPACE_CONFIG": runtime.FROZEN_PROCESS_START_CUBLAS_WORKSPACE_CONFIG}
+    environment = dict(process_environment.FROZEN_TRANSFORMERS_DETERMINISTIC_ENVIRONMENT)
     monkeypatch.setattr(runtime.os, "environ", environment)
     python_state = random.getstate()
     try:
@@ -557,8 +585,9 @@ def test_seed_everything_configures_every_rng_and_strict_mode(
     assert fake_torch.backends.cudnn.benchmark is False
     assert fake_torch.backends.cuda.matmul.allow_tf32 is False
     assert evidence["helper_source_sha256"] == (runtime.FROZEN_ENABLE_FULL_DETERMINISM_SHA256)
-    assert evidence["process_start_cublas_workspace_config"] == ":4096:8"
+    assert evidence["process_start_cublas_workspace_config"] == ":16:8"
     assert evidence["active_cublas_workspace_config"] == ":16:8"
+    assert evidence["effective_environment_changed"] is False
     assert evidence["python_random_seeded"] is True
     evidence_payload = {key: value for key, value in evidence.items() if key != "evidence_sha256"}
     assert evidence["evidence_sha256"] == canonical_sha256(evidence_payload)
@@ -575,13 +604,13 @@ def test_seed_everything_fails_if_strict_mode_cannot_be_enabled(
     monkeypatch.setattr(runtime.importlib, "import_module", lambda name: numpy_module)
     monkeypatch.setattr(
         runtime,
-        "callable_source_sha256",
-        lambda helper: runtime.FROZEN_ENABLE_FULL_DETERMINISM_SHA256,
+        "transformers_determinism_source_evidence",
+        lambda value: {"function_source_sha256": runtime.FROZEN_ENABLE_FULL_DETERMINISM_SHA256},
     )
     monkeypatch.setattr(
         runtime.os,
         "environ",
-        {"CUBLAS_WORKSPACE_CONFIG": runtime.FROZEN_PROCESS_START_CUBLAS_WORKSPACE_CONFIG},
+        dict(process_environment.FROZEN_TRANSFORMERS_DETERMINISTIC_ENVIRONMENT),
     )
     python_state = random.getstate()
     try:
@@ -591,7 +620,7 @@ def test_seed_everything_fails_if_strict_mode_cannot_be_enabled(
         random.setstate(python_state)
 
 
-def test_seed_everything_rejects_helper_source_drift_and_missing_transition(
+def test_seed_everything_rejects_helper_source_drift_and_environment_mutation(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     fake_torch = _FakeTorch()
@@ -603,28 +632,32 @@ def test_seed_everything_rejects_helper_source_drift_and_missing_transition(
         "import_module",
         lambda name: SimpleNamespace(random=numpy_random),
     )
-    environment = {"CUBLAS_WORKSPACE_CONFIG": runtime.FROZEN_PROCESS_START_CUBLAS_WORKSPACE_CONFIG}
+    environment = dict(process_environment.FROZEN_TRANSFORMERS_DETERMINISTIC_ENVIRONMENT)
     monkeypatch.setattr(runtime.os, "environ", environment)
-    monkeypatch.setattr(runtime, "callable_source_sha256", lambda helper: "0" * 64)
+    monkeypatch.setattr(
+        runtime,
+        "transformers_determinism_source_evidence",
+        lambda value: (_ for _ in ()).throw(RuntimeError("helper source differs")),
+    )
     with pytest.raises(RuntimeError, match="helper source differs"):
         runtime._seed_everything({"torch": fake_torch, "transformers": transformers}, 7)
     assert calls == []
 
-    no_transition = _fake_transformers_with_full_determinism(
+    mutating_helper = _fake_transformers_with_full_determinism(
         fake_torch,
         numpy_random,
         calls,
-        transition_cublas=False,
+        cublas_value=":4096:8",
     )
     monkeypatch.setattr(
         runtime,
-        "callable_source_sha256",
-        lambda helper: runtime.FROZEN_ENABLE_FULL_DETERMINISM_SHA256,
+        "transformers_determinism_source_evidence",
+        lambda value: {"function_source_sha256": runtime.FROZEN_ENABLE_FULL_DETERMINISM_SHA256},
     )
     python_state = random.getstate()
     try:
-        with pytest.raises(RuntimeError, match="activate the frozen cuBLAS"):
-            runtime._seed_everything({"torch": fake_torch, "transformers": no_transition}, 7)
+        with pytest.raises(RuntimeError, match="mutated the environment"):
+            runtime._seed_everything({"torch": fake_torch, "transformers": mutating_helper}, 7)
     finally:
         random.setstate(python_state)
 
@@ -844,7 +877,9 @@ def test_one_fresh_process_packet_writes_self_hashed_metadata(
 
     assert validated_paths == [raw_packet_path, trainer_output, metadata_path]
     assert metadata["packet_sha256"] == packet_hash
-    assert metadata["process_command_sha256"] == canonical_sha256(runtime.sys.argv)
+    process_contract = runtime.deterministic_process_contract(runtime_paths)  # type: ignore[arg-type]
+    assert metadata["process_command_sha256"] == process_contract.process_command_sha256
+    assert metadata["deterministic_process_contract_sha256"] == (process_contract.contract_sha256)
     assert metadata["process_id"] == runtime.os.getpid()
     assert metadata["process_instance_sha256"] == runtime._PROCESS_INSTANCE_SHA256
     assert metadata["raw_packet_path_sha256"] == runtime._resolved_path_sha256(raw_packet_path)
@@ -868,6 +903,7 @@ def _write_metadata(
         "runtime_id": runtime.REPLAY_RUNTIME_ID,
         "packet_sha256": packet_hash,
         "process_command_sha256": _hash(f"command-{process}"),
+        "deterministic_process_contract_sha256": _hash(f"process-contract-{process}"),
         "process_id": 1000 + process,
         "parent_process_id": 900,
         "process_instance_sha256": _hash(f"process-{process}"),

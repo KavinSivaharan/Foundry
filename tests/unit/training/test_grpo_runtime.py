@@ -17,10 +17,10 @@ from typing import cast
 
 import pytest
 
+from foundry.training import grpo_environment as process_environment
 from foundry.training import grpo_runtime as runtime
 from foundry.training import grpo_schedule as schedule
 from foundry.training.config import canonical_sha256
-from foundry.training.grpo_compatibility import callable_source_sha256
 from foundry.training.grpo_config import load_grpo_config
 from foundry.training.grpo_reward import score_reward
 
@@ -360,13 +360,27 @@ def test_frozen_arguments_preserve_all_decision_values() -> None:
 
 
 def test_external_process_contract_requires_effective_hash_seed_and_exact_cublas(
+    tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    environment = {
-        "PYTHONHASHSEED": str(runtime.FROZEN_PROCESS_SEED),
-        "CUBLAS_WORKSPACE_CONFIG": runtime.FROZEN_CUBLAS_WORKSPACE_CONFIG,
-    }
+    runtime_paths = SimpleNamespace(
+        python_executable=Path(sys.executable).resolve(),
+        source_root=(tmp_path / "source").resolve(),
+        artifact_root=(tmp_path / "artifact").resolve(),
+        model_cache_root=(tmp_path / "cache").resolve(),
+    )
+    environment = process_environment.deterministic_environment_values(runtime_paths)
     monkeypatch.setattr(os, "environ", environment)
+    monkeypatch.setattr(
+        process_environment,
+        "_PROCESS_START_CORE_ENVIRONMENT",
+        tuple(
+            sorted(
+                (key, environment[key])
+                for key in process_environment.FROZEN_CORE_PROCESS_ENVIRONMENT
+            )
+        ),
+    )
     calls: list[tuple[list[str], dict[str, object]]] = []
 
     def fake_run(command: list[str], **kwargs: object) -> SimpleNamespace:
@@ -374,23 +388,22 @@ def test_external_process_contract_requires_effective_hash_seed_and_exact_cublas
         return SimpleNamespace(stdout=f"{hash(runtime._PYTHON_HASH_PROBE)}\n")
 
     monkeypatch.setattr(subprocess, "run", fake_run)
-    runtime_paths = SimpleNamespace(python_executable=Path(sys.executable))
     evidence = runtime._external_process_evidence(  # type: ignore[arg-type]
         runtime.FROZEN_PROCESS_SEED,
         runtime_paths,
     )
     assert evidence["python_hash_seed"] == str(runtime.FROZEN_PROCESS_SEED)
-    assert evidence["cublas_workspace_config"] == ":4096:8"
+    assert evidence["cublas_workspace_config"] == ":16:8"
     assert len(str(evidence["python_hash_probe_sha256"])) == 64
     assert calls[0][0][:3] == [sys.executable, "-S", "-c"]
     assert calls[0][1]["env"] == environment
 
-    environment["CUBLAS_WORKSPACE_CONFIG"] = ":16:8"
-    with pytest.raises(RuntimeError, match="CUBLAS_WORKSPACE_CONFIG"):
+    environment["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
+    with pytest.raises(RuntimeError, match="deterministic process environment differs"):
         runtime._external_process_evidence(runtime.FROZEN_PROCESS_SEED, runtime_paths)
     environment["CUBLAS_WORKSPACE_CONFIG"] = runtime.FROZEN_CUBLAS_WORKSPACE_CONFIG
     environment["PYTHONHASHSEED"] = "7"
-    with pytest.raises(RuntimeError, match="exported before launching"):
+    with pytest.raises(RuntimeError, match="deterministic process environment differs"):
         runtime._external_process_evidence(runtime.FROZEN_PROCESS_SEED, runtime_paths)
     environment["PYTHONHASHSEED"] = str(runtime.FROZEN_PROCESS_SEED)
     monkeypatch.setattr(
@@ -402,53 +415,78 @@ def test_external_process_contract_requires_effective_hash_seed_and_exact_cublas
         runtime._external_process_evidence(runtime.FROZEN_PROCESS_SEED, runtime_paths)
 
 
-def _full_determinism_fixture(seed: int, warn_only: bool = False) -> None:
-    del seed, warn_only
-    os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":16:8"
-
-
-def test_stock_full_determinism_transition_is_source_pinned_and_not_restored(
+def test_stock_full_determinism_initialization_is_source_pinned_and_idempotent(
+    tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    environment = {"CUBLAS_WORKSPACE_CONFIG": runtime.FROZEN_CUBLAS_WORKSPACE_CONFIG}
+    runtime_paths = SimpleNamespace(
+        python_executable=Path(sys.executable).resolve(),
+        source_root=(tmp_path / "source").resolve(),
+        artifact_root=(tmp_path / "artifact").resolve(),
+        model_cache_root=(tmp_path / "cache").resolve(),
+    )
+    environment = process_environment.deterministic_environment_values(runtime_paths)
     monkeypatch.setattr(os, "environ", environment)
-    transformers = SimpleNamespace(
-        trainer_utils=SimpleNamespace(enable_full_determinism=_full_determinism_fixture)
+    monkeypatch.setattr(
+        process_environment,
+        "_PROCESS_START_CORE_ENVIRONMENT",
+        tuple(
+            sorted(
+                (key, environment[key])
+                for key in process_environment.FROZEN_CORE_PROCESS_ENVIRONMENT
+            )
+        ),
     )
-    expected_source = callable_source_sha256(_full_determinism_fixture)
-    source = runtime._stock_full_determinism_source_evidence(
-        transformers,
-        expected_source_sha256=expected_source,
-        expected_module=__name__,
-        expected_qualname=_full_determinism_fixture.__qualname__,
+    source_fixture = {
+        "function_source_sha256": runtime.FROZEN_FULL_DETERMINISM_SOURCE_SHA256,
+        "source_file_sha256": "f" * 64,
+        "environment_writes": dict(
+            process_environment.FROZEN_TRANSFORMERS_DETERMINISTIC_ENVIRONMENT
+        ),
+    }
+    monkeypatch.setattr(
+        runtime,
+        "transformers_determinism_source_evidence",
+        lambda *args, **kwargs: source_fixture,
     )
-    assert source["prelaunch_cublas_workspace_config"] == ":4096:8"
-    assert source["expected_active_cublas_workspace_config"] == ":16:8"
-    assert source["source_sha256"] == expected_source
+    source = runtime._stock_full_determinism_source_evidence(SimpleNamespace())
+    assert source["prelaunch_environment"] == dict(
+        process_environment.FROZEN_TRANSFORMERS_DETERMINISTIC_ENVIRONMENT
+    )
+    assert source["expected_active_environment"] == source["prelaunch_environment"]
+    assert source["source_sha256"] == runtime.FROZEN_FULL_DETERMINISM_SOURCE_SHA256
 
-    with pytest.raises(RuntimeError, match="source hash differs"):
-        runtime._stock_full_determinism_source_evidence(
-            transformers,
-            expected_source_sha256="0" * 64,
-            expected_module=__name__,
-            expected_qualname=_full_determinism_fixture.__qualname__,
-        )
+    torch = SimpleNamespace(
+        are_deterministic_algorithms_enabled=lambda: True,
+        is_deterministic_algorithms_warn_only_enabled=lambda: False,
+        cuda=SimpleNamespace(is_initialized=lambda: True),
+    )
+    before = runtime._require_transformers_environment(  # type: ignore[arg-type]
+        runtime_paths, "before fixture", torch
+    )
+    after_arguments = runtime._require_transformers_environment(  # type: ignore[arg-type]
+        runtime_paths, "after fixture arguments", torch
+    )
+    after_trainer = runtime._require_transformers_environment(  # type: ignore[arg-type]
+        runtime_paths, "after fixture trainer", torch
+    )
 
-    _full_determinism_fixture(runtime.FROZEN_PROCESS_SEED)
-    after_arguments = runtime._require_transformers_cublas("fixture arguments")
-    after_trainer = runtime._require_transformers_cublas("fixture trainer")
     transition = runtime._full_determinism_transition_evidence(
         source,
+        before_initialization=before,
         after_arguments=after_arguments,
         after_trainer=after_trainer,
     )
-    assert transition["environment_restored"] is False
+    assert transition["environment_transition_occurred"] is False
+    assert transition["environment_restoration_required"] is False
     assert len(str(transition["transition_sha256"])) == 64
     assert environment["CUBLAS_WORKSPACE_CONFIG"] == ":16:8"
 
     environment["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
-    with pytest.raises(RuntimeError, match="after fixture"):
-        runtime._require_transformers_cublas("fixture")
+    with pytest.raises(RuntimeError, match="deterministic process environment differs"):
+        runtime._require_transformers_environment(  # type: ignore[arg-type]
+            runtime_paths, "after fixture mutation", torch
+        )
 
 
 def test_runtime_environment_requires_exact_python_and_stack_versions(

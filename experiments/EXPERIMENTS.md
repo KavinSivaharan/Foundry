@@ -963,3 +963,21 @@ Every future experiment must be registered here before a costly run begins. Its 
   analysis, and the signal gate were not run. Optimizer steps, adapters, and checkpoints are zero.
 - **Decision:** Enforce the authorized no-retry rule and publish failure summary
   `0a1c7085a95fef8138c06b17faaa8e0b5c0af195148012ca9a88c7a07a6d1eeb`.
+
+### EXP-TRAIN-016: source-immutable verifier-GRPO V3
+
+- **Status:** orchestration correction verified; V3 execution not yet started.
+- **Authorization:** One new V3 experiment explicitly supersedes the V2 no-retry outcome while all
+  historical source/runtime directories remain immutable.
+- **Mechanical correction:** Predeclare all five Transformers 4.51.3 deterministic environment
+  writes before Python launch, including cuBLAS `:16:8`; propagate only an explicit parent
+  allowlist; bind the exact interpreter, command, import root, artifact root, and model cache; and
+  fail closed on any boundary mutation.
+- **Frozen patch evidence:** environment contract `1f80b141...38af`, Transformers file
+  `33561736...a95e`, function `18939641...4834`, command template `511500a2...a58b`.
+- **Verification:** `198/198` focused GRPO tests, `709/709` repository tests, Ruff, and strict Mypy
+  pass. Protected scientific and dependency paths changed: zero.
+- **Scientific activity:** zero model generations, backward/optimizer steps, adapters,
+  checkpoints, retention evaluations, GSM1K evaluations, or sealed-final access in this phase.
+- **Next gate:** Publish `fix: standardize GRPO deterministic environment`, then create and freeze
+  only the V3 worktree/runtime roots before same-process replay.

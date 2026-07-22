@@ -890,3 +890,17 @@ and read-only artifacts, while delegating scientific runtime-state transitions t
 audited contract. Adding a broad invariant can be just as disruptive as omitting one. Because the
 error surfaced after official model generation began, the no-retry rule correctly preserves the
 failure instead of repairing the validator post hoc.
+
+## Predeclare library-written deterministic values when the frozen implementation is known
+
+Milestone 10H supplied a narrower and stronger contract than the earlier entry-versus-transition
+model. The installed Transformers 4.51.3 helper writes five literal environment values. When that
+exact source is frozen, the launcher can set all five before Python starts. The helper then remains
+idempotent: assigning the already-present values creates no effective transition, and the same
+contract can be validated before imports and after every CUDA, model, generation, backward, and
+optimizer boundary.
+
+The companion lesson is that environment identity should not be a filtered hash of an arbitrary
+parent process. Construct a child environment from explicit required values plus a small named
+allowlist of operating-system fields. This keeps secrets and unrelated shell state outside the
+scientific identity while still preserving the DLL and process-launch fields Windows requires.

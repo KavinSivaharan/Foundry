@@ -1040,3 +1040,17 @@ replay failure. The source manifest, model manifest, detached worktree, and prim
 remained unchanged. Failure-summary SHA-256 is
 `0a1c7085a95fef8138c06b17faaa8e0b5c0af195148012ca9a88c7a07a6d1eeb`; its tracked file SHA-256
 is `d38741f5e24c63279994b2cfd983cb2005c8a5e7d141a30d84dde96585163bb4`.
+
+## Milestone 10H plan: one source-immutable V3 experiment
+
+An explicit correction authorization supersedes the Milestone 10G project stop for one new V3
+experiment only. The orchestration patch now constructs a typed, secret-free deterministic
+environment before Python starts. cuBLAS begins and remains at `:16:8`; the other four values
+written by the frozen Transformers helper are likewise predeclared and immutable.
+
+Patch verification is complete: the installed helper and file hashes match, all `198` focused GRPO
+tests and all `709` repository tests pass, strict Mypy and Ruff pass, and protected scientific and
+dependency paths have zero diff. After the exact environment-fix commit is pushed, create only
+`Foundry-grpo-frozen-v3` and `Foundry-grpo-runtime-v3`, freeze the external path/environment/source
+manifests, and proceed automatically through replay, duplicate two-step compatibility, conditional
+G1/G2, retention, and GSM1K gates while each preceding gate passes.

@@ -266,6 +266,9 @@ def _write_metadata(
         "packet_sha256": packet_hash,
         "process_instance_sha256": process_hash,
         "process_command_sha256": canonical_sha256([process_hash]),
+        "deterministic_process_contract_sha256": canonical_sha256(
+            ["process-contract", process_hash]
+        ),
         "runtime_path_contract_sha256": runtime_paths.contract_sha256,
         "process_environment_sha256": runtime_paths.process_environment_sha256,
         "process_command_template_sha256": (runtime_paths.process_command_template_sha256),

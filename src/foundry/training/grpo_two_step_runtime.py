@@ -28,10 +28,18 @@ from foundry.training.grpo_compatibility import (
     model_adapter_state,
 )
 from foundry.training.grpo_config import BASE_REVISION, load_grpo_config
+from foundry.training.grpo_environment import (
+    assert_idempotent_deterministic_initialization,
+    make_environment_guarded_trainer,
+    make_environment_validation_callback,
+    transformers_determinism_source_evidence,
+    validate_deterministic_process_environment,
+)
 from foundry.training.grpo_paths import (
     GrpoRuntimePaths,
     assert_artifact_path,
     assert_source_path,
+    deterministic_process_contract,
     load_runtime_paths,
     validate_runtime_paths,
 )
@@ -594,9 +602,9 @@ def _single_two_step_run(
     )
     _require_frozen_group_ids(groups)
 
-    os.environ["HF_HUB_OFFLINE"] = "1"
-    os.environ["TRANSFORMERS_OFFLINE"] = "1"
-    os.environ["TOKENIZERS_PARALLELISM"] = "false"
+    deterministic_stages = [
+        validate_deterministic_process_environment(runtime_paths, "before_transformers_import")
+    ]
     modules = _runtime_modules()
     torch = modules["torch"]
     transformers = modules["transformers"]
@@ -604,14 +612,57 @@ def _single_two_step_run(
     datasets = modules["datasets"]
     peft = modules["peft"]
     psutil = modules["psutil"]
+    deterministic_stages.append(
+        validate_deterministic_process_environment(
+            runtime_paths,
+            "after_transformers_import",
+            torch_module=torch,
+        )
+    )
+    transformers_source = transformers_determinism_source_evidence(transformers)
+    before_full_determinism = deterministic_stages[-1]
     numpy = replay_runtime._seed_everything(modules, config.grpo.seed)
+    after_full_determinism = validate_deterministic_process_environment(
+        runtime_paths,
+        "after_transformers_full_determinism",
+        torch_module=torch,
+        require_strict=True,
+    )
+    deterministic_stages.append(after_full_determinism)
+    initialization_idempotence = assert_idempotent_deterministic_initialization(
+        before_full_determinism, after_full_determinism
+    )
     runtime_environment = replay_runtime._runtime_environment_evidence(runtime_paths, numpy)
     cuda = replay_runtime._validate_frozen_cuda(torch)
+    deterministic_stages.append(
+        validate_deterministic_process_environment(
+            runtime_paths,
+            "after_cuda_initialization",
+            torch_module=torch,
+            require_strict=True,
+        )
+    )
     replay_runtime._prepare_cuda_replay(torch)
     process = psutil.Process()
     started = time.perf_counter()
+    deterministic_stages.append(
+        validate_deterministic_process_environment(
+            runtime_paths,
+            "before_model_loading",
+            torch_module=torch,
+            require_strict=True,
+        )
+    )
     model, tokenizer, lora_config, model_load_seconds = _prepare_runtime(
         config, model_path, modules
+    )
+    deterministic_stages.append(
+        validate_deterministic_process_environment(
+            runtime_paths,
+            "after_model_loading",
+            torch_module=torch,
+            require_strict=True,
+        )
     )
     reward_callback = VerifierRewardCallback(
         groups,
@@ -624,6 +675,14 @@ def _single_two_step_run(
         mode="compatibility",
     )
     arguments = trl.GRPOConfig(**argument_values)
+    after_arguments = validate_deterministic_process_environment(
+        runtime_paths,
+        "after_grpo_config_full_determinism",
+        torch_module=torch,
+        require_strict=True,
+    )
+    deterministic_stages.append(after_arguments)
+    assert_idempotent_deterministic_initialization(after_full_determinism, after_arguments)
     assert_frozen_grpo_arguments(
         arguments,
         config,
@@ -644,13 +703,30 @@ def _single_two_step_run(
         warning_contract=warning_contract,
         groups=groups,
     )
+    boundary_counts: dict[str, int] = {}
+    boundary_environment_sha256s: set[str] = set()
+
+    def validate_boundary(stage: str) -> None:
+        evidence = validate_deterministic_process_environment(
+            runtime_paths,
+            stage,
+            torch_module=torch,
+            require_strict=True,
+        )
+        boundary_counts[stage] = boundary_counts.get(stage, 0) + 1
+        boundary_environment_sha256s.add(str(evidence["environment_sha256"]))
+
     audited_type = make_truncation_aware_grpo_trainer(
         trl.GRPOTrainer,
         generation_scope_factory=partial(warning_contract.install, "generation"),
     )
-    trainer_type = make_two_step_evidence_trainer(audited_type, recorder)
+    guarded_type = make_environment_guarded_trainer(audited_type, validate_boundary)
+    trainer_type = make_two_step_evidence_trainer(guarded_type, recorder)
     trainer_type._foundry_torch = torch
     capture_callback = make_two_step_capture_callback(transformers.TrainerCallback, recorder)
+    environment_callback = make_environment_validation_callback(
+        transformers.TrainerCallback, validate_boundary
+    )
     train_dataset = datasets.Dataset.from_list([group.policy_row() for group in update_groups])
     trainer = trainer_type(
         model=model,
@@ -658,9 +734,17 @@ def _single_two_step_run(
         args=arguments,
         train_dataset=train_dataset,
         processing_class=tokenizer,
-        callbacks=[capture_callback],
+        callbacks=[capture_callback, environment_callback],
         peft_config=lora_config,
     )
+    after_trainer = validate_deterministic_process_environment(
+        runtime_paths,
+        "after_grpo_trainer_construction",
+        torch_module=torch,
+        require_strict=True,
+    )
+    deterministic_stages.append(after_trainer)
+    assert_idempotent_deterministic_initialization(after_full_determinism, after_trainer)
     if trainer.ref_model is not None:
         raise RuntimeError("two-step smoke unexpectedly created a second reference model")
     trained_model_reference = weakref.ref(trainer.model)
@@ -734,7 +818,7 @@ def _single_two_step_run(
     pre_release_memory = _cuda_memory_snapshot(torch)
     warning_contract.release_state_probe()
     del result, reference, policy, per_token_kl
-    del capture_callback, trainer_type, audited_type
+    del capture_callback, environment_callback, trainer_type, guarded_type, audited_type
     del trainer
     del model
     del recorder, warning_contract
@@ -745,6 +829,14 @@ def _single_two_step_run(
         model_reference=trained_model_reference,
         before=pre_release_memory,
         after=post_release_memory,
+    )
+    deterministic_stages.append(
+        validate_deterministic_process_environment(
+            runtime_paths,
+            "before_adapter_reload_model_loading",
+            torch_module=torch,
+            require_strict=True,
+        )
     )
     reloaded_base_model, reloaded_tokenizer, reload_base_seconds = _load_quantized_base(
         model_path, config, modules
@@ -759,6 +851,14 @@ def _single_two_step_run(
         str(adapter_path),
         local_files_only=True,
         is_trainable=False,
+    )
+    deterministic_stages.append(
+        validate_deterministic_process_environment(
+            runtime_paths,
+            "after_adapter_reload_model_loading",
+            torch_module=torch,
+            require_strict=True,
+        )
     )
     adapter_reload_seconds = time.perf_counter() - reload_started
     assert_cuda_only_model(reloaded)
@@ -776,7 +876,7 @@ def _single_two_step_run(
         raise RuntimeError("adapter-disabled reload did not restore the exact base")
 
     environment_sha256, environment_count, excluded_environment_count = (
-        replay_runtime._filtered_environment_sha256()
+        replay_runtime._filtered_environment_sha256(runtime_paths)
     )
     run_contract: dict[str, object] = {
         "runtime_id": TWO_STEP_RUNTIME_ID,
@@ -810,6 +910,9 @@ def _single_two_step_run(
         "finite_history_metric_names": sorted(metrics),
         "warning_contract": warning_evidence,
         "external_process_contract": external_process,
+        "transformers_determinism_source": transformers_source,
+        "deterministic_initialization_idempotence": initialization_idempotence,
+        "deterministic_process_environment_sha256": (runtime_paths.process_environment_sha256),
         "runtime_paths": runtime_paths.evidence(),
         "runtime_environment": runtime_environment,
         "environment_variable_sha256": environment_sha256,
@@ -861,11 +964,23 @@ def _single_two_step_run(
             path.stat().st_size for path in adapter_path.rglob("*") if path.is_file()
         ),
         "trained_model_release": pre_reload_release,
+        "deterministic_environment_stages": deterministic_stages,
+        "boundary_validation_counts": dict(sorted(boundary_counts.items())),
+        "boundary_environment_sha256s": sorted(boundary_environment_sha256s),
+        "environment_mutation_observed": False,
     }
     del reloaded
     del reloaded_base_model
     cleanup = replay_runtime._cleanup_cuda_replay(torch)
     resource.update(cleanup)
+    deterministic_stages.append(
+        validate_deterministic_process_environment(
+            runtime_paths,
+            "process_result_publication",
+            torch_module=torch,
+            require_strict=True,
+        )
+    )
     return packet, resource
 
 
@@ -895,12 +1010,14 @@ def _run_one_fresh_process_impl(
         trainer_output_dir=trainer_output_dir,
     )
     packet_hash = write_replay_packet_new(raw_packet_path, packet, kind="two_step_compatibility")
+    process_contract = deterministic_process_contract(runtime_paths)
     metadata: dict[str, object] = {
         "schema_version": TWO_STEP_RUNTIME_SCHEMA_VERSION,
         "runtime_id": TWO_STEP_RUNTIME_ID,
         "packet_sha256": packet_hash,
         "process_instance_sha256": _PROCESS_INSTANCE_SHA256,
-        "process_command_sha256": canonical_sha256(sys.argv),
+        "process_command_sha256": process_contract.process_command_sha256,
+        "deterministic_process_contract_sha256": process_contract.contract_sha256,
         "runtime_path_contract_sha256": runtime_paths.contract_sha256,
         "process_environment_sha256": runtime_paths.process_environment_sha256,
         "process_command_template_sha256": runtime_paths.process_command_template_sha256,
@@ -995,6 +1112,17 @@ def combine_fresh_process_runs(
         for value in process_identities
     ):
         raise ValueError("two-step runs do not prove two distinct process identities")
+    process_commands = [str(row.get("process_command_sha256")) for row in metadata]
+    process_contracts = [str(row.get("deterministic_process_contract_sha256")) for row in metadata]
+    if any(
+        len(value) != 64 or any(character not in _SHA256_CHARACTERS for character in value)
+        for value in (*process_commands, *process_contracts)
+    ):
+        raise ValueError("two-step process command or environment contract hash is invalid")
+    if len(set(process_commands)) != FRESH_PROCESS_RUNS or len(set(process_contracts)) != (
+        FRESH_PROCESS_RUNS
+    ):
+        raise RuntimeError("two-step runs do not bind two distinct exact process commands")
     resources = [cast(Mapping[str, object], row["resource_measurement"]) for row in metadata]
     if any(item.get("reserved_vram_gate_passed") is not True for item in resources):
         raise RuntimeError("one two-step run failed the reserved-VRAM gate")
@@ -1019,7 +1147,8 @@ def combine_fresh_process_runs(
             hashlib.sha256(path.read_bytes()).hexdigest() for path in packet_paths
         ],
         "process_identity_sha256s": process_identities,
-        "process_command_sha256s": [row["process_command_sha256"] for row in metadata],
+        "process_command_sha256s": process_commands,
+        "deterministic_process_contract_sha256s": process_contracts,
         "runtime_paths": runtime_paths.evidence(),
         "process_metadata_sha256s": [row["metadata_sha256"] for row in metadata],
         "resource_measurements": resources,

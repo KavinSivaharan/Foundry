@@ -2971,3 +2971,23 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
 - **Errors or uncertainty:** A diagnostic `pip check` with the training interpreter pointed at the mutable primary `src` directory exposed its ignored editable metadata and reported installed PyYAML `6.0.3` versus repository pin `6.0.2`. The required exact V2 invocation has no such ignored metadata and passes. No dependency or environment was changed. Peak RAM/VRAM and per-replay token/reward/KL aggregates remain unavailable because the post-run validator raised before persistence.
 - **Gate status:** **VERIFIED FAILURE READY TO PUBLISH.** No additional replay or scientific process is authorized.
 - **Next action:** Stage exactly the eight reviewed content-free result/documentation files, repeat index-only checks, commit as `analysis: stop verifier GRPO after immutable replay failure`, push, confirm clean 0/0 synchronization, and stop.
+
+### 2026-07-21 - Milestone 10H deterministic launch environment standardized
+
+- **Authorization:** A new explicit project-level authorization opened one V3 experiment and left
+  every V1/V2 source and runtime directory immutable. No historical evidence was reused or altered.
+- **Action performed:** Inspected the installed Transformers 4.51.3 helper before patching and
+  verified its five exact environment writes. Added a typed immutable process contract, replaced
+  raw parent-environment copying with an explicit allowlist, standardized cuBLAS at `:16:8` before
+  Python starts, and added fail-closed checks around import, deterministic initialization, CUDA,
+  model loading, generation, backward, optimizer, cleanup, and exception exits.
+- **Verification:** The helper file hashes to `33561736...a95e`, the function hashes to
+  `18939641...4834`, deterministic initialization causes no effective environment change, the V3
+  environment contract hashes to `1f80b141...38af`, all `198` focused GRPO tests pass, and all `709`
+  repository tests pass. Ruff and strict Mypy pass. All 106 protected scientific/dependency files
+  are unchanged from `ccbc88797441159f892bed28a336b625fc2ccab4`.
+- **Gate status:** **ORCHESTRATION CORRECTION VERIFIED; NO MODEL PROCESS STARTED.** Generation,
+  persisted completions, backward passes, optimizer steps, adapters, checkpoints, retention,
+  GSM1K, paired analysis, and sealed-final access remain zero.
+- **Next action:** Commit and push exactly as `fix: standardize GRPO deterministic environment`,
+  confirm clean 0/0 synchronization, then create and freeze the new detached V3 experiment.

@@ -23,14 +23,23 @@ from foundry.training.config import canonical_sha256
 from foundry.training.grpo_compatibility import (
     CONTRACT_ID,
     TopPWarningOnlyGenerationContract,
-    callable_source_sha256,
     model_adapter_state,
 )
 from foundry.training.grpo_config import BASE_REVISION, load_grpo_config
+from foundry.training.grpo_environment import (
+    FROZEN_TRANSFORMERS_DETERMINISTIC_ENVIRONMENT,
+    allowlisted_environment_evidence,
+    assert_idempotent_deterministic_initialization,
+    make_environment_guarded_trainer,
+    transformers_determinism_source_evidence,
+    validate_deterministic_process_environment,
+)
 from foundry.training.grpo_paths import (
     GrpoRuntimePaths,
     assert_artifact_path,
     assert_source_path,
+    deterministic_process_contract,
+    frozen_process_environment,
     load_runtime_paths,
     same_canonical_path,
     validate_runtime_paths,
@@ -79,6 +88,7 @@ REPLAY_RUNS = 3
 GENERATION_GROUPS = 3
 GENERATION_COMPLETIONS = GENERATION_GROUPS * COMPLETIONS_PER_GROUP
 FROZEN_REPLAY_ARM: Arm = "generic_control"
+FROZEN_REPLAY_SEED = 20_260_720
 FROZEN_GENERIC_PACKET_SHA256 = "67f48ebc3a310c0cb0db882b46759e993f3ad99faec9b7309d336d7b97f44400"
 FROZEN_GENERIC_MANIFEST_SHA256 = "5848ed6640dda21752ab9692c8e531d9175314a7d5a472616dc19ad834a6351e"
 FROZEN_REPLAY_GROUP_IDS = (
@@ -93,14 +103,14 @@ FROZEN_REWARD_IMPLEMENTATION_SHA256 = (
     "089650105e29ead3c4ad62f1e0e41263e6c2af5fb8a12cb2851644aca3599616"
 )
 ZERO_VARIANCE_POLICY_ID = "foundry-generation-only-zero-variance-record-v1"
-FROZEN_PROCESS_START_CUBLAS_WORKSPACE_CONFIG = ":4096:8"
-FROZEN_ACTIVE_CUBLAS_WORKSPACE_CONFIG = ":16:8"
+FROZEN_PROCESS_START_CUBLAS_WORKSPACE_CONFIG = ":16:8"
+FROZEN_ACTIVE_CUBLAS_WORKSPACE_CONFIG = FROZEN_PROCESS_START_CUBLAS_WORKSPACE_CONFIG
 # Compatibility alias for callers that name the externally supplied setting.
 FROZEN_CUBLAS_WORKSPACE_CONFIG = FROZEN_PROCESS_START_CUBLAS_WORKSPACE_CONFIG
 FROZEN_ENABLE_FULL_DETERMINISM_SHA256 = (
     "1893964197a05bfd07d1477815b58e42e883b9e64985f0e795b4562fc9f84834"
 )
-FULL_DETERMINISM_TRANSITION_ID = "transformers-enable-full-determinism-v4.51.3"
+FULL_DETERMINISM_TRANSITION_ID = "transformers-enable-full-determinism-idempotent-v4.51.3"
 _PYTHON_HASH_PROBE = "foundry-verifier-grpo-python-hash-probe-v1"
 _PROCESS_START_CUBLAS_WORKSPACE_CONFIG = os.environ.get("CUBLAS_WORKSPACE_CONFIG")
 _PROCESS_INSTANCE_STARTED_NS = time.time_ns()
@@ -149,17 +159,6 @@ _FROZEN_CUDA = {
     "nvidia_driver_version": "610.47",
     "torch_cuda_runtime": "12.1",
 }
-_SECRET_MARKERS = (
-    "secret",
-    "token",
-    "password",
-    "passwd",
-    "credential",
-    "api_key",
-    "apikey",
-    "authorization",
-)
-_SAFE_ENVIRONMENT_KEYS = frozenset({"TOKENIZERS_PARALLELISM"})
 
 
 def _write_json_new(path: Path, value: object) -> None:
@@ -205,18 +204,12 @@ def _strict_determinism(torch: Any) -> bool:
     )
 
 
-def _filtered_environment_sha256() -> tuple[str, int, int]:
-    retained: dict[str, str] = {}
-    excluded = 0
-    for key, value in sorted(os.environ.items()):
-        lowered = key.lower()
-        if key.upper() not in _SAFE_ENVIRONMENT_KEYS and any(
-            marker in lowered for marker in _SECRET_MARKERS
-        ):
-            excluded += 1
-            continue
-        retained[key] = value
-    return canonical_sha256(retained), len(retained), excluded
+def _filtered_environment_sha256(
+    runtime_paths: GrpoRuntimePaths,
+) -> tuple[str, int, int]:
+    """Hash the explicit environment allowlist, never the raw parent environment."""
+
+    return allowlisted_environment_evidence(runtime_paths)
 
 
 def _external_process_evidence(
@@ -225,23 +218,20 @@ def _external_process_evidence(
     *,
     expected_entry_cublas_workspace_config: str,
 ) -> dict[str, object]:
-    """Prove process-start hash seeding and the frozen cuBLAS transition entry."""
+    """Prove hash seeding and one unchanged pre-launch deterministic contract."""
 
+    if seed != FROZEN_REPLAY_SEED:
+        raise ValueError("generation replay seed differs from the frozen process seed")
+    launch_evidence = validate_deterministic_process_environment(
+        runtime_paths, "generation_replay_process_entry"
+    )
     expected_seed = str(seed)
-    if os.environ.get("PYTHONHASHSEED") != expected_seed:
-        raise RuntimeError("PYTHONHASHSEED must be exported before launching the replay process")
-    if not bool(sys.flags.hash_randomization):
-        raise RuntimeError("the replay interpreter has Python hash randomization disabled")
     if _PROCESS_START_CUBLAS_WORKSPACE_CONFIG != FROZEN_PROCESS_START_CUBLAS_WORKSPACE_CONFIG:
         raise RuntimeError(
             "the replay module must be imported by a process launched with "
             f"CUBLAS_WORKSPACE_CONFIG={FROZEN_PROCESS_START_CUBLAS_WORKSPACE_CONFIG!r}"
         )
-    allowed_entries = (
-        FROZEN_PROCESS_START_CUBLAS_WORKSPACE_CONFIG,
-        FROZEN_ACTIVE_CUBLAS_WORKSPACE_CONFIG,
-    )
-    if expected_entry_cublas_workspace_config not in allowed_entries:
+    if expected_entry_cublas_workspace_config != FROZEN_PROCESS_START_CUBLAS_WORKSPACE_CONFIG:
         raise ValueError("expected replay-entry cuBLAS configuration is not frozen")
     actual_entry = os.environ.get("CUBLAS_WORKSPACE_CONFIG")
     if actual_entry != expected_entry_cublas_workspace_config:
@@ -263,7 +253,7 @@ def _external_process_evidence(
         capture_output=True,
         text=True,
         timeout=30,
-        env=dict(os.environ),
+        env=frozen_process_environment(runtime_paths),
     )
     values = [line.strip() for line in completed.stdout.splitlines() if line.strip()]
     if values != [str(current_hash)]:
@@ -285,8 +275,17 @@ def _external_process_evidence(
         "first_replay_entry_cublas_workspace_config": (
             FROZEN_PROCESS_START_CUBLAS_WORKSPACE_CONFIG
         ),
-        "subsequent_replay_entry_cublas_workspace_config": (FROZEN_ACTIVE_CUBLAS_WORKSPACE_CONFIG),
+        "subsequent_replay_entry_cublas_workspace_config": (
+            FROZEN_PROCESS_START_CUBLAS_WORKSPACE_CONFIG
+        ),
+        "environment_transition_occurred": False,
         "entry_state_verified": True,
+        "deterministic_process_environment": {
+            "stage": launch_evidence["stage"],
+            "environment": launch_evidence["environment"],
+            "environment_sha256": launch_evidence["environment_sha256"],
+            "python_hash_randomization": launch_evidence["python_hash_randomization"],
+        },
     }
 
 
@@ -485,9 +484,8 @@ def _full_determinism_evidence(modules: Mapping[str, Any], seed: int) -> dict[st
     helper = getattr(trainer_utils, "enable_full_determinism", None)
     if not callable(helper):
         raise RuntimeError("Transformers full-determinism helper is unavailable")
-    source_sha256 = callable_source_sha256(helper)
-    if source_sha256 != FROZEN_ENABLE_FULL_DETERMINISM_SHA256:
-        raise RuntimeError("Transformers full-determinism helper source differs")
+    source_evidence = transformers_determinism_source_evidence(transformers)
+    source_sha256 = str(source_evidence["function_source_sha256"])
     active_cublas = os.environ.get("CUBLAS_WORKSPACE_CONFIG")
     if active_cublas != FROZEN_ACTIVE_CUBLAS_WORKSPACE_CONFIG:
         raise RuntimeError(
@@ -498,15 +496,9 @@ def _full_determinism_evidence(modules: Mapping[str, Any], seed: int) -> dict[st
     if not bool(torch.backends.cudnn.deterministic) or bool(torch.backends.cudnn.benchmark):
         raise RuntimeError("Transformers helper did not enable deterministic cuDNN behavior")
     blocking_environment = {
-        name: os.environ.get(name)
-        for name in (
-            "ASCEND_LAUNCH_BLOCKING",
-            "CUDA_LAUNCH_BLOCKING",
-            "FLASH_ATTENTION_DETERMINISTIC",
-            "HCCL_DETERMINISTIC",
-        )
+        name: os.environ.get(name) for name in FROZEN_TRANSFORMERS_DETERMINISTIC_ENVIRONMENT
     }
-    if set(blocking_environment.values()) != {"1"}:
+    if blocking_environment != dict(FROZEN_TRANSFORMERS_DETERMINISTIC_ENVIRONMENT):
         raise RuntimeError("Transformers helper did not set its frozen blocking environment")
     if random.getstate() != random.Random(seed).getstate():
         raise RuntimeError("Transformers helper did not seed the Python random generator")
@@ -519,6 +511,8 @@ def _full_determinism_evidence(modules: Mapping[str, Any], seed: int) -> dict[st
         "process_start_cublas_workspace_config": (FROZEN_PROCESS_START_CUBLAS_WORKSPACE_CONFIG),
         "active_cublas_workspace_config": active_cublas,
         "blocking_environment": blocking_environment,
+        "source_evidence": source_evidence,
+        "effective_environment_changed": False,
         "torch_strict_determinism": True,
         "cudnn_deterministic": True,
         "cudnn_benchmark": False,
@@ -539,9 +533,14 @@ def _seed_everything(modules: Mapping[str, Any], seed: int) -> Any:
     helper = getattr(trainer_utils, "enable_full_determinism", None)
     if not callable(helper):
         raise RuntimeError("Transformers full-determinism helper is unavailable")
-    if callable_source_sha256(helper) != FROZEN_ENABLE_FULL_DETERMINISM_SHA256:
-        raise RuntimeError("Transformers full-determinism helper source differs")
+    transformers_determinism_source_evidence(transformers)
+    before = {key: os.environ.get(key) for key in FROZEN_TRANSFORMERS_DETERMINISTIC_ENVIRONMENT}
+    if before != dict(FROZEN_TRANSFORMERS_DETERMINISTIC_ENVIRONMENT):
+        raise RuntimeError("deterministic environment differs before Transformers initialization")
     helper(seed, warn_only=False)
+    after = {key: os.environ.get(key) for key in FROZEN_TRANSFORMERS_DETERMINISTIC_ENVIRONMENT}
+    if after != before:
+        raise RuntimeError("Transformers deterministic initialization mutated the environment")
     torch.backends.cuda.matmul.allow_tf32 = False
     _full_determinism_evidence(modules, seed)
     return numpy
@@ -636,24 +635,66 @@ def _single_generation_replay_impl(
         group_ids=[group.group_id for group in groups],
     )
 
-    os.environ["HF_HUB_OFFLINE"] = "1"
-    os.environ["TRANSFORMERS_OFFLINE"] = "1"
-    os.environ["TOKENIZERS_PARALLELISM"] = "false"
+    deterministic_stages = [
+        validate_deterministic_process_environment(runtime_paths, "before_transformers_import")
+    ]
     modules = _runtime_modules()
     torch = modules["torch"]
     transformers = modules["transformers"]
     trl = modules["trl"]
     datasets = modules["datasets"]
     psutil = modules["psutil"]
+    deterministic_stages.append(
+        validate_deterministic_process_environment(
+            runtime_paths,
+            "after_transformers_import",
+            torch_module=torch,
+        )
+    )
+    before_full_determinism = deterministic_stages[-1]
     numpy = _seed_everything(modules, config.grpo.seed)
+    after_full_determinism = validate_deterministic_process_environment(
+        runtime_paths,
+        "after_transformers_full_determinism",
+        torch_module=torch,
+        require_strict=True,
+    )
+    deterministic_stages.append(after_full_determinism)
+    initialization_idempotence = assert_idempotent_deterministic_initialization(
+        before_full_determinism, after_full_determinism
+    )
     full_determinism = _full_determinism_evidence(modules, config.grpo.seed)
     runtime_environment = _runtime_environment_evidence(runtime_paths, numpy)
     cuda = _validate_frozen_cuda(torch)
+    deterministic_stages.append(
+        validate_deterministic_process_environment(
+            runtime_paths,
+            "after_cuda_initialization",
+            torch_module=torch,
+            require_strict=True,
+        )
+    )
     _prepare_cuda_replay(torch)
     process = psutil.Process()
     started = time.perf_counter()
+    deterministic_stages.append(
+        validate_deterministic_process_environment(
+            runtime_paths,
+            "before_model_loading",
+            torch_module=torch,
+            require_strict=True,
+        )
+    )
     model, tokenizer, lora_config, model_load_seconds = _prepare_runtime(
         config, model_path, modules
+    )
+    deterministic_stages.append(
+        validate_deterministic_process_environment(
+            runtime_paths,
+            "after_model_loading",
+            torch_module=torch,
+            require_strict=True,
+        )
     )
     reward_callback = VerifierRewardCallback(
         groups,
@@ -666,6 +707,14 @@ def _single_generation_replay_impl(
         mode="compatibility",
     )
     arguments = trl.GRPOConfig(**argument_values)
+    after_arguments = validate_deterministic_process_environment(
+        runtime_paths,
+        "after_grpo_config_full_determinism",
+        torch_module=torch,
+        require_strict=True,
+    )
+    deterministic_stages.append(after_arguments)
+    assert_idempotent_deterministic_initialization(after_full_determinism, after_arguments)
     assert_frozen_grpo_arguments(
         arguments,
         config,
@@ -678,10 +727,24 @@ def _single_generation_replay_impl(
         generation_owner=transformers.GenerationMixin,
         top_p_call=transformers.generation.logits_process.TopPLogitsWarper.__call__,
     )
-    trainer_type = make_truncation_aware_grpo_trainer(
+    boundary_counts: dict[str, int] = {}
+    boundary_environment_sha256s: set[str] = set()
+
+    def validate_boundary(stage: str) -> None:
+        evidence = validate_deterministic_process_environment(
+            runtime_paths,
+            stage,
+            torch_module=torch,
+            require_strict=True,
+        )
+        boundary_counts[stage] = boundary_counts.get(stage, 0) + 1
+        boundary_environment_sha256s.add(str(evidence["environment_sha256"]))
+
+    audited_trainer_type = make_truncation_aware_grpo_trainer(
         trl.GRPOTrainer,
         generation_scope_factory=lambda: warning_contract.install("generation"),
     )
+    trainer_type = make_environment_guarded_trainer(audited_trainer_type, validate_boundary)
     train_dataset = datasets.Dataset.from_list([group.policy_row() for group in update_groups])
     trainer = trainer_type(
         model=model,
@@ -691,6 +754,14 @@ def _single_generation_replay_impl(
         processing_class=tokenizer,
         peft_config=lora_config,
     )
+    after_trainer = validate_deterministic_process_environment(
+        runtime_paths,
+        "after_grpo_trainer_construction",
+        torch_module=torch,
+        require_strict=True,
+    )
+    deterministic_stages.append(after_trainer)
+    assert_idempotent_deterministic_initialization(after_full_determinism, after_trainer)
     if trainer.ref_model is not None:
         raise RuntimeError("generation replay unexpectedly created a second reference model")
     assert_only_lora_trainable(trainer.model)
@@ -766,7 +837,7 @@ def _single_generation_replay_impl(
     if warning_evidence["generation_calls"] != GENERATION_GROUPS:
         raise RuntimeError("warning contract call count differs from the three replay groups")
     environment_sha256, environment_count, excluded_environment_count = (
-        _filtered_environment_sha256()
+        _filtered_environment_sha256(runtime_paths)
     )
     run_contract: dict[str, object] = {
         "runtime_id": REPLAY_RUNTIME_ID,
@@ -807,6 +878,8 @@ def _single_generation_replay_impl(
         "external_process_contract": external_process,
         "runtime_paths": runtime_paths.evidence(),
         "full_determinism_transition": full_determinism,
+        "deterministic_initialization_idempotence": initialization_idempotence,
+        "deterministic_process_environment_sha256": (runtime_paths.process_environment_sha256),
         "runtime_environment": runtime_environment,
         "environment_variable_sha256": environment_sha256,
         "environment_variable_count": environment_count,
@@ -831,6 +904,10 @@ def _single_generation_replay_impl(
         "peak_process_ram_bytes": _peak_process_ram(process),
         "entry_cublas_workspace_config": expected_entry_cublas_workspace_config,
         "active_cublas_workspace_config": FROZEN_ACTIVE_CUBLAS_WORKSPACE_CONFIG,
+        "deterministic_environment_stages": deterministic_stages,
+        "boundary_validation_counts": dict(sorted(boundary_counts.items())),
+        "boundary_environment_sha256s": sorted(boundary_environment_sha256s),
+        "environment_mutation_observed": False,
     }
     return packet, resource
 
@@ -898,11 +975,6 @@ def run_same_process_replay(
     packets: list[dict[str, object]] = []
     resources: list[dict[str, object]] = []
     for index in range(REPLAY_RUNS):
-        expected_entry_cublas_workspace_config = (
-            FROZEN_PROCESS_START_CUBLAS_WORKSPACE_CONFIG
-            if index == 0
-            else FROZEN_ACTIVE_CUBLAS_WORKSPACE_CONFIG
-        )
         packet, resource = _single_generation_replay(
             runtime_paths=runtime_paths,
             config_path=config_path,
@@ -910,7 +982,7 @@ def run_same_process_replay(
             manifest_path=manifest_path,
             arm=arm,
             trainer_output_dir=raw_directory / f"run_{index + 1}" / "trainer",
-            expected_entry_cublas_workspace_config=(expected_entry_cublas_workspace_config),
+            expected_entry_cublas_workspace_config=(FROZEN_PROCESS_START_CUBLAS_WORKSPACE_CONFIG),
         )
         write_replay_packet_new(
             raw_directory / f"run_{index + 1}.json",
@@ -977,11 +1049,13 @@ def run_one_fresh_process_packet(
         expected_entry_cublas_workspace_config=(FROZEN_PROCESS_START_CUBLAS_WORKSPACE_CONFIG),
     )
     packet_hash = write_replay_packet_new(raw_packet_path, packet, kind="generation_only")
+    process_contract = deterministic_process_contract(runtime_paths)
     metadata: dict[str, object] = {
         "schema_version": REPLAY_RUNTIME_SCHEMA_VERSION,
         "runtime_id": REPLAY_RUNTIME_ID,
         "packet_sha256": packet_hash,
-        "process_command_sha256": canonical_sha256(sys.argv),
+        "process_command_sha256": process_contract.process_command_sha256,
+        "deterministic_process_contract_sha256": process_contract.contract_sha256,
         "process_id": os.getpid(),
         "parent_process_id": os.getppid(),
         "process_instance_sha256": _PROCESS_INSTANCE_SHA256,
@@ -1024,6 +1098,7 @@ def combine_fresh_process_replay(
         "runtime_id",
         "packet_sha256",
         "process_command_sha256",
+        "deterministic_process_contract_sha256",
         "process_id",
         "parent_process_id",
         "process_instance_sha256",
@@ -1056,6 +1131,7 @@ def combine_fresh_process_replay(
         for field in (
             "packet_sha256",
             "process_command_sha256",
+            "deterministic_process_contract_sha256",
             "process_instance_sha256",
             "runtime_path_contract_sha256",
             "process_environment_sha256",

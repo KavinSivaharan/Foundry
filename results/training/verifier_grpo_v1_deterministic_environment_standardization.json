@@ -1,0 +1,114 @@
+{
+  "artifact_id": "foundry-verifier-grpo-deterministic-environment-standardization-v1",
+  "corrected_launch_cublas_workspace_config": ":16:8",
+  "cuda_initialized_during_transformers_contract_inspection": false,
+  "dependency_changed": false,
+  "deterministic_environment": {
+    "ASCEND_LAUNCH_BLOCKING": "1",
+    "CUBLAS_WORKSPACE_CONFIG": ":16:8",
+    "CUDA_LAUNCH_BLOCKING": "1",
+    "FLASH_ATTENTION_DETERMINISTIC": "1",
+    "HCCL_DETERMINISTIC": "1",
+    "HF_HOME": "C:\\Users\\Admin\\Projects\\Foundry\\data\\huggingface",
+    "HF_HUB_OFFLINE": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONHASHSEED": "20260720",
+    "PYTHONNOUSERSITE": "1",
+    "PYTHONPATH": "C:\\Users\\Admin\\Projects\\Foundry-grpo-frozen-v3\\src",
+    "TEMP": "C:\\Users\\Admin\\Projects\\Foundry-grpo-runtime-v3\\temp",
+    "TMP": "C:\\Users\\Admin\\Projects\\Foundry-grpo-runtime-v3\\temp",
+    "TMPDIR": "C:\\Users\\Admin\\Projects\\Foundry-grpo-runtime-v3\\temp",
+    "TOKENIZERS_PARALLELISM": "false",
+    "TRANSFORMERS_OFFLINE": "1"
+  },
+  "deterministic_environment_sha256": "1f80b1415fc189488b50d04fc69bb0c0ab098ab4f66d03efebac2b6b95b738af",
+  "deterministic_initialization_environment_transition": false,
+  "focused_grpo_tests_passed": 198,
+  "frozen_transformers_cublas_workspace_config": ":16:8",
+  "full_unit_and_integration_tests_passed": 709,
+  "intentionally_inherited_environment_keys": [
+    "COMSPEC",
+    "DRIVERDATA",
+    "NUMBER_OF_PROCESSORS",
+    "OS",
+    "PATH",
+    "PATHEXT",
+    "PROCESSOR_ARCHITECTURE",
+    "PROCESSOR_IDENTIFIER",
+    "PROCESSOR_LEVEL",
+    "PROCESSOR_REVISION",
+    "PROGRAMDATA",
+    "SYSTEMDRIVE",
+    "SYSTEMROOT",
+    "WINDIR"
+  ],
+  "milestone": "10H",
+  "model_generation_occurred": false,
+  "mypy_passed": true,
+  "new_deterministic_environment_tests_passed": 16,
+  "optimizer_steps": 0,
+  "orchestration_source_sha256": {
+    "src/foundry/training/grpo_environment.py": {
+      "new": "82cb333cf76682e49d6a02400df7ca84eac1f29de20a05c6154f291149ddf974",
+      "prior": null
+    },
+    "src/foundry/training/grpo_paths.py": {
+      "new": "d6844ff9f98bdea269d1da0c98210d746b070f671eb3aebbf24adc25e4d0990e",
+      "prior": "8d4c24e4b961755e0959d078e6d1224ba85b39d6f6019b789b56a8664c8e404f"
+    },
+    "src/foundry/training/grpo_replay_runtime.py": {
+      "new": "cb2562f79dc360e9d214a314f5f992b75043ebb14f4ec8078512963c02bb956f",
+      "prior": "758dc1fbd5016b45d40012b5ec42aac8339ef087563b8f0654a74c45e4c5e5b6"
+    },
+    "src/foundry/training/grpo_runtime.py": {
+      "new": "1517678fc80e8e9aa9e6e9220692eb8d29b6b3a2fecc91a4bd0842a72a403bd9",
+      "prior": "d92fc9923900ed6861864197ec099179b9149296c7be0f04e125faee85cf1323"
+    },
+    "src/foundry/training/grpo_two_step_runtime.py": {
+      "new": "2490d1bad41eb1695fe4d8b174eb461fe16d59b8f374c7259a2d3b29e768fd6f",
+      "prior": "61b429e7bac4098f4930ec63ea618ddc1c38cd15fc1e7b2e390d3a2d0c00920c"
+    }
+  },
+  "phase": "orchestration_patch",
+  "prior_launch_cublas_workspace_config": ":4096:8",
+  "process_command_template_sha256": "511500a21ae74c995ead9dda0d0a7b1e5e91036a505a2ad48b58b9146a0ca58b",
+  "protected_scientific_file_count": 106,
+  "protected_scientific_manifest_sha256": "c72439071410d4dbb34d87fca6005080a21e6c3d8881c9d6ca955e010f9b146f",
+  "protected_scientific_paths_changed": 0,
+  "python_executable": "C:\\Users\\Admin\\Projects\\Foundry\\.venv-training\\Scripts\\python.exe",
+  "python_executable_sha256": "0b471133e110cfb53a061cad528ce8e517d7b9ac41a0a396c39ad795a487fc14",
+  "root_cause": "launch_environment_differed_from_frozen_transformers_deterministic_environment",
+  "ruff_passed": true,
+  "schema_version": 1,
+  "scientific_artifact_sha256": {
+    "final_retention_subset": "f56845076a1a59e5ca1a95466541339b56f026e945f86118caec307a690ee4ec",
+    "g1_execution": "d7023bf6705702a39dfe8d8718db264f6b2c0e2e211753145ad71e2368f4f4c0",
+    "g2_execution": "e31d814fc4bcd9fa94e6b74f48992bb79ec70bcf678e56e620277ea19dbe7bd8",
+    "generic_manifest": "5848ed6640dda21752ab9692c8e531d9175314a7d5a472616dc19ad834a6351e",
+    "generic_packet": "67f48ebc3a310c0cb0db882b46759e993f3ad99faec9b7309d336d7b97f44400",
+    "grpo_configuration": "01515d186f2485662ea20ef0b444902bdf368a2b4a8cde335f34bfe1b9222bda",
+    "paired_schedule": "23fede9132f53b7d32f354056c728fc68faa20586a9162e101834db34f71ca64",
+    "reward_configuration": "4a47359fa3129b1bfd79dd158ecb609177e9b1642a95368c106e016a1554a965",
+    "reward_implementation": "089650105e29ead3c4ad62f1e0e41263e6c2af5fb8a12cb2851644aca3599616",
+    "targeted_manifest": "cb13d4d522746bdfa829c9a405defdb0eff0acbd23859dc7fe49457318cc1ccf",
+    "targeted_packet": "1d13acb49aeea00bf2c68b6488d225796ee95411f6a79343d969731b6f1a2286"
+  },
+  "scientific_contract_changed": false,
+  "sealed_final_accessed": false,
+  "secrets_included": false,
+  "starting_commit": "ccbc88797441159f892bed28a336b625fc2ccab4",
+  "summary_sha256": "459c62ca623907d91f5b4cab7e18e1969547d7d0336a8c51cfd889087d0755f7",
+  "transformers_environment_writes": {
+    "ASCEND_LAUNCH_BLOCKING": "1",
+    "CUBLAS_WORKSPACE_CONFIG": ":16:8",
+    "CUDA_LAUNCH_BLOCKING": "1",
+    "FLASH_ATTENTION_DETERMINISTIC": "1",
+    "HCCL_DETERMINISTIC": "1"
+  },
+  "transformers_function_source_sha256": "1893964197a05bfd07d1477815b58e42e883b9e64985f0e795b4562fc9f84834",
+  "transformers_initialization_effective_environment_changed": false,
+  "transformers_source_file": "C:\\Users\\Admin\\Projects\\Foundry\\.venv-training\\Lib\\site-packages\\transformers\\trainer_utils.py",
+  "transformers_source_file_sha256": "33561736fc04ae94729a513845b9bb900637a5eb6a768aabe018494cf631a95e",
+  "transformers_version": "4.51.3",
+  "uncontrolled_parent_environment_compared": false
+}

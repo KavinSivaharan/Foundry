@@ -11,7 +11,6 @@ import argparse
 import hashlib
 import json
 import ntpath
-import os
 import platform
 import subprocess
 import sys
@@ -21,6 +20,14 @@ from pathlib import Path
 from typing import cast
 
 from foundry.training.config import canonical_sha256
+from foundry.training.grpo_environment import (
+    FROZEN_CORE_PROCESS_ENVIRONMENT,
+    GrpoDeterministicProcessEnvironment,
+    build_allowlisted_launch_environment,
+    deterministic_environment_sha256,
+    freeze_deterministic_process_environment,
+    validate_deterministic_process_environment,
+)
 
 RUNTIME_PATHS_ID = "foundry-verifier-grpo-runtime-paths-v1"
 RUNTIME_PATHS_SCHEMA_VERSION = 1
@@ -28,15 +35,7 @@ FROZEN_PYTHON_IMPLEMENTATION = "CPython"
 FROZEN_PYTHON_VERSION = "3.12.10"
 FROZEN_PYTHON_EXECUTABLE_SHA256 = "0b471133e110cfb53a061cad528ce8e517d7b9ac41a0a396c39ad795a487fc14"
 FROZEN_PYTHON_EXECUTABLE_SIZE_BYTES = 274_424
-FROZEN_PROCESS_ENVIRONMENT = {
-    "CUBLAS_WORKSPACE_CONFIG": ":4096:8",
-    "HF_HUB_OFFLINE": "1",
-    "PYTHONDONTWRITEBYTECODE": "1",
-    "PYTHONHASHSEED": "20260720",
-    "PYTHONNOUSERSITE": "1",
-    "TOKENIZERS_PARALLELISM": "false",
-    "TRANSFORMERS_OFFLINE": "1",
-}
+FROZEN_PROCESS_ENVIRONMENT = dict(FROZEN_CORE_PROCESS_ENVIRONMENT)
 PROCESS_COMMAND_TEMPLATES = {
     "generation_same_process": [
         "{python_executable}",
@@ -534,25 +533,20 @@ def frozen_process_environment(
     runtime_paths: GrpoRuntimePaths,
     base_environment: Mapping[str, str] | None = None,
 ) -> dict[str, str]:
-    environment = dict(os.environ if base_environment is None else base_environment)
-    environment.pop("PYTHONHOME", None)
-    environment.update(
-        _process_environment_values(
-            runtime_paths.source_root,
-            runtime_paths.model_cache_root,
-            runtime_paths.artifact_root,
-        )
-    )
-    return environment
+    return build_allowlisted_launch_environment(runtime_paths, base_environment)
 
 
 def frozen_environment_sha256(runtime_paths: GrpoRuntimePaths) -> str:
-    values = _process_environment_values(
-        runtime_paths.source_root,
-        runtime_paths.model_cache_root,
-        runtime_paths.artifact_root,
-    )
-    return canonical_sha256(values)
+    return deterministic_environment_sha256(runtime_paths)
+
+
+def deterministic_process_contract(
+    runtime_paths: GrpoRuntimePaths,
+    process_command: Sequence[str] | None = None,
+) -> GrpoDeterministicProcessEnvironment:
+    """Freeze one exact, typed process-environment and command identity."""
+
+    return freeze_deterministic_process_environment(runtime_paths, process_command)
 
 
 def python_module_command(
@@ -584,20 +578,9 @@ def validate_foundry_import(runtime_paths: GrpoRuntimePaths) -> dict[str, str]:
 
 
 def _assert_process_environment(runtime_paths: GrpoRuntimePaths) -> None:
-    expected = _process_environment_values(
-        runtime_paths.source_root,
-        runtime_paths.model_cache_root,
-        runtime_paths.artifact_root,
-    )
-    actual = {key: os.environ.get(key) for key in expected}
-    if actual != expected:
-        raise RuntimeError(f"frozen process environment differs: {actual}")
+    validate_deterministic_process_environment(runtime_paths, "runtime_paths_validation")
     if frozen_environment_sha256(runtime_paths) != runtime_paths.process_environment_sha256:
         raise RuntimeError("frozen process-environment hash differs")
-    if os.environ.get("PYTHONHASHSEED") != "20260720" or not bool(sys.flags.hash_randomization):
-        raise RuntimeError("Python hash seed or hash randomization differs")
-    if not bool(sys.dont_write_bytecode):
-        raise RuntimeError("PYTHONDONTWRITEBYTECODE was not effective before interpreter launch")
 
 
 def validate_runtime_paths(runtime_paths: GrpoRuntimePaths) -> dict[str, object]:
