@@ -37,6 +37,15 @@ FROZEN_PYTHON_EXECUTABLE_SHA256 = "0b471133e110cfb53a061cad528ce8e517d7b9ac41a0a
 FROZEN_PYTHON_EXECUTABLE_SIZE_BYTES = 274_424
 FROZEN_PROCESS_ENVIRONMENT = dict(FROZEN_CORE_PROCESS_ENVIRONMENT)
 PROCESS_COMMAND_TEMPLATES = {
+    "child_cuda_probe": [
+        "{python_executable}",
+        "-m",
+        "foundry.training.grpo_gpu",
+        "child-probe",
+        "--runtime-paths",
+        "{runtime_paths}",
+        "{frozen_inputs_and_outputs}",
+    ],
     "generation_same_process": [
         "{python_executable}",
         "-m",

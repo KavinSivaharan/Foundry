@@ -354,3 +354,19 @@ The exact next action is project stop for verifier-GRPO. Preserve V3; do not ret
 allowlist, or start downstream gates without a new explicit project-level authorization. Human
 language review remains pending at
 `file:///C:/Users/Admin/Projects/Foundry/results/raw/foundry_500x2_signal_review/codex_assisted_review.html`.
+
+## Milestone 10I CUDA-runtime orchestration correction
+
+The V3 stop was caused by an NVML-backed monitoring command inside the minimized model child, not
+by failed CUDA computation or a replay mismatch. V4 makes parent `nvidia-smi` evidence explicitly
+non-gating and validates the child through the frozen PyTorch CUDA runtime. The probe checks exact
+GPU/runtime identity, public free/total memory, fixed FP32 allocation, elementwise arithmetic,
+matrix multiplication, synchronization, CUDA-only placement, and one repeated result hash while
+rejecting NVML and pynvml.
+
+The host evidence contract hashes to `18a87a86a7d165b15c91c07c871f8df5dbf286644eba7f00a7cf8c027c261f68`,
+the child contract to `ead57033d7ff6fec5d4e74cd5288c7aad670e787f40d0c47bf1d12efa48720ec`,
+and the fixed probe configuration to `1fc17a20ab4ae8e7b76f9bd9ccda432169410ba786b6ea7ef5f160349a8c6775`.
+All `213` focused GRPO tests and all `724` repository tests pass. Protected scientific and
+dependency paths are unchanged; no model load, generation, optimizer step, adapter, checkpoint,
+retention result, GSM1K result, or sealed-final access occurred. V4 compatibility has not yet run.

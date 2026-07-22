@@ -494,3 +494,10 @@ The subsequently launched V3 same-process gate failed before model loading becau
 could not initialize NVML under the exact child-environment allowlist. No completion, adapter,
 retention score, or GSM1K prediction was produced. The GRPO one-seed signal gate is therefore
 **not reached**, and the historical `521/814` base result was not rerun.
+
+### Milestone 10I remains pre-signal during the CUDA-runtime correction
+
+The newly authorized V4 source correction changes only GPU orchestration: parent NVML monitoring is
+separate from an authoritative direct PyTorch CUDA child probe. No model process, adapter, retention
+evaluation, or GSM1K evaluation ran while implementing it. The GRPO one-seed signal gate remains
+**not reached**; the historical frozen base remains `521/814` and was not rerun.

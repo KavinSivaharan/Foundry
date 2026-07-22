@@ -5,11 +5,13 @@ import json
 import random
 from pathlib import Path
 from types import SimpleNamespace
+from typing import cast
 
 import pytest
 import torch
 
 from foundry.training import grpo_environment as process_environment
+from foundry.training import grpo_gpu as gpu
 from foundry.training import grpo_replay_runtime as runtime
 from foundry.training.config import canonical_sha256
 
@@ -268,33 +270,10 @@ def test_external_process_evidence_proves_hash_seed_and_exact_cublas(
         )
 
 
-def test_driver_version_requires_one_nonempty_value(monkeypatch: pytest.MonkeyPatch) -> None:
-    calls: list[tuple[list[str], dict[str, object]]] = []
-
-    def fake_run(command: list[str], **kwargs: object) -> SimpleNamespace:
-        calls.append((command, kwargs))
-        return SimpleNamespace(stdout="610.47\n")
-
-    monkeypatch.setattr(runtime.subprocess, "run", fake_run)
-    assert runtime._driver_version() == "610.47"
-    assert calls == [
-        (
-            [
-                "nvidia-smi",
-                "--query-gpu=driver_version",
-                "--format=csv,noheader,nounits",
-            ],
-            {"check": True, "capture_output": True, "text": True, "timeout": 30},
-        )
-    ]
-
-    monkeypatch.setattr(
-        runtime.subprocess,
-        "run",
-        lambda *args, **kwargs: SimpleNamespace(stdout="610.47\n610.47\n"),
-    )
-    with pytest.raises(RuntimeError, match="exactly one NVIDIA driver version"):
-        runtime._driver_version()
+def test_replay_source_contains_no_child_nvml_probe() -> None:
+    source = Path(runtime.__file__).read_text(encoding="utf-8")
+    assert "nvidia-smi" not in source
+    assert "pynvml" not in source
 
 
 def test_runtime_environment_evidence_binds_interpreter_packages_and_os(
@@ -393,16 +372,24 @@ def test_frozen_cuda_validation_and_synchronized_cleanup(
             return 22
 
     fake_torch = SimpleNamespace(cuda=Cuda())
-    cuda_base = {
-        "gpu_name": "NVIDIA GeForce RTX 3080",
-        "gpu_total_memory_bytes": 10_736_893_952,
-        "torch_cuda_runtime": "12.1",
-    }
-    monkeypatch.setattr(runtime, "_validate_cuda", lambda torch: dict(cuda_base))
-    monkeypatch.setattr(runtime, "_driver_version", lambda: "610.47")
+    sentinel = cast(gpu.ChildCudaComputeEvidence, object())
+    runtime_paths = _runtime_paths(Path.cwd())
+    calls_to_validate: list[tuple[object, object, str]] = []
+
+    def validate(torch: object, paths: object, *, stage: str) -> gpu.ChildCudaComputeEvidence:
+        calls_to_validate.append((torch, paths, stage))
+        return sentinel
+
+    monkeypatch.setattr(runtime, "_validate_cuda", validate)
     monkeypatch.setattr(runtime.gc, "collect", lambda: calls.append("gc") or 0)
 
-    assert runtime._validate_frozen_cuda(fake_torch) == runtime._FROZEN_CUDA
+    assert (
+        runtime._validate_frozen_cuda(  # type: ignore[arg-type]
+            fake_torch, runtime_paths
+        )
+        is sentinel
+    )
+    assert calls_to_validate == [(fake_torch, runtime_paths, "generation_replay")]
     runtime._prepare_cuda_replay(fake_torch)
     cleanup = runtime._cleanup_cuda_replay(fake_torch)
     assert calls == [
@@ -422,10 +409,6 @@ def test_frozen_cuda_validation_and_synchronized_cleanup(
         "post_cleanup_allocated_vram_bytes": 11,
         "post_cleanup_reserved_vram_bytes": 22,
     }
-
-    monkeypatch.setattr(runtime, "_driver_version", lambda: "999.0")
-    with pytest.raises(RuntimeError, match="differs from the frozen contract"):
-        runtime._validate_frozen_cuda(fake_torch)
 
 
 def test_single_replay_cleanup_runs_on_success_and_failure(

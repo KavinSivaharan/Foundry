@@ -35,6 +35,7 @@ from foundry.training.grpo_environment import (
     transformers_determinism_source_evidence,
     validate_deterministic_process_environment,
 )
+from foundry.training.grpo_gpu import current_cuda_memory_evidence
 from foundry.training.grpo_paths import (
     GrpoRuntimePaths,
     assert_artifact_path,
@@ -633,7 +634,9 @@ def _single_two_step_run(
         before_full_determinism, after_full_determinism
     )
     runtime_environment = replay_runtime._runtime_environment_evidence(runtime_paths, numpy)
-    cuda = replay_runtime._validate_frozen_cuda(torch)
+    child_cuda = replay_runtime._validate_frozen_cuda(torch, runtime_paths)
+    cuda = child_cuda.stable_evidence()
+    child_cuda_resource = child_cuda.resource_payload()
     deterministic_stages.append(
         validate_deterministic_process_environment(
             runtime_paths,
@@ -947,6 +950,7 @@ def _single_two_step_run(
     torch.cuda.synchronize(0)
     peak_allocated = int(torch.cuda.max_memory_allocated(0))
     peak_reserved = int(torch.cuda.max_memory_reserved(0))
+    cuda_memory_after_two_step = current_cuda_memory_evidence(torch)
     if peak_reserved >= MAX_RESERVED_VRAM_BYTES:
         raise RuntimeError(f"two-step peak reserved VRAM exceeds the 9.6 GiB gate: {peak_reserved}")
     resource: dict[str, object] = {
@@ -960,6 +964,8 @@ def _single_two_step_run(
         "reserved_vram_gate_bytes": MAX_RESERVED_VRAM_BYTES,
         "reserved_vram_gate_passed": True,
         "peak_process_ram_bytes": _peak_process_ram(process),
+        "child_cuda_probe_resource": child_cuda_resource,
+        "cuda_memory_after_two_step": cuda_memory_after_two_step,
         "adapter_directory_bytes": sum(
             path.stat().st_size for path in adapter_path.rglob("*") if path.is_file()
         ),

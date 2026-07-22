@@ -18,6 +18,7 @@ from typing import cast
 import pytest
 
 from foundry.training import grpo_environment as process_environment
+from foundry.training import grpo_gpu as gpu
 from foundry.training import grpo_runtime as runtime
 from foundry.training import grpo_schedule as schedule
 from foundry.training.config import canonical_sha256
@@ -616,22 +617,28 @@ def test_seed_everything_covers_python_numpy_torch_cuda_and_transformers(
         )
 
 
-def test_cuda_identity_requires_exact_memory_runtime_and_driver(
-    monkeypatch: pytest.MonkeyPatch,
+def test_cuda_validation_delegates_to_direct_child_compute(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
     torch = _RuntimeTorch()
-    monkeypatch.setattr(runtime, "_driver_version", lambda: "610.47")
-    evidence = runtime._validate_cuda(torch)
-    assert evidence["gpu_total_memory_bytes"] == 10_736_893_952
-    assert evidence["nvidia_driver_version"] == "610.47"
+    sentinel = cast(gpu.ChildCudaComputeEvidence, object())
+    calls: list[tuple[object, object, str]] = []
 
-    torch.cuda.total_memory -= 1
-    with pytest.raises(RuntimeError, match="frozen contract"):
-        runtime._validate_cuda(torch)
-    torch.cuda.total_memory = runtime.FROZEN_GPU_TOTAL_MEMORY_BYTES
-    monkeypatch.setattr(runtime, "_driver_version", lambda: "999.0")
-    with pytest.raises(RuntimeError, match="frozen contract"):
-        runtime._validate_cuda(torch)
+    def collect(
+        torch_module: object, runtime_paths: object, *, stage: str
+    ) -> gpu.ChildCudaComputeEvidence:
+        calls.append((torch_module, runtime_paths, stage))
+        return sentinel
+
+    monkeypatch.setattr(runtime, "collect_child_cuda_compute_evidence", collect)
+    runtime_paths = SimpleNamespace(source_root=tmp_path)
+    assert (
+        runtime._validate_cuda(  # type: ignore[arg-type]
+            torch, runtime_paths, stage="fixture"
+        )
+        is sentinel
+    )
+    assert calls == [(torch, runtime_paths, "fixture")]
 
 
 def test_cuda_resource_boundaries_synchronize_before_and_after_cleanup(

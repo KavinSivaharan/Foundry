@@ -2999,3 +2999,11 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
 - **Gate status:** **FAILED; STRICT STOP ENFORCED.** This is an orchestration/allowlist failure, not a model-side replay mismatch. Fresh-process replay, both two-step smokes, G1/G2, retention, GSM1K, paired analysis, and the signal gate were not run.
 - **Evidence:** V3 source, model cache, environment hash, source-manifest file, and both repositories passed the post-failure audit unchanged. Content-free failure-summary SHA-256 is `b5f0e4b21b496b47a9ae5a93a42d9d9c39bb81b5e2fa7b4ddd36c7432464c2bf`.
 - **Next action:** Preserve V3 and stop verifier-GRPO. No replay retry or further orchestration patch is authorized.
+
+### 2026-07-21 - Milestone 10I direct CUDA-runtime preflight implemented
+
+- **Authorization:** One new V4 experiment explicitly supersedes the V3 stop while preserving all V1-V3 source and runtime directories unchanged.
+- **Action performed:** Split GPU evidence into a monitoring-only normal-parent `nvidia-smi` contract and an authoritative deterministic-child PyTorch CUDA contract. Removed every child driver query, added three-repeat fixed-tensor allocation/arithmetic/matmul/synchronization verification, prohibited NVML/pynvml in the child, and changed replay, smoke, and training resource measurement to public `torch.cuda` APIs.
+- **Verification:** All `213` focused GRPO tests and all `724` repository tests pass under `PYTHONHASHSEED=20260720` and `CUBLAS_WORKSPACE_CONFIG=:16:8`. Ruff and strict Mypy pass. The host contract hashes to `18a87a86...1f68`, child contract to `ead57033...20ec`, and probe configuration to `1fc17a20...6775`; protected scientific and dependency paths changed: zero.
+- **Gate status:** **ORCHESTRATION CORRECTION VERIFIED; V4 NOT YET CREATED.** No model load, generation, optimizer step, adapter, checkpoint, retention run, GSM1K run, or sealed-final access occurred. Patch-evidence SHA-256 is `712ab82ee6a97a0ec701c03282e10f0c6eb23ad9f6220d2056a475939981e8b5`.
+- **Next action:** Publish exactly as `fix: validate GRPO GPU through CUDA runtime`, confirm clean 0/0 synchronization, then create and freeze only the new V4 source/runtime roots before collecting parent host evidence and launching the direct child CUDA gate.

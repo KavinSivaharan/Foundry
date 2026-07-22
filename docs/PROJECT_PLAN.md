@@ -1073,3 +1073,19 @@ was written.
 replay, train G1/G2, select retention checkpoints, or evaluate GSM1K. Failure-summary SHA-256 is
 `b5f0e4b21b496b47a9ae5a93a42d9d9c39bb81b5e2fa7b4ddd36c7432464c2bf`. A future experiment would
 require new explicit project-level authorization and a predeclared GPU-process environment.
+
+## Milestone 10I plan: one source-immutable V4 experiment
+
+The explicit V4 authorization replaces the child-process NVML prerequisite with a direct frozen
+PyTorch CUDA compute gate. Normal-parent `nvidia-smi` evidence is observational only. The child must
+use the exact deterministic launch environment, import Foundry from the detached V4 source tree,
+identify the expected RTX 3080, allocate and compute on `cuda:0`, synchronize, and reproduce one
+fixed result hash across three runs without NVML, CPU fallback, or model loading.
+
+Patch verification is complete: `213/213` focused GRPO tests and `724/724` repository tests pass;
+Ruff and strict Mypy pass; and generation, sampling, reward, reference, KL, optimizer, schedules,
+LoRA, retention, evaluation, datasets, and dependencies are unchanged. After publishing
+`fix: validate GRPO GPU through CUDA runtime`, create only `Foundry-grpo-frozen-v4` and
+`Foundry-grpo-runtime-v4`, freeze all source/environment/interpreter/cache/host/child evidence, and
+continue through the unchanged replay, duplicate two-step, conditional G1/G2, retention, and GSM1K
+gates only while every preceding gate passes.

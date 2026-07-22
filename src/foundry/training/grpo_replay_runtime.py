@@ -34,6 +34,10 @@ from foundry.training.grpo_environment import (
     transformers_determinism_source_evidence,
     validate_deterministic_process_environment,
 )
+from foundry.training.grpo_gpu import (
+    ChildCudaComputeEvidence,
+    current_cuda_memory_evidence,
+)
 from foundry.training.grpo_paths import (
     GrpoRuntimePaths,
     assert_artifact_path,
@@ -148,16 +152,6 @@ _FROZEN_OS = {
     "release": "11",
     "system": "Windows",
     "version": "10.0.26200",
-}
-_FROZEN_CUDA = {
-    "cuda_current_device": 0,
-    "cuda_device_count": 1,
-    "gpu_compute_capability": [8, 6],
-    "gpu_multiprocessor_count": 68,
-    "gpu_name": "NVIDIA GeForce RTX 3080",
-    "gpu_total_memory_bytes": 10_736_893_952,
-    "nvidia_driver_version": "610.47",
-    "torch_cuda_runtime": "12.1",
 }
 
 
@@ -348,23 +342,10 @@ def _runtime_environment_evidence(
     }
 
 
-def _validate_frozen_cuda(torch: Any) -> dict[str, object]:
-    """Require the exact frozen RTX 3080, CUDA runtime, and driver."""
+def _validate_frozen_cuda(torch: Any, runtime_paths: GrpoRuntimePaths) -> ChildCudaComputeEvidence:
+    """Require the frozen RTX 3080 through direct PyTorch CUDA computation."""
 
-    cuda = _validate_cuda(torch)
-    properties = torch.cuda.get_device_properties(0)
-    capability = torch.cuda.get_device_capability(0)
-    value = {
-        **cuda,
-        "cuda_device_count": int(torch.cuda.device_count()),
-        "cuda_current_device": int(torch.cuda.current_device()),
-        "gpu_compute_capability": [int(capability[0]), int(capability[1])],
-        "gpu_multiprocessor_count": int(properties.multi_processor_count),
-        "nvidia_driver_version": _driver_version(),
-    }
-    if value != _FROZEN_CUDA:
-        raise RuntimeError(f"CUDA hardware or runtime differs from the frozen contract: {value}")
-    return value
+    return _validate_cuda(torch, runtime_paths, stage="generation_replay")
 
 
 def _prepare_cuda_replay(torch: Any) -> None:
@@ -457,24 +438,6 @@ def _reward_variance_decisions(
     }
     value["evidence_sha256"] = canonical_sha256(value)
     return value
-
-
-def _driver_version() -> str:
-    completed = subprocess.run(
-        [
-            "nvidia-smi",
-            "--query-gpu=driver_version",
-            "--format=csv,noheader,nounits",
-        ],
-        check=True,
-        capture_output=True,
-        text=True,
-        timeout=30,
-    )
-    values = [line.strip() for line in completed.stdout.splitlines() if line.strip()]
-    if len(values) != 1:
-        raise RuntimeError("expected exactly one NVIDIA driver version")
-    return values[0]
 
 
 def _full_determinism_evidence(modules: Mapping[str, Any], seed: int) -> dict[str, object]:
@@ -665,7 +628,9 @@ def _single_generation_replay_impl(
     )
     full_determinism = _full_determinism_evidence(modules, config.grpo.seed)
     runtime_environment = _runtime_environment_evidence(runtime_paths, numpy)
-    cuda = _validate_frozen_cuda(torch)
+    child_cuda = _validate_frozen_cuda(torch, runtime_paths)
+    cuda = child_cuda.stable_evidence()
+    child_cuda_resource = child_cuda.resource_payload()
     deterministic_stages.append(
         validate_deterministic_process_environment(
             runtime_paths,
@@ -896,12 +861,15 @@ def _single_generation_replay_impl(
     torch.cuda.synchronize(0)
     peak_allocated = int(torch.cuda.max_memory_allocated(0))
     peak_reserved = int(torch.cuda.max_memory_reserved(0))
+    cuda_memory_after_replay = current_cuda_memory_evidence(torch)
     resource: dict[str, object] = {
         "model_load_seconds": model_load_seconds,
         "runtime_seconds": time.perf_counter() - started,
         "peak_allocated_vram_bytes": peak_allocated,
         "peak_reserved_vram_bytes": peak_reserved,
         "peak_process_ram_bytes": _peak_process_ram(process),
+        "child_cuda_probe_resource": child_cuda_resource,
+        "cuda_memory_after_replay": cuda_memory_after_replay,
         "entry_cublas_workspace_config": expected_entry_cublas_workspace_config,
         "active_cublas_workspace_config": FROZEN_ACTIVE_CUBLAS_WORKSPACE_CONFIG,
         "deterministic_environment_stages": deterministic_stages,

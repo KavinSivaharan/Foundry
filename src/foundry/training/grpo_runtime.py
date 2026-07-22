@@ -54,6 +54,13 @@ from foundry.training.grpo_environment import (
     transformers_determinism_source_evidence,
     validate_deterministic_process_environment,
 )
+from foundry.training.grpo_gpu import (
+    EXPECTED_GPU_TOTAL_MEMORY_BYTES,
+    EXPECTED_TORCH_CUDA_RUNTIME,
+    ChildCudaComputeEvidence,
+    collect_child_cuda_compute_evidence,
+    current_cuda_memory_evidence,
+)
 from foundry.training.grpo_paths import (
     GrpoRuntimePaths,
     assert_artifact_path,
@@ -111,16 +118,14 @@ COMPATIBILITY_GENERATION_ONLY_GROUPS = 1
 COMPATIBILITY_COMPLETIONS = 12
 FULL_COMPLETIONS = GROUPS_PER_ARM * COMPLETIONS_PER_GROUP
 MAX_RESERVED_VRAM_BYTES = int(9.6 * 1024**3)
-EXPECTED_GPU_NAME_FRAGMENT = "RTX 3080"
+FROZEN_GPU_TOTAL_MEMORY_BYTES = EXPECTED_GPU_TOTAL_MEMORY_BYTES
+FROZEN_TORCH_CUDA_RUNTIME = EXPECTED_TORCH_CUDA_RUNTIME
 FROZEN_PROCESS_SEED = 20_260_720
 FROZEN_CUBLAS_WORKSPACE_CONFIG = ":16:8"
 FROZEN_TRANSFORMERS_CUBLAS_WORKSPACE_CONFIG = FROZEN_CUBLAS_WORKSPACE_CONFIG
 FROZEN_FULL_DETERMINISM_SOURCE_SHA256 = FROZEN_TRANSFORMERS_DETERMINISM_FUNCTION_SHA256
 FROZEN_FULL_DETERMINISM_MODULE = FROZEN_TRANSFORMERS_DETERMINISM_MODULE
 FROZEN_FULL_DETERMINISM_QUALNAME = FROZEN_TRANSFORMERS_DETERMINISM_QUALNAME
-FROZEN_GPU_TOTAL_MEMORY_BYTES = 10_736_893_952
-FROZEN_NVIDIA_DRIVER_VERSION = "610.47"
-FROZEN_TORCH_CUDA_RUNTIME = "12.1"
 FROZEN_PYTHON_IMPLEMENTATION = "CPython"
 FROZEN_PYTHON_VERSION = "3.12.10"
 _PYTHON_HASH_PROBE = "foundry-verifier-grpo-python-hash-probe-v1"
@@ -1342,46 +1347,16 @@ def _prepare_runtime(
     return model, tokenizer, lora_config, load_seconds
 
 
-def _driver_version() -> str:
-    completed = subprocess.run(
-        [
-            "nvidia-smi",
-            "--query-gpu=driver_version",
-            "--format=csv,noheader,nounits",
-        ],
-        check=True,
-        capture_output=True,
-        text=True,
-        timeout=30,
+def _validate_cuda(
+    torch: Any, runtime_paths: GrpoRuntimePaths, *, stage: str
+) -> ChildCudaComputeEvidence:
+    """Validate the child through direct PyTorch CUDA computation, never NVML."""
+
+    return collect_child_cuda_compute_evidence(
+        torch,
+        runtime_paths,
+        stage=stage,
     )
-    values = [line.strip() for line in completed.stdout.splitlines() if line.strip()]
-    if len(values) != 1:
-        raise RuntimeError("expected exactly one NVIDIA driver version")
-    return values[0]
-
-
-def _validate_cuda(torch: Any) -> dict[str, object]:
-    if not bool(torch.cuda.is_available()):
-        raise RuntimeError("CUDA is unavailable")
-    name = str(torch.cuda.get_device_name(0))
-    if EXPECTED_GPU_NAME_FRAGMENT not in name:
-        raise RuntimeError(f"frozen compatibility target is an RTX 3080, got {name}")
-    properties = torch.cuda.get_device_properties(0)
-    value = {
-        "gpu_name": name,
-        "gpu_total_memory_bytes": int(properties.total_memory),
-        "torch_cuda_runtime": str(torch.version.cuda),
-        "nvidia_driver_version": _driver_version(),
-    }
-    expected = {
-        "gpu_total_memory_bytes": FROZEN_GPU_TOTAL_MEMORY_BYTES,
-        "torch_cuda_runtime": FROZEN_TORCH_CUDA_RUNTIME,
-        "nvidia_driver_version": FROZEN_NVIDIA_DRIVER_VERSION,
-    }
-    observed = {key: value[key] for key in expected}
-    if observed != expected:
-        raise RuntimeError(f"CUDA hardware or runtime differs from the frozen contract: {value}")
-    return value
 
 
 def _repeat_row(group: RuntimePromptGroup) -> list[dict[str, object]]:
@@ -1460,7 +1435,9 @@ def _run_grpo_impl(
             require_strict=True,
         )
     )
-    cuda = _validate_cuda(torch)
+    child_cuda = _validate_cuda(torch, runtime_paths, stage="counted_grpo")
+    cuda = child_cuda.stable_evidence()
+    child_cuda_resource = child_cuda.resource_payload()
     deterministic_stages.append(
         validate_deterministic_process_environment(
             runtime_paths,
@@ -1668,6 +1645,7 @@ def _run_grpo_impl(
     _synchronize_cuda(torch)
     peak_allocated = int(torch.cuda.max_memory_allocated(0))
     peak_reserved = int(torch.cuda.max_memory_reserved(0))
+    cuda_memory_before_final_cleanup = current_cuda_memory_evidence(torch)
     if peak_reserved >= MAX_RESERVED_VRAM_BYTES:
         raise RuntimeError(f"peak reserved VRAM exceeds the 9.6 GiB gate: {peak_reserved} bytes")
     del reloaded
@@ -1675,6 +1653,7 @@ def _run_grpo_impl(
     _cleanup_cuda_resources(torch)
     post_cleanup_allocated = int(torch.cuda.memory_allocated(0))
     post_cleanup_reserved = int(torch.cuda.memory_reserved(0))
+    cuda_memory_after_final_cleanup = current_cuda_memory_evidence(torch)
     final_deterministic_environment = validate_deterministic_process_environment(
         runtime_paths,
         "process_result_publication",
@@ -1766,6 +1745,9 @@ def _run_grpo_impl(
         "dropout_module_count": dropout_module_count,
         "software_versions": runtime_environment["software_versions"],
         **cuda,
+        "child_cuda_probe_resource": child_cuda_resource,
+        "cuda_memory_before_final_cleanup": cuda_memory_before_final_cleanup,
+        "cuda_memory_after_final_cleanup": cuda_memory_after_final_cleanup,
         "model_load_seconds": model_load_seconds,
         "reload_base_seconds": reload_base_seconds,
         "adapter_reload_seconds": adapter_reload_seconds,

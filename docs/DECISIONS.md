@@ -991,3 +991,10 @@ This log separates proposals from approved decisions. A proposal does not author
   Model generations, replay packets, optimizer steps, adapters, checkpoints, retention results,
   GSM1K predictions, and sealed-final access remain zero. Failure-summary SHA-256 is
   `b5f0e4b21b496b47a9ae5a93a42d9d9c39bb81b5e2fa7b4ddd36c7432464c2bf`.
+
+## 2026-07-21: validate Milestone 10I child GPU execution through PyTorch CUDA
+
+- **Status:** A new explicit project-level authorization opens one V4 experiment; V1-V3 remain immutable.
+- **Decision:** `nvidia-smi` is normal-parent monitoring evidence only and has no child-gate authority. The minimized deterministic child must not invoke NVML or pynvml. It must prove the expected RTX 3080 path by allocating fixed FP32 CUDA tensors, running deterministic elementwise arithmetic and matrix multiplication three times, synchronizing, and producing one exact result hash through the frozen PyTorch runtime.
+- **Evidence:** The host and child typed contracts hash to `18a87a86...1f68` and `ead57033...20ec`; the fixed probe configuration hashes to `1fc17a20...6775`. All `213` focused and `724` repository tests pass, with zero protected scientific or dependency changes.
+- **Consequence:** Publish the orchestration-only correction as `fix: validate GRPO GPU through CUDA runtime`, then create a new detached V4 worktree. A successful child CUDA probe may proceed to unchanged replay and training gates even if an observational parent `nvidia-smi` query fails. Any actual child CUDA or model replay failure still stops the route.

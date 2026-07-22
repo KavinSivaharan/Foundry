@@ -1,0 +1,74 @@
+{
+  "artifact_id": "foundry-verifier-grpo-cuda-runtime-validation-v1",
+  "child_cuda_compute_evidence_contract_sha256": "ead57033d7ff6fec5d4e74cd5288c7aad670e787f40d0c47bf1d12efa48720ec",
+  "child_cuda_probe_configuration_sha256": "1fc17a20ab4ae8e7b76f9bd9ccda432169410ba786b6ea7ef5f160349a8c6775",
+  "child_cuda_probe_executed": false,
+  "child_gpu_gate_source": "torch.cuda",
+  "child_nvml_permitted": false,
+  "dependency_changed": false,
+  "deterministic_environment_sha256": "0a5bd3bb12a30819e4abc862e33437cc74ae75ec436b14adea7ad1115f41e55d",
+  "focused_grpo_tests_passed": 213,
+  "full_unit_and_integration_tests_passed": 724,
+  "host_gpu_evidence_collected": false,
+  "host_gpu_evidence_contract_sha256": "18a87a86a7d165b15c91c07c871f8df5dbf286644eba7f00a7cf8c027c261f68",
+  "host_gpu_gate_authority": false,
+  "milestone": "10I",
+  "model_generation_occurred": false,
+  "mypy_passed": true,
+  "new_gpu_contract_tests_passed": 15,
+  "optimizer_steps": 0,
+  "orchestration_source_sha256": {
+    "src/foundry/training/grpo_gpu.py": {
+      "new": "672e0ee90693222b089a740ce77b8e00e5b4f05b4d813f0c19995a4edd73df2c",
+      "prior": null
+    },
+    "src/foundry/training/grpo_paths.py": {
+      "new": "dabcf548e4d4ea3e6d913cbb38b043585247615f5d2fc1818c8a73d0f4890efc",
+      "prior": "d6844ff9f98bdea269d1da0c98210d746b070f671eb3aebbf24adc25e4d0990e"
+    },
+    "src/foundry/training/grpo_replay_runtime.py": {
+      "new": "bc654bbf8e834c51a6ee40cbe73c32e59f2eafa42eee3d68ca1e3c779e98b680",
+      "prior": "cb2562f79dc360e9d214a314f5f992b75043ebb14f4ec8078512963c02bb956f"
+    },
+    "src/foundry/training/grpo_runtime.py": {
+      "new": "6a2571733d0aad9b577a2211816558c84f8a2459d03bc414cad09bc42cee66ba",
+      "prior": "1517678fc80e8e9aa9e6e9220692eb8d29b6b3a2fecc91a4bd0842a72a403bd9"
+    },
+    "src/foundry/training/grpo_two_step_runtime.py": {
+      "new": "6f17990fa3dd737b9f5d6fa23ad9a08d9a05e181dcee6963372e340befcfccc5",
+      "prior": "2490d1bad41eb1695fe4d8b174eb461fe16d59b8f374c7259a2d3b29e768fd6f"
+    }
+  },
+  "parent_nvidia_smi_monitoring_only": true,
+  "phase": "orchestration_patch",
+  "process_command_template_sha256": "98f9eb014cb4fc735d79c9a5e2e39ac9a1a5866e320649319a0b83936c1ecd7f",
+  "protected_scientific_file_count": 106,
+  "protected_scientific_manifest_sha256": "c72439071410d4dbb34d87fca6005080a21e6c3d8881c9d6ca955e010f9b146f",
+  "protected_scientific_paths_changed": 0,
+  "python_executable": "C:\\Users\\Admin\\Projects\\Foundry\\.venv-training\\Scripts\\python.exe",
+  "python_executable_sha256": "0b471133e110cfb53a061cad528ce8e517d7b9ac41a0a396c39ad795a487fc14",
+  "root_cause": "nvml_host_monitoring_query_was_incorrectly_used_as_child_cuda_compute_gate",
+  "ruff_passed": true,
+  "schema_version": 1,
+  "scientific_artifact_sha256": {
+    "final_retention_subset": "f56845076a1a59e5ca1a95466541339b56f026e945f86118caec307a690ee4ec",
+    "g1_execution": "d7023bf6705702a39dfe8d8718db264f6b2c0e2e211753145ad71e2368f4f4c0",
+    "g2_execution": "e31d814fc4bcd9fa94e6b74f48992bb79ec70bcf678e56e620277ea19dbe7bd8",
+    "generic_manifest": "5848ed6640dda21752ab9692c8e531d9175314a7d5a472616dc19ad834a6351e",
+    "generic_packet": "67f48ebc3a310c0cb0db882b46759e993f3ad99faec9b7309d336d7b97f44400",
+    "grpo_configuration": "01515d186f2485662ea20ef0b444902bdf368a2b4a8cde335f34bfe1b9222bda",
+    "paired_schedule": "23fede9132f53b7d32f354056c728fc68faa20586a9162e101834db34f71ca64",
+    "reward_configuration": "4a47359fa3129b1bfd79dd158ecb609177e9b1642a95368c106e016a1554a965",
+    "reward_implementation": "089650105e29ead3c4ad62f1e0e41263e6c2af5fb8a12cb2851644aca3599616",
+    "targeted_manifest": "cb13d4d522746bdfa829c9a405defdb0eff0acbd23859dc7fe49457318cc1ccf",
+    "targeted_packet": "1d13acb49aeea00bf2c68b6488d225796ee95411f6a79343d969731b6f1a2286"
+  },
+  "scientific_contract_changed": false,
+  "sealed_final_accessed": false,
+  "secrets_included": false,
+  "starting_commit": "e472a57d49fd0cfe074a9cf957b89cb15bd34cd3",
+  "summary_sha256": "712ab82ee6a97a0ec701c03282e10f0c6eb23ad9f6220d2056a475939981e8b5",
+  "training_environment_pip_check_passed_outside_mutable_source_root": true,
+  "v4_artifact_root": "C:\\Users\\Admin\\Projects\\Foundry-grpo-runtime-v4",
+  "v4_source_root": "C:\\Users\\Admin\\Projects\\Foundry-grpo-frozen-v4"
+}

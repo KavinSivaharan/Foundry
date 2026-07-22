@@ -998,3 +998,13 @@ Every future experiment must be registered here before a costly run begins. Its 
   analysis, and the signal gate were not run.
 - **Decision:** Enforce the no-retry rule and publish content-free failure summary
   `b5f0e4b21b496b47a9ae5a93a42d9d9c39bb81b5e2fa7b4ddd36c7432464c2bf`.
+
+### EXP-TRAIN-017: source-immutable verifier-GRPO V4
+
+- **Status:** direct CUDA-runtime orchestration correction verified; V4 execution not yet started.
+- **Authorization:** One new V4 experiment supersedes the V3 orchestration stop while preserving all historical worktree/runtime directories.
+- **Mechanical correction:** Collect `nvidia-smi` only from the normal parent as non-gating evidence. In the minimized child, prohibit NVML/pynvml and require three identical fixed-tensor `torch.cuda` allocation/arithmetic/matmul/synchronization result hashes on the exact RTX 3080. Use public PyTorch APIs for replay, smoke, and training memory evidence.
+- **Frozen patch evidence:** host contract `18a87a86...1f68`, child contract `ead57033...20ec`, probe configuration `1fc17a20...6775`, planned V4 environment `0a5bd3bb...e55d`, and patch summary `712ab82e...e8b5`.
+- **Verification:** `213/213` focused GRPO tests, `724/724` repository tests, Ruff, and strict Mypy pass. Protected scientific and dependency paths changed: zero.
+- **Scientific activity:** zero model loads, generations, optimizer steps, adapters, checkpoints, retention evaluations, GSM1K evaluations, or sealed-final access in this phase.
+- **Next gate:** Publish `fix: validate GRPO GPU through CUDA runtime`, create/freeze only V4, collect host evidence, then run the authoritative fresh child CUDA probe before any model load.

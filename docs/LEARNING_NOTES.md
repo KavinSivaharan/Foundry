@@ -919,3 +919,16 @@ must be integration-tested by launching every external executable used by the co
 including driver diagnostics, with only that allowlist. Any additional inherited field must be
 identified and frozen before authorization. Because this failure occurred in the official V3 gate,
 the experiment stopped without attempting to discover or add such a field.
+
+## Milestone 10I: measure the compute interface that owns the gate
+
+The V3 failure showed that a host-monitoring interface can fail under a minimized process even when
+it says nothing about whether PyTorch can allocate and execute CUDA tensors. Treating an NVML-backed
+driver query as a model-process prerequisite coupled the scientific compatibility gate to the wrong
+interface.
+
+V4 separates those responsibilities. The parent may record content-free `nvidia-smi` identity and
+driver evidence, but only direct `torch.cuda` allocation, arithmetic, matrix multiplication,
+synchronization, device placement, and repeated result hashing decide the child compute gate. This
+preserves the minimized environment without guessing extra inherited variables and makes resource
+measurements follow the same runtime that performs replay and training.
