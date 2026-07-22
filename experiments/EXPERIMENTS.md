@@ -1018,3 +1018,22 @@ Every future experiment must be registered here before a costly run begins. Its 
 - **Two-step run:** The first gradient-checkpointed generation raised `generation emitted multiple distinct normalized warning classes` before backward at `0/2`. No two-step packet/metadata, optimizer step, adapter, or checkpoint exists. The duplicate run was not launched.
 - **Downstream work:** G1/G2 counted training, retention, GSM1K, category analysis, bootstrap, and signal gate were not run. Sealed-final remained untouched.
 - **Decision:** Enforce the no-retry compatibility stop and publish content-free failure summary `164d3e35828758d4eff77b21919b9b3b28dee6238135478fcd2b2e5e024c6f91`.
+
+### EXP-TRAIN-018: immutable V4 training-warning audit
+
+- **Status:** failed closed during evidence-only audit; V5 not created.
+- **Scope:** Reconstruct existing V4 identities, packets, summaries, stderr, and warning sources
+  without loading or generating from the model.
+- **Recoverable classes:** Four logging warnings, each with count one: one B informational class,
+  one C automatic-state-transition class that was not accepted, and two E unsupported/ambiguous
+  runtime classes. Normalized class hashes are `ad97f015...5ce2`, `5f068b26...c2a5`,
+  `594cd40f...42c4`, and `e35718a7...e270`.
+- **Fatal evidence gap:** The failed generation captured at least two distinct Python warning
+  classes, but V4 persisted none of their class IDs, normalized hashes, categories, sources, or
+  counts. The set is UNKNOWN and cannot be inferred from static call paths.
+- **Scientific activity:** Zero model reruns, optimizer steps, adapters, checkpoints, retention
+  evaluations, GSM1K evaluations, or sealed-final access. Source, dependencies, and scientific
+  settings are unchanged.
+- **Decision:** Do not create `foundry-grpo-phase-warning-contract-v2` or V5. Publish audit
+  `a3e4d1ca40c3fb3f9fe984d3a019ed064a6ba96394a69b009257a248eebf1602` as
+  `analysis: stop verifier GRPO after training-warning audit`.

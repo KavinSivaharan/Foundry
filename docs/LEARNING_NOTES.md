@@ -946,3 +946,18 @@ Passing generation-only replay is necessary but not sufficient. The smallest aut
 smoke must exercise gradient checkpointing, generation, backward, optimizer, release, and adapter
 reload before counted training. Here that smoke did its job: it stopped the route at `0/2` steps
 without allowing a changed warning whitelist or cache policy to drift into the experiment.
+
+## Milestone 10J: fail-closed auditors must persist evidence before raising
+
+V4's warning guard correctly refused a generation call containing multiple normalized Python
+warning classes, but it appended the detailed in-memory record and then raised before any caller
+could serialize that record. Because `warnings.catch_warnings(record=True)` prevents those warnings
+from reaching stderr, the preserved log contains only logging-framework notices and the terminal
+exception. The exact captured warning identities and counts cannot be recovered from the sealed
+artifacts.
+
+The practical lesson is that a fail-closed audit has two responsibilities: stop unsafe execution
+and durably publish content-free failure evidence. Class IDs, normalized hashes, categories,
+packages, source locations, counts, and phases must be written atomically before raising or attached
+to an exception that the process-level boundary always serializes. Static call-path inference is
+not a substitute for measured warning evidence in an immutable experiment.

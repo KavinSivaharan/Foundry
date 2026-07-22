@@ -1006,3 +1006,25 @@ This log separates proposals from approved decisions. A proposal does not author
 - **Evidence:** The direct child CUDA result was `f8850fe4...e5af6` three times. All six generation replays matched packet `084515f9...ee2f`. Under the gradient-checkpointed training path, the first generation warning audit raised `generation emitted multiple distinct normalized warning classes`; stderr also records use-cache disabling and a DynamicCache/PyTorch-version message. No two-step packet or metadata was written, progress remained `0/2`, optimizer steps are zero, and no adapter/checkpoint exists.
 - **Rationale:** The NVML orchestration defect is fixed, but complete two-step compatibility requires the frozen single-warning-class generation boundary as well as exact generation packets. That gate failed on the actual training path. Changing warning handling, cache behavior, gradient checkpointing, or the whitelist would alter the frozen contract and is not authorized.
 - **Consequence:** Compatibility is failed closed without an exact packet mismatch. Source manifest `dda8cf58...a8b8`, environment `0a5bd3bb...e55d`, and model manifest `5173393f...4006` remain unchanged. Failure summary is `164d3e35...c6f91`.
+
+## 2026-07-22: stop Milestone 10J after the immutable V4 warning audit
+
+- **Status:** The primary repository and detached V4 source are clean at their expected commits;
+  all six successful replay packets and both summaries reconstruct. No model process was rerun.
+- **Decision:** Classify the four recoverable stderr warning classes as one Class B, one unresolved
+  Class C, and two Class E warnings. Classify the discarded Python warning set as UNKNOWN. Publish
+  `analysis: stop verifier GRPO after training-warning audit`; do not create the phase-warning
+  contract or either V5 directory.
+- **Evidence:** The four stderr classes each occur once at lines `1`, `2`, `4`, and `5`, with
+  normalized hashes `ad97f015...5ce2`, `5f068b26...c2a5`, `594cd40f...42c4`, and
+  `e35718a7...e270`. The V4 auditor proves at least two captured Python classes existed but the
+  process persisted no raw text, category, source, count, normalized hash, or class ID for that
+  set. V4 explicitly records `two_step_failure_warning_class_ids_persisted=false`.
+- **Rationale:** The authorization makes an unsupported/ambiguous runtime notice Class E and any
+  warning that cannot be directly classified from frozen evidence fatal. Reconstructing the
+  missing Python class from likely call paths or rerunning the model would be inference, not an
+  immutable audit.
+- **Consequence:** Warning-audit SHA-256 is
+  `a3e4d1ca40c3fb3f9fe984d3a019ed064a6ba96394a69b009257a248eebf1602`; classification SHA-256 is
+  `37f564cf5a73e91a196496c00c31b0822c44a2b4c84e519b5628d5135479ad74`. V5 replay, G1/G2,
+  retention, GSM1K, paired analysis, and the signal gate remain unrun.

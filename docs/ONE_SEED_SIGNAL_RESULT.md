@@ -508,3 +508,11 @@ V4 passed direct CUDA compute and exact same/fresh generation replay, then faile
 two-step smoke because the training generation path emitted multiple normalized warning classes.
 No optimizer step, adapter, retention result, or new GSM1K prediction exists. The GRPO one-seed
 signal gate is therefore **not reached**; the historical base remains `521/814` and was not rerun.
+
+### Milestone 10J stopped in the evidence-only warning audit
+
+The authorized audit recovered four stderr warning classes but could not recover the exact Python
+warning classes that triggered the V4 guard because their content-free identities and counts were
+not persisted. The UNKNOWN-class rule therefore closed the route before a warning patch or V5
+experiment. G1/G2, retention, GSM1K, paired analysis, and the GRPO one-seed signal gate remain
+**not reached**; the frozen base remains `521/814` and was not rerun.

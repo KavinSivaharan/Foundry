@@ -404,3 +404,37 @@ category analysis, paired bootstrap, and the one-seed signal gate were not reach
 base `521/814` was not rerun. Sealed-final remained untouched. Preserve V4 and stop verifier-GRPO.
 Human language review remains pending at
 `file:///C:/Users/Admin/Projects/Foundry/results/raw/foundry_500x2_signal_review/codex_assisted_review.html`.
+
+## Milestone 10J V4 training-warning audit
+
+The audit used only the sealed V4 stderr and structured runtime evidence. It revalidated clean
+source/primary worktrees, stderr `e86b8e9d...3459`, source manifest `dda8cf58...a8b8`, all six
+common packets `084515f9...ee2f`, same-process summary `319be850...043`, and fresh-process summary
+`de8ca110...dbb9`. No model process was started.
+
+| Content-free warning class | Count | Phase | Frozen source | Class |
+| --- | ---: | --- | --- | --- |
+| `transformers-qwen2-sliding-window-sdpa-unimplemented-v1` | 1 | model load | `modeling_qwen2.py:239` | E |
+| `transformers-peft-empty-label-names-informational-v1` | 1 | trainer construction | `trainer.py:782` | B |
+| `transformers-qwen2-gradient-checkpoint-use-cache-transition-v1` | 1 | generation | `modeling_qwen2.py:489` | C, not accepted |
+| `transformers-dynamic-cache-torch-export-version-uncertainty-v1` | 1 | generation | `cache_utils.py:540` | E |
+| `captured-python-warning-class-set-unrecoverable-v1` | unknown; at least 2 distinct classes | generation | identity not persisted | UNKNOWN |
+
+The successful generation-only reference still proves Class A
+`pytorch-cuda-cumsum-determinism-warning-v1` at `416` occurrences per three-group replay. It does
+not identify the failed run's extra Python class. V4's auditor captured warnings with
+`record=True`, constructed content-free records in memory, then raised before serialization. Its
+stderr therefore cannot supply the missing class IDs, categories, source locations, or counts.
+
+Class E and UNKNOWN each independently close the experiment under Milestone 10J. The automatic
+cache transition was not explicitized and no equivalence fixture ran. No source, dependency,
+scientific setting, V5 directory, replay packet, optimizer step, adapter, checkpoint, retention
+result, GSM1K prediction, or sealed-final access was created. Warning-audit SHA-256 is
+`a3e4d1ca40c3fb3f9fe984d3a019ed064a6ba96394a69b009257a248eebf1602`; classification SHA-256 is
+`37f564cf5a73e91a196496c00c31b0822c44a2b4c84e519b5628d5135479ad74`. All `724` repository
+tests, Ruff lint, Ruff formatting, and strict Mypy pass.
+
+### Final Milestone 10J gate status
+
+The warning audit **failed closed**. Preserve V1-V4, do not create V5, and stop verifier-GRPO. The
+frozen base remains `521/814`; no GRPO GSM1K comparison or one-seed signal decision was reached.

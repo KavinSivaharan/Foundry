@@ -1107,3 +1107,23 @@ before backward or optimizer step 1. No two-step packet, metadata, adapter, or c
 analysis, bootstrap, or signal gate. Preserve V4 and publish failure summary
 `164d3e35828758d4eff77b21919b9b3b28dee6238135478fcd2b2e5e024c6f91` as
 `analysis: stop verifier GRPO after V4 replay failure`.
+
+## Milestone 10J outcome: immutable warning audit closed the V5 route
+
+Milestone 10J reopened only an evidence-first audit of V4. Primary and V4 identities, stderr hash,
+all six replay packets, and both replay summaries revalidated exactly without loading the model.
+The complete stderr contains four warning-level classes with one occurrence each. Source-pinned
+classification yields B for the PEFT label-name notice, C for the automatic call-local cache
+transition, and E for both the unsupported SDPA/sliding-window notice and the DynamicCache runtime
+version uncertainty.
+
+Separately, the V4 auditor proves that at least two Python warning classes were captured inside its
+generation-only `catch_warnings` scope. Their raw text, categories, source locations, counts,
+normalized hashes, and class IDs were never serialized. Because the authorization makes any
+unclassifiable warning fatal and forbids benignity inference, no phase-aware contract or
+equivalence fixture may be created.
+
+**Final Milestone 10J stop:** preserve V1-V4; do not create V5, rerun replay, train G1/G2, evaluate
+retention or GSM1K, or run the signal gate. Publish warning audit
+`a3e4d1ca40c3fb3f9fe984d3a019ed064a6ba96394a69b009257a248eebf1602` as
+`analysis: stop verifier GRPO after training-warning audit`.
