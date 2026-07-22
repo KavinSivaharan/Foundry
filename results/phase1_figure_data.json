@@ -1,0 +1,183 @@
+{
+  "accuracy": [
+    {
+      "accuracy_percent": 64.004914004914,
+      "correct": 521,
+      "delta_percentage_points_vs_base": 0.0,
+      "label": "Untouched base",
+      "total": 814
+    },
+    {
+      "accuracy_percent": 47.542997542997545,
+      "correct": 387,
+      "delta_percentage_points_vs_base": -16.46191646191646,
+      "label": "Matched generic SFT",
+      "total": 814
+    },
+    {
+      "accuracy_percent": 50.85995085995086,
+      "correct": 414,
+      "delta_percentage_points_vs_base": -13.14496314496314,
+      "label": "Failure-targeted SFT",
+      "total": 814
+    }
+  ],
+  "data_sha256": "00f62fb41062071009525b06bd02439bbd770a054850a425d24dc9cfe687691e",
+  "outcome_timeline": [
+    {
+      "label": "Evaluator trust audit",
+      "milestone": "2.1",
+      "status": "passed"
+    },
+    {
+      "label": "Failure taxonomy",
+      "milestone": "3",
+      "status": "passed"
+    },
+    {
+      "label": "Procedural realization",
+      "milestone": "4-5",
+      "status": "stopped"
+    },
+    {
+      "label": "Template-bank capacity",
+      "milestone": "6-7",
+      "status": "failed"
+    },
+    {
+      "label": "Matched 500 x 2 data",
+      "milestone": "8A",
+      "status": "passed"
+    },
+    {
+      "label": "RTX 3080 QLoRA",
+      "milestone": "8B",
+      "status": "passed"
+    },
+    {
+      "label": "Assistant-only retention",
+      "milestone": "8E-8L",
+      "status": "failed"
+    },
+    {
+      "label": "Common scale 0.50",
+      "milestone": "8M",
+      "status": "passed"
+    },
+    {
+      "label": "Absolute signal gate",
+      "milestone": "8M",
+      "status": "failed"
+    },
+    {
+      "label": "Contrastive retention",
+      "milestone": "8N",
+      "status": "failed"
+    },
+    {
+      "label": "Replay retention instrument",
+      "milestone": "9",
+      "status": "stopped"
+    },
+    {
+      "label": "GRPO generation replay",
+      "milestone": "10I",
+      "status": "passed"
+    },
+    {
+      "label": "GRPO optimizer route",
+      "milestone": "10J",
+      "status": "stopped"
+    }
+  ],
+  "paired_difference": {
+    "confidence_level": 0.95,
+    "estimate_percentage_points": 3.3169533169533165,
+    "generic_wins": 20,
+    "interval_percentage_points": [
+      1.3513513513513513,
+      5.282555282555282
+    ],
+    "replicates": 10000,
+    "seed": 20260720,
+    "targeted_net_wins": 27,
+    "targeted_wins": 47
+  },
+  "pipeline": [
+    {
+      "detail": "814 frozen development examples",
+      "label": "Evaluate",
+      "status": "passed"
+    },
+    {
+      "detail": "293 failures reviewed",
+      "label": "Classify failures",
+      "status": "passed"
+    },
+    {
+      "detail": "500 targeted + 500 generic",
+      "label": "Generate verified data",
+      "status": "passed"
+    },
+    {
+      "detail": "Token-matched Windows QLoRA",
+      "label": "Train matched controls",
+      "status": "passed"
+    },
+    {
+      "detail": "Common runtime scale 0.50",
+      "label": "Retention gate",
+      "status": "passed"
+    },
+    {
+      "detail": "Targeted > generic; both < base",
+      "label": "Benchmark comparison",
+      "status": "negative_absolute"
+    }
+  ],
+  "schema_version": 1,
+  "sealed_final_accessed": false,
+  "source_evidence_file_sha256": {
+    "base_summary": "e2b436ce841122d9796cc71360e9b888ebff7007268a8053688fb094dfb7ba48",
+    "failure_taxonomy": "3ae9f4686ec8e7658a5fc33b2f4d911d168afd797143bffef598cdbe27320d51",
+    "generic_development": "a6d2f049b77e06f6ce5f8fda6da0b3ebca3fc88e2b168d6c849b62be43c2452b",
+    "paired_analysis": "fc60e71055eeacb53a52a1ea0fbe6f151b0b75a0fc39c0f53d82b5dd3d331538",
+    "signal_decision": "650bd15518b3830dd0a14987cdf3b763c13478dff14fc916cc2662868c466ef6",
+    "targeted_development": "bc0710c9a1fc79274204d5a39ab8f7fa241d8a52238d4e90a4f579a2208273a5"
+  },
+  "taxonomy": [
+    {
+      "count": 69,
+      "label": "Output format or extraction"
+    },
+    {
+      "count": 68,
+      "label": "Multi-step bookkeeping"
+    },
+    {
+      "count": 53,
+      "label": "Target or language interpretation"
+    },
+    {
+      "count": 28,
+      "label": "Rate, ratio, percentage, average"
+    },
+    {
+      "count": 27,
+      "label": "Constraint or discrete reasoning"
+    },
+    {
+      "count": 24,
+      "label": "Time, unit, or sequence reasoning"
+    },
+    {
+      "count": 22,
+      "label": "Arithmetic execution"
+    },
+    {
+      "count": 2,
+      "label": "Benchmark ambiguity or annotation risk"
+    }
+  ],
+  "taxonomy_total": 293
+}

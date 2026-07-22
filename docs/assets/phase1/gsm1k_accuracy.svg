@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc" data-source-sha256="00f62fb41062071009525b06bd02439bbd770a054850a425d24dc9cfe687691e">
+<title id="title">Frozen GSM1K development accuracy</title>
+<desc id="desc">Bar chart comparing the untouched base with matched generic and targeted SFT. Targeted exceeds generic but both remain below the base.</desc>
+<style>
+text { font-family: 'Segoe UI', Arial, sans-serif; fill: #172033; }
+.title { font-size: 30px; font-weight: 600; }
+.subtitle { font-size: 16px; fill: #586579; }
+.label { font-size: 18px; font-weight: 600; }
+.value { font-size: 17px; font-weight: 600; }
+.small { font-size: 14px; fill: #586579; }
+.axis { font-size: 14px; fill: #586579; }
+.node-label { font-size: 17px; font-weight: 600; }
+.node-detail { font-size: 13px; fill: #586579; }
+</style>
+<rect width="1200" height="700" fill="#ffffff"/>
+<text x="50.0" y="52.0" class="title" text-anchor="start">Frozen GSM1K development accuracy</text>
+<text x="50.0" y="82.0" class="subtitle" text-anchor="start">814 examples; common runtime LoRA scale = 0.50</text>
+<line x1="290.0" y1="145.0" x2="290.0" y2="545.0" stroke="#d9e1ea" stroke-width="1"/>
+<text x="290.0" y="571.0" class="axis" text-anchor="middle">0</text>
+<line x1="380.0" y1="145.0" x2="380.0" y2="545.0" stroke="#d9e1ea" stroke-width="1"/>
+<text x="380.0" y="571.0" class="axis" text-anchor="middle">10</text>
+<line x1="470.0" y1="145.0" x2="470.0" y2="545.0" stroke="#d9e1ea" stroke-width="1"/>
+<text x="470.0" y="571.0" class="axis" text-anchor="middle">20</text>
+<line x1="560.0" y1="145.0" x2="560.0" y2="545.0" stroke="#d9e1ea" stroke-width="1"/>
+<text x="560.0" y="571.0" class="axis" text-anchor="middle">30</text>
+<line x1="650.0" y1="145.0" x2="650.0" y2="545.0" stroke="#d9e1ea" stroke-width="1"/>
+<text x="650.0" y="571.0" class="axis" text-anchor="middle">40</text>
+<line x1="740.0" y1="145.0" x2="740.0" y2="545.0" stroke="#d9e1ea" stroke-width="1"/>
+<text x="740.0" y="571.0" class="axis" text-anchor="middle">50</text>
+<line x1="830.0" y1="145.0" x2="830.0" y2="545.0" stroke="#d9e1ea" stroke-width="1"/>
+<text x="830.0" y="571.0" class="axis" text-anchor="middle">60</text>
+<line x1="920.0" y1="145.0" x2="920.0" y2="545.0" stroke="#d9e1ea" stroke-width="1"/>
+<text x="920.0" y="571.0" class="axis" text-anchor="middle">70</text>
+<text x="605.0" y="610.0" class="label" text-anchor="middle">Accuracy (%)</text>
+<text x="272.0" y="211.0" class="label" text-anchor="end">Untouched base</text>
+<rect x="290.0" y="180.0" width="576.0" height="58" rx="5" fill="#17324d"/>
+<text x="1120.0" y="206.0" class="value" text-anchor="end">64.0049%  (521/814)</text>
+<text x="272.0" y="336.0" class="label" text-anchor="end">Matched generic SFT</text>
+<rect x="290.0" y="305.0" width="427.9" height="58" rx="5" fill="#7b8798"/>
+<text x="1120.0" y="331.0" class="value" text-anchor="end">47.5430%  (387/814)</text>
+<text x="1120.0" y="354.0" class="small" text-anchor="end">-16.4619 points vs base</text>
+<text x="272.0" y="461.0" class="label" text-anchor="end">Failure-targeted SFT</text>
+<rect x="290.0" y="430.0" width="457.7" height="58" rx="5" fill="#0f766e"/>
+<text x="1120.0" y="456.0" class="value" text-anchor="end">50.8600%  (414/814)</text>
+<text x="1120.0" y="479.0" class="small" text-anchor="end">-13.1450 points vs base</text>
+<line x1="866.0" y1="135.0" x2="866.0" y2="545.0" stroke="#17324d" stroke-width="2" stroke-dasharray="6 5"/>
+<text x="858.0" y="130.0" class="small" text-anchor="end">Untouched-base reference</text>
+<text x="50.0" y="665.0" class="subtitle" text-anchor="start">Provisional one-seed result; targeted did not beat the untouched base.</text>
+</svg>

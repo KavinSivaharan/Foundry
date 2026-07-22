@@ -3026,3 +3026,30 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
 - **Evidence:** Content-free warning-audit SHA-256 is `a3e4d1ca40c3fb3f9fe984d3a019ed064a6ba96394a69b009257a248eebf1602`; classification SHA-256 is `37f564cf5a73e91a196496c00c31b0822c44a2b4c84e519b5628d5135479ad74`.
 - **Verification:** All `724` repository tests pass under `PYTHONHASHSEED=20260720`; Ruff lint, Ruff formatting, and strict Mypy pass. The diff contains documentation plus one content-free audit artifact only.
 - **Next action:** Publish exactly as `analysis: stop verifier GRPO after training-warning audit`, push, confirm clean `0/0` synchronization, preserve V1-V4, and stop.
+
+### 2026-07-22 - Milestone 11 Phase 1 research package consolidated
+
+- **Authorization:** Close Foundry Phase 1 from the frozen evidence at commit
+  `20409ba41dc99bb1e6300b53d9ad9b3db1431722` without training, inference, generation, replay,
+  dataset generation, GSM evaluation, sealed evaluation, or scientific-source changes.
+- **Action performed:** Reconstructed every published aggregate and referenced evidence hash;
+  consolidated the final report, reproducibility and architecture documentation, milestone index,
+  Phase 2 directions, machine-readable summary, experiment timeline, consistency table, figure
+  data, deterministic SVG renderer, five accessible figures, README, and release-specific tests.
+  Checked both approved locations for the human-review export; neither exists, so genuine review
+  remains explicitly pending.
+- **Scientific result:** Base, generic SFT, and targeted SFT scored `521/814`, `387/814`, and
+  `414/814`. Targeted beat generic by `27` questions (`3.316953` percentage points; paired 95%
+  interval `[1.351351, 5.282555]`) while trailing base by `107`. Retention passed for both SFT arms.
+  Contrastive scale transfer failed. Verifier-GRPO generation replay was exact, but the warning
+  audit could not certify a training step; optimizer steps remain zero.
+- **Verification:** The release-specific suite passes `23/23`; the full repository suite passes
+  `747/747`; Ruff format and lint pass; strict Mypy reports no issues in `139` source files; both
+  verified environments report no broken requirements; deterministic figure regeneration and
+  whitespace checks pass. Development-content, secret, sealed-access, forbidden-artifact, hash,
+  arithmetic, cross-file-consistency, and candidate-size audits are clean.
+- **Gate status:** **PHASE 1 READY FOR ATOMIC PUBLICATION, PROVISIONAL PENDING GENUINE HUMAN
+  REVIEW.** No sealed-final access occurred, and no production-training recommendation is made.
+- **Next action:** Commit the reviewed closeout as
+  `docs: publish Foundry phase 1 research results`, push `main`, verify clean `0/0`
+  synchronization, create no tag, and stop.

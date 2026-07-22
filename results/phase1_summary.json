@@ -1,0 +1,282 @@
+{
+  "base_evaluation": {
+    "accuracy": 0.64004914004914,
+    "accuracy_percent": 64.004914004914,
+    "canonical_extractor_sha256": "e099d1c247968fed982cb849022ec3137b1694c15f23a65663a127b8158c06df",
+    "config_sha256": "5f315d5de645f9563b8d1e61bc8e02c3513c453238ad9e1d6f9473489b5a622b",
+    "correct": 521,
+    "extractability": 0.9238329238329238,
+    "extractable": 752,
+    "manifest_sha256": "5e810d3ab644bef1d43c598a14a6164ba6464b27fde50e92a2f241816ce87897",
+    "processed": 814,
+    "prompt_sha256": "738ea5a3b94e7c75ac0bd50a229bbf04f3fc5d773e14658bc6728bc7a4b18350",
+    "unextractable_or_ambiguous": 62
+  },
+  "benchmark": {
+    "dataset_id": "ScaleAI/gsm1k",
+    "development_examples": 814,
+    "partition": "development",
+    "revision": "bc09569d09a614b9b530edc7f076fb214ac10493"
+  },
+  "contrastive_adapter": {
+    "adapter_sha256": "84f02df1cbc5ec1015d096164dbfe3833e166a14eda9ffadf62b5d2d2527c961",
+    "construction_gate_passed": true,
+    "construction_summary_sha256": "07a99bde03339494cc1ce9cf8428d7ecf7ad35aef58b55038389a3888d2c586c",
+    "dense_equivalence_gate_passed": true,
+    "dense_equivalence_maximum_absolute_error": 1.7462298274040222e-10,
+    "dense_equivalence_relative_frobenius_error": 2.9353350495838164e-07,
+    "gsm1k_authorized": false,
+    "retention_matrix_passed_by_scale": {
+      "0.25": false,
+      "0.50": false,
+      "0.75": false,
+      "1.00": false
+    },
+    "retention_selection_passed": false,
+    "route_stopped": true,
+    "selection_summary_sha256": "b41d975f342820ac34ca693d599677994e3f272243c114c313605beb020ad49a"
+  },
+  "failure_taxonomy": {
+    "content_free_contract_sha256": "021837a1f1a3bb5a189b1f39c808bb907e415e28d8fa722a8a03c3114717cf28",
+    "detailed_taxonomy_sha256": "964d0c18b60d4f0262f0ec711b2f13b396ca4fa1c921f0dc2e91205d393cb692",
+    "extractable_incorrect": 231,
+    "manual_review_complete": true,
+    "primary_category_counts": {
+      "arithmetic_execution": 22,
+      "benchmark_ambiguity_or_annotation_risk": 2,
+      "constraint_distribution_or_discrete_reasoning": 27,
+      "multi_step_bookkeeping_or_omission": 68,
+      "output_format_or_answer_extraction": 69,
+      "rate_ratio_percentage_or_average": 28,
+      "target_or_language_interpretation": 53,
+      "time_unit_or_sequence_reasoning": 24
+    },
+    "reviewed_failures": 293,
+    "targetable": 291,
+    "unextractable": 62
+  },
+  "final_conclusion": "Foundry demonstrated that automatically targeted synthetic arithmetic data produced a statistically stronger adaptation direction than a matched generic curriculum, but the tested adaptation methods did not surpass the untouched base model.",
+  "grpo": {
+    "completed_generation_replays": 6,
+    "counted_training_started": false,
+    "fresh_process_common_packet_sha256": "084515f9f0ee18e976490e096cf1886247aa6c66f27811b9c714a916c895ee2f",
+    "fresh_process_replay_passed": true,
+    "fresh_process_summary_sha256": "de8ca1106268d874eaaf5bd9f659cd63a25252cb1fed1a653ed7a16dac7bdbb9",
+    "generation_replay_mean_reward": 0.9166666666666666,
+    "generation_replay_truncated_completion_rate": 0.0,
+    "generic_schedule_manifest_sha256": "5848ed6640dda21752ab9692c8e531d9175314a7d5a472616dc19ad834a6351e",
+    "generic_schedule_sha256": "2162d158660b125292a0257430826af00c228ef9a3929cde83db2741bdde2157",
+    "groups_per_arm": 64,
+    "optimizer_steps_completed": 0,
+    "prompt_tokens_per_arm": 6702,
+    "replay_failure_summary_sha256": "164d3e35828758d4eff77b21919b9b3b28dee6238135478fcd2b2e5e024c6f91",
+    "reward_calibration_sha256": "fc420f3cfd1737592a0ef49c8c835baff25fa7382642b13c4802ab5d18c5722c",
+    "reward_configuration_sha256": "4a47359fa3129b1bfd79dd158ecb609177e9b1642a95368c106e016a1554a965",
+    "reward_fixture_sha256": "8ba02448a87d5fe8c412f0e7a66acad5b45b6c6e9237dd366eecc060fbe67bdc",
+    "reward_implementation_sha256": "089650105e29ead3c4ad62f1e0e41263e6c2af5fb8a12cb2851644aca3599616",
+    "same_process_common_packet_sha256": "084515f9f0ee18e976490e096cf1886247aa6c66f27811b9c714a916c895ee2f",
+    "same_process_replay_passed": true,
+    "same_process_summary_sha256": "319be85006df062811970efc3bbb880efa0959df50c90d050f70fbe86e7bb043",
+    "schedule_summary_sha256": "23fede9132f53b7d32f354056c728fc68faa20586a9162e101834db34f71ca64",
+    "synthetic_groups_per_arm": 52,
+    "targeted_schedule_manifest_sha256": "cb13d4d522746bdfa829c9a405defdb0eff0acbd23859dc7fe49457318cc1ccf",
+    "targeted_schedule_sha256": "23686cee705e8cf854a01ac41a5544bd8cc7f79a645c4d5c2f1daefb6da07ef5",
+    "training_completed": false,
+    "warning_audit_decision": "failed_closed",
+    "warning_audit_sha256": "a3e4d1ca40c3fb3f9fe984d3a019ed064a6ba96394a69b009257a248eebf1602",
+    "warning_audit_source_or_dependency_files_changed": false
+  },
+  "human_review": {
+    "codex_language_audit_approved": 1000,
+    "codex_language_audit_high_confidence": 1000,
+    "export_found_at_closeout": false,
+    "packet_candidates": 100,
+    "packet_sha256": "ca5a3e0188440c762d96f100331185f5e8a011f04fe1ef6d2ee3d058027731ab",
+    "review_url": "file:///C:/Users/Admin/Projects/Foundry/results/raw/foundry_500x2_signal_review/codex_assisted_review.html",
+    "status": "pending"
+  },
+  "matched_datasets": {
+    "dataset_id": "foundry-matched-template-signal-500x2-v1",
+    "deterministic_reconstruction_match": true,
+    "generic_control": {
+      "dataset_sha256": "49294282d1b233c1ca36a9d1aa4400e4cb01b2c8d115d4450afcec091add2e7e",
+      "examples": 500,
+      "synthetic_validation_examples": 50,
+      "synthetic_validation_sha256": "42f51218dff5d52ba1366159868deb1d49b839d7edaf04871b6847668abbd58c",
+      "training_examples": 450,
+      "training_sha256": "52276f04e2f6fb42a154d3f3dd082809b1ad252e10639996e222926b3f4d41dd"
+    },
+    "global_exact_duplicates": 0,
+    "global_latent_program_duplicates": 0,
+    "global_normalized_duplicates": 0,
+    "independent_verifier_failures": 0,
+    "manifest_sha256": "33ca4041ac3fde472b49834b0c622664835b482e54eccb10c197c749fbce1094",
+    "primary_verifier_failures": 0,
+    "target_mismatches": 0,
+    "targeted": {
+      "dataset_sha256": "987712f6d143b21bfed4972e727204e9a1aa8672a74733d8b9bc286f7a482876",
+      "examples": 500,
+      "synthetic_validation_examples": 50,
+      "synthetic_validation_sha256": "1ec2074394233dbef217eede5a067ca1d83e0c3fbfe9996675cf0074f75b80ac",
+      "training_examples": 450,
+      "training_sha256": "9f8fef8070a8e3ea9874780d90bc4101d5b7827efaa54fa158eb32a8f5aae464"
+    },
+    "train_validation_exact_overlap": 0,
+    "train_validation_latent_overlap": 0,
+    "unresolved_contamination_cases": 0,
+    "verifier_disagreements": 0
+  },
+  "model": {
+    "model_id": "Qwen/Qwen2.5-1.5B-Instruct",
+    "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306"
+  },
+  "paired_comparison": {
+    "bootstrap_confidence_level": 0.95,
+    "bootstrap_interval": [
+      0.013513513513513514,
+      0.052825552825552825
+    ],
+    "bootstrap_interval_percentage_points": [
+      1.3513513513513513,
+      5.282555282555282
+    ],
+    "bootstrap_replicates": 10000,
+    "bootstrap_seed": 20260720,
+    "generic_wins": 20,
+    "one_seed_signal_gate_passed": false,
+    "point_estimate": 0.033169533169533166,
+    "point_estimate_percentage_points": 3.3169533169533165,
+    "targeted_net_wins": 27,
+    "targeted_wins": 47
+  },
+  "qlora_environment": {
+    "accelerate": "1.7.0",
+    "bitsandbytes": "0.49.2",
+    "cuda_runtime": "12.1",
+    "gpu": "NVIDIA GeForce RTX 3080",
+    "operating_system": "Windows",
+    "peft": "0.15.2",
+    "python": "3.12.10",
+    "requirements_lock_sha256": "fc158cd278124af82406a110afb5efcde2346776dce79875fe3cf6aa5ccb4755",
+    "torch": "2.5.1+cu121",
+    "transformers": "4.51.3",
+    "trl": "0.17.0"
+  },
+  "release_id": "foundry-phase1-final-v1",
+  "repository": {
+    "branch": "main",
+    "evidence_snapshot_commit": "20409ba41dc99bb1e6300b53d9ad9b3db1431722",
+    "evidence_snapshot_tree": "e5fea3f0bc45f0bf985d4d87778bf28c7c7895a0",
+    "publication_commit_identity": "the Git commit containing this file",
+    "repository_commit_at_summary_creation": "20409ba41dc99bb1e6300b53d9ad9b3db1431722"
+  },
+  "results": {
+    "base": {
+      "accuracy": 0.64004914004914,
+      "accuracy_percent": 64.004914004914,
+      "correct": 521,
+      "delta_correct_vs_base": 0,
+      "delta_percentage_points_vs_base": 0.0
+    },
+    "generic_control": {
+      "accuracy": 0.47542997542997545,
+      "accuracy_percent": 47.542997542997545,
+      "correct": 387,
+      "delta_correct_vs_base": -134,
+      "delta_percentage_points_vs_base": -16.46191646191646,
+      "extractability": 0.9434889434889435,
+      "extractable": 768
+    },
+    "targeted": {
+      "accuracy": 0.5085995085995086,
+      "accuracy_percent": 50.85995085995086,
+      "correct": 414,
+      "delta_correct_vs_base": -107,
+      "delta_percentage_points_vs_base": -13.14496314496314,
+      "extractability": 0.9422604422604423,
+      "extractable": 767
+    }
+  },
+  "retention": {
+    "common_scale": 0.5,
+    "final_holdout": {
+      "generic_control": {
+        "broken": 4,
+        "gate_passed": true,
+        "preservation": 0.9874213836477987,
+        "preserved": 314,
+        "total": 318,
+        "wilson_95_lower_bound": 0.9681093239385609
+      },
+      "targeted": {
+        "broken": 3,
+        "gate_passed": true,
+        "preservation": 0.9905660377358491,
+        "preserved": 315,
+        "total": 318,
+        "wilson_95_lower_bound": 0.972634892206577
+      }
+    },
+    "gsm1k_authorized_after_common_scale": true,
+    "retention_passed": true,
+    "selection_summary_sha256": "d7455a57001acf68f37369503cce9ef4e3fc30755b2f7f3fd8b7c7055a0b986c",
+    "validation_summary_sha256": "6f3e7a29dfbb184f5b6b5eb09fd52060c3c2465c5da2343f85d62d05f8589cc7"
+  },
+  "schema_version": 1,
+  "sealed_final": {
+    "accessed": false,
+    "evaluation_occurred": false
+  },
+  "source_evidence_file_sha256": {
+    "base_summary": "e2b436ce841122d9796cc71360e9b888ebff7007268a8053688fb094dfb7ba48",
+    "common_scale_final_validation": "b1ef3f4680f9ad6bc2c07a37b6fd074d08da37f3c2b2c3bc56e3b6f3bc8aa81c",
+    "contrastive_construction": "fa1366fd11bae2b1f33b73842257297eee6eeea47697220a11f0760edcd8d684",
+    "contrastive_selection": "2387a6144e0a005bb14766230ac8552dc99916ac4167fe91b25c51ee34db84b9",
+    "failure_taxonomy": "3ae9f4686ec8e7658a5fc33b2f4d911d168afd797143bffef598cdbe27320d51",
+    "generic_development": "a6d2f049b77e06f6ce5f8fda6da0b3ebca3fc88e2b168d6c849b62be43c2452b",
+    "grpo_generic_schedule": "2162d158660b125292a0257430826af00c228ef9a3929cde83db2741bdde2157",
+    "grpo_replay_failure": "7b6a05ff15ed395ea5ca863d94ef24d881670b4b41c36a07df8be7f432083405",
+    "grpo_schedule_summary": "11d121728b90199ec995535ffb72a333dcb44b0610d4f8a793ffbc5120c39ba1",
+    "grpo_targeted_schedule": "23686cee705e8cf854a01ac41a5544bd8cc7f79a645c4d5c2f1daefb6da07ef5",
+    "grpo_warning_audit": "f451f46abe042763fe267043e9c2aca0397447b3430982d3c49ab7be471f3db2",
+    "language_audit": "d9fd453e0e47510397280beb1f0fca6710576e4640afc9d234c4bdac6ca332c6",
+    "matched_dataset_manifest": "0cc05b87e77c781d6888719cc334f2aea601e356fdf5168de345ffde7ddd253f",
+    "matched_dataset_summary": "7698b52ec0953e201fcae102f602a68498c021ce21b5d9b70881a54de3a26f65",
+    "paired_analysis": "fc60e71055eeacb53a52a1ea0fbe6f151b0b75a0fc39c0f53d82b5dd3d331538",
+    "retention_safe_ladder": "968f09a071b367e72f654b9d5c30123c62928e1089ad850db50ec048c715c55e",
+    "signal_decision": "650bd15518b3830dd0a14987cdf3b763c13478dff14fc916cc2662868c466ef6",
+    "targeted_development": "bc0710c9a1fc79274204d5a39ab8f7fa241d8a52238d4e90a4f579a2208273a5"
+  },
+  "status_label": "Provisional one-seed result pending genuine stratified human language review and second-seed confirmation.",
+  "summary_sha256": "4d5d068a047f05205e0bd2d9d4018f6342fd510f95bbc9a7913b37d0cc9e9ede",
+  "training_controls": {
+    "final_comparison_source": {
+      "adapter_scale": 0.5,
+      "checkpoint": 32,
+      "format": "assistant_only_v3",
+      "generic_adapter_sha256": "faa4b72bd0046fbd8d94fc3f364cb7078259403131ea16cd136fdfbbe5408f35",
+      "generic_loss_bearing_tokens": 14400,
+      "learning_rate": 5e-05,
+      "targeted_adapter_sha256": "c4e455432b9a3b17ae077dafdaa1c9391ab67b7350628f3aa5f9787677d8bb5b",
+      "targeted_loss_bearing_tokens": 14400,
+      "token_parity_passed": true,
+      "variant": "a"
+    },
+    "full_token_matched_v2": {
+      "absolute_token_difference": 142,
+      "generic_adapter_sha256": "c039612d250827525f06269d75da2600c24d2a76c26c11c58a3bfb838e025df1",
+      "generic_loss_bearing_tokens": 271292,
+      "parity_limit": 0.005,
+      "parity_passed": true,
+      "relative_token_difference": 0.0005234212582752164,
+      "targeted_adapter_sha256": "b4a2e55d293ed88ccc2668dd450cc29f683bda7585668126fe75e2253fe3b02e",
+      "targeted_loss_bearing_tokens": 271150
+    }
+  },
+  "untested_or_unproven": {
+    "autonomous_repeated_improvement_cycle": false,
+    "base_beating_model": false,
+    "second_seed_confirmation": false,
+    "successful_grpo_training": false
+  }
+}

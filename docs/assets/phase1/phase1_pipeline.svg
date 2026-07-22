@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc" data-source-sha256="00f62fb41062071009525b06bd02439bbd770a054850a425d24dc9cfe687691e">
+<title id="title">Foundry Phase 1 research pipeline</title>
+<desc id="desc">Six connected stages from frozen evaluation through a matched benchmark comparison.</desc>
+<style>
+text { font-family: 'Segoe UI', Arial, sans-serif; fill: #172033; }
+.title { font-size: 30px; font-weight: 600; }
+.subtitle { font-size: 16px; fill: #586579; }
+.label { font-size: 18px; font-weight: 600; }
+.value { font-size: 17px; font-weight: 600; }
+.small { font-size: 14px; fill: #586579; }
+.axis { font-size: 14px; fill: #586579; }
+.node-label { font-size: 17px; font-weight: 600; }
+.node-detail { font-size: 13px; fill: #586579; }
+</style>
+<rect width="1200" height="700" fill="#ffffff"/>
+<text x="50.0" y="52.0" class="title" text-anchor="start">Foundry Phase 1 research pipeline</text>
+<text x="50.0" y="82.0" class="subtitle" text-anchor="start">Executed path; benchmark comparison was directionally positive but absolutely negative</text>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M 0 0 L 10 5 L 0 10 z" fill="#586579"/>
+</marker>
+</defs>
+<line x1="194.0" y1="330.0" x2="212.0" y2="330.0" stroke="#586579" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="25.0" y="225.0" width="165.0" height="210.0" rx="10" fill="#f0fdf4" stroke="#15803d" stroke-width="3"/>
+<text x="107.5" y="257.0" class="small" text-anchor="middle">PASSED</text>
+<text x="107.5" y="307.0" class="node-label" text-anchor="middle">Evaluate</text>
+<text x="107.5" y="375.0" class="node-detail" text-anchor="middle">814 frozen</text>
+<text x="107.5" y="395.0" class="node-detail" text-anchor="middle">development examples</text>
+<line x1="387.0" y1="330.0" x2="405.0" y2="330.0" stroke="#586579" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="218.0" y="225.0" width="165.0" height="210.0" rx="10" fill="#f0fdf4" stroke="#15803d" stroke-width="3"/>
+<text x="300.5" y="257.0" class="small" text-anchor="middle">PASSED</text>
+<text x="300.5" y="307.0" class="node-label" text-anchor="middle">Classify</text>
+<text x="300.5" y="331.0" class="node-label" text-anchor="middle">failures</text>
+<text x="300.5" y="375.0" class="node-detail" text-anchor="middle">293 failures</text>
+<text x="300.5" y="395.0" class="node-detail" text-anchor="middle">reviewed</text>
+<line x1="580.0" y1="330.0" x2="598.0" y2="330.0" stroke="#586579" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="411.0" y="225.0" width="165.0" height="210.0" rx="10" fill="#f0fdf4" stroke="#15803d" stroke-width="3"/>
+<text x="493.5" y="257.0" class="small" text-anchor="middle">PASSED</text>
+<text x="493.5" y="307.0" class="node-label" text-anchor="middle">Generate</text>
+<text x="493.5" y="331.0" class="node-label" text-anchor="middle">verified data</text>
+<text x="493.5" y="375.0" class="node-detail" text-anchor="middle">500 targeted</text>
+<text x="493.5" y="395.0" class="node-detail" text-anchor="middle">+ 500 generic</text>
+<line x1="773.0" y1="330.0" x2="791.0" y2="330.0" stroke="#586579" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="604.0" y="225.0" width="165.0" height="210.0" rx="10" fill="#f0fdf4" stroke="#15803d" stroke-width="3"/>
+<text x="686.5" y="257.0" class="small" text-anchor="middle">PASSED</text>
+<text x="686.5" y="307.0" class="node-label" text-anchor="middle">Train matched</text>
+<text x="686.5" y="331.0" class="node-label" text-anchor="middle">controls</text>
+<text x="686.5" y="375.0" class="node-detail" text-anchor="middle">Token-matched</text>
+<text x="686.5" y="395.0" class="node-detail" text-anchor="middle">Windows QLoRA</text>
+<line x1="966.0" y1="330.0" x2="984.0" y2="330.0" stroke="#586579" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="797.0" y="225.0" width="165.0" height="210.0" rx="10" fill="#f0fdf4" stroke="#15803d" stroke-width="3"/>
+<text x="879.5" y="257.0" class="small" text-anchor="middle">PASSED</text>
+<text x="879.5" y="307.0" class="node-label" text-anchor="middle">Retention</text>
+<text x="879.5" y="331.0" class="node-label" text-anchor="middle">gate</text>
+<text x="879.5" y="375.0" class="node-detail" text-anchor="middle">Common runtime</text>
+<text x="879.5" y="395.0" class="node-detail" text-anchor="middle">scale 0.50</text>
+<rect x="990.0" y="225.0" width="165.0" height="210.0" rx="10" fill="#fff8ed" stroke="#b45309" stroke-width="3"/>
+<text x="1072.5" y="257.0" class="small" text-anchor="middle">MIXED RESULT</text>
+<text x="1072.5" y="307.0" class="node-label" text-anchor="middle">Benchmark</text>
+<text x="1072.5" y="331.0" class="node-label" text-anchor="middle">comparison</text>
+<text x="1072.5" y="375.0" class="node-detail" text-anchor="middle">Targeted &gt; generic</text>
+<text x="1072.5" y="395.0" class="node-detail" text-anchor="middle">Both &lt; base</text>
+<text x="50.0" y="545.0" class="label" text-anchor="start">Interpretation</text>
+<text x="50.0" y="578.0" class="subtitle" text-anchor="start">Failure-targeted data produced the stronger adaptation direction, but no tested arm surpassed the base.</text>
+<text x="50.0" y="650.0" class="subtitle" text-anchor="start">Human language review remains pending; no sealed-final evaluation occurred.</text>
+</svg>

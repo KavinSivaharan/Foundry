@@ -1028,3 +1028,26 @@ This log separates proposals from approved decisions. A proposal does not author
   `a3e4d1ca40c3fb3f9fe984d3a019ed064a6ba96394a69b009257a248eebf1602`; classification SHA-256 is
   `37f564cf5a73e91a196496c00c31b0822c44a2b4c84e519b5628d5135479ad74`. V5 replay, G1/G2,
   retention, GSM1K, paired analysis, and the signal gate remain unrun.
+
+## 2026-07-22: close Phase 1 with an evidence-bound public research package
+
+- **Status:** The Phase 1 evidence chain is complete at repository commit
+  `20409ba41dc99bb1e6300b53d9ad9b3db1431722`. Genuine stratified human language review remains
+  pending, and sealed-final GSM1K evaluation has never been accessed.
+- **Decision:** Publish one consolidated Phase 1 report, reproducibility guide, architecture and
+  milestone indexes, machine-readable summary and consistency tables, deterministic figures, and
+  separately scoped Phase 2 research directions. Preserve every historical result and classify
+  the conclusion as provisional pending genuine human review.
+- **Evidence:** The untouched base scored `521/814`; matched generic and targeted SFT scored
+  `387/814` and `414/814`. Targeted exceeded generic by `27` questions (`3.316953` percentage
+  points; paired 95% interval `[1.351351, 5.282555]`) but remained `107` questions below base.
+  Final retention lower bounds were `0.968109` and `0.972635`. Six verifier-GRPO generation
+  replays matched packet `084515f9...ee2f`, but the training-warning audit failed closed before
+  any optimizer step.
+- **Rationale:** Phase 1 established a reproducible research system and a statistically supported
+  targeted-over-generic contrast without establishing an improvement over the base model. A
+  single evidence-linked closeout makes that mixed result legible while retaining the negative
+  contrastive and GRPO findings as first-class results.
+- **Consequence:** Phase 1 ends without a production-training recommendation, GSM transfer claim,
+  or sealed-final score. Any new training stack, human-review completion, or sealed evaluation
+  requires separately scoped authorization.

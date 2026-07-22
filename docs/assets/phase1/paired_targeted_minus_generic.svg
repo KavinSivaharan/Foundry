@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc" data-source-sha256="00f62fb41062071009525b06bd02439bbd770a054850a425d24dc9cfe687691e">
+<title id="title">Paired targeted-minus-generic result</title>
+<desc id="desc">A paired bootstrap confidence interval for targeted minus generic accuracy. The entire interval is above zero.</desc>
+<style>
+text { font-family: 'Segoe UI', Arial, sans-serif; fill: #172033; }
+.title { font-size: 30px; font-weight: 600; }
+.subtitle { font-size: 16px; fill: #586579; }
+.label { font-size: 18px; font-weight: 600; }
+.value { font-size: 17px; font-weight: 600; }
+.small { font-size: 14px; fill: #586579; }
+.axis { font-size: 14px; fill: #586579; }
+.node-label { font-size: 17px; font-weight: 600; }
+.node-detail { font-size: 13px; fill: #586579; }
+</style>
+<rect width="1200" height="700" fill="#ffffff"/>
+<text x="50.0" y="52.0" class="title" text-anchor="start">Paired targeted-minus-generic result</text>
+<text x="50.0" y="82.0" class="subtitle" text-anchor="start">10,000 paired bootstrap replicates; seed 20260720; 814 aligned examples</text>
+<line x1="130.0" y1="180" x2="130.0" y2="500" stroke="#d9e1ea" stroke-width="1"/>
+<text x="130.0" y="530.0" class="axis" text-anchor="middle">-2</text>
+<line x1="252.5" y1="180" x2="252.5" y2="500" stroke="#d9e1ea" stroke-width="1"/>
+<text x="252.5" y="530.0" class="axis" text-anchor="middle">-1</text>
+<line x1="375.0" y1="180" x2="375.0" y2="500" stroke="#d9e1ea" stroke-width="1"/>
+<text x="375.0" y="530.0" class="axis" text-anchor="middle">0</text>
+<line x1="497.5" y1="180" x2="497.5" y2="500" stroke="#d9e1ea" stroke-width="1"/>
+<text x="497.5" y="530.0" class="axis" text-anchor="middle">1</text>
+<line x1="620.0" y1="180" x2="620.0" y2="500" stroke="#d9e1ea" stroke-width="1"/>
+<text x="620.0" y="530.0" class="axis" text-anchor="middle">2</text>
+<line x1="742.5" y1="180" x2="742.5" y2="500" stroke="#d9e1ea" stroke-width="1"/>
+<text x="742.5" y="530.0" class="axis" text-anchor="middle">3</text>
+<line x1="865.0" y1="180" x2="865.0" y2="500" stroke="#d9e1ea" stroke-width="1"/>
+<text x="865.0" y="530.0" class="axis" text-anchor="middle">4</text>
+<line x1="987.5" y1="180" x2="987.5" y2="500" stroke="#d9e1ea" stroke-width="1"/>
+<text x="987.5" y="530.0" class="axis" text-anchor="middle">5</text>
+<line x1="1110.0" y1="180" x2="1110.0" y2="500" stroke="#d9e1ea" stroke-width="1"/>
+<text x="1110.0" y="530.0" class="axis" text-anchor="middle">6</text>
+<line x1="375.0" y1="165" x2="375.0" y2="500" stroke="#b91c1c" stroke-width="2"/>
+<text x="375.0" y="150.0" class="small" text-anchor="middle">No difference</text>
+<line x1="540.5" y1="345.0" x2="1022.1" y2="345.0" stroke="#0f766e" stroke-width="12" stroke-linecap="round"/>
+<line x1="540.5" y1="315.0" x2="540.5" y2="375.0" stroke="#0f766e" stroke-width="4"/>
+<line x1="1022.1" y1="315.0" x2="1022.1" y2="375.0" stroke="#0f766e" stroke-width="4"/>
+<circle cx="781.3" cy="345.0" r="14" fill="#17324d" stroke="#ffffff" stroke-width="4"/>
+<text x="781.3" y="290.0" class="label" text-anchor="middle">+3.3170 points</text>
+<text x="540.5" y="403.0" class="value" text-anchor="middle">+1.3514</text>
+<text x="1022.1" y="403.0" class="value" text-anchor="middle">+5.2826</text>
+<text x="620.0" y="590.0" class="label" text-anchor="middle">Targeted accuracy minus generic accuracy (percentage points)</text>
+<text x="50.0" y="650.0" class="subtitle" text-anchor="start">Targeted wins: 47; generic wins: 20; net: +27.</text>
+</svg>

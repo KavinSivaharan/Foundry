@@ -1,0 +1,51 @@
+milestone,commit,gate,result,next decision,model generation occurred,optimizer steps occurred,GSM1K evaluation occurred,sealed-final content accessed
+0,f1e4dd9decf42a21d7de6364ca8ea686580c89b6,"scope freeze","passed","build evaluator",false,false,false,false
+1,f9f579fbc61c09776c7d4bf28a44ee18f6f969d0,"foundation contracts","passed","run hardware smoke",false,false,false,false
+1-smoke,c1ef56184723c092a39937009fa2565aa1841c3c,"ten-example smoke","passed","calibrate output format",true,false,true,false
+1.5,5e873f10dfca2b9ad4ebd2dc30bee62c72008aa3,"prompt admission","failed","separate extraction",true,false,true,false
+1.6,e1d0576ac7c625de80960edf414d7270ed5cc8e4,"fresh extraction validation","failed","resolve coverage defects",true,false,true,false
+1.7,7786fe7c5d80953255b6a6ee15c4dcccb275e6d6,"final evaluator validation","failed with documented exception path","run fully audited baseline",true,false,true,false
+2,f4ac19f4e89917d3fee1e2831daad4757cee5f84,"frozen baseline","521/814 correct","audit correct-scored outputs",true,false,true,false
+2.1,0d838318b22404eac1b497ad859a0cfb8b6c7343,"label-blind trust audit","passed","classify failures",false,false,false,false
+3,e99be66304eeeede98d1787cf9b1edb049a4a057,"complete taxonomy","293/293 reviewed","validate synthesis",false,false,false,false
+4,c023ee068fe88400fbf378ade8c8e8e9fdcebfee,"procedural quality and yield","failed","repair renderer",false,false,false,false
+4.1,39ea07cdb3d09e2811f8aa871ec3378bebc743f8,"repaired procedural smoke","failed","test typed compiler",false,false,false,false
+4.2,ca835716c6cf456699a99f82cc9e09be800de828,"renderer stress","failed","design local realization",false,false,false,false
+5A,85179d7b8d3f9b48f0a36c92119c4f5049708ecd,"design freeze","passed","run local smoke",false,false,false,false
+5B,90a1806e6929e1297d0936b18e1f6fcfae4b0701,"local realization smoke","failed","try compact protocol",true,false,false,false
+5C,1110d987cd3ea5a980e2c80c79ccf2fe38678195,"compact realization smoke","failed","try stronger model",true,false,false,false
+5D,057130d5da79751ab9b05508dd83209e5a6b65b5,"stronger-model comparison","failed","pivot to template bank",true,false,false,false
+6A,822596a6f93435285e86c8fc63714341c525a833,"template-bank readiness","failed","add composition",false,false,false,false
+6B,2650f6adf63a8815403f472b925863890cade4e2,"composition technical gate","passed","obtain user review",false,false,false,false
+6C-R,457dc5e65e6828380d91c2b3c930ccf1c1ad98db,"runtime-diversity packet","failed","audit capacity",false,false,false,false
+6D,fa696d692b1af49afc3966db9f151e65e917ee06,"exact capacity","failed","permit bounded reuse",false,false,false,false
+6E,0e5f6d221f2eb10a4bf93fcb264c629878829e34,"latent capacity","failed","reduce scope",false,false,false,false
+7A,7978960d38552421370ecca1e013d825ebd1de40,"target-compatible capacity","failed","build feasible allocator",false,false,false,false
+7B,23c2cdb5ab2a931df6b711b1f3fc571c748035c3,"review-smoke identity","failed","integrate runtime identity",false,false,false,false
+7C,8653980c25ab1d03c35adf52e9c73f4814ddc2c4,"runtime-exact schedule","failed","calibrate surfaces",false,false,false,false
+7D,bfdbd4a89d29f8cdccde5eaca0517af397e8a289,"corrected compatibility","failed","adjust difficulty",false,false,false,false
+7E,6a5554050d7dad5ef4a268b2008d532732f09088,"complete schedule","failed","test multipliers",false,false,false,false
+7F,b66290b633fac4434e680be3b9180966950e0ee9,"multiplier preflight","failed","reduce pool",false,false,false,false
+7G,a005dda6bf42d09b53a3d50e30cc7fc5a1d90654,"size preflight","failed","fast-track matched templates",false,false,false,false
+8A,021517438e62210bc37a783269f4b7f367570745,"dataset and contamination","passed: 500 + 500","validate QLoRA",false,false,false,false
+8B,6d2b96e845870ed5c56cfbb3ba115cbd311d0e71,"32-step QLoRA smoke","passed","train matched adapters",true,true,false,false
+8C,9ac4202c7e2a0271a4c88d5202d21188250a6b6b,"training-token parity","failed","freeze token matching",false,true,false,false
+8D-protocol,02a7a3f16bd7ee4afa75b59b034e7e3c13c26238,"Method B smoke","passed","run full comparison",false,true,false,false
+8D,911b48106a80c950e4e0f0f334073c8b224c7b44,"one-seed signal","failed with shared collapse","diagnose masking",true,true,true,false
+8E,b2c02fffefba690c7d49236e4d291ec7e79ef89f,"assistant-only retention","failed","build adaptation ladder",true,true,false,false
+8F-8H,31105ba982cc17370d2c2a453bfb442835711b56,"disjoint retention validation","failed","design powered instruments",true,true,false,false
+8I-8K,d22044883457e194d02a9dd769d9b75010eca0b9,"untouched-base instrument","failed","use base conditioning",true,false,false,false
+8L,9af1840792037e5b7b5f91366536554668acf9bf,"base-conditioned retention","failed","test runtime scaling",true,false,false,false
+8M-retention,2a69bca54b8e90b88d51b91e2ea347f221722e5c,"common scale retention","passed at 0.50","run development comparison",true,false,false,false
+8M,0b6cbe350b6065317fe06aa93b48502ee4e57c56,"absolute signal","failed; targeted beat generic only","test task vector",true,false,true,false
+8N,08ae1a2763e5a054972231c0817b6ff8e35fc076,"contrastive retention","failed","investigate replay",true,false,false,false
+9,a0438698e37bdb4f0e4216225eb0d9b8f6c2dc8b,"independent holdout base gate","failed","design verifier GRPO",true,false,false,false
+10,a5f3af31bc05c25871934259c6d17e3ed47b704a,"GRPO compatibility","failed during first generation","audit warning-only replay",true,false,false,false
+10E,8f67e46262b7edafc57861aaf185efa345228179,"exact generation replay","failed source-bound contract","use immutable worktree",true,false,false,false
+10G-runtime,b647a3dcadcab941359fbecab2b11c8f9f63cb8d,"runtime-root separation","passed","rerun immutable replay",false,false,false,false
+10G,ccbc88797441159f892bed28a336b625fc2ccab4,"immutable replay","failed closed","standardize environment",true,false,false,false
+10H-environment,2254b22aa10c9f024eebd56c1f1b98b9a3cf16ab,"launch environment","passed","run V3 replay",false,false,false,false
+10H,e472a57d49fd0cfe074a9cf957b89cb15bd34cd3,"NVML preflight","failed before model load","replace preflight",false,false,false,false
+10I-CUDA,a13c31b43a72c3bec205e440aaf7c424ac487d47,"child CUDA compute","passed","run V4 replay",false,false,false,false
+10I,47bbe91e7bc0367be9abec68bfe113b4787c5d43,"replay then two-step warning audit","replay passed; smoke failed","audit warnings",true,false,false,false
+10J,20409ba41dc99bb1e6300b53d9ad9b3db1431722,"immutable warning classification","failed closed; 0 optimizer steps","close Phase 1",false,false,false,false
