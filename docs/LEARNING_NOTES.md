@@ -904,3 +904,18 @@ The companion lesson is that environment identity should not be a filtered hash 
 parent process. Construct a child environment from explicit required values plus a small named
 allowlist of operating-system fields. This keeps secrets and unrelated shell state outside the
 scientific identity while still preserving the DLL and process-launch fields Windows requires.
+
+## Milestone 10H: an allowlist is also an executable dependency contract
+
+The V3 replay exposed a boundary that unit validation did not cover. The frozen 30-field child
+environment was sufficient to start CPython, import the stack, enable deterministic algorithms,
+and initialize CUDA during manifest collection under the parent environment. When the replay was
+actually launched with every non-allowlisted field removed, NVIDIA's own `nvidia-smi` executable
+could not initialize NVML and exited `255`. The same command still returned driver `610.47` under
+the parent environment.
+
+The lesson is not to restore an uncontrolled environment copy. A minimized Windows/GPU allowlist
+must be integration-tested by launching every external executable used by the counted process,
+including driver diagnostics, with only that allowlist. Any additional inherited field must be
+identified and frozen before authorization. Because this failure occurred in the official V3 gate,
+the experiment stopped without attempting to discover or add such a field.

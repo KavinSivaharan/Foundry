@@ -971,3 +971,23 @@ This log separates proposals from approved decisions. A proposal does not author
   `fix: standardize GRPO deterministic environment`, then create a new detached V3 worktree. This
   decision changes no sampling, reward, reference, KL, optimizer, schedule, LoRA, retention,
   evaluator, dataset, or dependency setting.
+
+## 2026-07-21: stop Milestone 10H after V3 NVML allowlist failure
+
+- **Status:** Official V3 same-process gate failed before model loading; all downstream gates are
+  closed.
+- **Decision:** Preserve the detached V3 worktree and external runtime evidence. Do not retry the
+  replay, add a newly discovered parent field to the allowlist, run either two-step smoke, train
+  G1/G2, evaluate retention, or access GSM1K under this authorization.
+- **Evidence:** V3 froze commit `2254b22a`, tree `da9939e`, runtime contract `6154aecd...761a`, source
+  manifest `f9f48118...c729`, and model manifest `5173393f...4006`. The exact 30-field child
+  environment passed Python/import/determinism validation, but `nvidia-smi` exited `255` with
+  `Failed to initialize NVML: Unknown Error` during pre-model CUDA validation. The same query
+  succeeds under the parent environment with driver `610.47`.
+- **Rationale:** The official replay proved that the environment minimization omits an input needed
+  by NVML. Discovering and adding that field after the gate would create a new launch contract and
+  a new experiment, not complete the authorized immutable V3 run.
+- **Consequence:** No model-side replay mismatch was observed, but compatibility did not pass.
+  Model generations, replay packets, optimizer steps, adapters, checkpoints, retention results,
+  GSM1K predictions, and sealed-final access remain zero. Failure-summary SHA-256 is
+  `b5f0e4b21b496b47a9ae5a93a42d9d9c39bb81b5e2fa7b4ddd36c7432464c2bf`.

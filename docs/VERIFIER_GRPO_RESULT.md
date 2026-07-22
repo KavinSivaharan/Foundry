@@ -318,3 +318,39 @@ All `198` focused GRPO tests and all `709` repository tests pass. Protected scie
 dependency paths are byte-identical to the starting commit. No model generation, optimizer step,
 adapter, checkpoint, retention result, GSM1K result, or sealed-final access occurred during this
 correction phase. V3 compatibility remains not yet run.
+
+## Milestone 10H V3 immutable replay result
+
+V3 ran from commit `2254b22aa10c9f024eebd56c1f1b98b9a3cf16ab` and tree
+`da9939e50adb11d523fc00dec53a8350df5866d2`. External evidence froze runtime contract
+`6154aecda902d6a4f9a9773a68f4da873d52e3474acb6cced10aee3a4291761a`, source manifest
+`f9f481186f3fb2e4e1c2c44b1d281069910f302a99738fd1a420930977e4c729` (file
+`7eb5621d039f9c3d83106a7a14d759df38caa476c9f53302138a51c7d9b74afe`), and unchanged model
+manifest `5173393ff459ebe94d4019bf76e129a88022af448e1f24e954a8b9d291184006`.
+
+The same-process command launched with the exact secret-free 30-field allowlist and environment
+contract `1f80b1415fc189488b50d04fc69bb0c0ab098ab4f66d03efebac2b6b95b738af`. Before model loading,
+the frozen CUDA contract queried the NVIDIA driver. `nvidia-smi` returned exit `255` and
+`Failed to initialize NVML: Unknown Error`. A content-free diagnostic confirmed that the same
+command returns driver `610.47` under the parent environment and reproduces exit `255` under the
+exact allowlist.
+
+This is an orchestration/environment-allowlist failure, not a model-side replay mismatch. The
+process produced zero model loads, completions, reward calls, reference/KL calls, backward passes,
+optimizer steps, packets, adapters, or checkpoints. Peak RAM and VRAM are unavailable because the
+success-only resource packet was never created. The post-failure audit revalidated the clean source
+worktree, 495-file source identity, model cache, interpreter, environment, import path, and primary
+repository. Failure-summary SHA-256 is
+`b5f0e4b21b496b47a9ae5a93a42d9d9c39bb81b5e2fa7b4ddd36c7432464c2bf`.
+
+### Final gate status
+
+Same-process replay **failed before replay 1**. Fresh-process replay, both complete two-step smokes,
+G1/G2 training, checkpoint retention, independent final retention, generic/targeted GSM1K,
+category analysis, paired bootstrap, and the one-seed signal gate were not run. The frozen base
+remains the historical `521/814`; it was not rerun. Sealed-final remained untouched.
+
+The exact next action is project stop for verifier-GRPO. Preserve V3; do not retry, expand the
+allowlist, or start downstream gates without a new explicit project-level authorization. Human
+language review remains pending at
+`file:///C:/Users/Admin/Projects/Foundry/results/raw/foundry_500x2_signal_review/codex_assisted_review.html`.

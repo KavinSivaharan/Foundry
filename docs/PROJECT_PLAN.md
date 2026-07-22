@@ -1054,3 +1054,22 @@ dependency paths have zero diff. After the exact environment-fix commit is pushe
 `Foundry-grpo-frozen-v3` and `Foundry-grpo-runtime-v3`, freeze the external path/environment/source
 manifests, and proceed automatically through replay, duplicate two-step compatibility, conditional
 G1/G2, retention, and GSM1K gates while each preceding gate passes.
+
+## Milestone 10H outcome: V3 failed before model loading
+
+The environment fix was committed as `2254b22aa10c9f024eebd56c1f1b98b9a3cf16ab`. V3 froze tree
+`da9939e50adb11d523fc00dec53a8350df5866d2`, runtime-path contract
+`6154aecda902d6a4f9a9773a68f4da873d52e3474acb6cced10aee3a4291761a`, complete 495-file source
+manifest `f9f481186f3fb2e4e1c2c44b1d281069910f302a99738fd1a420930977e4c729`, and unchanged model
+manifest `5173393ff459ebe94d4019bf76e129a88022af448e1f24e954a8b9d291184006`.
+
+The official same-process process received only the explicit 30-field allowlist. Its pre-model CUDA
+contract check invoked `nvidia-smi --query-gpu=driver_version`; NVML initialization failed with exit
+`255`. The query succeeds under the parent environment, proving that removal of a non-allowlisted
+field changes NVML behavior. No model load or generation occurred, and no replay packet or summary
+was written.
+
+**Final Milestone 10H stop:** do not retry V3, patch the allowlist, run fresh-process or two-step
+replay, train G1/G2, select retention checkpoints, or evaluate GSM1K. Failure-summary SHA-256 is
+`b5f0e4b21b496b47a9ae5a93a42d9d9c39bb81b5e2fa7b4ddd36c7432464c2bf`. A future experiment would
+require new explicit project-level authorization and a predeclared GPU-process environment.

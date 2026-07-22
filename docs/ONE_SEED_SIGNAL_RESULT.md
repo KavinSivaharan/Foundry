@@ -489,3 +489,8 @@ retention, or GSM1K process.
 The GRPO one-seed signal gate therefore remains **not reached** at this publication point. The
 historical base result remains `521/814`, and the existing result remains **Provisional one-seed
 result pending stratified human language review and second-seed confirmation**.
+
+The subsequently launched V3 same-process gate failed before model loading because `nvidia-smi`
+could not initialize NVML under the exact child-environment allowlist. No completion, adapter,
+retention score, or GSM1K prediction was produced. The GRPO one-seed signal gate is therefore
+**not reached**, and the historical `521/814` base result was not rerun.

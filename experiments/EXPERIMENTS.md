@@ -981,3 +981,20 @@ Every future experiment must be registered here before a costly run begins. Its 
   checkpoints, retention evaluations, GSM1K evaluations, or sealed-final access in this phase.
 - **Next gate:** Publish `fix: standardize GRPO deterministic environment`, then create and freeze
   only the V3 worktree/runtime roots before same-process replay.
+
+#### EXP-TRAIN-016 outcome
+
+- **Status:** failed closed before model loading; project stop.
+- **Frozen identities:** commit `2254b22aa10c9f024eebd56c1f1b98b9a3cf16ab`, tree
+  `da9939e50adb11d523fc00dec53a8350df5866d2`, runtime contract `6154aecd...761a`, source manifest
+  `f9f48118...c729`, model manifest `5173393f...4006`, and environment `1f80b141...38af`.
+- **Run:** The official same-process command used the explicit 30-field child allowlist. Before any
+  model load, its CUDA contract query called `nvidia-smi`; NVML initialization failed with exit
+  `255`. The same query returned driver `610.47` under the parent environment.
+- **Interpretation:** Orchestration allowlist failure; no model-side replay mismatch and no
+  scientific result. Zero model generations, packets, rewards, optimizer steps, adapters, or
+  checkpoints exist.
+- **Downstream work:** Fresh-process replay, both two-step runs, G1/G2, retention, GSM1K, paired
+  analysis, and the signal gate were not run.
+- **Decision:** Enforce the no-retry rule and publish content-free failure summary
+  `b5f0e4b21b496b47a9ae5a93a42d9d9c39bb81b5e2fa7b4ddd36c7432464c2bf`.

@@ -2991,3 +2991,11 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
   GSM1K, paired analysis, and sealed-final access remain zero.
 - **Next action:** Commit and push exactly as `fix: standardize GRPO deterministic environment`,
   confirm clean 0/0 synchronization, then create and freeze the new detached V3 experiment.
+
+### 2026-07-21 - Milestone 10H V3 replay stopped before model loading
+
+- **Action performed:** Published environment fix `2254b22aa10c9f024eebd56c1f1b98b9a3cf16ab`, created the clean detached V3 worktree, froze runtime contract `6154aecda902d6a4f9a9773a68f4da873d52e3474acb6cced10aee3a4291761a` and complete source manifest `f9f481186f3fb2e4e1c2c44b1d281069910f302a99738fd1a420930977e4c729`, then launched the official same-process replay with the explicit 30-field child-environment allowlist.
+- **Result:** CUDA contract validation called `nvidia-smi` before model loading. The driver query succeeds under the parent environment with driver `610.47`, but the identical query under the exact allowlist exits `255` with `Failed to initialize NVML: Unknown Error`. The replay process stopped before any model load, generation, packet, reward, backward pass, optimizer step, adapter, or checkpoint.
+- **Gate status:** **FAILED; STRICT STOP ENFORCED.** This is an orchestration/allowlist failure, not a model-side replay mismatch. Fresh-process replay, both two-step smokes, G1/G2, retention, GSM1K, paired analysis, and the signal gate were not run.
+- **Evidence:** V3 source, model cache, environment hash, source-manifest file, and both repositories passed the post-failure audit unchanged. Content-free failure-summary SHA-256 is `b5f0e4b21b496b47a9ae5a93a42d9d9c39bb81b5e2fa7b4ddd36c7432464c2bf`.
+- **Next action:** Preserve V3 and stop verifier-GRPO. No replay retry or further orchestration patch is authorized.
