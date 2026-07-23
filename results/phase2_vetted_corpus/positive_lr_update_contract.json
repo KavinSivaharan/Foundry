@@ -1,0 +1,18 @@
+{
+  "amp_scaler_used": false,
+  "base_parameters_must_remain_unchanged": true,
+  "contract_id": "foundry-vetted-qlora-positive-lr-update-v1",
+  "contract_sha256": "0a1ad98543ffc6ee951d7a5f68df32258832e6ae6a156c7c9b7e6f45d714050c",
+  "expected_lr_before_optimizer": [
+    0.0,
+    0.0000025
+  ],
+  "expected_warmup_steps": 4,
+  "first_positive_lr_step": 2,
+  "maximum_probe_steps": 2,
+  "optimizer_scheduler_order": "optimizer_then_scheduler",
+  "positive_lr_requires_changed_lora_tensor": true,
+  "recipe_changed": false,
+  "update_detection_sha256": "5b2651dc20ec963e26c42eef6f9efd4c9efc1905dfc5bc36fc7d5e046a786c1d",
+  "zero_lr_expected_parameter_delta": 0
+}

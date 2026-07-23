@@ -17,6 +17,11 @@ from typing import Any, cast
 from foundry.phase2.argv_transport import validate_child_paths
 from foundry.phase2.launch_contract import validate_postimport, validate_preimport
 from foundry.phase2.pyyaml_exception import validate_evidence
+from foundry.phase2.update_detection import (
+    detect_updates,
+    snapshot_trainable,
+    validate_optimizer_ownership,
+)
 from foundry.phase2.windows_environment import validate_child_environment
 from foundry.training.config import canonical_sha256
 from foundry.training.qlora import file_sha256
@@ -143,8 +148,12 @@ def _probe(model_path: Path, replay_path: Path) -> dict[str, object]:
     input_ids, labels, assistant_eos = _assistant_labels(tokenizer, fixture)
     input_ids = input_ids.to("cuda")
     labels = labels.to("cuda")
-    trainable = [parameter for parameter in model.parameters() if parameter.requires_grad]
+    named_trainable = [
+        (name, parameter) for name, parameter in model.named_parameters() if parameter.requires_grad
+    ]
+    trainable = [parameter for _, parameter in named_trainable]
     optimizer = bitsandbytes.optim.PagedAdamW8bit(trainable, lr=1e-5, weight_decay=0.0)
+    validate_optimizer_ownership(named_trainable, optimizer)
     scheduler = transformers.get_scheduler(
         "cosine",
         optimizer=optimizer,
@@ -152,33 +161,52 @@ def _probe(model_path: Path, replay_path: Path) -> dict[str, object]:
         num_training_steps=64,
     )
     model.train()
-    optimizer.zero_grad(set_to_none=True)
-    with torch.autocast("cuda", dtype=torch.float16):
-        loss = model(
-            input_ids=input_ids,
-            attention_mask=torch.ones_like(input_ids),
-            labels=labels,
-        ).loss
-    if not bool(torch.isfinite(loss).item()):
-        raise RuntimeError("forward loss is nonfinite")
-    loss.backward()
-    gradients = [parameter.grad for parameter in trainable if parameter.grad is not None]
-    if not gradients or not all(
-        bool(torch.isfinite(gradient).all().item()) for gradient in gradients
-    ):
-        raise RuntimeError("LoRA gradients are missing or nonfinite")
-    before = [parameter.detach().clone() for parameter in trainable]
-    torch.nn.utils.clip_grad_norm_(trainable, 1.0)
-    optimizer.step()
-    scheduler.step()
-    torch.cuda.synchronize()
+    step_evidence: list[dict[str, Any]] = []
+    for step in (1, 2):
+        optimizer.zero_grad(set_to_none=True)
+        with torch.autocast("cuda", dtype=torch.float16):
+            loss = model(
+                input_ids=input_ids,
+                attention_mask=torch.ones_like(input_ids),
+                labels=labels,
+            ).loss
+        if not bool(torch.isfinite(loss).item()):
+            raise RuntimeError("forward loss is nonfinite")
+        loss.backward()
+        gradients = [parameter.grad for parameter in trainable if parameter.grad is not None]
+        if not gradients or not all(
+            bool(torch.isfinite(gradient).all().item()) for gradient in gradients
+        ):
+            raise RuntimeError("LoRA gradients are missing or nonfinite")
+        snapshots = snapshot_trainable(named_trainable)
+        torch.nn.utils.clip_grad_norm_(trainable, 1.0)
+        lr_before = float(optimizer.param_groups[0]["lr"])
+        epoch_before = int(scheduler.last_epoch)
+        optimizer.step()
+        update = detect_updates(snapshots, named_trainable)
+        scheduler.step()
+        torch.cuda.synchronize()
+        step_evidence.append(
+            {
+                "step": step,
+                "loss": float(loss.detach().float().item()),
+                "lr_before_optimizer": lr_before,
+                "lr_after_scheduler": float(optimizer.param_groups[0]["lr"]),
+                "scheduler_last_epoch_before": epoch_before,
+                "scheduler_last_epoch_after": int(scheduler.last_epoch),
+                "amp_scaler_used": False,
+                "optimizer_step_skipped": False,
+                "update": update,
+            }
+        )
+        if step == 1 and (lr_before != 0.0 or update["tensors_changed"] != 0):
+            raise RuntimeError("zero-LR warmup step behavior differs")
+        if step == 2 and (
+            lr_before <= 0.0 or update["tensors_changed"] == 0 or update["global_delta_norm"] <= 0.0
+        ):
+            raise RuntimeError("positive-LR step did not update LoRA parameters")
     if not optimizer.state:
         raise RuntimeError("paged AdamW 8-bit optimizer state was not created")
-    if not any(
-        not torch.equal(old, parameter.detach())
-        for old, parameter in zip(before, trainable, strict=True)
-    ):
-        raise RuntimeError("paged AdamW 8-bit did not update LoRA parameters")
     if any(
         parameter._version != base_versions[name] or parameter.grad is not None
         for name, parameter in model.named_parameters()
@@ -215,6 +243,7 @@ def _probe(model_path: Path, replay_path: Path) -> dict[str, object]:
         "optimizer": "PagedAdamW8bit",
         "optimizer_state_created": True,
         "optimizer_update": True,
+        "steps": step_evidence,
         "scheduler_compatible": True,
         "base_parameters_unchanged": True,
         "peak_allocated_vram_bytes": int(torch.cuda.max_memory_allocated()),

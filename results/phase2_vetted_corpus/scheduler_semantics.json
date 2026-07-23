@@ -1,0 +1,19 @@
+{
+  "a4_classification": "case_1_expected_zero_lr_noop",
+  "configured_total_optimizer_steps": 64,
+  "configured_warmup_ratio": 0.05,
+  "derived_warmup_steps": 4,
+  "foundry_probe_source_sha256_before_correction": "48bf6700def7bbfbeef0517d71b554d64f4896176ad4be5cece5714821cf4f7f",
+  "optimizer_scheduler_order": "optimizer_then_scheduler",
+  "scheduler_initial_last_epoch": 0,
+  "scheduler_initial_optimizer_lr": 0.0,
+  "sequence": [
+    {"step": 1, "lr_before_optimizer": 0.0, "lr_after_scheduler": 0.0000025},
+    {"step": 2, "lr_before_optimizer": 0.0000025, "lr_after_scheduler": 0.000005},
+    {"step": 3, "lr_before_optimizer": 0.000005, "lr_after_scheduler": 0.000007500000000000001},
+    {"step": 4, "lr_before_optimizer": 0.000007500000000000001, "lr_after_scheduler": 0.00001},
+    {"step": 5, "lr_before_optimizer": 0.00001, "lr_after_scheduler": 0.000009993147673772869}
+  ],
+  "torch_lambda_lr_source_sha256": "11fd39e690f8a64c6ff55aeee5da66cb82b9e47aae5a300227df64a89b2c563a",
+  "transformers_scheduler_source_sha256": "9554c7839c5163896a4a93c0ef259ee001ea0b83647b2f8e2986d4b35213ec8a"
+}
