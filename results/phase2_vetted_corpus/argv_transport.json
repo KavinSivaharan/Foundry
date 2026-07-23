@@ -1,0 +1,58 @@
+{
+  "argv": [
+    "C:\\Users\\Admin\\Projects\\Foundry\\.venv-training\\Scripts\\python.exe",
+    "-m",
+    "foundry.phase2.qlora_environment",
+    "--model-path",
+    "C:\\Users\\Admin\\Projects\\Foundry\\data\\huggingface\\hub\\models--Qwen--Qwen2.5-1.5B-Instruct\\snapshots\\989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+    "--replay-path",
+    "C:\\Users\\Admin\\Projects\\Foundry\\results\\raw\\training\\base_replay_kl\\replay_corpus.json",
+    "--exception-path",
+    "C:\\Users\\Admin\\Projects\\Foundry\\results\\phase2_vetted_corpus\\pyyaml_metadata_exception.json",
+    "--output",
+    "C:\\Users\\Admin\\Projects\\Foundry\\results\\raw\\phase2_vetted_corpus\\qlora_environment_probe\\training_environment.json"
+  ],
+  "argv_canonical_json": "[\"C:\\\\Users\\\\Admin\\\\Projects\\\\Foundry\\\\.venv-training\\\\Scripts\\\\python.exe\",\"-m\",\"foundry.phase2.qlora_environment\",\"--model-path\",\"C:\\\\Users\\\\Admin\\\\Projects\\\\Foundry\\\\data\\\\huggingface\\\\hub\\\\models--Qwen--Qwen2.5-1.5B-Instruct\\\\snapshots\\\\989aa7980e4cf806f80c7fef2b1adb7bc71aa306\",\"--replay-path\",\"C:\\\\Users\\\\Admin\\\\Projects\\\\Foundry\\\\results\\\\raw\\\\training\\\\base_replay_kl\\\\replay_corpus.json\",\"--exception-path\",\"C:\\\\Users\\\\Admin\\\\Projects\\\\Foundry\\\\results\\\\phase2_vetted_corpus\\\\pyyaml_metadata_exception.json\",\"--output\",\"C:\\\\Users\\\\Admin\\\\Projects\\\\Foundry\\\\results\\\\raw\\\\phase2_vetted_corpus\\\\qlora_environment_probe\\\\training_environment.json\"]",
+  "argv_sha256": "c9d71f34956cc6a0f3a40b394ea7c8ee0e6717d0cf5aeac84582e24606a4f900",
+  "child_module": "foundry.phase2.qlora_environment",
+  "child_module_source_sha256": "f7fdd3b2457a9dec4d6a9bdf131f7e708a34502be8865225cb6be0ac0a938ffd",
+  "contract_id": "foundry-vetted-qlora-argv-transport-v1",
+  "contract_sha256": "0c8c9e310e3bb8a2441b577990de37cdd7e9fe1314205daeeb099e08e42ffdf5",
+  "control_character_check": true,
+  "exception_file_sha256": "5403032fbc5f120c77f7a1dc7334f47af076f2c77ab028b05d3bbfef3b4825ee",
+  "exception_path_sha256": "61cd83b657b97ee9af46fa5e331021c1ab963d8e9efceea60217f10199356fd0",
+  "interpreter_sha256": "0b471133e110cfb53a061cad528ce8e517d7b9ac41a0a396c39ad795a487fc14",
+  "launch_environment": {
+    "CUBLAS_WORKSPACE_CONFIG": ":4096:8",
+    "HF_HUB_OFFLINE": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONHASHSEED": "20260720",
+    "TOKENIZERS_PARALLELISM": "false",
+    "TRANSFORMERS_OFFLINE": "1"
+  },
+  "launch_environment_sha256": "241e3e69f58d48a36c9411528aa129796319d23e61188b56cbcb4695e7fdf189",
+  "model_cache_path_sha256": "89bc9720d8b0d31b5a6cb6d7a7e543350d3cf583b8fe77ee27ed36d2493ff51f",
+  "output_root_path_sha256": "b2948c87de9fa7a9eb14746c922e3a8e761f1ae1d34d923cb2a5fee651883768",
+  "package_inventory_sha256": "2d4dbf699b73b53206d96687f1381ec22dac8a2d1575b0a43791627b9b43b2c8",
+  "replay_manifest_file_sha256": "a9f25258d23f05a785dfea9f8ae0e05a246b52c9798a0d10e683fdc4e01a87f6",
+  "replay_manifest_path_sha256": "74c898c04ca68ccb8337819c64169cf83dadd5bb36eb66937589a3ab47e6151f",
+  "resolved_paths": {
+    "configuration": "C:\\Users\\Admin\\Projects\\Foundry\\results\\phase2_vetted_corpus\\pyyaml_metadata_exception.json",
+    "model_cache": "C:\\Users\\Admin\\Projects\\Foundry\\data\\huggingface\\hub\\models--Qwen--Qwen2.5-1.5B-Instruct\\snapshots\\989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+    "output_root": "C:\\Users\\Admin\\Projects\\Foundry\\results\\raw\\phase2_vetted_corpus\\qlora_environment_probe",
+    "replay_manifest": "C:\\Users\\Admin\\Projects\\Foundry\\results\\raw\\training\\base_replay_kl\\replay_corpus.json",
+    "repository_root": "C:\\Users\\Admin\\Projects\\Foundry",
+    "source_root": "C:\\Users\\Admin\\Projects\\Foundry\\src"
+  },
+  "result_schema": {
+    "argv_sha256": "sha256",
+    "child_received_argv_sha256": "sha256",
+    "returncode": "integer",
+    "stderr_sha256": "sha256",
+    "stdout_sha256": "sha256"
+  },
+  "schema_version": 1,
+  "shell": false,
+  "working_directory": "C:\\Users\\Admin\\Projects\\Foundry\\src",
+  "working_directory_sha256": "cd5cb572c1fa318f96c6f7793a21cb68fd20aba6c1354e628f04027a737385ed"
+}

@@ -14,11 +14,8 @@ import time
 from pathlib import Path
 from typing import Any, cast
 
-from foundry.phase2.launch_contract import (
-    command_sha256,
-    validate_postimport,
-    validate_preimport,
-)
+from foundry.phase2.argv_transport import validate_child_paths
+from foundry.phase2.launch_contract import validate_postimport, validate_preimport
 from foundry.phase2.pyyaml_exception import validate_evidence
 from foundry.training.config import canonical_sha256
 from foundry.training.qlora import file_sha256
@@ -235,11 +232,13 @@ def complete_gate(
     output_path: Path,
 ) -> dict[str, object]:
     preimport = validate_preimport()
-    preimport["concrete_process_command_sha256"] = command_sha256(
-        interpreter=Path(sys.executable),
-        source_root=Path(__file__).resolve().parents[2],
-        child_argv=list(sys.argv),
+    transport = validate_child_paths(
+        model_path=model_path.resolve(),
+        replay_path=replay_path.resolve(),
+        exception_path=exception_path.resolve(),
+        output_path=output_path.resolve(),
     )
+    preimport["concrete_process_command_sha256"] = transport["child_received_argv_sha256"]
     preimport.pop("preimport_evidence_sha256", None)
     preimport["preimport_evidence_sha256"] = canonical_sha256(preimport)
     exception = json.loads(exception_path.read_text(encoding="utf-8"))
@@ -300,6 +299,7 @@ def complete_gate(
         "process_environment": environment,
         "launch_contract": preimport,
         "postimport_launch_contract": postimport,
+        "argv_transport": transport,
         "pyyaml_exception_evidence_sha256": exception["evidence_sha256"],
         "recipe": RECIPE,
         "recipe_sha256": canonical_sha256(RECIPE),
