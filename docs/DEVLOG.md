@@ -3356,3 +3356,19 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
 - **Boundary:** Model loads, adapters, optimizers, network requests, forward/backward passes, and
   output outside the ignored preflight root were all zero. The synchronized orchestration commit
   is required before the one model probe.
+
+### 2026-07-23 - Milestone 12F-A4 native probe stopped at optimizer update
+
+- **Action performed:** Published the Windows operational fix at
+  `13d2641d1c75fcf3066416271ef731b33118947e`, then launched the one authorized model probe from
+  that synchronized clean commit.
+- **Passed stages:** Path, manifest, interpreter, inventory, deterministic and operational
+  environments, offline NF4 model load, CUDA-only placement, finite forward loss, backward
+  propagation, finite LoRA gradients, and paged AdamW 8-bit optimizer-state creation.
+- **Stop gate:** The single optimizer step produced no detectable LoRA parameter change. No retry
+  or optimizer/probe change is authorized.
+- **Accounting:** One model load and one attempted optimizer step occurred. No generation,
+  persisted adapter/checkpoint, schedule, retention, GSM1K, or sealed-final access occurred.
+  Numeric loss, gradient norm, and resource measurements were not published before the exception.
+- **Next action:** Project-level interpretation of the optimizer-update blocker; A4 ends this
+  launch-correction runner line.

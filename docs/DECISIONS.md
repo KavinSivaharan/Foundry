@@ -1194,3 +1194,14 @@ This log separates proposals from approved decisions. A proposal does not author
 - **Consequence:** Do not expand the environment or retry within Milestone 12F-A3. Preserve zero
   model loads, forward/backward passes, optimizer updates, schedules, adapters, checkpoints,
   retention runs, GSM1K runs, and sealed-final access.
+
+## 2026-07-23: pass the Windows import preflight and stop at optimizer update
+
+- **Decision:** Accept `foundry-vetted-qlora-windows-operational-env-v1`; its fixed allowlist passed
+  `_overlapped`, Winsock, asyncio IOCP, model-stack import, environment equality, and RTX 3080
+  checks without model loading.
+- **Model probe:** Offline NF4 loading, CUDA-only placement, finite forward/backward, finite LoRA
+  gradients, and paged AdamW 8-bit state creation passed. The optimizer step produced no detectable
+  LoRA parameter change.
+- **Consequence:** Stop the training-runner line without retry, schedules, training, retention,
+  GSM1K, or sealed-final access.
