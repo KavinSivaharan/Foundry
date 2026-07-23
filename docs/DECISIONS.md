@@ -1182,3 +1182,15 @@ This log separates proposals from approved decisions. A proposal does not author
 - **Consequence:** Do not patch or retry in this milestone. Preserve zero model loads, generations,
   optimizer steps, schedules, adapters, checkpoints, retention runs, GSM1K runs, and sealed-final
   access.
+
+## 2026-07-23: pass argv transport and stop during torch import
+
+- **Decision:** Accept `foundry-vetted-qlora-argv-transport-v1`; the parent and child canonical argv
+  hashes match, all paths round-trip exactly, no control characters occur, and execution uses
+  `shell=False`.
+- **Probe result:** Stop before model loading because `torch` import reached
+  `asyncio.windows_events` and `_overlapped` failed with WinError 10106 under the reduced
+  six-variable child environment.
+- **Consequence:** Do not expand the environment or retry within Milestone 12F-A3. Preserve zero
+  model loads, forward/backward passes, optimizer updates, schedules, adapters, checkpoints,
+  retention runs, GSM1K runs, and sealed-final access.

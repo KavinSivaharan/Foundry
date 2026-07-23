@@ -3321,3 +3321,24 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
 - **Next action:** Interpret the child-command quoting blocker. Any continuation requires explicit
   authorization for a fresh Stage C process using argument transport that does not embed Windows
   paths as Python string literals.
+
+### 2026-07-23 - Milestone 12F-A3 argv transport passed; torch import stopped
+
+- **Action performed:** Replaced inline Python source transport with an 11-element absolute argv
+  array executed through `subprocess.run(..., shell=False, ...)`. Added path containment, file/hash,
+  model-cache, control-character, interpreter, inventory, and exact-child-argv validation plus
+  focused Windows backslash, tab, spaces, Unicode, quotes, reordering, missing-file, and tamper
+  tests. Published the orchestration fix at
+  `b7b12fb849d248ef8b4ff6a8c9677013cbada9c2`.
+- **Transport result:** Parent and child hashes both equal
+  `c9d71f34956cc6a0f3a40b394ea7c8ee0e6717d0cf5aeac84582e24606a4f900`.
+  The `\base_replay_kl` path arrived byte-for-byte unchanged, with no ASCII control character.
+- **Probe stop:** The one authorized child used the exact six-variable environment. During `torch`
+  import, Python imported `asyncio.windows_events`; `_overlapped` then failed with WinError 10106
+  because the requested Windows service provider could not initialize under that reduced process
+  environment.
+- **Accounting:** The model did not load and the native CUDA probe was not reached. There were zero
+  generations, losses, backward passes, optimizer states/updates, schedules, adapters/checkpoints,
+  retention evaluations, GSM1K evaluations, or sealed-final access.
+- **Next action:** Interpret whether the frozen launch contract should include a separately audited
+  Windows operational-environment allowlist. A3 does not authorize expanding it or retrying.
