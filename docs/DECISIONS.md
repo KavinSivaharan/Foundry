@@ -1160,3 +1160,14 @@ This log separates proposals from approved decisions. A proposal does not author
   metadata requires `PyYAML==6.0.2` while the environment contains `PyYAML==6.0.3`.
 - **Boundary:** Do not install, remove, upgrade, or downgrade packages under this authorization.
   GSM1K and sealed-final evaluation remain unaccessed.
+
+## 2026-07-23: grant the narrow PyYAML exception and stop at the native CUDA probe
+
+- **Decision:** Grant `foundry-pyyaml-metadata-exception-v1` only for the exact project
+  `PyYAML==6.0.2` versus training-environment PyYAML 6.0.3 mismatch. All 31 tracked YAML files,
+  real training-loader projections, and repeat audits are identical.
+- **Environment result:** Stop the QLoRA gate because the first deterministic CuBLAS forward
+  rejected a process launched without `CUBLAS_WORKSPACE_CONFIG` set before Python started.
+- **Consequence:** Do not retry under changed launch conditions in this milestone turn. No schedule,
+  backward pass, optimizer state/update, adapter, checkpoint, retention evaluation, or GSM1K
+  evaluation is authorized after the failed probe.

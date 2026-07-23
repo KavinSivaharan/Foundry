@@ -1,0 +1,486 @@
+{
+  "audited_file_count": 31,
+  "audited_files": [
+    {
+      "equivalent": true,
+      "general_parsed_sha256": "5f315d5de645f9563b8d1e61bc8e02c3513c453238ad9e1d6f9473489b5a622b",
+      "path": "C:/Users/Admin/Projects/Foundry/configs/eval/gsm1k_qwen2_5_1_5b_final_evaluator.yaml",
+      "source_sha256": "fa069dcc5d11e8b52da6fd3d6bc8cd77f46e3251c5d03ccadbe9e61db853d82d",
+      "training_parsed_sha256": "5f315d5de645f9563b8d1e61bc8e02c3513c453238ad9e1d6f9473489b5a622b"
+    },
+    {
+      "equivalent": true,
+      "general_parsed_sha256": "c6e2abf8b46ae2c5103d18ea888695d34a0abee2cfaba6b0ecf4f1ea0790fde7",
+      "path": "C:/Users/Admin/Projects/Foundry/configs/eval/gsm1k_qwen2_5_1_5b_format_v1.yaml",
+      "source_sha256": "e7962b53f25a277d18395bef98bed412cfd13c45c16518509e19d7d6de85fd03",
+      "training_parsed_sha256": "c6e2abf8b46ae2c5103d18ea888695d34a0abee2cfaba6b0ecf4f1ea0790fde7"
+    },
+    {
+      "equivalent": true,
+      "general_parsed_sha256": "8710486ada907fc9b4d4ce9c56971e1b1deb37cf13e5690a161a3758e060fb0c",
+      "path": "C:/Users/Admin/Projects/Foundry/configs/eval/gsm1k_qwen2_5_1_5b_format_v2.yaml",
+      "source_sha256": "7b46050314ae1fb69ddfebbd1c2785717436811e9bf9fc5c4539fd3fa2b3d0bb",
+      "training_parsed_sha256": "8710486ada907fc9b4d4ce9c56971e1b1deb37cf13e5690a161a3758e060fb0c"
+    },
+    {
+      "equivalent": true,
+      "general_parsed_sha256": "2a6e737cf3376ae081fd17600e31937824830ecdbb624644e729f6b5752f8eba",
+      "path": "C:/Users/Admin/Projects/Foundry/configs/eval/gsm1k_qwen2_5_1_5b_smoke.yaml",
+      "source_sha256": "6ba1d61f086ba135f3efa901ba90aa6c7fe3a2a677222f13f480d65aa2034243",
+      "training_parsed_sha256": "2a6e737cf3376ae081fd17600e31937824830ecdbb624644e729f6b5752f8eba"
+    },
+    {
+      "equivalent": true,
+      "general_parsed_sha256": "07aaef8aaefba0b93948951e74f0bc21aa0f192996cfe01b665ec65de9777801",
+      "path": "C:/Users/Admin/Projects/Foundry/configs/synthesis/gsm1k_phase1.yaml",
+      "source_sha256": "7c087ac45c9027ab872cfecbc0dbf6123b60ec088b35e6d6ddc4dfd9094a99d5",
+      "training_parsed_sha256": "07aaef8aaefba0b93948951e74f0bc21aa0f192996cfe01b665ec65de9777801"
+    },
+    {
+      "equivalent": true,
+      "general_parsed_sha256": "2fd1c4dfde7b9b404187e97225138c86d1f09cfd7e817bca7bd7940b2f0aad1a",
+      "path": "C:/Users/Admin/Projects/Foundry/configs/synthesis/gsm1k_phase1_smoke.yaml",
+      "source_sha256": "f4128dae86c6f870705caf459a6a0fb37c720dbddc39c571df754fc0381540ae",
+      "training_parsed_sha256": "2fd1c4dfde7b9b404187e97225138c86d1f09cfd7e817bca7bd7940b2f0aad1a"
+    },
+    {
+      "equivalent": true,
+      "general_parsed_sha256": "5c2a3e22ed6b15299767f53c08f08b7b5883721a165a17dd4e75f08fd525df15",
+      "path": "C:/Users/Admin/Projects/Foundry/configs/synthesis/gsm1k_phase1_smoke_v2.yaml",
+      "source_sha256": "4d5eddbce4d9cd7189f510e7476d7e7b0b9719b017393b5fa973643ad7812fbe",
+      "training_parsed_sha256": "5c2a3e22ed6b15299767f53c08f08b7b5883721a165a17dd4e75f08fd525df15"
+    },
+    {
+      "equivalent": true,
+      "general_parsed_sha256": "5f85d82f5f9cf962be208da4105c8cd3a6abebd4e6db95b57d6ebb73de7c2d71",
+      "path": "C:/Users/Admin/Projects/Foundry/configs/synthesis/internal_diversity_candidates_v1.yaml",
+      "source_sha256": "f8ce64bffe1ab93c92c041f8199eba7652d49afcc3efd03e4701f933e59ea098",
+      "training_parsed_sha256": "5f85d82f5f9cf962be208da4105c8cd3a6abebd4e6db95b57d6ebb73de7c2d71"
+    },
+    {
+      "equivalent": true,
+      "general_parsed_sha256": "7014273e9174fb57c591c5ce6906471c64c16e1672c20fa09f8e5b26e81030dc",
+      "path": "C:/Users/Admin/Projects/Foundry/configs/synthesis/internal_diversity_v1.yaml",
+      "source_sha256": "e734e1ac0f71e21365381e3f1b92391eae54c36ace0c05efec019368232ef355",
+      "training_parsed_sha256": "7014273e9174fb57c591c5ce6906471c64c16e1672c20fa09f8e5b26e81030dc"
+    },
+    {
+      "equivalent": true,
+      "general_parsed_sha256": "78d1f3e37dad7e97c7e857a0f60efa5459af55b246a34dc653efceb01b47438b",
+      "path": "C:/Users/Admin/Projects/Foundry/configs/synthesis/local_realization_compact_micro.yaml",
+      "source_sha256": "fc97ae3bb57b2b1fd642602a41861b5172ab1c5ed90394e9293f984c5b30d669",
+      "training_parsed_sha256": "78d1f3e37dad7e97c7e857a0f60efa5459af55b246a34dc653efceb01b47438b"
+    },
+    {
+      "equivalent": true,
+      "general_parsed_sha256": "71038684879f5ee095e68e0710d6ff621a6873b7b9665ffb460c36a8ea2d792b",
+      "path": "C:/Users/Admin/Projects/Foundry/configs/synthesis/local_realization_design.yaml",
+      "source_sha256": "d6e6ca82681b702e07c71a9732a8c81159ea7a9bca78c73193228f72ca4ec3a5",
+      "training_parsed_sha256": "71038684879f5ee095e68e0710d6ff621a6873b7b9665ffb460c36a8ea2d792b"
+    },
+    {
+      "equivalent": true,
+      "general_parsed_sha256": "d76be742ae2977265098e553ac1f0256b813515f9990685dd81120f783c6d143",
+      "path": "C:/Users/Admin/Projects/Foundry/configs/synthesis/local_realization_smoke.yaml",
+      "source_sha256": "ab43bfa8823f5cb3f5c71a4b1446cd012f45522e1795b67246b377d5ad413030",
+      "training_parsed_sha256": "d76be742ae2977265098e553ac1f0256b813515f9990685dd81120f783c6d143"
+    },
+    {
+      "equivalent": true,
+      "general_parsed_sha256": "362a9faeea7ad30151b53731fb4a155efb670a4b04433a2580d392ba23a654bc",
+      "path": "C:/Users/Admin/Projects/Foundry/configs/synthesis/local_realization_stronger_model_micro.yaml",
+      "source_sha256": "02c7d721ac332984cc3abd4d2a7be050c19740f8dea10203c6e21a9f7d8e7b88",
+      "training_parsed_sha256": "362a9faeea7ad30151b53731fb4a155efb670a4b04433a2580d392ba23a654bc"
+    },
+    {
+      "equivalent": true,
+      "general_parsed_sha256": "1efec10da3385170c24ac2eed9888767a7aa85b7b961e07dafdbec24b5aed9c6",
+      "path": "C:/Users/Admin/Projects/Foundry/configs/synthesis/matched_signal_dataset.yaml",
+      "source_sha256": "0c5aa972f0ccea3dce51863bc96a96439c92315fee6d23cfb581b7ae1ed20466",
+      "training_parsed_sha256": "1efec10da3385170c24ac2eed9888767a7aa85b7b961e07dafdbec24b5aed9c6"
+    },
+    {
+      "equivalent": true,
+      "general_parsed_sha256": "563a52c4a334464e11cee7f1547088b48a3036a7cdbb61328ca7c740ee85582a",
+      "path": "C:/Users/Admin/Projects/Foundry/configs/synthesis/matched_template_signal.yaml",
+      "source_sha256": "6f2717d5002a2f59f390032666a59feea8f0d30aadbdea04ae892f4a910cf753",
+      "training_parsed_sha256": "563a52c4a334464e11cee7f1547088b48a3036a7cdbb61328ca7c740ee85582a"
+    },
+    {
+      "equivalent": true,
+      "general_parsed_sha256": "ae3f58c521af3a695db1ce9c6666425fea3c7fb1a901fd3cd9d8748c7b515ced",
+      "path": "C:/Users/Admin/Projects/Foundry/configs/synthesis/semantic_all_minilm_l6_v2.yaml",
+      "source_sha256": "cc51cf68b2a2c05f83aa185a68ee0188e1c9cdcd3cedd6b8bc17c7cd1e9a530e",
+      "training_parsed_sha256": "ae3f58c521af3a695db1ce9c6666425fea3c7fb1a901fd3cd9d8748c7b515ced"
+    },
+    {
+      "equivalent": true,
+      "general_parsed_sha256": "e31eb8a2ee63de9a5f9582f6bf3304347ba1de2bfbba85e9eda84eb2476ea133",
+      "path": "C:/Users/Admin/Projects/Foundry/configs/synthesis/signal_pilot.yaml",
+      "source_sha256": "8bc6c976207aa019fe62e0148c758c6610a9876ddc916253ad6a6e6c401f772c",
+      "training_parsed_sha256": "e31eb8a2ee63de9a5f9582f6bf3304347ba1de2bfbba85e9eda84eb2476ea133"
+    },
+    {
+      "equivalent": true,
+      "general_parsed_sha256": "5dcb7467bd21b9a5dd2dd4164587d02c68c911102dc5a926564aa23f2d282ad7",
+      "path": "C:/Users/Admin/Projects/Foundry/configs/synthesis/signal_pilot_attempt_pool_candidates.yaml",
+      "source_sha256": "c5840a94319351d59dcc1cac9a0b7aae9977928d53518044613c19f7161c707e",
+      "training_parsed_sha256": "5dcb7467bd21b9a5dd2dd4164587d02c68c911102dc5a926564aa23f2d282ad7"
+    },
+    {
+      "equivalent": true,
+      "general_parsed_sha256": "c05883f24f4401c01551676789d8895d30eb64a2a5c1a131b283a1c6bc30068c",
+      "path": "C:/Users/Admin/Projects/Foundry/configs/synthesis/signal_pilot_difficulty_reallocation.yaml",
+      "source_sha256": "bbe3c428a3c399c70af8ada270d98955edc41bcb0eae6f6e2299ca66977a77cf",
+      "training_parsed_sha256": "c05883f24f4401c01551676789d8895d30eb64a2a5c1a131b283a1c6bc30068c"
+    },
+    {
+      "equivalent": true,
+      "general_parsed_sha256": "4bf60c1205d3733e25660f1ac4a292318b6fb419fcd86ba2fe6b000e979c5c1d",
+      "path": "C:/Users/Admin/Projects/Foundry/configs/synthesis/signal_pilot_size_candidates.yaml",
+      "source_sha256": "073f03bbc291502fb92f39c22f4fae70d5496a077d346f82e1a087438c7bbd49",
+      "training_parsed_sha256": "4bf60c1205d3733e25660f1ac4a292318b6fb419fcd86ba2fe6b000e979c5c1d"
+    },
+    {
+      "equivalent": true,
+      "general_parsed_sha256": "cd298e0c52aac09b6d8b8651e6d537dbb9f39e7952cc312496ae9d430cd28c6a",
+      "path": "C:/Users/Admin/Projects/Foundry/configs/synthesis/signal_pilot_submode_policy.yaml",
+      "source_sha256": "e40a0eb3ed2bea808d55bdab32e85647421e97e9ed020d3138622fb614698657",
+      "training_parsed_sha256": "cd298e0c52aac09b6d8b8651e6d537dbb9f39e7952cc312496ae9d430cd28c6a"
+    },
+    {
+      "equivalent": true,
+      "general_parsed_sha256": "fc0901355e00c710bf9dde066e313a8d1a1339f2263896ac9d36ed05e13ac1a5",
+      "path": "C:/Users/Admin/Projects/Foundry/configs/synthesis/signal_pilot_surface_reuse.yaml",
+      "source_sha256": "14b4b53adc5a1eaaeca372fc0740dac568159596a0e8d80df64cd7f839f9848b",
+      "training_parsed_sha256": "fc0901355e00c710bf9dde066e313a8d1a1339f2263896ac9d36ed05e13ac1a5"
+    },
+    {
+      "equivalent": true,
+      "general_parsed_sha256": "f8b8f5e91b5206dd90abbc4c6107d02f6897da0becda4bb8cd65046c17b2be4f",
+      "path": "C:/Users/Admin/Projects/Foundry/configs/synthesis/template_bank_bounded_reuse_candidates.yaml",
+      "source_sha256": "0976d8aee97a687fa30b7cc0e11433592e43c5cee2788132417286d0fe7774fe",
+      "training_parsed_sha256": "f8b8f5e91b5206dd90abbc4c6107d02f6897da0becda4bb8cd65046c17b2be4f"
+    },
+    {
+      "equivalent": true,
+      "general_parsed_sha256": "1ee8993754599e86a4ee37f89064588c9fbef42b3bd12996abd241aff00a9604",
+      "path": "C:/Users/Admin/Projects/Foundry/configs/synthesis/template_bank_internal_diversity.yaml",
+      "source_sha256": "c2043a1bf04ff693be20349c67619934b5af27df711b837a171270fc2a7d3d7f",
+      "training_parsed_sha256": "1ee8993754599e86a4ee37f89064588c9fbef42b3bd12996abd241aff00a9604"
+    },
+    {
+      "equivalent": true,
+      "general_parsed_sha256": "416ff570cb041eba64f31f0b8c1f6b1f282a835d0f907b89e75f242d6d398711",
+      "path": "C:/Users/Admin/Projects/Foundry/configs/synthesis/template_bank_smoke.yaml",
+      "source_sha256": "b03b03c13ca088ee3f9768fc4085f1bc9c27566e6d00a4bd5d814e55c2b54174",
+      "training_parsed_sha256": "416ff570cb041eba64f31f0b8c1f6b1f282a835d0f907b89e75f242d6d398711"
+    },
+    {
+      "equivalent": true,
+      "general_parsed_sha256": "cfa694e539414901832dc93504cb0258ae22a0a053beabf7b7f42c7dd6e9ab88",
+      "path": "C:/Users/Admin/Projects/Foundry/configs/synthesis/template_bank_smoke_v2.yaml",
+      "source_sha256": "17712db5fe5b7e6964080adba91875e6511f4cad944163b70f933becd61a217a",
+      "training_parsed_sha256": "cfa694e539414901832dc93504cb0258ae22a0a053beabf7b7f42c7dd6e9ab88"
+    },
+    {
+      "equivalent": true,
+      "general_parsed_sha256": "807849c845386cfc799c729005e9a3563de08a16f4693a23b781254af42d2fe3",
+      "path": "C:/Users/Admin/Projects/Foundry/configs/synthesis/template_bank_smoke_v3.yaml",
+      "source_sha256": "7d47f2b6027e7cbd6ad308789428bd7c1005043dbf9dcde89a900e70c8404fa9",
+      "training_parsed_sha256": "807849c845386cfc799c729005e9a3563de08a16f4693a23b781254af42d2fe3"
+    },
+    {
+      "equivalent": true,
+      "general_parsed_sha256": "9a968154a43e5a4b977bca49c645fb311b67b8112c51e19d73a60da1852e1df7",
+      "path": "C:/Users/Admin/Projects/Foundry/configs/training/assistant_only_sft_v3.yaml",
+      "source_sha256": "9f14fc308817ec29518ea9dd4b189e948892d821fb60f7667c26b2eeafc5912c",
+      "training_parsed_sha256": "9a968154a43e5a4b977bca49c645fb311b67b8112c51e19d73a60da1852e1df7"
+    },
+    {
+      "equivalent": true,
+      "general_parsed_sha256": "4a9c6043f72d4f5b83dad774ffcd208e17f8c9738c9b34b0ab06919ba2620590",
+      "path": "C:/Users/Admin/Projects/Foundry/configs/training/qwen2_5_1_5b_signal_qlora.yaml",
+      "source_sha256": "05917c6b5ccc33433bd72b010df159e4cad9b7d43d51be0325f7f554cb9e39ec",
+      "training_parsed_sha256": "4a9c6043f72d4f5b83dad774ffcd208e17f8c9738c9b34b0ab06919ba2620590"
+    },
+    {
+      "equivalent": true,
+      "general_parsed_sha256": "e2e269dccb54874c721cdcada5a2b9576a5c319d4f433478b60868935fd2b4a3",
+      "path": "C:/Users/Admin/Projects/Foundry/configs/training/qwen2_5_1_5b_token_matched_qlora_v2.yaml",
+      "source_sha256": "be2aa954786064a1bbf1bef3f17ebf9f8a98122c79d6ba5a5fb9134eb0c482cb",
+      "training_parsed_sha256": "e2e269dccb54874c721cdcada5a2b9576a5c319d4f433478b60868935fd2b4a3"
+    },
+    {
+      "equivalent": true,
+      "general_parsed_sha256": "3c5eae276e1871f06bf66f6058dba101c1e3c0c0ac632baba56eca5960029912",
+      "path": "C:/Users/Admin/Projects/Foundry/configs/training/retention_safe_ladder_v1.yaml",
+      "source_sha256": "190037bff02e5a9b6a9178ff64cd9bea478db3e9580892d6d52e6dbd964a7862",
+      "training_parsed_sha256": "3c5eae276e1871f06bf66f6058dba101c1e3c0c0ac632baba56eca5960029912"
+    }
+  ],
+  "combined_parser_equivalence_sha256": "00b0191b4db3ac84724fc7970f2df931d158d6bdf43a8b7c0a0978c53c2574da",
+  "deterministic_replay_equal": true,
+  "evidence_sha256": "dd9413331fc76c41f1e30b2bb4697abeabde0a97452196d225619329fcee810a",
+  "exception_decision": "pass",
+  "exception_id": "foundry-pyyaml-metadata-exception-v1",
+  "general_audit_sha256": "cf7b6a56db1828b9298ed9742b4aea8136e027a97fd85d3d422718930cf17106",
+  "general_package": {
+    "metadata": {
+      "License": [
+        "MIT"
+      ],
+      "License-File": [
+        "LICENSE"
+      ],
+      "Metadata-Version": [
+        "2.1"
+      ],
+      "Name": [
+        "PyYAML"
+      ],
+      "Requires-Python": [
+        ">=3.8"
+      ],
+      "Summary": [
+        "YAML parser and emitter for Python"
+      ],
+      "Version": [
+        "6.0.2"
+      ]
+    },
+    "metadata_sha256": "53364cadd06e8cb7feaafc6d580f83172f224d010c199e77f523d5f59115adfb",
+    "package_files": [
+      {
+        "bytes": 12311,
+        "path": "__init__.py",
+        "sha256": "377e52d351cc7ac1537b469144c5a43e3d0f6bc2046c7a44f452bb72be4176dc"
+      },
+      {
+        "bytes": 263680,
+        "path": "_yaml.cp312-win_amd64.pyd",
+        "sha256": "071edefcb110c7b727775fc0f7f9c2969dd7efb83efcbc356a8000b5865bc169"
+      },
+      {
+        "bytes": 4883,
+        "path": "composer.py",
+        "sha256": "fcaa37d16afa783594794a5ab94193dcb720f503c19ce3d59539c8311189f453"
+      },
+      {
+        "bytes": 28639,
+        "path": "constructor.py",
+        "sha256": "90d8247da78b524c10618fd0e857f54f3d97570fe91b5c5513d024ef3faf88b0"
+      },
+      {
+        "bytes": 3851,
+        "path": "cyaml.py",
+        "sha256": "e99ac01bd7c062f7557b614aff0d21997a06ed962ca185306a91bc0a20bbd87d"
+      },
+      {
+        "bytes": 2837,
+        "path": "dumper.py",
+        "sha256": "3cb72d66563064ba7b5e679477046ebf89d8399d940670c8532f3e94a7cb17ea"
+      },
+      {
+        "bytes": 43006,
+        "path": "emitter.py",
+        "sha256": "8e086d694ede170837d5b1b407b45979aff6f40762f422a65eafd08e04290a44"
+      },
+      {
+        "bytes": 2533,
+        "path": "error.py",
+        "sha256": "021f73fada072546c4f63f8cf18a7181244ce4280b09cc15cc980b2d1176171a"
+      },
+      {
+        "bytes": 2445,
+        "path": "events.py",
+        "sha256": "e74fd392c810884e2ea7e94aa3f57e9c1cbeb402319083d0c58e6a0e1282787c"
+      },
+      {
+        "bytes": 2061,
+        "path": "loader.py",
+        "sha256": "5156becc8aa6905482218abf3e04869b835226db4763645fff3438fdbd5f1cdd"
+      },
+      {
+        "bytes": 1440,
+        "path": "nodes.py",
+        "sha256": "80f28d8fca4a09d87677882bde021820d9cf39a3b11a12405226211919cf13ce"
+      },
+      {
+        "bytes": 25495,
+        "path": "parser.py",
+        "sha256": "8a55a9e6fbe0a07146cef3990c8b45a068c3e83e369e1959ad9ca30306b4a09a"
+      },
+      {
+        "bytes": 6794,
+        "path": "reader.py",
+        "sha256": "d1d9b38ab3a20c6e17a38d519ee412ecaf6b918df18c78956ac7c330d4ea08dc"
+      },
+      {
+        "bytes": 14190,
+        "path": "representer.py",
+        "sha256": "22e58ff9c016f6c1ca1274b4802a926bcf78935060e1c813c5a0f021c6d143e6"
+      },
+      {
+        "bytes": 9004,
+        "path": "resolver.py",
+        "sha256": "f4bf9561f9b89961f1503d558385fbae30d12bfed565de9bf76c33abb63620a6"
+      },
+      {
+        "bytes": 51279,
+        "path": "scanner.py",
+        "sha256": "60433788b652690c17710460da5d91e0c753d3318fd85f5e1e42862a71f25906"
+      },
+      {
+        "bytes": 4165,
+        "path": "serializer.py",
+        "sha256": "0a1b85826854d35863e31808f0668abfabdf33606e8f06bd8bb7761401e3edc0"
+      },
+      {
+        "bytes": 2573,
+        "path": "tokens.py",
+        "sha256": "953408cd2570f0c83dc2fe39f7e4e388e41eeb05738aa69196a5f6ffcf6ba79e"
+      }
+    ],
+    "package_files_sha256": "fff0c977060d4e83f4e58ce27e78e61299170289493484a74404ae28c71a793d",
+    "python_executable": "C:\\Users\\Admin\\Projects\\Foundry\\.venv\\Scripts\\python.exe",
+    "python_version": "3.12.10",
+    "yaml_file": "C:\\Users\\Admin\\Projects\\Foundry\\.venv\\Lib\\site-packages\\yaml\\__init__.py",
+    "yaml_version": "6.0.2"
+  },
+  "parser_equivalence": true,
+  "parser_semantics_equivalence": true,
+  "pip_check_discrepancies": [
+    "foundry-post-training 0.1.0 has requirement PyYAML==6.0.2, but you have pyyaml 6.0.3."
+  ],
+  "pip_check_evidence_sha256": "a91b01612c319130ede622d17c9ce19db0e6e01fa4d991b38e0286e32069d702",
+  "pip_check_exit_code": 1,
+  "project_required_version": "6.0.2",
+  "schema_version": 1,
+  "training_audit_sha256": "b779ff7792e18acc89e0682df0eae814e7caf297eaad748cfb4badc248d08563",
+  "training_installed_version": "6.0.3",
+  "training_package": {
+    "metadata": {
+      "License": [
+        "MIT"
+      ],
+      "License-File": [
+        "LICENSE"
+      ],
+      "Metadata-Version": [
+        "2.4"
+      ],
+      "Name": [
+        "PyYAML"
+      ],
+      "Requires-Python": [
+        ">=3.8"
+      ],
+      "Summary": [
+        "YAML parser and emitter for Python"
+      ],
+      "Version": [
+        "6.0.3"
+      ]
+    },
+    "metadata_sha256": "b784a8c2487f955784ae593304af764ec2e1c6751f8411f74c8d0f3af2ec4f06",
+    "package_files": [
+      {
+        "bytes": 12311,
+        "path": "__init__.py",
+        "sha256": "b19dfcc333d6a75dfd73073901164507252f271b41d3b5f7d85510033a0547a7"
+      },
+      {
+        "bytes": 253952,
+        "path": "_yaml.cp312-win_amd64.pyd",
+        "sha256": "4fd0e84f50261ed0886cffcdd8008b055af3352546e649c3d741b50eae1f9b5f"
+      },
+      {
+        "bytes": 4883,
+        "path": "composer.py",
+        "sha256": "fcaa37d16afa783594794a5ab94193dcb720f503c19ce3d59539c8311189f453"
+      },
+      {
+        "bytes": 28639,
+        "path": "constructor.py",
+        "sha256": "90d8247da78b524c10618fd0e857f54f3d97570fe91b5c5513d024ef3faf88b0"
+      },
+      {
+        "bytes": 3851,
+        "path": "cyaml.py",
+        "sha256": "e99ac01bd7c062f7557b614aff0d21997a06ed962ca185306a91bc0a20bbd87d"
+      },
+      {
+        "bytes": 2837,
+        "path": "dumper.py",
+        "sha256": "3cb72d66563064ba7b5e679477046ebf89d8399d940670c8532f3e94a7cb17ea"
+      },
+      {
+        "bytes": 43006,
+        "path": "emitter.py",
+        "sha256": "8e086d694ede170837d5b1b407b45979aff6f40762f422a65eafd08e04290a44"
+      },
+      {
+        "bytes": 2533,
+        "path": "error.py",
+        "sha256": "021f73fada072546c4f63f8cf18a7181244ce4280b09cc15cc980b2d1176171a"
+      },
+      {
+        "bytes": 2445,
+        "path": "events.py",
+        "sha256": "e74fd392c810884e2ea7e94aa3f57e9c1cbeb402319083d0c58e6a0e1282787c"
+      },
+      {
+        "bytes": 2061,
+        "path": "loader.py",
+        "sha256": "5156becc8aa6905482218abf3e04869b835226db4763645fff3438fdbd5f1cdd"
+      },
+      {
+        "bytes": 1440,
+        "path": "nodes.py",
+        "sha256": "80f28d8fca4a09d87677882bde021820d9cf39a3b11a12405226211919cf13ce"
+      },
+      {
+        "bytes": 25495,
+        "path": "parser.py",
+        "sha256": "8a55a9e6fbe0a07146cef3990c8b45a068c3e83e369e1959ad9ca30306b4a09a"
+      },
+      {
+        "bytes": 6794,
+        "path": "reader.py",
+        "sha256": "d1d9b38ab3a20c6e17a38d519ee412ecaf6b918df18c78956ac7c330d4ea08dc"
+      },
+      {
+        "bytes": 14190,
+        "path": "representer.py",
+        "sha256": "22e58ff9c016f6c1ca1274b4802a926bcf78935060e1c813c5a0f021c6d143e6"
+      },
+      {
+        "bytes": 9004,
+        "path": "resolver.py",
+        "sha256": "f4bf9561f9b89961f1503d558385fbae30d12bfed565de9bf76c33abb63620a6"
+      },
+      {
+        "bytes": 51279,
+        "path": "scanner.py",
+        "sha256": "60433788b652690c17710460da5d91e0c753d3318fd85f5e1e42862a71f25906"
+      },
+      {
+        "bytes": 4165,
+        "path": "serializer.py",
+        "sha256": "0a1b85826854d35863e31808f0668abfabdf33606e8f06bd8bb7761401e3edc0"
+      },
+      {
+        "bytes": 2573,
+        "path": "tokens.py",
+        "sha256": "953408cd2570f0c83dc2fe39f7e4e388e41eeb05738aa69196a5f6ffcf6ba79e"
+      }
+    ],
+    "package_files_sha256": "ddd28833b93b4700619b3cf44ecac6dcf4c37fde0f4b45514cfba07f4ed77b26",
+    "python_executable": "C:\\Users\\Admin\\Projects\\Foundry\\.venv-training\\Scripts\\python.exe",
+    "python_version": "3.12.10",
+    "yaml_file": "C:\\Users\\Admin\\Projects\\Foundry\\.venv-training\\Lib\\site-packages\\yaml\\__init__.py",
+    "yaml_version": "6.0.3"
+  },
+  "typed_config_equivalence": true
+}

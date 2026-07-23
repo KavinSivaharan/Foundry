@@ -3279,3 +3279,24 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
 - **Next action:** Obtain explicit authorization either to reconcile the training environment with
   the frozen Foundry dependency metadata or to define a scientifically justified exception. Then
   restart Milestone 12F-A from Stage A.
+
+### 2026-07-23 - Milestone 12F-A1 PyYAML exception passed; native CUDA probe stopped
+
+- **Action performed:** Reproduced the one-line `.venv-training` `pip check` discrepancy with exit
+  code 1 and verified that `.venv` passes normally. Froze both PyYAML installations, hashed their
+  Python/compiled package files and metadata, and independently audited all 31 tracked YAML files
+  twice under PyYAML 6.0.2 and 6.0.3. Compared canonical `safe_load` results and the real
+  assistant-only, QLoRA, and token-matched loader projections.
+- **PyYAML result:** Every source and parsed hash, every typed-loader outcome, and both repeat audits
+  match. The narrow exception passed with evidence SHA-256
+  `dd9413331fc76c41f1e30b2bb4697abeabde0a97452196d225619329fcee810a`.
+- **Environment result:** The offline NF4 model loaded without CPU offload and paged AdamW 8-bit was
+  constructed. The first forward stopped before producing a loss because deterministic CuBLAS
+  requires `CUBLAS_WORKSPACE_CONFIG` to be set before Python starts. The launch environment omitted
+  that variable.
+- **Stop accounting:** One model load occurred. No generation, completed forward loss, backward
+  pass, optimizer state/update, schedule, adapter/checkpoint save, retention evaluation, GSM1K
+  evaluation, or sealed-final access occurred. Neither environment nor dependency metadata changed.
+- **Next action:** Interpret the launch-environment blocker and, if authorized, restart the native
+  CUDA probe from a fresh process with an explicitly frozen prelaunch
+  `CUBLAS_WORKSPACE_CONFIG=:4096:8`; otherwise preserve this stop.
