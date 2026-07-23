@@ -3408,3 +3408,17 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
   32, and 64. Their four-step smoke prefixes are 3,964 and 3,976 tokens, a 0.30% difference. All
   180 records occur; vetted repeat counts range from 9 through 13.
 - **Next action:** Run the paired four-step compatibility smoke from fresh base loads and adapters.
+
+### 2026-07-23 - Milestone 12F-A paired V1 compatibility smoke passed
+
+- **Generic:** Four steps processed 3,964 loss-bearing tokens with finite weighted losses
+  `1.86344, 1.88742, 1.97095, 1.89170`. Save, offline reload, scheduler advancement, and exact
+  adapter-disabled base restoration passed. Peak allocated/reserved VRAM was
+  3,214,556,160/3,414,163,456 bytes.
+- **Targeted:** Four fresh-base steps processed 3,976 tokens with finite weighted losses
+  `1.90357, 2.01477, 1.87902, 1.84810`. Save, offline reload, scheduler advancement, and exact
+  base restoration passed at the same VRAM peak.
+- **Parity and boundary:** The 12-token difference is 0.30%. Both runs used the frozen zero-LR
+  first step followed by the expected positive-LR sequence. Temporary adapters remain ignored;
+  GSM1K and sealed-final were not accessed.
+- **Next action:** Train generic V1 for exactly 64 optimizer steps, then targeted V1.

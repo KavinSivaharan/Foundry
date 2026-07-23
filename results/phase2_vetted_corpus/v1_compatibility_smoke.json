@@ -1,0 +1,41 @@
+{
+  "decision": "pass",
+  "generic": {
+    "adapter_sha256": "c7a5f40034b23a2fdf6ef0d76232aeecc562d46d8ccbe536db0215eb717d851e",
+    "base_restoration": true,
+    "loss_bearing_tokens": 3964,
+    "losses": [
+      1.8634443667322107,
+      1.8874184003586836,
+      1.9709458331325265,
+      1.8916997913322642
+    ],
+    "offline_reload": true,
+    "peak_allocated_vram_bytes": 3214556160,
+    "peak_process_rss_bytes": 1517871104,
+    "peak_reserved_vram_bytes": 3414163456,
+    "result_sha256": "514bc1887bbf2c7495ffb821721146f0476fc1ef06f24c6feb8acc722e9cd366",
+    "runtime_seconds": 56.817183499995735
+  },
+  "optimizer_steps_per_arm": 4,
+  "pairwise_token_difference": 12,
+  "pairwise_token_difference_fraction": 0.003018108651911469,
+  "schema_version": 1,
+  "targeted": {
+    "adapter_sha256": "3e597d42d0735ec076073ed95c6762f713440f1c9c7773dc28f19ae383e4006d",
+    "base_restoration": true,
+    "loss_bearing_tokens": 3976,
+    "losses": [
+      1.9035706530183167,
+      2.0147652897991515,
+      1.8790155513637452,
+      1.8481018893785865
+    ],
+    "offline_reload": true,
+    "peak_allocated_vram_bytes": 3214556160,
+    "peak_process_rss_bytes": 1521524736,
+    "peak_reserved_vram_bytes": 3414163456,
+    "result_sha256": "02755fd4f0764aac6876c23830c95e106bc88bf432ca1de9ff09d1ea23a69a2c",
+    "runtime_seconds": 56.82093960000202
+  }
+}
