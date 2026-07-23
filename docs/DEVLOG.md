@@ -3422,3 +3422,18 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
   first step followed by the expected positive-LR sequence. Temporary adapters remain ignored;
   GSM1K and sealed-final were not accessed.
 - **Next action:** Train generic V1 for exactly 64 optimizer steps, then targeted V1.
+
+### 2026-07-23 - Milestone 12F-A V1 generic and targeted training passed
+
+- **Generic:** Exactly 64 optimizer steps and 64,000 assistant-only tokens completed in 811.51
+  seconds. Weighted loss moved from `1.86344` to `1.63294`; external-corpus validation losses at
+  steps 16/32/64 were `1.97163/1.83314/1.75701`.
+- **Targeted:** A fresh base and adapter completed exactly 64 steps and 64,000 tokens in 810.57
+  seconds. Weighted loss moved from `1.90357` to `1.58510`; validation losses were
+  `2.16634/2.02966/1.95436`.
+- **Artifacts:** All six ignored checkpoint adapters were hashed. Offline reload and exact
+  adapter-disabled base restoration passed for both arms. Peak allocated/reserved VRAM was
+  3,214,556,160/3,414,163,456 bytes. Token difference is zero; GSM1K and sealed-final remain
+  untouched.
+- **Next action:** Evaluate V1 checkpoints 16, 32, and 64 on the frozen adjudication and anchor
+  base-correct retention subsets and select the latest common passing checkpoint.

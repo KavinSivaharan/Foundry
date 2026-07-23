@@ -1,0 +1,58 @@
+{
+  "decision": "pass",
+  "generic": {
+    "base_restoration": true,
+    "checkpoints": {
+      "16": {
+        "adapter_sha256": "cf230487953cf347824a40faa36ad6b1b93ef667119f83766dce1d26e72ba63e",
+        "validation_loss": 1.971629531862076
+      },
+      "32": {
+        "adapter_sha256": "8dd3ee1894c03dd6c6ec0c03af32ba557099ac35dcbc604f1bb1eb00b001a901",
+        "validation_loss": 1.8331425779551322
+      },
+      "64": {
+        "adapter_sha256": "fe3c0f5a6e8082f2d151a293e918882f896ddeece93c8f779d4b16d21618a73d",
+        "validation_loss": 1.7570053556728535
+      }
+    },
+    "final_loss": 1.632942299351148,
+    "initial_loss": 1.8634443667322107,
+    "loss_bearing_tokens": 64000,
+    "offline_reload": true,
+    "peak_allocated_vram_bytes": 3214556160,
+    "peak_process_rss_bytes": 1552764928,
+    "peak_reserved_vram_bytes": 3414163456,
+    "result_sha256": "04e067592165373d4ce6b4d9d9d9e782114138a9cbf6bbd9da52310d76aec841",
+    "runtime_seconds": 811.5053355000127
+  },
+  "optimizer_steps_per_arm": 64,
+  "schema_version": 1,
+  "targeted": {
+    "base_restoration": true,
+    "checkpoints": {
+      "16": {
+        "adapter_sha256": "6915af1d2ab6bd8ac75b538417e1b3af7395924e77c1150138bc06bc4773c5e9",
+        "validation_loss": 2.1663428891982353
+      },
+      "32": {
+        "adapter_sha256": "7e8cda9db393344cd0479e247ccdf5a04c6888b9d9ac5960a21ef9860dfb2abb",
+        "validation_loss": 2.029661108979157
+      },
+      "64": {
+        "adapter_sha256": "7f15edf4cd7e8c50478b6bb8deb55bb3d9d43273109fc0b224110f9fe08da0bd",
+        "validation_loss": 1.9543632492423058
+      }
+    },
+    "final_loss": 1.5850973568455602,
+    "initial_loss": 1.9035706530183167,
+    "loss_bearing_tokens": 64000,
+    "offline_reload": true,
+    "peak_allocated_vram_bytes": 3214556160,
+    "peak_process_rss_bytes": 1511845888,
+    "peak_reserved_vram_bytes": 3414163456,
+    "result_sha256": "4ba79b3bb84862a474ddf4dc78d8109c768b332bfb64600bb8452017c01c51ad",
+    "runtime_seconds": 810.5715883999947
+  },
+  "token_difference": 0
+}
