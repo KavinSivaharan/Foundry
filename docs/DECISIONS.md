@@ -1151,3 +1151,12 @@ This log separates proposals from approved decisions. A proposal does not author
 - **Consequence:** Preserve the passed matching and dataset evidence. Record zero model loads,
   optimizer steps, adapters, checkpoints, retention runs, and adapter GSM1K evaluations. Resume
   only after explicit authorization freezes a compatible training environment.
+
+## 2026-07-23: stop Milestone 12F-A at the authorized training-environment gate
+
+- **Decision:** Do not construct schedules, train adapters, or run retention because the authorized
+  `.venv-training` interpreter fails `pip check` when the repository source root is visible.
+- **Evidence:** All required runtime versions and the RTX 3080 identity match, but installed Foundry
+  metadata requires `PyYAML==6.0.2` while the environment contains `PyYAML==6.0.3`.
+- **Boundary:** Do not install, remove, upgrade, or downgrade packages under this authorization.
+  GSM1K and sealed-final evaluation remain unaccessed.

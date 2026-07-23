@@ -3255,3 +3255,27 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
 - **Decision:** stop before V1. Matching and dataset gates remain passed; training, retention, and
   signal gates are not reached. Resume only with explicit authorization for a pinned compatible
   training environment.
+
+### 2026-07-23 - Milestone 12F-A stopped at the training-environment gate
+
+- **Action performed:** Verified clean synchronized `main` at
+  `a97972a162453a3c22b68b59c598048502d2b284`, reconstructed the frozen matching and dataset
+  evidence with six focused tests, confirmed zero Phase 2 adapters/checkpoints and no active model
+  process, and audited the authorized `.venv-training` interpreter, packages, CUDA runtime, GPU,
+  process environment, and local model cache.
+- **Result:** CPython 3.12.10, torch 2.5.1+cu121, CUDA 12.1, Transformers 4.51.3,
+  tokenizers 0.21.4, PEFT 0.15.2, TRL 0.17.0, bitsandbytes 0.49.2, Accelerate 1.7.0, and the
+  NVIDIA GeForce RTX 3080 all match. The interpreter SHA-256 is
+  `0b471133e110cfb53a061cad528ce8e517d7b9ac41a0a396c39ad795a487fc14`; the 57-package
+  inventory SHA-256 is `2d4dbf699b73b53206d96687f1381ec22dac8a2d1575b0a43791627b9b43b2c8`.
+- **Stop gate:** With the required repository `src` root visible, `.venv-training` `pip check`
+  reports that `foundry-post-training 0.1.0` requires `PyYAML==6.0.2`, but the environment has
+  `PyYAML 6.0.3`. The authorization prohibits dependency repair, so schedule construction, smoke,
+  training, retention, and GSM1K did not run.
+- **Errors or uncertainty:** One provisional offline model load exposed that the official Qwen
+  template places a post-EOS newline that the probe must mask. No generation, backward pass,
+  optimizer step, adapter save, retention inference, or benchmark access occurred. The corrected
+  probe was not run because `pip check` failed first.
+- **Next action:** Obtain explicit authorization either to reconcile the training environment with
+  the frozen Foundry dependency metadata or to define a scientifically justified exception. Then
+  restart Milestone 12F-A from Stage A.
