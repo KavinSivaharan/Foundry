@@ -1,0 +1,19 @@
+{
+  "adapters": 0,
+  "asyncio_iocp": true,
+  "cuda_available": true,
+  "decision": "pass",
+  "environment_after_sha256": "23043738523f3c6e0ae8c2a623d184facac2e319f75c089f1da1d74eeb3b503d",
+  "environment_before_sha256": "23043738523f3c6e0ae8c2a623d184facac2e319f75c089f1da1d74eeb3b503d",
+  "gpu": "NVIDIA GeForce RTX 3080",
+  "import_preflight_sha256": "c97c604581686472bb056c7f729b7881a7405a1f23a228b1c803ed8ddcc73b6a",
+  "imported_module_path_sha256": "d764569b032e5f66dbf42f17c58f42e2994e5131d8bfa9dba4b884451303cdb5",
+  "model_loads": 0,
+  "network_requests": 0,
+  "optimizers": 0,
+  "overlapped_import": true,
+  "runtime_seconds": 3.6529373999946984,
+  "schema_version": 1,
+  "winsock_socket": true,
+  "windows_environment_evidence_sha256": "10f2254d59e5167bb4be235038b176535afa0e01f2981712d66776518aef4137"
+}

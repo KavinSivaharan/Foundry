@@ -17,6 +17,7 @@ from typing import Any, cast
 from foundry.phase2.argv_transport import validate_child_paths
 from foundry.phase2.launch_contract import validate_postimport, validate_preimport
 from foundry.phase2.pyyaml_exception import validate_evidence
+from foundry.phase2.windows_environment import validate_child_environment
 from foundry.training.config import canonical_sha256
 from foundry.training.qlora import file_sha256
 
@@ -231,6 +232,14 @@ def complete_gate(
     exception_path: Path,
     output_path: Path,
 ) -> dict[str, object]:
+    windows_evidence_path = (
+        Path(__file__).resolve().parents[3]
+        / "results"
+        / "phase2_vetted_corpus"
+        / "windows_operational_environment.json"
+    )
+    windows_evidence = json.loads(windows_evidence_path.read_text(encoding="utf-8"))
+    validate_child_environment(os.environ, windows_evidence)
     preimport = validate_preimport()
     transport = validate_child_paths(
         model_path=model_path.resolve(),
@@ -300,6 +309,7 @@ def complete_gate(
         "launch_contract": preimport,
         "postimport_launch_contract": postimport,
         "argv_transport": transport,
+        "windows_operational_environment_sha256": windows_evidence["environment_evidence_sha256"],
         "pyyaml_exception_evidence_sha256": exception["evidence_sha256"],
         "recipe": RECIPE,
         "recipe_sha256": canonical_sha256(RECIPE),

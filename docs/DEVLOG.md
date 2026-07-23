@@ -3342,3 +3342,17 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
   retention evaluations, GSM1K evaluations, or sealed-final access.
 - **Next action:** Interpret whether the frozen launch contract should include a separately audited
   Windows operational-environment allowlist. A3 does not authorize expanding it or retrying.
+
+### 2026-07-23 - Milestone 12F-A4 Windows import-only preflight passed
+
+- **Action performed:** Added the fixed 31-name
+  `foundry-vetted-qlora-windows-operational-env-v1` allowlist. Child construction copies only
+  present allowlisted Windows values, overrides the six deterministic variables, rejects
+  case-insensitive duplicates and unauthorized names, and records only names and value hashes in
+  tracked evidence.
+- **Result:** The one import-only preflight passed `_overlapped`, Winsock/socket, asyncio IOCP,
+  torch, Transformers, tokenizers, PEFT, bitsandbytes, Accelerate, and TRL imports. CUDA remained
+  available on the RTX 3080 and environment hashes were identical before and after.
+- **Boundary:** Model loads, adapters, optimizers, network requests, forward/backward passes, and
+  output outside the ignored preflight root were all zero. The synchronized orchestration commit
+  is required before the one model probe.
