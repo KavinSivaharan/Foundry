@@ -3239,3 +3239,19 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
   questions, completions, predictions, and source data remain ignored.
 - **Next action:** publish `data: freeze vetted human-written curriculum pools`, then run V1
   REPLAY25 generic and targeted training under the frozen 64-step protocol.
+
+### 2026-07-23 - Milestone 12E stopped before V1 on the frozen environment boundary
+
+- **Published dataset:** commit `040129322c31da3464add4d108f0f771d0bdda1f` is synchronized
+  `0/0` with `origin/main`; the worktree was clean before the training preflight.
+- **Required interpreter:** `C:\Users\Admin\Projects\Foundry\.venv\Scripts\python.exe`, CPython
+  `3.12.10`. PyTorch `2.5.1+cu121` sees the RTX 3080 with `10,736,893,952` bytes of VRAM;
+  Transformers is `4.46.3`; `pip check` passes.
+- **Blocking discrepancy:** PEFT, bitsandbytes, and TRL are absent from the required environment.
+  The recovery authorization prohibits installing or modifying packages and requires this
+  interpreter, so no alternate environment was used.
+- **Scientific activity:** zero model loads, optimizer steps, schedules executed, adapters,
+  checkpoints, retention evaluations, GSM1K adapter evaluations, or sealed-final access.
+- **Decision:** stop before V1. Matching and dataset gates remain passed; training, retention, and
+  signal gates are not reached. Resume only with explicit authorization for a pinned compatible
+  training environment.

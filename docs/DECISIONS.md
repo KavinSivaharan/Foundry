@@ -1141,3 +1141,13 @@ This log separates proposals from approved decisions. A proposal does not author
 - **Consequence:** Freeze the repaired 200-per-arm datasets and exact 180/20 splits. Proceed only
   to the authorized retention-first V1 training protocol; do not run V2 unless V1 lacks a common
   passing checkpoint, and do not expose either adapter to GSM1K before final retention passes.
+
+## 2026-07-23: stop Milestone 12E before V1 when the required environment lacks QLoRA
+
+- **Decision:** Do not install packages, modify the project `.venv`, or substitute another
+  interpreter after the V1 preflight finds PEFT, bitsandbytes, and TRL absent.
+- **Evidence:** The required CPython 3.12.10 environment passes `pip check`; CUDA PyTorch
+  `2.5.1+cu121` sees the RTX 3080, but the three required training packages are unavailable.
+- **Consequence:** Preserve the passed matching and dataset evidence. Record zero model loads,
+  optimizer steps, adapters, checkpoints, retention runs, and adapter GSM1K evaluations. Resume
+  only after explicit authorization freezes a compatible training environment.

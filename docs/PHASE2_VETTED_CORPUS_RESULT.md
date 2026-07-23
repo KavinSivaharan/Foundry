@@ -5,7 +5,9 @@
 Fast-Track Phase 2 Milestones 12A-12D originally stopped at Stage H. Milestone 12E preserved that
 result, then performed the separately authorized deterministic matching-only repair. One generic
 row replacement passed every unchanged gate, and deterministic formula-derived targets plus exact
-180/20 splits are now frozen. No adapter has yet been trained or evaluated on GSM1K.
+180/20 splits are now frozen. Execution then stopped before V1 because the explicitly required
+project `.venv` lacks the frozen QLoRA packages and package changes are prohibited. No model was
+loaded, no optimizer step occurred, and no adapter was evaluated on GSM1K.
 
 ## Frozen starting point
 
@@ -51,7 +53,7 @@ token budgets, shared replay, the same seed, and one retention-only checkpoint r
 | H: Original matched-size selection | Failed; preserved | Size 200 exceeded depth and operation SMD 0.10 gates |
 | 12E repair | **Passed** | One exhaustive legal generic replacement; all frozen matching gates pass |
 | I-K: Targets, splits, freeze | **Passed** | Deterministic targets and 180/20 splits replay byte-identically |
-| L-S: Training and retention | Not run | Zero adapter and optimizer step |
+| L-S: Training and retention | **Stopped before training** | Required `.venv` lacks PEFT, bitsandbytes, and TRL |
 | T-U: GSM1K and signal gate | Not run | No retention-approved pair exists |
 
 No claim of Phase 2 improvement is currently supported; training and evaluation remain pending.
@@ -147,3 +149,13 @@ terminal `Final answer:` line, and one final EOS. All 400 targets replay their f
 canonical answer; maximum assistant length is `58` tokens. Each arm is deterministically split
 `180/20` with no exact, normalized, program, or cross-arm overlap. Dataset identity is
 `ee18f7f9...dc31`; complete matching and dataset reconstruction both replay byte-identically.
+
+## Training-environment stop
+
+The required interpreter `C:\Users\Admin\Projects\Foundry\.venv\Scripts\python.exe` is CPython
+3.12.10 with CUDA-enabled PyTorch `2.5.1+cu121` on the RTX 3080. It has Transformers `4.46.3` and
+passes `pip check`, but PEFT, bitsandbytes, and TRL are absent. The recovery authorization forbids
+installing or modifying packages and explicitly requires this environment, so Foundry did not
+switch to another interpreter or alter dependencies. V1/V2 training, retention, and adapter GSM1K
+evaluation remain not run. The next action requires explicit authorization for a pinned training
+environment; it is not a scientific matching or retention result.

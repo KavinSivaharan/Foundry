@@ -1085,3 +1085,8 @@ Every future experiment must be registered here before a costly run begins. Its 
   swap `mathqa-train-26455` to `mathqa-train-28853` passes every unchanged gate. Matching evidence
   is `004d338b...d5b5`; the deterministic 180/20 dataset is `ee18f7f9...dc31`. No two-row/global
   search, model inference, optimizer step, retention run, or GSM1K adapter evaluation occurred.
+- **Training-environment stop:** After the dataset publication commit, the required project
+  `.venv` was probed without loading the model. CUDA PyTorch `2.5.1+cu121` is available on the RTX
+  3080 and `pip check` passes, but PEFT, bitsandbytes, and TRL are absent. Because package changes
+  and another interpreter are unauthorized, V1 did not start: zero model loads, optimizer steps,
+  adapters, checkpoints, retention evaluations, or adapter GSM1K evaluations.

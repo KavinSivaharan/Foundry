@@ -1193,3 +1193,8 @@ Deterministic formula/program-derived targets and 180/20 splits now replay byte-
 dataset identity `ee18f7f9...dc31`. The next authorized stage is V1 REPLAY25 training for the
 generic and targeted arms, followed only by retention-based checkpoint selection. GSM1K adapter
 evaluation remains closed until independent final retention passes.
+
+**Training environment stopped before model load:** the recovery-required `.venv` has CUDA
+PyTorch but lacks PEFT, bitsandbytes, and TRL. Package installation/modification and switching
+interpreters are outside the authorization. V1 therefore has zero model loads and optimizer steps.
+Resume only after explicit authorization identifies an immutable compatible training environment.
