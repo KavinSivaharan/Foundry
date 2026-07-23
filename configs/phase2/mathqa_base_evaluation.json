@@ -1,0 +1,19 @@
+{
+  "candidate_corpus": "MathQA verified uncontaminated train subset",
+  "candidate_source_commit": "fafb9f7ee5b9ec4da9499f9c4177a4c91389f2d6",
+  "canonical_extractor_id": "foundry-terminal-number-v2",
+  "decoding": {
+    "do_sample": false,
+    "max_new_tokens": 512,
+    "temperature": 0.0,
+    "top_p": 1.0
+  },
+  "model_id": "Qwen/Qwen2.5-1.5B-Instruct",
+  "model_revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+  "replay_sample_seed": "foundry-phase2-mathqa-base-replay-v1",
+  "replay_sample_size": 30,
+  "schema_version": 1,
+  "seed": 20260720,
+  "system_instruction": "Solve the math problem carefully. Show concise reasoning and end with exactly one line in this form: Final answer: <canonical-number>",
+  "user_message": "untouched normalized human-written question, with original options only when required"
+}

@@ -1051,3 +1051,81 @@ This log separates proposals from approved decisions. A proposal does not author
 - **Consequence:** Phase 1 ends without a production-training recommendation, GSM transfer claim,
   or sealed-final score. Any new training stack, human-review completion, or sealed evaluation
   requires separately scoped authorization.
+
+## 2026-07-22: open Phase 2 with vetted human-written source wording
+
+- **Status:** Phase 1 is frozen at synchronized release commit
+  `f4ee93afa4c2be52ca21aef8ca16dbf5827b4a99`. The untouched base scored `521/814`; targeted
+  synthetic SFT exceeded generic synthetic SFT by `27` questions, while both remained below base.
+- **Decision:** Replace generated question wording with verified, externally published
+  human-written wording. Use ASDiv as the primary source and MathQA train only as the explicitly
+  gated fallback. Foundry performs deterministic verification, family classification, selection,
+  matching, target construction, and training without paraphrasing corpus questions.
+- **Evidence boundary:** GSM1K development content is permitted only for contamination screening
+  and the final frozen evaluation after retention. It cannot influence family assignment,
+  curriculum selection, matching, targets, checkpoint choice, or hyperparameters. Sealed-final
+  content remains prohibited.
+- **Consequence:** Proceed through Milestones 12A-12D only while every predeclared gate passes.
+  Stop at the first source, verification, contamination, capacity, matching, training, or
+  retention failure; do not lower thresholds or introduce another dataset, seed, or recipe.
+
+## 2026-07-22: pin official ASDiv V1.0 as the Phase 2 primary source
+
+- **Decision:** Use only official repository commit `883f90a9a65bf00304ba8f37423910fe743abc47`
+  and tree `2c3e8723c68436a2a6697329edfdf7fbd44e52ac`. Treat raw XML SHA-256
+  `ef8904068482919ac48c8eeaaf6df344b8a308ba66d048c2d4d87eab82dc4929` as the canonical
+  primary-data identity.
+- **Evidence:** The pinned README and XML establish `2,305` problems, the required schema, the ACL
+  2020 citation, and CC BY-NC 4.0. The repository has no separate license file.
+- **Consequence:** Restrict ASDiv to non-commercial research, preserve attribution, and keep all
+  raw text ignored. MathQA remains a non-active fallback unless the later evaluated-capacity gate
+  proves ASDiv cannot support the 200-per-arm minimum.
+
+## 2026-07-22: admit only ASDiv rows supported by the restricted exact verifier
+
+- **Decision:** Accept only one-equality formulas composed of exact numeric literals, addition,
+  subtraction, multiplication, exact division, parentheses, bounded non-negative integer powers,
+  unary signs, and explicit postfix percentages. Do not use `eval`, variables, named functions,
+  implicit operations, multiple equations, or ambiguous answers.
+- **Evidence:** `1,497/2,305` rows pass formula execution, independent answer extraction, exact
+  equality, unit compatibility, and replay. `1,452` belong to a supported Foundry family. Whole-run
+  replay reproduced all hashes; accepted disagreements, duplicate IDs, and nondeterminism are zero.
+- **Consequence:** Carry only those `1,452` rows into contamination screening. Preserve all `808`
+  rejection reasons locally; do not broaden parsing to recover additional capacity.
+
+## 2026-07-22: reject every ASDiv candidate at development similarity 0.75 or above
+
+- **Decision:** Apply the pinned local MiniLM encoder to every supported row and reject candidate
+  similarity `>=0.75` against the approved 904-question development inventory. Use no manual-review
+  band. Also reject exact, 12-token, number-neutral, operation-structure, source, duplicate, and
+  Phase 1 synthetic overlaps.
+- **Evidence:** `73` semantic candidates were rejected and `1,379` remain. All other overlap counts
+  and unresolved candidates are zero. Complete replay reproduced all output hashes.
+- **Consequence:** Freeze clean ASDiv hash `8d99a1de...eaac`. The clean rate-family count is `111`,
+  three below the combined 200-per-arm quota; evaluate the base pool before activating fallback,
+  exactly as predeclared.
+
+## 2026-07-22: activate the pinned MathQA fallback after measured ASDiv failure capacity
+
+- **Decision:** Activate only official `allenai/math_qa` train Parquet revision
+  `fafb9f7ee5b9ec4da9499f9c4177a4c91389f2d6`; never access validation, test, rationales, or remote
+  code. Select at most `5,000` verified rows before model inference using the frozen stable fields.
+- **Evidence:** ASDiv base failures are only `152/22/38` for bookkeeping/rate/discrete and cannot
+  satisfy the combined smallest quotas. MathQA verification accepted `15,468/29,837`, selected
+  `5,000` at hash `02fb19a8...3d45`, and contamination retained `4,929` at hash
+  `93d4d250...f418`. License metadata is Apache-2.0 and upstream provenance is AQuA-RAT.
+- **Consequence:** Combine the clean, verified base-failed rows from ASDiv and MathQA for the fixed
+  matched-size test. Preserve ASDiv's CC BY-NC restriction and MathQA's Apache-2.0 attribution.
+
+## 2026-07-22: stop Phase 2 at the Stage H matching-quality gate
+
+- **Decision:** Stop after the fixed selector tested `300`, `250`, and `200` examples per arm and
+  none passed every non-curriculum matching threshold. Do not revise selection, quotas, gates,
+  corpora, or matching fields after observing the result.
+- **Evidence:** At size `200`, source composition was exact and every categorical per-level
+  difference was at most five points. Formula-depth SMD was `0.1138945925` and operation-count SMD
+  was `0.1087652881`, exceeding the fixed `0.10` limit. The size-200 attempt summary is
+  `d240b0b5...9874`; the stop result is `1b169ab5...650f`.
+- **Consequence:** Stages I-W are closed. No assistant targets, split freeze, optimizer steps,
+  adapters, checkpoints, retention evaluation, GSM1K adapter evaluation, bootstrap, signal-gate
+  result, commit, or push is authorized by this stopped route. Sealed-final remains untouched.

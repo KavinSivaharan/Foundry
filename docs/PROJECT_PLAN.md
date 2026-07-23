@@ -1127,3 +1127,56 @@ equivalence fixture may be created.
 retention or GSM1K, or run the signal gate. Publish warning audit
 `a3e4d1ca40c3fb3f9fe984d3a019ed064a6ba96394a69b009257a248eebf1602` as
 `analysis: stop verifier GRPO after training-warning audit`.
+
+## Fast-Track Phase 2 Milestones 12A-12D: vetted human-written curricula
+
+Phase 2 opens from the clean synchronized Phase 1 release at
+`f4ee93afa4c2be52ca21aef8ca16dbf5827b4a99`. Phase 1 established a positive curriculum-selection
+contrastâ€”targeted synthetic SFT exceeded matched generic synthetic SFT by `27/814`â€”but both
+adapters remained below the untouched base. The next experiment therefore isolates selection
+quality from generated question wording.
+
+The primary source is a pinned official ASDiv revision stored only under ignored external-data
+paths. Foundry may normalize whitespace, verify formulas and answers, classify supported families,
+screen contamination, evaluate the untouched base, select disjoint targeted and generic pools,
+construct deterministic formula-grounded targets, and train the exact authorized retention-first
+LoRA protocol. Foundry must not rewrite corpus wording, use GSM1K for selection, access sealed-final
+content, add an unapproved corpus, or change a failed gate after observing results.
+
+Execution is sequential and fail-closed: source/provenance, formula verification, contamination,
+capacity, base-pool evaluation, matching, dataset freeze, training, retention, and only then the
+frozen GSM1K development evaluation. Each completed publication boundary receives one atomic
+commit and push. No Phase 1 summary, evaluator, manifest, figure, report, or result may change.
+
+**Stage B passed:** ASDiv is pinned at commit `883f90a9...abc47`, tree `2c3e8723...e52ac`, with
+`2,305` source rows and raw XML SHA-256 `ef890406...c4929`. The official README states CC BY-NC
+4.0 and the ACL 2020 attribution. MathQA remains inactive. Next, implement and test the restricted
+exact ASDiv parser before any model evaluation.
+
+**Stage C passed:** the exact verifier accepted `1,497` rows and classified `1,452` into a
+supported Foundry family. It rejected `808` rows without weakening the grammar. Supported counts
+are `1,126` bookkeeping, `118` rate/ratio, and `208` discrete; the full run and replay share
+summary hash `6c45b435...895d`. Next, screen all `1,452` supported rows against the frozen
+development inventory, Phase 1 synthetic questions, and each other.
+
+**Stages D-E passed:** the fixed contamination screen rejected `73` candidates at development
+semantic similarity `>=0.75` and left `1,379` clean rows. Exact, 12-token, number-neutral,
+structure, source, duplicate, Phase 1 overlap, and unresolved counts are zero. Clean families are
+`1,076/111/192` for bookkeeping/rate/discrete. ASDiv alone misses the smallest combined rate quota
+by three rows, but the authorization requires the untouched-base failure census before fallback.
+Next, evaluate all clean ASDiv candidates with the pinned base and frozen pool-inference contract.
+
+**Stages F-G passed:** the untouched base processed all `1,379` clean ASDiv rows with zero backend
+failures and exact 30-row replay. It scored `1,167/1,379` (`84.6265%`) and failed only
+`152/22/38` bookkeeping/rate/discrete rows, activating the predeclared MathQA fallback. The pinned
+official MathQA train artifact produced `15,468` exactly verified rows; the deterministic
+pre-inference subset retained `5,000`, contamination screening retained `4,929`, and the base
+processed all `4,929` with zero backend failures and exact replay. It scored `2,363/4,929`
+(`47.9408%`) and failed `1,214/1,136/216` rows by family.
+
+**Stage H failed; Phase 2 stopped:** the fixed selector tested `300`, `250`, then `200` per arm.
+The two larger designs exceeded numerical and categorical balance limits. At `200`, all
+categorical levels and exact source composition passed, but formula-depth SMD was `0.113895` and
+operation-count SMD was `0.108765`, above the frozen `0.10` maximum. Do not alter the selector,
+quotas, sources, or thresholds; do not construct targets or splits, train adapters, run retention,
+or evaluate GSM1K. A future continuation requires new explicit authorization.

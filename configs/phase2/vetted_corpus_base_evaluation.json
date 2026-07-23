@@ -1,0 +1,19 @@
+{
+  "candidate_corpus": "ASDiv V1.0 verified uncontaminated pool",
+  "candidate_source_commit": "883f90a9a65bf00304ba8f37423910fe743abc47",
+  "canonical_extractor_id": "foundry-terminal-number-v2",
+  "decoding": {
+    "do_sample": false,
+    "max_new_tokens": 512,
+    "temperature": 0.0,
+    "top_p": 1.0
+  },
+  "model_id": "Qwen/Qwen2.5-1.5B-Instruct",
+  "model_revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+  "replay_sample_seed": "foundry-phase2-asdiv-base-replay-v1",
+  "replay_sample_size": 30,
+  "schema_version": 1,
+  "seed": 20260720,
+  "system_instruction": "Solve the math problem carefully. Show concise reasoning and end with exactly one line in this form: Final answer: <canonical-number>",
+  "user_message": "untouched normalized human-written question only"
+}

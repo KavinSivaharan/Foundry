@@ -1037,3 +1037,46 @@ Every future experiment must be registered here before a costly run begins. Its 
 - **Decision:** Do not create `foundry-grpo-phase-warning-contract-v2` or V5. Publish audit
   `a3e4d1ca40c3fb3f9fe984d3a019ed064a6ba96394a69b009257a248eebf1602` as
   `analysis: stop verifier GRPO after training-warning audit`.
+
+### EXP-TRAIN-019: vetted-corpus targeted versus generic adaptation
+
+- **Status:** authorized; Stage A repository gate passed; source verification pending.
+- **Question:** Can Foundry select a more useful curriculum from a vetted human-written problem
+  pool than a matched generic selector while preserving the untouched base model's capabilities?
+- **Frozen baseline:** Phase 1 release `f4ee93afa4c2be52ca21aef8ca16dbf5827b4a99`; Qwen revision
+  `989aa798...a306`; GSM1K revision `bc09569d...0493`; base `521/814` with `752/814`
+  extractable; sealed-final untouched.
+- **Primary source:** Official ASDiv repository, exact commit/tree/license/citation to be verified
+  before download. MathQA train is a fallback only if verified ASDiv base failures cannot support
+  `200` disjoint examples per arm under the frozen quotas and matching gates.
+- **Design:** Both arms draw only from mathematically verified, uncontaminated base failures.
+  Targeted and generic differ in frozen family quotas but match non-curriculum covariates, source
+  composition, assistant-token budget, replay, LoRA recipe, seed, steps, and checkpoint rule.
+- **Stop rule:** Fail closed at the first unmet gate. Do not rewrite questions, use GSM1K for
+  selection, change quotas or training settings, add a dataset/seed/variant, run GRPO/DPO, or access
+  sealed-final content.
+- **Stage B source freeze:** Official ASDiv commit `883f90a9...abc47`, tree
+  `2c3e8723...e52ac`, raw XML `ef890406...c4929`, `2,305` problems, CC BY-NC 4.0, ACL 2020
+  attribution. Detached ignored clone is clean; MathQA is inactive; no model process has run.
+- **Stage C verification:** `1,497` exact verified, `1,452` supported, `45` verified unsupported,
+  and `808` rejected. Supported family counts are `1,126/118/208` for bookkeeping/rate/discrete.
+  Duplicate IDs, accepted disagreements, and nondeterminism are zero. Complete replay reproduced
+  summary `6c45b435...895d` and supported rows `6478aa3e...c016`; no model process has run.
+- **Stages D-E:** MiniLM/lexical screening rejected `73` and retained `1,379` at clean hash
+  `8d99a1de...eaac`; all non-semantic overlap and unresolved counts are zero. Clean families are
+  `1,076/111/192`. ASDiv-only fails the frozen sizes because rate deficits are `59/30/3` for
+  `300/250/200` per arm. Fallback remains inactive until actual base-failure evaluation.
+- **Stages F-G:** ASDiv base accuracy was `1,167/1,379`; exact replay and zero backend failures
+  passed, but failures `152/22/38` required fallback. Pinned MathQA train verification accepted
+  `15,468/29,837`; stable pre-inference selection and contamination left `4,929`. MathQA base
+  accuracy was `2,363/4,929`, replay exact, with failure counts `1,214/1,136/216`.
+- **Stage H outcome:** **failed closed; experiment stopped.** Sizes `300`, `250`, and `200` were
+  tested in order. At `200`, source composition and every categorical gate passed, but
+  formula-depth SMD `0.113895` and operation-count SMD `0.108765` exceeded `0.10`. Stop result is
+  `1b169ab5...650f`.
+- **Scientific activity after stop:** zero targets, splits, training schedules, optimizer steps,
+  adapters, checkpoints, retention runs, GSM1K adapter evaluations, bootstrap replicates, or
+  signal-gate results. The frozen base was not rerun on GSM1K; sealed-final remained untouched.
+- **Decision:** Do not tune matching, lower the gate, train, or evaluate GSM1K. No dataset-freeze
+  commit/push exists because Stage K was not reached. New authorization is required for any
+  continuation.

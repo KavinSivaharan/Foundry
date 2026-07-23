@@ -3053,3 +3053,167 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
 - **Next action:** Commit the reviewed closeout as
   `docs: publish Foundry phase 1 research results`, push `main`, verify clean `0/0`
   synchronization, create no tag, and stop.
+
+### 2026-07-22 - Phase 2 Milestones 12A-12D Stage A repository gate passed
+
+- **Authorization:** Open one gated Phase 2 experiment that tests Foundry's curriculum-selection
+  system on vetted human-written math problems while preserving the frozen Phase 1 evaluator and
+  evidence.
+- **Repository verification:** Root is `C:/Users/Admin/Projects/Foundry`; branch is `main`; local
+  and `origin/main` both equal `f4ee93afa4c2be52ca21aef8ca16dbf5827b4a99`; ahead/behind is
+  `0/0`; worktree is clean. The Phase 1 report and summary exist.
+- **Frozen identities:** Base result is `521/814` with `752/814` extractable. Model revision is
+  `989aa7980e4cf806f80c7fef2b1adb7bc71aa306`; benchmark revision is
+  `bc09569d09a614b9b530edc7f076fb214ac10493`. Evaluator config, development manifest,
+  prompting source, and extractor source file hashes are `fa069dcc...d82d`,
+  `09ef0acc...7d37`, `40584b1c...12a8`, and `aca21fc5...8fd`.
+- **Boundary checks:** Sealed-final access/evaluation remain false. Prohibited raw-data, model,
+  adapter, checkpoint, environment, cache, and binary-model tracked-path hits are zero. Existing
+  ignore rules cover `data/` and `results/raw/` before any external download.
+- **Gate status:** **PASSED.** No external corpus was downloaded and no model process was started
+  in Stage A.
+- **Next action:** Inspect the official ASDiv repository, pin one exact commit and tree, verify its
+  license/citation/schema/count, then download only into the approved ignored path.
+
+### 2026-07-22 - Phase 2 Stage B ASDiv source and provenance gate passed
+
+- **Official source:** `https://github.com/chaochun/nlu-asdiv-dataset.git`; default branch
+  `master`; detached commit `883f90a9a65bf00304ba8f37423910fe743abc47`; tree
+  `2c3e8723c68436a2a6697329edfdf7fbd44e52ac`.
+- **Verification:** The pinned README identifies ASDiv V1.0, `2,305` English math word problems,
+  the expected `ID`/`Grade`/`Source` attributes and five required fields, the ACL 2020 citation,
+  and CC BY-NC 4.0. Raw XML hash is `ef890406...c4929`; README raw-blob hash is
+  `929249a7...5783`.
+- **Storage:** The clean detached clone is under ignored
+  `data/external/phase2_vetted/asdiv`. `data/` and `results/raw/` ignore checks passed before
+  cloning. No raw corpus content entered a tracked path or progress message.
+- **Line-ending audit:** ASDiv XML is byte-identical to its Git blob. Windows checkout conversion
+  changes only README/fold text bytes; platform-neutral raw Git-blob identities are recorded, and
+  folds are not experiment inputs.
+- **Gate status:** **PASSED.** MathQA was not activated. No model process was started.
+- **Next action:** Implement the safe exact ASDiv formula/answer verifier, deterministic family
+  classifier, local content records, and exhaustive rejection accounting.
+
+### 2026-07-22 - Phase 2 Stage C ASDiv exact-verification gate passed
+
+- **Implementation:** Added a restricted recursive-descent formula parser using `Fraction`, bounded
+  exact operations, independent answer extraction, deterministic unit compatibility, program
+  hashing, replay checks, and a frozen non-LLM solution-type family map. Python `eval`, variables,
+  arbitrary functions, and remote code are not used.
+- **Measured result:** `2,305` source rows; `1,497` mathematically verified; `1,452` supported;
+  `45` verified but unsupported; `808` rejected. Supported families are `1,126` bookkeeping,
+  `118` rate/ratio/percentage/average, and `208` constraint/distribution/discrete.
+- **Rejections:** `484` unknown formula grammar, `275` non-single equality, `36` unit
+  incompatibility, `7` internal formula equality disagreement, `4` non-integer exponent, `1`
+  unexpected token, and `1` non-single answer. No accepted formula/answer disagreement remains.
+- **Determinism:** Two complete output directories reproduce summary `6c45b435...895d`, all-row
+  `119546be...d7f2`, and supported-row `6478aa3e...c016`. Duplicate IDs and parser nondeterminism
+  are zero. All complete records remain under ignored `results/raw/phase2_vetted_corpus`.
+- **Verification:** Phase 2 unit tests pass `32/32`; strict Mypy passes for the new package. The
+  source XML hash and count are asserted before parsing.
+- **Gate status:** **PASSED.** The supported count exceeds `1,000`. No model process was started.
+- **Next action:** Implement and run exact, 12-token, number-neutral, formula-structure, MiniLM
+  semantic, source, Phase 1 synthetic, and candidate-duplicate screening.
+
+### 2026-07-22 - Phase 2 Stages D-E contamination and capacity preflight passed
+
+- **Inputs:** `1,452` supported ASDiv rows, the approved `904` development questions, all `1,000`
+  Phase 1 synthetic questions, and pinned local MiniLM revision `1110a243...d41`.
+- **Contamination result:** `73` development-semantic rejects at the fixed `>=0.75` threshold;
+  `1,379` clean rows. Exact, 12-token, number-neutral, operation-structure, source-reference,
+  candidate duplicate, and Phase 1 synthetic match counts are zero. Unresolved semantic candidates
+  are zero, and the fixed 30-example semantic replay is exact.
+- **Determinism:** Two full screens reproduce summary `0bf877c4...bdc5`, evidence
+  `99cb38aa...a631`, and clean rows `8d99a1de...eaac`.
+- **Capacity:** Clean family counts are `1,076` bookkeeping, `111` rate/ratio, and `192` discrete.
+  ASDiv-only combined rate deficits are `59`, `30`, and `3` at per-arm sizes `300`, `250`, and
+  `200`. Other census dimensions cover grades 1-6, operation/depth buckets, integer and terminating
+  decimal answers, magnitude buckets, and token-length buckets. Summary is `16260814...ba00`.
+- **Gate status:** **PASSED TO REQUIRED BASE EVALUATION.** ASDiv alone is not structurally eligible,
+  but MathQA cannot activate until actual base-failure counts prove the 200-per-arm limit. No Qwen
+  model process has run; MiniLM contamination inference ran CPU-only.
+- **Next action:** Freeze the base-pool inference configuration and evaluate all `1,379` clean ASDiv
+  candidates with greedy Qwen decoding, reporting 25/50/75/100% progress.
+
+### 2026-07-22 - Phase 2 Stages F-G base-pool evaluation and MathQA fallback passed
+
+- **ASDiv base result:** processed `1,379/1,379`; zero backend failures; exact fixed 30-row replay;
+  `1,167` correct (`84.6265%`); `1,253` extractable (`90.8629%`). Base-failed families are
+  `152` bookkeeping, `22` rate/ratio, and `38` discrete. Aggregate hash is
+  `3eb702d1...7bd8`; prediction-content hash is `478740b2...434e`.
+- **Fallback activation:** ASDiv cannot support the `200`-per-arm quotas from actual base failures,
+  so the explicitly authorized MathQA fallback activated. Official train Parquet revision is
+  `fafb9f7e...f2d6`; train artifact SHA-256 is `c16335ea...4a99`; validation/test access and
+  rationale loading are false.
+- **MathQA verification and contamination:** `15,468/29,837` rows passed exact program/option
+  agreement; the frozen pre-inference selector chose `5,000`; `71` contamination candidates were
+  rejected and `4,929` remained. Selected-row hash is `02fb19a8...3d45`; clean-row hash is
+  `93d4d250...f418`; unresolved and cross-source matches are zero.
+- **MathQA base result:** processed `4,929/4,929`; zero backend failures; exact 30-row replay;
+  `2,363` correct (`47.9408%`); `3,787` extractable (`76.8310%`). Base-failed families are
+  `1,214/1,136/216`. Aggregate hash is `5659a547...a80b` and prediction-content hash is
+  `8a1d0967...e750`.
+- **Operational note:** A sequential timing probe was stopped after `20` durable rows before the
+  official run. Batch-20 equivalence then failed on `3/20`, so batching was rejected and removed.
+  The official one-at-a-time run reproduced all 20 probe outputs apart from timing and completed
+  in `49,233.8` seconds under the frozen environment.
+- **Gate status:** **PASSED.** Continue only to the predeclared matched-size gate.
+
+### 2026-07-22 - Phase 2 Stage H matching gate failed; experiment stopped
+
+- **Eligible pool:** `2,778` combined base failures; stable question/program deduplication removed
+  `62` duplicate latent programs and retained `2,716` unique eligible rows.
+- **Method:** targeted stable coverage used formula structure, solution type/category, operation
+  count, answer type, and available grade/difficulty. Generic selection enforced the frozen
+  balanced family quotas, disjoint role partition, exact source composition, question/program
+  uniqueness, and no number-neutral five-token-shingle near duplicate. Final pair assignment used
+  an exact deterministic Hungarian solution over the frozen selected sets.
+- **Size 300:** failed categorical balance because the `10_to_99` magnitude level differed by
+  `0.06`; formula-depth SMD was `0.140411`.
+- **Size 250:** failed categorical balance because the `10_to_99` magnitude level differed by
+  `0.056`; formula-depth SMD was `0.137710`.
+- **Size 200:** categorical gate and exact source composition passed. Numerical SMD failed only
+  for formula depth (`0.113895`) and operation count (`0.108765`); the maximum is `0.10`.
+- **Gate status:** **FAILED; STOPPED.** Stop-result SHA-256 is `1b169ab5...650f`. No targets,
+  splits, schedules, training, retention, GSM1K adapter evaluation, paired analysis, or signal
+  decision occurred. Optimizer steps, adapters, and checkpoints are zero. Sealed-final access is
+  false. No Stage K publication commit or push was created.
+
+### 2026-07-23 - Milestone 12E interrupted-worktree recovery and stop verification
+
+- **Repository audit:** recovered only `C:\Users\Admin\Projects\Foundry`, on `main` at
+  `f4ee93afa4c2be52ca21aef8ca16dbf5827b4a99`, equal to `origin/main` at `0/0`.
+  The intentional Phase 2 implementation and documentation were present, but
+  `src/foundry/phase2/matching_repair.py` was absent. Three stale system-Python processes running
+  `_tmp12e_matching_repair.py` were stopped before verification.
+- **Scratch preservation:** twelve untracked `_tmp12e*` files were hashed and moved without
+  modification to the external runtime-artifact archive
+  `C:\Users\Admin\Projects\Foundry-grpo-runtime\milestone12e-recovery-scratch`. Their SHA-256
+  values, in filename order, are `cc5e59a7...3000`, `101fdbdf...e700`, `c8b823e2...3111`,
+  `b477f9af...e9d4`, `27ce89a2...cd2d`, `d2829ab8...fd9e`, `c7a88776...8504`,
+  `2a959d1c...163b`, `85f348d7...8b6d`, `1f4949a9...9482`, `d4ec744a...80ab`, and
+  `a1870761...bfd0`. The non-authoritative lead was generic removal
+  `mathqa-train-26455` and addition `mathqa-train-28853`; it remains unaccepted pending an
+  independent canonical repair search.
+- **Frozen-stop reconstruction:** canonical project code reproduced `2,778` base failures,
+  `2,716` deduplicated eligible candidates, exact 200-row arms, required family quotas,
+  `97` ASDiv plus `103` MathQA rows per arm, and zero cross-arm source-ID, exact-question,
+  normalized-question, latent-program, or near-duplicate overlap. SMDs reproduced exactly as
+  question tokens `0.0`, base output tokens `0.022589325494615863`, formula depth
+  `0.11389459246177541`, and operation count `0.10876528809635315`.
+- **Evidence verification:** ASDiv and MathQA source revisions, licenses, mathematical
+  verification, contamination summaries, formula/program and semantic replays, untouched-base
+  prediction hashes, both 30-example base replays, and attempted-assignment hashes passed.
+  No source parsing, contamination inference, model inference, target construction, training,
+  retention, GSM1K adapter evaluation, or sealed-final access occurred.
+- **Repository verification:** Ruff format and lint passed; strict Mypy passed for 146 source
+  files; all 77 Phase 2 tests, 740 other unit tests, and 7 integration tests passed. All 824 tests
+  collect in one invocation after packaging the Phase 2 test directory. `pip check`,
+  `git diff --check`, raw-data containment, high-confidence secret scanning, the exact and
+  12-token scan against all 904 development questions, and the tracked-size review passed.
+- **Environment note:** the required project interpreter is CPython `3.12.10` in `.venv`; its
+  PyYAML remains `6.0.2`, and `pip check` reports no broken requirements. The interrupted
+  non-authoritative `pip install pyyaml` did not alter this verified project environment.
+- **Gate status:** the original Stage H result remains an accurate stopped experiment. The next
+  authorized action, after publishing this evidence, is to freeze repair inputs and independently
+  evaluate deterministic legal replacements without changing any scientific gate.

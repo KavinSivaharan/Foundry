@@ -961,3 +961,66 @@ and durably publish content-free failure evidence. Class IDs, normalized hashes,
 packages, source locations, counts, and phases must be written atomically before raising or attached
 to an exception that the process-level boundary always serializes. Static call-path inference is
 not a substitute for measured warning evidence in an immutable experiment.
+
+## Phase 2: separate curriculum selection from question generation
+
+Phase 1's cleanest positive result was comparative rather than absolute: targeted data produced a
+better adapter than matched generic data, but the shared synthetic-language and adaptation stack
+degraded both arms below the untouched base. That result does not identify whether the useful
+component was failure-directed selection, generated wording, target style, or their interaction.
+
+The Phase 2 design removes one major confound by keeping externally published human wording
+untouched. Foundry is still responsible for exact mathematical verification, deterministic family
+classification, disjoint matched selection, formula-grounded targets, and retention-first
+training. If targeted again exceeds generic under matched source and difficulty covariates, the
+evidence for selection quality becomes more specific. If both arms still degrade, the likely
+bottleneck shifts toward the adaptation and retention stack rather than synthetic wording alone.
+
+## Phase 2: source hashes must distinguish Git blobs from checkout bytes
+
+On Windows, a clean Git checkout may still contain CRLF-expanded bytes for text blobs when global
+`core.autocrlf` is active. ASDiv's XML is byte-identical across the pinned blob and checkout, but
+its README and fold-ID text files are not. Recording only local hashes would make provenance appear
+platform-dependent even though the Git commit is exact.
+
+The durable source contract records commit, tree, Git blob SHA-1, raw-blob byte length, and
+raw-blob SHA-256. Local checkout hashes remain diagnostic. This makes the canonical dataset
+identity reconstructable on any platform without rewriting or normalizing source data.
+
+## Phase 2: conservative grammar rejection preserves label authority
+
+ASDiv includes simple arithmetic equalities alongside named functions, time/ratio notation,
+multiple equations, answer tuples, and source inconsistencies. Recovering every row would require
+many operation-specific interpretations and could turn source notation into unreviewed label
+inference.
+
+The restricted parser instead proved `1,452` supported rowsâ€”enough for the declared gateâ€”while
+rejecting unsupported grammar deterministically. This is preferable to maximizing yield: the
+training label remains an exact consequence of a small auditable operation language, and rejected
+formula inconsistencies cannot silently become target noise.
+
+## Phase 2: contamination can determine fallback pressure before model evaluation
+
+The exact and lexical filters found no ASDiv overlap with the approved development inventory or
+Phase 1 synthetic data, but the fixed semantic threshold removed `73` rows. That small reduction
+left only `111` rate-family candidates, while the smallest two-arm experiment needs `114` before
+considering base correctness.
+
+This does not justify changing the family map, semantic threshold, or quotas. It provides a clear
+capacity diagnosis: even perfect base failure on every clean ASDiv rate row cannot satisfy the
+smallest frozen design. The authorization deliberately delays fallback until after measured base
+evaluation, so the experiment can report both structural and actual failure capacity without
+post-hoc rule changes.
+
+## Phase 2: raw family capacity does not imply a matchable experiment
+
+The combined pool contained far more base failures than the frozen quotas required, and the
+smallest `200`-per-arm design could satisfy all family, source, uniqueness, near-duplicate, and
+categorical constraints. It still failed the numerical matching gate: formula-depth SMD was
+`0.1139` and operation-count SMD was `0.1088`, just above the predeclared `0.10` limit.
+
+This is a useful negative result rather than a reason to retune matching. The curriculum contrast
+changes family proportions by design, and those families retain residual structural differences
+even in a large human-written pool. Because the balance threshold was frozen before adapter
+outcomes, changing the assignment or threshold after inspection would weaken the causal
+comparison. Phase 2 therefore stops before target construction and training.
