@@ -1,0 +1,37 @@
+{
+  "cross_arm_overlap_count": 0,
+  "dataset_contract": "foundry-vetted-curriculum-dataset-v1",
+  "dataset_sha256": "ee18f7f9bd7625469d83e1c1df8dad4db0ecf8b3d8c870a07c60f2808e11dc31",
+  "generic": {
+    "assistant_tokens_maximum": 55,
+    "assistant_tokens_total": 5381,
+    "manifest_sha256": "82a65131b65bb8aafd687746e014ecf260c3b94a9011e2e195be32cfe24c3322",
+    "records": 200,
+    "training_ids_sha256": "445cb72f4605b6502e74581224678e57532ccea2934850d34a981efab505962f",
+    "training_records": 180,
+    "training_sha256": "f3c59ffbea616486537ba911df5c0374227385f56471a64ebbed6fe01b922214",
+    "validation_ids_sha256": "753218c66976428f91263ea32e525c0796e8e0b1440a5eda5d74f9bced37d431",
+    "validation_records": 20,
+    "validation_sha256": "bfaf937734a53e1331271bccdd90b8b9ad36ea4a65504571a47fec5c09a611fa"
+  },
+  "matching_evidence_sha256": "004d338ba1a1118e5e4e9cf5537873240bf55167a1a17f4b32f2d9a46d55d5b5",
+  "raw_dataset_summary_file_sha256": "810df8fddbb0fc1f4b7f3037e3e8341e7a6c3e97f4dde70558cea26323956f5f",
+  "schema_version": 1,
+  "sealed_final_accessed": false,
+  "split_seed": "foundry-phase2-vetted-180-20-v1",
+  "target_format_sha256": "4239aad327ba78941609dccddfc16d1b32e701e194099d3db67ca8d5517c55a2",
+  "targeted": {
+    "assistant_tokens_maximum": 58,
+    "assistant_tokens_total": 5451,
+    "manifest_sha256": "86dacfc143d615127c15ba75415f8accfb62fc096f4d7dd0c3fb786f3b3bf337",
+    "records": 200,
+    "training_ids_sha256": "c1d77761ad46b2b43adc29b5d67280e51c3ff9531ceedb800d1d4e6dcca57f60",
+    "training_records": 180,
+    "training_sha256": "3322a9de2e56d24e170129112a8973dd45e5c6575969da52e5cac44f23cea215",
+    "validation_ids_sha256": "9cb402c379f9358e74c7f9f3833c002299a010e1360827b20e7ce245cbb9763e",
+    "validation_records": 20,
+    "validation_sha256": "4329bc2e4a09f0001c128f24ba99f32f60c3031ceae1fbbd639ac9c83309c74a"
+  },
+  "target_replay_exact": true,
+  "byte_identical_replay_passed": true
+}

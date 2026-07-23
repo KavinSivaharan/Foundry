@@ -1080,3 +1080,8 @@ Every future experiment must be registered here before a costly run begins. Its 
 - **Decision:** Do not tune matching, lower the gate, train, or evaluate GSM1K. No dataset-freeze
   commit/push exists because Stage K was not reached. New authorization is required for any
   continuation.
+- **Milestone 12E continuation:** New explicit authorization preserved the stop, froze repair input
+  `0e6332e2...5979`, and exhaustively checked `155,301` single replacements. The optimum generic
+  swap `mathqa-train-26455` to `mathqa-train-28853` passes every unchanged gate. Matching evidence
+  is `004d338b...d5b5`; the deterministic 180/20 dataset is `ee18f7f9...dc31`. No two-row/global
+  search, model inference, optimizer step, retention run, or GSM1K adapter evaluation occurred.

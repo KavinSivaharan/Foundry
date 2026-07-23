@@ -2,11 +2,10 @@
 
 ## Current status
 
-Fast-Track Phase 2 Milestones 12A-12D stopped at Stage H. Stages A-G passed: the Phase 1 release is
-frozen, ASDiv and MathQA provenance are pinned, exact verification and contamination screening are
-complete, and the untouched base evaluated both clean pools with exact replay. The predeclared
-matched-size gate then failed at `300`, `250`, and `200` examples per arm. No curriculum dataset was
-frozen, no adapter was trained, and no adapter was evaluated on GSM1K.
+Fast-Track Phase 2 Milestones 12A-12D originally stopped at Stage H. Milestone 12E preserved that
+result, then performed the separately authorized deterministic matching-only repair. One generic
+row replacement passed every unchanged gate, and deterministic formula-derived targets plus exact
+180/20 splits are now frozen. No adapter has yet been trained or evaluated on GSM1K.
 
 ## Frozen starting point
 
@@ -49,12 +48,13 @@ token budgets, shared replay, the same seed, and one retention-only checkpoint r
 | E: Capacity | Passed preflight | ASDiv-only has no eligible size; 200-per-arm rate quota is short by 3 |
 | F: ASDiv base-pool evaluation | Passed | 1,379 processed; zero backend failures; exact replay |
 | G: MathQA fallback | Passed | 4,929 clean processed; zero backend failures; exact replay |
-| H: Matched-size selection | **Failed; stop** | Size 200 exceeded depth and operation SMD 0.10 gates |
-| I-K: Targets, splits, freeze | Not run | Closed by Stage H stop |
+| H: Original matched-size selection | Failed; preserved | Size 200 exceeded depth and operation SMD 0.10 gates |
+| 12E repair | **Passed** | One exhaustive legal generic replacement; all frozen matching gates pass |
+| I-K: Targets, splits, freeze | **Passed** | Deterministic targets and 180/20 splits replay byte-identically |
 | L-S: Training and retention | Not run | Zero adapter and optimizer step |
 | T-U: GSM1K and signal gate | Not run | No retention-approved pair exists |
 
-No claim of Phase 2 improvement is currently supported.
+No claim of Phase 2 improvement is currently supported; training and evaluation remain pending.
 
 ## ASDiv verification result
 
@@ -126,4 +126,24 @@ The experiment therefore stopped before assistant-target construction. Selection
 `1b169ab5bf62c1f790e739a645f2eb26bee3c4a18f7af4f9159014e62615650f`. There is no selected
 experiment size, target-format hash, split hash, training measurement, retention result, adapter
 hash, adapter GSM1K score, paired interval, or Phase 2 signal-gate decision. The only valid next
-action is interpretation or a separately authorized redesigned experiment.
+action at that historical boundary was interpretation or a separately authorized experiment.
+
+## Milestone 12E matching repair and dataset freeze
+
+The repaired input contains `209` eligible ASDiv failures and `2,507` eligible MathQA failures at
+freeze hash `0e6332e2...5979`. Exhaustive deterministic single-row search checked `155,301`
+replacements, found `152,226` legal and `1,979` passing candidates, and selected the lexicographic
+optimum: remove generic `mathqa-train-26455` and add `mathqa-train-28853`. No two-row or global
+fallback search ran.
+
+The repaired SMDs are question tokens `0.0028892934`, base output tokens `0.0075164765`, formula
+depth `0.0870898715`, and operation count `0.0680561998`; categorical maximum is `0.05`. Source
+composition remains `97` ASDiv and `103` MathQA per arm, all family quotas remain exact, and every
+source-ID, exact-question, normalized-question, latent-program, near-duplicate, and contamination
+gate passes. Matching evidence is `004d338b...d5b5`.
+
+Target format `4239aad3...55a2` produces one concise formula-derived calculation line, exactly one
+terminal `Final answer:` line, and one final EOS. All 400 targets replay their formula/program and
+canonical answer; maximum assistant length is `58` tokens. Each arm is deterministically split
+`180/20` with no exact, normalized, program, or cross-arm overlap. Dataset identity is
+`ee18f7f9...dc31`; complete matching and dataset reconstruction both replay byte-identically.

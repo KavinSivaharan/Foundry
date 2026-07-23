@@ -1129,3 +1129,15 @@ This log separates proposals from approved decisions. A proposal does not author
 - **Consequence:** Stages I-W are closed. No assistant targets, split freeze, optimizer steps,
   adapters, checkpoints, retention evaluation, GSM1K adapter evaluation, bootstrap, signal-gate
   result, commit, or push is authorized by this stopped route. Sealed-final remains untouched.
+
+## 2026-07-23: accept the deterministic Milestone 12E matching-only repair
+
+- **Decision:** Preserve the original Stage H failure, then accept only the lexicographically
+  optimal passing legal single-row replacement under the separately authorized unchanged gates.
+- **Evidence:** Exhaustive search selected generic `mathqa-train-26455` to
+  `mathqa-train-28853`. Formula-depth SMD is `0.0870898715`, operation-count SMD is
+  `0.0680561998`, the other SMDs are below `0.01`, and categorical maximum is `0.05`. Matching
+  evidence `004d338b...d5b5` and dataset identity `ee18f7f9...dc31` replay byte-identically.
+- **Consequence:** Freeze the repaired 200-per-arm datasets and exact 180/20 splits. Proceed only
+  to the authorized retention-first V1 training protocol; do not run V2 unless V1 lacks a common
+  passing checkpoint, and do not expose either adapter to GSM1K before final retention passes.

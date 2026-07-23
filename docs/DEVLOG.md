@@ -3217,3 +3217,25 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
 - **Gate status:** the original Stage H result remains an accurate stopped experiment. The next
   authorized action, after publishing this evidence, is to freeze repair inputs and independently
   evaluate deterministic legal replacements without changing any scientific gate.
+
+### 2026-07-23 - Milestone 12E matching repair and dataset freeze passed
+
+- **Repair input:** `209` ASDiv plus `2,507` MathQA eligible failures; canonical normalized-question
+  covariates and all other frozen fields bind to input hash `0e6332e2...5979`.
+- **Search:** exhaustive deterministic single-row search checked `155,301`, found `152,226` legal
+  and `1,979` passing replacements, and selected generic `mathqa-train-26455` to
+  `mathqa-train-28853`. Two-row and global fallback stages did not run.
+- **Matching result:** SMDs are question `0.0028892934`, base output `0.0075164765`, formula depth
+  `0.0870898715`, and operations `0.0680561998`; categorical maximum is `0.05`. Source composition
+  remains `97/103` per arm and all quota, duplicate, near-duplicate, and contamination gates pass.
+  Matching evidence is `004d338b...d5b5`; full replay is byte-identical.
+- **Targets and splits:** all 400 formula/program-derived targets replay exactly, contain one
+  calculation line plus one terminal answer and EOS, and stay at or below 58 assistant tokens.
+  Each arm split deterministically into `180` training and `20` validation rows with zero exact,
+  normalized, program, or cross-arm overlap. Dataset identity `ee18f7f9...dc31` replays
+  byte-identically.
+- **Verification:** Ruff, strict Mypy, and all 83 Phase 2 tests pass, including changed-input,
+  changed-threshold, scratch-independence, target replay, split, and byte-replay cases. Raw
+  questions, completions, predictions, and source data remain ignored.
+- **Next action:** publish `data: freeze vetted human-written curriculum pools`, then run V1
+  REPLAY25 generic and targeted training under the frozen 64-step protocol.

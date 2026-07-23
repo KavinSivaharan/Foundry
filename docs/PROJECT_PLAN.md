@@ -1180,3 +1180,16 @@ categorical levels and exact source composition passed, but formula-depth SMD wa
 operation-count SMD was `0.108765`, above the frozen `0.10` maximum. Do not alter the selector,
 quotas, sources, or thresholds; do not construct targets or splits, train adapters, run retention,
 or evaluate GSM1K. A future continuation requires new explicit authorization.
+
+## Fast-Track Milestone 12E: matching repair and vetted dataset freeze
+
+The separately authorized matching-only repair preserved the Stage H stop, froze all eligible
+failures and covariates, and exhaustively evaluated every legal single-row replacement. Generic
+`mathqa-train-26455` was replaced by `mathqa-train-28853`; all four SMDs are now at most `0.10`,
+the categorical maximum is `0.05`, source composition and family quotas are unchanged, and all
+duplicate and contamination gates pass. Two-row and global fallback stages were not run.
+
+Deterministic formula/program-derived targets and 180/20 splits now replay byte-identically under
+dataset identity `ee18f7f9...dc31`. The next authorized stage is V1 REPLAY25 training for the
+generic and targeted arms, followed only by retention-based checkpoint selection. GSM1K adapter
+evaluation remains closed until independent final retention passes.

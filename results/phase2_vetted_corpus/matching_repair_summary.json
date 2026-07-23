@@ -1,0 +1,41 @@
+{
+  "categorical_maximum": 0.04999999999999999,
+  "checked_replacements": 155301,
+  "eligible_asdiv_count": 209,
+  "eligible_mathqa_count": 2507,
+  "eligible_pool_sha256": "1c1ad44d71b9658f8b7c969cd95fc572d8cb847089ec9a76067ad9f1eaa88d6f",
+  "generic_manifest_sha256": "71963ffa8eadd1621b687d0b6c727f8a327665b379c62144106c2fe763c13130",
+  "generic_source_counts": {
+    "ASDiv": 97,
+    "MathQA": 103
+  },
+  "input_freeze_sha256": "0e6332e2933cfb71d1266e8bbee9c5201f72f63a42fba8f81c80fdbba0965979",
+  "legal_replacements": 152226,
+  "matching_evidence_sha256": "004d338ba1a1118e5e4e9cf5537873240bf55167a1a17f4b32f2d9a46d55d5b5",
+  "matching_gate_passed": true,
+  "method": "deterministic exhaustive legal single-row replacement",
+  "numerical_smd": {
+    "base_output_tokens": 0.00751647648517605,
+    "formula_depth": 0.08708987147709694,
+    "operation_count": 0.06805619983768806,
+    "question_token_count": 0.002889293374768125
+  },
+  "paired_assignment_sha256": "31fe8504c465805a11f2e7795ece355342e7a7ad76839fe382445edcc92d6904",
+  "passing_replacements": 1979,
+  "raw_repair_summary_file_sha256": "9e39d11728ff7aaad5a1d3eaa90168ed9c89e6cedd84388f47258c71061dd687",
+  "repair_contract": "foundry-vetted-matching-repair-v1",
+  "schema_version": 1,
+  "selected_replacement": {
+    "added": "mathqa-train-28853",
+    "arm": "generic",
+    "removed": "mathqa-train-26455"
+  },
+  "targeted_manifest_sha256": "c732965d084e6cc6ef6aa0a4eba21acbceff1f7241782d8c8b845b87b05d3481",
+  "targeted_source_counts": {
+    "ASDiv": 97,
+    "MathQA": 103
+  },
+  "two_replacement_search_run": false,
+  "global_fallback_run": false,
+  "byte_identical_replay_passed": true
+}
