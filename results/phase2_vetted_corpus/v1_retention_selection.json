@@ -1,0 +1,60 @@
+{
+  "common_passing_checkpoint": null,
+  "decision": "continue_to_v2",
+  "failure_reason": "Every anchor-holdout cell generated one question; the frozen gate requires zero.",
+  "gate_cells": {
+    "generic": {
+      "16": {
+        "adjudication_passed": true,
+        "anchor_overall": 0.9809523809523809,
+        "anchor_question_generation": 1,
+        "anchor_summary_sha256": "5f5c19ca17683fcd684025b1a09377af6085e23dfdbf5943ccaf475613de8a15",
+        "anchor_wilson_lower_95": 0.952056618075792,
+        "passed": false
+      },
+      "32": {
+        "adjudication_passed": true,
+        "anchor_overall": 0.9761904761904762,
+        "anchor_question_generation": 1,
+        "anchor_summary_sha256": "91517f35641603adc4133236d15a41d7dc489aaa7325503f1b4d32bd5aeacbb4",
+        "anchor_wilson_lower_95": 0.945484236149039,
+        "passed": false
+      },
+      "64": {
+        "adjudication_passed": true,
+        "anchor_overall": 0.9761904761904762,
+        "anchor_question_generation": 1,
+        "anchor_summary_sha256": "bd4db9a1024ba29f3bd8363722520c0b351fed3d85141c13addf377a12e34b13",
+        "anchor_wilson_lower_95": 0.945484236149039,
+        "passed": false
+      }
+    },
+    "targeted": {
+      "16": {
+        "adjudication_passed": true,
+        "anchor_overall": 0.9809523809523809,
+        "anchor_question_generation": 1,
+        "anchor_summary_sha256": "bd5be0a991fc3d4989d1ac48727b6d46447451028ad47964ee76fc31a96c61ba",
+        "anchor_wilson_lower_95": 0.952056618075792,
+        "passed": false
+      },
+      "32": {
+        "adjudication_passed": true,
+        "anchor_overall": 0.9761904761904762,
+        "anchor_question_generation": 1,
+        "anchor_summary_sha256": "06891b63988634fea6c1639c32c13523becca38ddd3308641d775375c2e01675",
+        "anchor_wilson_lower_95": 0.945484236149039,
+        "passed": false
+      },
+      "64": {
+        "adjudication_passed": true,
+        "anchor_overall": 0.9761904761904762,
+        "anchor_question_generation": 1,
+        "anchor_summary_sha256": "22054d2e7eafed8180790e075640d4c6854f76017fa7f6639c33440d81a9b459",
+        "anchor_wilson_lower_95": 0.945484236149039,
+        "passed": false
+      }
+    }
+  },
+  "schema_version": 1
+}

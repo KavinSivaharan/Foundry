@@ -16,8 +16,10 @@ from foundry.training.config import canonical_sha256
 SEED = 20260720
 STEPS = 64
 CHECKPOINTS = (16, 32, 64)
-VETTED_TOKENS = 48_000
-REPLAY_TOKENS = 16_000
+V1_VETTED_TOKENS = 48_000
+V1_REPLAY_TOKENS = 16_000
+V2_VETTED_TOKENS = 38_400
+V2_REPLAY_TOKENS = 25_600
 SEGMENTS = 4
 
 
@@ -212,13 +214,15 @@ def _bins(occurrences: tuple[Occurrence, ...]) -> tuple[tuple[Occurrence, ...], 
 
 
 def _schedule(
-    vetted: tuple[Entry, ...], replay_segments: tuple[tuple[Occurrence, ...], ...]
+    vetted: tuple[Entry, ...],
+    replay_segments: tuple[tuple[Occurrence, ...], ...],
+    vetted_tokens: int,
 ) -> tuple[dict[str, Any], ...]:
     counters: Counter[str] = Counter()
     result: list[dict[str, Any]] = []
     for segment in range(SEGMENTS):
         vetted_bins = _bins(
-            _segment_occurrences(vetted, VETTED_TOKENS // SEGMENTS, segment, counters)
+            _segment_occurrences(vetted, vetted_tokens // SEGMENTS, segment, counters)
         )
         replay_bins = _bins(replay_segments[segment])
         for offset, (vetted_bin, replay_bin) in enumerate(
@@ -251,6 +255,10 @@ def _summary(
     replay_segments: tuple[tuple[Occurrence, ...], ...],
     generic_entries: tuple[Entry, ...],
     targeted_entries: tuple[Entry, ...],
+    *,
+    variant: str,
+    vetted_tokens: int,
+    replay_tokens: int,
 ) -> dict[str, Any]:
     def arm(value: tuple[dict[str, Any], ...], entries: tuple[Entry, ...]) -> dict[str, Any]:
         occurrences = [
@@ -292,18 +300,18 @@ def _summary(
     replay_payload = [[asdict(item) for item in segment] for segment in replay_segments]
     summary: dict[str, Any] = {
         "schema_version": 1,
-        "schedule_id": "foundry-vetted-corpus-replay25-v1",
+        "schedule_id": f"foundry-vetted-corpus-{variant}",
         "seed": SEED,
         "optimizer_steps": STEPS,
-        "budgets": {"vetted": VETTED_TOKENS, "replay": REPLAY_TOKENS, "total": 64_000},
+        "budgets": {"vetted": vetted_tokens, "replay": replay_tokens, "total": 64_000},
         "recipe_sha256": _hash(
             {
-                "schedule_id": "foundry-vetted-corpus-replay25-v1",
+                "schedule_id": f"foundry-vetted-corpus-{variant}",
                 "seed": SEED,
                 "optimizer_steps": STEPS,
                 "checkpoints": CHECKPOINTS,
-                "vetted_tokens": VETTED_TOKENS,
-                "replay_tokens": REPLAY_TOKENS,
+                "vetted_tokens": vetted_tokens,
+                "replay_tokens": replay_tokens,
                 "whole_examples": True,
             }
         ),
@@ -349,8 +357,9 @@ def run(
     replay_path: Path,
     raw_directory: Path,
     summary_path: Path,
+    variant: str = "replay25-v1",
 ) -> dict[str, Any]:
-    """Tokenize replay records and freeze deterministic V1 schedules."""
+    """Tokenize replay records and freeze deterministic V1 or V2 schedules."""
 
     validate_preimport()
     transformers = importlib.import_module("transformers")
@@ -358,17 +367,32 @@ def run(
     tokenizer = transformers.AutoTokenizer.from_pretrained(
         str(model_path), local_files_only=True, trust_remote_code=False
     )
+    if variant == "replay25-v1":
+        vetted_tokens, replay_tokens = V1_VETTED_TOKENS, V1_REPLAY_TOKENS
+    elif variant == "replay40-v2":
+        vetted_tokens, replay_tokens = V2_VETTED_TOKENS, V2_REPLAY_TOKENS
+    else:
+        raise ValueError("unknown vetted-corpus schedule variant")
     replay = _replay_entries(replay_path, tokenizer)
     replay_counters: Counter[str] = Counter()
     replay_segments = tuple(
-        _segment_occurrences(replay, REPLAY_TOKENS // SEGMENTS, segment, replay_counters)
+        _segment_occurrences(replay, replay_tokens // SEGMENTS, segment, replay_counters)
         for segment in range(SEGMENTS)
     )
     generic_entries = _vetted_entries(generic_path)
     targeted_entries = _vetted_entries(targeted_path)
-    generic = _schedule(generic_entries, replay_segments)
-    targeted = _schedule(targeted_entries, replay_segments)
-    summary = _summary(generic, targeted, replay_segments, generic_entries, targeted_entries)
+    generic = _schedule(generic_entries, replay_segments, vetted_tokens)
+    targeted = _schedule(targeted_entries, replay_segments, vetted_tokens)
+    summary = _summary(
+        generic,
+        targeted,
+        replay_segments,
+        generic_entries,
+        targeted_entries,
+        variant=variant,
+        vetted_tokens=vetted_tokens,
+        replay_tokens=replay_tokens,
+    )
     raw_directory.mkdir(parents=True, exist_ok=False)
     for name, value in (("generic", generic), ("targeted", targeted)):
         (raw_directory / f"{name}_schedule.json").write_text(
@@ -387,6 +411,7 @@ def main() -> None:
     parser.add_argument("--replay-path", type=Path, required=True)
     parser.add_argument("--raw-directory", type=Path, required=True)
     parser.add_argument("--summary-path", type=Path, required=True)
+    parser.add_argument("--variant", choices=("replay25-v1", "replay40-v2"), default="replay25-v1")
     args = parser.parse_args()
     print(json.dumps(run(**vars(args)), indent=2, sort_keys=True))
 

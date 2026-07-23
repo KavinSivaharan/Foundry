@@ -3437,3 +3437,14 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
   untouched.
 - **Next action:** Evaluate V1 checkpoints 16, 32, and 64 on the frozen adjudication and anchor
   base-correct retention subsets and select the latest common passing checkpoint.
+
+### 2026-07-23 - Milestone 12F-A V1 retention requires V2
+
+- **Result:** All six adjudication cells passed. Overall preservation ranged from 96.26% to
+  98.93%, every section remained above 90%, Wilson lower bounds exceeded 92%, backend failures
+  were zero, and maximum failure-family concentration was at most three.
+- **V1 blocker:** Every generic and targeted anchor-holdout cell at steps 16/32/64 produced
+  exactly one question-generation output. The gate requires zero, so V1 has no common passing
+  checkpoint despite 97.62% to 98.10% anchor preservation.
+- **Consequence:** Activate only the preauthorized V2 Replay40 route. The exact V2 schedules contain
+  38,400 vetted and 25,600 identical replay tokens per arm, with exact 16k/32k/64k prefixes.
