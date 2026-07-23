@@ -1171,3 +1171,14 @@ This log separates proposals from approved decisions. A proposal does not author
 - **Consequence:** Do not retry under changed launch conditions in this milestone turn. No schedule,
   backward pass, optimizer state/update, adapter, checkpoint, retention evaluation, or GSM1K
   evaluation is authorized after the failed probe.
+
+## 2026-07-23: freeze the CuBLAS prelaunch contract and stop on wrapper path escaping
+
+- **Decision:** Freeze `foundry-vetted-qlora-deterministic-launch-v1` with
+  `CUBLAS_WORKSPACE_CONFIG=:4096:8` and the five previously frozen process variables.
+- **Result:** Pre-import and post-import launch validation passed, but the single child command
+  encoded Windows backslashes as Python string escapes. The replay path therefore contained a
+  backspace control character and failed before fixture loading or model loading.
+- **Consequence:** Do not patch or retry in this milestone. Preserve zero model loads, generations,
+  optimizer steps, schedules, adapters, checkpoints, retention runs, GSM1K runs, and sealed-final
+  access.

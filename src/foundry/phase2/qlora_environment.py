@@ -14,6 +14,11 @@ import time
 from pathlib import Path
 from typing import Any, cast
 
+from foundry.phase2.launch_contract import (
+    command_sha256,
+    validate_postimport,
+    validate_preimport,
+)
 from foundry.phase2.pyyaml_exception import validate_evidence
 from foundry.training.config import canonical_sha256
 from foundry.training.qlora import file_sha256
@@ -132,11 +137,22 @@ def _probe(model_path: Path, replay_path: Path) -> dict[str, object]:
         ),
     )
     model.config.use_cache = False
+    base_versions = {
+        name: parameter._version
+        for name, parameter in model.named_parameters()
+        if "lora_" not in name
+    }
     input_ids, labels, assistant_eos = _assistant_labels(tokenizer, fixture)
     input_ids = input_ids.to("cuda")
     labels = labels.to("cuda")
     trainable = [parameter for parameter in model.parameters() if parameter.requires_grad]
     optimizer = bitsandbytes.optim.PagedAdamW8bit(trainable, lr=1e-5, weight_decay=0.0)
+    scheduler = transformers.get_scheduler(
+        "cosine",
+        optimizer=optimizer,
+        num_warmup_steps=4,
+        num_training_steps=64,
+    )
     model.train()
     optimizer.zero_grad(set_to_none=True)
     with torch.autocast("cuda", dtype=torch.float16):
@@ -156,6 +172,7 @@ def _probe(model_path: Path, replay_path: Path) -> dict[str, object]:
     before = [parameter.detach().clone() for parameter in trainable]
     torch.nn.utils.clip_grad_norm_(trainable, 1.0)
     optimizer.step()
+    scheduler.step()
     torch.cuda.synchronize()
     if not optimizer.state:
         raise RuntimeError("paged AdamW 8-bit optimizer state was not created")
@@ -164,6 +181,12 @@ def _probe(model_path: Path, replay_path: Path) -> dict[str, object]:
         for old, parameter in zip(before, trainable, strict=True)
     ):
         raise RuntimeError("paged AdamW 8-bit did not update LoRA parameters")
+    if any(
+        parameter._version != base_versions[name] or parameter.grad is not None
+        for name, parameter in model.named_parameters()
+        if "lora_" not in name
+    ):
+        raise RuntimeError("frozen base parameter state changed")
     states: list[Any] = []
     for module in model.modules():
         state = getattr(getattr(module, "weight", None), "quant_state", None)
@@ -194,6 +217,8 @@ def _probe(model_path: Path, replay_path: Path) -> dict[str, object]:
         "optimizer": "PagedAdamW8bit",
         "optimizer_state_created": True,
         "optimizer_update": True,
+        "scheduler_compatible": True,
+        "base_parameters_unchanged": True,
         "peak_allocated_vram_bytes": int(torch.cuda.max_memory_allocated()),
         "peak_reserved_vram_bytes": int(torch.cuda.max_memory_reserved()),
         "process_rss_bytes": int(process.memory_info().rss),
@@ -209,13 +234,25 @@ def complete_gate(
     exception_path: Path,
     output_path: Path,
 ) -> dict[str, object]:
+    preimport = validate_preimport()
+    preimport["concrete_process_command_sha256"] = command_sha256(
+        interpreter=Path(sys.executable),
+        source_root=Path(__file__).resolve().parents[2],
+        child_argv=list(sys.argv),
+    )
+    preimport.pop("preimport_evidence_sha256", None)
+    preimport["preimport_evidence_sha256"] = canonical_sha256(preimport)
     exception = json.loads(exception_path.read_text(encoding="utf-8"))
     validate_evidence(exception)
-    versions = {name: str(importlib.import_module(name).__version__) for name in EXPECTED_VERSIONS}
+    package_modules = {name: importlib.import_module(name) for name in EXPECTED_VERSIONS}
+    versions = {name: str(module.__version__) for name, module in package_modules.items()}
     torch = importlib.import_module("torch")
+    torch.use_deterministic_algorithms(True, warn_only=False)
+    postimport = validate_postimport(preimport, torch, package_modules)
     environment = {
         name: os.environ.get(name)
         for name in (
+            "CUBLAS_WORKSPACE_CONFIG",
             "HF_HUB_OFFLINE",
             "PYTHONDONTWRITEBYTECODE",
             "PYTHONHASHSEED",
@@ -239,6 +276,7 @@ def complete_gate(
     if (
         environment
         != {
+            "CUBLAS_WORKSPACE_CONFIG": ":4096:8",
             "HF_HUB_OFFLINE": "1",
             "PYTHONDONTWRITEBYTECODE": "1",
             "PYTHONHASHSEED": "20260720",
@@ -260,6 +298,8 @@ def complete_gate(
         "capability": list(torch.cuda.get_device_capability(0)),
         "total_device_memory_bytes": int(torch.cuda.get_device_properties(0).total_memory),
         "process_environment": environment,
+        "launch_contract": preimport,
+        "postimport_launch_contract": postimport,
         "pyyaml_exception_evidence_sha256": exception["evidence_sha256"],
         "recipe": RECIPE,
         "recipe_sha256": canonical_sha256(RECIPE),

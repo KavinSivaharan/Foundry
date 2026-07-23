@@ -3300,3 +3300,24 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
 - **Next action:** Interpret the launch-environment blocker and, if authorized, restart the native
   CUDA probe from a fresh process with an explicitly frozen prelaunch
   `CUBLAS_WORKSPACE_CONFIG=:4096:8`; otherwise preserve this stop.
+
+### 2026-07-23 - Milestone 12F-A2 deterministic launch passed; child wrapper stopped
+
+- **Action performed:** Reconstructed the repository, dataset, PyYAML exception, authorized
+  interpreter, 57-package inventory, and seven-file model cache. Added a fail-closed pre-import
+  launch contract and ten focused tests covering missing, wrong, late, changed, or tampered launch
+  values; unauthorized interpreters; inventory drift; and deterministic command hashing.
+- **Launch result:** The fresh child process started with
+  `CUBLAS_WORKSPACE_CONFIG=:4096:8`, `PYTHONHASHSEED=20260720`, and the four frozen offline/runtime
+  variables already present. Pre-import validation passed, imports preserved the environment, and
+  deterministic algorithms and the RTX 3080 were confirmed.
+- **Stop gate:** The wrapper represented Windows argument paths as ordinary Python string literals.
+  Backslash escape processing converted `\b` in `\base_replay_kl` to a control character, so the
+  replay fixture path could not be opened. The authorization forbids patch-and-retry after a code
+  defect.
+- **Accounting:** The native CUDA/model probe was not reached. Model loads, generations, completed
+  forward/backward passes, optimizer state/updates, schedules, adapters/checkpoints, retention,
+  GSM1K, and sealed-final access are all zero.
+- **Next action:** Interpret the child-command quoting blocker. Any continuation requires explicit
+  authorization for a fresh Stage C process using argument transport that does not embed Windows
+  paths as Python string literals.
