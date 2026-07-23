@@ -3392,3 +3392,19 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
   access.
 - **Next action:** Freeze this passing environment evidence, then construct the exact V1 Replay25
   schedules.
+
+### 2026-07-23 - Milestone 12F-A V1 Replay25 schedules passed
+
+- **Reconstruction:** The frozen 83-record replay corpus reconstructed at corpus SHA-256
+  `b511129f89ce450014b78698e9e439bdaa0947657f301c3e99b2a9955b7ab4d1`, manifest
+  `27ccd1c22bd321d17418ca346e1b3b4022fd696fdde07550e1c56f2864efde18`, and format
+  `758dc1f35020e88e04c425b6106e54ea2f577f547afa4762ade9923762af6d66`.
+- **Schedules:** Each arm contains exactly 48,000 vetted and 16,000 identical replay
+  assistant-only tokens over 64 whole-example optimizer steps. Generic schedule SHA-256 is
+  `4bc00d29d5cf308c12c77111d7943567521cc533b13440dc06c3d8b39c74e9df`; targeted is
+  `88c5378cac7efe927b29d3f421d97777cd6d917187c71c8388b60bbe7b57e259`; shared replay is
+  `1718bccea2eb7cf42e5ff47be6069e376d0cb4ed559caffa304d2c67c736125a`.
+- **Parity:** Both arms reach exactly 16,000, 32,000, and 64,000 cumulative tokens at steps 16,
+  32, and 64. Their four-step smoke prefixes are 3,964 and 3,976 tokens, a 0.30% difference. All
+  180 records occur; vetted repeat counts range from 9 through 13.
+- **Next action:** Run the paired four-step compatibility smoke from fresh base loads and adapters.

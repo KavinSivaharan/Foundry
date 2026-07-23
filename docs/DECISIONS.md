@@ -1219,3 +1219,13 @@ This log separates proposals from approved decisions. A proposal does not author
 - **Consequence:** Freeze the native-Windows QLoRA environment and proceed to V1 Replay25 schedule
   construction. The prior A4 stop remains historical evidence and is superseded only as the
   environment-gate decision.
+
+## 2026-07-23: freeze the V1 Replay25 whole-example schedules
+
+- **Decision:** Use deterministic stratum-stable baseline coverage, balanced complete cycles, and
+  bounded exact-token residual selection to meet the immutable 48,000/16,000 token budgets.
+- **Evidence:** Both 64-step arms total exactly 64,000 assistant-only tokens and exactly match at
+  every retention checkpoint. Replay occurrences and ordering are identical. The four-step
+  prefixes differ by 12 tokens, below 0.5%, and every vetted row appears 9 to 13 times.
+- **Consequence:** Freeze the generic, targeted, replay, and checkpoint-prefix hashes. Proceed to
+  paired four-step compatibility smoke without changing the recipe or schedules.

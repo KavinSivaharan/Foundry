@@ -1,0 +1,96 @@
+{
+  "budgets": {
+    "replay": 16000,
+    "total": 64000,
+    "vetted": 48000
+  },
+  "generic": {
+    "checkpoint_prefix_sha256": {
+      "16": "53e4b775715886779b969b264c00f9d3ea21fbc4c6ef7cec18d612d61a159d6d",
+      "32": "f19d970abeee9caea891e6919d2a9ef0bbdf6095732866ef9e7a84ce0da245a7",
+      "64": "4bc00d29d5cf308c12c77111d7943567521cc533b13440dc06c3d8b39c74e9df"
+    },
+    "maximum_vetted_occurrences": 13,
+    "minimum_vetted_occurrences": 9,
+    "occurrences_by_difficulty": {
+      "1": 81,
+      "2": 189,
+      "3": 396,
+      "4": 63,
+      "5": 27,
+      "6": 18,
+      "gain": 173,
+      "general": 104,
+      "geometry": 244,
+      "physics": 360,
+      "probability": 115
+    },
+    "occurrences_by_family": {
+      "constraint_distribution_or_discrete_reasoning": 616,
+      "multi_step_bookkeeping_or_omission": 531,
+      "rate_ratio_percentage_or_average": 623
+    },
+    "prefix_tokens": {
+      "16": 16000,
+      "32": 32000,
+      "64": 64000
+    },
+    "replay_occurrences": 859,
+    "replay_tokens": 16000,
+    "schedule_sha256": "4bc00d29d5cf308c12c77111d7943567521cc533b13440dc06c3d8b39c74e9df",
+    "smoke_prefix_tokens": 3964,
+    "total_tokens": 64000,
+    "unique_vetted_records": 180,
+    "vetted_occurrences": 1770,
+    "vetted_tokens": 48000
+  },
+  "optimizer_steps": 64,
+  "recipe_sha256": "9438cd70b33d5f348d64d0011006215f00658a5f322255f73d46c04f29173d94",
+  "replay_identical_between_arms": true,
+  "replay_schedule_sha256": "1718bccea2eb7cf42e5ff47be6069e376d0cb4ed559caffa304d2c67c736125a",
+  "schedule_id": "foundry-vetted-corpus-replay25-v1",
+  "schema_version": 1,
+  "seed": 20260720,
+  "summary_sha256": "f699b423e27341379087078819e1cfae96897e9d09ee499d9b1700ce8f4c0919",
+  "targeted": {
+    "checkpoint_prefix_sha256": {
+      "16": "7f3c26248ec5f021beb26011439226da230e5c796a9294e5dd8210c4123fc26f",
+      "32": "40214539356fb1f219e6d7bce57dc4a7db064dca030515eb4aab7008f12b07a7",
+      "64": "88c5378cac7efe927b29d3f421d97777cd6d917187c71c8388b60bbe7b57e259"
+    },
+    "maximum_vetted_occurrences": 13,
+    "minimum_vetted_occurrences": 9,
+    "occurrences_by_difficulty": {
+      "1": 45,
+      "2": 153,
+      "3": 324,
+      "4": 144,
+      "5": 36,
+      "6": 72,
+      "gain": 129,
+      "general": 390,
+      "geometry": 120,
+      "other": 73,
+      "physics": 214,
+      "probability": 52
+    },
+    "occurrences_by_family": {
+      "constraint_distribution_or_discrete_reasoning": 396,
+      "multi_step_bookkeeping_or_omission": 923,
+      "rate_ratio_percentage_or_average": 433
+    },
+    "prefix_tokens": {
+      "16": 16000,
+      "32": 32000,
+      "64": 64000
+    },
+    "replay_occurrences": 859,
+    "replay_tokens": 16000,
+    "schedule_sha256": "88c5378cac7efe927b29d3f421d97777cd6d917187c71c8388b60bbe7b57e259",
+    "smoke_prefix_tokens": 3976,
+    "total_tokens": 64000,
+    "unique_vetted_records": 180,
+    "vetted_occurrences": 1752,
+    "vetted_tokens": 48000
+  }
+}
