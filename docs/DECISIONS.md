@@ -1205,3 +1205,17 @@ This log separates proposals from approved decisions. A proposal does not author
   LoRA parameter change.
 - **Consequence:** Stop the training-runner line without retry, schedules, training, retention,
   GSM1K, or sealed-final access.
+
+## 2026-07-23: validate QLoRA updates at the first positive learning rate
+
+- **Decision:** Classify the A4 zero-delta observation as the frozen cosine scheduler's expected
+  first zero-LR optimizer step. Keep the scheduler, optimizer, warmup, ordering, and scientific
+  recipe unchanged; require a positive LoRA delta on the next step, whose pre-optimizer learning
+  rate is `2.5e-6`.
+- **Evidence:** The corrected probe used non-aliased snapshots for all 224 trainable LoRA tensors.
+  At LR 0, 112 tensors had nonzero gradients and none changed. At LR `2.5e-6`, the same 112 tensors
+  changed across 802,813 elements with global delta norm `0.002092279384222143`. Base parameters
+  remained unchanged and all other environment gates passed.
+- **Consequence:** Freeze the native-Windows QLoRA environment and proceed to V1 Replay25 schedule
+  construction. The prior A4 stop remains historical evidence and is superseded only as the
+  environment-gate decision.

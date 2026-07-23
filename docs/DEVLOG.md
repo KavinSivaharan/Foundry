@@ -3372,3 +3372,23 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
   Numeric loss, gradient norm, and resource measurements were not published before the exception.
 - **Next action:** Project-level interpretation of the optimizer-update blocker; A4 ends this
   launch-correction runner line.
+
+### 2026-07-23 - Milestone 12F-A5 training environment passed
+
+- **Scheduler audit:** The installed Transformers cosine scheduler delegates to PyTorch
+  `LambdaLR`. With four warmup steps it initializes the optimizer learning rate to zero, so the
+  first ordered `optimizer.step(); scheduler.step()` is intentionally a no-op and advances the
+  learning rate to `2.5e-6`.
+- **Probe correction:** Published the source-only correction at
+  `19e20b7e98cab5e15a4f68c1d4188b61620cc9c8`. The bounded probe snapshots every LoRA A/B tensor
+  without storage aliasing, verifies exact optimizer coverage, accepts the expected zero-LR first
+  step, and requires a measured update at the first positive learning rate.
+- **Result:** The single authorized fresh model process passed. Step 1 had 112 tensors with
+  nonzero gradients and zero changed tensors at LR 0. Step 2 used LR `2.5e-6`, changed 112 tensors
+  and 802,813 elements, and had global delta norm `0.002092279384222143`. Base parameters remained
+  byte-stable; NF4, double quantization, FP16 compute, CUDA-only placement, finite
+  forward/backward, paged AdamW 8-bit state, offline operation, and CUDA synchronization passed.
+  There was no generation, adapter save, retention inference, GSM1K access, or sealed-final
+  access.
+- **Next action:** Freeze this passing environment evidence, then construct the exact V1 Replay25
+  schedules.
