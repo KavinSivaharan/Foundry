@@ -1229,3 +1229,14 @@ This log separates proposals from approved decisions. A proposal does not author
   prefixes differ by 12 tokens, below 0.5%, and every vetted row appears 9 to 13 times.
 - **Consequence:** Freeze the generic, targeted, replay, and checkpoint-prefix hashes. Proceed to
   paired four-step compatibility smoke without changing the recipe or schedules.
+
+## 2026-07-23: stop vetted-corpus adaptation after V2 retention failure
+
+- **Decision:** Select no adapter and stop after the only authorized Replay40 fallback also lacks a
+  common passing checkpoint.
+- **Evidence:** V1 and V2 each passed all adjudication cells, but every anchor-holdout cell at steps
+  16, 32, and 64 generated one question. The immutable gate requires zero question generation.
+  V2 otherwise retained 96.26% to 99.05% overall with zero backend failures.
+- **Consequence:** Do not run independent final retention or GSM1K, and do not try another replay
+  ratio, learning rate, adapter scale, or post-hoc checkpoint adjustment. Publish the exact
+  retention blocker.

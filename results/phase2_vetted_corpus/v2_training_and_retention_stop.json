@@ -1,0 +1,53 @@
+{
+  "decision": "stop_after_v2_retention_failure",
+  "final_retention_reached": false,
+  "generic_training": {
+    "checkpoint_adapter_sha256": {
+      "16": "5be823fd88e59dd35c5e7de7fd0e9738e7555d684f5b5ac9c1947a048585d2d4",
+      "32": "00f3ba4d726d467f16d221c583a79886021b33e74b997e64f7b810d2abe0afed",
+      "64": "43306e3fe69a081cfd82e970d6da3e930a00658ed264297ba3992e9b75fa78d7"
+    },
+    "final_loss": 1.21125136546767,
+    "initial_loss": 1.611667405790438,
+    "result_sha256": "84d9697265db2110cb510b8d387b9c9a327a53f95128a6ca85c1df754767acf2",
+    "runtime_seconds": 881.3161988000065,
+    "validation_loss": {
+      "16": 1.9741546820990648,
+      "32": 1.8389236295417248,
+      "64": 1.7637939542585859
+    }
+  },
+  "gsm1k_runs": 0,
+  "retention": {
+    "adjudication_cells_passed": 6,
+    "anchor_cells_passed": 0,
+    "anchor_question_generation_per_cell": 1,
+    "common_passing_checkpoint": null,
+    "failure_reason": "Every V2 anchor-holdout cell violated the zero question-generation gate."
+  },
+  "schema_version": 1,
+  "sealed_final_accessed": false,
+  "selected_checkpoint": null,
+  "selected_variant": null,
+  "targeted_training": {
+    "checkpoint_adapter_sha256": {
+      "16": "7f45b8ed042346e8e175eb346a3eee62eae68ce2309e38d7f0da796b1b7ae559",
+      "32": "bc2b962f1c919f32c684bc31608139e7bd6181052990364c8055cb60b4e12fd1",
+      "64": "2d3ded68218f15d70878b6f21d24bf3b660d2b24dc8bb953e32db71d72161565"
+    },
+    "final_loss": 1.423678345636998,
+    "initial_loss": 1.671771478256907,
+    "result_sha256": "c04a11995c6d1bdc65b51198d24047302bb5cd42a73a72ecbaf724c396c6405c",
+    "runtime_seconds": 900.5346389000042,
+    "validation_loss": {
+      "16": 2.1692792466708593,
+      "32": 2.0351693881409507,
+      "64": 1.9611389607191085
+    }
+  },
+  "token_budget_per_arm": {
+    "replay": 25600,
+    "total": 64000,
+    "vetted": 38400
+  }
+}

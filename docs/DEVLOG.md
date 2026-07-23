@@ -3448,3 +3448,15 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
   checkpoint despite 97.62% to 98.10% anchor preservation.
 - **Consequence:** Activate only the preauthorized V2 Replay40 route. The exact V2 schedules contain
   38,400 vetted and 25,600 identical replay tokens per arm, with exact 16k/32k/64k prefixes.
+
+### 2026-07-23 - Milestone 12F-A stopped after V2 retention failure
+
+- **V2 training:** Generic and targeted each completed exactly 64 steps and 64,000 assistant-only
+  tokens with fresh base loads, three hashed checkpoints, finite losses, offline reload, and exact
+  adapter-disabled base restoration. Runtime was 881.32 and 900.53 seconds.
+- **Retention:** All six adjudication cells passed. Every anchor-holdout cell again produced exactly
+  one question-generation output, while the frozen gate requires zero. Consequently no generic
+  and targeted checkpoint pair passes both subsets at steps 16, 32, or 64.
+- **Stop:** No common V2 checkpoint exists. The authorization forbids another replay ratio,
+  learning-rate change, adapter scaling, or checkpoint tuning. Independent final retention and
+  GSM1K were not reached; sealed-final remained untouched. All adapters/checkpoints remain ignored.
