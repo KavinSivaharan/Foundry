@@ -3928,3 +3928,25 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
   evaluations, and sealed-path accesses are all zero.
 - **Next action:** Publish `train: select vetted-corpus KL coefficient`, then perform terminal
   verification and publish `analysis: stop V1-equivalent KL adaptation`.
+
+### 2026-07-27 - Milestone 13C-R3 terminal verification
+
+- **Published selection boundary:** Commit
+  `36ec0ca54383de7d8e56f0b0d7de0b0d768f6a5a` is pushed, synchronized, and clean. It selects
+  no coefficient and authorizes no full training.
+- **Evidence replay:** Recipe, objective, historical comparator, eight-run calibration,
+  coefficient selection, blocker, and environment-v2 records all replay exactly. The terminal
+  stop record is SHA-256 `857254d9...08cb`.
+- **Repository verification:** Ruff confirms 297 files formatted and lint clean; strict Mypy
+  passes 169 source files; all 959 unit and integration tests pass; the 61-test focused
+  dataset/holdout/environment/R3 reconstruction slice passes; both dependency environments pass;
+  and `git diff --check` is clean.
+- **Publication boundary:** The 22 candidate files have zero exact, normalized-exact, or
+  contiguous 12-token matches against all 904 GSM1K-development questions, zero high-confidence
+  secret hits, zero content-bearing result keys, zero protected evaluator/dataset/schedule or
+  dependency changes, zero tracked raw artifacts, zero files at or above 1 MiB, and no sealed-path
+  access.
+- **Terminal result:** Stop at calibration because no common coefficient reduces replay KL to at
+  most 75% of historical. Full KL training, holdout-v2 adapter evaluation, GSM1K adapter
+  evaluation, and sealed-final evaluation remain unrun. Publish
+  `analysis: stop V1-equivalent KL adaptation`; the next action is project-level interpretation.
