@@ -1240,3 +1240,15 @@ This log separates proposals from approved decisions. A proposal does not author
 - **Consequence:** Do not run independent final retention or GSM1K, and do not try another replay
   ratio, learning rate, adapter scale, or post-hoc checkpoint adjustment. Publish the exact
   retention blocker.
+
+## 2026-07-27: classify the anchor question-generation blocker as a scorer defect
+
+- **Decision:** Use Milestone 13A Case 1. The frozen response does not ask a new question; its sole
+  `?` is mathematical unknown data in `expression = ?`, and the untouched base produced identical
+  bytes.
+- **Evidence:** All twelve failures are one prompt, one output hash, one detector branch, and one
+  semantic class. General fixtures independently reproduce the defect. The correction retains all
+  true positives and has no prompt, adapter, variant, checkpoint, or desired-outcome exception.
+- **Consequence:** Publish the general scorer correction, then rescore existing bytes offline under
+  unchanged retention thresholds. Model inference remains forbidden until an existing common
+  checkpoint is selected by that corrected offline replay.

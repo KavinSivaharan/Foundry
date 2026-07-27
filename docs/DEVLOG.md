@@ -3460,3 +3460,19 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
 - **Stop:** No common V2 checkpoint exists. The authorization forbids another replay ratio,
   learning-rate change, adapter scaling, or checkpoint tuning. Independent final retention and
   GSM1K were not reached; sealed-final remained untouched. All adapters/checkpoints remain ignored.
+
+### 2026-07-27 - Milestone 13A classified the repeated failure as a scorer defect
+
+- **Inventory:** All twelve anchor-holdout failures use the same prompt and byte-identical response
+  across V1/V2, generic/targeted, and steps 16/32/64. The untouched base produced the same response.
+  Inventory SHA-256 is `f28dda30...d09278`.
+- **Defect:** The response correctly treats `?` as the unknown in a displayed multiplication
+  equation and then supplies the requested answer. The old scorer classified any literal question
+  mark anywhere as question generation, without distinguishing mathematical or structured data.
+- **Correction:** The general detector now preserves unprotected question marks and generated
+  `Question:`/`Problem:` headers while protecting valid JSON, code, prompt-supplied quotations, and
+  mathematical unknown placeholders. Fifteen true-positive/true-negative fixtures and focused
+  mutations pass. The pre-rescore projection changes exactly twelve of 4,764 decisions and only
+  the `question_generation` field.
+- **Boundary:** No model inference, training, GSM1K access, independent-final access, or sealed-final
+  access occurred during classification and scorer correction.

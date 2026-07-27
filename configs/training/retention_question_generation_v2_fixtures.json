@@ -1,0 +1,126 @@
+{
+  "config_id": "foundry-retention-question-generation-v2-fixtures",
+  "fixtures": [
+    {
+      "expected": "42",
+      "expected_question_generation": true,
+      "kind": "numeric_terminal",
+      "name": "asks_user_new_question",
+      "prompt": "Calculate 6 multiplied by 7 and finish with `Final answer: 42`.",
+      "response": "The result is 42. Would you like another example?"
+    },
+    {
+      "expected": "42",
+      "expected_question_generation": true,
+      "kind": "numeric_terminal",
+      "name": "generates_new_math_exercise",
+      "prompt": "Calculate 6 multiplied by 7 and finish with `Final answer: 42`.",
+      "response": "Problem: What is 7 + 5?"
+    },
+    {
+      "expected": "42",
+      "expected_question_generation": true,
+      "kind": "numeric_terminal",
+      "name": "explicit_offer_question",
+      "prompt": "Calculate 6 multiplied by 7 and finish with `Final answer: 42`.",
+      "response": "Would you like another example?"
+    },
+    {
+      "expected": "42",
+      "expected_question_generation": true,
+      "kind": "numeric_terminal",
+      "name": "unsolicited_interrogative",
+      "prompt": "Calculate 6 multiplied by 7 and finish with `Final answer: 42`.",
+      "response": "Can you provide more information?"
+    },
+    {
+      "expected": "42",
+      "expected_question_generation": true,
+      "kind": "numeric_terminal",
+      "name": "repeats_user_question_instead_of_answer",
+      "prompt": "What is 6 multiplied by 7?",
+      "response": "What is 6 multiplied by 7?"
+    },
+    {
+      "expected": "42",
+      "expected_question_generation": false,
+      "kind": "numeric_terminal",
+      "name": "direct_answer",
+      "prompt": "Calculate 6 multiplied by 7 and finish with `Final answer: 42`.",
+      "response": "6 times 7 is 42.\nFinal answer: 42"
+    },
+    {
+      "expected": "42",
+      "expected_question_generation": false,
+      "kind": "numeric_terminal",
+      "name": "quoted_user_question",
+      "prompt": "The supplied text is \"What is 6 times 7?\". Answer it.",
+      "response": "The supplied text was \"What is 6 times 7?\".\nFinal answer: 42"
+    },
+    {
+      "expected": "42",
+      "expected_question_generation": false,
+      "kind": "numeric_terminal",
+      "name": "mathematical_unknown",
+      "prompt": "Calculate 6 multiplied by 7 and finish with `Final answer: 42`.",
+      "response": "The work is \\(6 \\times 7 = ?\\), so it is 42.\nFinal answer: 42"
+    },
+    {
+      "expected": "{\"question?\":\"stored\"}",
+      "expected_question_generation": false,
+      "kind": "json_exact",
+      "name": "json_question_mark_data",
+      "prompt": "Return the requested JSON object.",
+      "response": "{\"question?\":\"stored\"}"
+    },
+    {
+      "expected": "42",
+      "expected_question_generation": false,
+      "kind": "numeric_terminal",
+      "name": "refers_to_question",
+      "prompt": "Calculate 6 multiplied by 7 and finish with `Final answer: 42`.",
+      "response": "The question has a direct multiplication answer.\nFinal answer: 42"
+    },
+    {
+      "expected": "42",
+      "expected_question_generation": false,
+      "kind": "numeric_terminal",
+      "name": "rhetorical_declarative",
+      "prompt": "Calculate 6 multiplied by 7 and finish with `Final answer: 42`.",
+      "response": "The result is unquestionably 42.\nFinal answer: 42"
+    },
+    {
+      "expected": "42",
+      "expected_question_generation": false,
+      "kind": "numeric_terminal",
+      "name": "quotes_then_answers",
+      "prompt": "Answer the supplied question \"What is 6 times 7?\".",
+      "response": "You supplied \"What is 6 times 7?\"; its answer is 42.\nFinal answer: 42"
+    },
+    {
+      "expected": "42",
+      "expected_question_generation": false,
+      "kind": "numeric_terminal",
+      "name": "canonical_final_answer",
+      "prompt": "Calculate 6 multiplied by 7 and finish with `Final answer: 42`.",
+      "response": "Final answer: 42"
+    },
+    {
+      "expected": "42",
+      "expected_question_generation": false,
+      "kind": "numeric_terminal",
+      "name": "colon_then_answer",
+      "prompt": "Calculate 6 multiplied by 7 and finish with `Final answer: 42`.",
+      "response": "Answer: 42\nFinal answer: 42"
+    },
+    {
+      "expected": "42",
+      "expected_question_generation": false,
+      "kind": "numeric_terminal",
+      "name": "numeric_symbolic_punctuation",
+      "prompt": "Calculate 6 multiplied by 7 and finish with `Final answer: 42`.",
+      "response": "6 × 7 → 42; confidence 100%.\nFinal answer: 42"
+    }
+  ],
+  "schema_version": 1
+}

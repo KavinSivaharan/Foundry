@@ -66,6 +66,28 @@ EVALUATION_IDS = {
         "foundry-retention-replay-final-holdout-evaluation-v1"
     ),
 }
+QUESTION_GENERATION_HEADER_PATTERN = r"(?:^|\n)\s*(?:question|problem)\s*:"
+QUESTION_GENERATION_CONFIG = {
+    "config_id": "foundry-retention-question-generation-v2",
+    "decision_rules": [
+        "unprotected_question_mark",
+        "unprotected_question_or_problem_header",
+    ],
+    "protected_classes": [
+        "valid_json_document",
+        "code_span",
+        "prompt_supplied_quotation",
+        "mathematical_unknown_placeholder",
+    ],
+    "header_pattern": QUESTION_GENERATION_HEADER_PATTERN,
+}
+_QUESTION_GENERATION_HEADER = re.compile(
+    QUESTION_GENERATION_HEADER_PATTERN,
+    re.IGNORECASE,
+)
+_CODE_SPAN = re.compile(r"```[\s\S]*?```|`[^`\n]*`")
+_QUOTED_SPAN = re.compile(r'"[^"\n]*"|“[^”\n]*”|‘[^’\n]*’')
+_MATHEMATICAL_UNKNOWN = re.compile(r"(?:=|≈|≃|≅|→|->)\s*(\?)")
 
 
 @dataclass(frozen=True)
@@ -105,6 +127,86 @@ class BaseConditionedSubset:
     base_summary_sha256: str
     items: tuple[tuple[str, Section, str], ...]
     subset_sha256: str
+
+
+def question_generation_configuration_sha256() -> str:
+    """Hash the complete deterministic question-generation configuration."""
+
+    return canonical_sha256(QUESTION_GENERATION_CONFIG)
+
+
+def _normalized_text(value: str) -> str:
+    return " ".join(value.casefold().split())
+
+
+def _question_generation_protected_positions(prompt: str, response: str) -> dict[int, str]:
+    """Classify question marks that occur in data rather than assistant questions."""
+
+    protected: dict[int, str] = {}
+    stripped = response.strip()
+    try:
+        json.loads(stripped)
+    except (json.JSONDecodeError, TypeError):
+        pass
+    else:
+        for match in re.finditer(r"\?", response):
+            protected[match.start()] = "valid_json_document"
+        return protected
+
+    for match in _CODE_SPAN.finditer(response):
+        for question in re.finditer(r"\?", match.group()):
+            protected[match.start() + question.start()] = "code_span"
+
+    normalized_prompt = _normalized_text(prompt)
+    for match in _QUOTED_SPAN.finditer(response):
+        quoted = match.group()[1:-1]
+        if quoted and _normalized_text(quoted) in normalized_prompt:
+            for question in re.finditer(r"\?", match.group()):
+                protected[match.start() + question.start()] = "prompt_supplied_quotation"
+
+    for match in _MATHEMATICAL_UNKNOWN.finditer(response):
+        protected[match.start(1)] = "mathematical_unknown_placeholder"
+    return protected
+
+
+def question_generation_evidence(prompt: str, response: str) -> dict[str, Any]:
+    """Return deterministic evidence for unsolicited question generation."""
+
+    protected = _question_generation_protected_positions(prompt, response)
+    question_marks = [
+        {
+            "start": match.start(),
+            "end": match.end(),
+            "classification": protected.get(match.start(), "unprotected_question_mark"),
+        }
+        for match in re.finditer(r"\?", response)
+    ]
+    header_matches = [
+        {"start": match.start(), "end": match.end()}
+        for match in _QUESTION_GENERATION_HEADER.finditer(response)
+        if not any(
+            start <= match.start() < end
+            for pattern in (_CODE_SPAN, _QUOTED_SPAN)
+            for span in pattern.finditer(response)
+            for start, end in ((span.start(), span.end()),)
+        )
+    ]
+    unprotected = [
+        item for item in question_marks if item["classification"] == "unprotected_question_mark"
+    ]
+    if unprotected:
+        triggered_rule: str | None = "unprotected_question_mark"
+    elif header_matches:
+        triggered_rule = "unprotected_question_or_problem_header"
+    else:
+        triggered_rule = None
+    return {
+        "decision": triggered_rule is not None,
+        "triggered_rule": triggered_rule,
+        "question_marks": question_marks,
+        "header_matches": header_matches,
+        "configuration_sha256": question_generation_configuration_sha256(),
+    }
 
 
 def load_suite(path: Path) -> RetentionSuite:
@@ -253,12 +355,10 @@ def score_response(item: RetentionItem, response: str) -> dict[str, Any]:
         correct = stripped == item.expected
         extracted = stripped if len(stripped) <= 160 else None
         malformed = not extractable
-    normalized_prompt = " ".join(item.prompt.lower().split())
-    normalized_response = " ".join(response.lower().split())
+    normalized_prompt = _normalized_text(item.prompt)
+    normalized_response = _normalized_text(response)
     prompt_echo = len(normalized_prompt) >= 24 and normalized_prompt in normalized_response
-    question_generation = "?" in response or bool(
-        re.search(r"(?:^|\n)\s*(?:question|problem)\s*:", response, re.IGNORECASE)
-    )
+    question_generation = bool(question_generation_evidence(item.prompt, response)["decision"])
     exact_format = (
         correct
         if item.kind != "numeric_terminal"

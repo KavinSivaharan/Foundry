@@ -1,0 +1,30 @@
+{
+  "all_true_negative_fixtures_passed": true,
+  "all_true_positive_fixtures_preserved": true,
+  "changed_class": "mathematical_unknown_placeholder",
+  "changed_decisions": 12,
+  "changed_fields": [
+    "question_generation"
+  ],
+  "changed_unique_response_hashes": 1,
+  "classification": "deterministic_scorer_defect",
+  "corrected_configuration_sha256": "87a140820f017acb0ff9bb44c047b169605befab3d250f42a054ea45d430f2c7",
+  "corrected_scorer_source_sha256": "0cc6f583caad049fe9ce25a4da70b84d8abcfd45360d8dbc1f9e25e86b530b91",
+  "correction_contract_sha256": "5cd3ce855cbf3c638d189b52482f8657c0ade1d1c10df53b5c22e9ddf29e2b02",
+  "fixture_file_sha256": "8c6222786e066d0d521823f8e7185637dbc4c3524c5d3225e13148f91c7cd401",
+  "fixture_sha256": "a7a5f2fb0dbb8e57140594561bc44a060c12695ab39eed02a2d10de6bb2dbe4e",
+  "old_scorer_source_sha256": "6285d75148fa0131a9b34203cfe57e1454007f4cb6977bb10ae4182268d8367b",
+  "projection_rows_seen": 4764,
+  "prompt_integrity": {
+    "adapter_response_asks_new_question": false,
+    "prompt_grammatical": true,
+    "prompt_requires_question": false,
+    "prompt_unambiguous": true,
+    "reference_valid": true,
+    "response_completed_requested_task": true,
+    "scorer_matches_stated_instruction_after_correction": true,
+    "untouched_base_response_identical": true
+  },
+  "schema_version": 1,
+  "thresholds_changed": false
+}
