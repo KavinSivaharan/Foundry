@@ -1,0 +1,108 @@
+{
+  "analysis_id": "foundry-milestone13d-original-kl-raw-scale-v1",
+  "architecture_decision_sha256": "74907ea92b2217b6f9ca39044feab6c6452600e7774a2b442e0ec9e29b6899a5",
+  "arms": {
+    "generic": {
+      "historical_replay_ce": 0.22957696406246395,
+      "historical_replay_token_kl": 0.00013135224548594236,
+      "historical_validation_ce": 1.9765619013667322,
+      "lambda_by_replay_ce_fraction": {
+        "0.01": 17.477962650210944,
+        "0.10": 174.77962650210944,
+        "0.30": 524.3388795063282,
+        "1.00": 1747.7962650210943
+      },
+      "lambda_for_weighted_kl_equals_replay_ce": 1747.7962650210943,
+      "previous_coefficients": [
+        {
+          "calibration_replay_kl_ratio_to_historical": 1.0226605351012945,
+          "calibration_run_sha256": "c6a200e554a9544fef2286d1885da9fa75caf7a0f82f4de89293cf35a3a4d9ab",
+          "calibration_validation_ce_ratio_to_historical": 0.9971668746956652,
+          "coefficient": 0.01,
+          "historical_weighted_kl_loss": 1.3135224548594237e-06,
+          "historical_weighted_kl_percent_of_replay_ce": 0.0005721490656623705
+        },
+        {
+          "calibration_replay_kl_ratio_to_historical": 1.0203302348272534,
+          "calibration_run_sha256": "6176a7f06c2659c7bea7317ad1b406b132112e1253990c6c03d2982961cdbcbb",
+          "calibration_validation_ce_ratio_to_historical": 0.9973244476509209,
+          "coefficient": 0.03,
+          "historical_weighted_kl_loss": 3.940567364578271e-06,
+          "historical_weighted_kl_percent_of_replay_ce": 0.0017164471969871116
+        },
+        {
+          "calibration_replay_kl_ratio_to_historical": 0.9852269285260176,
+          "calibration_run_sha256": "a50676b4aa421dc21052956e1b41025cb71731ba4db77c7cf8d8e9c45588f2a7",
+          "calibration_validation_ce_ratio_to_historical": 0.9974984351327774,
+          "coefficient": 0.1,
+          "historical_weighted_kl_loss": 1.3135224548594237e-05,
+          "historical_weighted_kl_percent_of_replay_ce": 0.005721490656623705
+        },
+        {
+          "calibration_replay_kl_ratio_to_historical": 1.0154326308790824,
+          "calibration_run_sha256": "aa89ef580a5994b73d344d4bc064f94484ded6b942d944fd8510a567098d3c24",
+          "calibration_validation_ce_ratio_to_historical": 0.99755934259559,
+          "coefficient": 0.3,
+          "historical_weighted_kl_loss": 3.940567364578271e-05,
+          "historical_weighted_kl_percent_of_replay_ce": 0.017164471969871118
+        }
+      ]
+    },
+    "targeted": {
+      "historical_replay_ce": 0.22947705141972982,
+      "historical_replay_token_kl": 0.00012543418646708914,
+      "historical_validation_ce": 2.1713853755167554,
+      "lambda_by_replay_ce_fraction": {
+        "0.01": 18.29461790944361,
+        "0.10": 182.9461790944361,
+        "0.30": 548.8385372833083,
+        "1.00": 1829.461790944361
+      },
+      "lambda_for_weighted_kl_equals_replay_ce": 1829.461790944361,
+      "previous_coefficients": [
+        {
+          "calibration_replay_kl_ratio_to_historical": 1.0477584426982935,
+          "calibration_run_sha256": "d797d955b809c49cae8cca7d3f580ac5e665d13585ad19ace9136c4c21cadc69",
+          "calibration_validation_ce_ratio_to_historical": 0.9977611165778273,
+          "coefficient": 0.01,
+          "historical_weighted_kl_loss": 1.2543418646708914e-06,
+          "historical_weighted_kl_percent_of_replay_ce": 0.0005466088469023472
+        },
+        {
+          "calibration_replay_kl_ratio_to_historical": 1.0320685518701445,
+          "calibration_run_sha256": "7e5e6e07132b74a1e73a54237825b09f4f88103bec8b9a82c667ec3d460a23a7",
+          "calibration_validation_ce_ratio_to_historical": 0.997755701074411,
+          "coefficient": 0.03,
+          "historical_weighted_kl_loss": 3.7630255940126743e-06,
+          "historical_weighted_kl_percent_of_replay_ce": 0.0016398265407070413
+        },
+        {
+          "calibration_replay_kl_ratio_to_historical": 1.0419466084051436,
+          "calibration_run_sha256": "a3cdaeab5ec5779ebb89909e1cddbd125e4d0671f112d5ef888b85cef7db8ea9",
+          "calibration_validation_ce_ratio_to_historical": 0.9977615535238578,
+          "coefficient": 0.1,
+          "historical_weighted_kl_loss": 1.2543418646708915e-05,
+          "historical_weighted_kl_percent_of_replay_ce": 0.005466088469023472
+        },
+        {
+          "calibration_replay_kl_ratio_to_historical": 1.047625655419776,
+          "calibration_run_sha256": "69b1dcb3b6b21e689458ea1f4eb48374ae5b0ddd09ef162699d8686f17aa7a54",
+          "calibration_validation_ce_ratio_to_historical": 0.9976566594186205,
+          "coefficient": 0.3,
+          "historical_weighted_kl_loss": 3.763025594012674e-05,
+          "historical_weighted_kl_percent_of_replay_ce": 0.016398265407070414
+        }
+      ]
+    }
+  },
+  "dataset_sha256": "ee18f7f9bd7625469d83e1c1df8dad4db0ecf8b3d8c870a07c60f2808e11dc31",
+  "gsm1k_use": false,
+  "historical_comparator_sha256": "06053527fdb5786ace22972aab642fd824b8471ee72e7e19ef849520f5d33324",
+  "holdout_v2_use": false,
+  "objective_contract_sha256": "159ef322b254d5f70b46296fe051417ed53c1543f3432bcb0b9069d66ab975a8",
+  "previous_calibration_sha256": "e1d0af0211bcb3c4e60c983ef3f2511abe88fb5ef3bf225a3d5d936b9e22305e",
+  "raw_scale_analysis_sha256": "894ef154c649f2463b5db9829c37901ceb654c18fcd095f34ae59f70957a10d5",
+  "schema_version": 1,
+  "sealed_paths_accessed": false,
+  "selection_from_raw_loss_scale": false
+}

@@ -3950,3 +3950,40 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
   most 75% of historical. Full KL training, holdout-v2 adapter evaluation, GSM1K adapter
   evaluation, and sealed-final evaluation remain unrun. Publish
   `analysis: stop V1-equivalent KL adaptation`; the next action is project-level interpretation.
+
+### 2026-07-27 - Milestone 13D froze the gradient-calibrated KL ladder
+
+- **Starting boundary:** Clean synchronized `main` at
+  `f41021c01c9fd03279717473339bcea4b4274b32`. The complete V1 recipe, objective,
+  historical comparator, all eight failed 13C-R3 calibration adapters and raw packets,
+  environment v2, and holdout v2 reconstruct exactly. Full KL training, holdout-v2 adapter
+  evaluations, GSM1K KL evaluations, and sealed-path accesses remain zero.
+- **Raw loss scale:** The old `0.30` coefficient weighted historical KL to only `0.0171645%`
+  of generic replay CE and `0.0163983%` of targeted replay CE. Weighted KL would equal
+  historical replay CE at lambda `1747.7963` and `1829.4618`, respectively. This analysis is
+  descriptive and did not select a coefficient; SHA-256 is `894ef154...10d5`.
+- **Graph integrity:** The frozen `replay-ce-token-kl-v1` source and contract remain unchanged.
+  Separate failure fixtures prove that active and reference logits cannot be sourced from the
+  same adapter state and that detaching KL before coefficient multiplication disconnects the
+  LoRA gradient. Runtime audits observe nonzero finite KL gradients, zero base/reference
+  gradients, and unchanged model/adapter states.
+- **Shared measurement corpus:** Both arms use the identical flattened stream of 213 replay
+  occurrences and exactly 4,000 assistant tokens from the first 16,000-token V1 prefixes.
+  Prompt-token, target-token, assistant-position, record, occurrence, and ordering identities
+  are content-free hashed; no vetted example, holdout v2, GSM1K item, or sealed content enters
+  gradient measurement.
+- **Historical gradients:** Generic measured CE/KL LoRA-gradient norms
+  `0.4676067893`/`0.05929893930`, KL/CE ratio `0.1268136833`, and cosine
+  `0.1476813494`. Targeted measured `0.5053435091`/`0.05692556841`, ratio
+  `0.1126472734`, and cosine `0.2212083190`. Each complete measurement was duplicated
+  bit-identically without an optimizer or scheduler.
+- **Frozen common ladder:** Decimal precision 50 and
+  `max(lambda_generic, lambda_targeted)` produce common lambda values
+  `0.88772676877271567348280710717339159364685227428036`,
+  `2.6631803063181470204484213215201747809405568228411`,
+  `8.8772676877271567348280710717339159364685227428036`, and
+  `26.631803063181470204484213215201747809405568228411` for rho
+  `0.10`, `0.30`, `1.00`, and `3.00`. Derivation and ladder SHA-256 values are
+  `fca6f23d...3fef` and `ab6b7a61...4cda`.
+- **Next action:** Verify, publish, and push `analysis: freeze gradient-calibrated KL ladder`;
+  only then execute the eight predeclared two-step compatibility smokes sequentially.

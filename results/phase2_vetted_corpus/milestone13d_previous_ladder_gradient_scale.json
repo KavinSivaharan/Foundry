@@ -1,0 +1,68 @@
+{
+  "arms": {
+    "generic": {
+      "coefficients": [
+        {
+          "classification": "less_than_1_percent",
+          "coefficient": 0.01,
+          "weighted_kl_to_ce_gradient_ratio": 0.0012681368332331253
+        },
+        {
+          "classification": "less_than_1_percent",
+          "coefficient": 0.03,
+          "weighted_kl_to_ce_gradient_ratio": 0.0038044104996993755
+        },
+        {
+          "classification": "1_to_10_percent",
+          "coefficient": 0.1,
+          "weighted_kl_to_ce_gradient_ratio": 0.012681368332331253
+        },
+        {
+          "classification": "1_to_10_percent",
+          "coefficient": 0.3,
+          "weighted_kl_to_ce_gradient_ratio": 0.038044104996993754
+        }
+      ],
+      "unweighted_kl_to_ce_gradient_norm_ratio": 0.12681368332331253
+    },
+    "targeted": {
+      "coefficients": [
+        {
+          "classification": "less_than_1_percent",
+          "coefficient": 0.01,
+          "weighted_kl_to_ce_gradient_ratio": 0.0011264727337021755
+        },
+        {
+          "classification": "less_than_1_percent",
+          "coefficient": 0.03,
+          "weighted_kl_to_ce_gradient_ratio": 0.0033794182011065263
+        },
+        {
+          "classification": "1_to_10_percent",
+          "coefficient": 0.1,
+          "weighted_kl_to_ce_gradient_ratio": 0.011264727337021755
+        },
+        {
+          "classification": "1_to_10_percent",
+          "coefficient": 0.3,
+          "weighted_kl_to_ce_gradient_ratio": 0.03379418201106526
+        }
+      ],
+      "unweighted_kl_to_ce_gradient_norm_ratio": 0.11264727337021754
+    }
+  },
+  "gradient_audit_sha256": "862f8cab062a992afa5e749c083754b577d5d7cba1532706a28df7841fab24cf",
+  "gsm1k_use": false,
+  "holdout_v2_use": false,
+  "interpretation_id": "foundry-milestone13d-previous-kl-ladder-gradient-scale-v1",
+  "previous_coefficients": [
+    0.01,
+    0.03,
+    0.1,
+    0.3
+  ],
+  "previous_ladder_gradient_scale_sha256": "30442953cf93754e19a32bb7d0f3703c0bb2b8334474ac420a7938f95c05bc5c",
+  "previous_result_redefined": false,
+  "schema_version": 1,
+  "sealed_paths_accessed": false
+}

@@ -1,0 +1,78 @@
+{
+  "architecture": "replay-ce-token-kl-v1",
+  "ce_to_kl_gradient_norm_ratio_exact": {
+    "generic": "7.8855843769673645084311586701505456785468416177909",
+    "targeted": "8.8772676877271567348280710717339159364685227428036"
+  },
+  "coefficient_add_remove_reorder_after_freeze": false,
+  "derivation_contract": {
+    "architecture_unchanged": "replay-ce-token-kl-v1",
+    "arm_order": [
+      "generic",
+      "targeted"
+    ],
+    "common_formula": "lambda_common(rho)=max(lambda_generic,lambda_targeted)",
+    "decimal_precision": 50,
+    "derivation_contract_sha256": "fca6f23d6d4b20692adb5c408bdaf00c33339ff1d6f1fa4169b8d55f86c03fef",
+    "formula_by_arm": "lambda_arm(rho)=rho*||g_CE||/||g_KL||",
+    "maximum_allowed_coefficient": "1000000",
+    "numeric_type": "Decimal",
+    "rho_targets_in_order": [
+      "0.10",
+      "0.30",
+      "1.00",
+      "3.00"
+    ]
+  },
+  "frozen_before_coefficient_execution": true,
+  "gradient_audit_sha256": "862f8cab062a992afa5e749c083754b577d5d7cba1532706a28df7841fab24cf",
+  "gsm1k_use": false,
+  "holdout_v2_use": false,
+  "ladder": [
+    {
+      "guaranteed_minimum_weighted_kl_to_ce_gradient_ratio": "0.10",
+      "lambda_by_arm_exact": {
+        "generic": "0.78855843769673645084311586701505456785468416177909",
+        "targeted": "0.88772676877271567348280710717339159364685227428036"
+      },
+      "lambda_common_exact": "0.88772676877271567348280710717339159364685227428036",
+      "lambda_common_rendered": "0.887726768773",
+      "rho_exact": "0.10"
+    },
+    {
+      "guaranteed_minimum_weighted_kl_to_ce_gradient_ratio": "0.30",
+      "lambda_by_arm_exact": {
+        "generic": "2.3656753130902093525293476010451637035640524853373",
+        "targeted": "2.6631803063181470204484213215201747809405568228411"
+      },
+      "lambda_common_exact": "2.6631803063181470204484213215201747809405568228411",
+      "lambda_common_rendered": "2.66318030632",
+      "rho_exact": "0.30"
+    },
+    {
+      "guaranteed_minimum_weighted_kl_to_ce_gradient_ratio": "1.00",
+      "lambda_by_arm_exact": {
+        "generic": "7.8855843769673645084311586701505456785468416177909",
+        "targeted": "8.8772676877271567348280710717339159364685227428036"
+      },
+      "lambda_common_exact": "8.8772676877271567348280710717339159364685227428036",
+      "lambda_common_rendered": "8.87726768773",
+      "rho_exact": "1.00"
+    },
+    {
+      "guaranteed_minimum_weighted_kl_to_ce_gradient_ratio": "3.00",
+      "lambda_by_arm_exact": {
+        "generic": "23.656753130902093525293476010451637035640524853373",
+        "targeted": "26.631803063181470204484213215201747809405568228411"
+      },
+      "lambda_common_exact": "26.631803063181470204484213215201747809405568228411",
+      "lambda_common_rendered": "26.6318030632",
+      "rho_exact": "3.00"
+    }
+  ],
+  "ladder_id": "foundry-milestone13d-common-gradient-calibrated-kl-ladder-v1",
+  "ladder_sha256": "ab6b7a61ca0d4deda7762daf3d03e66c3ab55e2e18370b919f6def5626e54cda",
+  "objective_direction_changed": false,
+  "schema_version": 1,
+  "sealed_paths_accessed": false
+}
