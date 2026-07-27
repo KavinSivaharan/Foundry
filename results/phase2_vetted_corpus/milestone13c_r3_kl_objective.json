@@ -1,0 +1,104 @@
+{
+  "configuration": {
+    "candidate_coefficients_in_order": [
+      0.01,
+      0.03,
+      0.1,
+      0.3
+    ],
+    "cpu_offload": false,
+    "kl_direction": "adapter_disabled_frozen_base||active_adapter_policy",
+    "kl_formula": "sum(p_base*(log_p_base-log_p_adapter))",
+    "kl_probability_dtype": "float32",
+    "kl_reduction": "mean_over_valid_replay_assistant_tokens",
+    "learning_rate": 1e-05,
+    "model_compute_dtype": "float16",
+    "objective_configuration_sha256": "b00a0c2c8fbc23031c8fa5c433fe6bea42f0fb1e9dc48f81d0a8148f9526cbd7",
+    "objective_id": "foundry-replay-ce-token-kl-v1",
+    "optimizer": "PagedAdamW8bit",
+    "recipe_decision_sha256": "b03dfc9d6f66843f2a83e9b4ff5b82e133fb9c6a4a27ab1783d64991a0f7d118",
+    "recipe_sha256": "3bc9fbcdb44dc53b12149d3832153a7fce90d0c7839868b5ec6c3b10939e7862",
+    "reference_model_count": 1,
+    "replay_loss": "assistant_only_replay_target_cross_entropy+lambda_kl*mean_forward_token_kl",
+    "schedule_sha256": {
+      "generic": "4bc00d29d5cf308c12c77111d7943567521cc533b13440dc06c3d8b39c74e9df",
+      "targeted": "88c5378cac7efe927b29d3f421d97777cd6d917187c71c8388b60bbe7b57e259"
+    },
+    "scheduler": "cosine",
+    "scheduler_horizon_steps": 64,
+    "seed": 20260720,
+    "vetted_kl": false,
+    "vetted_loss": "assistant_only_cross_entropy",
+    "warmup_steps": 4
+  },
+  "contract_id": "foundry-milestone13c-r3-kl-objective-v1",
+  "dataset_sha256": "ee18f7f9bd7625469d83e1c1df8dad4db0ecf8b3d8c870a07c60f2808e11dc31",
+  "environment_v2_contract_sha256": "c9faa8afafafb20b84fcd0cb5e7de1b57749e822adfa27c8b401bbaf8f0153dc",
+  "fixture": {
+    "adapter_saved": false,
+    "base_parameter_fingerprint": "bab01d0493fcf560133c9110545630bd5cc104c3855335b715d6a2205f6c8dba",
+    "base_parameters_unchanged": true,
+    "base_restoration": true,
+    "changed_lora_tensor_count": 112,
+    "finite_gradients": true,
+    "finite_losses": true,
+    "fixture_id": "foundry-replay-ce-token-kl-v1-runtime-fixture-v1",
+    "fixture_sha256": "351476cf2ba3780914a2f3a8aea926256c305ff8f2c6751dde997d6de1591e0b",
+    "gsm1k_use": false,
+    "holdout_v2_use": false,
+    "identical_logits_kl": 0.0,
+    "optimizer_owned_only_lora": true,
+    "post_update_replay_kl": 6.455185030063149e-06,
+    "reference_no_grad": true,
+    "runtime_fixture_record_sha256": "372b31ca1a6294238a54ed72ff101076943b0334ac7abbd9aa26de826c89bf26",
+    "trainable_inventory": {
+      "only_lora_tensors": true,
+      "tensor_inventory_sha256": "d3edea65d6d09226eb743182474ea51b2af1c0f94b163812ce67913ffc865e78",
+      "trainable_parameter_count": 2179072,
+      "trainable_tensor_count": 224
+    },
+    "two_updates": true,
+    "unit_fixture_source_sha256": "4c3b88f72915139a9e9e496ea4426ea54d5ad23ad4cad6954e20b9830336e93f"
+  },
+  "gsm1k_use": false,
+  "historical_v1_recipe_sha256": "3bc9fbcdb44dc53b12149d3832153a7fce90d0c7839868b5ec6c3b10939e7862",
+  "holdout_v2_adapter_exposure": false,
+  "masking": {
+    "alignment": "logits[:, :-1, :] predicts labels[:, 1:]",
+    "ce_mask_unchanged": true,
+    "excluded": [
+      "system",
+      "user",
+      "assistant_header",
+      "padding",
+      "post_eos"
+    ],
+    "included": [
+      "assistant_content",
+      "final_assistant_eos"
+    ],
+    "masking_sha256": "3858c6db0da9dbcf3a1149be2aa677ba0cdc52ce22c19de08a8d47aeaab8df4d",
+    "maximum_sequence_tokens": 512,
+    "selection": "labels[:, 1:] != -100"
+  },
+  "objective_contract_sha256": "159ef322b254d5f70b46296fe051417ed53c1543f3432bcb0b9069d66ab975a8",
+  "objective_id": "foundry-replay-ce-token-kl-v1",
+  "reference": {
+    "base_parameters_optimizer_owned": false,
+    "direction": "KL(base||adapter)",
+    "mechanism": "same_model_disable_adapter_context",
+    "reference_context": "torch.no_grad",
+    "reference_logits_detached": true,
+    "reference_mechanism_sha256": "c694138040fab03b4d98d1089eacf4306f8cca438b12061a9b815eea033a9b43",
+    "replay_only": true,
+    "second_full_model_instantiated": false
+  },
+  "schema_version": 1,
+  "source": {
+    "files": {
+      "objective_helpers": "6c9059c43a5a0b4abd2106539e7db972ee60c6ffd74b3c8a3447773b383a4d73",
+      "training_runner": "797debdef3bf0ba145ca4af3fbf9634f91e2d7f173898f56f05ed797ff6f49c3"
+    },
+    "objective_source_sha256": "daacbe91d4d6352166ec857e4074f2cfb6261b97319bf0ffa62c6298a7197515"
+  }
+}

@@ -3874,3 +3874,28 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
 - **Next action:** Complete recipe-resolution verification, publish
   `analysis: freeze V1-equivalent KL recipe`, synchronize clean `main`, and only then implement
   token-level KL as the sole scientific intervention.
+
+### 2026-07-27 - Milestone 13C-R3 froze the replay-ce-token-kl-v1 objective
+
+- **Published recipe boundary:** Recipe commit
+  `c055fe6834d001381f7e0e9aea8ea0f89494afe5` was pushed and synchronized before implementation.
+  The implementation preserves rank 8, alpha 16, dropout 0.05, four attention projections,
+  PagedAdamW8bit at `1e-5`, four warmup steps, the 64-step cosine horizon, seed 20260720, exact V1
+  schedules, assistant-only masking, FP16 model compute, and the frozen environment.
+- **Objective:** Vetted records use unchanged assistant-only cross-entropy. Replay records add
+  mean token-level `KL(adapter-disabled base || active adapter)` only on shifted supervised
+  assistant positions. Reference logits come from the same model with its adapter disabled under
+  `torch.no_grad()` and are detached; KL probabilities are calculated in float32. There is no
+  second base model, vetted-example KL, or CPU offload.
+- **Deterministic fixtures:** Six pure objective tests establish zero identical-logit KL, positive
+  directional perturbation KL, reference-gradient isolation, exact shift masking, and coefficient
+  enforcement. The exact two-update RTX 3080 fixture also proves finite losses and gradients,
+  LoRA-only optimizer ownership, 112 changed LoRA tensors, unchanged base fingerprint
+  `bab01d04...dba`, adapter-disabled base restoration, and positive post-update replay KL
+  `6.455185030063149e-06`. It saved no adapter and used neither holdout v2 nor GSM1K.
+- **Frozen hashes:** Objective source, configuration, masking, reference, fixture, and complete
+  contract SHA-256 values are `daacbe91...7515`, `b00a0c2c...cbd7`,
+  `3858c6db...df4d`, `c6941380...9b43`, `351476cf...1e0b`, and
+  `159ef322...75a8`.
+- **Next action:** Verify and publish this objective implementation, then measure both immutable
+  historical V1 step-16 adapters as lambda-zero comparators before starting any calibration.

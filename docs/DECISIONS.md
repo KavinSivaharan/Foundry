@@ -1441,3 +1441,22 @@ This log separates proposals from approved decisions. A proposal does not author
   the intended KL-only intervention.
 - **Consequence:** After recipe record `b03dfc9d...d118` is verified, pushed, and synchronized,
   implement `replay-ce-token-kl-v1` with the historical LoRA recipe unchanged.
+
+## 2026-07-27: freeze replay-ce-token-kl-v1 as the sole intervention
+
+- **Decision:** Preserve the published V1 training recipe and add forward token KL only to replay
+  examples. The frozen direction is adapter-disabled base to active adapter, averaged in float32
+  over shifted supervised replay-assistant tokens.
+- **Reference mechanism:** Use one quantized model. Produce detached reference logits under
+  `torch.no_grad()` while the adapter is disabled; do not instantiate a second base, add KL to
+  vetted examples, or offload parameters to CPU.
+- **Runtime proof:** The bounded two-update fixture has exact V1 LoRA inventory
+  `d3edea65...5e78`, finite loss and gradients, LoRA-only optimizer ownership, positive
+  post-update KL, unchanged base fingerprint, and exact adapter-disabled restoration. It writes
+  no adapter and does not use holdout v2 or GSM1K.
+- **Frozen contract:** Objective contract `159ef322...75a8` binds source
+  `daacbe91...7515`, configuration `b00a0c2c...cbd7`, masking `3858c6db...df4d`,
+  reference mechanism `c6941380...9b43`, and fixtures `351476cf...1e0b`.
+- **Consequence:** Historical lambda-zero measurements and all eight calibrations must use this
+  exact contract. Any source, masking, reference, recipe, schedule, optimizer, seed, or
+  environment drift invalidates comparison.
