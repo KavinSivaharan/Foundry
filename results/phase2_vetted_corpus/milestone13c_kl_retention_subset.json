@@ -1,0 +1,1039 @@
+{
+  "adapter_exposure_before_freeze": false,
+  "base_summary_sha256": "a62b5cce27b43f2e2a33555a976545580ee318e0efa09fcc2dd4c74d48e36c4a",
+  "definition": "frozen_scorer_correct_on_untouched_base_before_adapter_exposure",
+  "instrument_id": "foundry-kl-independent-retention-v1",
+  "items": [
+    {
+      "id": "klri-arithmetic-001",
+      "section": "arithmetic",
+      "skill": "workshop_stock_adjustment"
+    },
+    {
+      "id": "klri-arithmetic-002",
+      "section": "arithmetic",
+      "skill": "burst_count_accumulation"
+    },
+    {
+      "id": "klri-arithmetic-003",
+      "section": "arithmetic",
+      "skill": "equal_share_then_increment"
+    },
+    {
+      "id": "klri-arithmetic-005",
+      "section": "arithmetic",
+      "skill": "percentage_change_then_offset"
+    },
+    {
+      "id": "klri-arithmetic-007",
+      "section": "arithmetic",
+      "skill": "workshop_stock_adjustment"
+    },
+    {
+      "id": "klri-arithmetic-008",
+      "section": "arithmetic",
+      "skill": "burst_count_accumulation"
+    },
+    {
+      "id": "klri-arithmetic-009",
+      "section": "arithmetic",
+      "skill": "equal_share_then_increment"
+    },
+    {
+      "id": "klri-arithmetic-011",
+      "section": "arithmetic",
+      "skill": "percentage_change_then_offset"
+    },
+    {
+      "id": "klri-arithmetic-013",
+      "section": "arithmetic",
+      "skill": "workshop_stock_adjustment"
+    },
+    {
+      "id": "klri-arithmetic-014",
+      "section": "arithmetic",
+      "skill": "burst_count_accumulation"
+    },
+    {
+      "id": "klri-arithmetic-015",
+      "section": "arithmetic",
+      "skill": "equal_share_then_increment"
+    },
+    {
+      "id": "klri-arithmetic-017",
+      "section": "arithmetic",
+      "skill": "percentage_change_then_offset"
+    },
+    {
+      "id": "klri-arithmetic-019",
+      "section": "arithmetic",
+      "skill": "workshop_stock_adjustment"
+    },
+    {
+      "id": "klri-arithmetic-020",
+      "section": "arithmetic",
+      "skill": "burst_count_accumulation"
+    },
+    {
+      "id": "klri-arithmetic-021",
+      "section": "arithmetic",
+      "skill": "equal_share_then_increment"
+    },
+    {
+      "id": "klri-arithmetic-023",
+      "section": "arithmetic",
+      "skill": "percentage_change_then_offset"
+    },
+    {
+      "id": "klri-arithmetic-025",
+      "section": "arithmetic",
+      "skill": "workshop_stock_adjustment"
+    },
+    {
+      "id": "klri-arithmetic-026",
+      "section": "arithmetic",
+      "skill": "burst_count_accumulation"
+    },
+    {
+      "id": "klri-arithmetic-027",
+      "section": "arithmetic",
+      "skill": "equal_share_then_increment"
+    },
+    {
+      "id": "klri-arithmetic-029",
+      "section": "arithmetic",
+      "skill": "percentage_change_then_offset"
+    },
+    {
+      "id": "klri-arithmetic-031",
+      "section": "arithmetic",
+      "skill": "workshop_stock_adjustment"
+    },
+    {
+      "id": "klri-arithmetic-032",
+      "section": "arithmetic",
+      "skill": "burst_count_accumulation"
+    },
+    {
+      "id": "klri-arithmetic-033",
+      "section": "arithmetic",
+      "skill": "equal_share_then_increment"
+    },
+    {
+      "id": "klri-arithmetic-035",
+      "section": "arithmetic",
+      "skill": "percentage_change_then_offset"
+    },
+    {
+      "id": "klri-arithmetic-037",
+      "section": "arithmetic",
+      "skill": "workshop_stock_adjustment"
+    },
+    {
+      "id": "klri-arithmetic-038",
+      "section": "arithmetic",
+      "skill": "burst_count_accumulation"
+    },
+    {
+      "id": "klri-arithmetic-039",
+      "section": "arithmetic",
+      "skill": "equal_share_then_increment"
+    },
+    {
+      "id": "klri-arithmetic-041",
+      "section": "arithmetic",
+      "skill": "percentage_change_then_offset"
+    },
+    {
+      "id": "klri-arithmetic-043",
+      "section": "arithmetic",
+      "skill": "workshop_stock_adjustment"
+    },
+    {
+      "id": "klri-arithmetic-044",
+      "section": "arithmetic",
+      "skill": "burst_count_accumulation"
+    },
+    {
+      "id": "klri-arithmetic-045",
+      "section": "arithmetic",
+      "skill": "equal_share_then_increment"
+    },
+    {
+      "id": "klri-arithmetic-047",
+      "section": "arithmetic",
+      "skill": "percentage_change_then_offset"
+    },
+    {
+      "id": "klri-arithmetic-049",
+      "section": "arithmetic",
+      "skill": "workshop_stock_adjustment"
+    },
+    {
+      "id": "klri-arithmetic-051",
+      "section": "arithmetic",
+      "skill": "equal_share_then_increment"
+    },
+    {
+      "id": "klri-arithmetic-053",
+      "section": "arithmetic",
+      "skill": "percentage_change_then_offset"
+    },
+    {
+      "id": "klri-arithmetic-055",
+      "section": "arithmetic",
+      "skill": "workshop_stock_adjustment"
+    },
+    {
+      "id": "klri-arithmetic-056",
+      "section": "arithmetic",
+      "skill": "burst_count_accumulation"
+    },
+    {
+      "id": "klri-arithmetic-057",
+      "section": "arithmetic",
+      "skill": "equal_share_then_increment"
+    },
+    {
+      "id": "klri-arithmetic-059",
+      "section": "arithmetic",
+      "skill": "percentage_change_then_offset"
+    },
+    {
+      "id": "klri-arithmetic-060",
+      "section": "arithmetic",
+      "skill": "symmetric_four_value_mean"
+    },
+    {
+      "id": "klri-arithmetic-061",
+      "section": "arithmetic",
+      "skill": "workshop_stock_adjustment"
+    },
+    {
+      "id": "klri-arithmetic-062",
+      "section": "arithmetic",
+      "skill": "burst_count_accumulation"
+    },
+    {
+      "id": "klri-arithmetic-063",
+      "section": "arithmetic",
+      "skill": "equal_share_then_increment"
+    },
+    {
+      "id": "klri-arithmetic-065",
+      "section": "arithmetic",
+      "skill": "percentage_change_then_offset"
+    },
+    {
+      "id": "klri-arithmetic-067",
+      "section": "arithmetic",
+      "skill": "workshop_stock_adjustment"
+    },
+    {
+      "id": "klri-arithmetic-068",
+      "section": "arithmetic",
+      "skill": "burst_count_accumulation"
+    },
+    {
+      "id": "klri-arithmetic-069",
+      "section": "arithmetic",
+      "skill": "equal_share_then_increment"
+    },
+    {
+      "id": "klri-arithmetic-071",
+      "section": "arithmetic",
+      "skill": "percentage_change_then_offset"
+    },
+    {
+      "id": "klri-arithmetic-073",
+      "section": "arithmetic",
+      "skill": "workshop_stock_adjustment"
+    },
+    {
+      "id": "klri-arithmetic-074",
+      "section": "arithmetic",
+      "skill": "burst_count_accumulation"
+    },
+    {
+      "id": "klri-arithmetic-075",
+      "section": "arithmetic",
+      "skill": "equal_share_then_increment"
+    },
+    {
+      "id": "klri-arithmetic-077",
+      "section": "arithmetic",
+      "skill": "percentage_change_then_offset"
+    },
+    {
+      "id": "klri-arithmetic-079",
+      "section": "arithmetic",
+      "skill": "workshop_stock_adjustment"
+    },
+    {
+      "id": "klri-arithmetic-080",
+      "section": "arithmetic",
+      "skill": "burst_count_accumulation"
+    },
+    {
+      "id": "klri-arithmetic-081",
+      "section": "arithmetic",
+      "skill": "equal_share_then_increment"
+    },
+    {
+      "id": "klri-arithmetic-083",
+      "section": "arithmetic",
+      "skill": "percentage_change_then_offset"
+    },
+    {
+      "id": "klri-arithmetic-085",
+      "section": "arithmetic",
+      "skill": "workshop_stock_adjustment"
+    },
+    {
+      "id": "klri-arithmetic-087",
+      "section": "arithmetic",
+      "skill": "equal_share_then_increment"
+    },
+    {
+      "id": "klri-arithmetic-089",
+      "section": "arithmetic",
+      "skill": "percentage_change_then_offset"
+    },
+    {
+      "id": "klri-arithmetic-091",
+      "section": "arithmetic",
+      "skill": "workshop_stock_adjustment"
+    },
+    {
+      "id": "klri-arithmetic-092",
+      "section": "arithmetic",
+      "skill": "burst_count_accumulation"
+    },
+    {
+      "id": "klri-arithmetic-093",
+      "section": "arithmetic",
+      "skill": "equal_share_then_increment"
+    },
+    {
+      "id": "klri-arithmetic-095",
+      "section": "arithmetic",
+      "skill": "percentage_change_then_offset"
+    },
+    {
+      "id": "klri-arithmetic-097",
+      "section": "arithmetic",
+      "skill": "workshop_stock_adjustment"
+    },
+    {
+      "id": "klri-arithmetic-098",
+      "section": "arithmetic",
+      "skill": "burst_count_accumulation"
+    },
+    {
+      "id": "klri-arithmetic-099",
+      "section": "arithmetic",
+      "skill": "equal_share_then_increment"
+    },
+    {
+      "id": "klri-arithmetic-101",
+      "section": "arithmetic",
+      "skill": "percentage_change_then_offset"
+    },
+    {
+      "id": "klri-arithmetic-103",
+      "section": "arithmetic",
+      "skill": "workshop_stock_adjustment"
+    },
+    {
+      "id": "klri-arithmetic-104",
+      "section": "arithmetic",
+      "skill": "burst_count_accumulation"
+    },
+    {
+      "id": "klri-arithmetic-105",
+      "section": "arithmetic",
+      "skill": "equal_share_then_increment"
+    },
+    {
+      "id": "klri-arithmetic-107",
+      "section": "arithmetic",
+      "skill": "percentage_change_then_offset"
+    },
+    {
+      "id": "klri-arithmetic-109",
+      "section": "arithmetic",
+      "skill": "workshop_stock_adjustment"
+    },
+    {
+      "id": "klri-arithmetic-110",
+      "section": "arithmetic",
+      "skill": "burst_count_accumulation"
+    },
+    {
+      "id": "klri-arithmetic-111",
+      "section": "arithmetic",
+      "skill": "equal_share_then_increment"
+    },
+    {
+      "id": "klri-arithmetic-113",
+      "section": "arithmetic",
+      "skill": "percentage_change_then_offset"
+    },
+    {
+      "id": "klri-arithmetic-115",
+      "section": "arithmetic",
+      "skill": "workshop_stock_adjustment"
+    },
+    {
+      "id": "klri-arithmetic-116",
+      "section": "arithmetic",
+      "skill": "burst_count_accumulation"
+    },
+    {
+      "id": "klri-arithmetic-117",
+      "section": "arithmetic",
+      "skill": "equal_share_then_increment"
+    },
+    {
+      "id": "klri-arithmetic-119",
+      "section": "arithmetic",
+      "skill": "percentage_change_then_offset"
+    },
+    {
+      "id": "klri-format-002",
+      "section": "format",
+      "skill": "fixed_delimiter_identifier"
+    },
+    {
+      "id": "klri-format-005",
+      "section": "format",
+      "skill": "semicolon_key_value_record"
+    },
+    {
+      "id": "klri-format-006",
+      "section": "format",
+      "skill": "bracketed_status_line"
+    },
+    {
+      "id": "klri-format-007",
+      "section": "format",
+      "skill": "literal_token_only"
+    },
+    {
+      "id": "klri-format-008",
+      "section": "format",
+      "skill": "fixed_delimiter_identifier"
+    },
+    {
+      "id": "klri-format-011",
+      "section": "format",
+      "skill": "semicolon_key_value_record"
+    },
+    {
+      "id": "klri-format-012",
+      "section": "format",
+      "skill": "bracketed_status_line"
+    },
+    {
+      "id": "klri-format-013",
+      "section": "format",
+      "skill": "literal_token_only"
+    },
+    {
+      "id": "klri-format-014",
+      "section": "format",
+      "skill": "fixed_delimiter_identifier"
+    },
+    {
+      "id": "klri-format-017",
+      "section": "format",
+      "skill": "semicolon_key_value_record"
+    },
+    {
+      "id": "klri-format-018",
+      "section": "format",
+      "skill": "bracketed_status_line"
+    },
+    {
+      "id": "klri-format-019",
+      "section": "format",
+      "skill": "literal_token_only"
+    },
+    {
+      "id": "klri-format-020",
+      "section": "format",
+      "skill": "fixed_delimiter_identifier"
+    },
+    {
+      "id": "klri-format-022",
+      "section": "format",
+      "skill": "three_column_csv"
+    },
+    {
+      "id": "klri-format-023",
+      "section": "format",
+      "skill": "semicolon_key_value_record"
+    },
+    {
+      "id": "klri-format-024",
+      "section": "format",
+      "skill": "bracketed_status_line"
+    },
+    {
+      "id": "klri-format-025",
+      "section": "format",
+      "skill": "literal_token_only"
+    },
+    {
+      "id": "klri-format-026",
+      "section": "format",
+      "skill": "fixed_delimiter_identifier"
+    },
+    {
+      "id": "klri-format-028",
+      "section": "format",
+      "skill": "three_column_csv"
+    },
+    {
+      "id": "klri-format-029",
+      "section": "format",
+      "skill": "semicolon_key_value_record"
+    },
+    {
+      "id": "klri-format-030",
+      "section": "format",
+      "skill": "bracketed_status_line"
+    },
+    {
+      "id": "klri-format-031",
+      "section": "format",
+      "skill": "literal_token_only"
+    },
+    {
+      "id": "klri-format-032",
+      "section": "format",
+      "skill": "fixed_delimiter_identifier"
+    },
+    {
+      "id": "klri-format-034",
+      "section": "format",
+      "skill": "three_column_csv"
+    },
+    {
+      "id": "klri-format-035",
+      "section": "format",
+      "skill": "semicolon_key_value_record"
+    },
+    {
+      "id": "klri-format-036",
+      "section": "format",
+      "skill": "bracketed_status_line"
+    },
+    {
+      "id": "klri-format-037",
+      "section": "format",
+      "skill": "literal_token_only"
+    },
+    {
+      "id": "klri-format-038",
+      "section": "format",
+      "skill": "fixed_delimiter_identifier"
+    },
+    {
+      "id": "klri-format-040",
+      "section": "format",
+      "skill": "three_column_csv"
+    },
+    {
+      "id": "klri-format-041",
+      "section": "format",
+      "skill": "semicolon_key_value_record"
+    },
+    {
+      "id": "klri-format-042",
+      "section": "format",
+      "skill": "bracketed_status_line"
+    },
+    {
+      "id": "klri-format-043",
+      "section": "format",
+      "skill": "literal_token_only"
+    },
+    {
+      "id": "klri-format-044",
+      "section": "format",
+      "skill": "fixed_delimiter_identifier"
+    },
+    {
+      "id": "klri-format-046",
+      "section": "format",
+      "skill": "three_column_csv"
+    },
+    {
+      "id": "klri-format-047",
+      "section": "format",
+      "skill": "semicolon_key_value_record"
+    },
+    {
+      "id": "klri-format-048",
+      "section": "format",
+      "skill": "bracketed_status_line"
+    },
+    {
+      "id": "klri-format-049",
+      "section": "format",
+      "skill": "literal_token_only"
+    },
+    {
+      "id": "klri-format-050",
+      "section": "format",
+      "skill": "fixed_delimiter_identifier"
+    },
+    {
+      "id": "klri-format-052",
+      "section": "format",
+      "skill": "three_column_csv"
+    },
+    {
+      "id": "klri-format-053",
+      "section": "format",
+      "skill": "semicolon_key_value_record"
+    },
+    {
+      "id": "klri-format-054",
+      "section": "format",
+      "skill": "bracketed_status_line"
+    },
+    {
+      "id": "klri-format-055",
+      "section": "format",
+      "skill": "literal_token_only"
+    },
+    {
+      "id": "klri-format-056",
+      "section": "format",
+      "skill": "fixed_delimiter_identifier"
+    },
+    {
+      "id": "klri-format-059",
+      "section": "format",
+      "skill": "semicolon_key_value_record"
+    },
+    {
+      "id": "klri-format-060",
+      "section": "format",
+      "skill": "bracketed_status_line"
+    },
+    {
+      "id": "klri-format-061",
+      "section": "format",
+      "skill": "literal_token_only"
+    },
+    {
+      "id": "klri-format-062",
+      "section": "format",
+      "skill": "fixed_delimiter_identifier"
+    },
+    {
+      "id": "klri-format-065",
+      "section": "format",
+      "skill": "semicolon_key_value_record"
+    },
+    {
+      "id": "klri-format-066",
+      "section": "format",
+      "skill": "bracketed_status_line"
+    },
+    {
+      "id": "klri-format-067",
+      "section": "format",
+      "skill": "literal_token_only"
+    },
+    {
+      "id": "klri-format-068",
+      "section": "format",
+      "skill": "fixed_delimiter_identifier"
+    },
+    {
+      "id": "klri-format-071",
+      "section": "format",
+      "skill": "semicolon_key_value_record"
+    },
+    {
+      "id": "klri-format-072",
+      "section": "format",
+      "skill": "bracketed_status_line"
+    },
+    {
+      "id": "klri-format-073",
+      "section": "format",
+      "skill": "literal_token_only"
+    },
+    {
+      "id": "klri-format-074",
+      "section": "format",
+      "skill": "fixed_delimiter_identifier"
+    },
+    {
+      "id": "klri-format-077",
+      "section": "format",
+      "skill": "semicolon_key_value_record"
+    },
+    {
+      "id": "klri-format-078",
+      "section": "format",
+      "skill": "bracketed_status_line"
+    },
+    {
+      "id": "klri-format-079",
+      "section": "format",
+      "skill": "literal_token_only"
+    },
+    {
+      "id": "klri-format-080",
+      "section": "format",
+      "skill": "fixed_delimiter_identifier"
+    },
+    {
+      "id": "klri-format-082",
+      "section": "format",
+      "skill": "three_column_csv"
+    },
+    {
+      "id": "klri-format-083",
+      "section": "format",
+      "skill": "semicolon_key_value_record"
+    },
+    {
+      "id": "klri-format-084",
+      "section": "format",
+      "skill": "bracketed_status_line"
+    },
+    {
+      "id": "klri-format-085",
+      "section": "format",
+      "skill": "literal_token_only"
+    },
+    {
+      "id": "klri-format-086",
+      "section": "format",
+      "skill": "fixed_delimiter_identifier"
+    },
+    {
+      "id": "klri-format-088",
+      "section": "format",
+      "skill": "three_column_csv"
+    },
+    {
+      "id": "klri-format-089",
+      "section": "format",
+      "skill": "semicolon_key_value_record"
+    },
+    {
+      "id": "klri-format-090",
+      "section": "format",
+      "skill": "bracketed_status_line"
+    },
+    {
+      "id": "klri-format-091",
+      "section": "format",
+      "skill": "literal_token_only"
+    },
+    {
+      "id": "klri-format-092",
+      "section": "format",
+      "skill": "fixed_delimiter_identifier"
+    },
+    {
+      "id": "klri-format-095",
+      "section": "format",
+      "skill": "semicolon_key_value_record"
+    },
+    {
+      "id": "klri-format-096",
+      "section": "format",
+      "skill": "bracketed_status_line"
+    },
+    {
+      "id": "klri-format-098",
+      "section": "format",
+      "skill": "fixed_delimiter_identifier"
+    },
+    {
+      "id": "klri-format-100",
+      "section": "format",
+      "skill": "three_column_csv"
+    },
+    {
+      "id": "klri-format-101",
+      "section": "format",
+      "skill": "semicolon_key_value_record"
+    },
+    {
+      "id": "klri-format-102",
+      "section": "format",
+      "skill": "bracketed_status_line"
+    },
+    {
+      "id": "klri-format-103",
+      "section": "format",
+      "skill": "literal_token_only"
+    },
+    {
+      "id": "klri-format-104",
+      "section": "format",
+      "skill": "fixed_delimiter_identifier"
+    },
+    {
+      "id": "klri-format-106",
+      "section": "format",
+      "skill": "three_column_csv"
+    },
+    {
+      "id": "klri-format-107",
+      "section": "format",
+      "skill": "semicolon_key_value_record"
+    },
+    {
+      "id": "klri-format-108",
+      "section": "format",
+      "skill": "bracketed_status_line"
+    },
+    {
+      "id": "klri-format-109",
+      "section": "format",
+      "skill": "literal_token_only"
+    },
+    {
+      "id": "klri-format-110",
+      "section": "format",
+      "skill": "fixed_delimiter_identifier"
+    },
+    {
+      "id": "klri-format-112",
+      "section": "format",
+      "skill": "three_column_csv"
+    },
+    {
+      "id": "klri-format-113",
+      "section": "format",
+      "skill": "semicolon_key_value_record"
+    },
+    {
+      "id": "klri-format-114",
+      "section": "format",
+      "skill": "bracketed_status_line"
+    },
+    {
+      "id": "klri-format-115",
+      "section": "format",
+      "skill": "literal_token_only"
+    },
+    {
+      "id": "klri-format-116",
+      "section": "format",
+      "skill": "fixed_delimiter_identifier"
+    },
+    {
+      "id": "klri-format-119",
+      "section": "format",
+      "skill": "semicolon_key_value_record"
+    },
+    {
+      "id": "klri-format-120",
+      "section": "format",
+      "skill": "bracketed_status_line"
+    },
+    {
+      "id": "klri-instruction-005",
+      "section": "instruction",
+      "skill": "uppercase_transformation"
+    },
+    {
+      "id": "klri-instruction-006",
+      "section": "instruction",
+      "skill": "parity_conditioned_label"
+    },
+    {
+      "id": "klri-instruction-007",
+      "section": "instruction",
+      "skill": "alphabetic_reordering"
+    },
+    {
+      "id": "klri-instruction-008",
+      "section": "instruction",
+      "skill": "even_position_selection"
+    },
+    {
+      "id": "klri-instruction-011",
+      "section": "instruction",
+      "skill": "uppercase_transformation"
+    },
+    {
+      "id": "klri-instruction-018",
+      "section": "instruction",
+      "skill": "parity_conditioned_label"
+    },
+    {
+      "id": "klri-instruction-023",
+      "section": "instruction",
+      "skill": "uppercase_transformation"
+    },
+    {
+      "id": "klri-instruction-029",
+      "section": "instruction",
+      "skill": "uppercase_transformation"
+    },
+    {
+      "id": "klri-instruction-030",
+      "section": "instruction",
+      "skill": "parity_conditioned_label"
+    },
+    {
+      "id": "klri-instruction-035",
+      "section": "instruction",
+      "skill": "uppercase_transformation"
+    },
+    {
+      "id": "klri-instruction-037",
+      "section": "instruction",
+      "skill": "alphabetic_reordering"
+    },
+    {
+      "id": "klri-instruction-044",
+      "section": "instruction",
+      "skill": "even_position_selection"
+    },
+    {
+      "id": "klri-instruction-047",
+      "section": "instruction",
+      "skill": "uppercase_transformation"
+    },
+    {
+      "id": "klri-instruction-050",
+      "section": "instruction",
+      "skill": "even_position_selection"
+    },
+    {
+      "id": "klri-instruction-053",
+      "section": "instruction",
+      "skill": "uppercase_transformation"
+    },
+    {
+      "id": "klri-instruction-054",
+      "section": "instruction",
+      "skill": "parity_conditioned_label"
+    },
+    {
+      "id": "klri-instruction-055",
+      "section": "instruction",
+      "skill": "alphabetic_reordering"
+    },
+    {
+      "id": "klri-instruction-059",
+      "section": "instruction",
+      "skill": "uppercase_transformation"
+    },
+    {
+      "id": "klri-instruction-065",
+      "section": "instruction",
+      "skill": "uppercase_transformation"
+    },
+    {
+      "id": "klri-instruction-067",
+      "section": "instruction",
+      "skill": "alphabetic_reordering"
+    },
+    {
+      "id": "klri-instruction-068",
+      "section": "instruction",
+      "skill": "even_position_selection"
+    },
+    {
+      "id": "klri-instruction-071",
+      "section": "instruction",
+      "skill": "uppercase_transformation"
+    },
+    {
+      "id": "klri-instruction-072",
+      "section": "instruction",
+      "skill": "parity_conditioned_label"
+    },
+    {
+      "id": "klri-instruction-078",
+      "section": "instruction",
+      "skill": "parity_conditioned_label"
+    },
+    {
+      "id": "klri-instruction-083",
+      "section": "instruction",
+      "skill": "uppercase_transformation"
+    },
+    {
+      "id": "klri-instruction-084",
+      "section": "instruction",
+      "skill": "parity_conditioned_label"
+    },
+    {
+      "id": "klri-instruction-089",
+      "section": "instruction",
+      "skill": "uppercase_transformation"
+    },
+    {
+      "id": "klri-instruction-090",
+      "section": "instruction",
+      "skill": "parity_conditioned_label"
+    },
+    {
+      "id": "klri-instruction-095",
+      "section": "instruction",
+      "skill": "uppercase_transformation"
+    },
+    {
+      "id": "klri-instruction-097",
+      "section": "instruction",
+      "skill": "alphabetic_reordering"
+    },
+    {
+      "id": "klri-instruction-107",
+      "section": "instruction",
+      "skill": "uppercase_transformation"
+    },
+    {
+      "id": "klri-instruction-110",
+      "section": "instruction",
+      "skill": "even_position_selection"
+    },
+    {
+      "id": "klri-instruction-113",
+      "section": "instruction",
+      "skill": "uppercase_transformation"
+    },
+    {
+      "id": "klri-instruction-114",
+      "section": "instruction",
+      "skill": "parity_conditioned_label"
+    },
+    {
+      "id": "klri-instruction-115",
+      "section": "instruction",
+      "skill": "alphabetic_reordering"
+    },
+    {
+      "id": "klri-instruction-119",
+      "section": "instruction",
+      "skill": "uppercase_transformation"
+    }
+  ],
+  "prompts_or_references_in_manifest": false,
+  "schema_version": 1,
+  "section_counts": {
+    "arithmetic": 79,
+    "format": 89,
+    "instruction": 36
+  },
+  "subset_id": "foundry-kl-independent-retention-base-correct-v1",
+  "subset_sha256": "4ea32e5cbde0addfbf448291f92d40f1bb40e33dbe4706f7770a3e4c7a0047b7",
+  "suite_sha256": "826ccfda6714af45f2f8e0ae3926d4607a149446ae5b2f75137704e906a2d92e",
+  "total": 204
+}

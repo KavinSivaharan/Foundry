@@ -1,0 +1,4028 @@
+{
+  "adapter_exposure_before_freeze": false,
+  "base_correct_subset": {
+    "adapter_exposure_before_freeze": false,
+    "base_summary_sha256": "a62b5cce27b43f2e2a33555a976545580ee318e0efa09fcc2dd4c74d48e36c4a",
+    "definition": "frozen_scorer_correct_on_untouched_base_before_adapter_exposure",
+    "instrument_id": "foundry-kl-independent-retention-v1",
+    "items": [
+      {
+        "id": "klri-arithmetic-001",
+        "section": "arithmetic",
+        "skill": "workshop_stock_adjustment"
+      },
+      {
+        "id": "klri-arithmetic-002",
+        "section": "arithmetic",
+        "skill": "burst_count_accumulation"
+      },
+      {
+        "id": "klri-arithmetic-003",
+        "section": "arithmetic",
+        "skill": "equal_share_then_increment"
+      },
+      {
+        "id": "klri-arithmetic-005",
+        "section": "arithmetic",
+        "skill": "percentage_change_then_offset"
+      },
+      {
+        "id": "klri-arithmetic-007",
+        "section": "arithmetic",
+        "skill": "workshop_stock_adjustment"
+      },
+      {
+        "id": "klri-arithmetic-008",
+        "section": "arithmetic",
+        "skill": "burst_count_accumulation"
+      },
+      {
+        "id": "klri-arithmetic-009",
+        "section": "arithmetic",
+        "skill": "equal_share_then_increment"
+      },
+      {
+        "id": "klri-arithmetic-011",
+        "section": "arithmetic",
+        "skill": "percentage_change_then_offset"
+      },
+      {
+        "id": "klri-arithmetic-013",
+        "section": "arithmetic",
+        "skill": "workshop_stock_adjustment"
+      },
+      {
+        "id": "klri-arithmetic-014",
+        "section": "arithmetic",
+        "skill": "burst_count_accumulation"
+      },
+      {
+        "id": "klri-arithmetic-015",
+        "section": "arithmetic",
+        "skill": "equal_share_then_increment"
+      },
+      {
+        "id": "klri-arithmetic-017",
+        "section": "arithmetic",
+        "skill": "percentage_change_then_offset"
+      },
+      {
+        "id": "klri-arithmetic-019",
+        "section": "arithmetic",
+        "skill": "workshop_stock_adjustment"
+      },
+      {
+        "id": "klri-arithmetic-020",
+        "section": "arithmetic",
+        "skill": "burst_count_accumulation"
+      },
+      {
+        "id": "klri-arithmetic-021",
+        "section": "arithmetic",
+        "skill": "equal_share_then_increment"
+      },
+      {
+        "id": "klri-arithmetic-023",
+        "section": "arithmetic",
+        "skill": "percentage_change_then_offset"
+      },
+      {
+        "id": "klri-arithmetic-025",
+        "section": "arithmetic",
+        "skill": "workshop_stock_adjustment"
+      },
+      {
+        "id": "klri-arithmetic-026",
+        "section": "arithmetic",
+        "skill": "burst_count_accumulation"
+      },
+      {
+        "id": "klri-arithmetic-027",
+        "section": "arithmetic",
+        "skill": "equal_share_then_increment"
+      },
+      {
+        "id": "klri-arithmetic-029",
+        "section": "arithmetic",
+        "skill": "percentage_change_then_offset"
+      },
+      {
+        "id": "klri-arithmetic-031",
+        "section": "arithmetic",
+        "skill": "workshop_stock_adjustment"
+      },
+      {
+        "id": "klri-arithmetic-032",
+        "section": "arithmetic",
+        "skill": "burst_count_accumulation"
+      },
+      {
+        "id": "klri-arithmetic-033",
+        "section": "arithmetic",
+        "skill": "equal_share_then_increment"
+      },
+      {
+        "id": "klri-arithmetic-035",
+        "section": "arithmetic",
+        "skill": "percentage_change_then_offset"
+      },
+      {
+        "id": "klri-arithmetic-037",
+        "section": "arithmetic",
+        "skill": "workshop_stock_adjustment"
+      },
+      {
+        "id": "klri-arithmetic-038",
+        "section": "arithmetic",
+        "skill": "burst_count_accumulation"
+      },
+      {
+        "id": "klri-arithmetic-039",
+        "section": "arithmetic",
+        "skill": "equal_share_then_increment"
+      },
+      {
+        "id": "klri-arithmetic-041",
+        "section": "arithmetic",
+        "skill": "percentage_change_then_offset"
+      },
+      {
+        "id": "klri-arithmetic-043",
+        "section": "arithmetic",
+        "skill": "workshop_stock_adjustment"
+      },
+      {
+        "id": "klri-arithmetic-044",
+        "section": "arithmetic",
+        "skill": "burst_count_accumulation"
+      },
+      {
+        "id": "klri-arithmetic-045",
+        "section": "arithmetic",
+        "skill": "equal_share_then_increment"
+      },
+      {
+        "id": "klri-arithmetic-047",
+        "section": "arithmetic",
+        "skill": "percentage_change_then_offset"
+      },
+      {
+        "id": "klri-arithmetic-049",
+        "section": "arithmetic",
+        "skill": "workshop_stock_adjustment"
+      },
+      {
+        "id": "klri-arithmetic-051",
+        "section": "arithmetic",
+        "skill": "equal_share_then_increment"
+      },
+      {
+        "id": "klri-arithmetic-053",
+        "section": "arithmetic",
+        "skill": "percentage_change_then_offset"
+      },
+      {
+        "id": "klri-arithmetic-055",
+        "section": "arithmetic",
+        "skill": "workshop_stock_adjustment"
+      },
+      {
+        "id": "klri-arithmetic-056",
+        "section": "arithmetic",
+        "skill": "burst_count_accumulation"
+      },
+      {
+        "id": "klri-arithmetic-057",
+        "section": "arithmetic",
+        "skill": "equal_share_then_increment"
+      },
+      {
+        "id": "klri-arithmetic-059",
+        "section": "arithmetic",
+        "skill": "percentage_change_then_offset"
+      },
+      {
+        "id": "klri-arithmetic-060",
+        "section": "arithmetic",
+        "skill": "symmetric_four_value_mean"
+      },
+      {
+        "id": "klri-arithmetic-061",
+        "section": "arithmetic",
+        "skill": "workshop_stock_adjustment"
+      },
+      {
+        "id": "klri-arithmetic-062",
+        "section": "arithmetic",
+        "skill": "burst_count_accumulation"
+      },
+      {
+        "id": "klri-arithmetic-063",
+        "section": "arithmetic",
+        "skill": "equal_share_then_increment"
+      },
+      {
+        "id": "klri-arithmetic-065",
+        "section": "arithmetic",
+        "skill": "percentage_change_then_offset"
+      },
+      {
+        "id": "klri-arithmetic-067",
+        "section": "arithmetic",
+        "skill": "workshop_stock_adjustment"
+      },
+      {
+        "id": "klri-arithmetic-068",
+        "section": "arithmetic",
+        "skill": "burst_count_accumulation"
+      },
+      {
+        "id": "klri-arithmetic-069",
+        "section": "arithmetic",
+        "skill": "equal_share_then_increment"
+      },
+      {
+        "id": "klri-arithmetic-071",
+        "section": "arithmetic",
+        "skill": "percentage_change_then_offset"
+      },
+      {
+        "id": "klri-arithmetic-073",
+        "section": "arithmetic",
+        "skill": "workshop_stock_adjustment"
+      },
+      {
+        "id": "klri-arithmetic-074",
+        "section": "arithmetic",
+        "skill": "burst_count_accumulation"
+      },
+      {
+        "id": "klri-arithmetic-075",
+        "section": "arithmetic",
+        "skill": "equal_share_then_increment"
+      },
+      {
+        "id": "klri-arithmetic-077",
+        "section": "arithmetic",
+        "skill": "percentage_change_then_offset"
+      },
+      {
+        "id": "klri-arithmetic-079",
+        "section": "arithmetic",
+        "skill": "workshop_stock_adjustment"
+      },
+      {
+        "id": "klri-arithmetic-080",
+        "section": "arithmetic",
+        "skill": "burst_count_accumulation"
+      },
+      {
+        "id": "klri-arithmetic-081",
+        "section": "arithmetic",
+        "skill": "equal_share_then_increment"
+      },
+      {
+        "id": "klri-arithmetic-083",
+        "section": "arithmetic",
+        "skill": "percentage_change_then_offset"
+      },
+      {
+        "id": "klri-arithmetic-085",
+        "section": "arithmetic",
+        "skill": "workshop_stock_adjustment"
+      },
+      {
+        "id": "klri-arithmetic-087",
+        "section": "arithmetic",
+        "skill": "equal_share_then_increment"
+      },
+      {
+        "id": "klri-arithmetic-089",
+        "section": "arithmetic",
+        "skill": "percentage_change_then_offset"
+      },
+      {
+        "id": "klri-arithmetic-091",
+        "section": "arithmetic",
+        "skill": "workshop_stock_adjustment"
+      },
+      {
+        "id": "klri-arithmetic-092",
+        "section": "arithmetic",
+        "skill": "burst_count_accumulation"
+      },
+      {
+        "id": "klri-arithmetic-093",
+        "section": "arithmetic",
+        "skill": "equal_share_then_increment"
+      },
+      {
+        "id": "klri-arithmetic-095",
+        "section": "arithmetic",
+        "skill": "percentage_change_then_offset"
+      },
+      {
+        "id": "klri-arithmetic-097",
+        "section": "arithmetic",
+        "skill": "workshop_stock_adjustment"
+      },
+      {
+        "id": "klri-arithmetic-098",
+        "section": "arithmetic",
+        "skill": "burst_count_accumulation"
+      },
+      {
+        "id": "klri-arithmetic-099",
+        "section": "arithmetic",
+        "skill": "equal_share_then_increment"
+      },
+      {
+        "id": "klri-arithmetic-101",
+        "section": "arithmetic",
+        "skill": "percentage_change_then_offset"
+      },
+      {
+        "id": "klri-arithmetic-103",
+        "section": "arithmetic",
+        "skill": "workshop_stock_adjustment"
+      },
+      {
+        "id": "klri-arithmetic-104",
+        "section": "arithmetic",
+        "skill": "burst_count_accumulation"
+      },
+      {
+        "id": "klri-arithmetic-105",
+        "section": "arithmetic",
+        "skill": "equal_share_then_increment"
+      },
+      {
+        "id": "klri-arithmetic-107",
+        "section": "arithmetic",
+        "skill": "percentage_change_then_offset"
+      },
+      {
+        "id": "klri-arithmetic-109",
+        "section": "arithmetic",
+        "skill": "workshop_stock_adjustment"
+      },
+      {
+        "id": "klri-arithmetic-110",
+        "section": "arithmetic",
+        "skill": "burst_count_accumulation"
+      },
+      {
+        "id": "klri-arithmetic-111",
+        "section": "arithmetic",
+        "skill": "equal_share_then_increment"
+      },
+      {
+        "id": "klri-arithmetic-113",
+        "section": "arithmetic",
+        "skill": "percentage_change_then_offset"
+      },
+      {
+        "id": "klri-arithmetic-115",
+        "section": "arithmetic",
+        "skill": "workshop_stock_adjustment"
+      },
+      {
+        "id": "klri-arithmetic-116",
+        "section": "arithmetic",
+        "skill": "burst_count_accumulation"
+      },
+      {
+        "id": "klri-arithmetic-117",
+        "section": "arithmetic",
+        "skill": "equal_share_then_increment"
+      },
+      {
+        "id": "klri-arithmetic-119",
+        "section": "arithmetic",
+        "skill": "percentage_change_then_offset"
+      },
+      {
+        "id": "klri-format-002",
+        "section": "format",
+        "skill": "fixed_delimiter_identifier"
+      },
+      {
+        "id": "klri-format-005",
+        "section": "format",
+        "skill": "semicolon_key_value_record"
+      },
+      {
+        "id": "klri-format-006",
+        "section": "format",
+        "skill": "bracketed_status_line"
+      },
+      {
+        "id": "klri-format-007",
+        "section": "format",
+        "skill": "literal_token_only"
+      },
+      {
+        "id": "klri-format-008",
+        "section": "format",
+        "skill": "fixed_delimiter_identifier"
+      },
+      {
+        "id": "klri-format-011",
+        "section": "format",
+        "skill": "semicolon_key_value_record"
+      },
+      {
+        "id": "klri-format-012",
+        "section": "format",
+        "skill": "bracketed_status_line"
+      },
+      {
+        "id": "klri-format-013",
+        "section": "format",
+        "skill": "literal_token_only"
+      },
+      {
+        "id": "klri-format-014",
+        "section": "format",
+        "skill": "fixed_delimiter_identifier"
+      },
+      {
+        "id": "klri-format-017",
+        "section": "format",
+        "skill": "semicolon_key_value_record"
+      },
+      {
+        "id": "klri-format-018",
+        "section": "format",
+        "skill": "bracketed_status_line"
+      },
+      {
+        "id": "klri-format-019",
+        "section": "format",
+        "skill": "literal_token_only"
+      },
+      {
+        "id": "klri-format-020",
+        "section": "format",
+        "skill": "fixed_delimiter_identifier"
+      },
+      {
+        "id": "klri-format-022",
+        "section": "format",
+        "skill": "three_column_csv"
+      },
+      {
+        "id": "klri-format-023",
+        "section": "format",
+        "skill": "semicolon_key_value_record"
+      },
+      {
+        "id": "klri-format-024",
+        "section": "format",
+        "skill": "bracketed_status_line"
+      },
+      {
+        "id": "klri-format-025",
+        "section": "format",
+        "skill": "literal_token_only"
+      },
+      {
+        "id": "klri-format-026",
+        "section": "format",
+        "skill": "fixed_delimiter_identifier"
+      },
+      {
+        "id": "klri-format-028",
+        "section": "format",
+        "skill": "three_column_csv"
+      },
+      {
+        "id": "klri-format-029",
+        "section": "format",
+        "skill": "semicolon_key_value_record"
+      },
+      {
+        "id": "klri-format-030",
+        "section": "format",
+        "skill": "bracketed_status_line"
+      },
+      {
+        "id": "klri-format-031",
+        "section": "format",
+        "skill": "literal_token_only"
+      },
+      {
+        "id": "klri-format-032",
+        "section": "format",
+        "skill": "fixed_delimiter_identifier"
+      },
+      {
+        "id": "klri-format-034",
+        "section": "format",
+        "skill": "three_column_csv"
+      },
+      {
+        "id": "klri-format-035",
+        "section": "format",
+        "skill": "semicolon_key_value_record"
+      },
+      {
+        "id": "klri-format-036",
+        "section": "format",
+        "skill": "bracketed_status_line"
+      },
+      {
+        "id": "klri-format-037",
+        "section": "format",
+        "skill": "literal_token_only"
+      },
+      {
+        "id": "klri-format-038",
+        "section": "format",
+        "skill": "fixed_delimiter_identifier"
+      },
+      {
+        "id": "klri-format-040",
+        "section": "format",
+        "skill": "three_column_csv"
+      },
+      {
+        "id": "klri-format-041",
+        "section": "format",
+        "skill": "semicolon_key_value_record"
+      },
+      {
+        "id": "klri-format-042",
+        "section": "format",
+        "skill": "bracketed_status_line"
+      },
+      {
+        "id": "klri-format-043",
+        "section": "format",
+        "skill": "literal_token_only"
+      },
+      {
+        "id": "klri-format-044",
+        "section": "format",
+        "skill": "fixed_delimiter_identifier"
+      },
+      {
+        "id": "klri-format-046",
+        "section": "format",
+        "skill": "three_column_csv"
+      },
+      {
+        "id": "klri-format-047",
+        "section": "format",
+        "skill": "semicolon_key_value_record"
+      },
+      {
+        "id": "klri-format-048",
+        "section": "format",
+        "skill": "bracketed_status_line"
+      },
+      {
+        "id": "klri-format-049",
+        "section": "format",
+        "skill": "literal_token_only"
+      },
+      {
+        "id": "klri-format-050",
+        "section": "format",
+        "skill": "fixed_delimiter_identifier"
+      },
+      {
+        "id": "klri-format-052",
+        "section": "format",
+        "skill": "three_column_csv"
+      },
+      {
+        "id": "klri-format-053",
+        "section": "format",
+        "skill": "semicolon_key_value_record"
+      },
+      {
+        "id": "klri-format-054",
+        "section": "format",
+        "skill": "bracketed_status_line"
+      },
+      {
+        "id": "klri-format-055",
+        "section": "format",
+        "skill": "literal_token_only"
+      },
+      {
+        "id": "klri-format-056",
+        "section": "format",
+        "skill": "fixed_delimiter_identifier"
+      },
+      {
+        "id": "klri-format-059",
+        "section": "format",
+        "skill": "semicolon_key_value_record"
+      },
+      {
+        "id": "klri-format-060",
+        "section": "format",
+        "skill": "bracketed_status_line"
+      },
+      {
+        "id": "klri-format-061",
+        "section": "format",
+        "skill": "literal_token_only"
+      },
+      {
+        "id": "klri-format-062",
+        "section": "format",
+        "skill": "fixed_delimiter_identifier"
+      },
+      {
+        "id": "klri-format-065",
+        "section": "format",
+        "skill": "semicolon_key_value_record"
+      },
+      {
+        "id": "klri-format-066",
+        "section": "format",
+        "skill": "bracketed_status_line"
+      },
+      {
+        "id": "klri-format-067",
+        "section": "format",
+        "skill": "literal_token_only"
+      },
+      {
+        "id": "klri-format-068",
+        "section": "format",
+        "skill": "fixed_delimiter_identifier"
+      },
+      {
+        "id": "klri-format-071",
+        "section": "format",
+        "skill": "semicolon_key_value_record"
+      },
+      {
+        "id": "klri-format-072",
+        "section": "format",
+        "skill": "bracketed_status_line"
+      },
+      {
+        "id": "klri-format-073",
+        "section": "format",
+        "skill": "literal_token_only"
+      },
+      {
+        "id": "klri-format-074",
+        "section": "format",
+        "skill": "fixed_delimiter_identifier"
+      },
+      {
+        "id": "klri-format-077",
+        "section": "format",
+        "skill": "semicolon_key_value_record"
+      },
+      {
+        "id": "klri-format-078",
+        "section": "format",
+        "skill": "bracketed_status_line"
+      },
+      {
+        "id": "klri-format-079",
+        "section": "format",
+        "skill": "literal_token_only"
+      },
+      {
+        "id": "klri-format-080",
+        "section": "format",
+        "skill": "fixed_delimiter_identifier"
+      },
+      {
+        "id": "klri-format-082",
+        "section": "format",
+        "skill": "three_column_csv"
+      },
+      {
+        "id": "klri-format-083",
+        "section": "format",
+        "skill": "semicolon_key_value_record"
+      },
+      {
+        "id": "klri-format-084",
+        "section": "format",
+        "skill": "bracketed_status_line"
+      },
+      {
+        "id": "klri-format-085",
+        "section": "format",
+        "skill": "literal_token_only"
+      },
+      {
+        "id": "klri-format-086",
+        "section": "format",
+        "skill": "fixed_delimiter_identifier"
+      },
+      {
+        "id": "klri-format-088",
+        "section": "format",
+        "skill": "three_column_csv"
+      },
+      {
+        "id": "klri-format-089",
+        "section": "format",
+        "skill": "semicolon_key_value_record"
+      },
+      {
+        "id": "klri-format-090",
+        "section": "format",
+        "skill": "bracketed_status_line"
+      },
+      {
+        "id": "klri-format-091",
+        "section": "format",
+        "skill": "literal_token_only"
+      },
+      {
+        "id": "klri-format-092",
+        "section": "format",
+        "skill": "fixed_delimiter_identifier"
+      },
+      {
+        "id": "klri-format-095",
+        "section": "format",
+        "skill": "semicolon_key_value_record"
+      },
+      {
+        "id": "klri-format-096",
+        "section": "format",
+        "skill": "bracketed_status_line"
+      },
+      {
+        "id": "klri-format-098",
+        "section": "format",
+        "skill": "fixed_delimiter_identifier"
+      },
+      {
+        "id": "klri-format-100",
+        "section": "format",
+        "skill": "three_column_csv"
+      },
+      {
+        "id": "klri-format-101",
+        "section": "format",
+        "skill": "semicolon_key_value_record"
+      },
+      {
+        "id": "klri-format-102",
+        "section": "format",
+        "skill": "bracketed_status_line"
+      },
+      {
+        "id": "klri-format-103",
+        "section": "format",
+        "skill": "literal_token_only"
+      },
+      {
+        "id": "klri-format-104",
+        "section": "format",
+        "skill": "fixed_delimiter_identifier"
+      },
+      {
+        "id": "klri-format-106",
+        "section": "format",
+        "skill": "three_column_csv"
+      },
+      {
+        "id": "klri-format-107",
+        "section": "format",
+        "skill": "semicolon_key_value_record"
+      },
+      {
+        "id": "klri-format-108",
+        "section": "format",
+        "skill": "bracketed_status_line"
+      },
+      {
+        "id": "klri-format-109",
+        "section": "format",
+        "skill": "literal_token_only"
+      },
+      {
+        "id": "klri-format-110",
+        "section": "format",
+        "skill": "fixed_delimiter_identifier"
+      },
+      {
+        "id": "klri-format-112",
+        "section": "format",
+        "skill": "three_column_csv"
+      },
+      {
+        "id": "klri-format-113",
+        "section": "format",
+        "skill": "semicolon_key_value_record"
+      },
+      {
+        "id": "klri-format-114",
+        "section": "format",
+        "skill": "bracketed_status_line"
+      },
+      {
+        "id": "klri-format-115",
+        "section": "format",
+        "skill": "literal_token_only"
+      },
+      {
+        "id": "klri-format-116",
+        "section": "format",
+        "skill": "fixed_delimiter_identifier"
+      },
+      {
+        "id": "klri-format-119",
+        "section": "format",
+        "skill": "semicolon_key_value_record"
+      },
+      {
+        "id": "klri-format-120",
+        "section": "format",
+        "skill": "bracketed_status_line"
+      },
+      {
+        "id": "klri-instruction-005",
+        "section": "instruction",
+        "skill": "uppercase_transformation"
+      },
+      {
+        "id": "klri-instruction-006",
+        "section": "instruction",
+        "skill": "parity_conditioned_label"
+      },
+      {
+        "id": "klri-instruction-007",
+        "section": "instruction",
+        "skill": "alphabetic_reordering"
+      },
+      {
+        "id": "klri-instruction-008",
+        "section": "instruction",
+        "skill": "even_position_selection"
+      },
+      {
+        "id": "klri-instruction-011",
+        "section": "instruction",
+        "skill": "uppercase_transformation"
+      },
+      {
+        "id": "klri-instruction-018",
+        "section": "instruction",
+        "skill": "parity_conditioned_label"
+      },
+      {
+        "id": "klri-instruction-023",
+        "section": "instruction",
+        "skill": "uppercase_transformation"
+      },
+      {
+        "id": "klri-instruction-029",
+        "section": "instruction",
+        "skill": "uppercase_transformation"
+      },
+      {
+        "id": "klri-instruction-030",
+        "section": "instruction",
+        "skill": "parity_conditioned_label"
+      },
+      {
+        "id": "klri-instruction-035",
+        "section": "instruction",
+        "skill": "uppercase_transformation"
+      },
+      {
+        "id": "klri-instruction-037",
+        "section": "instruction",
+        "skill": "alphabetic_reordering"
+      },
+      {
+        "id": "klri-instruction-044",
+        "section": "instruction",
+        "skill": "even_position_selection"
+      },
+      {
+        "id": "klri-instruction-047",
+        "section": "instruction",
+        "skill": "uppercase_transformation"
+      },
+      {
+        "id": "klri-instruction-050",
+        "section": "instruction",
+        "skill": "even_position_selection"
+      },
+      {
+        "id": "klri-instruction-053",
+        "section": "instruction",
+        "skill": "uppercase_transformation"
+      },
+      {
+        "id": "klri-instruction-054",
+        "section": "instruction",
+        "skill": "parity_conditioned_label"
+      },
+      {
+        "id": "klri-instruction-055",
+        "section": "instruction",
+        "skill": "alphabetic_reordering"
+      },
+      {
+        "id": "klri-instruction-059",
+        "section": "instruction",
+        "skill": "uppercase_transformation"
+      },
+      {
+        "id": "klri-instruction-065",
+        "section": "instruction",
+        "skill": "uppercase_transformation"
+      },
+      {
+        "id": "klri-instruction-067",
+        "section": "instruction",
+        "skill": "alphabetic_reordering"
+      },
+      {
+        "id": "klri-instruction-068",
+        "section": "instruction",
+        "skill": "even_position_selection"
+      },
+      {
+        "id": "klri-instruction-071",
+        "section": "instruction",
+        "skill": "uppercase_transformation"
+      },
+      {
+        "id": "klri-instruction-072",
+        "section": "instruction",
+        "skill": "parity_conditioned_label"
+      },
+      {
+        "id": "klri-instruction-078",
+        "section": "instruction",
+        "skill": "parity_conditioned_label"
+      },
+      {
+        "id": "klri-instruction-083",
+        "section": "instruction",
+        "skill": "uppercase_transformation"
+      },
+      {
+        "id": "klri-instruction-084",
+        "section": "instruction",
+        "skill": "parity_conditioned_label"
+      },
+      {
+        "id": "klri-instruction-089",
+        "section": "instruction",
+        "skill": "uppercase_transformation"
+      },
+      {
+        "id": "klri-instruction-090",
+        "section": "instruction",
+        "skill": "parity_conditioned_label"
+      },
+      {
+        "id": "klri-instruction-095",
+        "section": "instruction",
+        "skill": "uppercase_transformation"
+      },
+      {
+        "id": "klri-instruction-097",
+        "section": "instruction",
+        "skill": "alphabetic_reordering"
+      },
+      {
+        "id": "klri-instruction-107",
+        "section": "instruction",
+        "skill": "uppercase_transformation"
+      },
+      {
+        "id": "klri-instruction-110",
+        "section": "instruction",
+        "skill": "even_position_selection"
+      },
+      {
+        "id": "klri-instruction-113",
+        "section": "instruction",
+        "skill": "uppercase_transformation"
+      },
+      {
+        "id": "klri-instruction-114",
+        "section": "instruction",
+        "skill": "parity_conditioned_label"
+      },
+      {
+        "id": "klri-instruction-115",
+        "section": "instruction",
+        "skill": "alphabetic_reordering"
+      },
+      {
+        "id": "klri-instruction-119",
+        "section": "instruction",
+        "skill": "uppercase_transformation"
+      }
+    ],
+    "prompts_or_references_in_manifest": false,
+    "schema_version": 1,
+    "section_counts": {
+      "arithmetic": 79,
+      "format": 89,
+      "instruction": 36
+    },
+    "subset_id": "foundry-kl-independent-retention-base-correct-v1",
+    "subset_sha256": "4ea32e5cbde0addfbf448291f92d40f1bb40e33dbe4706f7770a3e4c7a0047b7",
+    "suite_sha256": "826ccfda6714af45f2f8e0ae3926d4607a149446ae5b2f75137704e906a2d92e",
+    "total": 204
+  },
+  "candidate_suite": {
+    "candidate_count": 360,
+    "candidate_prompt_hashes": [
+      {
+        "id": "klri-arithmetic-001",
+        "sha256": "1e97a0066964c2f13c865476345486d6abf2994b4180363eb07cd79f13d113aa"
+      },
+      {
+        "id": "klri-arithmetic-002",
+        "sha256": "2f191d79a1b37e7fd50f78f673dcda48468b1dcfea6f886d1c7add4cd2efa348"
+      },
+      {
+        "id": "klri-arithmetic-003",
+        "sha256": "2054041259a5cb5cc4f0af96b5992a3ccf71b625cfc3da3823cf0b1e3700742e"
+      },
+      {
+        "id": "klri-arithmetic-004",
+        "sha256": "198045c33594fb93c281727992215d10a2786c91d64fef30434ef6599a6f647b"
+      },
+      {
+        "id": "klri-arithmetic-005",
+        "sha256": "a93eec099f75bc22f1f1a6139694e50161f5a3ecac32e1869ec0162fe64ae299"
+      },
+      {
+        "id": "klri-arithmetic-006",
+        "sha256": "1225a78c71d0379e65d871d4545731a6e97b268903cfd1179b7c381d948e5408"
+      },
+      {
+        "id": "klri-arithmetic-007",
+        "sha256": "21113fd363449c7cc6b159938677bd6b7999564b868309edb603a322af44dcfd"
+      },
+      {
+        "id": "klri-arithmetic-008",
+        "sha256": "1bddec36adea3a244d36745fdc8e902b2b54634020926968be3df134a509599e"
+      },
+      {
+        "id": "klri-arithmetic-009",
+        "sha256": "6a6f6f40a74c86eda56f7ecaf31f44063f24b293fb62d3dd6b35cb9d3c1fd13d"
+      },
+      {
+        "id": "klri-arithmetic-010",
+        "sha256": "ea1ba96952aa63987c5ab8cd6baaac975a993119f1d27fafec43aa3f53d917ac"
+      },
+      {
+        "id": "klri-arithmetic-011",
+        "sha256": "625c0819f03de553a90e71f432d3cc2a78809066c2cf7b8ad264be979644df42"
+      },
+      {
+        "id": "klri-arithmetic-012",
+        "sha256": "5301bf82a2fbaa5dbb7d1afc5eac0a05a5074f389da3827ea06a18e838b05f31"
+      },
+      {
+        "id": "klri-arithmetic-013",
+        "sha256": "85d25fdeffdec50159b6c6165adfb67606850db846e7c837aaf5c2c5f4a0a392"
+      },
+      {
+        "id": "klri-arithmetic-014",
+        "sha256": "750eb0121f1a223c00ad4a5b387005a0fd32ece6e2b3828cec5e36e9d43cb866"
+      },
+      {
+        "id": "klri-arithmetic-015",
+        "sha256": "0c9d8d19639fd0d0437df12223afc6ed10b89747e4db50029bb19c323b668636"
+      },
+      {
+        "id": "klri-arithmetic-016",
+        "sha256": "e08a84867bda927eacacf4ddb78f6be410bad1d6ec9b8d5272fde252f0ba2fb2"
+      },
+      {
+        "id": "klri-arithmetic-017",
+        "sha256": "f69844742f3c93e6fb64dbf2fbea9c84952192eb8946cf2a24baeb8b1e7f86b1"
+      },
+      {
+        "id": "klri-arithmetic-018",
+        "sha256": "f3c9f0d518cc80f935c2461c45120f0359b32567f1188fdc9075a5c1e6989f0c"
+      },
+      {
+        "id": "klri-arithmetic-019",
+        "sha256": "33951f8a0f33c4b42ac7be1a5fa6b2743eacb02460837b00ea7600fc637a56a7"
+      },
+      {
+        "id": "klri-arithmetic-020",
+        "sha256": "f3b4325a1b6217b1806b22935c6ad473067031c0178cd179bfa46e0e55a096a0"
+      },
+      {
+        "id": "klri-arithmetic-021",
+        "sha256": "3edbb37a795b16ff7d1cf7fcdd84bb1d51809eaa09ec8985a33934328da3a407"
+      },
+      {
+        "id": "klri-arithmetic-022",
+        "sha256": "8984c955d29de7ba2ad7a05d5cc8e6e6a663d7a4aac331c68c20dca373230a28"
+      },
+      {
+        "id": "klri-arithmetic-023",
+        "sha256": "c28b7bc1991dd7a7516b54769af9fc7cbd35ff8bb494c2e7d3dcadb5266456cb"
+      },
+      {
+        "id": "klri-arithmetic-024",
+        "sha256": "f492f0a35a04e0069d4da773ecd521f5e9b09400f0a19c720ef01103eb08ef30"
+      },
+      {
+        "id": "klri-arithmetic-025",
+        "sha256": "521766dadee9ab523c3d4606e52a41a00f4e0ce93b3e43316a0a0278d344c332"
+      },
+      {
+        "id": "klri-arithmetic-026",
+        "sha256": "656c65b251c7ce51e2dca21c951f906cac292466a60c8684fb28cee21e45e28d"
+      },
+      {
+        "id": "klri-arithmetic-027",
+        "sha256": "dccb355cd75438cc59c40edb699280b095680e9c4d69c18d2b7131aea6823e0a"
+      },
+      {
+        "id": "klri-arithmetic-028",
+        "sha256": "590ae8f4dae091e3be996f487a0c4b0bd18eb0c378af11352e078e07a9751511"
+      },
+      {
+        "id": "klri-arithmetic-029",
+        "sha256": "97ca0ca66c08335abc65cc4c9d8301e358c2c49a9be72c6754fc0301082a39ce"
+      },
+      {
+        "id": "klri-arithmetic-030",
+        "sha256": "dba3cbc53ac0600c642b4079b743fc277f7c09c7b0ea4fc2930d61a17b7d2c12"
+      },
+      {
+        "id": "klri-arithmetic-031",
+        "sha256": "cb1c056f03cec5844aa619467177e20c4efc56e7aafd30ebc040324552042c95"
+      },
+      {
+        "id": "klri-arithmetic-032",
+        "sha256": "2739284a8d435a105f64863ebad59deea0a5266a1dc919207ab4aa3067bce874"
+      },
+      {
+        "id": "klri-arithmetic-033",
+        "sha256": "2d5d9816e92f449d862661a667f965ee70b57afeb29b36c9d6961ab22b1bf49f"
+      },
+      {
+        "id": "klri-arithmetic-034",
+        "sha256": "01d4e2978bd883b9f1591eb6e4f5bf0123ea6d7d0517e0ccea06a6ffbcc6d083"
+      },
+      {
+        "id": "klri-arithmetic-035",
+        "sha256": "5e96075921a2e501a8bdffe93d08f5b939d1ce2eb89ca3069276c3aea1c7088c"
+      },
+      {
+        "id": "klri-arithmetic-036",
+        "sha256": "3a7b932b2633743ec5d3e77cdc1ba77a8e33180732627126d9edd1f524c29f47"
+      },
+      {
+        "id": "klri-arithmetic-037",
+        "sha256": "9b3f6a947a77d4cbc46ab141bd49c27964616745ae867b2fef223ea49cafba8d"
+      },
+      {
+        "id": "klri-arithmetic-038",
+        "sha256": "d06ab2788404b5bb2b1ff37f11bdbd59485e6364aee4921da565582a066898da"
+      },
+      {
+        "id": "klri-arithmetic-039",
+        "sha256": "1375d2b3fcc51d35423967585b7f3d47c478d06ab05b88b8b94f19bcd297ce2d"
+      },
+      {
+        "id": "klri-arithmetic-040",
+        "sha256": "4ff5e731722a7ec5e4343f4464cd16926234bfbcfa646b795dd296a5ad2c5c51"
+      },
+      {
+        "id": "klri-arithmetic-041",
+        "sha256": "f747cd42d767428d5dd21a2d4973d781f76e4a1579c8801b61e176a67eb54dc3"
+      },
+      {
+        "id": "klri-arithmetic-042",
+        "sha256": "7c97cee08a2da034a338fa0f93ba2aab5a9ebbd6840dfbd5c08e5fb414da6e91"
+      },
+      {
+        "id": "klri-arithmetic-043",
+        "sha256": "8a56a09d6bbe983e611e4389c06dd917068f1bdee33de67ad9df90f69439bca0"
+      },
+      {
+        "id": "klri-arithmetic-044",
+        "sha256": "b52e2f8c4826ccb6ed2c2bdcea3235725d031e5e571e9dab3f5ffb346d1b1924"
+      },
+      {
+        "id": "klri-arithmetic-045",
+        "sha256": "63fe4ec2fc39629a5b44bbd6bc04c3a4675351142959943a21e7460422e694a8"
+      },
+      {
+        "id": "klri-arithmetic-046",
+        "sha256": "9f2ec24fd28c623fce4cdb15605d98241fbeb8d317009180329dc5c7b8528919"
+      },
+      {
+        "id": "klri-arithmetic-047",
+        "sha256": "62c658d3ba3c77181091c3332e017a9b9dc077af5a7efa4cc5a4bd149d2389c7"
+      },
+      {
+        "id": "klri-arithmetic-048",
+        "sha256": "94d04add9e0ae1d8c3eb810ba379cdf1666e64c5d15bf5444f6c8fd87f4162fc"
+      },
+      {
+        "id": "klri-arithmetic-049",
+        "sha256": "9f6e6bb0822650a887ec9a029ec5d9791ed9dd5b65864db22659684875039473"
+      },
+      {
+        "id": "klri-arithmetic-050",
+        "sha256": "5585d0aeba40fde7849aec2c782676af8d0f920cfee81c42282fcfc9f661b448"
+      },
+      {
+        "id": "klri-arithmetic-051",
+        "sha256": "a5fab60e0b9c15a75d8e9b52fa993f50f9f5966706bf3c1a487bfcb32e7bf4d8"
+      },
+      {
+        "id": "klri-arithmetic-052",
+        "sha256": "ab39c696283c9e155588315ea1aa249ff08edb4e6458b241b40a3ab21087638a"
+      },
+      {
+        "id": "klri-arithmetic-053",
+        "sha256": "8eb7c5fbb40ba858f49d11564404fab6e361e03a839c50d37583ca80cefcea2d"
+      },
+      {
+        "id": "klri-arithmetic-054",
+        "sha256": "492076d46a3213590cfd93ea170224833e63c2e633c3bd8712983657440fca0e"
+      },
+      {
+        "id": "klri-arithmetic-055",
+        "sha256": "0a37363a3a874e9a3920db46592a4e9d9db1ae817559bca3dc84ebcb02c5d977"
+      },
+      {
+        "id": "klri-arithmetic-056",
+        "sha256": "88ad3640c11441b45b554fabf8b1155811ad4043bc649317dfe98623ae2eeec9"
+      },
+      {
+        "id": "klri-arithmetic-057",
+        "sha256": "98e5d4fcb21629660825fca8f0d8a859d6c37613e8c84190d9569cf13b91bf45"
+      },
+      {
+        "id": "klri-arithmetic-058",
+        "sha256": "eac0349bf4f81284f10ec359c46202a9f258f17b5e2aba7e27b59f1cf761ac85"
+      },
+      {
+        "id": "klri-arithmetic-059",
+        "sha256": "7d3b3ce4f85fee88fcecbdff6ccce08005be588ceab1ebec9992ad7726bd17ea"
+      },
+      {
+        "id": "klri-arithmetic-060",
+        "sha256": "8ea9648aa60ce84359e5102d7e256c4b94161888d3ed7814a93d2ac509479751"
+      },
+      {
+        "id": "klri-arithmetic-061",
+        "sha256": "778bda8685b674beec3f2655a029bcca2c4ac3bab352a6bc4573f1648188d67f"
+      },
+      {
+        "id": "klri-arithmetic-062",
+        "sha256": "5dedfe3ae3fc2027246aaa97bc5224a99f76657afee67508203f7bf4ad535b34"
+      },
+      {
+        "id": "klri-arithmetic-063",
+        "sha256": "0d9560105f60177bf89543f0bbb5a01078cb8f68f0555e78b07d513fe2e75c13"
+      },
+      {
+        "id": "klri-arithmetic-064",
+        "sha256": "24fd5643445e588cd2f0097d936a4073df3776c65a66fc58a1f23e2fbf280027"
+      },
+      {
+        "id": "klri-arithmetic-065",
+        "sha256": "043ce4401892a671f97cd81b60ff95e3b9d67b427b50e015446625b7c9ebc9fe"
+      },
+      {
+        "id": "klri-arithmetic-066",
+        "sha256": "f0088e376d7ad6e09fdf692544fdff4bcd12e2d1e617745b807fb5713894e0db"
+      },
+      {
+        "id": "klri-arithmetic-067",
+        "sha256": "93cd2742e4207e875e07cc11b6d1696876e6421257d7cfa140738b37ca96b5c1"
+      },
+      {
+        "id": "klri-arithmetic-068",
+        "sha256": "91dfe9a47d50f3bd7ff49c32f8ba824e581a5bc4e6cd0d1295ea38a1d075ee79"
+      },
+      {
+        "id": "klri-arithmetic-069",
+        "sha256": "9167b3faad4c6f10232246e4d5c64c6819a9df87ede037d8155f5ca4186a0ff4"
+      },
+      {
+        "id": "klri-arithmetic-070",
+        "sha256": "d54310e0fc5e6b467f48918d738d647d257309fa097289aa16b7fe5dc1c07a90"
+      },
+      {
+        "id": "klri-arithmetic-071",
+        "sha256": "fd3a8512664a65eba1efbdd1c8acd7de356ad8ad665cf3bcb5964ff10ac010e2"
+      },
+      {
+        "id": "klri-arithmetic-072",
+        "sha256": "eac176b8dc4311ee93a7242d0d7edbd85283b0a010e2e24378e165c29ce1e37f"
+      },
+      {
+        "id": "klri-arithmetic-073",
+        "sha256": "10d739a53927375e50af29a97d4a0c8df8c0cc0a2b5deed62c485471eeb42dfb"
+      },
+      {
+        "id": "klri-arithmetic-074",
+        "sha256": "f0deb9fb29e36b633751eeb63b7af9fddc48116c6dd0a8521a8d69b797b4428a"
+      },
+      {
+        "id": "klri-arithmetic-075",
+        "sha256": "fbfdfbd12f86a9a6463347a8cb7a86f7f7fea18142a72298a61b0a061d637f93"
+      },
+      {
+        "id": "klri-arithmetic-076",
+        "sha256": "0085fa3b7f38767b5f9097ac32b49ddd723b6185c6999beaf9fabc9e0b2c0167"
+      },
+      {
+        "id": "klri-arithmetic-077",
+        "sha256": "18c566e637882a3ee3b9b34b7d0cd2d5e856e01911cfb25828c811a8f94c990c"
+      },
+      {
+        "id": "klri-arithmetic-078",
+        "sha256": "162c09728d7208a16855d544a3335aa4a805ea82268c943e20dc1867ae37c85e"
+      },
+      {
+        "id": "klri-arithmetic-079",
+        "sha256": "ef3f808ff6bf41d9d95cafed75938e1e7bd770c906180747ab9928f6aa705a13"
+      },
+      {
+        "id": "klri-arithmetic-080",
+        "sha256": "936e8593b0852673a310785d9767c69add8775baf89fccb8a093ba794f7fde24"
+      },
+      {
+        "id": "klri-arithmetic-081",
+        "sha256": "df10e03239124b32f3e5932ae2c80fb6ac5dd64eb49843955b1fe00c6cf87693"
+      },
+      {
+        "id": "klri-arithmetic-082",
+        "sha256": "adc1673214c85de49466fecd7f09de3964d5b1ac96df18eca7d9b05b469c91b1"
+      },
+      {
+        "id": "klri-arithmetic-083",
+        "sha256": "737bbc0fc3b75108a9263350795b4d389baee7b6683155cacf64e083d488fb9a"
+      },
+      {
+        "id": "klri-arithmetic-084",
+        "sha256": "98b36de9452d4db809b4de05b1003089da2177398993d5ef746999614393ee84"
+      },
+      {
+        "id": "klri-arithmetic-085",
+        "sha256": "541d9d059c3c7cf2f5017d3c9031470829104e1f0eda00179e340e223b1b0c41"
+      },
+      {
+        "id": "klri-arithmetic-086",
+        "sha256": "689a53da760abf7857b250fc864bb29b182815ecba2f4a32911cd270c185d920"
+      },
+      {
+        "id": "klri-arithmetic-087",
+        "sha256": "4a74cb2bcb29ef1bb1152bb65946b9545318c85bb1a4f280c60208a6794815ff"
+      },
+      {
+        "id": "klri-arithmetic-088",
+        "sha256": "3904b4df5f9d968bd8be3495bb877834452dae76d420a237d0482d6852404524"
+      },
+      {
+        "id": "klri-arithmetic-089",
+        "sha256": "4eae0f8e6bbc30ae1671793c1b3e1d7c830b588ea4553967386cf307978c24d4"
+      },
+      {
+        "id": "klri-arithmetic-090",
+        "sha256": "c33652ba267c2b1b95a7ae3982231409a6632216dadeb86d4056d643c2a49702"
+      },
+      {
+        "id": "klri-arithmetic-091",
+        "sha256": "e29f44ce6a87493fd41c0c92232f05c7dba58bdf6d9dd59eda9fbd24c58f2fc8"
+      },
+      {
+        "id": "klri-arithmetic-092",
+        "sha256": "ca3194377f086ebf37e1e73e3a9c9604fd0a536c2c5c5599dc7ba1b5db94b1fb"
+      },
+      {
+        "id": "klri-arithmetic-093",
+        "sha256": "bf838ed5397586b1fa0c1fa3794cc1b90198bf7e1737db609d1c4929a18c74fc"
+      },
+      {
+        "id": "klri-arithmetic-094",
+        "sha256": "23d7864937b7842743ee8c8bd4b7230685af5e87f642ba6a9a0a81a9d25f918c"
+      },
+      {
+        "id": "klri-arithmetic-095",
+        "sha256": "040bd66ea3b0e993a3527c32a76607206741d12643f1fdd98c7f56aeb02779a1"
+      },
+      {
+        "id": "klri-arithmetic-096",
+        "sha256": "84c11e923bd2fbf6eb53f14f84b05f2f0b3a5396883932bf589b972360834e70"
+      },
+      {
+        "id": "klri-arithmetic-097",
+        "sha256": "e63e99702a2628fb283c14f8bebc0e167fad38721c4cc0f3f3bcc8844dce7c73"
+      },
+      {
+        "id": "klri-arithmetic-098",
+        "sha256": "93658b285f4f31593f551d89fbf5ebf4bb4a4c3707885fb8cf10ad997dac5c9d"
+      },
+      {
+        "id": "klri-arithmetic-099",
+        "sha256": "17c22815fdeb0b6c137fc9938b38f0e7d012ddfa041832f2981702fd5692ea46"
+      },
+      {
+        "id": "klri-arithmetic-100",
+        "sha256": "2b39306dd6073ec679cb3b745dbe810c05fc8a5855a540e685ada3245a840f56"
+      },
+      {
+        "id": "klri-arithmetic-101",
+        "sha256": "6533438ce6a6cd0310482aead0d3d11aebdf7bac1981221b8b5cbca68aa9bd2f"
+      },
+      {
+        "id": "klri-arithmetic-102",
+        "sha256": "178572384c3db9104620d9fa71b6f2a6683fe5700ed5f52b2b3cd189905e14c2"
+      },
+      {
+        "id": "klri-arithmetic-103",
+        "sha256": "511c81669b40690c5526609d6bb95c602024c095f36e6722439a62aba1a8c594"
+      },
+      {
+        "id": "klri-arithmetic-104",
+        "sha256": "942c0192e29c7fc556d5b69fcd03d95845a24e3637aea1246552ecb815f4a6d1"
+      },
+      {
+        "id": "klri-arithmetic-105",
+        "sha256": "11ed5f953ca375ac2bc73089e41bfe9b7d9ddae27eadf1e079ffb19abbdb6e28"
+      },
+      {
+        "id": "klri-arithmetic-106",
+        "sha256": "25a6366b3a34a1bb5df5b7d0f621077f2b9118f3533cd18a6e2e362b2be6b002"
+      },
+      {
+        "id": "klri-arithmetic-107",
+        "sha256": "54f641d8ca103e230e37961cac9db6914cd291528b868d247dc8e225b85b5d2e"
+      },
+      {
+        "id": "klri-arithmetic-108",
+        "sha256": "92a39a7e620b92727bb9fb916aba1858a5d068552064ff7ce5147eaaac587b9f"
+      },
+      {
+        "id": "klri-arithmetic-109",
+        "sha256": "c7d8f1e43a4e9b1407bed2ad64af6700e2aa6a9f57c6f84468f65c733a4152c2"
+      },
+      {
+        "id": "klri-arithmetic-110",
+        "sha256": "92b808c1fc580ae8a5926dcc2e269e8a5aa7c574769948f90240e5e9f84b3412"
+      },
+      {
+        "id": "klri-arithmetic-111",
+        "sha256": "df315ad4b016c7cb3fbcac4097cb1152807fd8e1b40f3fdb1a937d7adf90af41"
+      },
+      {
+        "id": "klri-arithmetic-112",
+        "sha256": "609f2eec4184a061ea755fef8b9090082e3383574366c7db28e9889577c0766a"
+      },
+      {
+        "id": "klri-arithmetic-113",
+        "sha256": "b6e56563f971eb590390639ec9e945b442948d9558046eb930febad900faec8e"
+      },
+      {
+        "id": "klri-arithmetic-114",
+        "sha256": "613f27cadfe5d7f80d9e434556e39b954534aaa87315883d3dae132bd35f94ce"
+      },
+      {
+        "id": "klri-arithmetic-115",
+        "sha256": "d1f0cdf9e9a4286d853ff345ef906da36641b9717f2a5179b176a67f404ab059"
+      },
+      {
+        "id": "klri-arithmetic-116",
+        "sha256": "b6f9022d887e02a34c402487b4e2b8d432461054e92eeb4fb68e45723e06aa72"
+      },
+      {
+        "id": "klri-arithmetic-117",
+        "sha256": "00fa5d36729071d6d398337a89b2d388719f871e39bafc606222fc5899eccfc2"
+      },
+      {
+        "id": "klri-arithmetic-118",
+        "sha256": "e1bf78a7a045d46b79f24176864d4863dbc964107784013dceba021fb0dda229"
+      },
+      {
+        "id": "klri-arithmetic-119",
+        "sha256": "4e2ed84257a34c0865080e1de63dc0a4393bc03fe2ab12406e45ad67fd6992b1"
+      },
+      {
+        "id": "klri-arithmetic-120",
+        "sha256": "9d8d4545305177bb7dcd19371e33056e97638656ff57e59599cfcee40028e346"
+      },
+      {
+        "id": "klri-format-001",
+        "sha256": "dd5d31c046ddc45037505f30c35c8f77581fdb019ffea4eb510ec89ed25a4294"
+      },
+      {
+        "id": "klri-format-002",
+        "sha256": "eb84cfb6a6fab9eb48b7400819a89818ea4606e7699f1aaa3cbf1a2b88227e70"
+      },
+      {
+        "id": "klri-format-003",
+        "sha256": "269060251508a010ddc1b6cb9537e2c544c8e335ef20fa024d97126a800e21ed"
+      },
+      {
+        "id": "klri-format-004",
+        "sha256": "790943b9b7953b0363fbcb727d2d554c36b1b5ca91f16247b5317d40b11b5a9c"
+      },
+      {
+        "id": "klri-format-005",
+        "sha256": "3a487b64cbdfd89ae751c187bb6db290ae6cd9c71bcf571bcd31aeade1417453"
+      },
+      {
+        "id": "klri-format-006",
+        "sha256": "0d87a66d5ff6dd24e1b0d08382add4574d64efed1a60d3d68b9c55e83298151d"
+      },
+      {
+        "id": "klri-format-007",
+        "sha256": "e5f7e2e2edeff65063a478d58a8422ad6773eb2d9a380cc1266ae382fbb271d1"
+      },
+      {
+        "id": "klri-format-008",
+        "sha256": "96d7118c98a4ac55911a7560d86f59f704b6b2b30331d0daaff08cc0d7cf08d9"
+      },
+      {
+        "id": "klri-format-009",
+        "sha256": "3ce0911e323542fdbe4ef3ff4819082f58000ac679f831f04e5cbafcfbfc195e"
+      },
+      {
+        "id": "klri-format-010",
+        "sha256": "f8376084f7679d7b42e32a2151e78c11aa76bad13a2ece831242e776bb6f2a43"
+      },
+      {
+        "id": "klri-format-011",
+        "sha256": "f178cf924b29e411f4c6c613d13918ef17f36b4ab9759b11734ae42b89aca975"
+      },
+      {
+        "id": "klri-format-012",
+        "sha256": "ee564857c4d7aef9bce1db96220225e872ad6b44826f2ae92e60541305ef612e"
+      },
+      {
+        "id": "klri-format-013",
+        "sha256": "4d75f7601e86e454ef91c4d11ea3cdea920bac22cbc449498e0ff8276e26cc61"
+      },
+      {
+        "id": "klri-format-014",
+        "sha256": "95e8f4f1faec269909f69e0a68110d0e77fea45c4c5c48aadbcf9b4e355e7757"
+      },
+      {
+        "id": "klri-format-015",
+        "sha256": "0d4c135fdf79bbce81cc2321e1ac3921ab58f4230ccee99c94d85fa07adac9d3"
+      },
+      {
+        "id": "klri-format-016",
+        "sha256": "5eb9d3b9d5529e0488570158b9c0aa88f3050c058617ad4e28effab6c413bd44"
+      },
+      {
+        "id": "klri-format-017",
+        "sha256": "ee4e05dfbe014e0d57dc5329c49a998e24d8f44e734b26230ebcd0a91e5e028b"
+      },
+      {
+        "id": "klri-format-018",
+        "sha256": "19a1c51d296c382304d7956224443466cf4ebc2f728ecc90b83289e331a15f44"
+      },
+      {
+        "id": "klri-format-019",
+        "sha256": "5429eeea3bf2aa12c6c09b3a35805b0e15a60f4d35ef245876a54cae784555c9"
+      },
+      {
+        "id": "klri-format-020",
+        "sha256": "a58be2122c03ae48e133910ea86d0a2fccf122d2f5a89152b00cac2d84e3ef71"
+      },
+      {
+        "id": "klri-format-021",
+        "sha256": "941bea9db992c376b411fed4a934a0e4b44ed947e4aa61aab8747b662fc99376"
+      },
+      {
+        "id": "klri-format-022",
+        "sha256": "37206f99c40fd47b38458a56c931dfdd7469c7a4467e9c464a38823accf5d574"
+      },
+      {
+        "id": "klri-format-023",
+        "sha256": "1e9323df7e5b724cff55ecd6d7d17dc63e27da2cfafc66b19d689f4cd936f303"
+      },
+      {
+        "id": "klri-format-024",
+        "sha256": "14ff46c05e612e17cf3d1cb9f8a1566cff20543628d4d8bc14eb9c6563af4a78"
+      },
+      {
+        "id": "klri-format-025",
+        "sha256": "d51ab3df1adaf8283730d63f0144391a469dd58fec1370917a7e152f07dec051"
+      },
+      {
+        "id": "klri-format-026",
+        "sha256": "8a98024eb9a75fc1567efa98fa2c373415b934df9c4fff50c819fd3492068d42"
+      },
+      {
+        "id": "klri-format-027",
+        "sha256": "db7550920bfb854c73de31d553f5f391f07946245501a29a580194eb970af68b"
+      },
+      {
+        "id": "klri-format-028",
+        "sha256": "fd7af05ae8abd5e9c68b0714b261617c2e4713a6ad58836c01ee8457615b10e9"
+      },
+      {
+        "id": "klri-format-029",
+        "sha256": "4b1c51e36d39421677bb1645276e4859950b44c1e737cd0a455d5b259bccf25e"
+      },
+      {
+        "id": "klri-format-030",
+        "sha256": "44a3b638bfe9471dc5285155dcd7c5b2f7257b2b469b93d7720af884287914b4"
+      },
+      {
+        "id": "klri-format-031",
+        "sha256": "6407f5eb0ead6739a358caa7fec3138733555f15fa0a96c0a4710ae489d3244e"
+      },
+      {
+        "id": "klri-format-032",
+        "sha256": "9dab7c9019126221212d90aadbfcb68d0bf1367e433643d7647a68446071464d"
+      },
+      {
+        "id": "klri-format-033",
+        "sha256": "dc55d69526820f79bb0891b6af40803b37d3fdf3d0516eeab8d6874674819f18"
+      },
+      {
+        "id": "klri-format-034",
+        "sha256": "8a36271b264f3b008f7bb55639888a8ce87d2cac2099bcc87af741d37005fbef"
+      },
+      {
+        "id": "klri-format-035",
+        "sha256": "7cd709f54716cc22531bcb8dabba6739f16c24acf9349f42a598a2335037808f"
+      },
+      {
+        "id": "klri-format-036",
+        "sha256": "a6abcbab9f0977de6e5f480b4e20763f29763cfc3fce284dbc45725d47eab900"
+      },
+      {
+        "id": "klri-format-037",
+        "sha256": "8e0ca625b71efc2cb8b766ac223f95218e920f3d1f2a590465aa86cc1b06011d"
+      },
+      {
+        "id": "klri-format-038",
+        "sha256": "90e39f0b1d90e59f6e445c4c12e98fbb4d4e87771ba7241e5e6dd7589072845c"
+      },
+      {
+        "id": "klri-format-039",
+        "sha256": "c2a18e9aa7ba8c5b54a41dcff6ae2c66862ac9e8c293dd198c80faa5ef911690"
+      },
+      {
+        "id": "klri-format-040",
+        "sha256": "e982c8e38a1a2ab8a2dee24fdfbcd527e68d816b2b53dc2c41912e605551f045"
+      },
+      {
+        "id": "klri-format-041",
+        "sha256": "03f1634d4d5b313decc2fb3cb12753d5b0e319c0c778bc694ee6b614d53d397b"
+      },
+      {
+        "id": "klri-format-042",
+        "sha256": "385cff03822107e2e650be4b582a235ac1bbca38f7725be5a66dbbd3359553f1"
+      },
+      {
+        "id": "klri-format-043",
+        "sha256": "9bbc52c0c0fc2f4aaed3ddf805c629caf193ebd7131229fbadc78b701e3fbca5"
+      },
+      {
+        "id": "klri-format-044",
+        "sha256": "72ccec0c844faf94da7be5b025be115b769a3a93908fa9bf8d7b9a1b8c8b3f10"
+      },
+      {
+        "id": "klri-format-045",
+        "sha256": "9676566c1ea547d158bf3dc7c9d663b1f0c0ef50b6654e34c4b31597f0d009ed"
+      },
+      {
+        "id": "klri-format-046",
+        "sha256": "9d2d68203c3a72475c69b06144eb2e1b8e7a762786c097b990757fde65db2a4f"
+      },
+      {
+        "id": "klri-format-047",
+        "sha256": "0ea031aa578d0cc8d4093d1aa7710e48073d2f7f8eb2d5e1b9323fe3925529e9"
+      },
+      {
+        "id": "klri-format-048",
+        "sha256": "3623d0bd48a43eb47d7eb50995527fcaaa064625dae5a7be17e57991e05cff9a"
+      },
+      {
+        "id": "klri-format-049",
+        "sha256": "e70feeac407bd060c81d7aeddac10d2a28d224ce1262f87c16b0b5f36dbc6d94"
+      },
+      {
+        "id": "klri-format-050",
+        "sha256": "90a1e48b4306ea9080fa73eb4771b3bebf50b165b9049e4e0141d394c76681b6"
+      },
+      {
+        "id": "klri-format-051",
+        "sha256": "280a9584c468014b9a295bde12494c1bced665eeae1776b2dd5aad2f9541ba4e"
+      },
+      {
+        "id": "klri-format-052",
+        "sha256": "bf84fdbc5821252fa231f6cc94dde0c0c70eac0662c7d24cc655ed08db53ff06"
+      },
+      {
+        "id": "klri-format-053",
+        "sha256": "904ff8b8fa6b0adac1d6d2c266a2fd3ae30497256070ae935b3a094db749f806"
+      },
+      {
+        "id": "klri-format-054",
+        "sha256": "9361d75b3625e9c34cdd1670374b67fed327db72c58627f2a9794dec24a488fe"
+      },
+      {
+        "id": "klri-format-055",
+        "sha256": "50b81641e2661e4583ac6f43352309dc3eacbbc9ac641ceb7e4f335af326de3e"
+      },
+      {
+        "id": "klri-format-056",
+        "sha256": "7558d3658c90f39054beaedaaed91c09976a115b6024e60f11ff132dd8d0ebfc"
+      },
+      {
+        "id": "klri-format-057",
+        "sha256": "ece8e7b673c6013906daa5677a23b9c404c91dc7efaca80f0bf5bc5d478b35c7"
+      },
+      {
+        "id": "klri-format-058",
+        "sha256": "3f141e31763777d830032b4108b04139862f744303bb1310977550bb0c2b65cb"
+      },
+      {
+        "id": "klri-format-059",
+        "sha256": "6b4aef4c0029524a3458d931bb377d3e4952435346f97b17f42ea98c8525318f"
+      },
+      {
+        "id": "klri-format-060",
+        "sha256": "07dfd1e163c0a3c7b83637b517ed21de01ce5cc75ef9fa43094c5ee5cea5b11a"
+      },
+      {
+        "id": "klri-format-061",
+        "sha256": "2d746790740e89bff3529af8c9135782d29d22f2ebf2957f879de1a8617b867b"
+      },
+      {
+        "id": "klri-format-062",
+        "sha256": "d9dceb202b348ef68422decd8f129427b350dfddec5174c447b454f9fe4a355b"
+      },
+      {
+        "id": "klri-format-063",
+        "sha256": "4efa8128e134c6e498e658da1c009e0aeadaf7690ab806ff132016838eb384ce"
+      },
+      {
+        "id": "klri-format-064",
+        "sha256": "fcef73543720e7423c1b683072c0676aecfce3ae85a3449b24c7afb726df2aa2"
+      },
+      {
+        "id": "klri-format-065",
+        "sha256": "ba1214c3618132c56d8c1c9f586a95cc72d27df569480bd5313281056097e74a"
+      },
+      {
+        "id": "klri-format-066",
+        "sha256": "fdc8914e7654aa4f761a93b5e6ac5526ce5028514ff8abe5cb6b6443a84c1ba9"
+      },
+      {
+        "id": "klri-format-067",
+        "sha256": "6697e40c0a87c6cfa119f3f7d8ef180743280e523fbba7a0175e57dc17a81703"
+      },
+      {
+        "id": "klri-format-068",
+        "sha256": "f58e920fd487a191785c05ff689f75979d62a48965fd898d1d88066c530c840f"
+      },
+      {
+        "id": "klri-format-069",
+        "sha256": "45b7881aaa4852706769e44ca9df3aac4ba65bfa4d6f0e89f340f8066f0bcb08"
+      },
+      {
+        "id": "klri-format-070",
+        "sha256": "d7638a1184acba2fe60b9f9d10d616f2d9a7411f5b4867ca882f0fd1947952bc"
+      },
+      {
+        "id": "klri-format-071",
+        "sha256": "b6b7d963f38c00099875505b3395aa92f88ca958b50c2b5718f8e615116482bd"
+      },
+      {
+        "id": "klri-format-072",
+        "sha256": "f53d39f2db6c731f68cfd4c521d5e901ce0d10f030895802d6598fc93cae5f12"
+      },
+      {
+        "id": "klri-format-073",
+        "sha256": "f1b31781293f3f1e2364b888eefb138168edb542a04d10be19f6903339e8b4e2"
+      },
+      {
+        "id": "klri-format-074",
+        "sha256": "cd24fc393cad6afbfe0dcacb37f5581bc3278f10e6513bc21f5705c5253d990a"
+      },
+      {
+        "id": "klri-format-075",
+        "sha256": "759e19c62a1862f696fe8a5c1a9dd35c41088e6d7d798c7c2df4cf0f6728f0cc"
+      },
+      {
+        "id": "klri-format-076",
+        "sha256": "47f2f1726f0d0cfb4feb206fe88d43f00ec27089800d94d35bedbda869b0d864"
+      },
+      {
+        "id": "klri-format-077",
+        "sha256": "b3bcfa5170b58c4d5c449c751671b5237fd264b9fd173a5460ac2387814b1f1b"
+      },
+      {
+        "id": "klri-format-078",
+        "sha256": "c9619977993f58857504bafb95aad6d7cdabc346e3b96c1cb3ebe86d46cf0997"
+      },
+      {
+        "id": "klri-format-079",
+        "sha256": "961d63dfc078b197418c1700d8ce3f4054ce848d05bd5cc0cd0ab5141be767df"
+      },
+      {
+        "id": "klri-format-080",
+        "sha256": "3b1ade52141f9c093661e5e55a7648af872939fb899fc4c19a97748597e91418"
+      },
+      {
+        "id": "klri-format-081",
+        "sha256": "194f736c796f9072537014194be6b824bd45c2d4dde7b71469ca7886d91d60a1"
+      },
+      {
+        "id": "klri-format-082",
+        "sha256": "2e6d1c542f9958a8a6af11c2e88db443a13b6f2132721f95974bfb6eda799c92"
+      },
+      {
+        "id": "klri-format-083",
+        "sha256": "44b13401d1a826437cf47562cf94a43c1fe5a4d6f07b423c9bf9a33a7f9e0460"
+      },
+      {
+        "id": "klri-format-084",
+        "sha256": "a25c909debc4452ec663808ac07fbde93897099cb6426a34b2b22351d45bf818"
+      },
+      {
+        "id": "klri-format-085",
+        "sha256": "ff1424709f451821e2c9b3bf629ac20145ff050253e8608635a3ae0fd29bd289"
+      },
+      {
+        "id": "klri-format-086",
+        "sha256": "63a8af7dc6a1da2b2756185e4f8f8c434ecc4a61250883e14c309c1fddbac862"
+      },
+      {
+        "id": "klri-format-087",
+        "sha256": "27543b9c62ad37cb91278827ffe92fc1119a4207071657b41bd5d5a46dd1b803"
+      },
+      {
+        "id": "klri-format-088",
+        "sha256": "999c195fe519503017f0e9da104934ce3af5346f8f2a10ecbd20664c0cbda6cc"
+      },
+      {
+        "id": "klri-format-089",
+        "sha256": "78c38d0e4ff99d27d97b3ca4893642fdde7ff9c03b406a1d969848de071c1869"
+      },
+      {
+        "id": "klri-format-090",
+        "sha256": "f9956ba5bc124b2c99023beb6783b08175a59dc4751570ae5f46e982a9348c64"
+      },
+      {
+        "id": "klri-format-091",
+        "sha256": "8aab4dbeb7378162b35a061d5aaeaff629caf2bf8bddf2eff2feef472bef4fac"
+      },
+      {
+        "id": "klri-format-092",
+        "sha256": "ac56469ab7e25933809ef2fb00d4c25b39f4526d08f8bcd6d3326b222ae0e17d"
+      },
+      {
+        "id": "klri-format-093",
+        "sha256": "9637c1e589ac7fbd6017a5bfc886dd1e7af8ccc38bb5e31035c06c61a98795d3"
+      },
+      {
+        "id": "klri-format-094",
+        "sha256": "be099d6173417bd7c929e8599ca9b215e926394e662b5e183cef737018395605"
+      },
+      {
+        "id": "klri-format-095",
+        "sha256": "8984e3e0aa37caa028e357254815d8f967e90037d7a474d42d7fadc24d3107ba"
+      },
+      {
+        "id": "klri-format-096",
+        "sha256": "ad9de9d69ba02e4f06b6ed73a520ffc4a87e72d15462dbd44e6841e53d3178a1"
+      },
+      {
+        "id": "klri-format-097",
+        "sha256": "8d82184a004b2e609b9e0f2ed1c38962eb3d626de6f8f230771883d86297a142"
+      },
+      {
+        "id": "klri-format-098",
+        "sha256": "2d1ab4fa78d2a58dd1b62bcf65963a26fe1bd0cf469f876077c1d9aa4390c10c"
+      },
+      {
+        "id": "klri-format-099",
+        "sha256": "b68c403e402d5f45a0e75f01071a79a5b80a54fb5457fdc5b97ec435ef98a124"
+      },
+      {
+        "id": "klri-format-100",
+        "sha256": "4365b171e899c75317a15459a920ed8c3cc797bcbb9c37bbe5545581d23aeba3"
+      },
+      {
+        "id": "klri-format-101",
+        "sha256": "51f5dbc49cb16013cb38be57724a54f82490f38a787388150cb8304bfc041ed4"
+      },
+      {
+        "id": "klri-format-102",
+        "sha256": "b73c8e00f2481e502bb4f439a1627bc27ccf1ce7a2a077868e2eaf4fd708771f"
+      },
+      {
+        "id": "klri-format-103",
+        "sha256": "8bc28170b9b83857ef14ef2cff44844672460ca2d0e72c0e5b74f9f55dfb2b00"
+      },
+      {
+        "id": "klri-format-104",
+        "sha256": "d4dcd14687beebac5d780839731620def8afac5dab4b1f3fca486afeaf3c529c"
+      },
+      {
+        "id": "klri-format-105",
+        "sha256": "503edd7942c300c20f3ccaa53f510fca0e8113b7f26053383a662440d17a65cd"
+      },
+      {
+        "id": "klri-format-106",
+        "sha256": "60548e2dbbf4de8158df08538e974b5b131e19ca880a5f8e60d9d59f5ead08ae"
+      },
+      {
+        "id": "klri-format-107",
+        "sha256": "8028c67ad4836850dd166d732f15977615164a8faa8b4c9953008325e0e2ebf6"
+      },
+      {
+        "id": "klri-format-108",
+        "sha256": "b900d7358c0302cab65d314570c6adb6f95a821e6539013e8684a74369e5060b"
+      },
+      {
+        "id": "klri-format-109",
+        "sha256": "7fa5b710b275173c917934dd1633e720d744b68f84fad0dfe69a9fd2ecd3baba"
+      },
+      {
+        "id": "klri-format-110",
+        "sha256": "cac6c3015f04c7dd8fa22897125a8bc2288ca6c5d35d983efc41972050ca62a6"
+      },
+      {
+        "id": "klri-format-111",
+        "sha256": "17147ffe85a761e6517fab5d6f7ddfc5b874f6169657d731f03e796abb905244"
+      },
+      {
+        "id": "klri-format-112",
+        "sha256": "24a838c04005d6822a7194dd67cf077e0072fe7df860124fc58136656a60972f"
+      },
+      {
+        "id": "klri-format-113",
+        "sha256": "bd3035e6c5558563a29729cc2bb6b10e497f313541a867a1eeb747d7c5b6aab9"
+      },
+      {
+        "id": "klri-format-114",
+        "sha256": "f464866dba2d9db845d0ab27a482e912b1122feaadcdc25e722f4cf4eda21a24"
+      },
+      {
+        "id": "klri-format-115",
+        "sha256": "a644a6661756c326423a71262021ba15298783237d174540d41d3536b51e4226"
+      },
+      {
+        "id": "klri-format-116",
+        "sha256": "a867d90631e5dad0c58c6ccff053d5fce5e47a3be67d4a50ed6ddad270e547ce"
+      },
+      {
+        "id": "klri-format-117",
+        "sha256": "591b4e057ca8de55c5592d1be2324f0b13c489426e4a5369fc90a7db75e52e1e"
+      },
+      {
+        "id": "klri-format-118",
+        "sha256": "dfe974b564819e9f3f174ff17c2add527cadb33d09c1178b0f29b4cae5aa407c"
+      },
+      {
+        "id": "klri-format-119",
+        "sha256": "4757d8b48d317a3f0510d62df41f60a94abde1f0ce325c3eb8b0a8e65b34037c"
+      },
+      {
+        "id": "klri-format-120",
+        "sha256": "fcbb00f8c068d61dbcbfc876343f9bd4a5ef4777804d075ee043ccbef87f2449"
+      },
+      {
+        "id": "klri-instruction-001",
+        "sha256": "e5e6a2fb4af2b89f076cb40b067c56f123769f8a06e36d3578bed4d4981e92b9"
+      },
+      {
+        "id": "klri-instruction-002",
+        "sha256": "412997404fbeb8b26ff08636bc3c98832be73ad3dae992e9132fdee5a1a39564"
+      },
+      {
+        "id": "klri-instruction-003",
+        "sha256": "ba45ac2a79dd1323d82fdbfb15144a5a6e636c1b60cbb165c0fdec841e306479"
+      },
+      {
+        "id": "klri-instruction-004",
+        "sha256": "8a6ad8fbf079a55bf9b8e7eec19a0663d6b5458d542aaf15e722d3d01237515e"
+      },
+      {
+        "id": "klri-instruction-005",
+        "sha256": "e0bf74b8d19cc24a903e93da9defc0df5d205a3df2f66b8665d20fe6dc3e384e"
+      },
+      {
+        "id": "klri-instruction-006",
+        "sha256": "3d8c7d627e70e14b449a98bf3b37d530df7080f8291a2b144263f42968438a24"
+      },
+      {
+        "id": "klri-instruction-007",
+        "sha256": "3d1be98dcfa0081e7536cb022a8aea550d32ec7e6b45918651b7829592a66d90"
+      },
+      {
+        "id": "klri-instruction-008",
+        "sha256": "6b933cde604a18036bbb782bffc0fe6c165836702abc4f8ffc2092575bc1e481"
+      },
+      {
+        "id": "klri-instruction-009",
+        "sha256": "3a4eba0310983c0bc5142a0602712e034bf2735913dc9cb083680ed067fd2478"
+      },
+      {
+        "id": "klri-instruction-010",
+        "sha256": "600f3dcc7349d4eb6a5b4fc158e739cf265d352aa1d209cc125ece1b4cda42ab"
+      },
+      {
+        "id": "klri-instruction-011",
+        "sha256": "f4317dbdab6bb6ea19670f339e467abf86235eb10a82569c8b656911edeff844"
+      },
+      {
+        "id": "klri-instruction-012",
+        "sha256": "982d120a262fcfc8041dba5a5da79aa766871773173659a9500a49c41b4436f4"
+      },
+      {
+        "id": "klri-instruction-013",
+        "sha256": "2ae7a7f11d42c28773618d54cbfac645a8e25ea840e308735749bddae021d632"
+      },
+      {
+        "id": "klri-instruction-014",
+        "sha256": "2e66b78033b78f3c9bdecf57dcb0a35125b8f684f1d85f05971ee7ab86b8e6a2"
+      },
+      {
+        "id": "klri-instruction-015",
+        "sha256": "fca6e531f845a2a32d7925781ee9efe7e3b9931d437f420f56adca6cb949b03f"
+      },
+      {
+        "id": "klri-instruction-016",
+        "sha256": "25b90c1475e5fed325f6ac69f54ea2d3e3adff911d65f5d0d4a0fbcf72a98cfb"
+      },
+      {
+        "id": "klri-instruction-017",
+        "sha256": "a59cc8464cc719bfe9eaff8029e53ffc46d8455817b341b69bb71063ca540b52"
+      },
+      {
+        "id": "klri-instruction-018",
+        "sha256": "9ef7dcdd97542f27e80445a9b6d415c1324b77dfad3c54cbe7e31896924286f5"
+      },
+      {
+        "id": "klri-instruction-019",
+        "sha256": "0b206abb146edeacd2c9beee0932f6843f21bfdfed5479d3ff0c0b40dc485572"
+      },
+      {
+        "id": "klri-instruction-020",
+        "sha256": "232934ea954a102040116d6c353a691f75c2ef7e30ecf763fd5b899882b70381"
+      },
+      {
+        "id": "klri-instruction-021",
+        "sha256": "750a419239120a78fa23753baab6a069450654790f292e892330f78acd8cce6d"
+      },
+      {
+        "id": "klri-instruction-022",
+        "sha256": "10f5ffd20b9207c7d57aa7807b5641954619552174991c66c6440b7402b5a22f"
+      },
+      {
+        "id": "klri-instruction-023",
+        "sha256": "f96f9762aebf8db93839006b96bb785420bf9e61b2d39d87564f668d45e40f50"
+      },
+      {
+        "id": "klri-instruction-024",
+        "sha256": "c0e979eab4845aaf86ed2e6c77d20ff230c40bebe5dde5967f124c73be2ddc3a"
+      },
+      {
+        "id": "klri-instruction-025",
+        "sha256": "40ac779f6532f9379866e3e5700a92c4d68743f802a0c4337f950aa8b6a9157e"
+      },
+      {
+        "id": "klri-instruction-026",
+        "sha256": "f398be49d1da37f47d50a0eaecec5bbff66d77973648990a252695b81693b58e"
+      },
+      {
+        "id": "klri-instruction-027",
+        "sha256": "c3917d53953d5a1ba36e833dc2ee7ef614fed28cf749a81b1d601102b980c8ce"
+      },
+      {
+        "id": "klri-instruction-028",
+        "sha256": "d2304f3df124baf213b26b79727dea7ed5f9fa4010be4f673d7cd5e42cfc7db2"
+      },
+      {
+        "id": "klri-instruction-029",
+        "sha256": "7c6743a7d3348f9facc664de2cf4a416a29e2cf13dba52f0c79b88fa9d0744e5"
+      },
+      {
+        "id": "klri-instruction-030",
+        "sha256": "be34d6f70db46f165ba05c505781ff21ac8c130c7a957356465195dac9c0f5fa"
+      },
+      {
+        "id": "klri-instruction-031",
+        "sha256": "d17ad093c271d0ccfdb041c416ce38474f12fbe9a7e26c97e47826097e09288d"
+      },
+      {
+        "id": "klri-instruction-032",
+        "sha256": "489cb50660d04079918e36078faa402fbcdd7ba35a83da24e3a0a797c2904b2a"
+      },
+      {
+        "id": "klri-instruction-033",
+        "sha256": "6c4a8d905952b53dee2bcbd9621faaf081412296116f149898a4f58b54c8fef4"
+      },
+      {
+        "id": "klri-instruction-034",
+        "sha256": "c3022cf2bcbb0c7fbc983f27c7c762e102884830a1dd465e18b6bb02fa872fdb"
+      },
+      {
+        "id": "klri-instruction-035",
+        "sha256": "c60babc8d5aebd040d2e37aa97ccc10643aaa9c01e65a339bcff3ac8b659b515"
+      },
+      {
+        "id": "klri-instruction-036",
+        "sha256": "ba3ae902956ea9f859808731638827d22a55ab2f66fb5056908b2f26611e6ad0"
+      },
+      {
+        "id": "klri-instruction-037",
+        "sha256": "6e5929ca286e8e389a28a9ab836692d5b8e731f1e68b224b0faf7a00cb571586"
+      },
+      {
+        "id": "klri-instruction-038",
+        "sha256": "e6c0a2354aff87025c1855087dfaed56776904e20d68303f557ea365e0af2d20"
+      },
+      {
+        "id": "klri-instruction-039",
+        "sha256": "fef78253a72c4fe41594bf36c64ef8be14611b234fa8fe9c99c1c9ec2a088e90"
+      },
+      {
+        "id": "klri-instruction-040",
+        "sha256": "89dd478a708b7f3ca98c98d54dd5efd446eef90ebaf97d8564d0ad34a3e01986"
+      },
+      {
+        "id": "klri-instruction-041",
+        "sha256": "b003d64fb33fb3e4a40a8afd5cc072caec86245805cf4dafb20c9e3434f59304"
+      },
+      {
+        "id": "klri-instruction-042",
+        "sha256": "4e2354a82439225c70daa30d89c471163c51242d5c9b5e7a62f2f7400f537918"
+      },
+      {
+        "id": "klri-instruction-043",
+        "sha256": "00afe0c006a01155c56c70b6b2eade38bbecd232e9171f35d2c7976e9766d05a"
+      },
+      {
+        "id": "klri-instruction-044",
+        "sha256": "30bce8937e6f767bde7fdeb889abeb5c5a5b10f26da7f7fbd7b47fb1435b3f87"
+      },
+      {
+        "id": "klri-instruction-045",
+        "sha256": "53240b513ddd638cdfcc4b2ef734c6d12dcf8c1ed26e600c723e59d6febd9e72"
+      },
+      {
+        "id": "klri-instruction-046",
+        "sha256": "f433002faa82514b6235a815753d6cad28e716c88e7b24ccdd70744d366deb8a"
+      },
+      {
+        "id": "klri-instruction-047",
+        "sha256": "3957bebbccc914445bc69c37aff9b362369afdb6747b50a28a869828c115cb23"
+      },
+      {
+        "id": "klri-instruction-048",
+        "sha256": "ff9fe1cd06b95cec53d4505d1a83ae73526f3580a298e790d65f4f1c8b5f6200"
+      },
+      {
+        "id": "klri-instruction-049",
+        "sha256": "a737c63e4d7b652f50cc64801cbf70b582ab2ccb1e00b16f46d250605094d705"
+      },
+      {
+        "id": "klri-instruction-050",
+        "sha256": "f1428e4a817b5df2c25db8661a762eda6707ba1eec1fae708683527a0872d49d"
+      },
+      {
+        "id": "klri-instruction-051",
+        "sha256": "9c5626558ec1e12557a258be8c27fffa901a2dc96b48cd637e8e9129270daa75"
+      },
+      {
+        "id": "klri-instruction-052",
+        "sha256": "b2efe0b4cc783abbae8d16eba09cecb72bdb4792f2c815c12bb351c8795c499d"
+      },
+      {
+        "id": "klri-instruction-053",
+        "sha256": "8b5c91ece31bd3f8bf5f89bc42f7c0011df1f22a55bffb7cb048e9990a43cfb7"
+      },
+      {
+        "id": "klri-instruction-054",
+        "sha256": "f36b210454c713c22a7afd6ab3bf279c1d795d0ad5509d5a2cb8431f057835dc"
+      },
+      {
+        "id": "klri-instruction-055",
+        "sha256": "5cd67c82ffad7bbd1cab1559940f46c40a1c1ce9e914c289d6c25ae931864aca"
+      },
+      {
+        "id": "klri-instruction-056",
+        "sha256": "75b95a56b8a2158ac599af7c19c90a011197a884b3d884d1cb9c1b3606fc4ff9"
+      },
+      {
+        "id": "klri-instruction-057",
+        "sha256": "b403d117e3f24137f1ce0dfc652669428cffe64c52d98976276cf79e6330a271"
+      },
+      {
+        "id": "klri-instruction-058",
+        "sha256": "a66ede0a56c166ac450360ef902716db4a75d352731b7b7efd0f8082b27a404b"
+      },
+      {
+        "id": "klri-instruction-059",
+        "sha256": "4611df6fb9ce953b66799f6ddba735de36454a7431cb3eb293226d9b9f0e45be"
+      },
+      {
+        "id": "klri-instruction-060",
+        "sha256": "905ec0c98d02a52c0505a4ff4cb6ac778f64942e7db3cc39c0bf17cd6d623b79"
+      },
+      {
+        "id": "klri-instruction-061",
+        "sha256": "2ebd009aee637f36cedd0f062299643e0f285b20014c79b4ae7d809d6849641e"
+      },
+      {
+        "id": "klri-instruction-062",
+        "sha256": "fdeba95e386da71ce8c97813a458b625b2bf79b222eb3bd1350705474e2b45b2"
+      },
+      {
+        "id": "klri-instruction-063",
+        "sha256": "aee2138b3a0abc2a9d821b5d21bdf62959f68a4db131b39385dd10ee0132d533"
+      },
+      {
+        "id": "klri-instruction-064",
+        "sha256": "a3948f1188cd5993145d66564c278ac056b8cd9214a6922330a67a788850c5d7"
+      },
+      {
+        "id": "klri-instruction-065",
+        "sha256": "8f76e724fec5ea4721508ac238bba6a80f4ba77b001872be00bfe0906aa99801"
+      },
+      {
+        "id": "klri-instruction-066",
+        "sha256": "2432bbf8ceab5b4368a0ae39cfc1a23ab62408374d4614c5a16c2db0c758b147"
+      },
+      {
+        "id": "klri-instruction-067",
+        "sha256": "8300b49657a8b482af5b268874c75ae9b06dbce77be24c97fa959efc6cd373b4"
+      },
+      {
+        "id": "klri-instruction-068",
+        "sha256": "9b74cb14993561e24d5fa478d34740356067855e759935b4a89ce138a6b5b7f2"
+      },
+      {
+        "id": "klri-instruction-069",
+        "sha256": "965672364bca2e0538e39b9f97b4b6f8f86f54f96199b47df2c27c25b112b83d"
+      },
+      {
+        "id": "klri-instruction-070",
+        "sha256": "695f35d360a49a8f809af2965436361a4901f1643d41a589e6ca56851bfb8758"
+      },
+      {
+        "id": "klri-instruction-071",
+        "sha256": "e47584d161e32a6b5b14363b8e0929698fc43ac63595d71a957f8e31e662cbdb"
+      },
+      {
+        "id": "klri-instruction-072",
+        "sha256": "f1c0f616dacff28e98dec48b33bd6fc22a6aaf34e30fd3518898e54c0c994fdf"
+      },
+      {
+        "id": "klri-instruction-073",
+        "sha256": "55e5d5d5366bcf7d81d8a720ba9ebd59272cf24211181ac24eb56f84c4877c34"
+      },
+      {
+        "id": "klri-instruction-074",
+        "sha256": "d08d8f6c41552a9fd29583dab93d20970ad52de47e2883707512b22afdaeb16f"
+      },
+      {
+        "id": "klri-instruction-075",
+        "sha256": "df19fac14e50ddc400e7061a2f69054aa51b73185f44d79ac931be2253d0337c"
+      },
+      {
+        "id": "klri-instruction-076",
+        "sha256": "3f39542bfc2f4179b28e44b2fb8ff07cc31b55b9fd1e44a370ec53e8d6445d77"
+      },
+      {
+        "id": "klri-instruction-077",
+        "sha256": "33b7dd1f1e4c4dc3bd198ce829e3667555fd1b8f56d7e1db629878dacc8c9429"
+      },
+      {
+        "id": "klri-instruction-078",
+        "sha256": "dc1e3ecde66b4a5fd23b6407f04bdced6354aaf4c59726588a2950b0dfc2fa2d"
+      },
+      {
+        "id": "klri-instruction-079",
+        "sha256": "cff3e3c338743a2239811b06ee105b271ac70cecdd5f8e15f2eff6a2d1218776"
+      },
+      {
+        "id": "klri-instruction-080",
+        "sha256": "9d0d73b076caf8b738602632dc1c4a49f6c09bf7dc95418724ae5d0e55ba6b0e"
+      },
+      {
+        "id": "klri-instruction-081",
+        "sha256": "8bea63e1511c0fce8199a131fca53b05eac2a9ae6f4b784313a16bbdf72b78f6"
+      },
+      {
+        "id": "klri-instruction-082",
+        "sha256": "eb956d1a328258e0ed4c0acb33f10e96e6634c69c1b97ab784038feb7889be47"
+      },
+      {
+        "id": "klri-instruction-083",
+        "sha256": "230de7aaae2b0bdfaa259aa96f15095a9d6b24c4e3e3ed5d3f63772c33ac5126"
+      },
+      {
+        "id": "klri-instruction-084",
+        "sha256": "3d9a6a98499fdd32440289aaeb5e49a2a59332259d5334e5472d042755152c51"
+      },
+      {
+        "id": "klri-instruction-085",
+        "sha256": "302adcc7002666d611d35b620731cb223a0f641dd521be88b82138c9414fdbd1"
+      },
+      {
+        "id": "klri-instruction-086",
+        "sha256": "819d28d455463506464facba635a33510d9782535d2276b1db695f2795ea91c1"
+      },
+      {
+        "id": "klri-instruction-087",
+        "sha256": "44dc2334b50f1aaed9fa952ce3ccc466c0b3d1996df3872ed2d55f71934e3dd9"
+      },
+      {
+        "id": "klri-instruction-088",
+        "sha256": "74fa3a0cdcc560669ecb46091c96d69237068048791a5dcc4b97119eadf23700"
+      },
+      {
+        "id": "klri-instruction-089",
+        "sha256": "7a2bdb96d16dfb8aa04964537e11933d73d812f93ce1bf4c8ab4903822a506ea"
+      },
+      {
+        "id": "klri-instruction-090",
+        "sha256": "419711b513f0aed9fb04032e456279580f998558f095db9a94a98ea82f98eb57"
+      },
+      {
+        "id": "klri-instruction-091",
+        "sha256": "d63c98e74db7186309184335716b272b6aa8d4e8071f8672851b908b35690e99"
+      },
+      {
+        "id": "klri-instruction-092",
+        "sha256": "fe82743b50a4436a7b67702041c8dd4811355d4c198f3ec02036512c7eebacc1"
+      },
+      {
+        "id": "klri-instruction-093",
+        "sha256": "f114f147234fa7d083c3d26f1664252734aa7ea884fb4187b51a18ad688989bb"
+      },
+      {
+        "id": "klri-instruction-094",
+        "sha256": "7f8bdb91e3c44535be67f506c3477790178732dee51a0c96442222d14ec4ae79"
+      },
+      {
+        "id": "klri-instruction-095",
+        "sha256": "cfb5afb9ce7b65d0f24c9931a767d90b6bf205e53eb962432e5afea772953c4d"
+      },
+      {
+        "id": "klri-instruction-096",
+        "sha256": "d7c795914e03f2188ab385bd8e14ff531d50ca9c21ac6e08e977345a9a6e281f"
+      },
+      {
+        "id": "klri-instruction-097",
+        "sha256": "c593fba20295b4f4880e9c949dc4d13f285761fff0059aec3dcd56fa04d18af2"
+      },
+      {
+        "id": "klri-instruction-098",
+        "sha256": "7acdc5a2a4742abc4298adaf078e0a0645aedb7c5460e664df900e89e1a3292f"
+      },
+      {
+        "id": "klri-instruction-099",
+        "sha256": "81322caf710a60c9652479ab49764f67323f9c983a45e6c31808542fb2293892"
+      },
+      {
+        "id": "klri-instruction-100",
+        "sha256": "ff58927010cbdf3e82b77c423f6a06422dc43f2b9b4643c85ebb68461e4f98e7"
+      },
+      {
+        "id": "klri-instruction-101",
+        "sha256": "4ccbade57d5c77a23bbbbdbbdcbe9a745c471d8062aac4f25447913df1c82123"
+      },
+      {
+        "id": "klri-instruction-102",
+        "sha256": "c5b43f9ee03d090ac3f90a71ffd5b8857b70fbffe16d4439d0abedd850376e9f"
+      },
+      {
+        "id": "klri-instruction-103",
+        "sha256": "5efe9f19dcb6fa0d27528ebadae6ff3a65c1590abdd77e2b4c28fae77c8ff152"
+      },
+      {
+        "id": "klri-instruction-104",
+        "sha256": "e940c953147fd69016e8464bc1e169b04fdf508e277efc2043ff0353b078707f"
+      },
+      {
+        "id": "klri-instruction-105",
+        "sha256": "06d7c694bc8212c26c07f982492345d64bcc35a687c414f3007a7d6671216016"
+      },
+      {
+        "id": "klri-instruction-106",
+        "sha256": "d8019ed49cac53d08db78f1b366efcfde4f3ea077be341497bcb55429d79a14d"
+      },
+      {
+        "id": "klri-instruction-107",
+        "sha256": "680c7aaf68c570b32059172a2c8df6bedeca025e339efeb3e46e40339c8a659a"
+      },
+      {
+        "id": "klri-instruction-108",
+        "sha256": "e16796797349ba15cf29f5d0dc590c349b9adc041e7e21cb8a425c7bb08a6164"
+      },
+      {
+        "id": "klri-instruction-109",
+        "sha256": "7b332345becd618179e6f6757042f5e9cf2a8be6c89fe20c673427d23d86fec2"
+      },
+      {
+        "id": "klri-instruction-110",
+        "sha256": "4434fd023bbda2fbdda169ada65fd3cc83eb19bf65e158bf866e882eaf6737aa"
+      },
+      {
+        "id": "klri-instruction-111",
+        "sha256": "298f81bdde0f4773eecd953d42e7e1173fb4578245fc337833b2434394424609"
+      },
+      {
+        "id": "klri-instruction-112",
+        "sha256": "b1200f701808141d4520d6203eeef5e331eeb320c02454fae3ccea08365c6ea4"
+      },
+      {
+        "id": "klri-instruction-113",
+        "sha256": "39263d9a46f066a72c1a8f7b1e960e7eda27eb4f0a3cc5173ebd5c1ac755cb6d"
+      },
+      {
+        "id": "klri-instruction-114",
+        "sha256": "72dcc7171dd1c5c74ab5dbe99c177db9b38a8289d3f5dafe8288a3788bf48681"
+      },
+      {
+        "id": "klri-instruction-115",
+        "sha256": "ea7cc5e7e09635946a00de31d7e51b302daa09448921370f74b9ba7df98f38b8"
+      },
+      {
+        "id": "klri-instruction-116",
+        "sha256": "8f081168c0277d3105162f1527263c5e10a6e817a0302f3a1baf0f159603d5fd"
+      },
+      {
+        "id": "klri-instruction-117",
+        "sha256": "14d7fd062d0058338392d1892439cd327df2560354d21e0a4af17a1831a02e7b"
+      },
+      {
+        "id": "klri-instruction-118",
+        "sha256": "7e3db10cbfc38894891a4d72d714b8585368ff982a9e06a4fcf77e33c2a4a9b3"
+      },
+      {
+        "id": "klri-instruction-119",
+        "sha256": "130e8f1a3ae4354f7e71bde995889ce4ee0535c485fc1937c1b554dc2c302e2c"
+      },
+      {
+        "id": "klri-instruction-120",
+        "sha256": "71017f18783aa91c5e44fac3c18ba2757223f91951de8602ee2c6cb1bc843d7e"
+      }
+    ],
+    "candidate_scorer_hashes": [
+      {
+        "id": "klri-arithmetic-001",
+        "sha256": "4cb39fad59e9d3725d5b0b2e099e4660fcf2708ecba1cc0db7b150b871deb07f"
+      },
+      {
+        "id": "klri-arithmetic-002",
+        "sha256": "7be5c911ce5c850baffbe6a37041e7cde690a5563e6ee8d4f5e1030f3431b0a2"
+      },
+      {
+        "id": "klri-arithmetic-003",
+        "sha256": "02f83e02dc82ee9f390f5acab9a2cd14e3250a077d35cd6540515d10ad6c753e"
+      },
+      {
+        "id": "klri-arithmetic-004",
+        "sha256": "2ce3969ffee1361ca469992ac0185701044c3b115eb6f30e73349541b6afc7a9"
+      },
+      {
+        "id": "klri-arithmetic-005",
+        "sha256": "cfaf03dcd67555571f55d0d3a2c2a6ba641e52c2a05e889b4ff3c5a209f91ba9"
+      },
+      {
+        "id": "klri-arithmetic-006",
+        "sha256": "b095d6add3ea53170bcfdb03dc0842b1f37dc4259a9bf3c47b02b73d90b74400"
+      },
+      {
+        "id": "klri-arithmetic-007",
+        "sha256": "06015ac08e7adb3c4169e24f50d10c55eb8634638f846d3dd69701ee1cd54e9d"
+      },
+      {
+        "id": "klri-arithmetic-008",
+        "sha256": "b6cd8e6cf528553c399d4ae6df46cd7f0cc7bd9f43a376873b769ec7bceba93b"
+      },
+      {
+        "id": "klri-arithmetic-009",
+        "sha256": "717d876840c6409c7e2321b2af3306ae5e215efea701465e935b47badaf19fc5"
+      },
+      {
+        "id": "klri-arithmetic-010",
+        "sha256": "06015ac08e7adb3c4169e24f50d10c55eb8634638f846d3dd69701ee1cd54e9d"
+      },
+      {
+        "id": "klri-arithmetic-011",
+        "sha256": "f1f3764d5fc1cf18313e58eda0a7485f8d24219523643b20a106d9707eaf9bdb"
+      },
+      {
+        "id": "klri-arithmetic-012",
+        "sha256": "35987da4dcb8cf06ece3bcd35cadacb029412bc0b96de257ccc424a28f803f45"
+      },
+      {
+        "id": "klri-arithmetic-013",
+        "sha256": "a98e41005db09dda19adc05e6d83d1640e4532f4d081e40f8574abebe6f88a2c"
+      },
+      {
+        "id": "klri-arithmetic-014",
+        "sha256": "cfaf03dcd67555571f55d0d3a2c2a6ba641e52c2a05e889b4ff3c5a209f91ba9"
+      },
+      {
+        "id": "klri-arithmetic-015",
+        "sha256": "76b6ca0230cf7f8a398138d4607c9c97da41786627774ebd9c38d3fa6e2328fe"
+      },
+      {
+        "id": "klri-arithmetic-016",
+        "sha256": "199c3974e979ed04989ea5044bb33a341366495580981807711c64365d05ce2d"
+      },
+      {
+        "id": "klri-arithmetic-017",
+        "sha256": "f6cccdf24f8d7e859a6219e6d3ced853ae56d06b4cba16384f664587eb43258d"
+      },
+      {
+        "id": "klri-arithmetic-018",
+        "sha256": "19d1a2bcfe8f531e3a430842230b22671e306795ce03e9803909c5e291c358f7"
+      },
+      {
+        "id": "klri-arithmetic-019",
+        "sha256": "c31a226775dc96cc78b8fd23da271c721044a020fab01f9893d6a79cab1de6c5"
+      },
+      {
+        "id": "klri-arithmetic-020",
+        "sha256": "44f9f2e2d843e522f20a263f0b776d13becff3739a7979fef55bcaa293479ed3"
+      },
+      {
+        "id": "klri-arithmetic-021",
+        "sha256": "b095d6add3ea53170bcfdb03dc0842b1f37dc4259a9bf3c47b02b73d90b74400"
+      },
+      {
+        "id": "klri-arithmetic-022",
+        "sha256": "8fe583a8863ba8d3f4f6f3797cb173c9e183e5108d3981cadd881bbf9fa027ec"
+      },
+      {
+        "id": "klri-arithmetic-023",
+        "sha256": "2852183dd3b28757cab1615dde21a09c6dacfa65603abcc7d3de917e2fc265e7"
+      },
+      {
+        "id": "klri-arithmetic-024",
+        "sha256": "deb8453af8c92432197dcf901d471ba1194d690f4b7f905b07f97d76fe2787d9"
+      },
+      {
+        "id": "klri-arithmetic-025",
+        "sha256": "0061ddb459ad374f542d56051c226cfb9a89c0e96bbdbd5a2a5278aa5ed9efe6"
+      },
+      {
+        "id": "klri-arithmetic-026",
+        "sha256": "a4e2289deb3af9d189d7c7cb553682970cc76d658649bbfb956679fa89150ba2"
+      },
+      {
+        "id": "klri-arithmetic-027",
+        "sha256": "35987da4dcb8cf06ece3bcd35cadacb029412bc0b96de257ccc424a28f803f45"
+      },
+      {
+        "id": "klri-arithmetic-028",
+        "sha256": "d5949dd8f9f5320db9c5e1fef4c2bb89f2ff89f59ad0490a945011b276fa0a8c"
+      },
+      {
+        "id": "klri-arithmetic-029",
+        "sha256": "76aa600459dfef0731856a605f2ab72fdcfed4ad0aeb6941bf98708a51813ad0"
+      },
+      {
+        "id": "klri-arithmetic-030",
+        "sha256": "57606b40957803a7147489d3c46410cf046cfddf05b933641a93ad73afed693d"
+      },
+      {
+        "id": "klri-arithmetic-031",
+        "sha256": "1f2645a0b9802e97445ab4084a6987dd4ea5016c737453df8f28f0b3603c105d"
+      },
+      {
+        "id": "klri-arithmetic-032",
+        "sha256": "8fe583a8863ba8d3f4f6f3797cb173c9e183e5108d3981cadd881bbf9fa027ec"
+      },
+      {
+        "id": "klri-arithmetic-033",
+        "sha256": "19d1a2bcfe8f531e3a430842230b22671e306795ce03e9803909c5e291c358f7"
+      },
+      {
+        "id": "klri-arithmetic-034",
+        "sha256": "ade10eb0da8fbf0489b5e04d44fcf3a1fd6110a2864e958e13f1d62f94c557ff"
+      },
+      {
+        "id": "klri-arithmetic-035",
+        "sha256": "d4f2624ca9c0c1683838f50bb936d99605f61d48e62a88f8edfff50a24e3fb79"
+      },
+      {
+        "id": "klri-arithmetic-036",
+        "sha256": "ecd95a9fdcb262b65024f20f9313e8387736794a9b98f4084d44a17a190861a9"
+      },
+      {
+        "id": "klri-arithmetic-037",
+        "sha256": "d5949dd8f9f5320db9c5e1fef4c2bb89f2ff89f59ad0490a945011b276fa0a8c"
+      },
+      {
+        "id": "klri-arithmetic-038",
+        "sha256": "0cac9438b0f758bdce3cc3385c6527ad81299d8bf2c02209fa6274c3206cd5d0"
+      },
+      {
+        "id": "klri-arithmetic-039",
+        "sha256": "deb8453af8c92432197dcf901d471ba1194d690f4b7f905b07f97d76fe2787d9"
+      },
+      {
+        "id": "klri-arithmetic-040",
+        "sha256": "e9ea198e7773ab1f1a72b8307e5867966aa427156c45aec9a54043745ff75db4"
+      },
+      {
+        "id": "klri-arithmetic-041",
+        "sha256": "be997e4908c31c988bbc201fd4cf5c74ead9ab4d6a9a077d66ca3d23a1b44f38"
+      },
+      {
+        "id": "klri-arithmetic-042",
+        "sha256": "befcfe655a048a65d172cca24d096b91f136b9833c399bdf3f5352087aa378c0"
+      },
+      {
+        "id": "klri-arithmetic-043",
+        "sha256": "199c3974e979ed04989ea5044bb33a341366495580981807711c64365d05ce2d"
+      },
+      {
+        "id": "klri-arithmetic-044",
+        "sha256": "43ff47e3b63f81aed2ff7da8c340323f44a25e675baf3414e7ffd775a6312948"
+      },
+      {
+        "id": "klri-arithmetic-045",
+        "sha256": "afea0f3c8d54f50e028669a43c8efcc0d2536c51c77e4780b6d62e314e050d70"
+      },
+      {
+        "id": "klri-arithmetic-046",
+        "sha256": "f180a03aa30979d950e556a636af31ab2ccfc3dc06e86a2118e8557902bd6865"
+      },
+      {
+        "id": "klri-arithmetic-047",
+        "sha256": "7dda74d2b803cfa46ac9a147c631f2af5c183d6c45652e74f3b8ba9a1c0bb0d3"
+      },
+      {
+        "id": "klri-arithmetic-048",
+        "sha256": "7568bc2210a16526beb4c22820ed01bca5ec81ce650bdc7af1842feaa323181a"
+      },
+      {
+        "id": "klri-arithmetic-049",
+        "sha256": "e4c8f75b069f4868e0f5f4ef63d02aadfdc406d896ac71e3d493fdffe6265b38"
+      },
+      {
+        "id": "klri-arithmetic-050",
+        "sha256": "ae8b784aecd438bb757a0438f5171d9ace3fc25b19f13371464982a967d7ac8b"
+      },
+      {
+        "id": "klri-arithmetic-051",
+        "sha256": "0571577d2ddce447da135b5a316e2c1d7841335225508e84059245c82fa35c08"
+      },
+      {
+        "id": "klri-arithmetic-052",
+        "sha256": "e511c20bbdfd78066c8c07a779eb98fe42c66d4d1124f2654ff1ce486b5058f9"
+      },
+      {
+        "id": "klri-arithmetic-053",
+        "sha256": "22d60de0f2946bc3cc8b9fc2c5e2956e33d408e4bfa01d483dd40cd65516a5fd"
+      },
+      {
+        "id": "klri-arithmetic-054",
+        "sha256": "f09dcfdcab6698577e42806e858caf8b526c81d04ea12ca2f73585725e00eb64"
+      },
+      {
+        "id": "klri-arithmetic-055",
+        "sha256": "8613b121f5337a5a2b4b9716f35b96a7374cb50c177f4bdd770b4f64553d6d36"
+      },
+      {
+        "id": "klri-arithmetic-056",
+        "sha256": "0115b5b9a12db436f3b3cc5601e2dd321ba80e6c52dcf980dc0134c69029c741"
+      },
+      {
+        "id": "klri-arithmetic-057",
+        "sha256": "363d029764a1fb2c16bf4b0a70bf55aa07095c996df566ed437a05334ab4444f"
+      },
+      {
+        "id": "klri-arithmetic-058",
+        "sha256": "82da83b08624687ede75f7a2a8427ee3111626f0a508b79736a0a9858ea53d54"
+      },
+      {
+        "id": "klri-arithmetic-059",
+        "sha256": "5bf0a41838493d294ac98fbcf4cbc1dd46756c97d5178644714654df11598b9a"
+      },
+      {
+        "id": "klri-arithmetic-060",
+        "sha256": "2ce3969ffee1361ca469992ac0185701044c3b115eb6f30e73349541b6afc7a9"
+      },
+      {
+        "id": "klri-arithmetic-061",
+        "sha256": "ba99a99f350ccc4bd4aae3c6752dbe1a9edd5143bbd6b213cd92da2495c355e9"
+      },
+      {
+        "id": "klri-arithmetic-062",
+        "sha256": "7367dbf17961fe99d6b80ed2e4ee58ae1b7a86f6c2eec5e77749ad5d8e7a33e5"
+      },
+      {
+        "id": "klri-arithmetic-063",
+        "sha256": "d2361b22e3a96929c42f35cd33659124f82792c857a682eaee878bdc2dd08857"
+      },
+      {
+        "id": "klri-arithmetic-064",
+        "sha256": "f1f3764d5fc1cf18313e58eda0a7485f8d24219523643b20a106d9707eaf9bdb"
+      },
+      {
+        "id": "klri-arithmetic-065",
+        "sha256": "f9720fb4960022dd78f350f1a4c67173584a14869d078851a745c96e50bcd66e"
+      },
+      {
+        "id": "klri-arithmetic-066",
+        "sha256": "1e6de105bd66989b06e8caca235a72a446e66e23d415b2a87105a257039b2fb4"
+      },
+      {
+        "id": "klri-arithmetic-067",
+        "sha256": "45c7e0e4cf945972ca6632c9ef351ede83b8343cd2c7e2b7e20757a0113ffd6a"
+      },
+      {
+        "id": "klri-arithmetic-068",
+        "sha256": "f620a9c747934042edc1be92a91173122e8b02de4a1e0ed1306165219dd823d3"
+      },
+      {
+        "id": "klri-arithmetic-069",
+        "sha256": "2fc8e5ec9b20ee32a98bb5666cfdcdf0c3db42f7b9fba7471311c934f329481e"
+      },
+      {
+        "id": "klri-arithmetic-070",
+        "sha256": "0e12ae39c8683a27253093936c37f180c6f019dfd3468d706858b96306785be6"
+      },
+      {
+        "id": "klri-arithmetic-071",
+        "sha256": "655c57d250c9bfe5bef442fc5e16804eca29f8d49647b2a29b4eb67a6564cb6e"
+      },
+      {
+        "id": "klri-arithmetic-072",
+        "sha256": "68344bf696fd755e2fb9f9d1b73950a64a629cb67ccc51622328eba801adea0f"
+      },
+      {
+        "id": "klri-arithmetic-073",
+        "sha256": "5e9fc577b4abf3f46b34efc90270c261becbb9740b81a1121ec198e12322f413"
+      },
+      {
+        "id": "klri-arithmetic-074",
+        "sha256": "21a5336e250a7717a2aad08276cee210a3499007e9744967281b07c3b1fa8b10"
+      },
+      {
+        "id": "klri-arithmetic-075",
+        "sha256": "ec45d262f0ff86a682643f869efcebca37621cf1c2a74b05c72c738b4f6bed6d"
+      },
+      {
+        "id": "klri-arithmetic-076",
+        "sha256": "1f2645a0b9802e97445ab4084a6987dd4ea5016c737453df8f28f0b3603c105d"
+      },
+      {
+        "id": "klri-arithmetic-077",
+        "sha256": "77ebf3e155546771f4cfc0a86371b99b7466d1cbe76dd4a8695d7599a87e5c63"
+      },
+      {
+        "id": "klri-arithmetic-078",
+        "sha256": "db9c309917a53c82275346331ee4d3b4fa41b07890451a41fffa1476f65b099a"
+      },
+      {
+        "id": "klri-arithmetic-079",
+        "sha256": "2237275401c897fd8db0f63a1aa39349d50f8283f9ac65b8f9b79a197ddcff93"
+      },
+      {
+        "id": "klri-arithmetic-080",
+        "sha256": "5b013f7d97f2222e47735114b0e750fe336af2726fd1f72aaf1ca6f99021ba4e"
+      },
+      {
+        "id": "klri-arithmetic-081",
+        "sha256": "a50cbd2f0d0ffdcf0221009f1a7ab14a832cc8954ec906ab3377a83e33f40cc0"
+      },
+      {
+        "id": "klri-arithmetic-082",
+        "sha256": "2237275401c897fd8db0f63a1aa39349d50f8283f9ac65b8f9b79a197ddcff93"
+      },
+      {
+        "id": "klri-arithmetic-083",
+        "sha256": "4b9cbf90430f31c186b832966d86ce2a274edade0e9d93de4a91391d5d932f32"
+      },
+      {
+        "id": "klri-arithmetic-084",
+        "sha256": "69ec17802882861fe5978ddee64e8796d1b900a726ce36ac08f46262e52d87b0"
+      },
+      {
+        "id": "klri-arithmetic-085",
+        "sha256": "caaa6bea6bef73386d77cf0320e542e811e94a97fac7723929baf39fd39d0591"
+      },
+      {
+        "id": "klri-arithmetic-086",
+        "sha256": "4b823762123ea27b2e871151d0f5db8f8580940a17c3c1ca29374141709ac6f9"
+      },
+      {
+        "id": "klri-arithmetic-087",
+        "sha256": "57606b40957803a7147489d3c46410cf046cfddf05b933641a93ad73afed693d"
+      },
+      {
+        "id": "klri-arithmetic-088",
+        "sha256": "a94d74a0bcb60dcd1f54694a1423193b53a072eb51fe4ef19bed2376b5854c43"
+      },
+      {
+        "id": "klri-arithmetic-089",
+        "sha256": "072f7d42747530eaa3f92866978246fc7736ce99ece8f56d645208cbf7641001"
+      },
+      {
+        "id": "klri-arithmetic-090",
+        "sha256": "efa3b878599a9b0afa5667e8ce6b84f6f320fdc9073056a7db6dd7366b837c4e"
+      },
+      {
+        "id": "klri-arithmetic-091",
+        "sha256": "0cac9438b0f758bdce3cc3385c6527ad81299d8bf2c02209fa6274c3206cd5d0"
+      },
+      {
+        "id": "klri-arithmetic-092",
+        "sha256": "f620a9c747934042edc1be92a91173122e8b02de4a1e0ed1306165219dd823d3"
+      },
+      {
+        "id": "klri-arithmetic-093",
+        "sha256": "ecd95a9fdcb262b65024f20f9313e8387736794a9b98f4084d44a17a190861a9"
+      },
+      {
+        "id": "klri-arithmetic-094",
+        "sha256": "3eb4bf00bd5add44be5fff5d3ad98d1a7ba95ebb4847784bbfd182cbcfb0ff4c"
+      },
+      {
+        "id": "klri-arithmetic-095",
+        "sha256": "fef274a63c68c01071804ca0ccb7eb5615df2b52e66a5bfa4af32562e4ae71a2"
+      },
+      {
+        "id": "klri-arithmetic-096",
+        "sha256": "256deead3fab72fab4d6f9e4413e2a0008c61fb1102e779a82f5fb424e732edb"
+      },
+      {
+        "id": "klri-arithmetic-097",
+        "sha256": "998a04e92e22a1ab879ebfab3d44dd10c91b76cc3c155a2769664f812c70f420"
+      },
+      {
+        "id": "klri-arithmetic-098",
+        "sha256": "b1b6b4d5fa379dea8c33bc82ac44f14f8b26d9a66144c7a8f8522b7400bc05da"
+      },
+      {
+        "id": "klri-arithmetic-099",
+        "sha256": "befcfe655a048a65d172cca24d096b91f136b9833c399bdf3f5352087aa378c0"
+      },
+      {
+        "id": "klri-arithmetic-100",
+        "sha256": "0cac9438b0f758bdce3cc3385c6527ad81299d8bf2c02209fa6274c3206cd5d0"
+      },
+      {
+        "id": "klri-arithmetic-101",
+        "sha256": "9ba19561b2f4a28a0ce11d34195033fac86995629489162fc077daa25069dae6"
+      },
+      {
+        "id": "klri-arithmetic-102",
+        "sha256": "6a73dae6cec7fbcb3af0102e769acd35d4f15d33603081da9245e9860a399845"
+      },
+      {
+        "id": "klri-arithmetic-103",
+        "sha256": "2bfa363ff1b17bb63816a202fe41856f1eba175e9851aada7144b0a77e348f2c"
+      },
+      {
+        "id": "klri-arithmetic-104",
+        "sha256": "f13b5bff85c12cf80c53392dd8cd811ed8b98bc47f9b2b6341b8710476633348"
+      },
+      {
+        "id": "klri-arithmetic-105",
+        "sha256": "7568bc2210a16526beb4c22820ed01bca5ec81ce650bdc7af1842feaa323181a"
+      },
+      {
+        "id": "klri-arithmetic-106",
+        "sha256": "ef367eb5cc426e7c24bf3ad9f2bc6cba9786e6819c801ded270674dce3cbf91a"
+      },
+      {
+        "id": "klri-arithmetic-107",
+        "sha256": "19cdf0ebab0aa81f99621216772ef0d803b1b2311ab6ccf06ada7544c832b381"
+      },
+      {
+        "id": "klri-arithmetic-108",
+        "sha256": "4cb39fad59e9d3725d5b0b2e099e4660fcf2708ecba1cc0db7b150b871deb07f"
+      },
+      {
+        "id": "klri-arithmetic-109",
+        "sha256": "e77c5ff549ca7abc8a668f1a2a2774e81b3a02e476383d62cfcbeb5f2ba1ec1b"
+      },
+      {
+        "id": "klri-arithmetic-110",
+        "sha256": "01e2a0ffe6b4da7d08d5e3826e7f901a8c5ba3757c1c3ade2aec250a5016185f"
+      },
+      {
+        "id": "klri-arithmetic-111",
+        "sha256": "f09dcfdcab6698577e42806e858caf8b526c81d04ea12ca2f73585725e00eb64"
+      },
+      {
+        "id": "klri-arithmetic-112",
+        "sha256": "303a6932791aca7d4a54b48f82cc4f41c80865d2e6df46fef92d80a2187b58e5"
+      },
+      {
+        "id": "klri-arithmetic-113",
+        "sha256": "3cf204c5e3993e1283a194e644390932c6deb231d38e16a97042590a06afe77f"
+      },
+      {
+        "id": "klri-arithmetic-114",
+        "sha256": "6d70530fec3b83f511e7c9a8159c3a1a5d5bb07b185aa435b74d3c55afeea58d"
+      },
+      {
+        "id": "klri-arithmetic-115",
+        "sha256": "7f40c2c72bce981683fe20db54c016adfc51953524b41109f988f4114279b9e7"
+      },
+      {
+        "id": "klri-arithmetic-116",
+        "sha256": "c27c769fcd41bb8c67ee06b6b62c15f7b870a345ba70e61600d798ec9bc1d24f"
+      },
+      {
+        "id": "klri-arithmetic-117",
+        "sha256": "2ce3969ffee1361ca469992ac0185701044c3b115eb6f30e73349541b6afc7a9"
+      },
+      {
+        "id": "klri-arithmetic-118",
+        "sha256": "8b040cbbc02185da1ca16709ae8ed82f9aa828736526fd2f2aeb0886f45b6089"
+      },
+      {
+        "id": "klri-arithmetic-119",
+        "sha256": "7c192475d7de04be95645f49b858bc21bfbe17f2bcb81ce423f3f4e0392858c4"
+      },
+      {
+        "id": "klri-arithmetic-120",
+        "sha256": "06015ac08e7adb3c4169e24f50d10c55eb8634638f846d3dd69701ee1cd54e9d"
+      },
+      {
+        "id": "klri-format-001",
+        "sha256": "e06a795a1261485dc3760b6c0e4d6b4da9494cb9d1dc9d33d4e37f59af8a623e"
+      },
+      {
+        "id": "klri-format-002",
+        "sha256": "3b1e6fddd6fb220e144ccf4ab3edabdee77b1c563e30ffffaa11132c9565e83e"
+      },
+      {
+        "id": "klri-format-003",
+        "sha256": "c0c442b12922f86cadc719d0d327b33e528750f57c5a18bddcb13020e60f10af"
+      },
+      {
+        "id": "klri-format-004",
+        "sha256": "34a49a2d41874b68328289ffbcdbb44a098582076df6218dd81668c60f3e08c1"
+      },
+      {
+        "id": "klri-format-005",
+        "sha256": "069494405adc2c520e0f00610b6f6b7914cc83a8d40bc8dbde3cc5565aca2621"
+      },
+      {
+        "id": "klri-format-006",
+        "sha256": "4e6e36abc2ce3111faf4c5ac1cedae0dffeab00f838a0fd6f85f58b5fc3b2065"
+      },
+      {
+        "id": "klri-format-007",
+        "sha256": "751e9e0739c83403e4bf69242c6290d43a3f390b1f59029168cea4f476f8349a"
+      },
+      {
+        "id": "klri-format-008",
+        "sha256": "fd66357c42bc0b6e2e39ff8e0a1fe6e433679827f143613c7aee21f261023968"
+      },
+      {
+        "id": "klri-format-009",
+        "sha256": "0b866f39ce9ae996514622e760c9b90650ab22d516ddc15536eb7ec4ee8c7e2a"
+      },
+      {
+        "id": "klri-format-010",
+        "sha256": "3ed9e1b0e40976ec37c939973581810c1058a44639269dcee95cdb72ab0bfeb4"
+      },
+      {
+        "id": "klri-format-011",
+        "sha256": "9fe94c4f7d5931e102ff4f3883df8d0f40021caad4e6151e3f3dfade75ea72ca"
+      },
+      {
+        "id": "klri-format-012",
+        "sha256": "42ffe2b74fc707dd83fae9b85acc8179c79774a8cacc3722fe35c93175917d4c"
+      },
+      {
+        "id": "klri-format-013",
+        "sha256": "0f0ecbf8e73b12b671dc244634db321954ad6f89aa0abacd936deca6a25ccf9c"
+      },
+      {
+        "id": "klri-format-014",
+        "sha256": "a4f0519c60256a337ed68f1d6dcd93eac1fa391ae686a875389930bb9a5b9a36"
+      },
+      {
+        "id": "klri-format-015",
+        "sha256": "1edb7b15871ac659c914c9c906d29e79797e1f7007906c4a5854361f3ef791c6"
+      },
+      {
+        "id": "klri-format-016",
+        "sha256": "43d726ffe658a0e7204fc35f11f4c13603fdf043c954d69f3eb2670d32352938"
+      },
+      {
+        "id": "klri-format-017",
+        "sha256": "d4dadd341335602c24a3f6b0f26afe19a5ea331fc586769542a1e7615bf7d621"
+      },
+      {
+        "id": "klri-format-018",
+        "sha256": "d70ce0404e36a8d35df3c2a0bb4bb3c3febd99b78b14d9380a0caae7eaad5eaf"
+      },
+      {
+        "id": "klri-format-019",
+        "sha256": "f2ccd74d3d81e8540a59613720467aef4917a3741387e157854c4b5b21a502f1"
+      },
+      {
+        "id": "klri-format-020",
+        "sha256": "8e9ce2e0448e217dfeb222ea2492426bb296a26c29122c49f00d1cfeda5a2c02"
+      },
+      {
+        "id": "klri-format-021",
+        "sha256": "2752a9b86574e3a552a9906240b5b1d3bccae4f0e14a05dff364f8366f54fd1b"
+      },
+      {
+        "id": "klri-format-022",
+        "sha256": "f1741b81fd4ea8a97481cbe0c8dee2366b60d07d7096f31536b6d8ba2108758e"
+      },
+      {
+        "id": "klri-format-023",
+        "sha256": "5b1f50716ae14635daeb5a615440ea0b8555f8eaf78daf9f75d1bf7b6a13ae99"
+      },
+      {
+        "id": "klri-format-024",
+        "sha256": "00b5cbbe1e510d1c7f06f73c438eaac9725864a8e0ea48d2aca89881a901b8e2"
+      },
+      {
+        "id": "klri-format-025",
+        "sha256": "ac1e3ac34cf49dd88f4caf7cb7912198397196963b6fae1faf93d15ea1422ddf"
+      },
+      {
+        "id": "klri-format-026",
+        "sha256": "319ff94877f71aa64f00c1ac2ffb5cbcbe886fea31beb5d572e17ef5d3cb26d9"
+      },
+      {
+        "id": "klri-format-027",
+        "sha256": "08d08b5e1ffd167c8d36a5cc49e181152735a1a2a03a0c292d30958d72bff29e"
+      },
+      {
+        "id": "klri-format-028",
+        "sha256": "755cd656bca4d751c8cb1c216f8c2d573a315673305208d418779697f17081fe"
+      },
+      {
+        "id": "klri-format-029",
+        "sha256": "608d925de2107a8be6714353abb9a2004f55ae86722ffab3418499bcf416b99d"
+      },
+      {
+        "id": "klri-format-030",
+        "sha256": "afd15b861365e479eb1f8cc832ae8761ba9c491a47d1f01723de589923e9c1de"
+      },
+      {
+        "id": "klri-format-031",
+        "sha256": "8ca6326de2479a6173a17d68a675bf07b116d204ff1ed25a660eefda501524bb"
+      },
+      {
+        "id": "klri-format-032",
+        "sha256": "ae46f9e5c8b80ec942afc00fd51a396021086d8d9fd095e928534cbc7a086909"
+      },
+      {
+        "id": "klri-format-033",
+        "sha256": "f9b5889562248904dcea67009aa817707dec8986f4947602a5af248e5f39acb2"
+      },
+      {
+        "id": "klri-format-034",
+        "sha256": "3cad67ce55cdfc3013bdd098bc8275f53d940a31861ede75f5148c81cae4a523"
+      },
+      {
+        "id": "klri-format-035",
+        "sha256": "d8e54078c33243ed3a631ebc30044a95877fb4ac050f63b690f72f52a3cb2a86"
+      },
+      {
+        "id": "klri-format-036",
+        "sha256": "9ad944abfccc9bf18cd2037a9af4bc844e5fe076801b9aadb547635e7251141e"
+      },
+      {
+        "id": "klri-format-037",
+        "sha256": "87f98ba5d87c7cd10817903736ffc7d4b7dd78149304573c90cd021aeb4f0240"
+      },
+      {
+        "id": "klri-format-038",
+        "sha256": "34498de8277d34b5468baf936be5e46ae66340e0f7ddf45bd400c1e2f88e096e"
+      },
+      {
+        "id": "klri-format-039",
+        "sha256": "538446aed324bd6bff86f4573f17586efe774032bca917953f4ac34db1c74088"
+      },
+      {
+        "id": "klri-format-040",
+        "sha256": "a94212b742c0b287def4f0032d7de01f59b1e69aa94e6ee6a4e0bb05c82e0c2b"
+      },
+      {
+        "id": "klri-format-041",
+        "sha256": "2576e2f3c2e13b95ac5a7e8eb529fc984623a5ea6b7e2d288bc76e212dd1988e"
+      },
+      {
+        "id": "klri-format-042",
+        "sha256": "76ffafe4df2741a5d2c8fcbd8e7aa518b12b84a9201aeb442005333dcc4e5da6"
+      },
+      {
+        "id": "klri-format-043",
+        "sha256": "c8a01e0cdcdf9d2f2ae877250b06f527639953d34f39ea7d35e83ed48378faa6"
+      },
+      {
+        "id": "klri-format-044",
+        "sha256": "fdff00490e3d84bb6e61a4625c0bab31915f380bed1914bd5807367866228b07"
+      },
+      {
+        "id": "klri-format-045",
+        "sha256": "3417557a65d55ca54a8e1a577fed483c613e5aeed77e00aa519f8bd62c64acc1"
+      },
+      {
+        "id": "klri-format-046",
+        "sha256": "c80903164952fc50cc8a1f7d35c8ec459a61b8714375c7a287398401b4223350"
+      },
+      {
+        "id": "klri-format-047",
+        "sha256": "80843b4d113bd05da46f66f69ae1a299c72ab3930e4c714a3b4a51543c1babc0"
+      },
+      {
+        "id": "klri-format-048",
+        "sha256": "29a0e38efdca0798d1743525ab829c819b83cbb1e0fb32bdc448e803382545a5"
+      },
+      {
+        "id": "klri-format-049",
+        "sha256": "83a15c82ae27ecf19496cb774ef33c3b1078cb9c836be9045fe14d8fd90f5f35"
+      },
+      {
+        "id": "klri-format-050",
+        "sha256": "9e89e0bc1a5a837ee0564fee05c084e2d447bea98d82f942b6ce145a07cf8aab"
+      },
+      {
+        "id": "klri-format-051",
+        "sha256": "7bb518853071ba6280b52caac947336751017be685c2abc729ceaad72580604f"
+      },
+      {
+        "id": "klri-format-052",
+        "sha256": "03ee8ae967228aadad79af3f4128ffb606081b868b464567ba7c34d16b19460d"
+      },
+      {
+        "id": "klri-format-053",
+        "sha256": "6d3b08254aba7c4ded51c610c34bea3bd2187c5fe243ad33c8e2225ab8bbd0b2"
+      },
+      {
+        "id": "klri-format-054",
+        "sha256": "85a8d56ecd0bdb74709cd61adb76ca248e0b13d1a46f894613bc719808283ba3"
+      },
+      {
+        "id": "klri-format-055",
+        "sha256": "cb134dcda6c8e21ce92e8293275ae9c42aad106686b29c5d09e0874749439b86"
+      },
+      {
+        "id": "klri-format-056",
+        "sha256": "cc736ca93ebe1dfbaa8cec6ac805455542575da1125c76cbc95c1a410d743460"
+      },
+      {
+        "id": "klri-format-057",
+        "sha256": "c381427c20232d2e1a5bde6767311926155d113477a415136e5b09ed80e4136c"
+      },
+      {
+        "id": "klri-format-058",
+        "sha256": "1b41031ddd5c9f0281f4e3bf9cd3d734164c4a7808d1a0cd24fd33bd6a6e98e8"
+      },
+      {
+        "id": "klri-format-059",
+        "sha256": "12dc681b5afc6b1458c617c27fac284f1c70b93a82d223b85ba259362d160d0f"
+      },
+      {
+        "id": "klri-format-060",
+        "sha256": "28236cd2af359417679d2a8352f42b43794217639560487bc95a686de3dafbec"
+      },
+      {
+        "id": "klri-format-061",
+        "sha256": "0549f2e4b10b3f7c689684346abade72b3d0d57340e3053f78381632edc45f35"
+      },
+      {
+        "id": "klri-format-062",
+        "sha256": "912c86b774f6fc88316c5a6bf5254ca821422d61feb351f05be3bb9c9a7b1727"
+      },
+      {
+        "id": "klri-format-063",
+        "sha256": "482cf6df199b3eb7920b0c8a743ac42c966b9f16c9329f76267ae7485493eb9d"
+      },
+      {
+        "id": "klri-format-064",
+        "sha256": "7cb067286fade6b3e5189160ad411e099a2422ae6b3a39b315687a25937446b8"
+      },
+      {
+        "id": "klri-format-065",
+        "sha256": "77ed97775c8dbe8d96a0ae73979fb122f380d466cc85e3b7d46b5a2097ac0a8e"
+      },
+      {
+        "id": "klri-format-066",
+        "sha256": "02022db36410c88c110faa9ef1e28490e8b0138b5e4dc28bfdacc458dc9215f3"
+      },
+      {
+        "id": "klri-format-067",
+        "sha256": "4a73d7c437f731dbecdfe7739c6cf5f9160c1d14b1b0030294a60914555014e4"
+      },
+      {
+        "id": "klri-format-068",
+        "sha256": "851761b9fbbb1fd90f2bb9e4e1425b329293138403b12f2c03a445ee34129887"
+      },
+      {
+        "id": "klri-format-069",
+        "sha256": "585c7961f285ce9136090f62a5484588d029d0fcf954c13ae306c90b339f5c78"
+      },
+      {
+        "id": "klri-format-070",
+        "sha256": "3d279ce5ae40d5c886b2eec11df5bf5e98d991cdc04ab374be4245e2e821899c"
+      },
+      {
+        "id": "klri-format-071",
+        "sha256": "d898c0b82a177c751c2243530eef0f88cf747b8e0506471c6518c230d13b2c70"
+      },
+      {
+        "id": "klri-format-072",
+        "sha256": "a64761d55f99d9b83e4ca7fdc744c6b6d9d3e2d86caef1e55fcd5361fc5d9677"
+      },
+      {
+        "id": "klri-format-073",
+        "sha256": "7869020ff4f2674cf7c201145fd2c91ede3e95f51d88beaa07b04717e4434c08"
+      },
+      {
+        "id": "klri-format-074",
+        "sha256": "9a35c10d1096e5e1633a697f0df1a9dd8c1a5e3a3115b3fd0a8167b9018fcbf3"
+      },
+      {
+        "id": "klri-format-075",
+        "sha256": "c90b60126fece00d005b589ab9a745b00a317a66dbc3203653b0519b1cc76f17"
+      },
+      {
+        "id": "klri-format-076",
+        "sha256": "b832b7f9e71fceac937cfe51e51a60404a088f5c5423396f26bf74d5e8eecd44"
+      },
+      {
+        "id": "klri-format-077",
+        "sha256": "25e03ecb8fb63877cb40192153dd8dedbe621d4099cd4727dabe75c8f45188af"
+      },
+      {
+        "id": "klri-format-078",
+        "sha256": "44fd5425c07c5f8092fc80fcbcf218d760520ffc75d354841bf15c994d31a189"
+      },
+      {
+        "id": "klri-format-079",
+        "sha256": "9d35c9a7b6e4397a3138f32bad89989957216df6077e0b53a13ac4262859025a"
+      },
+      {
+        "id": "klri-format-080",
+        "sha256": "0e7caaf9b62d0251c827a5e120422a493bd16c668ed274ae829bc1b70749f132"
+      },
+      {
+        "id": "klri-format-081",
+        "sha256": "258f1b46fa97fa79efeed741ab8ddd2c6bc4d99712cfcd5da539b06dc8e46f5a"
+      },
+      {
+        "id": "klri-format-082",
+        "sha256": "d4dd94227ebd2a1ce3cc5608c81386fc2ab0d8dc95ee9380cf7b772de17c9524"
+      },
+      {
+        "id": "klri-format-083",
+        "sha256": "cb5b261ee1195fcb65b92a435f889deda56cdc7b0b3ca64abccb388645134aa2"
+      },
+      {
+        "id": "klri-format-084",
+        "sha256": "dda37a64f82b085cdab543da40f03c2e931b3845182c06441d12fec0e53a2afc"
+      },
+      {
+        "id": "klri-format-085",
+        "sha256": "b78fbb13fc129cf36370720ced2094d7438369fed45f282bd7a9613f246d9daf"
+      },
+      {
+        "id": "klri-format-086",
+        "sha256": "03707c0f522d14b9e3fb80e72d55292e393b5f466b743cf4bd82ac49566acb79"
+      },
+      {
+        "id": "klri-format-087",
+        "sha256": "1b27f7086a946c60443738e6a3641b8b045637d87cdde7781aace74e31b44f9d"
+      },
+      {
+        "id": "klri-format-088",
+        "sha256": "786cd45bdb5c3ddc4cc255e8f6925aa0a6b8c54e3d9bfadba5efe7fb56b312cf"
+      },
+      {
+        "id": "klri-format-089",
+        "sha256": "28dd1015d2ac378c9b6332dbef752c8730a64691a6c260e88879a4257bc5eb07"
+      },
+      {
+        "id": "klri-format-090",
+        "sha256": "679b52ff5246ea8b87d0323e8facef072a99bef58b742074d31ca780a0a57abc"
+      },
+      {
+        "id": "klri-format-091",
+        "sha256": "c4d353becd3ef03c47af0ab33f7158242028b17299b1aa9c9528663a2fffe867"
+      },
+      {
+        "id": "klri-format-092",
+        "sha256": "507c33286898b68adf8023053f89c29737a07c01a38bcbeb4f4b3d2b77bd8227"
+      },
+      {
+        "id": "klri-format-093",
+        "sha256": "17aab497aec3e0199ef2d494a3ee5c97a82917825bd10af34f9e626588274d39"
+      },
+      {
+        "id": "klri-format-094",
+        "sha256": "e9c9d17ef08471c4fcaf033760d990542ba9b67335ee36c6f8967c68da7d2522"
+      },
+      {
+        "id": "klri-format-095",
+        "sha256": "2d607f8a86e4afb5cac3039913a16be7e907a34bb2c8a211491b2e26007f3192"
+      },
+      {
+        "id": "klri-format-096",
+        "sha256": "6cc78df79b0670396612833d0e93605c3f77fd9f8a51cbdb496f29beed15a3d9"
+      },
+      {
+        "id": "klri-format-097",
+        "sha256": "af482315d74c447c13f1405664a24e40330aefed90967aac3bdb7fe94b4ae18f"
+      },
+      {
+        "id": "klri-format-098",
+        "sha256": "34a975969c11bbc3bb89c50ea26b4511d6832bb04fa060a4af7076ba1ad48251"
+      },
+      {
+        "id": "klri-format-099",
+        "sha256": "7a11c56b1beb9b27185962dee1fe198abd6287935e3c684d7aa33bde30602805"
+      },
+      {
+        "id": "klri-format-100",
+        "sha256": "ed553c9cb3dcff044d1297f840e46e9963d833980b9a8f57dd1e154e29f184e4"
+      },
+      {
+        "id": "klri-format-101",
+        "sha256": "2abef7240284c6972f7b5a218c8caadb0dac7dd075d592a3d052193a1abbc03f"
+      },
+      {
+        "id": "klri-format-102",
+        "sha256": "21d82921df125fab19cf7358841ca5d2b8e4be6776a0e42bebf1014528a37c32"
+      },
+      {
+        "id": "klri-format-103",
+        "sha256": "e4ad794969b1ff10abbebcc47b2cddd64e535dafbcf06d9c889bd1909dcc368e"
+      },
+      {
+        "id": "klri-format-104",
+        "sha256": "c4ee104ac916fb6260588bd72db4c3a0705c2d44c75fd3d3bbcebd908dfcfb6f"
+      },
+      {
+        "id": "klri-format-105",
+        "sha256": "4676a6b9a8f46c477e855b368bbaaea50bef9c86c3785043e8676d9407534009"
+      },
+      {
+        "id": "klri-format-106",
+        "sha256": "670a8a5808b0b80c07ff9e388e2022ba449ee1e233f59ea6f0cbeb81c1cadba2"
+      },
+      {
+        "id": "klri-format-107",
+        "sha256": "ba4010095de190c0f84d6d394a197d1159fbfd2ebc870b0e33ca4ee110aaec1b"
+      },
+      {
+        "id": "klri-format-108",
+        "sha256": "8f305597007cba0f12322da7de285f32a9f87f58d9a60b50581fb6ca31f1bb79"
+      },
+      {
+        "id": "klri-format-109",
+        "sha256": "4c42918929594bb21c8197f59c84b75d47579e8e44a8bcdb2f5014058e06db4d"
+      },
+      {
+        "id": "klri-format-110",
+        "sha256": "89c7cef7273ab2da9f0a52e4a12be9bb0ce5fe544c2721f927ae2a6635a9c59b"
+      },
+      {
+        "id": "klri-format-111",
+        "sha256": "4f1446527f8c0d7c06c74b67de0caee659eed3ac2fd65c113391dc781cad1c88"
+      },
+      {
+        "id": "klri-format-112",
+        "sha256": "24534150e48d12a68ef3c601bbfe03603b721fa88260e25e3ee4361a27790a42"
+      },
+      {
+        "id": "klri-format-113",
+        "sha256": "00a3678bc7551830c509c78161b1dc8d1661b49e10be7fb990b36429582cff5f"
+      },
+      {
+        "id": "klri-format-114",
+        "sha256": "01f5166df8371176bb0e05aa046e7d9d0125982227f937fbb6e06ff43b98d45f"
+      },
+      {
+        "id": "klri-format-115",
+        "sha256": "32f9265c8b99d02a15274d006af86da6b9cf3739b2f693d5c990506ada66ce73"
+      },
+      {
+        "id": "klri-format-116",
+        "sha256": "68ba68866a6031fdd5372bc9031430b5b0a143c4fd2cb900b2cab2109c11a165"
+      },
+      {
+        "id": "klri-format-117",
+        "sha256": "82493b1a9f7e9d07e94727f77c0847faaa7d8564dfd453c361f3c28bbf08e9e1"
+      },
+      {
+        "id": "klri-format-118",
+        "sha256": "8699ff52f9ae291a93da640315e23eb34f2eb1ab3ea63c4b1c7516d4c3ab6d0b"
+      },
+      {
+        "id": "klri-format-119",
+        "sha256": "e5a8b026d7279fd5fa0f5af3dc2cb324f7264240a80c5748da0674d6708cc0e1"
+      },
+      {
+        "id": "klri-format-120",
+        "sha256": "891f728fb678bee8bfcb19c97e0df62bf4caa659dcb8a9bddc2fe5a7f172383a"
+      },
+      {
+        "id": "klri-instruction-001",
+        "sha256": "5e37759e06fada245f9f5c6d95737967863cde9007107400cccdb099cbf1e705"
+      },
+      {
+        "id": "klri-instruction-002",
+        "sha256": "8573e238b4ef45b52f1ef35169bce8f76e4b040434f211c30bc3361aac3cf572"
+      },
+      {
+        "id": "klri-instruction-003",
+        "sha256": "c7cf3ff5db2863fc7c55f7ef4f71023e837a0ed1501457afd821807d787caee5"
+      },
+      {
+        "id": "klri-instruction-004",
+        "sha256": "d7a6f8f082daeafef8c9dfa25d547b4d44aa255727ea0829abf6ef2426c34627"
+      },
+      {
+        "id": "klri-instruction-005",
+        "sha256": "4c6ff501b5757fb6670b0d939d4320a3bc2e3677247fe0a12517a8eae1ad7f7d"
+      },
+      {
+        "id": "klri-instruction-006",
+        "sha256": "9dcfc886736bf218e2ab617640e843db7466ea421c5ae758d0b50f0f39d70170"
+      },
+      {
+        "id": "klri-instruction-007",
+        "sha256": "0440d50704cae39c2ce99e2b88ca25c88eb1874234fbdde7f16087e06ffe8b34"
+      },
+      {
+        "id": "klri-instruction-008",
+        "sha256": "233bb08e35d73110a0707f82ebc035029fd7d71287abb8a232ed6334cbb50dca"
+      },
+      {
+        "id": "klri-instruction-009",
+        "sha256": "f15fd74baff924bb55fb10be3ce481459d340cf1e8f00bbbe12eee5d23d89555"
+      },
+      {
+        "id": "klri-instruction-010",
+        "sha256": "b0bed32701393b725bb56e0298c5a242a533cb94855509170dc8cdce233f7362"
+      },
+      {
+        "id": "klri-instruction-011",
+        "sha256": "93efa1c4388f150af3a873c9ab9b2e36b054c6ab77d720d64a7723a2bab080f6"
+      },
+      {
+        "id": "klri-instruction-012",
+        "sha256": "064be78f84813120ead4264f1ca0cb8c272ccf66e439f11a94ca554fb4e057a4"
+      },
+      {
+        "id": "klri-instruction-013",
+        "sha256": "758d641302da9891683a242256afc14e883bb449f28cc086c38fbf5d451c6890"
+      },
+      {
+        "id": "klri-instruction-014",
+        "sha256": "26e790286465c0b20baa22e69138ec7d341f605b912f4c1166035a4fb1291f75"
+      },
+      {
+        "id": "klri-instruction-015",
+        "sha256": "77b0bdab3fb77fff2909a2bef4c420310a36d6f972f9d2d7d26428dc6bafc188"
+      },
+      {
+        "id": "klri-instruction-016",
+        "sha256": "479fc38d52db58094d539cfdfce5e66b49509f9ab4849330f8e946f1b7062b76"
+      },
+      {
+        "id": "klri-instruction-017",
+        "sha256": "b0dcb8c82f6462770e4dc2c30b7b09795b1ad1cd6c2b361be18eeab8f5559fda"
+      },
+      {
+        "id": "klri-instruction-018",
+        "sha256": "2f01893e04b9c836ba5a27388eaa9f8da903d90836093540c87e9ca3620b7e07"
+      },
+      {
+        "id": "klri-instruction-019",
+        "sha256": "008d4603b833b4aced446f8cdc32fcaf95a6c68d8175bced556dbf648bb7d2c7"
+      },
+      {
+        "id": "klri-instruction-020",
+        "sha256": "accd186552426ae5bc8587ae52bed51e10d7d7a4f52b5dfeedf2c48e15111a27"
+      },
+      {
+        "id": "klri-instruction-021",
+        "sha256": "fbe86ebce6d9b8c0921b0fa4aefbfef121cd6dd43143af9bb71ca733ee708111"
+      },
+      {
+        "id": "klri-instruction-022",
+        "sha256": "24c6b187b1ce8e73c884744c82bd2df6b01d0fb02b422c6a526a1f8b652d5fad"
+      },
+      {
+        "id": "klri-instruction-023",
+        "sha256": "b888311c24c490f698c4a5b43d738392383343553d65e41cceb395d562a3e842"
+      },
+      {
+        "id": "klri-instruction-024",
+        "sha256": "62b35e789e720619cf37643e92925c08d6c326ef8c8673ce46229abd965b8e5d"
+      },
+      {
+        "id": "klri-instruction-025",
+        "sha256": "f1cb61e10a45d3822f290362f4e7883e385c3df57be30ecbb32ae9b5da2e2a7f"
+      },
+      {
+        "id": "klri-instruction-026",
+        "sha256": "006d1e5c8543a04450d2d5c28ae2f09f2219ac7207a4fc50b5ab65f31aa04bc7"
+      },
+      {
+        "id": "klri-instruction-027",
+        "sha256": "1bb1a7f719d40cb42f249789cfbb1325fd4aed12f85823a290a2118ae5a56055"
+      },
+      {
+        "id": "klri-instruction-028",
+        "sha256": "97ed60e76bcbb33301c140e4b601b635373a79eb578b30baf5a368976c33736c"
+      },
+      {
+        "id": "klri-instruction-029",
+        "sha256": "c509f1952b8b3955aa8002977968f6cef608f7af9aa1078daefd698140d93416"
+      },
+      {
+        "id": "klri-instruction-030",
+        "sha256": "bad346e0bbe229a753879d8e1f9a809f293223ee17edaf2412b91b09ad32aca8"
+      },
+      {
+        "id": "klri-instruction-031",
+        "sha256": "089433dd7d96f2c70cd6b4e03734e3a495c77a9014111a26c500a55356e300bb"
+      },
+      {
+        "id": "klri-instruction-032",
+        "sha256": "64af66421aa62417750502fe56db1c767344d6b441dc8be509afc5ff53f4e651"
+      },
+      {
+        "id": "klri-instruction-033",
+        "sha256": "281895f1b501cc1bec823fa2b49787562990d7b3f4ea1c0ac35b167894292975"
+      },
+      {
+        "id": "klri-instruction-034",
+        "sha256": "944d9ec1d08a9ce4d672da13d7d86e7c0b1d1ef804c10e09cacb93bc73532ec9"
+      },
+      {
+        "id": "klri-instruction-035",
+        "sha256": "0db732b0336153c1341195e8caf93013e06f44566693b0ae1fe2bd82ed98ebb7"
+      },
+      {
+        "id": "klri-instruction-036",
+        "sha256": "e350c3c4991589d30ab7a02c6ced9c9149f64ccd962cff6c0a1ea08d7011f2e9"
+      },
+      {
+        "id": "klri-instruction-037",
+        "sha256": "b209571e88119e78d6d4e4c06abaa9bbe02b045964d42f73f008fba5ab271a8a"
+      },
+      {
+        "id": "klri-instruction-038",
+        "sha256": "f1700cf14fd42590f9009da9001ba339093c53513f08808fc58f1740b8a275c8"
+      },
+      {
+        "id": "klri-instruction-039",
+        "sha256": "12f70cb97b6d31a4305b090d62b42f516f7b5c59c1f699d19c59f0c3802771f4"
+      },
+      {
+        "id": "klri-instruction-040",
+        "sha256": "f2b14171d8060827b9ab5fc0fa37cfff9ac557cffc7a08a5bf0af5884b43a7b4"
+      },
+      {
+        "id": "klri-instruction-041",
+        "sha256": "f9051a0ba36809bce286e6c60bfc6b240d26da7c280b8cb4672f0c708aeb8579"
+      },
+      {
+        "id": "klri-instruction-042",
+        "sha256": "d9f22221244b7972227b1bfcee91919c512ca64825c92c167ba9408873e0790e"
+      },
+      {
+        "id": "klri-instruction-043",
+        "sha256": "e8b73c4473790d49481cc3a42310fa44c32b3ac8e7619cccc4d10564372d2ca7"
+      },
+      {
+        "id": "klri-instruction-044",
+        "sha256": "cc73bd27ea2de8b018d5f47ea098b469bc73b430f60bc5104ee940cbbe7cd18f"
+      },
+      {
+        "id": "klri-instruction-045",
+        "sha256": "74072aecc13f1a556e730af314a9b28eed1154be7d796a33eaf5f7b4fb4e5d20"
+      },
+      {
+        "id": "klri-instruction-046",
+        "sha256": "37b143e1e1a87935c619e0ca35d9dfb95c40d00e3577adf14dcd4328e6afb509"
+      },
+      {
+        "id": "klri-instruction-047",
+        "sha256": "d73e73f2ea8eaba744528117409fe1a53fcc03ad083a0e26761e610bc8c8e803"
+      },
+      {
+        "id": "klri-instruction-048",
+        "sha256": "4878a363074042d3be4d8b3a6f97540163c942bd3c5ee21308995af236aaddd8"
+      },
+      {
+        "id": "klri-instruction-049",
+        "sha256": "37351139dd6f11e0623ddb84cd1fcebd4ca26858c7c99d70b556e32ed173a706"
+      },
+      {
+        "id": "klri-instruction-050",
+        "sha256": "83683d7459cb5d1521d95e0a68ddc37ef652d167a168b8192994ae3169f3abc7"
+      },
+      {
+        "id": "klri-instruction-051",
+        "sha256": "e0abe35fc7440e9a68feecf368cc4b139e41bb9b467272e37f3894743d0e3d19"
+      },
+      {
+        "id": "klri-instruction-052",
+        "sha256": "77917cb2f4493b4e15a6a4f8fa4b9d1d48b21ada4faffb8114a3ff24883b85a9"
+      },
+      {
+        "id": "klri-instruction-053",
+        "sha256": "491e71954855d9da9064dd466450c636dfc662903e48be2f117a4357e2a530e5"
+      },
+      {
+        "id": "klri-instruction-054",
+        "sha256": "6215151d9939393885f1d6b5b20c9ff1ac218aeeeaaecfe0691df8fb3e8b3234"
+      },
+      {
+        "id": "klri-instruction-055",
+        "sha256": "654ad5d63f297cfb7b38dd761e88c3afb39dcc754805df7568bfe841e57013ad"
+      },
+      {
+        "id": "klri-instruction-056",
+        "sha256": "22f6140a7fd70a9ea6dec3fd15fddaef855590cd83d2bf94e3f5f58d0ac2d138"
+      },
+      {
+        "id": "klri-instruction-057",
+        "sha256": "628c741a5322b5889fb71d7102da3fdef5f9371d1d249340abbd5aad5e08689e"
+      },
+      {
+        "id": "klri-instruction-058",
+        "sha256": "bb620582020587c31a82631ca9badd9d796030bc8d79824edc93c12fe7613293"
+      },
+      {
+        "id": "klri-instruction-059",
+        "sha256": "8bd0c582ecaa4b58656bca25f94c685f94b8dfe6b0148f3ad1730ecf01dce0c7"
+      },
+      {
+        "id": "klri-instruction-060",
+        "sha256": "1bddddae1efce565c5faec745cda2d914008f772790dc9d2d1abac5f934f5578"
+      },
+      {
+        "id": "klri-instruction-061",
+        "sha256": "5e37759e06fada245f9f5c6d95737967863cde9007107400cccdb099cbf1e705"
+      },
+      {
+        "id": "klri-instruction-062",
+        "sha256": "80ea84209950f351a346963cd14b7b7cc7bcb60db6fe1dcf073bd2e1050076ac"
+      },
+      {
+        "id": "klri-instruction-063",
+        "sha256": "c7cf3ff5db2863fc7c55f7ef4f71023e837a0ed1501457afd821807d787caee5"
+      },
+      {
+        "id": "klri-instruction-064",
+        "sha256": "92218a2c405b4c3ce5d45d5f59b548f8cd2c6f6fbc95ce5cc8a4dd79b0d5167a"
+      },
+      {
+        "id": "klri-instruction-065",
+        "sha256": "10c0fd9dd33eede56c711030472b74bb6d1b5982cdcf32863b42b68e8189ef81"
+      },
+      {
+        "id": "klri-instruction-066",
+        "sha256": "2a88c5f9a4cdb96ea4b073c7dc453c1afeeb5a77e97fd0e9650630c4d8c72099"
+      },
+      {
+        "id": "klri-instruction-067",
+        "sha256": "0440d50704cae39c2ce99e2b88ca25c88eb1874234fbdde7f16087e06ffe8b34"
+      },
+      {
+        "id": "klri-instruction-068",
+        "sha256": "f0a26ce3bf1ce4538e4445460a84ffbe43a96e7a8f842233990a9c4cc15d7fa1"
+      },
+      {
+        "id": "klri-instruction-069",
+        "sha256": "f15fd74baff924bb55fb10be3ce481459d340cf1e8f00bbbe12eee5d23d89555"
+      },
+      {
+        "id": "klri-instruction-070",
+        "sha256": "7d4ba5ec2f2fcf015e8fb12c37b525d2af7200a83445133750668754ef3c1f5e"
+      },
+      {
+        "id": "klri-instruction-071",
+        "sha256": "a6692ba6329715c3899e258ad40e59ad88f446b31f200bc072b1d9b81a54a16a"
+      },
+      {
+        "id": "klri-instruction-072",
+        "sha256": "d38f91c662877957f5ee46f17738c3396fbe7305d4b5c101bffc1ab98a0ffeba"
+      },
+      {
+        "id": "klri-instruction-073",
+        "sha256": "758d641302da9891683a242256afc14e883bb449f28cc086c38fbf5d451c6890"
+      },
+      {
+        "id": "klri-instruction-074",
+        "sha256": "42306aee9ef032622f2198fa62d5d00c030174e30db474ce5db07a520edead86"
+      },
+      {
+        "id": "klri-instruction-075",
+        "sha256": "77b0bdab3fb77fff2909a2bef4c420310a36d6f972f9d2d7d26428dc6bafc188"
+      },
+      {
+        "id": "klri-instruction-076",
+        "sha256": "e6e21807cb2d34de2562f7f07d608fc0bf0433a37ece2e80126479793e9fbad1"
+      },
+      {
+        "id": "klri-instruction-077",
+        "sha256": "a0b0a07ac2290bb22da8a38db32c466be9f945e082067b92b5a1223fef09f43e"
+      },
+      {
+        "id": "klri-instruction-078",
+        "sha256": "e8c460309e1fbe5ea87e7b591238e6cd2a489763e4a66b48d31b41495676a92e"
+      },
+      {
+        "id": "klri-instruction-079",
+        "sha256": "008d4603b833b4aced446f8cdc32fcaf95a6c68d8175bced556dbf648bb7d2c7"
+      },
+      {
+        "id": "klri-instruction-080",
+        "sha256": "33100c39d4eb422ff5d1f96555cba3dcc2b5aca99d9be60513bd45165ab9cc42"
+      },
+      {
+        "id": "klri-instruction-081",
+        "sha256": "fbe86ebce6d9b8c0921b0fa4aefbfef121cd6dd43143af9bb71ca733ee708111"
+      },
+      {
+        "id": "klri-instruction-082",
+        "sha256": "eae292190b75958995611c29d29bcc09c3578d0dfd01e46aad0c0e44c7312fdf"
+      },
+      {
+        "id": "klri-instruction-083",
+        "sha256": "46d34fbe56fcb55bf487f41b8036dab770331d0238a365ed270d4ce28b375eaf"
+      },
+      {
+        "id": "klri-instruction-084",
+        "sha256": "8743f353126afe4d2945d205ac823da117fe6b727eba92a2f96cca9e434eff20"
+      },
+      {
+        "id": "klri-instruction-085",
+        "sha256": "f1cb61e10a45d3822f290362f4e7883e385c3df57be30ecbb32ae9b5da2e2a7f"
+      },
+      {
+        "id": "klri-instruction-086",
+        "sha256": "2e21f856a6c36bba612865d6cc44118f60f302d47fa1d45ed4b81baab43fb025"
+      },
+      {
+        "id": "klri-instruction-087",
+        "sha256": "1bb1a7f719d40cb42f249789cfbb1325fd4aed12f85823a290a2118ae5a56055"
+      },
+      {
+        "id": "klri-instruction-088",
+        "sha256": "85e510528fe5fa213eb2c4d86e24f532ba60fecb137c521f41e41baa373a8893"
+      },
+      {
+        "id": "klri-instruction-089",
+        "sha256": "469b828d4daac35c381f6eaceb7729661a3d95dba777eb39293522b3ddf78455"
+      },
+      {
+        "id": "klri-instruction-090",
+        "sha256": "56f04993db01f7bc156fdb5a0dc43048f679c2d675f9e1ce221b1b781ed0f33d"
+      },
+      {
+        "id": "klri-instruction-091",
+        "sha256": "089433dd7d96f2c70cd6b4e03734e3a495c77a9014111a26c500a55356e300bb"
+      },
+      {
+        "id": "klri-instruction-092",
+        "sha256": "e6f9c7e368bce98584a21dff7aed8dbc99c72e0b80f15d73e51cf85a88b2fff0"
+      },
+      {
+        "id": "klri-instruction-093",
+        "sha256": "281895f1b501cc1bec823fa2b49787562990d7b3f4ea1c0ac35b167894292975"
+      },
+      {
+        "id": "klri-instruction-094",
+        "sha256": "09dbf5c6e3f4e8a69f5719c01db6dd11b2f2c07828827c03e9fe5ba488feb60a"
+      },
+      {
+        "id": "klri-instruction-095",
+        "sha256": "69c0021b01e6a06dbe2d0d8e8984d11b51c20f68c7e3d062b0ca4a221c9c82a8"
+      },
+      {
+        "id": "klri-instruction-096",
+        "sha256": "5f3ee3cf1b10e2ef78648980aeadcf846f35059d331a24eea6b515f055b1eee0"
+      },
+      {
+        "id": "klri-instruction-097",
+        "sha256": "b209571e88119e78d6d4e4c06abaa9bbe02b045964d42f73f008fba5ab271a8a"
+      },
+      {
+        "id": "klri-instruction-098",
+        "sha256": "37a24e15ce474fcca2a9b3e2b0586142ae7074252be976a1db991cf8f919476a"
+      },
+      {
+        "id": "klri-instruction-099",
+        "sha256": "12f70cb97b6d31a4305b090d62b42f516f7b5c59c1f699d19c59f0c3802771f4"
+      },
+      {
+        "id": "klri-instruction-100",
+        "sha256": "570e3f80f5159623e40fb93a6a11dbe409018ebb2ca69e88152fc64c9760acd9"
+      },
+      {
+        "id": "klri-instruction-101",
+        "sha256": "bcafa6315350daed1683d89080154b93f8e8e28c34b509a6c20b18ae37ce5c08"
+      },
+      {
+        "id": "klri-instruction-102",
+        "sha256": "21559d2317ed6cf09aba9d2b859895a4658dd0a4f5c35b8ad777697ae9407d84"
+      },
+      {
+        "id": "klri-instruction-103",
+        "sha256": "e8b73c4473790d49481cc3a42310fa44c32b3ac8e7619cccc4d10564372d2ca7"
+      },
+      {
+        "id": "klri-instruction-104",
+        "sha256": "ac9f0ef807e3e8352ade66f9a28cf31310a547a8103cb77a4f622501ac28ad0a"
+      },
+      {
+        "id": "klri-instruction-105",
+        "sha256": "74072aecc13f1a556e730af314a9b28eed1154be7d796a33eaf5f7b4fb4e5d20"
+      },
+      {
+        "id": "klri-instruction-106",
+        "sha256": "6c29fed955a023d87764bb375f41c4b159460afb059a1d957509e9f1bf205e07"
+      },
+      {
+        "id": "klri-instruction-107",
+        "sha256": "48dac31c28b36917c68ed8f34ab41b6d244517f14aca1a925c413b6425eec3fe"
+      },
+      {
+        "id": "klri-instruction-108",
+        "sha256": "38c5526130916c295b9f23810806aaf593602778b511164c56eee45d283b5ac4"
+      },
+      {
+        "id": "klri-instruction-109",
+        "sha256": "37351139dd6f11e0623ddb84cd1fcebd4ca26858c7c99d70b556e32ed173a706"
+      },
+      {
+        "id": "klri-instruction-110",
+        "sha256": "3d9b9efa13925782dc8d4c68d83ece9ca08d344a492b730357a40bc35e172ba8"
+      },
+      {
+        "id": "klri-instruction-111",
+        "sha256": "e0abe35fc7440e9a68feecf368cc4b139e41bb9b467272e37f3894743d0e3d19"
+      },
+      {
+        "id": "klri-instruction-112",
+        "sha256": "5ac0b098fee83264da5a4bb488f9261dce5cbee31c3aae7913689ca9ded99c70"
+      },
+      {
+        "id": "klri-instruction-113",
+        "sha256": "ddcc4764e07b35bad3d078b71ad18bb23637c63fe554e8e2531cefe708b3ad82"
+      },
+      {
+        "id": "klri-instruction-114",
+        "sha256": "a53be6ad0e2e65186db5ec8442b8b1a4bf3ee234d1fcedfb20bdbc15266e14c6"
+      },
+      {
+        "id": "klri-instruction-115",
+        "sha256": "654ad5d63f297cfb7b38dd761e88c3afb39dcc754805df7568bfe841e57013ad"
+      },
+      {
+        "id": "klri-instruction-116",
+        "sha256": "881a324aa47326b3afa717c1e6084745bc290fb9100a645ffa4c06854fed8f4d"
+      },
+      {
+        "id": "klri-instruction-117",
+        "sha256": "628c741a5322b5889fb71d7102da3fdef5f9371d1d249340abbd5aad5e08689e"
+      },
+      {
+        "id": "klri-instruction-118",
+        "sha256": "6e6057cbd7b702b7c00ff758b13d07c0ec72c12458e02de5de6bdf2fc8091895"
+      },
+      {
+        "id": "klri-instruction-119",
+        "sha256": "f3c9b3f386a69a8cdfe44e5a1f031fc3e1f159456b025f857f196acc37a54fe5"
+      },
+      {
+        "id": "klri-instruction-120",
+        "sha256": "418765d751b10f7b2ecf8ae549bc598ba7b68ee72799b53f635ae7da64eefbb7"
+      }
+    ],
+    "category_counts": {
+      "arithmetic": 120,
+      "format": 120,
+      "instruction": 120
+    },
+    "generation_sha256": "145701ffecf24c054cf1eb05b3364a12d2beab00a244a6b7dcc0dafee55e5c12",
+    "prompt_sha256": "2ff729ac5abbfcb430cc8abfab9870443043e8f990b152406e9b7c9011f93137",
+    "suite_file_sha256": "d2157df46c2d6bb88a97e6ebfcc792d0180d46079465f0661d1c6760e74678c7",
+    "suite_sha256": "826ccfda6714af45f2f8e0ae3926d4607a149446ae5b2f75137704e906a2d92e"
+  },
+  "decision": "base_usability_blocker",
+  "gate_checks": {
+    "arithmetic_at_least_60": true,
+    "format_at_least_60": true,
+    "instruction_at_least_50": false,
+    "total_at_least_170": true,
+    "zero_backend_failures": true,
+    "zero_reference_or_scorer_defects": true
+  },
+  "holdout_record_sha256": "5600fafd82e3829a013a291aa98b251852b405725ed427bef7d62e3ea77888a3",
+  "instrument_id": "foundry-kl-independent-retention-v1",
+  "integrity": {
+    "ambiguous_or_subjective_scorers": 0,
+    "integrity_audit_sha256": "868fb886dbcd88c0a37f9448071990ae7ff8881b9d24ee9144425f1691754279",
+    "llm_judge_used": false,
+    "overlap_sources": {
+      "gsm1k_development_904": {
+        "contiguous_12_token_overlap": 0,
+        "exact_overlap": 0,
+        "normalized_exact_overlap": 0,
+        "source_prompt_count": 904
+      },
+      "previous_retention_prompts": {
+        "contiguous_12_token_overlap": 0,
+        "exact_overlap": 0,
+        "normalized_exact_overlap": 0,
+        "source_prompt_count": 1740
+      },
+      "prior_calibration_prompts": {
+        "contiguous_12_token_overlap": 0,
+        "exact_overlap": 0,
+        "normalized_exact_overlap": 0,
+        "source_prompt_count": 150
+      },
+      "replay_prompts_83": {
+        "contiguous_12_token_overlap": 0,
+        "exact_overlap": 0,
+        "normalized_exact_overlap": 0,
+        "source_prompt_count": 83
+      },
+      "vetted_curriculum_400": {
+        "contiguous_12_token_overlap": 0,
+        "exact_overlap": 0,
+        "normalized_exact_overlap": 0,
+        "source_prompt_count": 400
+      }
+    },
+    "reference_self_score_failures": 0,
+    "sealed_paths_accessed": false
+  },
+  "previous_independent_subset_used": false,
+  "schema_version": 1,
+  "sealed_boundary_status": "metadata_accessed_example_content_unseen",
+  "untouched_base": {
+    "backend_failures": 0,
+    "correct": 204,
+    "exact_format": 204,
+    "extractable": 281,
+    "input_tokens": 35293,
+    "load_seconds": 2.8693941999990784,
+    "malformed_outputs": 79,
+    "output_tokens": 12712,
+    "peak_process_rss_bytes": 1811070976,
+    "peak_vram_allocated_bytes": 3554672640,
+    "peak_vram_reserved_bytes": 3617587200,
+    "prompt_echo": 0,
+    "question_generation": 0,
+    "raw_packet_sha256": "4945064dfd6ea9e24d00ba80c7c87da13a31ec6e87b53a35488fcdd321fe6fa5",
+    "runtime_seconds": 205.8141760999988,
+    "section_metrics": {
+      "arithmetic": {
+        "accuracy": 0.6583333333333333,
+        "correct": 79,
+        "total": 120
+      },
+      "format": {
+        "accuracy": 0.7416666666666667,
+        "correct": 89,
+        "total": 120
+      },
+      "instruction": {
+        "accuracy": 0.3,
+        "correct": 36,
+        "total": 120
+      }
+    },
+    "summary_file_sha256": "5073742bbe955e31e16a6b6a002b59de962df9b357ccfc115d5ac3983db28b49",
+    "summary_sha256": "a62b5cce27b43f2e2a33555a976545580ee318e0efa09fcc2dd4c74d48e36c4a",
+    "total": 360
+  }
+}

@@ -1361,3 +1361,24 @@ This log separates proposals from approved decisions. A proposal does not author
 - **Continuation:** After the exact PATH-contract commit is pushed and synchronized, resume 13C
   from untouched-base holdout evaluation. Do not rebuild the holdout or revisit architecture and
   environment selection.
+
+## 2026-07-27: stop KL adaptation on independent-holdout base usability
+
+- **Decision:** Stop Milestone 13C-R1 before implementing `replay-ce-token-kl-v1`. The one-time
+  untouched-base evaluation scored `79/120` arithmetic, `89/120` format, `36/120` instruction,
+  and `204/360` overall with zero backend failures. Instruction misses the predeclared
+  base-correct minimum of 50.
+- **Frozen subset:** Preserve the 204 base-correct IDs as content-free subset
+  `4ea32e5c...47b7` and the base-usability blocker record `5600fafd...88a3`. Raw prompts,
+  references, and outputs remain ignored. Do not revise, regenerate, resample, or replace the
+  holdout after seeing this result.
+- **Scientific consequence:** The holdout cannot serve as the authorized one-shot independent
+  retention gate under the frozen minimums. Do not implement KL, calibrate coefficients, train
+  generic or targeted adapters, select checkpoints, evaluate adapter retention, or run conditional
+  GSM1K inside this milestone.
+- **Environment consequence:** The v2 PATH contract remains passed and usable; this is a scientific
+  instrument blocker, not an environment failure. No package, interpreter, model, dataset,
+  schedule, optimizer, scorer, architecture, or threshold changed.
+- **Next action:** Project-level interpretation must decide whether to authorize a new retention
+  instrument under a new milestone. This result does not authorize prompt repair, threshold
+  relaxation, KL training, or Tier 3 GRPO.

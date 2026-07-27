@@ -3732,3 +3732,39 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
   1,787,924,480 bytes. The emitted checkpoint warning matches the already-frozen warning contract.
 - **Next action:** Publish `fix: freeze stable PATH for KL training child`, require synchronized
   clean `main`, and resume Milestone 13C at untouched-base evaluation of the existing holdout.
+
+### 2026-07-27 - Milestone 13C-R1 stopped on KL-holdout base usability
+
+- **Resumed source:** After synchronized PATH-contract commit
+  `910337cc81f60480d4a67c4d85aba0447b6da867`, resumed the original 13C at the existing frozen
+  360-prompt holdout. The suite, prompt, generation, and integrity hashes remained
+  `826ccfda...d92e`, `2ff729ac...3137`, `145701ff...5c12`, and `868fb886...4279`; no prompt,
+  reference, scorer, ID, order, category, or generation field changed.
+- **One-time untouched-base result:** The RTX 3080 evaluation completed all 360 prompts with zero
+  backend failures. Arithmetic was `79/120`, format was `89/120`, instruction was `36/120`, and
+  total correct was `204/360`. The instruction result misses the frozen minimum of `50`, while
+  arithmetic, format, and total exceed their minimums of 60, 60, and 170.
+- **Frozen blocker:** The content-free base-correct subset contains 204 IDs and has SHA-256
+  `4ea32e5c...47b7`; the blocker record has SHA-256 `5600fafd...88a3`. Raw base outputs remain
+  ignored. The record contains no prompt or reference text and confirms adapter exposure before
+  freeze was false.
+- **Runtime evidence:** Base load took 2.869 seconds and generation took 205.814 seconds for
+  35,293 input and 12,712 output tokens. Peak allocated/reserved VRAM was
+  3,554,672,640/3,617,587,200 bytes and peak RSS was 1,811,070,976 bytes. Raw packet and
+  per-item-decision hashes are `4945064d...6fa5` and `ff174d86...a226`.
+- **Launcher note:** The model child returned success and wrote a complete self-hashed summary.
+  The surrounding PowerShell wrapper then returned nonzero because it promoted warning-only
+  generation stderr to `Write-Error`. The result was not rerun; reconstruction uses the completed
+  packet from that one model process.
+- **Mandatory consequence:** Stop before KL implementation. There are zero KL calibration runs,
+  optimizer steps, generic or targeted full-training arms, KL adapters/checkpoints, development or
+  independent adapter-retention evaluations, GSM1K adapter evaluations, or paired signal analysis.
+  Do not rewrite or replace holdout prompts after observing the base result.
+- **Final verification:** Ruff formatting and lint pass, strict Mypy passes across 161 source
+  files, all 929 unit and integration tests pass in 113.02 seconds, and both isolated dependency
+  checks report no broken requirements. Dataset/architecture/holdout, v2 PATH, import-preflight,
+  native-probe, base-summary, raw-packet, subset, and blocker evidence reconstruct. No Python or
+  training process remains active; raw PATH/base artifacts remain ignored; no downstream KL
+  source or packet exists; and `git diff --check` passes.
+- **Next action:** Publish `data: freeze KL independent retention holdout`, confirm clean
+  synchronized `main`, and stop for project-level interpretation of the base-usability failure.
