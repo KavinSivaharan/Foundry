@@ -1,0 +1,29 @@
+{
+  "all_development_retention_passed": true,
+  "all_replay_kl_gates_failed": true,
+  "all_validation_ce_gates_passed": true,
+  "arm_count": 2,
+  "blocker_id": "foundry-milestone13c-r3-kl-calibration-blocker-v1",
+  "calibration_blocker_sha256": "8f25722d6c7b1a48f5f41e20edbece94d69b25d86c50e3d9d62336f59fb4cf75",
+  "calibration_summary_sha256": "e1d0af0211bcb3c4e60c983ef3f2511abe88fb5ef3bf225a3d5d936b9e22305e",
+  "coefficient_count": 4,
+  "coefficient_selection_sha256": "3db161b50423115f8737f52ff1d174ee943a1d013a8855fc729e27786399a3f3",
+  "full_training_runs": 0,
+  "gsm1k_adapter_evaluations": 0,
+  "holdout_v2_adapter_evaluations": 0,
+  "reason": "no_common_coefficient_met_replay_kl_at_most_75_percent",
+  "replay_kl_ratio_by_run": {
+    "lambda-001/generic": 1.0226605351012945,
+    "lambda-001/targeted": 1.0477584426982935,
+    "lambda-003/generic": 1.0203302348272534,
+    "lambda-003/targeted": 1.0320685518701445,
+    "lambda-010/generic": 0.9852269285260176,
+    "lambda-010/targeted": 1.0419466084051436,
+    "lambda-030/generic": 1.0154326308790824,
+    "lambda-030/targeted": 1.047625655419776
+  },
+  "required_stop": "before_full_training",
+  "run_count": 8,
+  "schema_version": 1,
+  "sealed_paths_accessed": false
+}

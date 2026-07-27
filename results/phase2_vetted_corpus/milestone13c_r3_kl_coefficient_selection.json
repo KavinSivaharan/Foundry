@@ -1,0 +1,87 @@
+{
+  "calibration_summary_sha256": "e1d0af0211bcb3c4e60c983ef3f2511abe88fb5ef3bf225a3d5d936b9e22305e",
+  "coefficient_results": [
+    {
+      "coefficient": 0.01,
+      "common_eligible": false,
+      "failed_criteria_by_arm": {
+        "generic": [
+          "replay_token_kl_at_most_75_percent_historical"
+        ],
+        "targeted": [
+          "replay_token_kl_at_most_75_percent_historical"
+        ]
+      },
+      "run_sha256_by_arm": {
+        "generic": "c6a200e554a9544fef2286d1885da9fa75caf7a0f82f4de89293cf35a3a4d9ab",
+        "targeted": "d797d955b809c49cae8cca7d3f580ac5e665d13585ad19ace9136c4c21cadc69"
+      }
+    },
+    {
+      "coefficient": 0.03,
+      "common_eligible": false,
+      "failed_criteria_by_arm": {
+        "generic": [
+          "replay_token_kl_at_most_75_percent_historical"
+        ],
+        "targeted": [
+          "replay_token_kl_at_most_75_percent_historical"
+        ]
+      },
+      "run_sha256_by_arm": {
+        "generic": "6176a7f06c2659c7bea7317ad1b406b132112e1253990c6c03d2982961cdbcbb",
+        "targeted": "7e5e6e07132b74a1e73a54237825b09f4f88103bec8b9a82c667ec3d460a23a7"
+      }
+    },
+    {
+      "coefficient": 0.1,
+      "common_eligible": false,
+      "failed_criteria_by_arm": {
+        "generic": [
+          "replay_token_kl_at_most_75_percent_historical"
+        ],
+        "targeted": [
+          "replay_token_kl_at_most_75_percent_historical"
+        ]
+      },
+      "run_sha256_by_arm": {
+        "generic": "a50676b4aa421dc21052956e1b41025cb71731ba4db77c7cf8d8e9c45588f2a7",
+        "targeted": "a3cdaeab5ec5779ebb89909e1cddbd125e4d0671f112d5ef888b85cef7db8ea9"
+      }
+    },
+    {
+      "coefficient": 0.3,
+      "common_eligible": false,
+      "failed_criteria_by_arm": {
+        "generic": [
+          "replay_token_kl_at_most_75_percent_historical"
+        ],
+        "targeted": [
+          "replay_token_kl_at_most_75_percent_historical"
+        ]
+      },
+      "run_sha256_by_arm": {
+        "generic": "aa89ef580a5994b73d344d4bc064f94484ded6b942d944fd8510a567098d3c24",
+        "targeted": "69b1dcb3b6b21e689458ea1f4eb48374ae5b0ddd09ef162699d8686f17aa7a54"
+      }
+    }
+  ],
+  "coefficient_selection_sha256": "3db161b50423115f8737f52ff1d174ee943a1d013a8855fc729e27786399a3f3",
+  "decision": "no_common_eligible_coefficient",
+  "final_training_loss_only_used_for_selection": false,
+  "full_training_authorized": false,
+  "gsm1k_used_for_selection": false,
+  "holdout_v2_used_for_selection": false,
+  "schema_version": 1,
+  "sealed_paths_accessed": false,
+  "selected_coefficient": null,
+  "selection_id": "foundry-vetted-corpus-kl-coefficient-selection-v1",
+  "selection_order": [
+    0.01,
+    0.03,
+    0.1,
+    0.3
+  ],
+  "stop_before_full_training": true,
+  "targeted_vs_generic_benchmark_used_for_selection": false
+}

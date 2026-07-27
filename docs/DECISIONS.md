@@ -1460,3 +1460,22 @@ This log separates proposals from approved decisions. A proposal does not author
 - **Consequence:** Historical lambda-zero measurements and all eight calibrations must use this
   exact contract. Any source, masking, reference, recipe, schedule, optimizer, seed, or
   environment drift invalidates comparison.
+
+## 2026-07-27: select no replay-ce-token-kl-v1 coefficient
+
+- **Decision:** No coefficient among `0.01`, `0.03`, `0.10`, and `0.30` is common-eligible.
+  Complete all eight calibration runs as authorized, publish the calibration blocker, and stop
+  before full matched training.
+- **Evidence:** All eight cells complete exactly 16 optimizer steps and 16,000 assistant tokens,
+  preserve generic-targeted token parity, use the exact V1 rank-8 recipe and environment, update
+  only LoRA tensors, leave the base unchanged, reload offline, pass both development-retention
+  subsets, pass the validation-CE ceiling, and have zero backend failures.
+- **Failed criterion:** Every final replay token KL exceeds 75% of its arm's measured historical
+  V1 step-16 KL. Ratios range from `0.9852269` to `1.0477584`; none reaches the required
+  `<=0.75`.
+- **Frozen decision:** Calibration `e1d0af02...305e` selects none at selection
+  `3db161b5...a3f3`; blocker `8f25722d...cf75` classifies the required stop as
+  `before_full_training`.
+- **Consequence:** Do not run 64-step KL training, checkpoint selection, independent holdout v2,
+  or GSM1K. Publish the verified stop; further scientific interpretation requires a separate
+  authorization and must not alter this completed calibration.

@@ -3899,3 +3899,32 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
   `159ef322...75a8`.
 - **Next action:** Verify and publish this objective implementation, then measure both immutable
   historical V1 step-16 adapters as lambda-zero comparators before starting any calibration.
+
+### 2026-07-27 - Milestone 13C-R3 stopped after the complete KL calibration matrix
+
+- **Historical lambda-zero measurements:** The immutable generic and targeted step-16 adapters
+  measured replay token KL `0.0001313522455` and `0.0001254341865`, replay CE
+  `0.2295769641` and `0.2294770514`, and validation CE `1.9765619014` and
+  `2.1713853755`. Both restored the untouched base and retained their published adjudication and
+  anchor passes without updates. Historical-comparator SHA-256 is `06053527...3324`.
+- **Complete bounded matrix:** Ran coefficients `0.01`, `0.03`, `0.10`, and `0.30` in that order
+  for generic and targeted, exactly eight fresh rank-8 runs. The matrix totals 128 optimizer steps
+  and 128,000 assistant tokens. Every run has finite CE/KL/total loss and gradients, changed LoRA
+  tensors, unchanged base fingerprint, CUDA-only placement, offline reload, exact recipe and
+  schedule identity, and zero backend failures.
+- **Development retention:** All sixteen required calibration retention evaluations pass. Generic
+  adjudication/anchor preserved `184/187` and `204/210` at 0.01, `184/187` and `205/210` at
+  0.03, and `185/187` and `206/210` at both 0.10 and 0.30. Targeted preserved `183/187` and
+  `204/210` at 0.01, `183/187` and `207/210` at 0.03, and `185/187` and `206/210` at both
+  0.10 and 0.30.
+- **Failed KL gate:** Generic replay-KL ratios to historical, in coefficient order, are
+  `1.02266`, `1.02033`, `0.98523`, and `1.01543`; targeted ratios are `1.04776`, `1.03207`,
+  `1.04195`, and `1.04763`. All exceed the frozen maximum `0.75`. All eight validation-CE gates
+  pass, so the blocker is specifically insufficient measured KL reduction rather than retention,
+  validation loss, backend, or base mutation.
+- **Selection and stop:** Calibration, selection, and blocker SHA-256 values are
+  `e1d0af02...305e`, `3db161b5...a3f3`, and `8f25722d...cf75`. Select no coefficient and stop
+  before full matched training. Full-training runs, holdout-v2 adapter evaluations, GSM1K adapter
+  evaluations, and sealed-path accesses are all zero.
+- **Next action:** Publish `train: select vetted-corpus KL coefficient`, then perform terminal
+  verification and publish `analysis: stop V1-equivalent KL adaptation`.
