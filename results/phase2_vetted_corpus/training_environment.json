@@ -6,7 +6,7 @@
   "cuda_runtime": "12.1",
   "dataset_sha256": "ee18f7f9bd7625469d83e1c1df8dad4db0ecf8b3d8c870a07c60f2808e11dc31",
   "decision": "pass",
-  "environment_evidence_sha256": "7bc6a93416e20b96a2637f73759e2a99c2738fe59fe41c0ad3b22133171d7503",
+  "environment_evidence_sha256": "6cc47f9bd8f0ecb8012097bc042c6f9004baa5aade61aace3ab63cc2e51795db",
   "gpu": "NVIDIA GeForce RTX 3080",
   "model_generations": 0,
   "no_cpu_offload": true,
@@ -14,10 +14,10 @@
   "optimizer_state_created": true,
   "package_inventory_sha256": "2d4dbf699b73b53206d96687f1381ec22dac8a2d1575b0a43791627b9b43b2c8",
   "peak_allocated_vram_bytes": 2384341504,
-  "peak_process_rss_bytes": 1794936832,
+  "peak_process_rss_bytes": 1787924480,
   "peak_reserved_vram_bytes": 2808086528,
   "positive_lr_update_contract_sha256": "0a1ad98543ffc6ee951d7a5f68df32258832e6ae6a156c7c9b7e6f45d714050c",
-  "probe_runtime_seconds": 3.4907982000004267,
+  "probe_runtime_seconds": 3.4257331999997405,
   "pyyaml_exception_evidence_sha256": "dd9413331fc76c41f1e30b2bb4697abeabde0a97452196d225619329fcee810a",
   "recipe_sha256": "b5b57f45b16c038fe4eb21c18cb73245cec6075227d021ce62615b5980cf06b9",
   "schema_version": 1,
@@ -51,5 +51,5 @@
     }
   ],
   "total_device_memory_bytes": 10736893952,
-  "windows_operational_environment_sha256": "10f2254d59e5167bb4be235038b176535afa0e01f2981712d66776518aef4137"
+  "windows_operational_environment_sha256": "9244dd7aa9d4d5138ef01f1b4fb20b911fc390e034e5704ded4ba8fcd967244b"
 }

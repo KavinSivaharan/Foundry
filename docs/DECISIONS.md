@@ -1340,3 +1340,24 @@ This log separates proposals from approved decisions. A proposal does not author
   value or accept a merely plausible `PATH`. Continuation requires separate authorization to
   re-freeze the current Windows operational environment or an execution context that reproduces
   operational hash `fca477ea...360f` and combined hash `8f529002...4d63` exactly.
+
+## 2026-07-27: freeze the stable Windows PATH as operational contract v2
+
+- **Decision:** Select Milestone 13C-R1 Case 2. The exact v1 raw PATH cannot be reconstructed from
+  authorized evidence, while the current PATH passes every safety check and differs only in an
+  operational field. Freeze it once as `foundry-vetted-qlora-windows-operational-env-v2`; do not
+  reread ambient parent PATH for later children.
+- **Identity:** PATH SHA-256 is `1a80e80c...1175a`, operational SHA-256 is
+  `76afee83...244a`, combined child SHA-256 is `1d402ec0...995b`, and v2 contract SHA-256 is
+  `c9faa8af...53dc`. All 30 non-PATH operational values, the six deterministic variables, the
+  interpreter, 57-package inventory, model-cache manifest, shell-free argv, dataset, architecture,
+  and holdout identities remain frozen.
+- **Gate result:** The one import-only child and one bounded native QLoRA probe both pass without
+  PATH adjustment or retry. This v2 environment is therefore the only authorized child
+  environment for resumed 13C execution.
+- **Scientific consequence:** The environment decision changes no dataset, prompt, scorer, model,
+  schedule, optimizer, coefficient, architecture, or retention threshold. The existing
+  360-candidate holdout remains unchanged and unexposed before its untouched-base evaluation.
+- **Continuation:** After the exact PATH-contract commit is pushed and synchronized, resume 13C
+  from untouched-base holdout evaluation. Do not rebuild the holdout or revisit architecture and
+  environment selection.

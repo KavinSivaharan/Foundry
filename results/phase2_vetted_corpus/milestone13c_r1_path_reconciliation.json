@@ -1,0 +1,102 @@
+{
+  "architecture_decision_sha256": "74907ea92b2217b6f9ca39044feab6c6452600e7774a2b442e0ec9e29b6899a5",
+  "argv_sha256": "c9d71f34956cc6a0f3a40b394ea7c8ee0e6717d0cf5aeac84582e24606a4f900",
+  "bounded_native_qlora_probe": {
+    "decision": "pass",
+    "environment_evidence_sha256": "6cc47f9bd8f0ecb8012097bc042c6f9004baa5aade61aace3ab63cc2e51795db",
+    "model_generations": 0,
+    "peak_allocated_vram_bytes": 2384341504,
+    "peak_process_rss_bytes": 1787924480,
+    "peak_reserved_vram_bytes": 2808086528,
+    "runtime_seconds": 3.4257331999997405
+  },
+  "case_1": {
+    "decision": "not_selected",
+    "expected_component_count": null,
+    "expected_ordered_component_sha256": null,
+    "raw_v1_path_present_in_authorized_evidence": false,
+    "reason": "The tracked v1 packet and relevant Git history preserve only the PATH hash; the ignored preflight and native-probe packets preserve only deterministic variables."
+  },
+  "case_2": {
+    "combined_child_environment_sha256": "1d402ec0cb661adeb50a3d3bd9510895f3f9068cbb393fb381565a5670de995b",
+    "contract_id": "foundry-vetted-qlora-windows-operational-env-v2",
+    "decision": "selected_and_passed",
+    "operational_environment_sha256": "76afee8390e73ef9274d4bc4b91d8a99735f66efb9137c4909e8619d3f9d244a",
+    "parent_capture_timestamp_utc": "2026-07-27T17:34:21.940573+00:00",
+    "parent_to_frozen_equal": true,
+    "raw_evidence_sha256": "a8e4d06a0745f7f6e37bc83bd995bd50eb6aab2ba47031bf5d3526b019259ef1",
+    "v2_contract_sha256": "c9faa8afafafb20b84fcd0cb5e7de1b57749e822adfa27c8b401bbaf8f0153dc"
+  },
+  "dataset_sha256": "ee18f7f9bd7625469d83e1c1df8dad4db0ecf8b3d8c870a07c60f2808e11dc31",
+  "deterministic_projection_sha256": "241e3e69f58d48a36c9411528aa129796319d23e61188b56cbcb4695e7fdf189",
+  "difference_classification": {
+    "actual_only_components": "not_reconstructible_without_v1_raw_path",
+    "differing_operational_names": [
+      "PATH"
+    ],
+    "environment_or_packages_modified": false,
+    "every_difference_operational_not_scientific": true,
+    "expected_only_components": "not_reconstructible_without_v1_raw_path",
+    "other_30_operational_values_unchanged": true,
+    "order_only_differences": "not_reconstructible_without_v1_raw_path",
+    "parent_environment_mutated": false,
+    "scientific_configuration_changed": false
+  },
+  "expected_v1": {
+    "combined_child_environment_sha256": "8f5290020f8e4b6d7d470d494972a877f145ffa3bff62dca2eda7a9a46234d63",
+    "operational_environment_sha256": "fca477eaaf839892c6374363f084ec63c2c2aac131d1cf5772080583a62a360f",
+    "path_sha256": "fc435730951754aff2809a185479cac351afa0a4c959bad0db533dfcafcd06ec"
+  },
+  "holdout_suite_sha256": "826ccfda6714af45f2f8e0ae3926d4607a149446ae5b2f75137704e906a2d92e",
+  "import_only_preflight": {
+    "decision": "pass",
+    "environment_unchanged": true,
+    "import_preflight_sha256": "de699ccf6ca61992b64527a13f896ff4dacb5bb716d2b03536b5a4c342f5a9a7",
+    "model_loads": 0,
+    "network_requests": 0,
+    "optimizers": 0,
+    "path_unchanged": true,
+    "runtime_seconds": 3.1342729999996664
+  },
+  "interpreter_sha256": "0b471133e110cfb53a061cad528ce8e517d7b9ac41a0a396c39ad795a487fc14",
+  "model_cache_manifest_sha256": "02bff45c336c3650abe518a94accf4c321f0116678a99c2f56a131cf2eade34d",
+  "observed_and_frozen_v2_path": {
+    "component_count": 21,
+    "control_character_component_sha256": [],
+    "duplicate_component_sha256": [],
+    "empty_component_indices": [],
+    "ordered_component_sha256": [
+      "eb4c0551da2b1bddd07ac7857ea96032e644f3fee1f99e4801da08db1d77ef1d",
+      "1fcb5251eb942c398eed86af0ac02ce29852f6710ccc7ea9326056c49c6966d5",
+      "3495534b3719b32c7ec5aed04c197d4f1e5ec0015f09da8c032e1329f9364e4d",
+      "3458f1bab7b6046440035c48408266fee90371375fae0f813261305b41747a09",
+      "c2bb903d586d19ec0d6eb6a2a659a882fd51244d6a137cee3595a385fda042f1",
+      "9662e7dbf7ec7f6c69f2c012c0a738f1582f8d1578913420c090b3b5da2c29f8",
+      "9dee1957ab6ff5b8707dda36de44ab204189a2f8e4afae3921e80cd8f6b15de9",
+      "dad91dbf441c001ef261973d10763a3e93aa4bed32a6e8f584ec30d78f394cc1",
+      "7e5fc49a3b25d58bb90ee647bc64bbf184233cadea1ad0e7048b8d916d074a16",
+      "c7ab782d7a12d48e09784c2f9c4a0cf52975281e345304d95140c373e1746d27",
+      "3694f53f282164ffe0cb636f8788c2632b8d9f58e25b324377c62eba18cdc625",
+      "ff2b8f2fa21fb2f4b073f905fb40b20bfd77d4ba7aa67a99a1f25ca665a1914d",
+      "2b737dabe953c4b5f59251acb2d84043c5b93bea9720ff86a09ffb198eb14b8f",
+      "cb4d7b3b57c924b5523ee5e6650e2bc8802a800eb64e0be8dea3e54e4af2e37b",
+      "8f205f6b77393307fabf7fcca2a20dd299088955fa081e1949346e9fbb797755",
+      "43b18a42c6ad1b7aeb58969abeab0bfdd8dc2d6d7e563df900c5e18ecc793adb",
+      "39169d22ea04fc0ab9075d4b63a39a893f26084911c502a4c9f57cdca2c47bb5",
+      "a0cd0bf7a2b6dbe9673751234b79d074f8af9a7ec64251f85008f74b7988297c",
+      "51fe309f58dae0655e9a53236862533779f8c0d9d50d0ac3fd0e7230ac16cbcd",
+      "219e00f675c8751a7e31b904e75c406226fcf3b3c02a03a03d22d7805efedd39",
+      "c10c4de34f16203fb226fc9f43acc36aea3e075bcbb06f79ed0f0b38790eafaf"
+    ],
+    "path_sha256": "1a80e80c95f29e2f79401cb88dd47bfae24c6e00bfdb93ab5b0e2bdc24b1175a",
+    "relative_component_sha256": [],
+    "safe": true,
+    "secret_like_component_sha256": []
+  },
+  "package_inventory_count": 57,
+  "package_inventory_sha256": "2d4dbf699b73b53206d96687f1381ec22dac8a2d1575b0a43791627b9b43b2c8",
+  "path_drift_evidence_sha256": "86b1ae8c474745fc5a0fa66a1efbf658031b3f2728698ca95e4dd6fbfd25f253",
+  "record_id": "foundry-milestone13c-r1-path-reconciliation-v1",
+  "schema_version": 1,
+  "sealed_paths_accessed": false
+}

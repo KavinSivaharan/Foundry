@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import os
 import subprocess
 import sys
 from pathlib import Path
@@ -15,7 +14,7 @@ from foundry.phase2.launch_contract import (
     AUTHORIZED_INTERPRETER_SHA256,
     PACKAGE_INVENTORY_SHA256,
 )
-from foundry.phase2.windows_environment import build_child_environment
+from foundry.phase2.windows_environment import load_frozen_child_environment
 from foundry.training.config import canonical_sha256
 from foundry.training.qlora import file_sha256
 
@@ -219,7 +218,20 @@ def run_probe(contract: dict[str, Any], repository_root: Path) -> dict[str, Any]
     validate_contract(contract, repository_root)
     output = Path(contract["argv"][-1])
     output.parent.mkdir(parents=True, exist_ok=False)
-    child_environment, _ = build_child_environment(os.environ)
+    root = repository_root.resolve()
+    child_environment = load_frozen_child_environment(
+        raw_environment_path=(
+            root
+            / "results"
+            / "raw"
+            / "phase2_vetted_corpus"
+            / "milestone13c_r1"
+            / "windows_operational_environment_v2_raw.json"
+        ),
+        tracked_evidence_path=(
+            root / "results" / "phase2_vetted_corpus" / "windows_operational_environment.json"
+        ),
+    )
     result = subprocess.run(
         contract["argv"],
         shell=False,

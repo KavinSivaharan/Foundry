@@ -3696,3 +3696,39 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
 - **Next action:** A separate authorization must either re-freeze the Windows operational
   environment for the current launcher or provide an execution context that exactly reproduces
   the published hash. Tier 3 remains downstream of a completed retention-safe Phase 2 result.
+
+### 2026-07-27 - Milestone 13C-R1 froze and passed the v2 Windows PATH contract
+
+- **Published-stop verification:** Started clean and synchronized at
+  `7f4f6c32d9eb6f87e9086e381f2c2a4f1b5fe6e3`. Dataset identity
+  `ee18f7f...dc31`, architecture decision `74907ea9...99a5`, and the unchanged 360-candidate
+  holdout suite `826ccfda...d92e` reconstruct. The holdout remained unexposed, with no base packet,
+  base-correct subset, KL implementation, calibration packet, adapter, checkpoint, GSM1K adapter
+  prediction, active model process, or sealed-path access after the published stop.
+- **PATH audit and decision:** The original v1 raw PATH is absent from the authorized tracked,
+  ignored, and relevant Git-history evidence, so Case 1 cannot be proven. Case 2 captured the
+  current PATH exactly once at `2026-07-27T17:34:21.940573+00:00`, stored its raw value only under
+  ignored evidence, and froze contract `foundry-vetted-qlora-windows-operational-env-v2`. Its 21
+  ordered components contain no duplicate, empty, relative, control-character, or secret-like
+  entry. PATH SHA-256 is `1a80e80c...1175a`, operational SHA-256 is `76afee83...244a`, combined
+  child SHA-256 is `1d402ec0...995b`, and v2 contract SHA-256 is `c9faa8af...53dc`. PATH remains
+  the only change from v1; the other 30 operational values and all scientific identities match.
+- **Focused tests:** Added fail-closed v1 reconstruction and v2 capture/replay support. The 20
+  required behaviors are covered, including one-character and order sensitivity, unsafe PATH
+  rejection, no parent mutation, Case 1 parent-PATH isolation, one-time Case 2 capture, captured
+  child replay, deterministic overrides, unauthorized-variable exclusion, `shell=False`, and
+  frozen argv/interpreter/package/dataset/holdout/architecture hashes. The focused environment,
+  argv, and launch suite passes `48/48`; Ruff and strict Mypy pass.
+- **Import-only gate:** The single fresh child passed `_overlapped`, socket, asyncio/IOCP, torch,
+  Transformers, tokenizers, PEFT, bitsandbytes, Accelerate, and TRL imports on the RTX 3080.
+  Environment and PATH hashes were unchanged; network requests, model loads, adapters, and
+  optimizers were zero. Evidence SHA-256 is `de699ccf...a9a7`.
+- **Native QLoRA gate:** The single bounded probe passed offline NF4 loading, CUDA-only placement,
+  finite loss/backward, nonzero LoRA gradients, PagedAdamW8bit state, zero-LR then positive-LR
+  update semantics, unchanged base parameters, offline reload, and adapter-disabled base
+  restoration. The exact 57-line inventory remains `2d4dbf69...b2c8`, model cache remains
+  `02bff45c...34d`, and argv remains `c9d71f34...f900`. Runtime was 3.426 seconds, peak
+  allocated/reserved VRAM was 2,384,341,504/2,808,086,528 bytes, and peak RSS was
+  1,787,924,480 bytes. The emitted checkpoint warning matches the already-frozen warning contract.
+- **Next action:** Publish `fix: freeze stable PATH for KL training child`, require synchronized
+  clean `main`, and resume Milestone 13C at untouched-base evaluation of the existing holdout.
