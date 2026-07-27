@@ -1,0 +1,119 @@
+{
+  "architecture_decision_sha256": "74907ea92b2217b6f9ca39044feab6c6452600e7774a2b442e0ec9e29b6899a5",
+  "candidate_holdout": {
+    "adapter_exposure_before_stop": false,
+    "base_correct_subset_counts": null,
+    "base_correct_subset_sha256": null,
+    "candidate_count": 360,
+    "candidate_file_sha256": "d2157df46c2d6bb88a97e6ebfcc792d0180d46079465f0661d1c6760e74678c7",
+    "category_counts": {
+      "arithmetic": 120,
+      "format": 120,
+      "instruction": 120
+    },
+    "duplicate_prompt_pairs_in_rejected_pre_model_draft": 20,
+    "generation_sha256": "145701ffecf24c054cf1eb05b3364a12d2beab00a244a6b7dcc0dafee55e5c12",
+    "generator_file_sha256": "cc1c3777ca55a68d6d7c0a27c3ed8e9504a1f4181bf22c3af83c54ce83b91b36",
+    "integrity_audit_file_sha256": "d20208f63a0bc5d35e376ec41c76b26d8bb4f2914bb80bd15eab3e0a34d91a9a",
+    "integrity_audit_sha256": "868fb886dbcd88c0a37f9448071990ae7ff8881b9d24ee9144425f1691754279",
+    "instrument_id": "foundry-kl-independent-retention-v1",
+    "llm_judge_used": false,
+    "objective_prompt_reference_scorer_defects": 0,
+    "overlap_audit": {
+      "gsm1k_development_904": {
+        "contiguous_12_token_overlap": 0,
+        "exact_overlap": 0,
+        "normalized_exact_overlap": 0
+      },
+      "previous_retention_prompts_1740": {
+        "contiguous_12_token_overlap": 0,
+        "exact_overlap": 0,
+        "normalized_exact_overlap": 0
+      },
+      "prior_calibration_prompts_150": {
+        "contiguous_12_token_overlap": 0,
+        "exact_overlap": 0,
+        "normalized_exact_overlap": 0
+      },
+      "replay_prompts_83": {
+        "contiguous_12_token_overlap": 0,
+        "exact_overlap": 0,
+        "normalized_exact_overlap": 0
+      },
+      "vetted_curriculum_400": {
+        "contiguous_12_token_overlap": 0,
+        "exact_overlap": 0,
+        "normalized_exact_overlap": 0
+      }
+    },
+    "prompt_sha256": "2ff729ac5abbfcb430cc8abfab9870443043e8f990b152406e9b7c9011f93137",
+    "raw_artifact_disk_bytes": 254234,
+    "raw_artifact_file_count": 3,
+    "raw_artifacts_tracked": false,
+    "rejected_draft_corrected_before_model_or_adapter_exposure": true,
+    "suite_sha256": "826ccfda6714af45f2f8e0ae3926d4607a149446ae5b2f75137704e906a2d92e",
+    "untouched_base_evaluation": "not_started",
+    "untouched_base_result": null
+  },
+  "dataset_sha256": "ee18f7f9bd7625469d83e1c1df8dad4db0ecf8b3d8c870a07c60f2808e11dc31",
+  "decision": "mandatory_stop_before_untouched_base_evaluation",
+  "downstream_activity": {
+    "adapter_or_checkpoint_files_written": 0,
+    "calibration_runs": 0,
+    "coefficient_selected": null,
+    "development_retention_evaluations": 0,
+    "full_training_arms": 0,
+    "gsm1k_adapter_evaluations": 0,
+    "independent_retention_adapter_evaluations": 0,
+    "kl_objective_implemented": false,
+    "model_generations": 0,
+    "model_loads": 0,
+    "optimizer_steps": 0
+  },
+  "failed_stage": "stage_b_untouched_base_environment_preflight",
+  "failure_class": "frozen_windows_operational_environment_drift",
+  "holdout_evaluator_source_sha256": "1cb31813bcfb2d3c98bcc07324506f999157f35d1ddf761ea17bfdecb4d34d48",
+  "publication_commit_message": "analysis: stop KL-regularized vetted-corpus adaptation",
+  "record_id": "foundry-milestone13c-kl-environment-stop-v1",
+  "schema_version": 1,
+  "sealed_boundary_status": "metadata_accessed_example_content_unseen",
+  "sealed_paths_accessed_in_milestone13c": false,
+  "starting_commit": "7ddd45ae8bd158c2bf68aadfd48307313cb978aa",
+  "stop_record_sha256": "0ab27714fc8a90bf5f51b94c786deff8c7c3b540298f05a6ce17be8ab05d1198",
+  "unit_test_source_sha256": "3dd0a40b904211eac70bf26ad7d0f6a2fc398a4f117ab5e09c79c96d10c57630",
+  "verification": {
+    "dependency_checks_passed": 2,
+    "git_diff_check_passed": true,
+    "holdout_integrity_reconstruction_passed": true,
+    "mypy_source_files_passed": 161,
+    "pytest_passed": 924,
+    "ruff_files_formatted": 283,
+    "ruff_format_check_passed": true,
+    "ruff_lint_passed": true,
+    "stop_record_reconstruction_passed": true,
+    "tracked_raw_artifact_count": 0
+  },
+  "windows_environment_gate": {
+    "actual_absent_names": [],
+    "actual_combined_child_environment_sha256": "1d402ec0cb661adeb50a3d3bd9510895f3f9068cbb393fb381565a5670de995b",
+    "actual_deterministic_projection_sha256": "241e3e69f58d48a36c9411528aa129796319d23e61188b56cbcb4695e7fdf189",
+    "actual_operational_environment_sha256": "76afee8390e73ef9274d4bc4b91d8a99735f66efb9137c4909e8619d3f9d244a",
+    "actual_path_sha256": "1a80e80c95f29e2f79401cb88dd47bfae24c6e00bfdb93ab5b0e2bdc24b1175a",
+    "actual_present_names_equal_frozen": true,
+    "app_and_cli_roots_identified_from_local_launch_logs": true,
+    "different_value_names": [
+      "PATH"
+    ],
+    "environment_or_package_modified": false,
+    "exact_reconstruction_passed": false,
+    "expected_absent_names": [],
+    "expected_combined_child_environment_sha256": "8f5290020f8e4b6d7d470d494972a877f145ffa3bff62dca2eda7a9a46234d63",
+    "expected_deterministic_projection_sha256": "241e3e69f58d48a36c9411528aa129796319d23e61188b56cbcb4695e7fdf189",
+    "expected_operational_environment_sha256": "fca477eaaf839892c6374363f084ec63c2c2aac131d1cf5772080583a62a360f",
+    "expected_path_sha256": "fc435730951754aff2809a185479cac351afa0a4c959bad0db533dfcafcd06ec",
+    "failure_explanation": "The frozen evidence retains only the PATH value hash. The original randomized Codex launch-shim value is no longer available after the application restart, and every candidate reconstructed from authoritative local launch evidence fails the frozen hash.",
+    "model_child_spawned": false,
+    "operational_allowlist_name_count": 31,
+    "reconstructed_candidate_accepted_without_hash_match": false
+  }
+}

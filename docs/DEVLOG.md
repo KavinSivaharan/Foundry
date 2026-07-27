@@ -3654,3 +3654,45 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
   completed the same read-only scan. Neither reporting error changed a file or scientific result.
 - **Next action:** Run the final candidate-only content, secret, prohibited-artifact, size,
   whitespace, staged-scope, and synchronization gates; commit and push only if every gate passes.
+
+### 2026-07-27 - Milestone 13C stopped before untouched-base holdout evaluation
+
+- **Stage A:** Verified clean synchronized `main` at
+  `7ddd45ae8bd158c2bf68aadfd48307313cb978aa`, all frozen dataset, split, scorer,
+  schedule, model, interpreter, package, architecture, and environment identities, the RTX 3080,
+  and zero active Python/model processes. The first repository-root import probe lacked the
+  source-first working directory and stopped at `ModuleNotFoundError` before model import or
+  artifact creation; the corrected source-root probe reconstructed the published state.
+- **Holdout construction:** Created exactly 360 original candidates: 120 arithmetic, 120 exact
+  format, and 120 deterministic instruction prompts. A first pre-model draft exposed 20 duplicate
+  prompt pairs caused by word-list reuse; it was discarded and corrected before any base result or
+  adapter exposure. The final suite has zero self-score defects and zero exact, normalized-exact,
+  or contiguous 12-token overlap with 400 vetted, 83 replay, 904 GSM1K-development, 1,740 prior
+  retention, and 150 prior calibration prompts. Suite, prompt, and integrity hashes are
+  `826ccfda...d92e`, `2ff729ac...3137`, and `868fb886...4279`.
+- **Mandatory environment gate:** The shell-free base launcher rejected its child before spawn.
+  All 31 operational names and every non-`PATH` value match, and the deterministic projection
+  remains `241e3e69...189`; only `PATH` differs. Frozen versus current operational hashes are
+  `fca477ea...360f` and `76afee83...244a`; combined hashes are `8f529002...4d63` and
+  `1d402ec0...995b`.
+- **Reconstruction audit:** Local session, application-launch, package-deployment, process, and
+  desktop logs identify the historical app and CLI roots, but the frozen evidence intentionally
+  retained only the `PATH` value hash. The randomized historical Codex launch-shim value was
+  removed by the application restart. Every evidence-backed reconstruction failed the frozen
+  `fc435730...06ec` hash, so no candidate was accepted and no contract field was relaxed.
+- **Scientific activity:** Untouched-base model loads, generations, adapter exposure, optimizer
+  steps, KL implementation, calibration, full training, retention evaluation, GSM1K evaluation,
+  and sealed-path access are all zero. No package or environment was modified.
+- **Publication verification:** Ruff confirms 283 formatted files and clean lint; strict Mypy
+  passes 161 source files; all 924 unit and integration tests pass in 111.29 seconds; both isolated
+  dependency checks pass; the final holdout integrity packet and stop record reconstruct; raw
+  artifact tracking count is zero; and `git diff --check` passes. An initial wrapper used a
+  one-second tool timeout and closed pytest's stdout after the preceding static checks; the
+  normal-timeout rerun passed in full and changed no file.
+- **Decision:** Stop at the Stage B environment preflight. Preserve the ignored raw candidate and
+  audit packets plus content-free evaluator/test and stop evidence. Do not freeze a base-correct
+  subset, implement KL, select a coefficient, or train under a nonmatching operational
+  environment.
+- **Next action:** A separate authorization must either re-freeze the Windows operational
+  environment for the current launcher or provide an execution context that exactly reproduces
+  the published hash. Tier 3 remains downstream of a completed retention-safe Phase 2 result.

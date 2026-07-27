@@ -1324,3 +1324,19 @@ This log separates proposals from approved decisions. A proposal does not author
 - **Publication:** Use one combined commit because the incident qualification and scientific record
   share documentation and must become public atomically; a transient incident-only commit would
   leave the completed architecture record unpublished and the shared documents incomplete.
+
+## 2026-07-27: stop Milestone 13C on frozen Windows environment drift
+
+- **Decision:** Stop before the untouched base is loaded. The current shell-free child reconstructs
+  all 31 allowlisted operational names and every non-`PATH` value, but its operational and combined
+  hashes do not equal the frozen contract because `PATH` changed after a Codex application restart.
+- **Holdout status:** The final 360-candidate original suite and its overlap/integrity audit pass,
+  but the untouched base was not evaluated. Therefore no base-correct subset is frozen and the new
+  instrument has not been exposed to an adapter.
+- **Scientific consequence:** Do not implement or calibrate `replay-ce-token-kl-v1`, train an
+  adapter, run retention, or run GSM1K under a substituted environment. No model load, generation,
+  optimizer step, sealed-path access, package change, or environment modification occurred.
+- **Reproducibility consequence:** Do not fabricate the missing randomized historical launch-shim
+  value or accept a merely plausible `PATH`. Continuation requires separate authorization to
+  re-freeze the current Windows operational environment or an execution context that reproduces
+  operational hash `fca477ea...360f` and combined hash `8f529002...4d63` exactly.
