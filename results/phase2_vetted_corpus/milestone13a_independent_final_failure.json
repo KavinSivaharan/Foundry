@@ -1,0 +1,92 @@
+{
+  "corrected_scorer_configuration_sha256": "87a140820f017acb0ff9bb44c047b169605befab3d250f42a054ea45d430f2c7",
+  "corrected_scorer_source_sha256": "0cc6f583caad049fe9ce25a4da70b84d8abcfd45360d8dbc1f9e25e86b530b91",
+  "decision": "independent_final_retention_failed",
+  "effective_adapter_scale_multiplier": 1.0,
+  "generic": {
+    "adapter_sha256": "fe3c0f5a6e8082f2d151a293e918882f896ddeece93c8f779d4b16d21618a73d",
+    "arithmetic": {
+      "accuracy": 0.8928571428571429,
+      "correct": 75,
+      "total": 84
+    },
+    "backend_failures": 0,
+    "correct": 131,
+    "failure_reasons": [
+      "arithmetic_preservation_below_0.90",
+      "maximum_failure_family_above_3"
+    ],
+    "format": {
+      "accuracy": 0.9629629629629629,
+      "correct": 26,
+      "total": 27
+    },
+    "instruction": {
+      "accuracy": 1.0,
+      "correct": 30,
+      "total": 30
+    },
+    "maximum_failure_family": 5,
+    "overall_preservation": 0.9290780141843972,
+    "passed": false,
+    "per_item_decision_sha256": "71d9df3c193d5fc01f1e56d0f1c9781f20de718ef4655d377c6f56edcca5bf8d",
+    "prompt_echo": 0,
+    "question_generation": 0,
+    "raw_packet_sha256": "c6375040bf8e80b936a8d3a14ec7d41d1f4a96c5a07110afe3b703265b3f5835",
+    "run_count": 1,
+    "summary_file_sha256": "369895a54586ff2c626c4283725cdb62ca4870eeca5ad9065ce795ae2508a038",
+    "summary_sha256": "65cf37a9899b6b04a13d8ef24a8d2b312a56fa80663e4be8ed1dfd8b2837b3c6",
+    "total": 141,
+    "wilson_lower_95": 0.8743728043920829
+  },
+  "generation_sha256": "43a279a5c3a0b1ef2cde520688b6ae8e67e1d9e58ccfbd13cd623d8b46213354",
+  "gsm1k_runs": 0,
+  "independent_final_subset_sha256": "f56845076a1a59e5ca1a95466541339b56f026e945f86118caec307a690ee4ec",
+  "model_inference_runs": 2,
+  "retrained": false,
+  "retention_approved": false,
+  "retention_decision_sha256": "0746305653d6d23674f8df1652ec07be6585d1fda2f0d4dd3b3b70f6efe79741",
+  "runtime_adapter_scale_argument": null,
+  "schema_version": 1,
+  "sealed_final_accessed": false,
+  "selected_checkpoint": 64,
+  "selected_variant": "V1",
+  "suite_sha256": "4f49c42cbae8ce7b5029192786f8ff493a4cc445f940063298e0bd22392b6ef9",
+  "targeted": {
+    "adapter_sha256": "7f15edf4cd7e8c50478b6bb8deb55bb3d9d43273109fc0b224110f9fe08da0bd",
+    "arithmetic": {
+      "accuracy": 0.8928571428571429,
+      "correct": 75,
+      "total": 84
+    },
+    "backend_failures": 0,
+    "correct": 131,
+    "failure_reasons": [
+      "arithmetic_preservation_below_0.90",
+      "maximum_failure_family_above_3"
+    ],
+    "format": {
+      "accuracy": 0.9629629629629629,
+      "correct": 26,
+      "total": 27
+    },
+    "instruction": {
+      "accuracy": 1.0,
+      "correct": 30,
+      "total": 30
+    },
+    "maximum_failure_family": 5,
+    "overall_preservation": 0.9290780141843972,
+    "passed": false,
+    "per_item_decision_sha256": "dee0a13032a286863e19da7b9e445825df2fb03c8dcb4bc696a45f506102ea57",
+    "prompt_echo": 0,
+    "question_generation": 0,
+    "raw_packet_sha256": "c9210c5abff6f922b91518a08881ba9d6081670c52b9b4d4a7b93a5998347dfe",
+    "run_count": 1,
+    "summary_file_sha256": "569e1ec9700b06d4122029a325caea2f7ed252567bc1713045420a6d632d023c",
+    "summary_sha256": "eac0ac9b397d8f04f4e86306ead68adcc5e9aa9497c85dacfc1a315bf49c17b8",
+    "total": 141,
+    "wilson_lower_95": 0.8743728043920829
+  },
+  "thresholds_changed": false
+}

@@ -1090,3 +1090,18 @@ Every future experiment must be registered here before a costly run begins. Its 
   3080 and `pip check` passes, but PEFT, bitsandbytes, and TRL are absent. Because package changes
   and another interpreter are unauthorized, V1 did not start: zero model loads, optimizer steps,
   adapters, checkpoints, retention evaluations, or adapter GSM1K evaluations.
+- **Authorized continuation:** The later pinned `.venv-training` contract passed. V1 REPLAY25 and
+  V2 REPLAY40 each completed generic and targeted 64-step, 64,000-token runs with checkpoints at
+  16/32/64, offline reload, and exact adapter-disabled base restoration.
+- **Milestone 13A audit:** All twelve anchor failures were one deterministic scorer defect: the
+  untouched base and every adapter emitted the same correct response containing a mathematical
+  unknown placeholder. The general scorer correction changed exactly twelve of 4,764 stored
+  decisions and no other field. Deterministic offline replay selected V1 step 64.
+- **Independent final outcome:** Generic and targeted were each evaluated exactly once on the
+  141-item frozen subset. Both preserved `131/141` overall, `75/84` arithmetic, `26/27` format,
+  and `30/30` instruction items, with Wilson lower bound `87.4373%`, zero question generation, and
+  zero backend failures. Both fail the `90%` arithmetic gate and maximum-three failure-family gate
+  because the observed maximum is five.
+- **Final decision:** No retention-approved adapter pair exists. GSM1K was not run, sealed-final
+  content was not accessed, and no retry, retraining, scale change, or benchmark-based selection is
+  authorized. Retention decision SHA-256 is `07463056...9741`.

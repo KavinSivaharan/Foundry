@@ -5,9 +5,16 @@
 Fast-Track Phase 2 Milestones 12A-12D originally stopped at Stage H. Milestone 12E preserved that
 result, then performed the separately authorized deterministic matching-only repair. One generic
 row replacement passed every unchanged gate, and deterministic formula-derived targets plus exact
-180/20 splits are now frozen. Execution then stopped before V1 because the explicitly required
-project `.venv` lacks the frozen QLoRA packages and package changes are prohibited. No model was
-loaded, no optimizer step occurred, and no adapter was evaluated on GSM1K.
+180/20 splits were frozen. A later pinned training-environment authorization completed V1 REPLAY25
+and V2 REPLAY40, but every checkpoint initially failed the anchor retention gate on the same
+question-generation decision.
+
+Milestone 13A proved that repeated decision was a general deterministic scorer defect rather than
+adapter-generated questioning. Corrected offline replay selected existing V1 step 64. Generic and
+targeted then ran exactly once on the untouched independent final subset and both failed the
+unchanged retention gate: each preserved `75/84` arithmetic items and had a maximum failure-family
+concentration of five. No adapter pair is retention-approved, no adapter was evaluated on GSM1K,
+and sealed-final content was not accessed.
 
 ## Frozen starting point
 
@@ -53,10 +60,16 @@ token budgets, shared replay, the same seed, and one retention-only checkpoint r
 | H: Original matched-size selection | Failed; preserved | Size 200 exceeded depth and operation SMD 0.10 gates |
 | 12E repair | **Passed** | One exhaustive legal generic replacement; all frozen matching gates pass |
 | I-K: Targets, splits, freeze | **Passed** | Deterministic targets and 180/20 splits replay byte-identically |
-| L-S: Training and retention | **Stopped before training** | Required `.venv` lacks PEFT, bitsandbytes, and TRL |
+| L-N: Frozen training environment | **Passed after authorization** | Native Windows `.venv-training` compatibility and deterministic launch gates passed |
+| O-P: V1 REPLAY25 | **Completed** | Both arms ran 64 steps/64,000 tokens; checkpoints 16/32/64 |
+| Q-R: V1 retention | Failed under old scorer | All cells passed offline after general scorer correction |
+| V2 REPLAY40 and retention | **Completed** | Both arms ran; all cells passed corrected offline replay |
+| 13A scorer adjudication | **Scorer defect corrected** | Exactly 12/4,764 decisions changed; only `question_generation` |
+| 13A independent final | **Failed** | Both arms: `75/84` arithmetic; maximum failure family `5` |
 | T-U: GSM1K and signal gate | Not run | No retention-approved pair exists |
 
-No claim of Phase 2 improvement is currently supported; training and evaluation remain pending.
+No claim of Phase 2 improvement is supported. Training completed, but independent retention rejected
+both selected adapters before benchmark evaluation.
 
 ## ASDiv verification result
 
@@ -150,12 +163,56 @@ canonical answer; maximum assistant length is `58` tokens. Each arm is determini
 `180/20` with no exact, normalized, program, or cross-arm overlap. Dataset identity is
 `ee18f7f9...dc31`; complete matching and dataset reconstruction both replay byte-identically.
 
-## Training-environment stop
+## Historical training-environment stop and authorized resolution
 
 The required interpreter `C:\Users\Admin\Projects\Foundry\.venv\Scripts\python.exe` is CPython
 3.12.10 with CUDA-enabled PyTorch `2.5.1+cu121` on the RTX 3080. It has Transformers `4.46.3` and
 passes `pip check`, but PEFT, bitsandbytes, and TRL are absent. The recovery authorization forbids
 installing or modifying packages and explicitly requires this environment, so Foundry did not
 switch to another interpreter or alter dependencies. V1/V2 training, retention, and adapter GSM1K
-evaluation remain not run. The next action requires explicit authorization for a pinned training
-environment; it is not a scientific matching or retention result.
+evaluation did not run under that recovery authorization.
+
+A later explicit authorization selected `.venv-training`, reconciled its frozen PyYAML metadata
+exception, and audited deterministic launch, Windows operational variables, argv transport, CUDA,
+scheduler semantics, and the first positive-learning-rate update. V1 and V2 then trained without
+changing the dataset, schedules, optimizer, scorer thresholds, or benchmark firewall.
+
+## Milestone 13A scorer adjudication and independent final
+
+The published V1/V2 stop contained twelve anchor question-generation failures: V1 and V2,
+generic and targeted, and steps 16/32/64. All twelve used one prompt and one byte-identical response.
+The untouched base response was also byte-identical. The response completed the requested
+arithmetic task and used `?` only as a displayed mathematical unknown. The old scorer's
+literal-question-mark-anywhere rule therefore created a false decision.
+
+The corrected general scorer distinguishes protected mathematical placeholders, valid JSON, code,
+and prompt-supplied quotations while continuing to reject unprotected question marks and generated
+question/problem headers. Fifteen nonbenchmark fixtures, focused mutations, tamper checks, and the
+old-versus-new projection passed. Exactly twelve of 4,764 stored decisions changed, and the only
+changed field was `question_generation`. Corrected scorer source and configuration SHA-256 values
+are `0cc6f583...b530b91` and `87a14082...f2c7`.
+
+Two byte-identical offline rescoring runs re-applied every unchanged retention threshold to all 24
+V1/V2 arm/checkpoint/subset cells. All passed, so the original V1-first/latest hierarchy selected
+V1 step 64. Generic and targeted adapter SHA-256 values are `fe3c0f5a...18a73d` and
+`7f15edf4...da0bd`.
+
+Each selected adapter then ran once, generic followed by targeted, on independent subset
+`f5684507...e4ec`. Both results were:
+
+| Gate measure | Generic | Targeted | Requirement |
+|---|---:|---:|---:|
+| Overall preservation | 131/141 (92.9078%) | 131/141 (92.9078%) | at least 90% |
+| Arithmetic preservation | 75/84 (89.2857%) | 75/84 (89.2857%) | at least 90% |
+| Format preservation | 26/27 (96.2963%) | 26/27 (96.2963%) | at least 90% |
+| Instruction preservation | 30/30 (100%) | 30/30 (100%) | at least 90% |
+| Wilson lower bound | 87.4373% | 87.4373% | at least 85% |
+| Question generation | 0 | 0 | exactly 0 |
+| Prompt echo | 0 | 0 | at most 2% |
+| Backend failures | 0 | 0 | exactly 0 |
+| Maximum failure family | 5 | 5 | at most 3 |
+
+Both arms fail arithmetic preservation and failure-family concentration. Decision SHA-256 is
+`0746305653d6d23674f8df1652ec07be6585d1fda2f0d4dd3b3b70f6efe79741`. The success-only adapter
+freeze commit and Milestone 12F-B are not authorized. The next project-level action is a separately
+authorized interpretation of this independent retention failure; GSM1K remains not run.

@@ -1,0 +1,51 @@
+{
+  "all_adjudication_cells_passed": true,
+  "all_anchor_cells_passed": true,
+  "all_response_bytes_unchanged": true,
+  "all_response_hashes_unchanged": true,
+  "byte_identical_replay_files": 49,
+  "changed_decisions": 12,
+  "changed_fields": [
+    "question_generation"
+  ],
+  "corrected_question_generation_per_anchor_cell": 0,
+  "deterministic_replay_match": true,
+  "generic_adapter_sha256": "fe3c0f5a6e8082f2d151a293e918882f896ddeece93c8f779d4b16d21618a73d",
+  "matrix_summary_sha256": "c9b99d614dee8101ebc37a0219dd3ddcd41b20ca59bdd8f127b7251c4f23b43f",
+  "model_inference_runs": 0,
+  "old_question_generation_per_anchor_cell": 1,
+  "projection_rows_seen": 4764,
+  "schema_version": 1,
+  "selected_checkpoint": 64,
+  "selected_variant": "V1",
+  "selection_hierarchy": [
+    "V1 latest common passing checkpoint",
+    "V2 latest common passing checkpoint only if V1 has none"
+  ],
+  "targeted_adapter_sha256": "7f15edf4cd7e8c50478b6bb8deb55bb3d9d43273109fc0b224110f9fe08da0bd",
+  "thresholds_changed": false,
+  "v1_checkpoint_passes": {
+    "generic": {
+      "16": true,
+      "32": true,
+      "64": true
+    },
+    "targeted": {
+      "16": true,
+      "32": true,
+      "64": true
+    }
+  },
+  "v2_checkpoint_passes": {
+    "generic": {
+      "16": true,
+      "32": true,
+      "64": true
+    },
+    "targeted": {
+      "16": true,
+      "32": true,
+      "64": true
+    }
+  }
+}

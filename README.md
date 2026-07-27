@@ -23,6 +23,22 @@ remained **107 questions below the untouched base**.
 The result is provisional pending genuine stratified human language review and second-seed
 confirmation. No sealed-final evaluation occurred.
 
+## Phase 2 vetted-corpus result
+
+Foundry trained matched generic and targeted adapters on the frozen human-written vetted corpus,
+then audited a repeated retention failure before using any benchmark result. The audit proved that
+all twelve checkpoint cells had been rejected by an overbroad question-generation rule: a
+mathematical `?` placeholder was data, not an assistant-generated question. The general corrected
+scorer preserved every true-positive fixture and changed only those twelve decisions across 4,764
+stored rows.
+
+Offline rescoring selected the existing V1 step-64 pair. Its one-shot independent retention
+evaluation then failed both arms under unchanged thresholds. Each arm preserved `131/141` overall
+but only `75/84` arithmetic items (`89.2857%`, below the required `90%`), and its largest
+base-correct failure family contained five items (above the limit of three). Both arms had zero
+question generation and zero backend failures. No Phase 2 adapter was approved, GSM1K was not run,
+and sealed-final content remains untouched.
+
 ## Why the result matters
 
 The comparison held the two training arms to the same source corpus size, training recipe, hardware,
@@ -99,6 +115,8 @@ runtime LoRA scale of 0.50.
 - Verifier-GRPO generation replay matched across same-process and fresh-process runs, but no backward
   or optimizer step was certified. The gradient-checkpoint warning audit contained fatal or unresolved
   classes, so that route was closed.
+- Human-written vetted-corpus QLoRA completed, but both selected V1 adapters failed the untouched
+  independent retention gate before GSM1K evaluation.
 
 Historical failures and stop decisions are retained as research evidence; they are not rewritten as
 successes.
@@ -156,10 +174,10 @@ reconstruction and machine-local replay.
 ## Limitations and next direction
 
 Phase 1 has one seed, no base-beating model, no completed GRPO optimization, no sealed-final result,
-and pending genuine human language review. It did not complete an autonomous repeated improvement
-cycle. The next project-level decision is whether to begin a separately scoped Phase 2 on a
-Linux-native, independently pinned, retention-preserving training stack with complete warning
-capture before the first run.
+and pending genuine human language review. Phase 2's vetted-corpus adapters also failed independent
+retention before benchmark evaluation. The next project-level action is a separately authorized
+interpretation of that retention failure; no retry, scale change, retraining, or GSM1K evaluation is
+currently authorized.
 
 Read the [Phase 1 final report](docs/PHASE1_FINAL_REPORT.md), the
 [machine-readable summary](results/phase1_summary.json), and the ranked

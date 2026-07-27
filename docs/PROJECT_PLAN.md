@@ -1198,3 +1198,24 @@ evaluation remains closed until independent final retention passes.
 PyTorch but lacks PEFT, bitsandbytes, and TRL. Package installation/modification and switching
 interpreters are outside the authorization. V1 therefore has zero model loads and optimizer steps.
 Resume only after explicit authorization identifies an immutable compatible training environment.
+
+## Milestone 13A outcome: scorer corrected; independent retention failed
+
+The later pinned `.venv-training` authorization resolved the historical environment stop and
+completed V1 REPLAY25 and V2 REPLAY40. Each arm ran exactly 64 optimizer steps and 64,000
+assistant-only loss-bearing tokens, with checkpoints at steps 16, 32, and 64. The original
+retention result rejected all twelve anchor cells for one question-generation decision each.
+
+Milestone 13A proved those twelve decisions were one deterministic scorer defect. The same prompt,
+same byte-identical response, same mathematical `?` placeholder, and same detector branch occurred
+in every V1/V2 arm/checkpoint cell, and the untouched base produced the same response. A general
+correction passed the frozen fixture/mutation contract and changed exactly twelve of 4,764 stored
+decisions, only in `question_generation`. Deterministic offline replay then selected V1 step 64
+under the original V1-first/latest hierarchy.
+
+The selected generic and targeted adapters were each evaluated exactly once on the frozen
+independent subset. Both preserved `131/141` overall but only `75/84` arithmetic items, and each
+had a maximum base-correct failure-family concentration of five. Those values fail the unchanged
+`90%` arithmetic and maximum-three family gates. No adapter pair is retention-approved; GSM1K was
+not run; sealed-final content was not accessed. The next project-level action is a separately
+authorized interpretation of the independent retention failure, not Milestone 12F-B.

@@ -1024,3 +1024,20 @@ changes family proportions by design, and those families retain residual structu
 even in a large human-written pool. Because the balance threshold was frozen before adapter
 outcomes, changing the assignment or threshold after inspection would weaken the causal
 comparison. Phase 2 therefore stops before target construction and training.
+
+## Milestone 13A: audit categorical detectors before interpreting repeated model regressions
+
+A detector that maps any literal `?` to question generation conflates language acts with data
+syntax. In this case every adapter checkpoint and the untouched base emitted the same correct
+worked multiplication containing `= ?`; the old rule transformed one instrument defect into an
+apparently universal adapter regression. The defensible correction was not to ignore question
+marks, but to distinguish narrowly defined protected data contexts while retaining unprotected
+questions and generated `Question:`/`Problem:` headers. Independent true-positive, true-negative,
+mutation, tamper, and old-versus-new projection tests made that distinction auditable.
+
+Correcting an instrument defect does not make the selected model safe. Offline replay removed the
+false question-generation failures and selected V1 step 64, but the untouched independent subset
+exposed a different, genuine retention failure in both arms: arithmetic preservation was
+`75/84`, and one base-correct failure family contributed five failures. This is why selection and
+independent validation must remain separate and why a valid scorer correction must never trigger
+post-hoc threshold changes, retries, or benchmark-based checkpoint selection.

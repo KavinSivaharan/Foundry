@@ -1252,3 +1252,26 @@ This log separates proposals from approved decisions. A proposal does not author
 - **Consequence:** Publish the general scorer correction, then rescore existing bytes offline under
   unchanged retention thresholds. Model inference remains forbidden until an existing common
   checkpoint is selected by that corrected offline replay.
+
+## 2026-07-27: select existing V1 checkpoint 64 after corrected offline replay
+
+- **Decision:** Select V1 step 64 for the conditional independent final-retention gate.
+- **Evidence:** Both deterministic offline rescoring passes agree byte-for-byte. All V1 checkpoints
+  pass both selection subsets after the only valid scorer delta, so the frozen V1-first/latest
+  hierarchy selects step 64 without consulting loss or GSM1K.
+- **Consequence:** Evaluate the selected generic and targeted adapters exactly once on the untouched
+  independent final subset. Do not alter adapters, scale, prompts, references, generation, scorer,
+  or thresholds.
+
+## 2026-07-27: independent final retention rejects both V1 step-64 adapters
+
+- **Decision:** Do not approve either selected adapter and do not run GSM1K.
+- **Evidence:** The generic and targeted one-shot evaluations each preserved `131/141` overall,
+  `75/84` arithmetic, `26/27` format, and `30/30` instruction items. Both had zero question
+  generation and zero backend failures, but arithmetic preservation was `89.2857%` versus the
+  frozen `90%` minimum and the maximum base-correct failure family was five versus the maximum
+  allowed three.
+- **Consequence:** The conditional success commit and Milestone 12F-B are not authorized. Preserve
+  the two existing adapters and their failure evidence without retry, fallback, retraining, scale
+  change, benchmark selection, or threshold reinterpretation. The next action requires a separately
+  authorized interpretation of this independent retention failure.

@@ -4,6 +4,20 @@ This document ranks research options from the Phase 1 evidence. It is a decision
 authorization to run any experiment. Every option requires a separately scoped protocol, fresh
 budgets, predeclared gates, and a new commit boundary.
 
+## Milestone 13A evidence update
+
+The human-written vetted-corpus route subsequently trained V1 REPLAY25 and V2 REPLAY40. A general
+scorer correction removed twelve false question-generation decisions and selected existing V1
+step 64 without consulting GSM1K. Both selected arms then failed the untouched independent
+retention subset at `75/84` arithmetic preservation and maximum failure-family concentration five.
+GSM1K was not run.
+
+This result strengthens the motivation for retention-preserving objectives, but it does not by
+itself authorize or select a new architecture. The immediate project-level action is a separately
+authorized interpretation of the independent retention failure. Any follow-on must preserve the
+corrected scorer, independent-subset exposure record, exact adapter hashes, benchmark firewall, and
+no-retry result.
+
 ## Ranking criteria
 
 Options rank higher when they address an observed Phase 1 failure directly, can be falsified with a

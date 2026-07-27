@@ -11,7 +11,7 @@ from foundry.training.retention import (
     score_response,
 )
 
-FIXTURES = Path("configs/training/retention_question_generation_v2_fixtures.json")
+FIXTURES = Path("tests/fixtures/training/retention_question_generation_v2_fixtures.json")
 
 
 def _item(

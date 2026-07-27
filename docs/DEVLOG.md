@@ -3476,3 +3476,56 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
   the `question_generation` field.
 - **Boundary:** No model inference, training, GSM1K access, independent-final access, or sealed-final
   access occurred during classification and scorer correction.
+
+### 2026-07-27 - Milestone 13A offline rescore selected V1 step 64
+
+- **Replay:** All 4,764 existing retention rows were rescored twice without model inference.
+  Forty-nine output/evidence files matched byte-for-byte between replays. Response bytes, response
+  hashes, adapter hashes, checkpoint hashes, extraction, correctness, format, echo, malformed, and
+  backend decisions were unchanged.
+- **Delta:** Exactly the twelve mathematical-placeholder decisions changed from question generation
+  to data. Every V1 and V2 checkpoint now passes both frozen selection subsets with unchanged gates.
+- **Selection:** The frozen hierarchy prefers V1 and chooses its latest common passing checkpoint,
+  step 64. Generic adapter SHA-256 is `fe3c0f5a...18a73d`; targeted is
+  `7f15edf4...da0bd`. Independent final retention is now conditionally authorized exactly once.
+
+### 2026-07-27 - Milestone 13A independent final retention failed
+
+- **Execution:** Evaluated V1 step 64 exactly once per arm, generic then targeted, on the untouched
+  141-item independent base-correct subset `f5684507...e4ec`. Both fresh processes used the
+  authorized training interpreter, offline model snapshot, corrected scorer, unscaled adapter
+  multiplier 1.0, unchanged greedy generation, `PYTHONHASHSEED=20260720`, and the frozen Windows
+  process environment. No retry, fallback, training, GSM1K, or sealed-final access occurred.
+- **Generic:** Preserved `131/141` overall, `75/84` arithmetic, `26/27` format, and `30/30`
+  instruction items; Wilson lower bound was `87.4373%`. Question generation, prompt echo, and
+  backend failures were zero. Arithmetic preservation (`89.2857%`) and maximum failure-family
+  concentration (`5`) failed their unchanged `90%` and `3` limits.
+- **Targeted:** Produced the same aggregate gate result and the same two failures, with zero
+  question generation, prompt echo, or backend failures. Generic and targeted raw-packet hashes are
+  `c6375040...f5835` and `c9210c5a...dfe`; decision SHA-256 is
+  `0746305653d6d23674f8df1652ec07be6585d1fda2f0d4dd3b3b70f6efe79741`.
+- **Gate:** **FAILED.** No retention-approved adapter pair exists. The conditional
+  `train: freeze retention-approved vetted-corpus adapters` commit and Milestone 12F-B are not
+  authorized. GSM1K remains not run.
+
+### 2026-07-27 - Milestone 13A failure-publication verification passed
+
+- **Checks:** Repository-wide Ruff format/lint and strict Mypy pass; the complete suite passes
+  `914/914`; both isolated environments report no broken requirements; and the frozen PyYAML
+  exception evidence validates. Dataset reconstruction reproduces `ee18f7f9...dc31`; V1/V2
+  schedule reconstruction reproduces all four arm hashes; all twelve checkpoint-adapter hashes
+  and all 24 original raw-retention packet hashes match their evidence.
+- **Replay:** A third corrected offline replay matches all 49 files from the prior runs byte-for-byte
+  at matrix summary `c9b99d61...b43f`. The 15-fixture file remains
+  `8c622278...cd401`; the final two-arm failure decision reconstructs at
+  `0746305653d6d23674f8df1652ec07be6585d1fda2f0d4dd3b3b70f6efe79741`.
+- **Safety:** Across 15 candidate paths, exact and contiguous 12-token matches to all 904
+  development questions, high-confidence secrets, content-bearing result keys, forbidden
+  raw/model/adapter/checkpoint/environment paths, protected evaluator/synthesis changes, sealed
+  status entries, and files at or above 1 MiB are all zero. The largest candidate is this DEVLOG
+  at 670,475 bytes before this entry.
+- **Correction during verification:** The first full run passed 913 tests and exposed one protected
+  GRPO-tree integrity failure because the new nonbenchmark scorer fixture lived under
+  `configs/training`. The fixture was moved byte-identically to `tests/fixtures/training`, its test
+  locator was updated, the protected tree returned to byte identity, focused tests passed 21/21,
+  and the complete rerun passed 914/914. No scorer, threshold, model result, or raw evidence changed.
