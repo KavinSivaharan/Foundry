@@ -3768,3 +3768,48 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
   source or packet exists; and `git diff --check` passes.
 - **Next action:** Publish `data: freeze KL independent retention holdout`, confirm clean
   synchronized `main`, and stop for project-level interpretation of the base-usability failure.
+
+### 2026-07-27 - Milestone 13C-R2 froze a base-usable independent KL holdout v2
+
+- **Recovered start:** Began clean and synchronized at
+  `45da87d2ee6cd51284249c6b04d371c9367435ce`. Dataset identity
+  `ee18f7f...dc31`, architecture decision `74907ea9...99a5`, environment-v2 hashes
+  `76afee83...244a`, `1d402ec0...995b`, and `c9faa8af...53dc`, and all existing holdout
+  component and result hashes reconstructed. The 360-prompt component remained adapter-unexposed
+  and was not rerun.
+- **Predeclared supplement:** Froze `foundry-kl-instruction-supplement-v1` at contract SHA-256
+  `d481043e...acf0` before constructing prompts. It contains exactly 180 deterministic prompts,
+  30 in each of six ordered instruction families. Suite, integrity, and content-free manifest
+  hashes are `9dd87e3d...7ec0`, `d9709200...4659`, and `27d42d0f...e6f0`.
+- **Integrity and independence:** All 180 references self-score, with zero duplicate prompt text,
+  defective prompts, references, or scorers. Exact, normalized-exact, and contiguous 12-token
+  overlap are zero against the 400 vetted records, 83 replay prompts, 904 GSM1K-development
+  prompts, the existing 360-prompt suite, 1,740 prior retention prompts, 150 prior calibration
+  prompts, and 1,823 existing nonbenchmark fixtures. No sealed path or adapter output was used.
+- **One-shot base result:** The one authorized untouched-base evaluation scored `113/180`, above
+  the frozen minimum of 24, with family counts `30, 10, 15, 29, 10, 19` in contract order. It had
+  zero backend failures, prompt echo, or question generation. Summary and raw-packet hashes are
+  `08e9fb72...ba56` and `62e9a870...942`; runtime was 30.755 seconds after a 2.937-second load,
+  using 18,580 input and 1,948 output tokens. Peak allocated/reserved VRAM was
+  3,554,672,640/3,617,587,200 bytes and peak RSS was 1,813,241,856 bytes.
+- **Combined holdout:** Froze `foundry-kl-independent-retention-v2` with all 540 unchanged
+  component prompts. Its suite and prompt-manifest hashes are `b8b978ba...1b18` and
+  `6b066a54...4033`. The union includes every base-correct component item: 79 arithmetic,
+  89 format, and 149 instruction, for 317 total. Subset and integrity-decision hashes are
+  `a23b1014...f420` and `970df977...ae60`; every minimum passed.
+- **Launcher notes:** Two non-model helper invocations opened argument-free Python interpreters
+  because a PowerShell variable name and then an unavailable `.ArgumentList` API prevented
+  argument forwarding. Both exited without imports, generation, evidence, or source changes. The
+  one authorized model evaluation was not retried, and the combined freeze then used PowerShell
+  array argument transport under the exact frozen child environment.
+- **Publication verification:** Ruff confirms all 285 files formatted and clean; strict Mypy
+  passes 162 source files; all 939 unit and integration tests pass in 113.02 seconds; and both
+  isolated dependency checks pass. A fresh reconstruction reproduced the supplement suite,
+  integrity audit, content-free manifest, combined suite, subset, and decision byte-for-byte.
+  All 180 stored base responses reproduced their frozen scorer decisions. The eight publication
+  candidates have zero exact, normalized-exact, or contiguous 12-token overlap against all 904
+  GSM1K-development questions, zero high-confidence secret or content-bearing result hits, zero
+  prohibited or large artifacts, and zero raw tracked artifacts. `git diff --check` passes.
+- **Next action:** Complete reconstruction and repository verification, publish
+  `data: freeze KL independent retention holdout v2`, synchronize `main`, and only then implement
+  and calibrate `replay-ce-token-kl-v1` from that commit.

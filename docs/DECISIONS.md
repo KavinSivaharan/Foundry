@@ -1382,3 +1382,26 @@ This log separates proposals from approved decisions. A proposal does not author
 - **Next action:** Project-level interpretation must decide whether to authorize a new retention
   instrument under a new milestone. This result does not authorize prompt repair, threshold
   relaxation, KL training, or Tier 3 GRPO.
+
+## 2026-07-27: freeze the augmented independent KL holdout v2
+
+- **Decision:** Preserve all 360 observed base-calibration prompts unchanged and add the one
+  authorized predeclared 180-prompt instruction supplement. Classify the original suite as
+  `base_calibration_component_for_kl_holdout_v2`; it remains adapter-unexposed and is not rerun.
+- **Supplement evidence:** Contract `d481043e...acf0` fixes six ordered families with 30 prompts
+  each. Suite `9dd87e3d...7ec0` and integrity audit `d9709200...4659` have zero self-score defects
+  and zero exact, normalized-exact, or contiguous 12-token overlap against every required
+  development, replay, vetted, existing-holdout, prior-retention, prior-calibration, and
+  nonbenchmark source group.
+- **Base-usability evidence:** The one-shot untouched-base supplement result is `113/180`, with no
+  backend failure, prompt echo, or question generation. The unfiltered union of all correct
+  existing and supplement items is 79 arithmetic, 89 format, and 149 instruction, or 317 total.
+  All frozen 60/60/60/220 minimums pass.
+- **Frozen instrument:** Select `foundry-kl-independent-retention-v2`, suite
+  `b8b978ba...1b18`, subset `a23b1014...f420`, and integrity decision
+  `970df977...ae60` as the sole independent holdout for `replay-ce-token-kl-v1`. It must not be
+  used for KL coefficient calibration or checkpoint selection and may be evaluated only once on
+  the finally selected generic and targeted adapters.
+- **Consequence:** After the exact holdout commit is verified, pushed, and synchronized, resume
+  the authorized KL objective implementation and bounded coefficient calibration. Do not expose
+  this v2 holdout during calibration or development checkpoint selection.

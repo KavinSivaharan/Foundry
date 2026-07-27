@@ -1,0 +1,86 @@
+{
+  "construction_seed": 20260720,
+  "contract_id": "foundry-kl-instruction-supplement-contract-v1",
+  "family_order": [
+    {
+      "family_id": "exact_extraction_and_return",
+      "order": 1,
+      "quota": 30
+    },
+    {
+      "family_id": "deterministic_text_transformation",
+      "order": 2,
+      "quota": 30
+    },
+    {
+      "family_id": "fixed_label_classification",
+      "order": 3,
+      "quota": 30
+    },
+    {
+      "family_id": "deterministic_ordering_and_sorting",
+      "order": 4,
+      "quota": 30
+    },
+    {
+      "family_id": "conditional_response_selection",
+      "order": 5,
+      "quota": 30
+    },
+    {
+      "family_id": "multi_constraint_response_compliance",
+      "order": 6,
+      "quota": 30
+    }
+  ],
+  "generation_contract": {
+    "do_sample": false,
+    "max_new_tokens": 96,
+    "seed": 20260720
+  },
+  "integrity_thresholds": {
+    "ambiguous_or_subjective_scorers": 0,
+    "candidate_exact_duplicates": 0,
+    "candidate_normalized_duplicates": 0,
+    "defective_prompts": 0,
+    "defective_references": 0,
+    "defective_scorers": 0,
+    "family_count": 6,
+    "family_quota": 30,
+    "llm_judge_used": false,
+    "reference_self_score_failures": 0,
+    "total_prompts": 180
+  },
+  "overlap_policy": {
+    "contiguous_token_window": 12,
+    "required_zero_metrics": [
+      "exact_overlap",
+      "normalized_exact_overlap",
+      "contiguous_12_token_overlap"
+    ],
+    "source_groups": [
+      "vetted_curriculum_400",
+      "replay_prompts_83",
+      "gsm1k_development_904",
+      "existing_kl_suite_360",
+      "previous_retention_prompts",
+      "prior_calibration_prompts",
+      "existing_nonbenchmark_fixtures"
+    ]
+  },
+  "prompt_id_scheme": "klis-f{family_order:02d}-{ordinal:03d}",
+  "reference_generation_contract": {
+    "external_knowledge": false,
+    "model_used": false,
+    "one_objective_reference_per_prompt": true,
+    "pure_function_of_family_index_and_seed": true
+  },
+  "schema_version": 1,
+  "scorer_contract": {
+    "implementation": "foundry.training.retention.score_response",
+    "kind": "exact_text",
+    "llm_judge": false
+  },
+  "supplement_id": "foundry-kl-instruction-supplement-v1",
+  "supplement_contract_sha256": "d481043e0ea0775aa27144c52000a6f35b965c4005dbf621d5f8a6cc9ba3acf0"
+}
