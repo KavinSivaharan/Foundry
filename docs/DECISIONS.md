@@ -1405,3 +1405,21 @@ This log separates proposals from approved decisions. A proposal does not author
 - **Consequence:** After the exact holdout commit is verified, pushed, and synchronized, resume
   the authorized KL objective implementation and bounded coefficient calibration. Do not expose
   this v2 holdout during calibration or development checkpoint selection.
+
+## 2026-07-27: stop KL calibration on contradictory frozen LoRA recipes
+
+- **Decision:** Stop before implementing or running `replay-ce-token-kl-v1`. The published V1
+  Replay25 runner and both historical step-16 adapters use rank 8, alpha 16 LoRA on four attention
+  projections. The written Milestone 13C contract instead requires rank 16, alpha 32 LoRA on seven
+  attention and MLP projections while also requiring the V1 LoRA configuration to remain
+  unchanged.
+- **Scientific reason:** A rank-16/seven-projection calibration would not isolate KL relative to
+  the published rank-8/four-projection historical adapters. A rank-8/four-projection calibration
+  would violate the explicit numeric recipe. Neither interpretation is authorized.
+- **Preserved evidence:** The newly frozen v2 independent holdout remains valid and adapter
+  unexposed. There were zero post-publication model loads, calibration runs, optimizer steps,
+  adapters, checkpoints, adapter-retention evaluations, GSM1K adapter evaluations, or sealed-path
+  accesses.
+- **Consequence:** Publish the content-free blocker. Continuation requires a separate explicit
+  correction choosing one LoRA recipe and specifying the scientifically matched historical V1
+  comparator; do not infer that choice from the desired outcome.

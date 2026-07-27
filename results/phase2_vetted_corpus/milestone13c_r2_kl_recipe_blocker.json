@@ -1,0 +1,76 @@
+{
+  "architecture_decision_sha256": "74907ea92b2217b6f9ca39044feab6c6452600e7774a2b442e0ec9e29b6899a5",
+  "architecture_id": "replay-ce-token-kl-v1",
+  "blocker": {
+    "classification": "frozen_scientific_recipe_contradiction",
+    "historical_comparison_requirement": "measure_published_v1_step_16_adapters_without_retraining_lambda_zero",
+    "published_v1_replay25": {
+      "adapter_config_file_sha256": "2cf0fb6637747b0aa31525f08ba8b412cc4f1986689ef8b9f555cd4b299039e2",
+      "alpha": 16,
+      "generic_step_16_adapter_sha256": "cf230487953cf347824a40faa36ad6b1b93ef667119f83766dce1d26e72ba63e",
+      "rank": 8,
+      "runner_file_sha256": "b28bc416f3e813e3bc91c34fc3f4fb700a5a2a328912d63ba0c0c830c9da4081",
+      "target_modules": [
+        "q_proj",
+        "k_proj",
+        "v_proj",
+        "o_proj"
+      ],
+      "targeted_step_16_adapter_sha256": "6915af1d2ab6bd8ac75b538417e1b3af7395924e77c1150138bc06bc4773c5e9",
+      "training_evidence_file_sha256": "2eaedb3250abb2bec6db3e7262d4dee7421002526a224080071f61609c773032"
+    },
+    "required_resolution": "A separate authorization must choose whether KL calibration preserves the published V1 rank-8 four-projection LoRA or uses the written rank-16 seven-projection recipe, and must define a scientifically matched historical comparator.",
+    "written_milestone13c_recipe": {
+      "alpha": 32,
+      "rank": 16,
+      "simultaneous_requirements": [
+        "preserve_the_successful_v1_replay25_recipe_except_for_the_kl_term",
+        "preserve_unchanged_lora",
+        "compare_against_the_published_historical_v1_step_16_adapters"
+      ],
+      "target_modules": [
+        "q_proj",
+        "k_proj",
+        "v_proj",
+        "o_proj",
+        "gate_proj",
+        "up_proj",
+        "down_proj"
+      ]
+    }
+  },
+  "blocker_sha256": "1129ccb4810ad86c034ceb609d86c682360f1acfbde9b18bdd917755706d5e9f",
+  "combined_v2_holdout": {
+    "commit": "c19ea1f52f615fbda2da3d16c61477c760a5edd8",
+    "decision_sha256": "970df977248195d71e3d5a54a20d24b5c2cc07ad5c3c7add10d1bf13dcb0ae60",
+    "subset_sha256": "a23b1014d92e9f98b74da3b29913a430bdaebf8e07a16b31b4c3dcc831f1f420",
+    "suite_sha256": "b8b978ba69b501187b984d4631e8d7f5a41f39efeb292cb391a845c3e61e1b18"
+  },
+  "decision": "stop_before_kl_implementation_and_calibration",
+  "environment": {
+    "combined_child_environment_sha256": "1d402ec0cb661adeb50a3d3bd9510895f3f9068cbb393fb381565a5670de995b",
+    "contract_id": "foundry-vetted-qlora-windows-operational-env-v2",
+    "operational_environment_sha256": "76afee8390e73ef9274d4bc4b91d8a99735f66efb9137c4909e8619d3f9d244a",
+    "v2_contract_sha256": "c9faa8afafafb20b84fcd0cb5e7de1b57749e822adfa27c8b401bbaf8f0153dc"
+  },
+  "record_id": "foundry-milestone13c-r2-kl-recipe-blocker-v1",
+  "schedule_evidence_file_sha256": "dc8cbb08bcb210839b188b170c12d36c7eb17e3b05a553581e0dd28557a738d2",
+  "schema_version": 1,
+  "scientific_activity_after_holdout_publication": {
+    "adapter_checkpoints_created": 0,
+    "calibration_runs": 0,
+    "gsm1k_adapter_evaluations": 0,
+    "independent_adapter_retention_evaluations": 0,
+    "kl_objective_implementations": 0,
+    "model_loads": 0,
+    "optimizer_steps": 0,
+    "training_runs": 0
+  },
+  "sealed_boundary_status": "metadata_accessed_example_content_unseen",
+  "sealed_paths_accessed": false,
+  "v1_schedule_hashes": {
+    "generic": "4bc00d29d5cf308c12c77111d7943567521cc533b13440dc06c3d8b39c74e9df",
+    "shared_replay": "1718bccea2eb7cf42e5ff47be6069e376d0cb4ed559caffa304d2c67c736125a",
+    "targeted": "88c5378cac7efe927b29d3f421d97777cd6d917187c71c8388b60bbe7b57e259"
+  }
+}

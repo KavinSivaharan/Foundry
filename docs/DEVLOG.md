@@ -3813,3 +3813,31 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
 - **Next action:** Complete reconstruction and repository verification, publish
   `data: freeze KL independent retention holdout v2`, synchronize `main`, and only then implement
   and calibrate `replay-ce-token-kl-v1` from that commit.
+
+### 2026-07-27 - Milestone 13C-R2 stopped on a frozen KL recipe contradiction
+
+- **Published boundary:** Holdout-v2 commit
+  `c19ea1f52f615fbda2da3d16c61477c760a5edd8` was pushed and synchronized before any KL work.
+  The independent suite remains unexposed to adapters at suite SHA-256 `b8b978ba...1b18`,
+  base-correct subset `a23b1014...f420`, and decision `970df977...ae60`.
+- **Reconstruction discrepancy:** The published V1 Replay25 runner is SHA-256
+  `b28bc416...4081` and configures rank 8, alpha 16, dropout 0.05 LoRA on `q_proj`, `k_proj`,
+  `v_proj`, and `o_proj`. Both historical step-16 adapter configs are byte-identical at
+  `2cf0fb66...39e2` and declare the same values. Their published adapter hashes are
+  `cf230487...a63e` and `6915af1d...c5e9`.
+- **Conflicting frozen requirement:** The written Milestone 13C recipe requires rank 16, alpha 32,
+  and seven target projections, adding `gate_proj`, `up_proj`, and `down_proj`. It simultaneously
+  requires preserving the successful V1 recipe and unchanged LoRA and comparing against those
+  published V1 step-16 adapters. A KL run cannot satisfy both configurations, and choosing one
+  would change either explicit authorization or the controlled historical comparison.
+- **Mandatory stop:** No KL source was implemented, model was loaded, coefficient calibrated,
+  optimizer step taken, adapter/checkpoint created, retention adapter evaluated, or GSM1K adapter
+  evaluated after the holdout publication. No sealed path was accessed. Freeze the content-free
+  blocker and publish `analysis: stop KL-regularized vetted-corpus adaptation`.
+- **Final verification:** Blocker SHA-256 `1129ccb4...e9f` reconstructs. Ruff confirms 285
+  formatted files and clean lint, strict Mypy passes 162 source files, all 939 unit and integration
+  tests pass in 112.03 seconds, and both isolated dependency checks pass. Final candidate scans,
+  tracking, size, whitespace, process, and synchronization checks are required immediately before
+  publication.
+- **Next action:** A separate correction must select the published rank-8/four-projection V1 LoRA
+  or the written rank-16/seven-projection recipe and define the matching historical comparator.
