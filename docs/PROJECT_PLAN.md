@@ -1,8 +1,8 @@
 # Foundry Project Plan
 
-Last updated: 2026-07-20
+Last updated: 2026-07-27
 
-## Current milestone status: retention ladder failed disjoint validation; full retraining blocked
+## Current milestone status: KL-regularized vetted-corpus architecture selected; training blocked
 
 Fast-Track 8F-8H compared four predeclared, token-matched adaptation variants without consulting
 GSM1K. Variant A (assistant-only v3 at `5e-5`) was the only variant with common calibration passes,
@@ -12,6 +12,14 @@ therefore blocks protocol promotion, full retraining, final-holdout adapter eval
 paired analysis, and a second seed. The next decision must address the training method without
 reusing validation for model or checkpoint selection; the pending human language review remains
 separate and unchanged.
+
+Milestone 13B later interpreted the independent vetted-corpus failure using only frozen raw
+evidence. Generic and targeted shared all ten failures; the Replay25 and Replay40 development
+trajectories showed aligned residual drift, and Replay40 did not uniformly improve retention.
+Neither frozen objective included a KL or logit-preservation term. The predeclared hierarchy
+selected `replay-ce-token-kl-v1`. Training remains blocked until a separate authorization freezes
+its calibration, schedule, coefficient, seed, checkpoint rule, and a new independent holdout
+before adapter exposure.
 
 ## Project objective
 
@@ -1219,3 +1227,60 @@ had a maximum base-correct failure-family concentration of five. Those values fa
 `90%` arithmetic and maximum-three family gates. No adapter pair is retention-approved; GSM1K was
 not run; sealed-final content was not accessed. The next project-level action is a separately
 authorized interpretation of the independent retention failure, not Milestone 12F-B.
+
+## Milestone 13B outcome: select KL-regularized vetted-corpus adaptation
+
+The complete one-shot failure inventory contains exactly ten generic and ten targeted failures.
+Both arms failed the same ten prompt IDs: nine arithmetic and one format. Nine adapter responses
+are byte-identical across arms; the remaining pair differs only by a terminal-answer rendering and
+fails the same arithmetic rule. There are no curriculum-unique failures. The maximum family is
+`scaled_sum_with_offset`, with five failures per arm, so the result is shared adaptation drift
+rather than a curriculum-specific defect.
+
+Across the eight V1/V2 arm-by-subset trajectories, step 16 to step 64 worsened six, left one
+unchanged, and improved one. V2 Replay40 changed some local results but did not uniformly improve
+retention. The 83-item replay corpus supplied `859` occurrences and `16,000` assistant tokens per
+V1 arm, and `1,451` occurrences and `25,600` tokens per V2 arm. Deterministic coverage analysis
+classified all ten final failures as adjacent-only: none had an exact, normalized, structural, or
+direct same-skill replay target.
+
+The frozen training implementation schedules ordinary assistant-token cross-entropy examples from
+the vetted task and replay sources. It has no KL-to-base, logit-preservation,
+representation-preservation, or gradient-balancing mechanism. This supports a replay-coverage gap
+and unconstrained logit drift; it does not establish excessive adapter capacity or measured
+task/replay gradient conflict. Because generic and targeted share every failure, both replay
+ratios fail to establish safety, and no KL/logit constraint existed, hierarchy item 1 selects
+`replay-ce-token-kl-v1`.
+
+The exposed subset `f5684507...e4ec` is preserved as Milestone 13A evidence but is diagnostic-only
+for future architectures. Before future adapter training, Foundry must construct a new original
+nonbenchmark holdout, prove zero exact or 12-token overlap against training, replay, GSM1K
+development, and all prior retention prompts, evaluate the untouched base, freeze only base-correct
+rows, validate the corrected scorer, and freeze the identity. It may be used exactly once for the
+finally selected architecture and never for coefficient or checkpoint selection.
+
+**Frozen next architecture:** `replay-ce-token-kl-v1`, design decision
+`74907ea92b2217b6f9ca39044feab6c6452600e7774a2b442e0ec9e29b6899a5`.
+Milestone 13B selects no coefficient, seed, checkpoint, replay ratio, or new holdout. No model
+inference, training, GSM1K evaluation, or sealed-final model evaluation occurred.
+
+**Recovery boundary:** A publication-time repository search read the sealed manifest and surfaced
+only `partition=sealed_final`. No sealed example field or model output was displayed or used.
+Milestone 13B-R records this as `metadata_only_protocol_breach`, withdraws the unavailable
+zero-file-access claim, and freezes the current boundary as
+`metadata_accessed_example_content_unseen`. Future sealed use requires an explicit project-level
+choice between accepting the existing partition under this documented exception or freezing a
+replacement before its content is exposed; this milestone chooses neither.
+
+**Minimal Tier 3 sequence:** complete this interpretation; train one retention-regularized SFT
+architecture; obtain one common retention-safe generic/targeted checkpoint; evaluate both on
+GSM1K; require targeted to beat generic and untouched base; run one certified verifier-reward GRPO
+path from a retention-safe checkpoint; build one autonomous
+evaluate-diagnose-data-train-retain-evaluate controller; execute a second smaller repair cycle;
+repeat the final important result with seed 2; run sealed-final once after all decisions are frozen;
+then package the dashboard/demo.
+
+The immediate training milestone must first construct and base-qualify a new nonbenchmark
+independent holdout, calibrate a bounded predeclared KL coefficient set without that holdout, train
+matched arms, select one common checkpoint on existing development retention instruments, and use
+the new holdout exactly once. GSM1K opens only if both arms pass.

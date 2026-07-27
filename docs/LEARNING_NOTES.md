@@ -1041,3 +1041,46 @@ exposed a different, genuine retention failure in both arms: arithmetic preserva
 `75/84`, and one base-correct failure family contributed five failures. This is why selection and
 independent validation must remain separate and why a valid scorer correction must never trigger
 post-hoc threshold changes, retries, or benchmark-based checkpoint selection.
+
+## Milestone 13B: replay quantity and behavioral preservation are different controls
+
+The one-shot independent failures were not split by curriculum: generic and targeted failed the
+same ten prompts, with nine byte-identical responses and one structurally equivalent response.
+Increasing replay from 25% to 40% changed some development cells but did not uniformly improve the
+checkpoint trajectories. That pattern argues against treating another replay percentage as the
+next scientific variable.
+
+Deterministic replay mapping added an important qualification. Every failing family had adjacent
+behavior in the 83-item corpus, but none of the ten prompts had an exact, normalized, structural,
+or direct same-skill replay target. Replay CE therefore supplied related examples without
+constraining the adapter's full output distribution around the frozen base. The implementation
+also lacked KL, logit preservation, representation preservation, and gradient balancing.
+
+This supports replay-coverage gap plus unconstrained logit drift as the primary interpretation; it
+does not prove excessive adapter capacity or measured task/replay gradient conflict. Token-level KL
+to the adapter-disabled base is the smallest evidence-directed architecture change because it adds
+the missing preservation constraint while retaining the matched targeted/generic comparison. Its
+coefficient and training controls still require a separate, predeclared milestone.
+
+Finally, a once-only independent holdout becomes development evidence after exposure even when no
+checkpoint was selected from it. Preserving the bytes and hashes maintains the historical record,
+but future architectures need a newly frozen, untouched, base-correct holdout before training.
+
+## Milestone 13B-R: distinguish file-access integrity from scientific dependence
+
+A sealed-manifest boundary can be violated without exposing an example. Here a recursive search
+read the protected file but surfaced only its partition field. The correct record is neither
+"untouched" nor "example contaminated": it is
+`metadata_accessed_example_content_unseen`. That status withdraws the stronger zero-file-access
+claim while preserving the narrower, evidence-supported statement that questions, answers, IDs,
+labels, predictions, and scores remained unseen.
+
+Recovery also requires separating protocol evidence from scientific dependencies. The incident
+value cannot enter model selection, feature construction, or architecture logic. A content-free
+replay of the original failure inventory, overlap, trajectories, replay coverage, objective, and
+predeclared hierarchy produced the same architecture hash without any sealed dependency. This
+makes the breach transparent without rewriting the scientific result.
+
+Repository searches near sealed paths should always use an explicit candidate-file allowlist.
+Status-only checks can establish whether a protected path changed; recursive content searches
+cannot establish non-access and should never be used for that purpose.

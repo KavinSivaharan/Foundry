@@ -1,0 +1,93 @@
+{
+  "aggregate_sha256": "8953e734ec71172f3485fa710ff37610afeeee8c1f4ef0021c832efe6f43ec0f",
+  "analysis_id": "foundry-vetted-corpus-independent-retention-interpretation-v1",
+  "architecture": {
+    "architecture_decision_sha256": "74907ea92b2217b6f9ca39044feab6c6452600e7774a2b442e0ec9e29b6899a5",
+    "options_comparison_sha256": "488ae036c62a87e33ac0052d506f41c251888e00532346bc00c3a64c885c4bd4",
+    "selected_architecture": "replay-ce-token-kl-v1",
+    "selection_decision_sha256": "f8215e583a7a08f5362cef1daefdb86c2972be8229eb40939dee78afea9ae8fc"
+  },
+  "base_model_revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+  "corrected_scorer_configuration_sha256": "87a140820f017acb0ff9bb44c047b169605befab3d250f42a054ea45d430f2c7",
+  "corrected_scorer_source_sha256": "0cc6f583caad049fe9ce25a4da70b84d8abcfd45360d8dbc1f9e25e86b530b91",
+  "dataset_identity": "ee18f7f9bd7625469d83e1c1df8dad4db0ecf8b3d8c870a07c60f2808e11dc31",
+  "exposed_subset_status": "diagnostic_only_for_future_architectures",
+  "failure_inventory": {
+    "failure_inventory_sha256": "e24e65b671ab86a9f9427c24a9d7af4d0ef2bb8819454f839f56e16811e171e2",
+    "generic_failures": 10,
+    "targeted_failures": 10
+  },
+  "future_holdout_requirements_sha256": "b71319235b9acb046834b9f2f0efbe78e406df857fffad4d099f0ef4fdafe783",
+  "gsm1k_runs": 0,
+  "independent_decision_sha256": "0746305653d6d23674f8df1652ec07be6585d1fda2f0d4dd3b3b70f6efe79741",
+  "independent_subset_sha256": "f56845076a1a59e5ca1a95466541339b56f026e945f86118caec307a690ee4ec",
+  "model_inference_runs": 0,
+  "objective": {
+    "explicit_kl_or_logit_constraint": false,
+    "objective_audit_sha256": "f92f3072c3b956e972c22a37c0eceb332dd95340473c4281bf2cb4d3097a638b",
+    "replay_and_task_cross_entropy_only": true,
+    "v1_replay_share": 0.25,
+    "v2_replay_share": 0.4
+  },
+  "overlap": {
+    "classification": "shared_adaptation_drift",
+    "generic_only": 0,
+    "maximum_failure_family": "scaled_sum_with_offset",
+    "maximum_failure_family_count_per_arm": 5,
+    "overlap_analysis_sha256": "0a25ae1066b5cb3951376bd176e939614db9e13a457978ebaae713fe0dada0aa",
+    "shared_arithmetic_failures": 9,
+    "shared_exact_response_hashes": 9,
+    "shared_failures": 10,
+    "shared_format_failures": 1,
+    "structurally_equivalent_outputs": 10,
+    "targeted_only": 0
+  },
+  "replay_coverage": {
+    "adjacent_only_failure_count": 10,
+    "coverage_class_counts": {
+      "adjacent_only": 10
+    },
+    "directly_supervised_failure_count": 0,
+    "replay_coverage_sha256": "db28c6f972071a675bdafc3119e1d68dddd25833f5ec8f760b5de55cd4708498"
+  },
+  "schema_version": 1,
+  "sealed_final_accessed": false,
+  "selected_adapter_sha256": {
+    "generic": "fe3c0f5a6e8082f2d151a293e918882f896ddeece93c8f779d4b16d21618a73d",
+    "targeted": "7f15edf4cd7e8c50478b6bb8deb55bb3d9d43273109fc0b224110f9fe08da0bd"
+  },
+  "selected_checkpoint": 64,
+  "selected_variant": "V1_REPLAY25",
+  "source_identity": {
+    "corrected_scorer_configuration_sha256": "87a140820f017acb0ff9bb44c047b169605befab3d250f42a054ea45d430f2c7",
+    "corrected_scorer_source_sha256": "0cc6f583caad049fe9ce25a4da70b84d8abcfd45360d8dbc1f9e25e86b530b91",
+    "dataset_identity": "ee18f7f9bd7625469d83e1c1df8dad4db0ecf8b3d8c870a07c60f2808e11dc31",
+    "independent_decision_sha256": "0746305653d6d23674f8df1652ec07be6585d1fda2f0d4dd3b3b70f6efe79741",
+    "independent_raw_sha256": {
+      "generic": "c6375040bf8e80b936a8d3a14ec7d41d1f4a96c5a07110afe3b703265b3f5835",
+      "targeted": "c9210c5abff6f922b91518a08881ba9d6081670c52b9b4d4a7b93a5998347dfe"
+    },
+    "independent_subset_sha256": "f56845076a1a59e5ca1a95466541339b56f026e945f86118caec307a690ee4ec",
+    "independent_summary_file_sha256": {
+      "generic": "369895a54586ff2c626c4283725cdb62ca4870eeca5ad9065ce795ae2508a038",
+      "targeted": "569e1ec9700b06d4122029a325caea2f7ed252567bc1713045420a6d632d023c"
+    },
+    "selected_adapter_sha256": {
+      "generic": "fe3c0f5a6e8082f2d151a293e918882f896ddeece93c8f779d4b16d21618a73d",
+      "targeted": "7f15edf4cd7e8c50478b6bb8deb55bb3d9d43273109fc0b224110f9fe08da0bd"
+    }
+  },
+  "starting_commit": "4c4db2b8ec3fddc136d5efac9c47c81017236931",
+  "tier3_roadmap_sha256": "918b85d7feaca709a1cc7b5a6adc07696e0a325ff5185b2376225a42b99f4dc8",
+  "training_runs": 0,
+  "trajectory": {
+    "generic_targeted_trajectories_aligned": true,
+    "replay40_uniformly_improved_retention": false,
+    "step16_to_step64_suite_trajectory_counts": {
+      "improved": 1,
+      "unchanged": 1,
+      "worsened": 6
+    },
+    "trajectory_analysis_sha256": "5b291dbdfa958a0bf4e42547c61dfd55e204edfa9131c4dc9acc1575d89b655b"
+  }
+}

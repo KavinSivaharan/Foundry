@@ -23,7 +23,9 @@ and sealed-final content was not accessed.
 - Model revision: `989aa7980e4cf806f80c7fef2b1adb7bc71aa306`
 - Frozen GSM1K development result: `521/814` correct; `752/814` extractable
 - Benchmark revision: `bc09569d09a614b9b530edc7f076fb214ac10493`
-- Sealed-final access: false
+- Milestone 13A starting-boundary sealed-final access: false (historical; the current qualified
+  boundary is `metadata_accessed_example_content_unseen` after the Milestone 13B publication
+  incident)
 
 ## Primary source freeze
 
@@ -216,3 +218,85 @@ Both arms fail arithmetic preservation and failure-family concentration. Decisio
 `0746305653d6d23674f8df1652ec07be6585d1fda2f0d4dd3b3b70f6efe79741`. The success-only adapter
 freeze commit and Milestone 12F-B are not authorized. The next project-level action is a separately
 authorized interpretation of this independent retention failure; GSM1K remains not run.
+
+## Milestone 13B independent-failure interpretation
+
+Milestone 13B used only the frozen independent outputs, existing V1/V2 retention packets,
+schedules, replay corpus, and training implementation. It ran no model inference, training,
+GSM1K, or sealed-final model evaluation. Two fresh tokenizer-only analysis runs produced byte-identical
+evidence.
+
+The complete failure inventory accounts for exactly ten failures per arm. Both arms failed the
+same IDs: `rrfh-arithmetic-012`, `031`, `046`, `048`, `053`, `055`, `073`, `108`, `125`, and
+`rrfh-format-031`. Nine cross-arm responses are byte-identical. The `048` responses differ only
+because targeted also renders the same wrong value as a terminal answer, so all ten output pairs
+are structurally equivalent failures. There are zero generic-only or targeted-only failures.
+
+| Failure family | Shared failures per arm |
+|---|---:|
+| `sequential_integer_adjustment` | 1 |
+| `scaled_sum_with_offset` | 5 |
+| `exact_division_then_adjustment` | 1 |
+| `symmetric_three_value_mean` | 1 |
+| `integer_percentage` | 1 |
+| `double_colon_identifier` | 1 |
+
+The nine arithmetic failures and one format failure are shared. The first seven arithmetic outputs
+contain extractable but wrong answers; two arithmetic outputs are malformed/nonextractable; the
+format item is an exact deterministic mismatch. Question generation, prompt echo, and backend
+failure remain zero. This is shared adaptation drift, not a curriculum-specific retention defect.
+
+Checkpoint trajectories do not support choosing another replay ratio. From step 16 to step 64,
+six of eight V1/V2 arm-by-subset trajectories worsened, one was unchanged, and one improved.
+Replay40 produced localized gains but no uniform solution, and the generic and targeted
+trajectories remained aligned.
+
+The 83-item replay corpus delivered `859` occurrences and `16,000` assistant tokens per V1 arm and
+`1,451` occurrences and `25,600` tokens per V2 arm. Deterministic category, structure, and scorer
+family mapping found adjacent family coverage for all ten failures, but no exact prompt,
+normalized prompt, structural-template match, or direct same-skill target. The result is therefore
+not total replay absence; it is adjacent-only coverage.
+
+The frozen objective combines ordinary assistant-token cross-entropy from task and replay examples
+through deterministic scheduling. V1 uses 25% replay and V2 uses 40%. Neither includes KL to the
+adapter-disabled base, logit preservation, representation preservation, gradient balancing, or
+another base-behavior constraint. The evidence supports replay-coverage gap plus unconstrained
+logit drift. Gradient conflict remains plausible but unmeasured; excessive adapter capacity is not
+established.
+
+The predeclared hierarchy therefore selects `replay-ce-token-kl-v1`. Its hypothesis is that adding
+token-level KL preservation against the adapter-disabled frozen base on replay prompts will reduce
+shared base-behavior regression that persisted under 25% and 40% replay cross-entropy alone, while
+preserving the targeted-versus-generic curriculum comparison. Architecture decision SHA-256 is
+`74907ea92b2217b6f9ca39044feab6c6452600e7774a2b442e0ec9e29b6899a5`.
+
+The selected design retains task CE, replay-target CE, the frozen human-written datasets, the same
+base revision, matching/contamination controls, corrected scorer, and benchmark firewall. It adds
+only the explicit token-level KL architecture concept. Milestone 13B selects no KL coefficient,
+checkpoint, seed, replay ratio, or new holdout.
+
+Independent subset `f5684507...e4ec` is preserved unchanged but is diagnostic-only for future
+architectures. Before any future adapter training, a new original nonbenchmark retention holdout
+must be created; audited for zero exact or 12-token overlap with training, replay, GSM1K
+development, and every prior retention prompt; evaluated on the untouched base; reduced to the
+base-correct subset; scorer-validated; and frozen. It may be used once on the finally selected
+architecture and never for coefficient or checkpoint selection.
+
+## Milestone 13B-R publication recovery
+
+After the scientific analysis and full test/reconstruction suite passed, a broad publication-time
+search read the sealed manifest and displayed only its partition metadata. No sealed question,
+answer, ID, label, prediction, score, model output, or source record was displayed or used. The
+incident is frozen as `metadata_only_protocol_breach`; the stronger zero-file-access claim is
+withdrawn.
+
+Candidate-only propagation review found no raw benchmark content or scientific feature derived
+from the surfaced value. Scientific-independence replay used only the existing independent
+retention outputs, V1/V2 trajectories, replay corpus and schedules, objective implementation, and
+predeclared hierarchy. It reproduced `replay-ce-token-kl-v1` and unchanged architecture decision
+`74907ea92b2217b6f9ca39044feab6c6452600e7774a2b442e0ec9e29b6899a5`.
+
+The sealed boundary is now `metadata_accessed_example_content_unseen`: sealed examples remain
+unseen, no model was evaluated on them, and no score exists. Eventual sealed use requires a
+separate decision either to accept the existing partition under this documented exception or to
+freeze a replacement before exposure. This recovery chooses neither.

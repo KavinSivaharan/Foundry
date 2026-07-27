@@ -1,0 +1,96 @@
+{
+  "ahead_behind": {
+    "ahead": 0,
+    "behind": 0
+  },
+  "branch": "main",
+  "file_count": 12,
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "697aa6a97687262405db79d660ae681ac252151981b813f54faede6b902fc933",
+      "size_bytes": 10049
+    },
+    {
+      "path": "docs/DECISIONS.md",
+      "sha256": "6b759cc92512efdcc8a77f127324b07ad762a44403c6ba779c19a9621307dfe1",
+      "size_bytes": 124396
+    },
+    {
+      "path": "docs/DEVLOG.md",
+      "sha256": "92df2dda57d69dfa69f6ed9911c591f0106f04a4cd4c17d493fe5958b81e0a91",
+      "size_bytes": 677058
+    },
+    {
+      "path": "docs/LEARNING_NOTES.md",
+      "sha256": "92edc12ffb182d900bae67f83484ec366695e3e2c3665653ca9e1ef97f70f41f",
+      "size_bytes": 89178
+    },
+    {
+      "path": "docs/PHASE2_RESEARCH_DIRECTIONS.md",
+      "sha256": "e6e39bd6c49d4e96873a79fc31fecc75c71ddf177c47088667595d0627a07c47",
+      "size_bytes": 11559
+    },
+    {
+      "path": "docs/PHASE2_VETTED_CORPUS_RESULT.md",
+      "sha256": "25c4ca7697aad0ca08dafabba0aa91d4894a4366083d49fd0f6bca3f7ad051e2",
+      "size_bytes": 17317
+    },
+    {
+      "path": "docs/PROJECT_PLAN.md",
+      "sha256": "4f3d299de22ef540d246a53e7c71405500660671966da010569f204dc547d501",
+      "size_bytes": 98089
+    },
+    {
+      "path": "experiments/EXPERIMENTS.md",
+      "sha256": "cffa003a57f101ea8c175b01d7ee97f06f1c95035ddeb22f362ef26a426bebff",
+      "size_bytes": 114569
+    },
+    {
+      "path": "results/phase2_vetted_corpus/milestone13b_architecture_contract.json",
+      "sha256": "3c825605f7af3a4f3872570e59f6a06fb48ee047041f233f549c451e685dee83",
+      "size_bytes": 5037
+    },
+    {
+      "path": "results/phase2_vetted_corpus/milestone13b_interpretation.json",
+      "sha256": "29eab15b67ee372cc0eecb0df4874051397ac0113a405de92674643f9d9ccf59",
+      "size_bytes": 4616
+    },
+    {
+      "path": "src/foundry/phase2/retention_failure_interpretation.py",
+      "sha256": "3cb367e1fd5ccbad9bf5b25971416235dcb91db463f136cfdc5164e2f8f0dc78",
+      "size_bytes": 47249
+    },
+    {
+      "path": "tests/unit/phase2/test_retention_failure_interpretation.py",
+      "sha256": "c58dd96d10af75125ae58e53f0db14ff168174bef9118480c60d00854f7e39da",
+      "size_bytes": 2751
+    }
+  ],
+  "git_diff_sha256": "efb170f3b94f857b3722bf2163ce944af3dc42ec8541fed7d033f150bbe0948c",
+  "manifest_id": "foundry-milestone13b-uncommitted-state-v1",
+  "model_process_active": false,
+  "modified_paths": [
+    "README.md",
+    "docs/DECISIONS.md",
+    "docs/DEVLOG.md",
+    "docs/LEARNING_NOTES.md",
+    "docs/PHASE2_RESEARCH_DIRECTIONS.md",
+    "docs/PHASE2_VETTED_CORPUS_RESULT.md",
+    "docs/PROJECT_PLAN.md",
+    "experiments/EXPERIMENTS.md"
+  ],
+  "origin_main": "4c4db2b8ec3fddc136d5efac9c47c81017236931",
+  "published_commit": "4c4db2b8ec3fddc136d5efac9c47c81017236931",
+  "repository_root": "C:/Users/Admin/Projects/Foundry",
+  "schema_version": 1,
+  "sealed_path_access_after_reported_stop": false,
+  "total_size_bytes": 1201868,
+  "uncommitted_state_manifest_sha256": "465968624257bebbbfb76f48b2d90a3c799fce2b391df647923b589afcd00db2",
+  "untracked_paths": [
+    "results/phase2_vetted_corpus/milestone13b_architecture_contract.json",
+    "results/phase2_vetted_corpus/milestone13b_interpretation.json",
+    "src/foundry/phase2/retention_failure_interpretation.py",
+    "tests/unit/phase2/test_retention_failure_interpretation.py"
+  ]
+}

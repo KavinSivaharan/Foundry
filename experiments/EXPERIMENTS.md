@@ -1105,3 +1105,24 @@ Every future experiment must be registered here before a costly run begins. Its 
 - **Final decision:** No retention-approved adapter pair exists. GSM1K was not run, sealed-final
   content was not accessed, and no retry, retraining, scale change, or benchmark-based selection is
   authorized. Retention decision SHA-256 is `07463056...9741`.
+- **Milestone 13B interpretation:** The complete inventory contains `10/10` failures per arm and
+  the failing ID sets are identical: nine arithmetic and one format. Nine responses are
+  byte-identical; the remaining pair is structurally equivalent and fails the same arithmetic
+  rule. There are no curriculum-unique failures.
+- **Trajectory and coverage:** Across V1/V2 arm-by-subset trajectories, step 16 to step 64 worsened
+  six, left one unchanged, and improved one. V1 supplied `859` replay occurrences and `16,000`
+  assistant tokens per arm; V2 supplied `1,451` and `25,600`. All ten final failures are
+  adjacent-only in the frozen replay corpus; none is directly supervised.
+- **Objective audit:** V1/V2 combine task CE and replay CE through example scheduling. They include
+  no KL-to-base, logit-preservation, representation-preservation, or gradient-balancing term.
+- **Architecture decision:** Hierarchy item 1 selects `replay-ce-token-kl-v1`; architecture decision
+  SHA-256 is `74907ea92b...99a5`. The exposed independent subset is diagnostic-only for future
+  architectures. No coefficient, checkpoint, seed, replay ratio, or new holdout was selected.
+  Model inference, training, GSM1K, and sealed-final model evaluation remained zero.
+- **Milestone 13B-R incident:** A publication search displayed only sealed-manifest partition
+  metadata. Questions, answers, IDs, labels, predictions, scores, and scientific uses were zero.
+  The incident is `metadata_only_protocol_breach`; sealed status is
+  `metadata_accessed_example_content_unseen`, and the zero-file-access claim is withdrawn.
+- **Recovery decision:** Candidate-only propagation and content-free scientific replay preserve
+  `replay-ce-token-kl-v1` and architecture hash `74907ea92b...99a5` with no sealed dependency.
+  Eventual sealed use requires a separate documented-exception or replacement-partition decision.

@@ -4,7 +4,7 @@ This document ranks research options from the Phase 1 evidence. It is a decision
 authorization to run any experiment. Every option requires a separately scoped protocol, fresh
 budgets, predeclared gates, and a new commit boundary.
 
-## Milestone 13A evidence update
+## Milestone 13B architecture decision
 
 The human-written vetted-corpus route subsequently trained V1 REPLAY25 and V2 REPLAY40. A general
 scorer correction removed twelve false question-generation decisions and selected existing V1
@@ -12,11 +12,22 @@ step 64 without consulting GSM1K. Both selected arms then failed the untouched i
 retention subset at `75/84` arithmetic preservation and maximum failure-family concentration five.
 GSM1K was not run.
 
-This result strengthens the motivation for retention-preserving objectives, but it does not by
-itself authorize or select a new architecture. The immediate project-level action is a separately
-authorized interpretation of the independent retention failure. Any follow-on must preserve the
-corrected scorer, independent-subset exposure record, exact adapter hashes, benchmark firewall, and
-no-retry result.
+Milestone 13B then proved from frozen bytes that the two arms shared all ten failures. The 25% and
+40% replay schedules did not provide uniform retention improvement, all ten failures had only
+adjacent replay coverage, and the frozen objective contained no KL or logit-preservation term.
+Under the predeclared hierarchy, Foundry selected `replay-ce-token-kl-v1`: task CE plus replay-target
+CE plus token-level KL to the adapter-disabled frozen base on replay prompts.
+
+This is an architecture decision, not training authorization. No coefficient, seed, checkpoint,
+replay ratio, or new holdout was selected. The exposed subset `f5684507...e4ec` is diagnostic-only
+for future architectures. Any follow-on must preserve the corrected scorer, exact dataset and base
+revision, matching/contamination controls, benchmark firewall, and no-retry result, and must freeze
+a new independent base-correct holdout before training.
+
+Publication records a later metadata-only sealed-manifest protocol breach. No sealed example field
+or model output was displayed or used, and the scientific decision replays with zero sealed input
+dependencies. The current sealed status is `metadata_accessed_example_content_unseen`; eventual use
+requires a separate choice between a documented exception and a replacement partition.
 
 ## Ranking criteria
 
@@ -52,33 +63,33 @@ training-path warning appears before the first certified optimizer step.
 implementation/configuration, G1/G2 betas, sampling parameters, group counts, seed, reference-policy
 semantics, retention gates, benchmark firewall, and zero access to sealed-final content.
 
-## 2. Train with replay/KL retention in the objective
+## 2. Train with replay/KL retention in the objective — selected immediate Phase 2 direction
 
-**Hypothesis.** Policy optimization with shared base-replay examples and an explicit KL or retention
-term can preserve demonstrated base behavior better than post-hoc admission alone while retaining the
-targeted curriculum direction.
+**Hypothesis.** Adding token-level KL preservation against the adapter-disabled frozen base on
+replay prompts will reduce shared base-behavior regression that persisted under 25% and 40% replay
+cross-entropy alone, while preserving the targeted-versus-generic curriculum comparison.
 
-**Supporting evidence.** Targeted beat generic, but both common-scaled SFT adapters remained far below
-the base. The unscaled and contrastive adapters showed shared drift, suggesting that after-the-fact
-retention filtering does not prevent the damaging update. Phase 1 froze 83 scorer-correct base replay
-behaviors and verified a reference-policy design.
+**Supporting evidence.** Both vetted-corpus arms failed the same ten independent prompts. Nine
+responses were byte-identical and the tenth was structurally equivalent. Replay25 and Replay40
+provided related CE examples but no explicit distribution-preservation constraint, and all ten
+failures were adjacent-only rather than directly supervised by the replay corpus.
 
-**Risks.** Replay can overfit a small behavior set, KL can suppress useful learning, and the existing
-absolute holdout instruments were not usable for the pinned base. Training before replacing that
-instrument would repeat the Milestone 9 error. Reward/KL scale selection could introduce substantial
-researcher degrees of freedom.
+**Risks.** Replay can overfit a small behavior set, KL can suppress useful learning, and coefficient
+selection can introduce researcher degrees of freedom. The exposed independent subset cannot be
+reused as a future architecture or checkpoint gate.
 
-**Compute requirement.** First, a no-training study to build and validate a new retention instrument
-on the untouched base. Then a bounded two-arm smoke with identical replay ratios and a small,
-predeclared beta grid. Only a passing smoke should unlock full scheduled runs.
+**Compute requirement.** Before adapter training, build and validate a new original nonbenchmark
+holdout on the untouched base. A separate authorization must then predeclare one bounded
+coefficient-calibration protocol, matched two-arm training, checkpoint rule, and once-only
+independent admission gate.
 
-**Falsifier.** Reject the approach if the untouched base cannot pass the new instrument, if replay/KL
-does not improve retention relative to an otherwise identical no-replay control, or if targeted no
-longer exceeds generic under the same constraint.
+**Falsifier.** Reject the approach if no common checkpoint passes development retention, either arm
+fails the new independent subset, the KL/reference contract fails, or matched data and benchmark
+firewalls drift.
 
 **Must remain frozen.** Development evaluator, 83 replay identities and scorers, targeted/generic
-datasets, source-corpus sizes, per-arm token/group budgets, base revision, seed policy, comparison
-order, retention-instrument freeze order, and sealed-final isolation.
+dataset identity, matching and contamination controls, base revision, corrected retention scorer,
+comparison order, holdout freeze-before-training order, and sealed-final isolation.
 
 ## 3. Constrain or orthogonalize adaptation updates
 
@@ -163,13 +174,20 @@ controls comparable to Phase 1.
 objective-verifier requirement, matched-control principle, content-free publication boundary, and
 sealed-evaluation policy.
 
-## Recommended decision sequence
+## Minimal Tier 3 sequence
 
-1. Decide whether a separately funded Linux-native compatibility phase is warranted.
-2. Before any new optimization, validate a retention instrument that the untouched base can pass.
-3. Choose exactly one retention-preserving update hypothesis and freeze its falsifier.
-4. Require at least two seeds and genuine human review before any sealed evaluation request.
-5. Expand models or domains only after the arithmetic path yields an absolute base improvement.
+1. Complete the independent-failure interpretation.
+2. Train one retention-regularized SFT architecture.
+3. Obtain one common retention-safe generic/targeted checkpoint.
+4. Evaluate both on GSM1K.
+5. Require targeted to beat generic and untouched base.
+6. Run one certified verifier-reward GRPO path from a retention-safe checkpoint.
+7. Build one autonomous evaluate-diagnose-data-train-retain-evaluate controller.
+8. Execute a second smaller autonomous repair cycle.
+9. Repeat the final important result with seed 2.
+10. Run sealed-final evaluation once after all decisions are frozen.
+11. Package the dashboard/demo.
 
-Phase 1 does not authorize any of these steps. Its next project-level decision is whether to open a
-new Phase 2 with new scientific and compute authorization.
+Milestone 13B implements only step 1. The next exact action is a separately authorized
+KL-regularized SFT calibration and training milestone with a newly frozen independent retention
+holdout.

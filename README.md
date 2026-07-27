@@ -37,7 +37,18 @@ evaluation then failed both arms under unchanged thresholds. Each arm preserved 
 but only `75/84` arithmetic items (`89.2857%`, below the required `90%`), and its largest
 base-correct failure family contained five items (above the limit of three). Both arms had zero
 question generation and zero backend failures. No Phase 2 adapter was approved, GSM1K was not run,
-and sealed-final content remains untouched.
+and no sealed-final model evaluation occurred. A later verification search exposed only the sealed
+manifest's partition metadata—not a question, answer, ID, label, prediction, or score—and is
+recorded as a metadata-only protocol breach.
+
+An evidence-only interpretation then proved that generic and targeted failed the same ten prompts:
+nine arithmetic items and one format item, with nine byte-identical responses and one
+structurally equivalent response. The frozen 83-item replay corpus covered only adjacent behavior
+for these failures, while the V1/V2 objective combined task and replay cross-entropy without an
+explicit KL or logit-preservation constraint. Foundry therefore selected
+`replay-ce-token-kl-v1` as the next architecture under a separately authorized milestone. The
+exposed independent subset is now diagnostic-only for future architectures; a new base-correct
+holdout must be frozen before any future adapter training.
 
 ## Why the result matters
 
@@ -176,8 +187,11 @@ reconstruction and machine-local replay.
 Phase 1 has one seed, no base-beating model, no completed GRPO optimization, no sealed-final result,
 and pending genuine human language review. Phase 2's vetted-corpus adapters also failed independent
 retention before benchmark evaluation. The next project-level action is a separately authorized
-interpretation of that retention failure; no retry, scale change, retraining, or GSM1K evaluation is
-currently authorized.
+KL-regularized SFT calibration and training milestone for `replay-ce-token-kl-v1`, including a new
+independent retention holdout frozen before adapter exposure. No coefficient, checkpoint, seed,
+replay-ratio change, retraining, or GSM1K evaluation is authorized by the interpretation result.
+The sealed boundary is `metadata_accessed_example_content_unseen`; later sealed-final use requires
+an explicit project-level decision.
 
 Read the [Phase 1 final report](docs/PHASE1_FINAL_REPORT.md), the
 [machine-readable summary](results/phase1_summary.json), and the ranked

@@ -1,0 +1,171 @@
+{
+  "content_propagation_audit": {
+    "candidate_file_count": 16,
+    "candidate_files": [
+      {
+        "path": "README.md",
+        "sha256": "b5b7fdceda19755c4fa0e4e33034251a914edf07fabb21171308abae98814abd",
+        "size_bytes": 10381
+      },
+      {
+        "path": "docs/DECISIONS.md",
+        "sha256": "b0f7d943e30f770b3ddfd0117a09e6cb702a7614e0ba1b8cace44e5b29f77636",
+        "size_bytes": 126077
+      },
+      {
+        "path": "docs/DEVLOG.md",
+        "sha256": "68bfb90a7432da5f8fd050fbe2d13239965c470be644df08f63f8eb3ff49cda4",
+        "size_bytes": 679730
+      },
+      {
+        "path": "docs/LEARNING_NOTES.md",
+        "sha256": "3c6905ccfce6c29bfc57d26d88de506f8526b4f216683f320c0b1fb208ea99f2",
+        "size_bytes": 90450
+      },
+      {
+        "path": "docs/PHASE2_RESEARCH_DIRECTIONS.md",
+        "sha256": "749782ae99895dfd47212071ed9949d233dc2431898217175690cbd6dd0b353d",
+        "size_bytes": 11944
+      },
+      {
+        "path": "docs/PHASE2_VETTED_CORPUS_RESULT.md",
+        "sha256": "9c46e38f72a5387fe33981fef6d4d4d0e59fe1cd77f4c7f14c55b47c32fae8e0",
+        "size_bytes": 18532
+      },
+      {
+        "path": "docs/PROJECT_PLAN.md",
+        "sha256": "730a19deae700351db80231fc6767ea9e842d479457488341fadcf2ded8d75f8",
+        "size_bytes": 99064
+      },
+      {
+        "path": "experiments/EXPERIMENTS.md",
+        "sha256": "bbeff2529f6bc498dd0efa1994a962041b7938b751757dbdd0359f2f9fcd4274",
+        "size_bytes": 115218
+      },
+      {
+        "path": "results/phase2_vetted_corpus/milestone13b_architecture_contract.json",
+        "sha256": "3c825605f7af3a4f3872570e59f6a06fb48ee047041f233f549c451e685dee83",
+        "size_bytes": 5037
+      },
+      {
+        "path": "results/phase2_vetted_corpus/milestone13b_interpretation.json",
+        "sha256": "29eab15b67ee372cc0eecb0df4874051397ac0113a405de92674643f9d9ccf59",
+        "size_bytes": 4616
+      },
+      {
+        "path": "results/phase2_vetted_corpus/milestone13b_sealed_metadata_incident.json",
+        "sha256": "43654864126f4b98e1b78b685fad53b28d753c73c7b73d07311c464ecf968fbd",
+        "size_bytes": 2204
+      },
+      {
+        "path": "results/phase2_vetted_corpus/milestone13b_uncommitted_state.json",
+        "sha256": "953cae8bc5f4f6dc680c2f42702a9acf6abe95aa9f12a1538aae2330d1d8f59c",
+        "size_bytes": 3373
+      },
+      {
+        "path": "src/foundry/phase2/retention_failure_interpretation.py",
+        "sha256": "3cb367e1fd5ccbad9bf5b25971416235dcb91db463f136cfdc5164e2f8f0dc78",
+        "size_bytes": 47249
+      },
+      {
+        "path": "src/foundry/phase2/sealed_metadata_recovery.py",
+        "sha256": "890ccc7316129e8038e45d361f59f07d3b627da5361ce4d4b59a5f925bf54974",
+        "size_bytes": 10928
+      },
+      {
+        "path": "tests/unit/phase2/test_retention_failure_interpretation.py",
+        "sha256": "c58dd96d10af75125ae58e53f0db14ff168174bef9118480c60d00854f7e39da",
+        "size_bytes": 2751
+      },
+      {
+        "path": "tests/unit/phase2/test_sealed_metadata_recovery.py",
+        "sha256": "794c2dabaac90de303a29299fa2d1c4c4f3dcb538a04e25c86e6380e9ddfa460",
+        "size_bytes": 2150
+      }
+    ],
+    "candidate_scan_sha256": "6cd78a45bd7059d92eb3635c6bfd01c9a68cfd0b288d0c96555cd37bcf846798",
+    "candidate_size_bytes": 1229704,
+    "content_propagation_sha256": "a4b86400ef9fc5722076073aa843e5f8b4084b34afbc1dc6ea2cbeb31915fd2c",
+    "copied_manifest_objects": 0,
+    "decision": "no_example_content_propagation",
+    "development_12_token_hits": 0,
+    "development_exact_hits": 0,
+    "development_questions_compared": 904,
+    "incident_exact_visible_output_records": [
+      "results/phase2_vetted_corpus/milestone13b_sealed_metadata_incident.json"
+    ],
+    "metadata_only_reference_paths": [
+      "README.md",
+      "docs/DECISIONS.md",
+      "docs/DEVLOG.md",
+      "docs/LEARNING_NOTES.md",
+      "docs/PHASE2_RESEARCH_DIRECTIONS.md",
+      "docs/PHASE2_VETTED_CORPUS_RESULT.md",
+      "docs/PROJECT_PLAN.md",
+      "experiments/EXPERIMENTS.md",
+      "results/phase2_vetted_corpus/milestone13b_sealed_metadata_incident.json",
+      "src/foundry/phase2/sealed_metadata_recovery.py",
+      "tests/unit/phase2/test_sealed_metadata_recovery.py"
+    ],
+    "prohibited_artifact_paths": [],
+    "prohibited_content_findings": 0,
+    "raw_content_object_pattern_hits": 0,
+    "raw_visible_output_copies": [],
+    "scientific_features_derived_from_sealed_data": 0,
+    "sealed_answers_propagated": 0,
+    "sealed_ids_propagated": 0,
+    "sealed_labels_propagated": 0,
+    "sealed_predictions_propagated": 0,
+    "sealed_questions_propagated": 0,
+    "sealed_scores_propagated": 0,
+    "secret_hits": 0
+  },
+  "future_sealed_final_options": [
+    "approve_existing_partition_under_documented_metadata_only_access_exception",
+    "freeze_replacement_partition_before_any_content_exposure"
+  ],
+  "incident_classification": "metadata_only_protocol_breach",
+  "incident_evidence_sha256": "b6799f3422747d8ec306d6e2a7100918b97f3dea3c58977aa8b205dc8b8bbd3d",
+  "recovery_audit_sha256": "2edca3cca8cc91ebf678edb62250b196412fea30e96e257c7d482fc75b185530",
+  "recovery_id": "foundry-milestone13b-metadata-only-recovery-v1",
+  "schema_version": 1,
+  "scientific_independence_audit": {
+    "architecture_decision_sha256": "74907ea92b2217b6f9ca39044feab6c6452600e7774a2b442e0ec9e29b6899a5",
+    "architecture_id": "replay-ce-token-kl-v1",
+    "decision": "scientifically_independent",
+    "dependency_graph": {
+      "generic_independent_raw_sha256": "c6375040bf8e80b936a8d3a14ec7d41d1f4a96c5a07110afe3b703265b3f5835",
+      "replay_corpus_file_sha256": "a9f25258d23f05a785dfea9f8ae0e05a246b52c9798a0d10e683fdc4e01a87f6",
+      "targeted_independent_raw_sha256": "c9210c5abff6f922b91518a08881ba9d6081670c52b9b4d4a7b93a5998347dfe",
+      "v1_generic_schedule_sha256": "4bc00d29d5cf308c12c77111d7943567521cc533b13440dc06c3d8b39c74e9df",
+      "v1_schedule_summary_sha256": "f699b423e27341379087078819e1cfae96897e9d09ee499d9b1700ce8f4c0919",
+      "v1_targeted_schedule_sha256": "88c5378cac7efe927b29d3f421d97777cd6d917187c71c8388b60bbe7b57e259",
+      "v2_generic_schedule_sha256": "ccd3c4104d05c9433c57c139cc429b414d2911aa53167c0a0a0ca78ddd2191e3",
+      "v2_schedule_summary_sha256": "70eed121baa4ebf04f42ed6922a03be684005720cda4a319322ae278cdda5623",
+      "v2_targeted_schedule_sha256": "545600f068b5480909e50e8253f25f456664a829bdabe11fd424d7b99656275d",
+      "vetted_qlora_source_sha256": "b28bc416f3e813e3bc91c34fc3f4fb700a5a2a328912d63ba0c0c830c9da4081",
+      "vetted_schedule_source_sha256": "766343ad9358a756208ceb5ebac1002ede9c32d1cbf028b360447b7a1d933590"
+    },
+    "dependency_graph_sha256": "da27b779caa7f1bd76a9648893a0a86c74a6039bdc7799ae3509b36a23914532",
+    "failure_inventory_sha256": "e24e65b671ab86a9f9427c24a9d7af4d0ef2bb8819454f839f56e16811e171e2",
+    "generic_failures": 10,
+    "generic_only_failures": 0,
+    "objective_audit_sha256": "f92f3072c3b956e972c22a37c0eceb332dd95340473c4281bf2cb4d3097a638b",
+    "options_comparison_sha256": "488ae036c62a87e33ac0052d506f41c251888e00532346bc00c3a64c885c4bd4",
+    "overlap_analysis_sha256": "0a25ae1066b5cb3951376bd176e939614db9e13a457978ebaae713fe0dada0aa",
+    "partition_metadata_removed_from_analysis_process": true,
+    "replay_coverage_sha256": "db28c6f972071a675bdafc3119e1d68dddd25833f5ec8f760b5de55cd4708498",
+    "scientific_decision_predates_incident": true,
+    "scientific_independence_sha256": "cd7c92b8baccad164b3e4788939ce8d5e8d3659d08779ffe3d7d22cc91088069",
+    "sealed_input_dependencies": [],
+    "selection_decision_sha256": "f8215e583a7a08f5362cef1daefdb86c2972be8229eb40939dee78afea9ae8fc",
+    "shared_failures": 10,
+    "targeted_failures": 10,
+    "targeted_only_failures": 0,
+    "trajectory_analysis_sha256": "5b291dbdfa958a0bf4e42547c61dfd55e204edfa9131c4dc9acc1575d89b655b"
+  },
+  "sealed_boundary_status": "metadata_accessed_example_content_unseen",
+  "sealed_examples_unseen": true,
+  "uncommitted_state_manifest_sha256": "465968624257bebbbfb76f48b2d90a3c799fce2b391df647923b589afcd00db2",
+  "zero_file_access_claim_withdrawn": true
+}

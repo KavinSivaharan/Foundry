@@ -1275,3 +1275,52 @@ This log separates proposals from approved decisions. A proposal does not author
   the two existing adapters and their failure evidence without retry, fallback, retraining, scale
   change, benchmark selection, or threshold reinterpretation. The next action requires a separately
   authorized interpretation of this independent retention failure.
+
+## 2026-07-27: select token-level KL preservation for the next vetted-corpus architecture
+
+- **Decision:** Select `replay-ce-token-kl-v1` under Milestone 13B hierarchy item 1. The next
+  objective is task cross-entropy plus replay-target cross-entropy plus token-level KL to the
+  adapter-disabled frozen base on replay prompts.
+- **Evidence:** Generic and targeted failed the same ten independent prompt IDs, including the same
+  nine arithmetic failures and the same format failure. Nine outputs are byte-identical and the
+  tenth pair is structurally equivalent. V1 Replay25 and V2 Replay40 show aligned residual
+  development-retention drift, and Replay40 did not uniformly improve it. V2 was not evaluated on
+  the exposed independent subset and is not classified as an independent-final failure. Their
+  implementation has no KL or logit-preservation constraint, and replay coverage is adjacent-only
+  for all ten independent V1 failures. Failure inventory, overlap, trajectory, replay-coverage,
+  objective, options, and selection hashes are bound by architecture decision
+  `74907ea92b2217b6f9ca39044feab6c6452600e7774a2b442e0ec9e29b6899a5`.
+- **Alternatives:** Do not choose another replay percentage, a lower threshold, adapter scaling, a
+  benchmark-selected checkpoint, or GRPO before retention-safe SFT. Layer-restricted LoRA is not
+  supported because capacity was not isolated; gradient-balanced SFT is not selected because
+  gradient conflict was not measured.
+- **Holdout consequence:** Independent subset `f5684507...e4ec` is now diagnostic-only for future
+  architectures. A new original nonbenchmark holdout must be constructed, base-qualified, audited,
+  and frozen before training; it may be used exactly once on the finally selected architecture and
+  never for coefficient or checkpoint selection.
+- **Boundary:** No coefficient, seed, checkpoint, replay ratio, or new holdout is selected here.
+  No model inference, training, GSM1K evaluation, or sealed-final model evaluation occurred. The
+  next action requires a separately authorized KL-regularized SFT calibration and training
+  milestone.
+
+## 2026-07-27: recover 13B under a metadata-only sealed-manifest exception
+
+- **Incident:** A recursive repository text search read the sealed-final manifest and displayed one
+  structural field, `partition=sealed_final`. It displayed zero sealed questions, answers, IDs,
+  labels, predictions, scores, model outputs, or source records. The manifest was not reopened or
+  hashed during recovery.
+- **Decision:** Classify the access as `metadata_only_protocol_breach`, permanently withdraw the
+  zero-file-access certification, and freeze the boundary as
+  `metadata_accessed_example_content_unseen`. Publish the already-completed 13B result only after
+  candidate-only propagation, scientific-independence, and full repository verification pass.
+- **Scientific consequence:** The surfaced partition value is not an analysis dependency. Replaying
+  the content-free failure counts, overlap, Replay25/Replay40 trajectory, replay coverage, objective
+  audit, and hierarchy preserves architecture decision `74907ea9...99a5` and
+  `replay-ce-token-kl-v1`.
+- **Future sealed consequence:** Example-level contamination is not asserted because no example
+  content was exposed. Before eventual sealed use, a separate project-level decision must either
+  approve the existing partition under this exception or freeze a replacement before exposure.
+  Milestone 13B-R chooses neither option.
+- **Publication:** Use one combined commit because the incident qualification and scientific record
+  share documentation and must become public atomically; a transient incident-only commit would
+  leave the completed architecture record unpublished and the shared documents incomplete.

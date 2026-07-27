@@ -3515,6 +3515,7 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
   exception evidence validates. Dataset reconstruction reproduces `ee18f7f9...dc31`; V1/V2
   schedule reconstruction reproduces all four arm hashes; all twelve checkpoint-adapter hashes
   and all 24 original raw-retention packet hashes match their evidence.
+
 - **Replay:** A third corrected offline replay matches all 49 files from the prior runs byte-for-byte
   at matrix summary `c9b99d61...b43f`. The 15-fixture file remains
   `8c622278...cd401`; the final two-arm failure decision reconstructs at
@@ -3529,3 +3530,127 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
   `configs/training`. The fixture was moved byte-identically to `tests/fixtures/training`, its test
   locator was updated, the protected tree returned to byte identity, focused tests passed 21/21,
   and the complete rerun passed 914/914. No scorer, threshold, model result, or raw evidence changed.
+
+### 2026-07-27 - Milestone 13B selected KL-regularized vetted-corpus adaptation
+
+- **Action performed:** Verified clean synchronized `main` at
+  `4c4db2b8ec3fddc136d5efac9c47c81017236931`, reconstructed the frozen dataset, corrected scorer,
+  selected V1 step-64 adapters, independent raw outputs, and independent decision, and confirmed
+  that no model process was active. Using only the existing raw evidence, built the complete
+  content-free failure inventory, generic/targeted equivalence matrix, V1/V2 trajectory audit,
+  deterministic replay-family coverage audit, frozen objective audit, four-option comparison, and
+  predeclared hierarchy decision. The tokenizer-only token-accounting analysis ran twice in fresh
+  processes under the frozen six-variable environment; no model weights were loaded.
+- **Result:** Both arms failed the same ten IDs: nine arithmetic and one format. Nine adapter
+  responses are byte-identical; the remaining response pair is structurally equivalent and fails
+  the same deterministic rule. Generic-only and targeted-only counts are zero. The maximum family
+  is `scaled_sum_with_offset`, with five failures per arm. Failure inventory and overlap hashes are
+  `e24e65b6...71e2` and `0a25ae10...0aa`.
+- **Trajectory:** Of eight V1/V2 arm-by-subset step-16-to-step-64 trajectories, six worsened, one
+  was unchanged, and one improved. Replay40 did not uniformly improve retention; generic and
+  targeted remained aligned. Trajectory hash is `5b291dbd...655b`.
+- **Replay/objective evidence:** V1 delivered `859` replay occurrences and `16,000` assistant
+  tokens per arm; V2 delivered `1,451` and `25,600`. All ten final failures have adjacent-only
+  family coverage and zero exact, normalized, structural, or direct-skill replay targets. The
+  frozen implementation combines task and replay assistant-token CE through scheduling and has no
+  KL, logit-preservation, representation-preservation, or gradient-balancing mechanism. Coverage
+  and objective hashes are `db28c6f9...8498` and `f92f3072...638b`.
+- **Decision:** The evidence satisfies hierarchy item 1, so select `replay-ce-token-kl-v1`.
+  Architecture decision SHA-256 is
+  `74907ea92b2217b6f9ca39044feab6c6452600e7774a2b442e0ec9e29b6899a5`.
+  Do not select another replay percentage, a lower threshold, adapter scaling, a
+  benchmark-selected checkpoint, or GRPO before retention-safe SFT.
+- **Holdout boundary:** Preserve independent subset `f5684507...e4ec` as Milestone 13A evidence but
+  mark it diagnostic-only for future architectures. A new original nonbenchmark holdout must be
+  constructed, overlap-audited, base-qualified, scorer-validated, and frozen before future
+  training, then used exactly once on the finally selected architecture and never for coefficient
+  or checkpoint selection.
+- **Scientific activity:** Zero model inference, training, optimizer steps, adapter/checkpoint
+  changes, GSM1K runs, or sealed-final access. A diagnostic filename scan initially found three
+  historical `predictions.jsonl` files, but path inspection proved they belong to the prior
+  base-pool/MathQA-base evaluations rather than GSM1K adapter predictions.
+- **Next action:** Complete repository-wide verification, publish
+  `analysis: select KL-regularized vetted-corpus adaptation`, and stop. A separate authorization is
+  required to freeze the KL coefficient/calibration, seed, schedule, checkpoint rule, and new
+  independent holdout before training.
+
+### 2026-07-27 - Milestone 13B publication stopped at sealed-final verification
+
+- **Discrepancy:** A read-only verification command intended to locate the protected sealed path
+  searched the complete `configs` tree. It consequently read
+  `configs/eval/manifests/gsm1k_sealed_final.json` and returned only line 1214,
+  the structural value `partition=sealed_final`. No benchmark question, answer, identifier, label,
+  prediction, score, or model output was displayed.
+- **Stop decision:** The authorization forbids sealed-final content access. Although the surfaced
+  line was structural metadata rather than benchmark content, the file itself was read, so the
+  milestone cannot certify zero sealed-final access. Stop before completing safety verification,
+  commit, or push. Do not reinterpret the boundary or silently continue.
+- **Preserved status:** The failure inventory, overlap, trajectory, replay coverage, objective
+  audit, and architecture decision were produced before this verification error and no model
+  inference, training, rescore, adapter change, GSM1K run, or optimizer step occurred. All
+  Milestone 13B changes remain uncommitted in the worktree; `origin/main` remains unchanged.
+- **Next action:** Await explicit recovery direction. Any continuation must state how this
+  verification-only protected-file access affects Milestone 13B publication and whether a new
+  clean authorization boundary is required.
+
+### 2026-07-27 - Milestone 13B-R metadata-only recovery accepted
+
+- **Entry freeze:** Before recovery edits, `main`, local HEAD, and `origin/main` all equaled
+  `4c4db2b8ec3fddc136d5efac9c47c81017236931` at `0/0`. The intentionally dirty worktree contained
+  12 Milestone 13B files totaling 1,201,868 bytes. Git-diff SHA-256 was
+  `efb170f3...948c`; uncommitted-state manifest SHA-256 is `46596862...0db2`. Every entry file was
+  hashed, no Python/model process was active, and no command after the reported stop had revisited
+  a sealed path.
+- **Incident replay:** Existing session evidence identifies a recursive repository text search and
+  exactly one visible sealed metadata field. Questions, answers, IDs, labels, predictions, scores,
+  post-access model processes, training processes, GSM1K evaluations, sealed evaluations, and
+  scientific decisions using the value are all zero. The original manifest was not reopened or
+  hashed. Incident classification is `metadata_only_protocol_breach`.
+- **Propagation gate:** Candidate-only inspection found no raw benchmark object, example ID, answer,
+  prediction, score, adapter, checkpoint, model weight, environment, cache, or secret. Exact and
+  contiguous 12-token comparison against all 904 development questions returned zero hits. The
+  surfaced JSON text is retained only in the content-free incident evidence.
+- **Independence gate:** The tracked failure inventory reconstructs `10/10` failures per arm, all
+  ten shared, with zero arm-specific failures. Replay25/Replay40 trajectory, replay coverage,
+  objective audit, and hierarchy dependencies contain no sealed input. Content-free replay returns
+  `replay-ce-token-kl-v1` and unchanged architecture decision `74907ea9...99a5`.
+- **Boundary:** Freeze `metadata_accessed_example_content_unseen`. Zero-file access can no longer be
+  claimed, but no evidence indicates example-level contamination and no sealed model evaluation or
+  benchmark score exists. A later explicit decision must accept the existing partition under the
+  exception or replace it before content exposure; this recovery selects neither.
+- **Commit strategy:** Publish incident and architecture evidence atomically with
+  `analysis: select KL adaptation after metadata-only sealed access`. The same documentation files
+  contain both the scientific result and its mandatory incident qualification, so one combined
+  commit is cleaner than a transient partial publication.
+- **Next action:** Finish the complete recovery verification, push the atomic record, confirm clean
+  synchronized `main`, and stop. Training remains separately authorized only.
+
+### 2026-07-27 - Milestone 13B-R complete recovery verification passed
+
+- **Repository checks:** Ruff formatting covers 281 files and lint is clean; strict Mypy passes
+  across 160 source files; all 921 unit and integration tests pass in 115.78 seconds; both isolated
+  dependency checks pass; and the frozen PyYAML metadata exception validates at evidence SHA-256
+  `dd941333...810a`. No source or scientific artifact changed during these checks.
+- **Reconstruction:** The recovery dataset tree is byte-identical to all seven frozen dataset
+  files. The recovery V1 and V2 schedule trees are byte-identical to both files in each original
+  tree, and their summary files reproduce SHA-256 `dc8cbb08...38d2` and
+  `a450c116...4260`. All twelve V1/V2 step-16/32/64 adapter-directory hashes match the tracked
+  training evidence. Both independent raw files and both independent summary files reproduce their
+  four frozen SHA-256 values, including selected step-64 adapters `fe3c0f5a...a73d` and
+  `7f15edf4...a0bd`. These were read-only hashes; no model was loaded.
+- **Recovery replay:** Incident, content-propagation, scientific-independence, architecture, and
+  qualified-publication validation passes. The result remains `replay-ce-token-kl-v1` at
+  architecture-decision SHA-256 `74907ea9...99a5`, incident evidence `b6799f34...9d3d`, recovery
+  audit `2edca3cc...5530`, and publication record `0ebceedb...159`. Sealed status remains
+  `metadata_accessed_example_content_unseen`.
+- **Scientific activity:** Model inference, generation, training, rescoring, backward passes,
+  optimizer steps, adapter/checkpoint changes, GSM1K evaluation, and sealed-final evaluation are
+  all zero. The sealed manifest and sealed paths were not reopened, hashed, searched, or traversed
+  during recovery verification.
+- **Verification note:** An initial reporting wrapper referenced a nonexistent PyYAML evidence key
+  after the actual validator had already passed. The corrected read-only wrapper printed the
+  existing `evidence_sha256`, and validation passed again. A first final 12-token scan wrapper then
+  hit a Python generator-scope `NameError` before any assertion; the explicit-loop correction
+  completed the same read-only scan. Neither reporting error changed a file or scientific result.
+- **Next action:** Run the final candidate-only content, secret, prohibited-artifact, size,
+  whitespace, staged-scope, and synchronization gates; commit and push only if every gate passes.

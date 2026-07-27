@@ -1,0 +1,100 @@
+{
+  "architecture_decision_sha256": "74907ea92b2217b6f9ca39044feab6c6452600e7774a2b442e0ec9e29b6899a5",
+  "architecture_id": "replay-ce-token-kl-v1",
+  "decision_id": "foundry-vetted-corpus-next-retention-architecture-v1",
+  "exposed_subset": {
+    "future_architecture_selection_use": false,
+    "future_checkpoint_selection_use": false,
+    "future_independent_final_gate_use": false,
+    "modified_or_deleted": false,
+    "preserved_as_milestone13a_evidence": true,
+    "status": "diagnostic_only_for_future_architectures",
+    "subset_sha256": "f56845076a1a59e5ca1a95466541339b56f026e945f86118caec307a690ee4ec"
+  },
+  "failure_inventory_sha256": "e24e65b671ab86a9f9427c24a9d7af4d0ef2bb8819454f839f56e16811e171e2",
+  "future_holdout_requirements": [
+    "keep_existing_adjudication_and_anchor_as_development_instruments",
+    "construct_new_original_nonbenchmark_retention_holdout",
+    "prove_zero_exact_or_12_token_overlap_with_training_replay_gsm1k_development_and_prior_retention",
+    "evaluate_untouched_base_before_adapter_exposure",
+    "freeze_only_base_correct_subset",
+    "validate_prompt_reference_and_corrected_scorer_integrity",
+    "freeze_identity_before_training",
+    "use_exactly_once_on_finally_selected_new_architecture",
+    "never_use_for_coefficient_or_checkpoint_selection",
+    "leave_sealed_final_untouched"
+  ],
+  "future_holdout_requirements_sha256": "b71319235b9acb046834b9f2f0efbe78e406df857fffad4d099f0ef4fdafe783",
+  "gsm1k_runs": 0,
+  "inherited_base_model_revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+  "inherited_controls": [
+    "human_written_vetted_corpus_identity",
+    "targeted_generic_matching_and_contamination_controls",
+    "assistant_only_cross_entropy_contract",
+    "corrected_retention_scorer",
+    "existing_adjudication_and_anchor_development_instruments",
+    "benchmark_and_sealed_final_firewall"
+  ],
+  "inherited_dataset_identity": "ee18f7f9bd7625469d83e1c1df8dad4db0ecf8b3d8c870a07c60f2808e11dc31",
+  "model_inference_runs": 0,
+  "next_milestone_failure_conditions": [
+    "no_common_checkpoint_passes_development_retention",
+    "either_arm_fails_new_independent_retention",
+    "kl_runtime_or_reference_contract_fails",
+    "dataset_matching_or_benchmark_firewall_drifts"
+  ],
+  "next_milestone_success_conditions": [
+    "one_predeclared_common_checkpoint_passes_adjudication_and_anchor_for_both_arms",
+    "both_arms_pass_a_new_once_only_independent_base_correct_retention_subset",
+    "targeted_generic_curriculum_comparison_remains_matched",
+    "only_after_retention_approval_may_gsm1k_run"
+  ],
+  "not_selected_in_this_milestone": {
+    "checkpoint": null,
+    "kl_coefficient": null,
+    "new_final_retention_subset": null,
+    "new_replay_ratio": null,
+    "seed": null
+  },
+  "objective_audit_sha256": "f92f3072c3b956e972c22a37c0eceb332dd95340473c4281bf2cb4d3097a638b",
+  "options_comparison_sha256": "488ae036c62a87e33ac0052d506f41c251888e00532346bc00c3a64c885c4bd4",
+  "overlap_analysis_sha256": "0a25ae1066b5cb3951376bd176e939614db9e13a457978ebaae713fe0dada0aa",
+  "prohibited_alternatives": [
+    "another_replay_percentage",
+    "lower_retention_threshold",
+    "adapter_scaling",
+    "benchmark_selected_checkpoint",
+    "grpo_before_retention_safe_sft"
+  ],
+  "replay_coverage_sha256": "db28c6f972071a675bdafc3119e1d68dddd25833f5ec8f760b5de55cd4708498",
+  "schema_version": 1,
+  "scientific_hypothesis": "Adding token-level KL preservation against the adapter-disabled frozen base on replay prompts will reduce shared base-behavior regression that persisted under 25% and 40% replay cross-entropy alone, while preserving the targeted-versus-generic curriculum comparison.",
+  "sealed_final_accessed": false,
+  "selection_contract": {
+    "explicit_kl_or_logit_constraint_existed": false,
+    "generic_targeted_trajectories_aligned": true,
+    "hierarchy_item": 1,
+    "replay40_uniformly_improved_retention": false,
+    "selected_architecture": "replay-ce-token-kl-v1",
+    "shared_failure_count": 10,
+    "shared_failure_fraction": 1.0,
+    "v1_v2_residual_drift_aligned": true
+  },
+  "selection_decision_sha256": "f8215e583a7a08f5362cef1daefdb86c2972be8229eb40939dee78afea9ae8fc",
+  "tier3_roadmap": [
+    "complete_independent_failure_interpretation",
+    "train_one_retention_regularized_sft_architecture",
+    "obtain_one_common_retention_safe_generic_targeted_checkpoint",
+    "evaluate_both_on_gsm1k",
+    "require_targeted_to_beat_generic_and_untouched_base",
+    "run_one_certified_verifier_reward_grpo_path_from_retention_safe_checkpoint",
+    "build_one_autonomous_evaluate_diagnose_data_train_retain_evaluate_controller",
+    "execute_second_smaller_autonomous_repair_cycle",
+    "repeat_final_important_result_with_seed_2",
+    "run_sealed_final_once_after_all_decisions_are_frozen",
+    "package_dashboard_demo"
+  ],
+  "tier3_roadmap_sha256": "918b85d7feaca709a1cc7b5a6adc07696e0a325ff5185b2376225a42b99f4dc8",
+  "training_runs": 0,
+  "trajectory_analysis_sha256": "5b291dbdfa958a0bf4e42547c61dfd55e204edfa9131c4dc9acc1575d89b655b"
+}
