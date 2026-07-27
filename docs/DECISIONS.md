@@ -1423,3 +1423,21 @@ This log separates proposals from approved decisions. A proposal does not author
 - **Consequence:** Publish the content-free blocker. Continuation requires a separate explicit
   correction choosing one LoRA recipe and specifying the scientifically matched historical V1
   comparator; do not infer that choice from the desired outcome.
+
+## 2026-07-27: select the exact published V1 LoRA recipe for KL
+
+- **Decision:** Resolve the 13C contradiction by selecting the executed V1 Replay25 configuration:
+  rank 8, alpha 16, dropout 0.05 LoRA on `q_proj`, `k_proj`, `v_proj`, and `o_proj`. Preserve
+  construction order separately from PEFT's stable saved-config ordering.
+- **Evidence:** Runner source `b28bc416...4081`, six byte-identical adapter configs
+  `2cf0fb66...39e2`, six published directory hashes, six raw/ tracked checkpoint summaries, and
+  six identical tensor inventories agree. The recipe has 224 trainable A/B tensors, 2,179,072
+  trainable parameters, 112 adapted modules across 28 layers, and scaling 2.0.
+- **Comparator:** Use the existing generic `cf230487...a63e` and targeted
+  `6915af1d...c5e9` step-16 adapters as lambda zero. Do not retrain them, expose them to
+  holdout v2, or use step 64 for coefficient selection.
+- **Draft classification:** The rank-16/seven-projection text is
+  `conflicting_unexecuted_draft_recipe`, not experimental evidence. Changing to it would confound
+  the intended KL-only intervention.
+- **Consequence:** After recipe record `b03dfc9d...d118` is verified, pushed, and synchronized,
+  implement `replay-ce-token-kl-v1` with the historical LoRA recipe unchanged.

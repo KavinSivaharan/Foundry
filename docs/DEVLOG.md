@@ -3841,3 +3841,36 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
   publication.
 - **Next action:** A separate correction must select the published rank-8/four-projection V1 LoRA
   or the written rank-16/seven-projection recipe and define the matching historical comparator.
+
+### 2026-07-27 - Milestone 13C-R3 froze the V1-equivalent KL recipe
+
+- **Recovered start:** Began clean and synchronized at
+  `91aea71492a2b1925da6bfb235e31a46e0a47665`. Dataset `ee18f7f...dc31`,
+  architecture decision `74907ea9...99a5`, environment-v2 hashes `76afee83...244a`,
+  `1d402ec0...995b`, and `c9faa8af...53dc`, and holdout-v2 suite/subset/decision hashes
+  `b8b978ba...1b18`, `a23b1014...f420`, and `970df977...ae60` reconstruct. Holdout adapter
+  exposure, KL implementations, calibrations, checkpoints, and active model processes remain zero.
+- **Historical recipe:** The executed V1 runner, all six generic/targeted step-16/32/64 adapter
+  configs, all six tensor inventories, raw summaries, tracked evidence, and published directory
+  hashes agree on rank 8, alpha 16, dropout 0.05, bias none, CAUSAL_LM LoRA with no modules to
+  save, scaling 2.0, and four targets: `q_proj`, `k_proj`, `v_proj`, and `o_proj`.
+- **Ordering and capacity:** The runner construction order is `q_proj,k_proj,v_proj,o_proj`; PEFT
+  serializes the same set as `k_proj,q_proj,o_proj,v_proj` in all six byte-identical
+  `adapter_config.json` files at SHA-256 `2cf0fb66...39e2`. Each state contains 224 A/B tensors
+  across 28 layers and 112 adapted modules, totaling 2,179,072 trainable parameters. Tensor
+  inventory SHA-256 is `d3edea65...5e78`.
+- **Frozen decision:** `foundry-replay-ce-token-kl-v1-lora-v1` has canonical/historical
+  configuration SHA-256 `3bc9fbcd...7862`. Equality evidence is `cb7e8f36...e548`; the historical
+  step-16 lambda-zero comparator contract is `1d04a3d6...40d7`; final recipe decision is
+  `b03dfc9d...d118`.
+- **Rejected draft:** Rank 16, alpha 32, and seven projections are classified
+  `conflicting_unexecuted_draft_recipe` at rejection SHA-256 `4b41790c...e312`. It has zero
+  executions and is not experimental evidence; using it would change rank, alpha, projections,
+  trainable tensors, trainable parameters, and capacity.
+- **Publication verification:** Ruff confirms 287 formatted files and clean lint; strict Mypy
+  passes 163 source files; all 942 unit and integration tests pass in 107.09 seconds; and both
+  isolated dependency checks pass. The focused reconstruction, config equality, tensor inventory,
+  comparator, dataset, holdout, and environment tests pass without a model load.
+- **Next action:** Complete recipe-resolution verification, publish
+  `analysis: freeze V1-equivalent KL recipe`, synchronize clean `main`, and only then implement
+  token-level KL as the sole scientific intervention.
