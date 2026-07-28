@@ -4019,7 +4019,7 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
   respectively. All sixteen development assessments pass with zero backend failures.
 - **Selection and blocker:** Smoke, calibration, selection, blocker, and terminal-stop SHA-256
   values are `b7f7f3fe...df4`, `51035703...613`, `a8a040f1...86d`,
-  `4ae15805...cb4`, and `cf6183a8...df8`. No common coefficient is eligible, so token-level
+  `4ae15805...cb4`, and `5265578a...4dd`. No common coefficient is eligible, so token-level
   replay KL is closed under this bounded gradient-scaled ladder for the V1-equivalent
   architecture. Full training, holdout-v2 adapter evaluation, GSM1K adapter evaluation, and
   sealed-path access remain zero.
@@ -4033,6 +4033,11 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
   Windows argv transport. Neither created evidence or changed source. The successful replay used
   the frozen shell-free `runpy` source injection with the identical child environment; no model
   execution was repeated.
+- **Publication binding correction:** Final report extraction found that the first terminal packet
+  copied stale recipe-decision and objective-contract hashes from the preceding milestone's
+  terminal record. The builder now reconstructs and cross-checks both identities directly from
+  their frozen upstream records. No ladder, smoke, calibration, selection, blocker, model output,
+  optimizer step, or scientific decision changed.
 - **Verification:** Ruff confirms 309 formatted files and clean lint; strict Mypy passes 175
   source files; all 973 unit and integration tests pass; both isolated dependency checks pass;
   all required identity and 13D evidence replays reconstruct; the 23 publication candidates have

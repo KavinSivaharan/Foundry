@@ -47,13 +47,13 @@
   },
   "independent_holdout_adapter_evaluations": 0,
   "next_action": "project_level_selection_between_layer_restricted_lora_and_multi_objective_gradient_balanced_sft",
-  "objective_contract_sha256": "159ef3222b6c77ac32dd31ca24875dcbfb7a30a8a2eabb1b95a9b7b04f5b75a8",
+  "objective_contract_sha256": "159ef322b254d5f70b46296fe051417ed53c1543f3432bcb0b9069d66ab975a8",
   "published_commits": {
     "gradient_ladder": "4c054bf6541367f9fbfbb766ca247891537a67a0",
     "terminal_result_subject": "analysis: stop gradient-calibrated KL adaptation"
   },
   "reason": "no_common_gradient_scaled_coefficient_met_all_unchanged_gates",
-  "recipe_decision_sha256": "b03dfc9dcfef9c9c2d49100094d762fbf2c50f5d332e4f54ad99a568f8b9d118",
+  "recipe_decision_sha256": "b03dfc9d6f66843f2a83e9b4ff5b82e133fb9c6a4a27ab1783d64991a0f7d118",
   "record_id": "foundry-milestone13d-gradient-kl-terminal-stop-v1",
   "replay_kl_ratio_by_run": {
     "rho-010/generic": 0.9922018293810254,
@@ -78,7 +78,7 @@
     "runs": 8
   },
   "starting_commit": "f41021c01c9fd03279717473339bcea4b4274b32",
-  "terminal_stop_sha256": "cf6183a84137c51832b9a546e9f29354d3278bf4ceff5481c1bbc60e72fecdf8",
+  "terminal_stop_sha256": "5265578a94c91885bdab5e9c47287c78a603def509456efe7882e8524b5a84dd",
   "verification": {
     "all_required_reconstructions_passed": true,
     "candidate_files_at_or_above_1_mib": 0,

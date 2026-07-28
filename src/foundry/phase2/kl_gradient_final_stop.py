@@ -31,6 +31,15 @@ def build(root: Path) -> dict[str, Any]:
     """Bind every published 13D decision into the required terminal stop."""
 
     results = root / "results/phase2_vetted_corpus"
+    recipe = _read(results / "milestone13c_r3_v1_kl_recipe.json")
+    objective = _read(results / "milestone13c_r3_kl_objective.json")
+    historical = _read(results / "milestone13c_r3_historical_comparator.json")
+    for value, key in (
+        (recipe, "final_recipe_decision_sha256"),
+        (objective, "objective_contract_sha256"),
+        (historical, "historical_comparator_summary_sha256"),
+    ):
+        _verify(value, key)
     evidence_specs = (
         ("raw_scale", "milestone13d_raw_scale_analysis.json", "raw_scale_analysis_sha256"),
         (
@@ -80,7 +89,14 @@ def build(root: Path) -> dict[str, Any]:
     selection = evidence["selection"]
     blocker = evidence["blocker"]
     if (
-        smoke.get("run_count") != 8
+        evidence["raw_scale"]["objective_contract_sha256"] != objective["objective_contract_sha256"]
+        or evidence["historical_gradient"]["objective_contract_sha256"]
+        != objective["objective_contract_sha256"]
+        or calibration["historical_comparator_sha256"]
+        != historical["historical_comparator_summary_sha256"]
+        or historical["recipe_sha256"] != recipe["historical_v1_configuration_sha256"]
+        or recipe["dataset_sha256"] != evidence["raw_scale"]["dataset_sha256"]
+        or smoke.get("run_count") != 8
         or calibration.get("run_count") != 8
         or selection.get("selected_rho") is not None
         or selection.get("selected_coefficient_exact") is not None
@@ -140,15 +156,9 @@ def build(root: Path) -> dict[str, Any]:
             "adapter_evaluations": 0,
             "status": "not_evaluated_and_adapter_unexposed",
         },
-        "recipe_decision_sha256": (
-            "b03dfc9dcfef9c9c2d49100094d762fbf2c50f5d332e4f54ad99a568f8b9d118"
-        ),
-        "objective_contract_sha256": (
-            "159ef3222b6c77ac32dd31ca24875dcbfb7a30a8a2eabb1b95a9b7b04f5b75a8"
-        ),
-        "historical_comparator_sha256": (
-            "06053527fdb5786ace22972aab642fd824b8471ee72e7e19ef849520f5d33324"
-        ),
+        "recipe_decision_sha256": recipe["final_recipe_decision_sha256"],
+        "objective_contract_sha256": objective["objective_contract_sha256"],
+        "historical_comparator_sha256": historical["historical_comparator_summary_sha256"],
         "evidence_sha256": evidence_hashes,
         "smoke_counts": {
             "runs": smoke["run_count"],
