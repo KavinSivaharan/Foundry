@@ -4073,3 +4073,35 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
 - **Next action:** Verify the implementation and content-free contract, publish and synchronize
   the execution boundary, then launch the six calibration cells sequentially under the exact
   frozen child environment.
+
+### 2026-07-28 - Milestone 13E selected the top-14-layer scope
+
+- **Immutable execution:** Published and synchronized contract commit
+  `b2ec2e99308f2bda5aa542595a459edf787e7284` before model execution. All six fresh calibration
+  cells then completed exactly 16 optimizer steps and 16,000 assistant tokens under the frozen
+  environment, for 96 total steps and 96,000 total tokens. Every runtime inventory, schedule,
+  finite-loss/gradient, LoRA-update, base-fingerprint, CUDA-only, save, and offline-reload gate
+  passed.
+- **Calibration measurements:** Generic/targeted validation CE is `2.1098087/2.3038567` for L1,
+  `2.1012024/2.2954378` for L2, and `2.0549072/2.2490615` for L3. Diagnostic-only replay KL is
+  `0.000006588/0.000005978`, `0.000010327/0.000009435`, and
+  `0.000078179/0.000076346`, respectively. Replay KL did not enter any gradient or selection
+  gate.
+- **Development retention:** Generic/targeted adjudication preservation is `186/187` and
+  `187/187` for L1, `185/187` and `186/187` for L2, and `185/187` and `186/187` for L3.
+  Anchor preservation is `209/210` and `209/210`, `207/210` and `209/210`, and `208/210` and
+  `208/210`, respectively. Every assessment passes the complete frozen gate with zero backend
+  and question-generation failures; maximum instruction-family failure count is one.
+- **Operational continuation:** After L1/generic adjudication, the desktop launcher closed the
+  campaign's inherited stdout pipe; the next progress print raised `Errno 22` before anchor
+  inference or its log creation. The never-started anchor command was launched once with durable
+  stdout/stderr, then the unchanged campaign resumed without repeating training or adjudication.
+  The immutable aggregator expected suite assessment aliases one directory level higher than the
+  campaign layout; twelve byte-identical ignored aliases were created and hash-checked. Neither
+  event changed source, environment, adapter, model output, optimizer count, or scientific gate.
+- **Selection:** All three scopes pass in both arms. The predeclared largest-scope rule therefore
+  selects L3, layers 14-27, with 112 LoRA tensors and 1,089,536 trainable parameters.
+  Calibration summary SHA-256 is `f1e31583...149e9`; full generic and targeted 64-step training
+  is authorized. Holdout v2 remains adapter-unexposed and GSM1K remains unused.
+- **Next action:** Publish and synchronize the L3 selection, then run the two fresh 64-step
+  training arms and select the latest common development-passing checkpoint.
