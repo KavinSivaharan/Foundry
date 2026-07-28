@@ -1,0 +1,24 @@
+{
+  "blocker_id": "foundry-milestone13d-gradient-kl-calibration-blocker-v1",
+  "calibration_blocker_sha256": "4ae158054bece6f0e2d84b8568be8f9b8cae7359eb415fb14cebd1c718694cb4",
+  "calibration_summary_sha256": "51035703eb984e6634f9690b01cdf27dfa333011a1912823961f821847ddd613",
+  "coefficient_selection_sha256": "a8a040f1a382ebf6a165bfa50a8ebca310ee333a25c919240c9a7b4998f786d5",
+  "full_training_runs": 0,
+  "gsm1k_adapter_evaluations": 0,
+  "holdout_v2_adapter_evaluations": 0,
+  "reason": "no_common_gradient_scaled_coefficient_met_all_unchanged_gates",
+  "replay_kl_ratio_by_run": {
+    "rho-010/generic": 0.9922018293810254,
+    "rho-010/targeted": 1.0495940418795224,
+    "rho-030/generic": 0.997746467509297,
+    "rho-030/targeted": 0.9708924746116647,
+    "rho-100/generic": 0.9493920817234526,
+    "rho-100/targeted": 0.9911324588408851,
+    "rho-300/generic": 0.8041242145061221,
+    "rho-300/targeted": 0.8312500518576723
+  },
+  "required_stop": "before_full_training",
+  "run_count": 8,
+  "schema_version": 1,
+  "sealed_paths_accessed": false
+}

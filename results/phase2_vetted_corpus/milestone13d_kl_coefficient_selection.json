@@ -1,0 +1,90 @@
+{
+  "calibration_summary_sha256": "51035703eb984e6634f9690b01cdf27dfa333011a1912823961f821847ddd613",
+  "coefficient_results": [
+    {
+      "coefficient_exact": "0.88772676877271567348280710717339159364685227428036",
+      "common_eligible": false,
+      "failed_criteria_by_arm": {
+        "generic": [
+          "replay_token_kl_at_most_75_percent_historical"
+        ],
+        "targeted": [
+          "replay_token_kl_at_most_75_percent_historical"
+        ]
+      },
+      "rho_exact": "0.10",
+      "run_sha256_by_arm": {
+        "generic": "741fa926aad5f4aa84646f7839285b70af7ffa07017505290df8afba165cf096",
+        "targeted": "9f487bf78cb7f7998fc1a5b27d1424dc01dec79c437e1d99f0fc6297e5114c6e"
+      }
+    },
+    {
+      "coefficient_exact": "2.6631803063181470204484213215201747809405568228411",
+      "common_eligible": false,
+      "failed_criteria_by_arm": {
+        "generic": [
+          "replay_token_kl_at_most_75_percent_historical"
+        ],
+        "targeted": [
+          "replay_token_kl_at_most_75_percent_historical"
+        ]
+      },
+      "rho_exact": "0.30",
+      "run_sha256_by_arm": {
+        "generic": "743b673ecb62c50150e3732b531aca0b69df1f48d08082adca054942be3abc78",
+        "targeted": "c9d236b8334f1badedbc7fa0dd052e5a36494c16e34b5120a3705bb1ceaff5c4"
+      }
+    },
+    {
+      "coefficient_exact": "8.8772676877271567348280710717339159364685227428036",
+      "common_eligible": false,
+      "failed_criteria_by_arm": {
+        "generic": [
+          "replay_token_kl_at_most_75_percent_historical"
+        ],
+        "targeted": [
+          "replay_token_kl_at_most_75_percent_historical"
+        ]
+      },
+      "rho_exact": "1.00",
+      "run_sha256_by_arm": {
+        "generic": "c603a28161b58c43e563eff53cf632e909b38f0b0f227641182ae024039e4bbc",
+        "targeted": "9e1befd004fd1d974cc09b8214608e3ae3b824aa4578a71c83929806d10152df"
+      }
+    },
+    {
+      "coefficient_exact": "26.631803063181470204484213215201747809405568228411",
+      "common_eligible": false,
+      "failed_criteria_by_arm": {
+        "generic": [
+          "replay_token_kl_at_most_75_percent_historical"
+        ],
+        "targeted": [
+          "replay_token_kl_at_most_75_percent_historical"
+        ]
+      },
+      "rho_exact": "3.00",
+      "run_sha256_by_arm": {
+        "generic": "3a73d8ec634fbe64e84242f6547d3329242268c1bdb933c9142a6b0491fef0ff",
+        "targeted": "bdd01dd3d37b6917f5eeb49adfc39e62ee8f4ee485dfdfcc7ee2094c64b1e3d3"
+      }
+    }
+  ],
+  "coefficient_selection_sha256": "a8a040f1a382ebf6a165bfa50a8ebca310ee333a25c919240c9a7b4998f786d5",
+  "decision": "no_common_eligible_gradient_scaled_coefficient",
+  "full_training_run_in_milestone": false,
+  "gsm1k_used_for_selection": false,
+  "holdout_v2_used_for_selection": false,
+  "schema_version": 1,
+  "sealed_paths_accessed": false,
+  "selected_coefficient_exact": null,
+  "selected_rho": null,
+  "selection_id": "foundry-milestone13d-gradient-kl-coefficient-selection-v1",
+  "selection_order": [
+    "0.10",
+    "0.30",
+    "1.00",
+    "3.00"
+  ],
+  "smoke_summary_sha256": "b7f7f3fed6d88b241933efc708053ff1201f4407d0206542423d2c3160a26df4"
+}

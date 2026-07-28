@@ -1,0 +1,104 @@
+{
+  "architecture_decision_sha256": "74907ea92b2217b6f9ca39044feab6c6452600e7774a2b442e0ec9e29b6899a5",
+  "calibration_counts": {
+    "arms": 2,
+    "assistant_tokens": 128000,
+    "backend_failures": 0,
+    "coefficients": 4,
+    "development_retention_evaluations": 16,
+    "optimizer_steps": 128,
+    "runs": 8
+  },
+  "calibration_resource_use": {
+    "peak_process_rss_bytes": 1569628160,
+    "peak_reserved_vram_bytes": 5754585088,
+    "saved_adapter_bytes": 197050264,
+    "training_runtime_seconds": 5105.836984500005
+  },
+  "dataset_sha256": "ee18f7f9bd7625469d83e1c1df8dad4db0ecf8b3d8c870a07c60f2808e11dc31",
+  "environment_v2": {
+    "combined_child_environment_sha256": "1d402ec0cb661adeb50a3d3bd9510895f3f9068cbb393fb381565a5670de995b",
+    "operational_environment_sha256": "76afee8390e73ef9274d4bc4b91d8a99735f66efb9137c4909e8619d3f9d244a",
+    "replay_passed": true,
+    "v2_contract_sha256": "c9faa8afafafb20b84fcd0cb5e7de1b57749e822adfa27c8b401bbaf8f0153dc"
+  },
+  "evidence_sha256": {
+    "blocker": "4ae158054bece6f0e2d84b8568be8f9b8cae7359eb415fb14cebd1c718694cb4",
+    "calibration": "51035703eb984e6634f9690b01cdf27dfa333011a1912823961f821847ddd613",
+    "historical_gradient": "862f8cab062a992afa5e749c083754b577d5d7cba1532706a28df7841fab24cf",
+    "ladder": "ab6b7a61ca0d4deda7762daf3d03e66c3ab55e2e18370b919f6def5626e54cda",
+    "measurement_manifest": "f5b4d98ce6e9cc59f0ad39bc3ac1ac823fbccb2e23d6963584c4885840d16bf4",
+    "objective_graph": "3a6f064799aec2696806b38e98a8dda9c2acb1139e8201bdae80f25dd54ff723",
+    "previous_ladder_scale": "30442953cf93754e19a32bb7d0f3703c0bb2b8334474ac420a7938f95c05bc5c",
+    "raw_scale": "894ef154c649f2463b5db9829c37901ceb654c18fcd095f34ae59f70957a10d5",
+    "selection": "a8a040f1a382ebf6a165bfa50a8ebca310ee333a25c919240c9a7b4998f786d5",
+    "smoke": "b7f7f3fed6d88b241933efc708053ff1201f4407d0206542423d2c3160a26df4"
+  },
+  "full_training_optimizer_steps": 0,
+  "full_training_runs": 0,
+  "gsm1k_adapter_evaluations": 0,
+  "historical_comparator_sha256": "06053527fdb5786ace22972aab642fd824b8471ee72e7e19ef849520f5d33324",
+  "holdout_v2": {
+    "adapter_evaluations": 0,
+    "base_correct_subset_sha256": "a23b1014d92e9f98b74da3b29913a430bdaebf8e07a16b31b4c3dcc831f1f420",
+    "decision_sha256": "970df977248195d71e3d5a54a20d24b5c2cc07ad5c3c7add10d1bf13dcb0ae60",
+    "status": "not_evaluated_and_adapter_unexposed",
+    "suite_sha256": "b8b978ba69b501187b984d4631e8d7f5a41f39efeb292cb391a845c3e61e1b18"
+  },
+  "independent_holdout_adapter_evaluations": 0,
+  "next_action": "project_level_selection_between_layer_restricted_lora_and_multi_objective_gradient_balanced_sft",
+  "objective_contract_sha256": "159ef3222b6c77ac32dd31ca24875dcbfb7a30a8a2eabb1b95a9b7b04f5b75a8",
+  "published_commits": {
+    "gradient_ladder": "4c054bf6541367f9fbfbb766ca247891537a67a0",
+    "terminal_result_subject": "analysis: stop gradient-calibrated KL adaptation"
+  },
+  "reason": "no_common_gradient_scaled_coefficient_met_all_unchanged_gates",
+  "recipe_decision_sha256": "b03dfc9dcfef9c9c2d49100094d762fbf2c50f5d332e4f54ad99a568f8b9d118",
+  "record_id": "foundry-milestone13d-gradient-kl-terminal-stop-v1",
+  "replay_kl_ratio_by_run": {
+    "rho-010/generic": 0.9922018293810254,
+    "rho-010/targeted": 1.0495940418795224,
+    "rho-030/generic": 0.997746467509297,
+    "rho-030/targeted": 0.9708924746116647,
+    "rho-100/generic": 0.9493920817234526,
+    "rho-100/targeted": 0.9911324588408851,
+    "rho-300/generic": 0.8041242145061221,
+    "rho-300/targeted": 0.8312500518576723
+  },
+  "result": "token_level_replay_kl_closed_for_v1_equivalent_architecture",
+  "schema_version": 1,
+  "sealed_boundary_status": "metadata_accessed_example_content_unseen",
+  "sealed_paths_accessed": false,
+  "selected_coefficient_exact": null,
+  "selected_rho": null,
+  "smoke_counts": {
+    "assistant_tokens": 15880,
+    "common_eligible_coefficients": 4,
+    "optimizer_steps": 16,
+    "runs": 8
+  },
+  "starting_commit": "f41021c01c9fd03279717473339bcea4b4274b32",
+  "terminal_stop_sha256": "cf6183a84137c51832b9a546e9f29354d3278bf4ceff5481c1bbc60e72fecdf8",
+  "verification": {
+    "all_required_reconstructions_passed": true,
+    "candidate_files_at_or_above_1_mib": 0,
+    "content_bearing_result_hits": 0,
+    "contiguous_12_token_development_hits": 0,
+    "dependency_checks_passed": true,
+    "dependency_environment_count": 2,
+    "development_reference_count": 904,
+    "exact_development_hits": 0,
+    "full_test_count": 973,
+    "full_tests_passed": true,
+    "git_diff_check_passed": true,
+    "high_confidence_secret_hits": 0,
+    "normalized_exact_development_hits": 0,
+    "protected_path_changes": 0,
+    "publication_candidate_count": 23,
+    "raw_tracked_artifacts": 0,
+    "ruff_formatted_file_count": 309,
+    "ruff_lint_passed": true,
+    "strict_mypy_passed": true,
+    "strict_mypy_source_file_count": 175
+  }
+}

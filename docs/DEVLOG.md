@@ -3987,3 +3987,57 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
   `fca6f23d...3fef` and `ab6b7a61...4cda`.
 - **Next action:** Verify, publish, and push `analysis: freeze gradient-calibrated KL ladder`;
   only then execute the eight predeclared two-step compatibility smokes sequentially.
+
+### 2026-07-27 - Milestone 13D closed bounded gradient-scaled token-level KL
+
+- **Published execution boundary:** Gradient-ladder commit
+  `4c054bf6541367f9fbfbb766ca247891537a67a0` was pushed and synchronized before any coefficient
+  execution. All eight two-step smokes and all eight 16-step calibrations then ran sequentially
+  from untouched base states under the frozen environment, V1-equivalent rank-8 recipe, objective,
+  schedules, and seed.
+- **Compatibility smokes:** All four common coefficients passed in both arms. The eight smokes
+  completed exactly 16 optimizer steps and 15,880 assistant tokens in 1,477.320 aggregate training
+  seconds. Every run had finite losses and gradients, LoRA updates on the first positive-LR step,
+  unchanged base parameters, CUDA-only placement, bounded replay KL, and successful offline
+  reload. Because the pre-step-2 KL gradient is exactly zero from a fresh adapter state, all four
+  coefficients produced the same two-step terminal replay KL within each arm:
+  `0.00000424531837` generic and `0.00000363331883` targeted.
+- **Complete calibration matrix:** The eight bounded runs completed exactly 128 optimizer steps
+  and 128,000 assistant tokens. Generic replay-KL ratios to the historical step-16 comparator,
+  for rho `0.10`, `0.30`, `1.00`, and `3.00`, are `0.99220183`, `0.99774647`,
+  `0.94939208`, and `0.80412421`; targeted ratios are `1.04959404`, `0.97089247`,
+  `0.99113246`, and `0.83125005`. Every ratio exceeds the unchanged maximum `0.75`.
+  Every other coefficient-selection criterion passes in every arm.
+- **Gradient behavior:** Weighted KL-to-CE gradient ratios at step 16 rise with the common ladder.
+  At rho `3.00`, they reach `3.20919683` generic and `3.25429005` targeted, while terminal
+  replay KL remains above the required ceiling. The observed failure is therefore not a
+  disconnected or numerically negligible KL gradient at the upper end of the bounded ladder.
+- **Development retention:** Generic adjudication/anchor preservation is `184/187` and `206/210`
+  at rho `0.10`, `185/187` and `206/210` at `0.30`, `183/187` and `207/210` at `1.00`,
+  and `185/187` and `208/210` at `3.00`. Targeted preservation is `184/187` and `206/210`,
+  `184/187` and `207/210`, `184/187` and `205/210`, and `185/187` and `205/210`,
+  respectively. All sixteen development assessments pass with zero backend failures.
+- **Selection and blocker:** Smoke, calibration, selection, blocker, and terminal-stop SHA-256
+  values are `b7f7f3fe...df4`, `51035703...613`, `a8a040f1...86d`,
+  `4ae15805...cb4`, and `cf6183a8...df8`. No common coefficient is eligible, so token-level
+  replay KL is closed under this bounded gradient-scaled ladder for the V1-equivalent
+  architecture. Full training, holdout-v2 adapter evaluation, GSM1K adapter evaluation, and
+  sealed-path access remain zero.
+- **Resource accounting:** Calibration training totals 5,105.837 seconds, peaks at
+  5,754,585,088 reserved VRAM bytes and 1,569,628,160 RSS bytes, and saves 197,050,264 adapter
+  bytes. Its sixteen retention evaluations total 2,819.770 seconds and 220,016 input plus
+  106,244 output tokens. The complete ignored Milestone 13D runtime tree contains 316 files and
+  397,013,574 bytes; none is staged or tracked.
+- **Launcher note:** After all model work, two adjudication-helper invocations exited before
+  importing Foundry: the first omitted source-root injection and the second lost JSON quotes in
+  Windows argv transport. Neither created evidence or changed source. The successful replay used
+  the frozen shell-free `runpy` source injection with the identical child environment; no model
+  execution was repeated.
+- **Verification:** Ruff confirms 309 formatted files and clean lint; strict Mypy passes 175
+  source files; all 973 unit and integration tests pass; both isolated dependency checks pass;
+  all required identity and 13D evidence replays reconstruct; the 23 publication candidates have
+  zero development-content, secret, prohibited-artifact, raw-tracking, protected-path, sealed,
+  or oversized-file findings; and `git diff --check` passes.
+- **Next action:** Publish and push `analysis: stop gradient-calibrated KL adaptation`, then make
+  a project-level selection between layer-restricted LoRA and multi-objective
+  gradient-balanced SFT.
