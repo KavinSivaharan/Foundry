@@ -4168,3 +4168,40 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
 - **Next action:** Publish and synchronize the holdout decision, then evaluate GSM1K for generic
   and targeted against the frozen Phase-1 base result and apply the strict targeted-greater-than-
   both comparison.
+
+### 2026-07-28 - Milestone 13E closed after the GSM1K comparison
+
+- **Published GSM1K boundary:** Holdout-pass commit
+  `8f828e256f45d3289750b7312181d56edb680295` was pushed, synchronized, and clean before
+  GSM1K evaluation. The frozen Phase-1 base result is `521/814` (`64.0049%`). Generic and
+  targeted were then evaluated once each, in that order, on the identical frozen 814-example
+  manifest at adapter scale 1.0 under the exact Windows child environment.
+- **Generic result:** Generic scored `517/814` (`63.5135%`), with 754 extractable responses,
+  zero generation failures, and a delta of -4 correct (`-0.4914` percentage points) versus base.
+  Runtime was 4,832.364 seconds for 113,720 input and 232,292 output tokens.
+- **Targeted result:** Targeted scored `519/814` (`63.7592%`), with 756 extractable responses,
+  zero generation failures, and a delta of +2 correct (`+0.2457` percentage points) versus
+  generic but -2 correct (`-0.2457` percentage points) versus base. Runtime was 4,792.787
+  seconds for 113,720 input and 232,784 output tokens.
+- **Success decision:** `targeted > generic` passes, but `targeted > base` fails. Therefore the
+  conjunction required by Milestone 13E is false and the terminal decision is
+  `layer_restricted_targeted_training_did_not_beat_both_comparators`. GSM1K-decision SHA-256 is
+  `03397d26...c8d1d`; the tracked file SHA-256 is `ac718a88...c566`.
+- **Interpretation:** Restricting rank-8 LoRA to the top 14 layers eliminated the previously
+  shared independent-retention regression: both full adapters preserved `315/317` holdout-v2
+  items and passed every gate. It did not preserve or improve the frozen base GSM1K score.
+  Layer restriction is therefore retention-safe for this bounded experiment but not a successful
+  capability-improving targeted adaptation under the predeclared criterion.
+- **Resource and access accounting:** The two GSM1K adapter runs consumed 9,625.151 aggregate
+  evaluation seconds, 227,440 input tokens, and 465,076 output tokens. Both had zero backend
+  failures. Exactly two GSM1K adapter evaluations occurred, and sealed-final remained untouched.
+- **Launcher note:** An initial campaign invocation used the repository root rather than `src`
+  and exited with `ModuleNotFoundError` before importing Foundry, creating a campaign status,
+  loading a model or adapter, or generating evidence. The identical command was relaunched from
+  the required source root under the same exact environment; no scientific evaluation was
+  repeated and no source or setting changed.
+- **Terminal verification:** All 16 focused layer-restriction and campaign tests pass under the
+  frozen process environment. A fresh decision reconstruction is byte-identical to the tracked
+  terminal packet at SHA-256 `ac718a88...c566`, and `git diff --check` is clean.
+- **Final decision:** Close Milestone 13E as a retention success and a GSM1K success-condition
+  failure. Do not promote the targeted L3 adapter as outperforming the base model.

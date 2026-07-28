@@ -1,0 +1,49 @@
+{
+  "adapter_evaluations": 2,
+  "base": {
+    "accuracy": 0.64004914004914,
+    "config_sha256": "5f315d5de645f9563b8d1e61bc8e02c3513c453238ad9e1d6f9473489b5a622b",
+    "correct": 521,
+    "manifest_sha256": "5e810d3ab644bef1d43c598a14a6164ba6464b27fde50e92a2f241816ce87897",
+    "processed": 814,
+    "result_source": "frozen_phase1_814_example_base_evaluation"
+  },
+  "contract_sha256": "e23c1f5d1262bc31445d0af50d6efa157a06da77828b6b8849d964c38f818b05",
+  "decision": "layer_restricted_targeted_training_did_not_beat_both_comparators",
+  "decision_id": "foundry-milestone13e-gsm1k-decision-v1",
+  "generic": {
+    "accuracy": 0.6351351351351351,
+    "adapter_sha256": "67c6f1dd34c0fa1ddebb354dfe14c43e61c48fdd90c687ba1a9290d2401479cd",
+    "backend_failures": 0,
+    "correct": 517,
+    "extractable": 754,
+    "input_tokens": 113720,
+    "output_tokens": 232292,
+    "processed": 814,
+    "runtime_seconds": 4832.364211,
+    "summary_file_sha256": "082ca6331b5a876cc65220390da6d2e04c5407336cde9c138436fc2d08c0b103"
+  },
+  "gsm1k_decision_sha256": "03397d2671ba2ea0cbe9774d94a24d652f151e81b9b1ce56ed21487b588c8d1d",
+  "holdout_decision_sha256": "52137aa5354778899cde0db286ffed868d63600e7d7dbf68ff4185e2f857fa8d",
+  "schema_version": 1,
+  "sealed_final_accessed": false,
+  "success": false,
+  "success_condition": {
+    "targeted_greater_than_base": false,
+    "targeted_greater_than_generic": true
+  },
+  "targeted": {
+    "accuracy": 0.6375921375921376,
+    "adapter_sha256": "4e195ff2cb32c4faa6858915b95507862c911bb2eb853b060717416d825df91d",
+    "backend_failures": 0,
+    "correct": 519,
+    "extractable": 756,
+    "input_tokens": 113720,
+    "output_tokens": 232784,
+    "processed": 814,
+    "runtime_seconds": 4792.7865277,
+    "summary_file_sha256": "39c566f59aa8ada6e6efcc0025b51a462baac0178295a88f26372070aa5ce79e"
+  },
+  "targeted_delta_correct_vs_base": -2,
+  "targeted_delta_correct_vs_generic": 2
+}
