@@ -4026,8 +4026,8 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
 - **Resource accounting:** Calibration training totals 5,105.837 seconds, peaks at
   5,754,585,088 reserved VRAM bytes and 1,569,628,160 RSS bytes, and saves 197,050,264 adapter
   bytes. Its sixteen retention evaluations total 2,819.770 seconds and 220,016 input plus
-  106,244 output tokens. The complete ignored Milestone 13D runtime tree contains 316 files and
-  397,013,574 bytes; none is staged or tracked.
+  106,244 output tokens. After final verification, the complete ignored Milestone 13D runtime
+  tree contains 321 files and 397,015,915 bytes; none is staged or tracked.
 - **Launcher note:** After all model work, two adjudication-helper invocations exited before
   importing Foundry: the first omitted source-root injection and the second lost JSON quotes in
   Windows argv transport. Neither created evidence or changed source. The successful replay used
