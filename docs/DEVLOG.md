@@ -4133,3 +4133,38 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
   assessments and aliases were SHA-256-equal; no inference or scientific process was repeated.
 - **Next action:** Publish and synchronize the checkpoint-64 selection. Only then evaluate
   generic and targeted exactly once each on holdout v2 and apply the full frozen retention gate.
+
+### 2026-07-28 - Milestone 13E passed independent holdout v2
+
+- **Published holdout boundary:** Checkpoint-selection commit
+  `8285292d50f908ccbe65a3b8fbbca338180cf8f3` was pushed, synchronized, and clean before
+  the combined holdout-v2 suite was opened. Generic and targeted checkpoint-64 adapters were
+  then evaluated once each, in that order, on the complete frozen 317-item base-correct subset.
+  The suite and subset SHA-256 values are `b8b978ba...e1b18` and `a23b1014...1f420`.
+- **Pre-inference launcher reconciliation:** The first generic command rejected the v2 suite ID
+  in `load_suite` before importing Torch, loading a model or adapter, generating a completion, or
+  creating an output packet. The following custom v2 subset schema would likewise have been
+  rejected by the generic loader. This non-exposure command is not an adapter evaluation. A
+  source-external, ignored runtime entrypoint registered only the exact frozen suite layout and
+  evaluation ID and validated the already-frozen custom subset without transforming its IDs or
+  hash. It then delegated generation, scoring, and assessment to the unchanged evaluators.
+  Runtime-entrypoint and validation SHA-256 values are `67f6d893...c9c8` and
+  `85a0b8aa...42ac`; validation proved the exact child environment and interpreter, no model-stack
+  import, no adapter load, no generation, and no tracked-source edit.
+- **Generic holdout:** Preserved `315/317` overall (`99.3691%`), `78/79` arithmetic
+  (`98.7342%`), `89/89` format (`100%`), and `148/149` instruction (`99.3289%`).
+  The two broken IDs are `klri-arithmetic-002` and `klri-instruction-006`; the maximum
+  instruction-family failure count is one. Backend failures, malformed outputs, prompt echoes,
+  and question generation are all zero. Assessment SHA-256 is `5ac26443...c93a`.
+- **Targeted holdout:** Preserved the same `315/317`, `78/79`, `89/89`, and `148/149`
+  counts with the same two broken IDs and maximum instruction-family count of one. Backend
+  failures, malformed outputs, prompt echoes, and question generation are all zero. Assessment
+  SHA-256 is `6e82b4a4...cccf`.
+- **Gate decision:** Every predeclared overall, arithmetic, format, instruction,
+  failure-family, question-generation, backend, complete-gate, suite-identity, and subset-identity
+  criterion passes in both arms. Holdout-decision SHA-256 is `52137aa5...fa8d`; the tracked file
+  SHA-256 is `b643e40f...e894a`. Exactly two adapter evaluations occurred. GSM1K is now
+  authorized; no GSM1K adapter evaluation or sealed-final access has yet occurred.
+- **Next action:** Publish and synchronize the holdout decision, then evaluate GSM1K for generic
+  and targeted against the frozen Phase-1 base result and apply the strict targeted-greater-than-
+  both comparison.

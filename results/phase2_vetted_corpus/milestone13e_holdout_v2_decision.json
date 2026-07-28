@@ -1,0 +1,151 @@
+{
+  "adapter_evaluation_order": [
+    "generic",
+    "targeted"
+  ],
+  "adapter_evaluations": 2,
+  "arms": {
+    "generic": {
+      "adapter_sha256": "67c6f1dd34c0fa1ddebb354dfe14c43e61c48fdd90c687ba1a9290d2401479cd",
+      "assessment": {
+        "assessment_file_sha256": "d9128c6c1c1badac999cfdffee3e60f689518299735aa9d8827cafca5b3b87a3",
+        "assessment_sha256": "5ac2644352dd120f28eb04fe33ba9b1abdf3396d9e893942e5d968cc233ec93a",
+        "backend_failures": 0,
+        "broken": 2,
+        "broken_item_ids": [
+          "klri-arithmetic-002",
+          "klri-instruction-006"
+        ],
+        "gate_checks": {
+          "arithmetic_preservation_at_least_90_percent": true,
+          "format_preservation_at_least_90_percent": true,
+          "instruction_family_adapter_only_failures_at_most_3": true,
+          "instruction_preservation_at_least_90_percent": true,
+          "overall_preservation_at_least_90_percent": true,
+          "overall_wilson_lower_bound_at_least_85_percent": true,
+          "prompt_echo_at_most_2_percent": true,
+          "zero_backend_failures": true,
+          "zero_question_generation": true
+        },
+        "gate_passed": true,
+        "instruction_family_adapter_only_failures": {
+          "parity_conditioned_label": 1
+        },
+        "maximum_instruction_family_adapter_only_failures": 1,
+        "overall_preservation": 0.9936908517350158,
+        "preserved": 315,
+        "question_generation": 0,
+        "section_preservation": {
+          "arithmetic": {
+            "preserved": 78,
+            "rate": 0.9873417721518988,
+            "total": 79
+          },
+          "format": {
+            "preserved": 89,
+            "rate": 1.0,
+            "total": 89
+          },
+          "instruction": {
+            "preserved": 148,
+            "rate": 0.9932885906040269,
+            "total": 149
+          }
+        },
+        "subset_sha256": "a23b1014d92e9f98b74da3b29913a430bdaebf8e07a16b31b4c3dcc831f1f420",
+        "suite_sha256": "b8b978ba69b501187b984d4631e8d7f5a41f39efeb292cb391a845c3e61e1b18",
+        "total": 317
+      },
+      "criteria": {
+        "arithmetic_at_least_90_percent": true,
+        "backend_failures_zero": true,
+        "complete_frozen_retention_gate": true,
+        "exact_holdout_v2_subset": true,
+        "exact_holdout_v2_suite": true,
+        "failure_family_at_most_3": true,
+        "format_at_least_90_percent": true,
+        "instruction_at_least_90_percent": true,
+        "overall_at_least_90_percent": true,
+        "question_generation_zero": true
+      },
+      "passed": true
+    },
+    "targeted": {
+      "adapter_sha256": "4e195ff2cb32c4faa6858915b95507862c911bb2eb853b060717416d825df91d",
+      "assessment": {
+        "assessment_file_sha256": "c59ae416d9710b9b4c4d23b7038c2b00be7afe5aa5648616518a2aabcc50b681",
+        "assessment_sha256": "6e82b4a4272f8bacffe5fb78eaa58a0551451091f17455ffafe8d33fc9c3cccf",
+        "backend_failures": 0,
+        "broken": 2,
+        "broken_item_ids": [
+          "klri-arithmetic-002",
+          "klri-instruction-006"
+        ],
+        "gate_checks": {
+          "arithmetic_preservation_at_least_90_percent": true,
+          "format_preservation_at_least_90_percent": true,
+          "instruction_family_adapter_only_failures_at_most_3": true,
+          "instruction_preservation_at_least_90_percent": true,
+          "overall_preservation_at_least_90_percent": true,
+          "overall_wilson_lower_bound_at_least_85_percent": true,
+          "prompt_echo_at_most_2_percent": true,
+          "zero_backend_failures": true,
+          "zero_question_generation": true
+        },
+        "gate_passed": true,
+        "instruction_family_adapter_only_failures": {
+          "parity_conditioned_label": 1
+        },
+        "maximum_instruction_family_adapter_only_failures": 1,
+        "overall_preservation": 0.9936908517350158,
+        "preserved": 315,
+        "question_generation": 0,
+        "section_preservation": {
+          "arithmetic": {
+            "preserved": 78,
+            "rate": 0.9873417721518988,
+            "total": 79
+          },
+          "format": {
+            "preserved": 89,
+            "rate": 1.0,
+            "total": 89
+          },
+          "instruction": {
+            "preserved": 148,
+            "rate": 0.9932885906040269,
+            "total": 149
+          }
+        },
+        "subset_sha256": "a23b1014d92e9f98b74da3b29913a430bdaebf8e07a16b31b4c3dcc831f1f420",
+        "suite_sha256": "b8b978ba69b501187b984d4631e8d7f5a41f39efeb292cb391a845c3e61e1b18",
+        "total": 317
+      },
+      "criteria": {
+        "arithmetic_at_least_90_percent": true,
+        "backend_failures_zero": true,
+        "complete_frozen_retention_gate": true,
+        "exact_holdout_v2_subset": true,
+        "exact_holdout_v2_suite": true,
+        "failure_family_at_most_3": true,
+        "format_at_least_90_percent": true,
+        "instruction_at_least_90_percent": true,
+        "overall_at_least_90_percent": true,
+        "question_generation_zero": true
+      },
+      "passed": true
+    }
+  },
+  "both_arms_pass": true,
+  "contract_sha256": "e23c1f5d1262bc31445d0af50d6efa157a06da77828b6b8849d964c38f818b05",
+  "decision": "holdout_v2_passed_gsm1k_authorized",
+  "decision_id": "foundry-milestone13e-holdout-v2-decision-v1",
+  "full_selection_sha256": "499bcbe654a844da643709dbdb88215dadd13e9b920b27de2a875afc37a5b701",
+  "gsm1k_adapter_evaluations": 0,
+  "gsm1k_authorized": true,
+  "holdout_decision_sha256": "52137aa5354778899cde0db286ffed868d63600e7d7dbf68ff4185e2f857fa8d",
+  "schema_version": 1,
+  "sealed_final_accessed": false,
+  "selected_checkpoint": 64,
+  "selected_scope": "L3"
+}
