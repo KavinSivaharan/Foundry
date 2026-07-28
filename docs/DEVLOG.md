@@ -4105,3 +4105,31 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
   is authorized. Holdout v2 remains adapter-unexposed and GSM1K remains unused.
 - **Next action:** Publish and synchronize the L3 selection, then run the two fresh 64-step
   training arms and select the latest common development-passing checkpoint.
+
+### 2026-07-28 - Milestone 13E selected full checkpoint 64
+
+- **Published training boundary:** L3 selection commit
+  `e7422e0bc6d072eddf95e966a0b91e899fbf0a46` was pushed and synchronized before full
+  training. Generic and targeted each completed exactly 64 optimizer steps and 64,000 assistant
+  tokens from fresh bases under the unchanged frozen environment and top-14-layer scope. Both
+  retained the exact 112-tensor/1,089,536-parameter inventory, unchanged base fingerprints,
+  CUDA-only placement, and successful offline reload.
+- **Validation and diagnostics:** Generic validation CE at checkpoints 16/32/64 is
+  `2.0549072`, `1.9841063`, and `1.9382972`; targeted is `2.2490615`, `2.1788913`, and
+  `2.1338994`. Full-prefix diagnostic replay KL is `0.0006913365` generic and `0.0006843212`
+  targeted. These diagnostics did not alter training or retention selection.
+- **Latest-checkpoint search:** Checkpoint 64 was evaluated first and passed in both arms, so
+  checkpoints 32 and 16 were not retention-evaluated. Generic preserves `184/187`
+  adjudication and `208/210` anchor items. Targeted preserves `183/187` and `205/210`.
+  The lowest category rate is targeted adjudication format at `45/48` (`93.75%`); all
+  arithmetic, format, and instruction rates exceed 90%, every complete gate passes, and backend,
+  question-generation, and instruction-family failure counts are zero.
+- **Selection:** Checkpoint 64 is the latest common development-passing checkpoint. Generic and
+  targeted adapter SHA-256 values are `67c6f1dd...1479cd` and `4e195ff2...df91d`.
+  Full-selection SHA-256 is `499bcbe6...5b701`. Holdout v2 adapter evaluations and GSM1K
+  adapter evaluations remain zero; sealed-final remains untouched.
+- **Operational layout:** As in calibration, four byte-identical ignored assessment aliases
+  bridge the immutable campaign directory layout to the immutable aggregator path. All source
+  assessments and aliases were SHA-256-equal; no inference or scientific process was repeated.
+- **Next action:** Publish and synchronize the checkpoint-64 selection. Only then evaluate
+  generic and targeted exactly once each on holdout v2 and apply the full frozen retention gate.

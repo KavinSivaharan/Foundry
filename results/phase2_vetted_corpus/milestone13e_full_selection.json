@@ -1,0 +1,268 @@
+{
+  "calibration_summary_sha256": "f1e31583196389e7daf0a310615bec55041f4d3558e1825b984db194df8149e9",
+  "checkpoint_order": [
+    64,
+    32,
+    16
+  ],
+  "checkpoint_results": [
+    {
+      "by_arm": {
+        "generic": {
+          "adapter_sha256": "67c6f1dd34c0fa1ddebb354dfe14c43e61c48fdd90c687ba1a9290d2401479cd",
+          "development_retention": {
+            "adjudication": {
+              "assessment_file_sha256": "9545304a02d9adeb07a96739b95590d61c01698704c4503ca2339b537655b401",
+              "assessment_sha256": "b3426f0723c4a6dbc3660a3c33bcd4cd52b27d733ace4cc9b5c5768fc02b51dd",
+              "backend_failures": 0,
+              "broken": 3,
+              "broken_item_ids": [
+                "adjudication-arithmetic-009",
+                "adjudication-format-057",
+                "adjudication-format-067"
+              ],
+              "gate_checks": {
+                "arithmetic_preservation_at_least_90_percent": true,
+                "format_preservation_at_least_90_percent": true,
+                "instruction_family_adapter_only_failures_at_most_3": true,
+                "instruction_preservation_at_least_90_percent": true,
+                "overall_preservation_at_least_90_percent": true,
+                "overall_wilson_lower_bound_at_least_85_percent": true,
+                "prompt_echo_at_most_2_percent": true,
+                "zero_backend_failures": true,
+                "zero_question_generation": true
+              },
+              "gate_passed": true,
+              "instruction_family_adapter_only_failures": {},
+              "maximum_instruction_family_adapter_only_failures": 0,
+              "overall_preservation": 0.983957219251337,
+              "preserved": 184,
+              "question_generation": 0,
+              "section_preservation": {
+                "arithmetic": {
+                  "preserved": 83,
+                  "rate": 0.9880952380952381,
+                  "total": 84
+                },
+                "format": {
+                  "preserved": 46,
+                  "rate": 0.9583333333333334,
+                  "total": 48
+                },
+                "instruction": {
+                  "preserved": 55,
+                  "rate": 1.0,
+                  "total": 55
+                }
+              },
+              "subset_sha256": "c76df74b911b96ca43c2663a123e41347fd544bf6644f15522ccaad7b77099e1",
+              "suite_sha256": "5caf23be79fa01151af6f7db8d45c2b85bfe24b03a29589e482d51731c8358af",
+              "total": 187
+            },
+            "anchor": {
+              "assessment_file_sha256": "0f10dbb09a65139e6bfe90a5e19462170e550dd0fd6136d5a060c0e2119da588",
+              "assessment_sha256": "735a8ec8f602e71137b2e5e3d27314e001a5a504dd7d141f4f4cc549baa71560",
+              "backend_failures": 0,
+              "broken": 2,
+              "broken_item_ids": [
+                "anchor-holdout-arithmetic-059",
+                "anchor-holdout-format-063"
+              ],
+              "gate_checks": {
+                "arithmetic_preservation_at_least_90_percent": true,
+                "format_preservation_at_least_90_percent": true,
+                "instruction_family_adapter_only_failures_at_most_3": true,
+                "instruction_preservation_at_least_90_percent": true,
+                "overall_preservation_at_least_90_percent": true,
+                "overall_wilson_lower_bound_at_least_85_percent": true,
+                "prompt_echo_at_most_2_percent": true,
+                "zero_backend_failures": true,
+                "zero_question_generation": true
+              },
+              "gate_passed": true,
+              "instruction_family_adapter_only_failures": {},
+              "maximum_instruction_family_adapter_only_failures": 0,
+              "overall_preservation": 0.9904761904761905,
+              "preserved": 208,
+              "question_generation": 0,
+              "section_preservation": {
+                "arithmetic": {
+                  "preserved": 95,
+                  "rate": 0.9895833333333334,
+                  "total": 96
+                },
+                "format": {
+                  "preserved": 59,
+                  "rate": 0.9833333333333333,
+                  "total": 60
+                },
+                "instruction": {
+                  "preserved": 54,
+                  "rate": 1.0,
+                  "total": 54
+                }
+              },
+              "subset_sha256": "36be91d08f2ab0e05c491094c53965d1aa4f989a730347768877a2548a62c7a9",
+              "suite_sha256": "bff18b434a284d848387262dde201601278e5c8b573937b3486bed2bf925696e",
+              "total": 210
+            }
+          },
+          "passes": true
+        },
+        "targeted": {
+          "adapter_sha256": "4e195ff2cb32c4faa6858915b95507862c911bb2eb853b060717416d825df91d",
+          "development_retention": {
+            "adjudication": {
+              "assessment_file_sha256": "0a06e1560dc99adad60268d7483ac47cd53bd8e756a0b477aa9dfdbc63fefec6",
+              "assessment_sha256": "d42db615c003ef57720439f986993c03c3a1cbaf133d1dcdb33dfc84adcbcdcb",
+              "backend_failures": 0,
+              "broken": 4,
+              "broken_item_ids": [
+                "adjudication-arithmetic-009",
+                "adjudication-format-057",
+                "adjudication-format-067",
+                "adjudication-format-098"
+              ],
+              "gate_checks": {
+                "arithmetic_preservation_at_least_90_percent": true,
+                "format_preservation_at_least_90_percent": true,
+                "instruction_family_adapter_only_failures_at_most_3": true,
+                "instruction_preservation_at_least_90_percent": true,
+                "overall_preservation_at_least_90_percent": true,
+                "overall_wilson_lower_bound_at_least_85_percent": true,
+                "prompt_echo_at_most_2_percent": true,
+                "zero_backend_failures": true,
+                "zero_question_generation": true
+              },
+              "gate_passed": true,
+              "instruction_family_adapter_only_failures": {},
+              "maximum_instruction_family_adapter_only_failures": 0,
+              "overall_preservation": 0.9786096256684492,
+              "preserved": 183,
+              "question_generation": 0,
+              "section_preservation": {
+                "arithmetic": {
+                  "preserved": 83,
+                  "rate": 0.9880952380952381,
+                  "total": 84
+                },
+                "format": {
+                  "preserved": 45,
+                  "rate": 0.9375,
+                  "total": 48
+                },
+                "instruction": {
+                  "preserved": 55,
+                  "rate": 1.0,
+                  "total": 55
+                }
+              },
+              "subset_sha256": "c76df74b911b96ca43c2663a123e41347fd544bf6644f15522ccaad7b77099e1",
+              "suite_sha256": "5caf23be79fa01151af6f7db8d45c2b85bfe24b03a29589e482d51731c8358af",
+              "total": 187
+            },
+            "anchor": {
+              "assessment_file_sha256": "bbfa79c17f3ab8f23661708068b3661cc68d66a4b5ae0d566d029d1f3d7cb58c",
+              "assessment_sha256": "6bf440ecff8b7a3cbf7ae70a4b3c9ae4c3c916fec659eb67b389a0d4d8ba29cd",
+              "backend_failures": 0,
+              "broken": 5,
+              "broken_item_ids": [
+                "anchor-holdout-arithmetic-052",
+                "anchor-holdout-arithmetic-059",
+                "anchor-holdout-arithmetic-076",
+                "anchor-holdout-format-035",
+                "anchor-holdout-format-063"
+              ],
+              "gate_checks": {
+                "arithmetic_preservation_at_least_90_percent": true,
+                "format_preservation_at_least_90_percent": true,
+                "instruction_family_adapter_only_failures_at_most_3": true,
+                "instruction_preservation_at_least_90_percent": true,
+                "overall_preservation_at_least_90_percent": true,
+                "overall_wilson_lower_bound_at_least_85_percent": true,
+                "prompt_echo_at_most_2_percent": true,
+                "zero_backend_failures": true,
+                "zero_question_generation": true
+              },
+              "gate_passed": true,
+              "instruction_family_adapter_only_failures": {},
+              "maximum_instruction_family_adapter_only_failures": 0,
+              "overall_preservation": 0.9761904761904762,
+              "preserved": 205,
+              "question_generation": 0,
+              "section_preservation": {
+                "arithmetic": {
+                  "preserved": 93,
+                  "rate": 0.96875,
+                  "total": 96
+                },
+                "format": {
+                  "preserved": 58,
+                  "rate": 0.9666666666666667,
+                  "total": 60
+                },
+                "instruction": {
+                  "preserved": 54,
+                  "rate": 1.0,
+                  "total": 54
+                }
+              },
+              "subset_sha256": "36be91d08f2ab0e05c491094c53965d1aa4f989a730347768877a2548a62c7a9",
+              "suite_sha256": "bff18b434a284d848387262dde201601278e5c8b573937b3486bed2bf925696e",
+              "total": 210
+            }
+          },
+          "passes": true
+        }
+      },
+      "checkpoint": 64,
+      "common_pass": true
+    }
+  ],
+  "contract_sha256": "e23c1f5d1262bc31445d0af50d6efa157a06da77828b6b8849d964c38f818b05",
+  "decision": "latest_common_development_passing_checkpoint_selected",
+  "evaluated_checkpoints": [
+    64
+  ],
+  "full_selection_sha256": "499bcbe654a844da643709dbdb88215dadd13e9b920b27de2a875afc37a5b701",
+  "gsm1k_adapter_evaluations": 0,
+  "holdout_v2_adapter_evaluations": 0,
+  "holdout_v2_authorized": true,
+  "schema_version": 1,
+  "sealed_final_accessed": false,
+  "selected_adapter_sha256_by_arm": {
+    "generic": "67c6f1dd34c0fa1ddebb354dfe14c43e61c48fdd90c687ba1a9290d2401479cd",
+    "targeted": "4e195ff2cb32c4faa6858915b95507862c911bb2eb853b060717416d825df91d"
+  },
+  "selected_checkpoint": 64,
+  "selected_scope": "L3",
+  "selection_id": "foundry-milestone13e-full-development-selection-v1",
+  "training_runs": {
+    "generic": {
+      "checkpoint_validation_ce": {
+        "16": 2.0549071753434633,
+        "32": 1.9841062585009803,
+        "64": 1.938297227537007
+      },
+      "final_replay_kl_diagnostic": 0.0006913364951142782,
+      "loss_bearing_tokens": 64000,
+      "optimizer_steps": 64,
+      "runtime_seconds": 1068.2373861999995,
+      "training_file_sha256": "324ee789086461be6a9f5b0f4e5cbee37c6bc15ef21f846a2b78595dd7e14e3f",
+      "training_result_sha256": "ce4814254eea363bf30e79e54268654252605555f7bade73613294f3a83e9843"
+    },
+    "targeted": {
+      "checkpoint_validation_ce": {
+        "16": 2.249061501451901,
+        "32": 2.178891295833247,
+        "64": 2.1338993519544602
+      },
+      "final_replay_kl_diagnostic": 0.0006843212073562342,
+      "loss_bearing_tokens": 64000,
+      "optimizer_steps": 64,
+      "runtime_seconds": 1056.181775,
+      "training_file_sha256": "3a31f0fed286f57d4d4bfcd223db2d2339cba6e35db5b1f03b8e6627544a8e12",
+      "training_result_sha256": "93de5877b246ece463883ba17cfb69d0ae396a4d058f87c2aa6af74e678e755b"
+    }
+  }
+}
