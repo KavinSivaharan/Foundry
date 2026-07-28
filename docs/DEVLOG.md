@@ -4046,3 +4046,30 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
 - **Next action:** Publish and push `analysis: stop gradient-calibrated KL adaptation`, then make
   a project-level selection between layer-restricted LoRA and multi-objective
   gradient-balanced SFT.
+
+### 2026-07-28 - Milestone 13E froze the layer-restricted LoRA experiment
+
+- **Starting boundary:** Clean synchronized `main` at
+  `4b3421e4312c95c564947e1886fb8aab151d12ad`. The pinned Qwen revision, vetted dataset,
+  V1 rank-8 LoRA recipe, generic and targeted 25%-replay schedules, seed 20260720, optimizer,
+  learning rate, scheduler, assistant-only masking, quantization, and exact Windows child
+  environment remain unchanged. No model process, optimizer step, holdout-v2 adapter evaluation,
+  GSM1K adapter evaluation, or sealed-final access occurred before this freeze.
+- **Predeclared ladder:** L1 adapts layers 24-27, L2 adapts layers 20-27, and L3 adapts layers
+  14-27 of the 28-layer model. Their expected LoRA inventories are respectively 32/311,296,
+  64/622,592, and 112/1,089,536 trainable tensors/parameters across q/k/v/o projections. The
+  largest common passing scope must be selected; the ladder cannot be changed after execution
+  starts.
+- **Execution contract:** Each of the six ordered calibration cells runs exactly 16 optimizer
+  steps and 16,000 assistant tokens from a fresh base. Training remains replay-plus-vetted
+  assistant-only cross-entropy; replay token KL is measured only after training as a diagnostic.
+  Both existing development instruments and zero backend failures determine eligibility.
+  Conditional full training is 64 steps/64,000 tokens per arm, followed by descending
+  64/32/16 latest-common checkpoint selection.
+- **Firewalls:** The combined holdout-v2 suite remains adapter-unexposed until one full common
+  checkpoint is frozen and published. It may then be evaluated exactly once per arm. GSM1K
+  remains prohibited unless both arms pass the complete holdout gate; sealed-final remains
+  prohibited throughout.
+- **Next action:** Verify the implementation and content-free contract, publish and synchronize
+  the execution boundary, then launch the six calibration cells sequentially under the exact
+  frozen child environment.

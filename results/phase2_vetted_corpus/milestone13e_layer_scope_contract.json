@@ -1,0 +1,187 @@
+{
+  "arms": [
+    "generic",
+    "targeted"
+  ],
+  "authorization_starting_commit": "4b3421e4312c95c564947e1886fb8aab151d12ad",
+  "base_model": {
+    "model_id": "Qwen/Qwen2.5-1.5B-Instruct",
+    "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306"
+  },
+  "calibration": {
+    "eligibility": [
+      "all_adjudication_retention_thresholds_pass",
+      "all_anchor_retention_thresholds_pass",
+      "zero_backend_failures"
+    ],
+    "loss_bearing_tokens_per_run": 16000,
+    "optimizer_steps_per_run": 16,
+    "recorded_metrics": [
+      "validation_ce",
+      "adjudication_development_retention",
+      "anchor_development_retention",
+      "failure_family_counts",
+      "diagnostic_only_replay_kl"
+    ],
+    "run_count": 6,
+    "total_loss_bearing_tokens": 96000,
+    "total_optimizer_steps": 96
+  },
+  "calibration_order": [
+    "L1/generic",
+    "L1/targeted",
+    "L2/generic",
+    "L2/targeted",
+    "L3/generic",
+    "L3/targeted"
+  ],
+  "combined_child_environment_sha256": "1d402ec0cb661adeb50a3d3bd9510895f3f9068cbb393fb381565a5670de995b",
+  "contract_id": "foundry-milestone13e-layer-restricted-lora-v1",
+  "contract_sha256": "e23c1f5d1262bc31445d0af50d6efa157a06da77828b6b8849d964c38f818b05",
+  "dataset_sha256": "ee18f7f9bd7625469d83e1c1df8dad4db0ecf8b3d8c870a07c60f2808e11dc31",
+  "environment_evidence_sha256": "9244dd7aa9d4d5138ef01f1b4fb20b911fc390e034e5704ded4ba8fcd967244b",
+  "full_training": {
+    "checkpoint_order": [
+      64,
+      32,
+      16
+    ],
+    "checkpoint_selection_rule": "latest_common_development_passing_checkpoint",
+    "loss_bearing_tokens_per_arm": 64000,
+    "optimizer_steps_per_arm": 64
+  },
+  "gsm1k": {
+    "authorized_only_if_both_holdout_v2_arms_pass": true,
+    "base_result_source": "frozen_814_example_base_evaluation",
+    "success_rule": "targeted_correct_greater_than_generic_and_base"
+  },
+  "holdout_v2": {
+    "adapter_evaluations_per_arm": 1,
+    "adapter_unexposed_before_final_checkpoint_selection": true,
+    "gate": {
+      "arithmetic_minimum": 0.9,
+      "backend_failures": 0,
+      "format_minimum": 0.9,
+      "instruction_minimum": 0.9,
+      "maximum_instruction_family_failures": 3,
+      "overall_minimum": 0.9,
+      "question_generation": 0
+    },
+    "subset_sha256": "a23b1014d92e9f98b74da3b29913a430bdaebf8e07a16b31b4c3dcc831f1f420",
+    "suite_sha256": "b8b978ba69b501187b984d4631e8d7f5a41f39efeb292cb391a845c3e61e1b18"
+  },
+  "layer_ladder": [
+    {
+      "adapted_module_count": 16,
+      "definition": "top_4_layers",
+      "label": "L1",
+      "layer_indices": [
+        24,
+        25,
+        26,
+        27
+      ],
+      "top_layer_count": 4,
+      "trainable_parameter_count": 311296,
+      "trainable_tensor_count": 32
+    },
+    {
+      "adapted_module_count": 32,
+      "definition": "top_8_layers",
+      "label": "L2",
+      "layer_indices": [
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27
+      ],
+      "top_layer_count": 8,
+      "trainable_parameter_count": 622592,
+      "trainable_tensor_count": 64
+    },
+    {
+      "adapted_module_count": 56,
+      "definition": "top_14_layers",
+      "label": "L3",
+      "layer_indices": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27
+      ],
+      "top_layer_count": 14,
+      "trainable_parameter_count": 1089536,
+      "trainable_tensor_count": 112
+    }
+  ],
+  "pre_contract_counts": {
+    "gsm1k_adapter_evaluations": 0,
+    "holdout_v2_adapter_evaluations": 0,
+    "model_processes": 0,
+    "optimizer_steps": 0,
+    "sealed_final_accesses": 0
+  },
+  "schedules": {
+    "generic": "4bc00d29d5cf308c12c77111d7943567521cc533b13440dc06c3d8b39c74e9df",
+    "targeted": "88c5378cac7efe927b29d3f421d97777cd6d917187c71c8388b60bbe7b57e259"
+  },
+  "schema_version": 1,
+  "seed": 20260720,
+  "selection_order": [
+    "L3",
+    "L2",
+    "L1"
+  ],
+  "selection_rule": "largest_scope_where_both_arms_pass_all_development_gates",
+  "sole_scientific_intervention": "layers_to_transform",
+  "source_file_sha256": {
+    "src/foundry/phase2/layer_restricted.py": "6b2f4b9669aa7fa0751f9d989b937733bf4e20c692c4a1f11657e6b8cd79eda1",
+    "src/foundry/phase2/layer_restricted_campaign.py": "52b499031dec9c6a1573b142c2a09fa8a17299c5e74c2f659fce9f91cbee62ed",
+    "src/foundry/phase2/vetted_qlora_layer_restricted.py": "f37ff00b25ed0a72a98d2963c5c8f82e509918a1328a77486a82691a39e93247"
+  },
+  "unchanged_fields": [
+    "dataset",
+    "generic_and_targeted_schedules",
+    "replay_ratio",
+    "seed",
+    "optimizer",
+    "learning_rate",
+    "weight_decay",
+    "warmup_steps",
+    "scheduler_horizon",
+    "gradient_clipping",
+    "assistant_only_masking",
+    "quantization",
+    "gradient_checkpointing",
+    "lora_rank_alpha_dropout_and_projection_targets"
+  ],
+  "v1_lora_configuration": {
+    "alpha": 16,
+    "bias": "none",
+    "dropout": 0.05,
+    "rank": 8,
+    "recipe_decision_sha256": "b03dfc9d6f66843f2a83e9b4ff5b82e133fb9c6a4a27ab1783d64991a0f7d118",
+    "target_modules_in_construction_order": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj"
+    ],
+    "total_transformer_layers": 28,
+    "v1_lora_configuration_sha256": "3bc9fbcdb44dc53b12149d3832153a7fce90d0c7839868b5ec6c3b10939e7862"
+  }
+}
