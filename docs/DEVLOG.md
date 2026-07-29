@@ -4732,6 +4732,43 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
   `b2e2819b58706c85848965fdcd87bbceaab0c5c783c2c314d5b8883e441c4549`.
   Four clean Windows text paths have distinct execution/blob hashes, and both representations
   are individually frozen.
-- **Next action:** Complete repository-wide pre-model verification, publish
-  `fix: version L3 GRPO source binding`, freeze that synchronized commit and tree in the two
-  manifests, and only then run the four ordered no-retry compatibility processes.
+- **Clean child preflight:** From publication commit
+  `2c0ab0daa5ecc2003b69db091328460f099bd852`, a fresh training-environment process
+  verified all layered manifests, 60 current source rows, fix commit/tree, 29 loaded Foundry
+  modules, import root, environment, command template, and concrete generic-run-1 argv before
+  any model-stack import. Binding evidence SHA-256 was
+  `d2c723e616277b25b10ef3f491cc2dd6b889b4991982f920949306a6c3b6fc62`.
+- **First generic step:** Shared replay group `l3-grpo-generic-g004` generated four
+  completions / 12 valid completion tokens. Its reward variance and all advantages were zero.
+  Optimizer call 1 and scheduler advance 1 completed at effective LR `0.0`; Trainer global
+  step advanced from 0 to 1; the classification was `expected_zero_advantage_noop`; and policy,
+  reference, and base parameter deltas were all zero.
+- **Positive-LR blocker:** Task group `l3-grpo-generic-g005` generated four completions /
+  343 valid completion tokens at expected effective LR `1e-6`. Before backward, the exact stock
+  TRL advantage vector differed from the frozen reward projection in three of four components
+  by one float32 ULP (maximum absolute delta `5.960464477539063e-08`). The runtime raised
+  `stock TRL advantages differ from the frozen reward projection`. No positive-LR optimizer
+  call, scheduler advance, policy gradient, or policy update occurred.
+- **Immediate no-retry stop:** The generic duplicate and both targeted processes did not run.
+  Counted training, development retention, holdout v2, GSM1K, and sealed-final evaluation did
+  not run. Source, schedules, rewards, references, environment, and scientific settings were
+  not edited after the model-side failure.
+- **Evidence and resources:** One model process generated two groups / eight completions /
+  355 valid completion tokens, completed one optimizer call and one scheduler advance, and made
+  zero policy/reference/base updates. The ignored compatibility tree contains three files /
+  2,736,664 bytes. Partial-evidence SHA-256 is
+  `c043de7b4cd5222b10cef7266367de982257ccff16734f22c599406cef48144a`;
+  content-free blocker SHA-256 is
+  `bd59d40e0cb775bb4c3f0b751e6ec0f7c25a2a91b0a4fa87a74163691d57e797`.
+  The failed process occupied about 25.3 seconds. Peak VRAM/RAM were not published before the
+  validation exception; no adapter, checkpoint, raw summary, qualification envelope, or
+  trainer-state file was written.
+- **Final verification:** Ruff format-check covers 385 files, Ruff lint is clean, strict Mypy
+  passes all 215 source files, all 147 L3 GRPO tests pass, and all 1,136 repository tests pass
+  in 143.80 seconds. Both authorized environments pass dependency integrity. The blocker
+  self-hash, partial-evidence self-hash/file hash, ignored raw boundary, candidate-only secret
+  and prohibited-artifact scans, sealed-path status, `git diff --check`, and source-versus-fix
+  binding all pass.
+- **Next action:** Publish and synchronize
+  `analysis: stop source-bound L3 GRPO adaptation`, then stop for project-level GRPO
+  interpretation. No further source-binding retry or scientific-setting patch is authorized.
