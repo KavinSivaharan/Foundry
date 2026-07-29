@@ -1,0 +1,98 @@
+{
+  "advantage_equivalence_contract_sha256": "057af22d9784ef4a2bab1f8dc37687942a28b7d124cf95c287a3b2338867efbd",
+  "audit_evidence": {
+    "generic": {
+      "raw_audit_sha256": "625477ff41c20d0639f84bdcabddfc187b10a81be38d5acd7f75aa6dc40ad863",
+      "raw_evidence_file_sha256": "fd878a40342df8b7b1289a166f02d25883e3cb8d432f866e902e255fa1cc4105",
+      "runtime_summary_file_sha256": "0f967accaa36350c06a8865c609db5620a9ad28eb33337f700d062f5998ee924",
+      "runtime_summary_sha256": "09ef88c0ead7aa78443e1bf070ca546012b09b9c54989c289db09f68990b3239"
+    },
+    "targeted": {
+      "raw_audit_sha256": "e8ecccf1bb3b343adacf46597d8f6a98f224bc50f8b9fc7152e41ef808c36d72",
+      "raw_evidence_file_sha256": "0a1eac9d5ddac1df26a5f358df76b4cbc22f2334bf2d4374b57c1b2b53e66bf5",
+      "runtime_summary_file_sha256": "f5e322036a91776028a17280cacba9fe90086537582b9663142f8f3d3ab997a2",
+      "runtime_summary_sha256": "697a85d683b0b7756a9d820e952697f5f7e5c8009acf552d299fed8dfd0d85b1"
+    }
+  },
+  "compatibility_completions_per_run": 8,
+  "compatibility_groups_per_run": 2,
+  "compatibility_optimizer_steps_per_run": 2,
+  "compatibility_runs_per_arm": 2,
+  "contract_id": "foundry-l3-grpo-signal-qualification-v1",
+  "corrected_signal_audit_contract_sha256": "21188671b298fb52974af62ab5dd0590d52eedc2f8bc4fc77dc3ca3b355ca103",
+  "counted_training_authorized": false,
+  "family_aggregation_contract_sha256": "806c5f437366adbbf353eeefb0fda126a8d00b6c4ea8e76c41af83dbf3de04ed",
+  "gradient_requirements": {
+    "base_gradient_count": 0,
+    "connected_policy_objective": true,
+    "duplicate_exact_evidence": true,
+    "finite_nonzero_policy_lora_gradient": true,
+    "nonempty_completion_masks": true,
+    "nonzero_canonical_advantage": true,
+    "nonzero_reward_variance": true,
+    "optimizer_construction": false,
+    "optimizer_steps": 0,
+    "reference_gradient_count": 0
+  },
+  "gsm1k_authorized": false,
+  "holdout_v2_authorized": false,
+  "implementation_sha256": "1485669c9df4053e5f47baf07ac981c902966ed490346a3081ed1778213cf002",
+  "prior_diagnostic_manifest_sha256": "d7b5945e0df9206b84bb8e6ab355a13112822fdba6e68a1933798449f2ef5b95",
+  "process_environment": {
+    "CUBLAS_WORKSPACE_CONFIG": ":4096:8",
+    "HF_HUB_OFFLINE": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONHASHSEED": "20260720",
+    "TOKENIZERS_PARALLELISM": "false",
+    "TRANSFORMERS_OFFLINE": "1"
+  },
+  "projection_prefix_policy": "replay_all_frozen_schedule_positions_through_selected_task",
+  "projection_runs_per_arm": 2,
+  "qualification_contract_sha256": "0ad3c6fc584b1dcc0221e6c29179f1f53c26c754297b6534222bf750e51a23bc",
+  "quantitative_signal_density_sha256": "2352b69ab16ba6fc9250332f179b824f5eb52b56126a9fbd67abd3f8155e435d",
+  "quantitative_viability_passed": true,
+  "retention_authorized": false,
+  "schema_version": 1,
+  "sealed_content_use": 0,
+  "selected_candidates": {
+    "generic": {
+      "fresh_process_replay_status": "pending",
+      "gradient_projection_status": "pending",
+      "replay_group_id": "l3-grpo-generic-g004",
+      "replay_group_record_sha256": "592f3e8cf97da79a251874295549af1bcee20c2675c9a1449e43841ded4365b3",
+      "replay_prompt_sha256": "0a9209d0c04326e6a405bc41b4f6c974009dca65f21891beebc2f77d4faa2044",
+      "replay_schedule_position": 4,
+      "selection_rule": "earliest_schedule_position_with_nonzero_reward_variance_then_lowest_prompt_hash",
+      "task_family": "multi_step_bookkeeping_or_omission",
+      "task_group_id": "l3-grpo-generic-g005",
+      "task_group_record_sha256": "14cd697162b9ace4809d715901821afd7120bfc9f3fdf86483a8d9d9785cc3f3",
+      "task_nonzero_advantage_count": 4,
+      "task_prompt_sha256": "45a695f6371a613f4ce616dcda0f5c0040eb1cba91e81720e38a5d5a865ec002",
+      "task_reward_variance": 0.4592187702655792,
+      "task_schedule_position": 5,
+      "task_valid_completion_token_count": 211
+    },
+    "targeted": {
+      "fresh_process_replay_status": "pending",
+      "gradient_projection_status": "pending",
+      "replay_group_id": "l3-grpo-targeted-g004",
+      "replay_group_record_sha256": "3a99bfd2603fa061abf59b9d842e044e2cfb4d502dc5435bed413899889363a4",
+      "replay_prompt_sha256": "0a9209d0c04326e6a405bc41b4f6c974009dca65f21891beebc2f77d4faa2044",
+      "replay_schedule_position": 4,
+      "selection_rule": "earliest_schedule_position_with_nonzero_reward_variance_then_lowest_prompt_hash",
+      "task_family": "multi_step_bookkeeping_or_omission",
+      "task_group_id": "l3-grpo-targeted-g001",
+      "task_group_record_sha256": "7128ecc43cdd6128e24c948823e2d9e1da249356534f413decd8c73f63c01ce3",
+      "task_nonzero_advantage_count": 4,
+      "task_prompt_sha256": "18b524f0cf8d79fb38e5631a516db4884ecdbeefbae00e23aafed8367fd50029",
+      "task_reward_variance": 0.2006250023841858,
+      "task_schedule_position": 1,
+      "task_valid_completion_token_count": 612
+    }
+  },
+  "source_parent_commit": "bdffaf81180098736bff116074ede67f8fa43d89",
+  "starting_adapters": {
+    "generic": "67c6f1dd34c0fa1ddebb354dfe14c43e61c48fdd90c687ba1a9290d2401479cd",
+    "targeted": "4e195ff2cb32c4faa6858915b95507862c911bb2eb853b060717416d825df91d"
+  }
+}

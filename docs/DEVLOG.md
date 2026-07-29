@@ -4440,3 +4440,78 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
   directly and passed with the counts above. No sealed path was opened.
 - **Next action:** Commit exactly `fix: align L3 GRPO audit with CUDA advantages`, push and
   synchronize it, and only then begin the fresh generic audit from schedule position 1.
+
+### 2026-07-29 - Milestone 14B-R1 completed the corrected two-arm signal audit
+
+- **Published correction boundary:** Commit `bdffaf81180098736bff116074ede67f8fa43d89`
+  was pushed and verified clean and synchronized before model loading. Generic then targeted ran
+  once each under the exact 37-field child environment. No source changed while either process
+  ran.
+- **Complete fresh evidence:** Each arm produced exactly 32 groups and 128 completions, for 64
+  groups and 256 completions overall. Generic raw/summary file SHA-256 values are
+  `fd878a40...c4105` and `09ef88c0...b3239`; targeted values are
+  `0a1eac9d...66bf5` and `697a85d6...d85b1`. All stock CUDA advantages reconstructed, the
+  maximum CPU/CUDA diagnostic difference was one float32 epsilon, and backend failures,
+  reward-contract inconsistencies, optimizer constructions, backward calls, scheduler
+  constructions, adapter mutations, and adapter saves were zero.
+- **Prior-evidence continuity:** Generic positions 1 through 12 reproduced every previously
+  persisted generation, completion, reward, scorer, and token-mask field exactly. Position 13
+  explicitly records that the interrupted predecessor had no persisted group record and lists
+  all 17 unavailable comparison fields. Targeted continuity is not applicable. No missing prior
+  value was fabricated.
+- **Signal density:** Generic has 15 informative task groups: 5/8 in each canonical bookkeeping,
+  rate/ratio, and discrete family. Targeted has 21: 13/13 bookkeeping, 4/6 rate/ratio, and 4/5
+  discrete. Each arm has 2/8 informative replay groups. Generic zero-variance classifications
+  are two all-correct, seven all-incorrect, and six identical-output groups; targeted has one,
+  three, and five respectively. Both arms have zero output-diverse/reward-indistinguishable and
+  zero invalid-or-ambiguous groups. The unchanged quantitative schedule gate passed.
+- **Frozen representative candidates:** The earliest usable generic task is position 5,
+  `l3-grpo-generic-g005`, with reward variance `0.4592187702655792`, four nonzero
+  advantages, and 211 valid completion tokens. The earliest targeted task is position 1,
+  `l3-grpo-targeted-g001`, with variance `0.2006250023841858`, four nonzero advantages,
+  and 612 valid completion tokens. Each is paired only for later compatibility with the first
+  frozen replay group at position 4.
+- **Resources and scope:** The audit generated 30,895 completion tokens in
+  507.46436229999928 seconds, including 495.8192550999993 seconds of generation and
+  4.2586480000009032 seconds of model loading. Peak allocated/reserved VRAM was
+  2,912,367,616 / 4,638,900,224 bytes, peak process RSS was 5,327,343,616 bytes, and
+  ignored audit output occupied 14,101,902 bytes. Counted training, retention, holdout v2,
+  GSM1K, and sealed-final evaluation did not run.
+- **Next action:** Freeze and publish an optimizer-free fresh-process replay and gradient
+  qualification implementation before any representative replay or official compatibility
+  smoke starts.
+
+### 2026-07-29 - Milestone 14B-R1 froze signal qualification before replay
+
+- **Immutable qualification design:** The new qualification runtime replays every frozen
+  schedule position through the selected task, reconstructs each corrected audit group record
+  exactly, and performs one connected backward projection without constructing an optimizer,
+  scheduler, or adapter save. Two independently reset processes are required per arm. The
+  compatibility wrapper changes only the in-memory two-group selection and delegates both
+  optimizer/scheduler steps, adapter save, offline reload, and integrity checks to the unchanged
+  official Milestone 14A runtime.
+- **Frozen candidates and pairings:** Generic selects position 5
+  `l3-grpo-generic-g005` / group-record SHA-256
+  `14cd697162b9ace4809d715901821afd7120bfc9f3fdf86483a8d9d9785cc3f3`
+  and pairs it with replay position 4 `l3-grpo-generic-g004`. Targeted selects position 1
+  `l3-grpo-targeted-g001` / group-record SHA-256
+  `7128ecc43cdd6128e24c948823e2d9e1da249356534f413decd8c73f63c01ce3`
+  and pairs it with `l3-grpo-targeted-g004`. The full counted schedules are unchanged.
+- **Source hashes:** Qualification implementation SHA-256 is
+  `1485669c9df4053e5f47baf07ac981c902966ed490346a3081ed1778213cf002`;
+  qualification-contract SHA-256 is
+  `0ad3c6fc584b1dcc0221e6c29179f1f53c26c754297b6534222bf750e51a23bc`.
+  The manifest freezes all five new implementation modules, all five focused test modules, and
+  the corrected audit, official runtime, campaign/environment, gradient, reference, schedule,
+  and training dependencies before any representative model process.
+- **Verification:** Both final-source passes completed all 1,094 unit/integration tests; the
+  final pass took 117.50 seconds. Ruff format-check covers 370 files, Ruff lint is clean, strict
+  Mypy passes all 207 source files, the 11 new focused tests pass, both environments pass
+  `pip check`, and `git diff --check` is clean.
+- **Discarded tooling attempts:** The first model-free formatter launcher used a PowerShell API
+  unavailable in Windows PowerShell and started an empty Python REPL with no arguments; it
+  imported no project module and performed no model work. The first complete-suite invocation
+  was terminated by the shell tool's 10-second timeout. Both were discarded and rerun under the
+  exact frozen environment; neither created scientific evidence or model output.
+- **Next action:** Commit, push, and verify this clean source boundary. Only then run generic
+  projection 1 and 2 followed by targeted projection 1 and 2, with no retry path.
