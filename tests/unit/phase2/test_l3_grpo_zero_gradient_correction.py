@@ -10,6 +10,13 @@ from foundry.training.config import canonical_sha256
 from foundry.training.qlora import file_sha256
 
 ROOT = Path(__file__).resolve().parents[3]
+WARMUP_AWARE_OVERRIDES = frozenset(
+    {
+        "src/foundry/phase2/l3_grpo_runtime.py",
+        "tests/unit/phase2/test_l3_grpo_runtime.py",
+        "tests/unit/phase2/test_l3_grpo_zero_gradient_correction.py",
+    }
+)
 
 
 def test_file_rows_bind_bytes_and_sha256(tmp_path: Path) -> None:
@@ -47,7 +54,10 @@ def test_published_correction_manifests_reconstruct_and_bind_sources() -> None:
     assert contract["counted_training_gradient_gate_changed"] is False
     assert contract["official_smoke_runs_authorized"] == 2
     assert contract["official_smoke_retries_authorized"] == 0
+    assert WARMUP_AWARE_OVERRIDES <= {row["path"] for row in implementation["files"]}
     for row in implementation["files"]:
+        if row["path"] in WARMUP_AWARE_OVERRIDES:
+            continue
         path = ROOT / row["path"]
         assert path.stat().st_size == row["bytes"]
         assert file_sha256(path) == row["sha256"]

@@ -1,0 +1,79 @@
+{
+  "fixture_contract_id": "foundry-grpo-warmup-aware-update-fixtures-v1",
+  "fixture_count": 14,
+  "fixture_sha256": "23cd974ecff6e343efde2f997646de662bae8c0edae15a1ed8934b5133f9602c",
+  "fixtures": [
+    {
+      "detail_sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+      "fixture_id": "nonzero_gradient_lr_zero_has_zero_parameter_delta",
+      "passed": true
+    },
+    {
+      "detail_sha256": "a26fa1ba8e25cf8f1e5ad5094b2b39291ed6c38d345197c0f6d466355e6e5116",
+      "fixture_id": "optimizer_state_may_change_at_lr_zero",
+      "passed": true
+    },
+    {
+      "detail_sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+      "fixture_id": "scheduler_advance_makes_next_lr_positive",
+      "passed": true
+    },
+    {
+      "detail_sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+      "fixture_id": "first_positive_lr_step_changes_parameters",
+      "passed": true
+    },
+    {
+      "detail_sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+      "fixture_id": "positive_lr_nonzero_gradient_zero_delta_fails",
+      "passed": true
+    },
+    {
+      "detail_sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+      "fixture_id": "zero_advantage_group_is_valid_noop",
+      "passed": true
+    },
+    {
+      "detail_sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+      "fixture_id": "zero_lr_does_not_hide_zero_gradient_defect",
+      "passed": true
+    },
+    {
+      "detail_sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+      "fixture_id": "reference_and_base_remain_unchanged",
+      "passed": true
+    },
+    {
+      "detail_sha256": "ee0b1f0ce231512a68d2841c63ee43589f149dd55b18ccdad82ee70ea64cecb5",
+      "fixture_id": "optimizer_then_scheduler_order_preserved",
+      "passed": true
+    },
+    {
+      "detail_sha256": "d88b413988ecd09778e4dec4289828de57a6019e0e42dae69b175b9259eef017",
+      "fixture_id": "accepted_warmup_allows_global_step_advancement",
+      "passed": true
+    },
+    {
+      "detail_sha256": "329312873c472bda9c02b003e67b5f56ec218d6eb1f1f1aadb7f5a0cb51b8906",
+      "fixture_id": "two_step_warmup_then_update_passes",
+      "passed": true
+    },
+    {
+      "detail_sha256": "7ee004bc2b88d30ea3c01cf0b2cd8675384e0a62ed79b09579da31d972c233d0",
+      "fixture_id": "two_step_without_policy_update_fails",
+      "passed": true
+    },
+    {
+      "detail_sha256": "05366ec9fc79c8cd0250c56f660f3a851506c99f6ef8720ac60d1bdbc7f4af20",
+      "fixture_id": "counted_validator_accepts_initial_warmup_and_later_valid_steps",
+      "passed": true
+    },
+    {
+      "detail_sha256": "c6e1a8aaee2d0122f87a949b36e59a9e39af077245a8216299163b6e194d573c",
+      "fixture_id": "update_contract_does_not_modify_scientific_recipe",
+      "passed": true
+    }
+  ],
+  "schema_version": 1,
+  "update_contract_id": "foundry-grpo-warmup-aware-update-v1"
+}

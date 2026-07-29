@@ -71,12 +71,31 @@ from foundry.phase2.l3_grpo_schedule import (
     Arm,
     PromptMessage,
 )
+from foundry.phase2.l3_grpo_warmup_prepare import verify_warmup_update_contract
+from foundry.phase2.l3_grpo_warmup_update import (
+    EXPECTED_ZERO_ADVANTAGE_NOOP as UPDATE_EXPECTED_ZERO_ADVANTAGE_NOOP,
+)
+from foundry.phase2.l3_grpo_warmup_update import (
+    EXPECTED_ZERO_LR_WARMUP_NOOP,
+    NONZERO_POLICY_UPDATE,
+    UNEXPECTED_POSITIVE_LR_NO_UPDATE,
+    changed_state_tensor_count,
+    classify_update,
+    complete_warmup_smoke_gate,
+    counted_update_gate,
+    effective_learning_rates,
+)
+from foundry.phase2.l3_grpo_warmup_update import (
+    INVALID_OR_AMBIGUOUS as UPDATE_INVALID_OR_AMBIGUOUS,
+)
+from foundry.phase2.l3_grpo_warmup_update import (
+    UNEXPECTED_ZERO_GRADIENT as UPDATE_UNEXPECTED_ZERO_GRADIENT,
+)
 from foundry.phase2.l3_grpo_zero_gradient import (
     EXPECTED_ZERO_ADVANTAGE_NOOP,
     NONZERO_GRADIENT_UPDATE,
     classification_contract,
     classify_group,
-    complete_smoke_gate,
     gradient_projection,
     objective_components,
     populated_gradient_projection,
@@ -116,7 +135,7 @@ from foundry.training.retention import RetentionItem
 
 RuntimeMode = Literal["compatibility", "train"]
 SourceKind = Literal["task", "base_replay"]
-RUNTIME_ID = "foundry-l3-verifier-grpo-runtime-v1"
+RUNTIME_ID = "foundry-l3-verifier-grpo-runtime-v2"
 MAX_RESERVED_VRAM_BYTES = 10_240 * 1024**2
 COMPATIBILITY_STEPS = 2
 COMPATIBILITY_COMPLETIONS = 8
@@ -1223,14 +1242,16 @@ class SmokeRecorder:
         reference_initial_sha256: str,
         base_initial_sha256: str,
         controlled_live_policy_fixture_passed: bool,
+        expected_learning_rates: Sequence[float],
         partial_evidence_path: Path,
     ) -> None:
         if (
             len(groups) != COMPATIBILITY_STEPS
-            or groups[0].source_kind != "task"
-            or groups[1].source_kind != "base_replay"
+            or len(expected_learning_rates) != COMPATIBILITY_STEPS
+            or groups[0].source_kind != "base_replay"
+            or groups[1].source_kind != "task"
         ):
-            raise ValueError("smoke requires one task then one replay group")
+            raise ValueError("warmup-aware smoke requires one replay then one task group")
         self.torch = torch_module
         self.numpy_random = numpy_random
         self.tokenizer = tokenizer
@@ -1240,6 +1261,7 @@ class SmokeRecorder:
         self.reference_initial_sha256 = reference_initial_sha256
         self.base_initial_sha256 = base_initial_sha256
         self.controlled_live_policy_fixture_passed = controlled_live_policy_fixture_passed
+        self.expected_learning_rates = tuple(float(value) for value in expected_learning_rates)
         self.partial_evidence_path = partial_evidence_path
         self.steps: list[CompatibilityStepEvidence] = []
         self.classification_steps: list[dict[str, object]] = []
@@ -1260,7 +1282,7 @@ class SmokeRecorder:
         pending = self._pending_step
         payload: dict[str, object] = {
             "schema_version": 1,
-            "evidence_id": "foundry-l3-r1-compatibility-partial-v1",
+            "evidence_id": "foundry-l3-r2-warmup-compatibility-partial-v1",
             "stage": stage,
             "groups": [group.group_id for group in self.groups],
             "completed_raw_steps": self.raw_steps,
@@ -1290,6 +1312,9 @@ class SmokeRecorder:
         optimizer_ownership = _model_optimizer_ownership(model, optimizer)
         optimizer_before = capture_optimizer_state(optimizer)
         scheduler_before = capture_scheduler_state(scheduler)
+        learning_rates = effective_learning_rates(optimizer)
+        expected_lr = self.expected_learning_rates[expected - 1]
+        scheduler_state = scheduler.state_dict()
         active = active_adapter_name(model)
         self._pending_step = {
             "step": expected,
@@ -1297,12 +1322,22 @@ class SmokeRecorder:
             "lora_before": capture_lora_state(model),
             "optimizer_before": optimizer_before,
             "scheduler_before": scheduler_before,
+            "effective_learning_rates": learning_rates,
             "policy_snapshot": _clone_named_parameters(policy_parameters),
             "strict_mode_evidence": {},
             "audit": {
                 "step": expected,
+                "group_position": self.groups[expected - 1].position,
                 "group_id": self.groups[expected - 1].group_id,
                 "source_kind": self.groups[expected - 1].source_kind,
+                "trainer_global_step_before": int(state.global_step),
+                "optimizer_call_index": expected,
+                "scheduler_step_index_before": int(state.global_step),
+                "scheduler_last_epoch_before": int(scheduler_state["last_epoch"]),
+                "effective_learning_rates": learning_rates,
+                "minimum_effective_learning_rate": min(learning_rates),
+                "maximum_effective_learning_rate": max(learning_rates),
+                "expected_effective_learning_rate": expected_lr,
                 "active_adapter_at_step_start": active,
                 "policy_state_before": policy_before,
                 "reference_state_before": reference_before,
@@ -1319,6 +1354,8 @@ class SmokeRecorder:
         self._persist("step_begin")
         if active != POLICY_ADAPTER_NAME:
             self._raise("policy adapter is not active at smoke step start")
+        if any(value != expected_lr for value in learning_rates):
+            self._raise("compatibility learning rate differs from the frozen trajectory")
 
     def start_generation(self) -> None:
         _strict(self.torch, "smoke generation entry")
@@ -1582,7 +1619,7 @@ class SmokeRecorder:
             "classification": classification,
             "gradients_after_backward": gradients_after_backward,
         }
-        pending["classification"] = classification
+        pending["gradient_classification"] = classification
         pending["populated_gradient"] = populated
         pending["gradients_after_backward"] = gradients_after_backward
         self._persist("backward_and_classification_persisted")
@@ -1602,7 +1639,14 @@ class SmokeRecorder:
         ):
             self._raise("nonzero-gradient classification lacks a populated policy gradient")
 
-    def pre_optimizer(self, model: Any) -> None:
+    def pre_optimizer(
+        self,
+        *,
+        state: Any,
+        model: Any,
+        optimizer: Any,
+        scheduler: Any,
+    ) -> None:
         _strict(self.torch, "smoke pre-optimizer")
         if self._pending_step is None or "gradients_after_backward" not in self._pending_step:
             self._raise("smoke clipping preceded backward")
@@ -1615,14 +1659,32 @@ class SmokeRecorder:
             named_base_parameters=base,
         )
         gradients_after_clipping = capture_gradient_state(model)
+        learning_rates = effective_learning_rates(optimizer)
+        optimizer_before = capture_optimizer_state(optimizer)
+        scheduler_before = capture_scheduler_state(scheduler)
         cast(dict[str, object], pending["audit"])["pre_optimizer"] = {
             "populated_gradient_after_clipping": clipped,
             "gradients_after_clipping": gradients_after_clipping,
+            "trainer_global_step": int(state.global_step),
+            "optimizer_call_index": int(pending["step"]),
+            "scheduler_step_index": int(state.global_step),
+            "effective_learning_rates": learning_rates,
+            "minimum_effective_learning_rate": min(learning_rates),
+            "maximum_effective_learning_rate": max(learning_rates),
+            "optimizer_state": optimizer_before,
+            "scheduler_state": scheduler_before,
         }
         pending["gradients_after_clipping"] = gradients_after_clipping
         pending["strict_mode_evidence"]["after_backward"] = True
         pending["strict_mode_evidence"]["before_optimizer"] = True
         self._persist("pre_optimizer_persisted")
+        if (
+            int(state.global_step) != int(pending["step"]) - 1
+            or learning_rates != pending["effective_learning_rates"]
+            or optimizer_before != pending["optimizer_before"]
+            or scheduler_before != pending["scheduler_before"]
+        ):
+            self._raise("pre-optimizer state differs from the frozen step-start state")
         if (
             clipped["finite"] is not True
             or clipped["reference_gradient_count"] != 0
@@ -1630,11 +1692,11 @@ class SmokeRecorder:
         ):
             self._raise("clipped smoke gradients violate policy-only finite ownership")
         if (
-            pending["classification"] == EXPECTED_ZERO_ADVANTAGE_NOOP
+            pending["gradient_classification"] == EXPECTED_ZERO_ADVANTAGE_NOOP
             and clipped["exactly_zero"] is not True
         ):
             self._raise("expected no-op clipping produced a nonzero policy gradient")
-        if pending["classification"] == NONZERO_GRADIENT_UPDATE and clipped[
+        if pending["gradient_classification"] == NONZERO_GRADIENT_UPDATE and clipped[
             "nonzero_gradient_count"
         ] in (None, 0):
             self._raise("update classification became zero before the optimizer")
@@ -1661,9 +1723,36 @@ class SmokeRecorder:
         policy_changed = policy_delta["exactly_zero"] is False
         reference_changed = reference_hash != self.reference_initial_sha256
         base_changed = base_hash != self.base_initial_sha256
-        optimizer_step_completed = (
+        optimizer_state_changed = (
             optimizer_after["state_sha256"] != optimizer_before["state_sha256"]
         )
+        optimizer_state_tensor_changes = changed_state_tensor_count(
+            optimizer_before,
+            optimizer_after,
+        )
+        generation = cast(dict[str, object], audit["generation"])
+        projection = cast(dict[str, object], generation["reward_projection"])
+        populated = cast(dict[str, object], pending["populated_gradient"])
+        update_input: dict[str, object] = {
+            "group_position": audit["group_position"],
+            "trainer_global_step": audit["trainer_global_step_before"],
+            "optimizer_call_index": audit["optimizer_call_index"],
+            "scheduler_step_index": audit["scheduler_step_index_before"],
+            "effective_learning_rates": pending["effective_learning_rates"],
+            "reward_variance": projection["reward_variance"],
+            "advantages": projection["advantages"],
+            "policy_gradient_norm": populated["global_norm"],
+            "nonzero_policy_gradient_tensor_count": populated["nonzero_gradient_count"],
+            "policy_gradient_finite": populated["finite"],
+            "policy_delta_norm": policy_delta["global_norm"],
+            "changed_policy_tensor_count": policy_delta["changed_parameter_count"],
+            "policy_delta_finite": policy_delta["finite"],
+            "changed_optimizer_state_tensor_count": optimizer_state_tensor_changes,
+            "reference_parameter_changed": reference_changed,
+            "base_parameter_changed": base_changed,
+            "evidence_complete": True,
+        }
+        update_classification = classify_update(update_input)
         audit["post_optimizer"] = {
             "policy_state_after": policy,
             "reference_state_after": reference,
@@ -1674,14 +1763,21 @@ class SmokeRecorder:
             "base_parameter_changed": base_changed,
             "optimizer_before": optimizer_before,
             "optimizer_after": optimizer_after,
-            "optimizer_step_completed": optimizer_step_completed,
+            "optimizer_call_completed": True,
+            "optimizer_state_changed": optimizer_state_changed,
+            "changed_optimizer_state_tensor_count": optimizer_state_tensor_changes,
+            "update_classification_input": update_input,
+            "update_classification": update_classification,
         }
         pending["policy_parameter_delta"] = policy_delta
         pending["policy_parameter_changed"] = policy_changed
         pending["reference_parameter_changed"] = reference_changed
         pending["base_parameter_changed"] = base_changed
-        pending["optimizer_step_completed"] = optimizer_step_completed
+        pending["optimizer_call_completed"] = True
+        pending["optimizer_state_changed"] = optimizer_state_changed
+        pending["changed_optimizer_state_tensor_count"] = optimizer_state_tensor_changes
         pending["optimizer_after"] = optimizer_after
+        pending["update_classification"] = update_classification
         pending["lora_after"] = capture_lora_state(model)
         pending["strict_mode_evidence"]["after_optimizer"] = True
         self._persist("post_optimizer_persisted")
@@ -1689,12 +1785,18 @@ class SmokeRecorder:
             self._raise("reference adapter changed during smoke optimizer update")
         if base_changed:
             self._raise("base model changed during smoke optimizer update")
-        if not optimizer_step_completed:
-            self._raise("smoke optimizer state did not advance")
-        if pending["classification"] == EXPECTED_ZERO_ADVANTAGE_NOOP and policy_changed:
-            self._raise("expected no-op changed policy parameters")
-        if pending["classification"] == NONZERO_GRADIENT_UPDATE and not policy_changed:
-            self._raise("nonzero-gradient group did not change policy parameters")
+        if update_classification == UPDATE_UNEXPECTED_ZERO_GRADIENT:
+            self._raise("informative compatibility group produced an unexpected zero gradient")
+        if update_classification == UNEXPECTED_POSITIVE_LR_NO_UPDATE:
+            self._raise("positive-learning-rate group did not change policy parameters")
+        if update_classification == UPDATE_INVALID_OR_AMBIGUOUS:
+            self._raise("compatibility update evidence is invalid or ambiguous")
+        if update_classification not in {
+            UPDATE_EXPECTED_ZERO_ADVANTAGE_NOOP,
+            EXPECTED_ZERO_LR_WARMUP_NOOP,
+            NONZERO_POLICY_UPDATE,
+        }:
+            self._raise("compatibility update classification differs")
         self.reference_states_after_steps.append(reference_hash)
 
     def step_end(self, state: Any, scheduler: Any) -> None:
@@ -1733,6 +1835,9 @@ class SmokeRecorder:
             "completion_sha256s": generation_audit["completion_sha256s"],
             "reward_vector": reward_evidence["rewards"],
             "reward_variance": reward_evidence["reward_variance"],
+            "nonzero_advantage_count": sum(
+                float(value) != 0.0 for value in cast(list[float], reward_evidence["advantages"])
+            ),
             "advantages": reward_evidence["advantages"],
             "valid_completion_token_counts": generation_audit["valid_completion_token_counts"],
             "completion_mask_evidence": generation_audit["completion_mask_evidence"],
@@ -1745,20 +1850,55 @@ class SmokeRecorder:
             "policy_reference_kl_evidence": loss_audit["policy_reference_kl_evidence"],
             "objective_values": loss_audit["objective_values"],
             "objective_graph": loss_audit["objective_graph"],
-            "classification": pending["classification"],
+            "gradient_classification": pending["gradient_classification"],
+            "classification": pending["update_classification"],
+            "group_position": audit["group_position"],
+            "trainer_global_step_before": audit["trainer_global_step_before"],
+            "trainer_global_step_after": int(state.global_step),
+            "optimizer_call_index": audit["optimizer_call_index"],
+            "scheduler_step_index_before": audit["scheduler_step_index_before"],
+            "scheduler_step_index_after": int(state.global_step),
+            "effective_learning_rates": pending["effective_learning_rates"],
+            "minimum_effective_learning_rate": min(
+                cast(list[float], pending["effective_learning_rates"])
+            ),
+            "maximum_effective_learning_rate": max(
+                cast(list[float], pending["effective_learning_rates"])
+            ),
             "policy_gradient": pending["policy_gradient"],
             "kl_gradient": pending["kl_gradient"],
             "combined_gradient": pending["combined_gradient"],
             "populated_combined_gradient": pending["populated_gradient"],
+            "policy_gradient_norm": cast(dict[str, object], pending["populated_gradient"])[
+                "global_norm"
+            ],
+            "nonzero_policy_gradient_tensor_count": cast(
+                dict[str, object], pending["populated_gradient"]
+            )["nonzero_gradient_count"],
+            "policy_gradient_finite": cast(dict[str, object], pending["populated_gradient"])[
+                "finite"
+            ],
             "gradients_after_backward": pending["gradients_after_backward"],
             "gradients_after_clipping": pending["gradients_after_clipping"],
             "policy_parameter_delta": pending["policy_parameter_delta"],
+            "policy_delta_norm": cast(dict[str, object], pending["policy_parameter_delta"])[
+                "global_norm"
+            ],
+            "changed_policy_tensor_count": cast(
+                dict[str, object], pending["policy_parameter_delta"]
+            )["changed_parameter_count"],
+            "policy_delta_finite": cast(dict[str, object], pending["policy_parameter_delta"])[
+                "finite"
+            ],
             "policy_parameter_changed": pending["policy_parameter_changed"],
             "reference_parameter_changed": pending["reference_parameter_changed"],
             "base_parameter_changed": pending["base_parameter_changed"],
+            "evidence_complete": True,
             "optimizer_before": pending["optimizer_before"],
             "optimizer_after": pending["optimizer_after"],
-            "optimizer_step_completed": pending["optimizer_step_completed"],
+            "optimizer_call_completed": pending["optimizer_call_completed"],
+            "optimizer_state_changed": pending["optimizer_state_changed"],
+            "changed_optimizer_state_tensor_count": pending["changed_optimizer_state_tensor_count"],
             "scheduler_before": pending["scheduler_before"],
             "scheduler_after": pending["scheduler_after"],
             "scheduler_step_completed": scheduler_step_completed,
@@ -1812,7 +1952,7 @@ class SmokeRecorder:
             != [self.reference_initial_sha256] * COMPATIBILITY_STEPS
         ):
             self._raise("exact two-step smoke evidence is incomplete")
-        self.complete_gate = complete_smoke_gate(self.classification_steps)
+        self.complete_gate = complete_warmup_smoke_gate(self.classification_steps)
         self._persist("complete_smoke_gate_persisted")
         if self.complete_gate["passed"] is not True:
             self._raise("complete two-step smoke update gate failed")
@@ -1831,8 +1971,13 @@ def make_smoke_callback(base: type[Any], recorder: SmokeRecorder) -> object:
             return control
 
         def on_pre_optimizer_step(self, args: Any, state: Any, control: Any, **kwargs: Any) -> Any:
-            del args, state
-            recorder.pre_optimizer(kwargs["model"])
+            del args
+            recorder.pre_optimizer(
+                state=state,
+                model=kwargs["model"],
+                optimizer=kwargs["optimizer"],
+                scheduler=kwargs["lr_scheduler"],
+            )
             return control
 
         def on_optimizer_step(self, args: Any, state: Any, control: Any, **kwargs: Any) -> Any:
@@ -1906,65 +2051,186 @@ def make_smoke_trainer(base: type[Any], recorder: SmokeRecorder) -> type[Any]:
 
 
 class FullAuditRecorder:
-    """Capture content-free per-group, loss, KL, gradient, and update trajectories."""
+    """Capture and validate every counted warmup-aware optimizer update."""
 
     def __init__(
         self,
         *,
         torch_module: Any,
+        numpy_random: Any,
         tokenizer: Any,
         reward_callback: VerifierRewardCallback,
         warning_contract: TopPWarningOnlyGenerationContract,
         groups: Sequence[RuntimeGroup],
         reference_initial_sha256: str,
+        base_initial_sha256: str,
+        expected_learning_rates: Sequence[float],
+        partial_evidence_path: Path,
     ) -> None:
-        if len(groups) != GROUPS_PER_ARM:
+        if len(groups) != GROUPS_PER_ARM or len(expected_learning_rates) != GROUPS_PER_ARM:
             raise ValueError("counted recorder requires all 32 groups")
         self.torch = torch_module
+        self.numpy_random = numpy_random
         self.tokenizer = tokenizer
         self.reward_callback = reward_callback
         self.warning_contract = warning_contract
         self.groups = tuple(groups)
         self.reference_initial_sha256 = reference_initial_sha256
+        self.base_initial_sha256 = base_initial_sha256
+        self.expected_learning_rates = tuple(float(value) for value in expected_learning_rates)
+        self.partial_evidence_path = partial_evidence_path
         self.generations: list[dict[str, object]] = []
         self.loss_trajectory: list[float] = []
         self.kl_trajectory: list[float] = []
         self.gradient_trajectory: list[dict[str, object]] = []
         self.policy_state_trajectory: list[str] = []
         self.learning_rate_trajectory: list[float] = []
+        self.update_steps: list[dict[str, object]] = []
+        self.raw_steps: list[dict[str, object]] = []
+        self.update_gate: dict[str, object] | None = None
         self._record_start = 0
         self._warning_start = 0
         self._pending_result: Mapping[str, Any] | None = None
         self._pending_records: list[RewardAudit] = []
         self._pending_warning: Any | None = None
+        self._pending_step: dict[str, Any] | None = None
         self._policy_capture = False
         self._policy_value: Any | None = None
 
+    def _persist(self, stage: str, *, error: str | None = None) -> None:
+        pending = self._pending_step
+        payload: dict[str, object] = {
+            "schema_version": 1,
+            "evidence_id": "foundry-l3-r2-counted-warmup-update-partial-v1",
+            "stage": stage,
+            "groups": [group.group_id for group in self.groups],
+            "completed_raw_steps": self.raw_steps,
+            "completed_update_steps": self.update_steps,
+            "pending_step": None if pending is None else pending.get("audit"),
+            "counted_update_gate": self.update_gate,
+            "error": error,
+        }
+        payload["partial_evidence_sha256"] = canonical_sha256(payload)
+        _write_json_replace(self.partial_evidence_path, payload)
+
+    def _raise(self, message: str) -> NoReturn:
+        self._persist("validation_failure", error=message)
+        raise RuntimeError(message)
+
+    def step_begin(self, *, state: Any, model: Any, optimizer: Any, scheduler: Any) -> None:
+        _strict(self.torch, "counted step begin")
+        expected = len(self.update_steps) + 1
+        if expected > GROUPS_PER_ARM or int(state.global_step) != expected - 1:
+            self._raise("counted Trainer step ordering differs")
+        if self._pending_step is not None:
+            self._raise("prior counted step did not finalize")
+        policy_parameters, _, _ = _parameter_partitions(model)
+        policy_before = capture_adapter_state(model, POLICY_ADAPTER_NAME)
+        reference_before = capture_adapter_state(model, REFERENCE_ADAPTER_NAME)
+        base_before = capture_base_parameter_state(model)
+        optimizer_ownership = _model_optimizer_ownership(model, optimizer)
+        optimizer_before = capture_optimizer_state(optimizer)
+        scheduler_before = capture_scheduler_state(scheduler)
+        learning_rates = effective_learning_rates(optimizer)
+        expected_lr = self.expected_learning_rates[expected - 1]
+        scheduler_state = scheduler.state_dict()
+        active = active_adapter_name(model)
+        self._pending_step = {
+            "step": expected,
+            "rng_before": capture_rng_state(self.torch, numpy_random=self.numpy_random),
+            "optimizer_before": optimizer_before,
+            "scheduler_before": scheduler_before,
+            "effective_learning_rates": learning_rates,
+            "policy_snapshot": _clone_named_parameters(policy_parameters),
+            "audit": {
+                "step": expected,
+                "group_position": self.groups[expected - 1].position,
+                "group_id": self.groups[expected - 1].group_id,
+                "source_kind": self.groups[expected - 1].source_kind,
+                "trainer_global_step_before": int(state.global_step),
+                "optimizer_call_index": expected,
+                "scheduler_step_index_before": int(state.global_step),
+                "scheduler_last_epoch_before": int(scheduler_state["last_epoch"]),
+                "effective_learning_rates": learning_rates,
+                "minimum_effective_learning_rate": min(learning_rates),
+                "maximum_effective_learning_rate": max(learning_rates),
+                "expected_effective_learning_rate": expected_lr,
+                "active_adapter_at_step_start": active,
+                "policy_state_before": policy_before,
+                "reference_state_before": reference_before,
+                "base_parameter_state_before": base_before,
+                "optimizer_ownership": optimizer_ownership,
+                "optimizer_before": optimizer_before,
+                "scheduler_before": scheduler_before,
+            },
+        }
+        self._persist("step_begin")
+        if active != POLICY_ADAPTER_NAME:
+            self._raise("policy adapter is not active at counted step start")
+        if (
+            reference_before["normalized_tensor_state_sha256"] != self.reference_initial_sha256
+            or base_before["base_parameter_state_sha256"] != self.base_initial_sha256
+        ):
+            self._raise("reference or base differs at counted step start")
+        if any(value != expected_lr for value in learning_rates):
+            self._raise("counted effective learning rate differs from the frozen trajectory")
+
     def start_generation(self) -> None:
         _strict(self.torch, "counted generation entry")
-        if self._pending_result is not None or len(self.generations) >= GROUPS_PER_ARM:
-            raise RuntimeError("counted generation lifecycle differs")
+        if (
+            self._pending_step is None
+            or self._pending_result is not None
+            or len(self.update_steps) >= GROUPS_PER_ARM
+        ):
+            self._raise("counted generation lifecycle differs")
         self._record_start = len(self.reward_callback.records)
         self._warning_start = len(self.warning_contract.call_records())
+        self._persist("generation_started")
 
     def finish_generation(self, result: Mapping[str, Any]) -> None:
         _strict(self.torch, "counted generation exit")
         records = list(self.reward_callback.records[self._record_start :])
         warnings = list(self.warning_contract.call_records()[self._warning_start :])
-        expected = self.groups[len(self.generations)]
+        pending = self._pending_step
+        if pending is None:
+            self._raise("counted generation lacks a pending step")
+        expected = self.groups[len(self.update_steps)]
         if (
             len(records) != COMPLETIONS_PER_GROUP
             or len(warnings) != 1
             or {record.group_id for record in records} != {expected.group_id}
         ):
-            raise RuntimeError("counted generation records differ from schedule")
+            self._raise("counted generation records differ from schedule")
+        rewards = [float(record.reward.total) for record in records]
+        projected = reward_projection(self.torch, rewards)
+        advantages = _tensor_values(result["advantages"])
+        completion_mask = result["completion_mask"]
+        valid_counts = [int(value) for value in completion_mask.sum(dim=1).detach().cpu().tolist()]
+        if advantages != projected["advantages"]:
+            self._raise("counted stock advantages differ from the frozen reward projection")
+        if len(valid_counts) != COMPLETIONS_PER_GROUP or any(value <= 0 for value in valid_counts):
+            self._raise("counted completion mask contains an empty completion")
+        audit = cast(dict[str, object], pending["audit"])
+        audit["generation"] = {
+            "completion_sha256s": [record.completion_sha256 for record in records],
+            "reward_vector_unprojected": rewards,
+            "reward_components": [record.reward.as_dict() for record in records],
+            "reward_projection": projected,
+            "stock_advantages": advantages,
+            "valid_completion_token_counts": valid_counts,
+            "completion_mask_evidence": tensor_evidence(completion_mask).as_dict(),
+            "warning": warnings[0].as_dict(),
+        }
         self._pending_result = result
         self._pending_records = records
         self._pending_warning = warnings[0]
+        pending["reward_projection"] = projected
+        pending["valid_completion_token_counts"] = valid_counts
+        self._persist("generation_and_rewards_persisted")
 
     def begin_policy_capture(self) -> None:
         if self._policy_capture or self._policy_value is not None:
-            raise RuntimeError("counted policy capture lifecycle differs")
+            self._raise("counted policy capture lifecycle differs")
         self._policy_capture = True
 
     def capture_policy(self, value: Any) -> None:
@@ -1983,16 +2249,22 @@ class FullAuditRecorder:
         self._policy_capture = False
         policy = self._policy_value
         self._policy_value = None
-        if policy is None or self._pending_result is None or self._pending_warning is None:
-            raise RuntimeError("counted loss lacks matching generation")
+        pending = self._pending_step
+        if (
+            policy is None
+            or pending is None
+            or self._pending_result is None
+            or self._pending_warning is None
+        ):
+            self._raise("counted loss lacks matching generation")
         delta = reference - policy
         per_token_kl = self.torch.exp(delta) - delta - 1
         mean_kl = (per_token_kl * completion_mask).sum() / completion_mask.sum()
         if not bool(self.torch.isfinite(loss).all().item()) or not bool(
             self.torch.isfinite(per_token_kl).all().item()
         ):
-            raise RuntimeError("counted GRPO loss or KL is non-finite")
-        group = self.groups[len(self.generations)]
+            self._raise("counted GRPO loss or KL is non-finite")
+        group = self.groups[len(self.update_steps)]
         warning = self._pending_warning
         generation = _capture_l3_generation_evidence(
             group=group,
@@ -2013,12 +2285,23 @@ class FullAuditRecorder:
             policy_logprobs=policy,
             per_token_kl=per_token_kl,
         )
-        self.generations.append(generation.as_dict())
-        self.loss_trajectory.append(float(loss.detach().float().item()))
-        self.kl_trajectory.append(float(mean_kl.detach().float().item()))
+        audit = cast(dict[str, object], pending["audit"])
+        audit["loss"] = {
+            "loss": float(loss.detach().float().item()),
+            "mean_kl": float(mean_kl.detach().float().item()),
+            "loss_finite": True,
+            "kl_finite": True,
+            "policy_logprobs_evidence": tensor_evidence(policy).as_dict(),
+            "reference_logprobs_evidence": tensor_evidence(reference).as_dict(),
+            "per_token_kl_evidence": tensor_evidence(per_token_kl).as_dict(),
+        }
+        pending["generation_evidence"] = generation.as_dict()
+        pending["loss"] = float(loss.detach().float().item())
+        pending["mean_kl"] = float(mean_kl.detach().float().item())
         self._pending_result = None
         self._pending_records = []
         self._pending_warning = None
+        self._persist("loss_and_kl_persisted")
 
     def abort_policy_capture(self) -> None:
         self._policy_capture = False
@@ -2026,30 +2309,252 @@ class FullAuditRecorder:
 
     def after_backward(self, model: Any) -> None:
         _strict(self.torch, "counted backward")
-        evidence = _assert_gradient_ownership(model, self.torch)
-        evidence["step"] = len(self.gradient_trajectory) + 1
-        self.gradient_trajectory.append(evidence)
+        pending = self._pending_step
+        if pending is None or "loss" not in pending:
+            self._raise("counted backward lacks matching loss")
+        policy, reference, base = _parameter_partitions(model)
+        evidence = populated_gradient_projection(
+            self.torch,
+            named_policy_parameters=policy,
+            named_reference_parameters=reference,
+            named_base_parameters=base,
+        )
+        evidence["step"] = int(pending["step"])
+        cast(dict[str, object], pending["audit"])["backward"] = evidence
+        pending["gradient_after_backward"] = evidence
+        self._persist("backward_persisted")
+        if (
+            evidence["finite"] is not True
+            or evidence["present_gradient_count"] != EXPECTED_ADAPTER_TENSORS
+            or evidence["reference_gradient_count"] != 0
+            or evidence["base_gradient_count"] != 0
+        ):
+            self._raise("counted gradients violate policy-only finite ownership")
 
-    def pre_optimizer(self, model: Any) -> None:
+    def pre_optimizer(
+        self,
+        *,
+        state: Any,
+        model: Any,
+        optimizer: Any,
+        scheduler: Any,
+    ) -> None:
         _strict(self.torch, "counted clipping")
-        _assert_gradient_ownership(model, self.torch)
+        pending = self._pending_step
+        if pending is None or "gradient_after_backward" not in pending:
+            self._raise("counted optimizer clipping preceded backward")
+        policy, reference, base = _parameter_partitions(model)
+        clipped = populated_gradient_projection(
+            self.torch,
+            named_policy_parameters=policy,
+            named_reference_parameters=reference,
+            named_base_parameters=base,
+        )
+        learning_rates = effective_learning_rates(optimizer)
+        optimizer_before = capture_optimizer_state(optimizer)
+        scheduler_before = capture_scheduler_state(scheduler)
+        cast(dict[str, object], pending["audit"])["pre_optimizer"] = {
+            "trainer_global_step": int(state.global_step),
+            "optimizer_call_index": int(pending["step"]),
+            "scheduler_step_index": int(state.global_step),
+            "effective_learning_rates": learning_rates,
+            "minimum_effective_learning_rate": min(learning_rates),
+            "maximum_effective_learning_rate": max(learning_rates),
+            "gradient_after_clipping": clipped,
+            "optimizer_state": optimizer_before,
+            "scheduler_state": scheduler_before,
+        }
+        pending["gradient_after_clipping"] = clipped
+        self._persist("pre_optimizer_persisted")
+        if (
+            int(state.global_step) != int(pending["step"]) - 1
+            or learning_rates != pending["effective_learning_rates"]
+            or optimizer_before != pending["optimizer_before"]
+            or scheduler_before != pending["scheduler_before"]
+            or clipped["finite"] is not True
+            or clipped["reference_gradient_count"] != 0
+            or clipped["base_gradient_count"] != 0
+        ):
+            self._raise("counted pre-optimizer evidence differs")
 
-    def post_optimizer(self, model: Any) -> None:
+    def post_optimizer(self, model: Any, optimizer: Any) -> None:
         _strict(self.torch, "counted optimizer")
-        reference = capture_adapter_state(model, REFERENCE_ADAPTER_NAME)
-        if reference["normalized_tensor_state_sha256"] != self.reference_initial_sha256:
-            raise RuntimeError("reference adapter changed in counted training")
+        pending = self._pending_step
+        if pending is None or "gradient_after_clipping" not in pending:
+            self._raise("counted optimizer preceded clipping")
+        policy_parameters, _, _ = _parameter_partitions(model)
         policy = capture_adapter_state(model, POLICY_ADAPTER_NAME)
-        self.policy_state_trajectory.append(str(policy["normalized_tensor_state_sha256"]))
+        reference = capture_adapter_state(model, REFERENCE_ADAPTER_NAME)
+        base = capture_base_parameter_state(model)
+        policy_delta = _parameter_delta_projection(
+            self.torch,
+            before=cast(tuple[tuple[str, Any], ...], pending["policy_snapshot"]),
+            after=policy_parameters,
+        )
+        optimizer_before = cast(dict[str, object], pending["optimizer_before"])
+        optimizer_after = capture_optimizer_state(optimizer)
+        optimizer_state_changed = (
+            optimizer_before["state_sha256"] != optimizer_after["state_sha256"]
+        )
+        optimizer_tensor_changes = changed_state_tensor_count(optimizer_before, optimizer_after)
+        reference_changed = (
+            reference["normalized_tensor_state_sha256"] != self.reference_initial_sha256
+        )
+        base_changed = base["base_parameter_state_sha256"] != self.base_initial_sha256
+        gradient = cast(dict[str, object], pending["gradient_after_backward"])
+        projection = cast(dict[str, object], pending["reward_projection"])
+        update_input: dict[str, object] = {
+            "group_position": cast(dict[str, object], pending["audit"])["group_position"],
+            "trainer_global_step": cast(dict[str, object], pending["audit"])[
+                "trainer_global_step_before"
+            ],
+            "optimizer_call_index": pending["step"],
+            "scheduler_step_index": cast(dict[str, object], pending["audit"])[
+                "scheduler_step_index_before"
+            ],
+            "effective_learning_rates": pending["effective_learning_rates"],
+            "reward_variance": projection["reward_variance"],
+            "advantages": projection["advantages"],
+            "policy_gradient_norm": gradient["global_norm"],
+            "nonzero_policy_gradient_tensor_count": gradient["nonzero_gradient_count"],
+            "policy_gradient_finite": gradient["finite"],
+            "policy_delta_norm": policy_delta["global_norm"],
+            "changed_policy_tensor_count": policy_delta["changed_parameter_count"],
+            "policy_delta_finite": policy_delta["finite"],
+            "changed_optimizer_state_tensor_count": optimizer_tensor_changes,
+            "reference_parameter_changed": reference_changed,
+            "base_parameter_changed": base_changed,
+            "evidence_complete": True,
+        }
+        classification = classify_update(update_input)
+        cast(dict[str, object], pending["audit"])["post_optimizer"] = {
+            "policy_state_after": policy,
+            "reference_state_after": reference,
+            "base_parameter_state_after": base,
+            "policy_parameter_delta": policy_delta,
+            "optimizer_after": optimizer_after,
+            "optimizer_call_completed": True,
+            "optimizer_state_changed": optimizer_state_changed,
+            "changed_optimizer_state_tensor_count": optimizer_tensor_changes,
+            "update_classification_input": update_input,
+            "update_classification": classification,
+        }
+        pending["policy_after"] = policy
+        pending["reference_after"] = reference
+        pending["base_after"] = base
+        pending["policy_delta"] = policy_delta
+        pending["optimizer_after"] = optimizer_after
+        pending["optimizer_state_changed"] = optimizer_state_changed
+        pending["changed_optimizer_state_tensor_count"] = optimizer_tensor_changes
+        pending["classification"] = classification
+        self._persist("post_optimizer_persisted")
+        if classification == UPDATE_UNEXPECTED_ZERO_GRADIENT:
+            self._raise("counted informative group produced an unexpected zero gradient")
+        if classification == UNEXPECTED_POSITIVE_LR_NO_UPDATE:
+            self._raise("counted positive-learning-rate group did not update policy parameters")
+        if classification == UPDATE_INVALID_OR_AMBIGUOUS:
+            self._raise("counted update evidence is invalid or ambiguous")
+        if classification not in {
+            UPDATE_EXPECTED_ZERO_ADVANTAGE_NOOP,
+            EXPECTED_ZERO_LR_WARMUP_NOOP,
+            NONZERO_POLICY_UPDATE,
+        }:
+            self._raise("counted update classification differs")
 
     def step_end(self, state: Any, scheduler: Any) -> None:
         _strict(self.torch, "counted scheduler")
-        if int(state.global_step) != len(self.learning_rate_trajectory) + 1:
-            raise RuntimeError("counted scheduler step ordering differs")
+        pending = self._pending_step
+        if pending is None or "classification" not in pending:
+            self._raise("counted scheduler lacks a completed optimizer call")
+        if int(state.global_step) != int(pending["step"]):
+            self._raise("counted scheduler step ordering differs")
         state_dict = scheduler.state_dict()
         if int(state_dict["last_epoch"]) != int(state.global_step):
-            raise RuntimeError("counted scheduler epoch differs from global step")
-        self.learning_rate_trajectory.append(float(scheduler.optimizer.param_groups[0]["lr"]))
+            self._raise("counted scheduler epoch differs from global step")
+        scheduler_after = capture_scheduler_state(scheduler)
+        scheduler_before = cast(dict[str, object], pending["scheduler_before"])
+        scheduler_step_completed = (
+            scheduler_after["state_sha256"] != scheduler_before["state_sha256"]
+        )
+        if not scheduler_step_completed:
+            self._raise("counted scheduler state did not advance")
+        projection = cast(dict[str, object], pending["reward_projection"])
+        gradient = cast(dict[str, object], pending["gradient_after_backward"])
+        delta = cast(dict[str, object], pending["policy_delta"])
+        audit = cast(dict[str, object], pending["audit"])
+        audit["step_end"] = {
+            "trainer_global_step_after": int(state.global_step),
+            "scheduler_step_index_after": int(state.global_step),
+            "scheduler_after": scheduler_after,
+            "scheduler_step_completed": scheduler_step_completed,
+        }
+        update_step: dict[str, object] = {
+            "step": int(pending["step"]),
+            "group_position": audit["group_position"],
+            "group_id": audit["group_id"],
+            "source_kind": audit["source_kind"],
+            "completion_count": COMPLETIONS_PER_GROUP,
+            "trainer_global_step_before": audit["trainer_global_step_before"],
+            "trainer_global_step_after": int(state.global_step),
+            "optimizer_call_index": pending["step"],
+            "scheduler_step_index_before": audit["scheduler_step_index_before"],
+            "scheduler_step_index_after": int(state.global_step),
+            "effective_learning_rates": pending["effective_learning_rates"],
+            "minimum_effective_learning_rate": min(
+                cast(list[float], pending["effective_learning_rates"])
+            ),
+            "maximum_effective_learning_rate": max(
+                cast(list[float], pending["effective_learning_rates"])
+            ),
+            "reward_variance": projection["reward_variance"],
+            "nonzero_advantage_count": sum(
+                float(value) != 0.0 for value in cast(list[float], projection["advantages"])
+            ),
+            "advantages": projection["advantages"],
+            "policy_gradient_norm": gradient["global_norm"],
+            "nonzero_policy_gradient_tensor_count": gradient["nonzero_gradient_count"],
+            "policy_gradient_finite": gradient["finite"],
+            "policy_state_before_sha256": cast(dict[str, object], audit["policy_state_before"])[
+                "normalized_tensor_state_sha256"
+            ],
+            "policy_state_after_sha256": cast(dict[str, object], pending["policy_after"])[
+                "normalized_tensor_state_sha256"
+            ],
+            "policy_delta_norm": delta["global_norm"],
+            "changed_policy_tensor_count": delta["changed_parameter_count"],
+            "policy_delta_finite": delta["finite"],
+            "optimizer_state_before_sha256": cast(dict[str, object], pending["optimizer_before"])[
+                "state_sha256"
+            ],
+            "optimizer_state_after_sha256": cast(dict[str, object], pending["optimizer_after"])[
+                "state_sha256"
+            ],
+            "optimizer_call_completed": True,
+            "optimizer_state_changed": pending["optimizer_state_changed"],
+            "changed_optimizer_state_tensor_count": pending["changed_optimizer_state_tensor_count"],
+            "scheduler_state_before_sha256": scheduler_before["state_sha256"],
+            "scheduler_state_after_sha256": scheduler_after["state_sha256"],
+            "scheduler_step_completed": scheduler_step_completed,
+            "reference_parameter_changed": False,
+            "base_parameter_changed": False,
+            "classification": pending["classification"],
+            "evidence_complete": True,
+        }
+        update_step["update_evidence_sha256"] = canonical_sha256(update_step)
+        self.generations.append(cast(dict[str, object], pending["generation_evidence"]))
+        self.loss_trajectory.append(float(pending["loss"]))
+        self.kl_trajectory.append(float(pending["mean_kl"]))
+        self.gradient_trajectory.append(gradient)
+        self.policy_state_trajectory.append(
+            str(cast(dict[str, object], pending["policy_after"])["normalized_tensor_state_sha256"])
+        )
+        self.learning_rate_trajectory.append(
+            max(cast(list[float], pending["effective_learning_rates"]))
+        )
+        self.raw_steps.append(audit)
+        self.update_steps.append(update_step)
+        self._pending_step = None
+        self._persist("step_complete")
 
     def assert_complete(self) -> None:
         lengths = {
@@ -2059,9 +2564,23 @@ class FullAuditRecorder:
             len(self.gradient_trajectory),
             len(self.policy_state_trajectory),
             len(self.learning_rate_trajectory),
+            len(self.update_steps),
+            len(self.raw_steps),
         }
-        if lengths != {GROUPS_PER_ARM} or self._pending_result is not None:
-            raise RuntimeError("counted per-step evidence is incomplete")
+        if (
+            lengths != {GROUPS_PER_ARM}
+            or self._pending_result is not None
+            or self._pending_step is not None
+        ):
+            self._raise("counted per-step evidence is incomplete")
+        self.update_gate = counted_update_gate(
+            self.update_steps,
+            expected_steps=GROUPS_PER_ARM,
+            expected_learning_rates=self.expected_learning_rates,
+        )
+        self._persist("counted_update_gate_persisted")
+        if self.update_gate["passed"] is not True:
+            self._raise("counted warmup-aware update gate failed")
 
     def evidence(self) -> dict[str, object]:
         self.assert_complete()
@@ -2072,6 +2591,8 @@ class FullAuditRecorder:
             "gradient_trajectory": self.gradient_trajectory,
             "policy_state_trajectory": self.policy_state_trajectory,
             "learning_rate_trajectory": self.learning_rate_trajectory,
+            "update_steps": self.update_steps,
+            "counted_update_gate": self.update_gate,
         }
         payload["trajectory_sha256"] = canonical_sha256(payload)
         return payload
@@ -2079,14 +2600,29 @@ class FullAuditRecorder:
 
 def make_full_callback(base: type[Any], recorder: FullAuditRecorder) -> object:
     class FullCallback(base):  # type: ignore[misc]
+        def on_step_begin(self, args: Any, state: Any, control: Any, **kwargs: Any) -> Any:
+            del args
+            recorder.step_begin(
+                state=state,
+                model=kwargs["model"],
+                optimizer=kwargs["optimizer"],
+                scheduler=kwargs["lr_scheduler"],
+            )
+            return control
+
         def on_pre_optimizer_step(self, args: Any, state: Any, control: Any, **kwargs: Any) -> Any:
-            del args, state
-            recorder.pre_optimizer(kwargs["model"])
+            del args
+            recorder.pre_optimizer(
+                state=state,
+                model=kwargs["model"],
+                optimizer=kwargs["optimizer"],
+                scheduler=kwargs["lr_scheduler"],
+            )
             return control
 
         def on_optimizer_step(self, args: Any, state: Any, control: Any, **kwargs: Any) -> Any:
             del args, state
-            recorder.post_optimizer(kwargs["model"])
+            recorder.post_optimizer(kwargs["model"], kwargs["optimizer"])
             return control
 
         def on_step_end(self, args: Any, state: Any, control: Any, **kwargs: Any) -> Any:
@@ -2212,6 +2748,7 @@ def _validate_experiment_contract(
     *,
     schedule: RuntimeSchedule,
     arm: Arm,
+    warmup_update_contract_path: Path,
 ) -> dict[str, object]:
     contract = _read(path)
     declared = contract.get("experiment_contract_sha256")
@@ -2235,6 +2772,25 @@ def _validate_experiment_contract(
     ):
         raise ValueError("experiment recipe or reward contract differs")
     root = path.parents[2]
+    warmup_contract = _read(warmup_update_contract_path)
+    verify_warmup_update_contract(
+        root,
+        warmup_contract,
+        require_clean_synchronized=True,
+    )
+    warmup_implementation = _read(
+        warmup_update_contract_path.with_name("milestone14b_r2_warmup_update_implementation.json")
+    )
+    warmup_paths = {
+        _require_text(
+            _object(row, "warmup_implementation.files[]").get("path"),
+            "warmup_implementation.path",
+        )
+        for row in _array(
+            warmup_implementation.get("files"),
+            "warmup_implementation.files",
+        )
+    }
     implementation = _read(path.with_name("milestone14a_implementation.json"))
     if implementation.get("implementation_sha256") != canonical_sha256(
         {key: value for key, value in implementation.items() if key != "implementation_sha256"}
@@ -2249,6 +2805,9 @@ def _validate_experiment_contract(
     for row_value in _array(corrected.get("files"), "corrected.files"):
         row = _object(row_value, "corrected.files[]")
         relative = _require_text(row.get("path"), "corrected.path")
+        if relative in warmup_paths:
+            corrected_paths.add(relative)
+            continue
         source = (root / relative).resolve()
         if (
             relative in corrected_paths
@@ -2299,6 +2858,15 @@ def _validate_experiment_contract(
     result["corrected_implementation_sha256"] = corrected["corrected_implementation_sha256"]
     result["correction_contract_sha256"] = correction["correction_contract_sha256"]
     result["classification_contract_sha256"] = correction["classification_contract_sha256"]
+    result["warmup_update_contract_sha256"] = warmup_contract["warmup_update_contract_sha256"]
+    result["warmup_implementation_sha256"] = warmup_contract["implementation_sha256"]
+    result["scheduler_contract_sha256"] = warmup_contract["scheduler_contract_sha256"]
+    result["warmup_fixture_sha256"] = warmup_contract["fixture_sha256"]
+    result["compatibility_order_sha256"] = warmup_contract["compatibility_order_sha256"]
+    result["compatibility_effective_learning_rates"] = warmup_contract[
+        "compatibility_effective_learning_rates"
+    ]
+    result["counted_effective_learning_rates"] = warmup_contract["counted_effective_learning_rates"]
     return result
 
 
@@ -2310,21 +2878,25 @@ def _run(
     packet_path: Path,
     manifest_path: Path,
     experiment_contract_path: Path,
+    warmup_update_contract_path: Path,
     starting_adapter: Path,
     output_dir: Path,
     raw_evidence_path: Path,
+    partial_evidence_path: Path,
     summary_path: Path,
 ) -> dict[str, object]:
-    partial_evidence_path = raw_evidence_path.with_name("partial_evidence.json")
-    paths = [output_dir, raw_evidence_path, summary_path]
-    if mode == "compatibility":
-        paths.append(partial_evidence_path)
+    paths = [output_dir, raw_evidence_path, summary_path, partial_evidence_path]
     if any(path.exists() for path in paths):
-        raise FileExistsError("Milestone 14A runtime outputs must start unused")
+        raise FileExistsError("Milestone 14B-R2 runtime outputs must start unused")
     if file_sha256(root / ".venv-training/Scripts/python.exe") != INTERPRETER_SHA256:
         raise ValueError("authorized training interpreter differs")
     schedule = load_schedule(packet_path, manifest_path, arm)
-    contract = _validate_experiment_contract(experiment_contract_path, schedule=schedule, arm=arm)
+    contract = _validate_experiment_contract(
+        experiment_contract_path,
+        schedule=schedule,
+        arm=arm,
+        warmup_update_contract_path=warmup_update_contract_path,
+    )
     expected_starting = STARTING_ADAPTER_SHA256[arm]
     if directory_sha256(starting_adapter) != expected_starting:
         raise ValueError("selected L3 starting adapter differs")
@@ -2332,11 +2904,23 @@ def _run(
     if mode == "compatibility":
         task = next(group for group in schedule.groups if group.source_kind == "task")
         replay = next(group for group in schedule.groups if group.source_kind == "base_replay")
-        groups = (task, replay)
+        groups = (replay, task)
         max_steps = COMPATIBILITY_STEPS
     else:
         groups = schedule.groups
         max_steps = OPTIMIZER_STEPS
+    expected_learning_rates = cast(
+        list[float],
+        contract[
+            (
+                "compatibility_effective_learning_rates"
+                if mode == "compatibility"
+                else "counted_effective_learning_rates"
+            )
+        ],
+    )
+    if len(expected_learning_rates) != max_steps:
+        raise ValueError("frozen effective-learning-rate trajectory length differs")
 
     modules, launch = _runtime_modules()
     torch = modules["torch"]
@@ -2397,6 +2981,7 @@ def _run(
             controlled_live_policy_fixture_passed=(
                 cast(float, reference_calibration["controlled_positive_per_token_kl"]) > 0.0
             ),
+            expected_learning_rates=expected_learning_rates,
             partial_evidence_path=partial_evidence_path,
         )
         trainer_type = make_smoke_trainer(audited_base, cast(SmokeRecorder, recorder))
@@ -2406,11 +2991,15 @@ def _run(
     else:
         recorder = FullAuditRecorder(
             torch_module=torch,
+            numpy_random=numpy.random,
             tokenizer=tokenizer,
             reward_callback=reward_callback,
             warning_contract=warning_contract,
             groups=groups,
             reference_initial_sha256=reference_initial_sha256,
+            base_initial_sha256=str(base_before["base_parameter_state_sha256"]),
+            expected_learning_rates=expected_learning_rates,
+            partial_evidence_path=partial_evidence_path,
         )
         trainer_type = make_full_trainer(audited_base, recorder)
         callbacks.extend(
@@ -2456,11 +3045,16 @@ def _run(
         if complete_gate is None:
             raise RuntimeError("compatibility complete-smoke gate evidence is absent")
     else:
-        classification_steps = []
-        complete_gate = None
         cast(FullAuditRecorder, recorder).assert_complete()
+        classification_steps = cast(FullAuditRecorder, recorder).update_steps
+        complete_gate = None
+        counted_gate = cast(FullAuditRecorder, recorder).update_gate
+        if counted_gate is None:
+            raise RuntimeError("counted warmup-aware update gate evidence is absent")
         if set(checkpoint_evidence) != {"8", "16", "32"}:
             raise RuntimeError("counted checkpoint set differs")
+    if mode == "compatibility":
+        counted_gate = None
     reward_summary = summarize_rewards(
         reward_callback.records,
         groups,
@@ -2475,8 +3069,20 @@ def _run(
     ):
         raise RuntimeError("completion accounting or backend gate failed")
     warning_evidence = warning_contract.evidence()
-    if warning_evidence["generation_calls"] != len(groups):
-        raise RuntimeError("warning-only generation call count differs")
+    if (
+        warning_evidence["generation_calls"] != len(groups)
+        or warning_evidence["all_warnings_whitelisted"] is not True
+        or warning_evidence["all_expected_warnings_present"] is not True
+        or warning_evidence["all_single_warning_class"] is not True
+        or warning_evidence["all_warning_filters_restored"] is not True
+        or warning_evidence["all_state_unchanged"] is not True
+        or warning_evidence["all_adapter_runtime_unchanged"] is not True
+        or warning_evidence["all_scaling_unchanged"] is not True
+        or warning_evidence["all_training_state_unchanged"] is not True
+        or warning_evidence["all_strict_entries"] is not True
+        or warning_evidence["all_strict_restorations"] is not True
+    ):
+        raise RuntimeError("warning-only generation contract differs")
     history = _finite_history(cast(Sequence[Mapping[str, object]], trainer.state.log_history))
     optimizer_ownership = _optimizer_ownership(trainer)
     final_policy = capture_adapter_state(trainer.model, POLICY_ADAPTER_NAME)
@@ -2512,6 +3118,7 @@ def _run(
         "records": [record.raw_record() for record in reward_callback.records],
         "classification_steps": classification_steps,
         "complete_smoke_gate": complete_gate,
+        "counted_update_gate": counted_gate,
     }
     raw_evidence["raw_evidence_sha256"] = canonical_sha256(raw_evidence)
     _write_json_new(raw_evidence_path, raw_evidence)
@@ -2535,6 +3142,12 @@ def _run(
             "corrected_implementation_sha256": contract["corrected_implementation_sha256"],
             "correction_contract_sha256": contract["correction_contract_sha256"],
             "classification_contract_sha256": contract["classification_contract_sha256"],
+            "warmup_update_contract_sha256": contract["warmup_update_contract_sha256"],
+            "warmup_implementation_sha256": contract["warmup_implementation_sha256"],
+            "scheduler_contract_sha256": contract["scheduler_contract_sha256"],
+            "warmup_fixture_sha256": contract["warmup_fixture_sha256"],
+            "compatibility_order_sha256": contract["compatibility_order_sha256"],
+            "expected_effective_learning_rates": expected_learning_rates,
             "schedule_packet_sha256": schedule.packet_sha256,
             "schedule_manifest_sha256": schedule.manifest_sha256,
             "group_ids": [group.group_id for group in groups],
@@ -2635,6 +3248,12 @@ def _run(
         "corrected_implementation_sha256": contract["corrected_implementation_sha256"],
         "correction_contract_sha256": contract["correction_contract_sha256"],
         "classification_contract_sha256": contract["classification_contract_sha256"],
+        "warmup_update_contract_sha256": contract["warmup_update_contract_sha256"],
+        "warmup_implementation_sha256": contract["warmup_implementation_sha256"],
+        "scheduler_contract_sha256": contract["scheduler_contract_sha256"],
+        "warmup_fixture_sha256": contract["warmup_fixture_sha256"],
+        "compatibility_order_sha256": contract["compatibility_order_sha256"],
+        "expected_effective_learning_rates": expected_learning_rates,
         "schedule_packet_sha256": schedule.packet_sha256,
         "schedule_manifest_sha256": schedule.manifest_sha256,
         "recipe_sha256": GRPO_RECIPE_SHA256,
@@ -2679,15 +3298,18 @@ def _run(
         "output_disk_bytes": output_disk_bytes,
         "pre_reload_allocated_vram_bytes": pre_reload_allocated,
         "raw_evidence_file_sha256": file_sha256(raw_evidence_path),
+        "partial_evidence_file_sha256": file_sha256(partial_evidence_path),
         "prompts_completions_or_answers_present": False,
         "gate_passed": True,
     }
     if mode == "compatibility":
         summary["classification_steps"] = classification_steps
         summary["complete_smoke_gate"] = complete_gate
-        summary["partial_evidence_file_sha256"] = file_sha256(partial_evidence_path)
         summary["exact_packet_sha256"] = exact_packet["packet_sha256"]
         summary["exact_packet"] = exact_packet
+    else:
+        summary["classification_steps"] = classification_steps
+        summary["counted_update_gate"] = counted_gate
     summary["summary_sha256"] = canonical_sha256(summary)
     _write_json_new(summary_path, summary)
     del reloaded, reload_base
@@ -2706,14 +3328,28 @@ def run(
     packet_path: Path,
     manifest_path: Path,
     experiment_contract_path: Path,
+    warmup_update_contract_path: Path | None = None,
     starting_adapter: Path,
     output_dir: Path,
     raw_evidence_path: Path,
+    partial_evidence_path: Path | None = None,
     summary_path: Path,
 ) -> dict[str, object]:
     """Run one fresh compatibility or counted process."""
 
     try:
+        resolved_warmup_contract = (
+            root.resolve()
+            / "results/phase2_vetted_corpus"
+            / "milestone14b_r2_warmup_update_contract.json"
+            if warmup_update_contract_path is None
+            else warmup_update_contract_path.resolve()
+        )
+        resolved_partial_evidence = (
+            raw_evidence_path.resolve().with_name("partial_evidence.json")
+            if partial_evidence_path is None
+            else partial_evidence_path.resolve()
+        )
         return _run(
             root=root.resolve(),
             arm=arm,
@@ -2721,9 +3357,11 @@ def run(
             packet_path=packet_path.resolve(),
             manifest_path=manifest_path.resolve(),
             experiment_contract_path=experiment_contract_path.resolve(),
+            warmup_update_contract_path=resolved_warmup_contract,
             starting_adapter=starting_adapter.resolve(),
             output_dir=output_dir.resolve(),
             raw_evidence_path=raw_evidence_path.resolve(),
+            partial_evidence_path=resolved_partial_evidence,
             summary_path=summary_path.resolve(),
         )
     finally:
@@ -2738,9 +3376,11 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--packet", type=Path, required=True)
     parser.add_argument("--manifest", type=Path, required=True)
     parser.add_argument("--experiment-contract", type=Path, required=True)
+    parser.add_argument("--warmup-update-contract", type=Path, required=True)
     parser.add_argument("--starting-adapter", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--raw-evidence", type=Path, required=True)
+    parser.add_argument("--partial-evidence", type=Path, required=True)
     parser.add_argument("--summary", type=Path, required=True)
     return parser
 
@@ -2754,9 +3394,11 @@ def main(argv: Sequence[str] | None = None) -> int:
         packet_path=args.packet,
         manifest_path=args.manifest,
         experiment_contract_path=args.experiment_contract,
+        warmup_update_contract_path=args.warmup_update_contract,
         starting_adapter=args.starting_adapter,
         output_dir=args.output_dir,
         raw_evidence_path=args.raw_evidence,
+        partial_evidence_path=args.partial_evidence,
         summary_path=args.summary,
     )
     print(json.dumps(summary, sort_keys=True))

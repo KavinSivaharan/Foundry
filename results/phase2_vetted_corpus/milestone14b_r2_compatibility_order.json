@@ -1,0 +1,46 @@
+{
+  "arms": {
+    "generic": {
+      "optimizer_call_1": {
+        "group_id": "l3-grpo-generic-g004",
+        "original_counted_schedule_position": 4,
+        "prompt_sha256": "0a9209d0c04326e6a405bc41b4f6c974009dca65f21891beebc2f77d4faa2044",
+        "required_effective_learning_rate": 0.0,
+        "source_kind": "base_replay"
+      },
+      "optimizer_call_2": {
+        "group_id": "l3-grpo-generic-g005",
+        "original_counted_schedule_position": 5,
+        "prompt_sha256": "45a695f6371a613f4ce616dcda0f5c0040eb1cba91e81720e38a5d5a865ec002",
+        "required_effective_learning_rate_relation": "strictly_positive",
+        "source_kind": "task"
+      }
+    },
+    "targeted": {
+      "optimizer_call_1": {
+        "group_id": "l3-grpo-targeted-g004",
+        "original_counted_schedule_position": 4,
+        "prompt_sha256": "0a9209d0c04326e6a405bc41b4f6c974009dca65f21891beebc2f77d4faa2044",
+        "required_effective_learning_rate": 0.0,
+        "source_kind": "base_replay"
+      },
+      "optimizer_call_2": {
+        "group_id": "l3-grpo-targeted-g001",
+        "original_counted_schedule_position": 1,
+        "prompt_sha256": "18b524f0cf8d79fb38e5631a516db4884ecdbeefbae00e23aafed8367fd50029",
+        "required_effective_learning_rate_relation": "strictly_positive",
+        "source_kind": "task"
+      }
+    }
+  },
+  "compatibility_only": true,
+  "compatibility_order_sha256": "7fc2d155ce78695967ccb6079e9558c8574bb51deadadfe57fea1b5ffd648a32",
+  "counted_generic_schedule_changed": false,
+  "counted_targeted_schedule_changed": false,
+  "group_or_completion_counts_changed": false,
+  "order_id": "foundry-l3-grpo-warmup-compatibility-order-v1",
+  "replay_positions_changed": false,
+  "schema_version": 1,
+  "selection_decision_sha256": "0e809d1870ddef275017a11c4db5ffd766d9624a34dbf87a7ab417f8bed6a3cf",
+  "task_quotas_changed": false
+}

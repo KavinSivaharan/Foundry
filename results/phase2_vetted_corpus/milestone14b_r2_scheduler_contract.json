@@ -1,0 +1,705 @@
+{
+  "bitsandbytes_source_files": {
+    "adam.py": {
+      "bytes": 16316,
+      "path": "C:\\Users\\Admin\\Projects\\Foundry\\.venv-training\\Lib\\site-packages\\bitsandbytes\\optim\\adam.py",
+      "sha256": "fdb81e80b210464eedb62168e507133167e103c9ae5919b241600b49785acf49"
+    },
+    "optimizer.py": {
+      "bytes": 32875,
+      "path": "C:\\Users\\Admin\\Projects\\Foundry\\.venv-training\\Lib\\site-packages\\bitsandbytes\\optim\\optimizer.py",
+      "sha256": "a252cab404be14f29904a1d25b967ff83ad8760a8b021a145039ef2e5f3bd9bb"
+    }
+  },
+  "callable_source_sha256": {
+    "cosine_factory": "910cafe9375f62592d263fa445c5cefabda51396f03eb6b309977e6b13e49ba7",
+    "cosine_lambda": "4c6875c560306cc7bd2780a9069dd2ab5f0fcefa1a9d5ae86a952db2ad568922",
+    "lambda_lr": "a7c1f302286c0587b7157a9235b3740b92e4c0924b2b1032aecb780b625c7bc0",
+    "trainer_inner_loop": "5cbd42bc6403cdb80846e3e6d18aa11778243dbe9d933dcaf8a7d885c9e3b00e",
+    "warmup_steps": "e8250a6e177aeaf7cfa60acf07e016b4ea0d1e059776c5883b5bf2ad946237ca"
+  },
+  "compatibility": {
+    "base_learning_rate": 1e-06,
+    "effective_learning_rate_hex_trajectory": [
+      "0x0.0p+0",
+      "0x1.0c6f7a0b5ed8dp-20"
+    ],
+    "effective_learning_rate_trajectory": [
+      0.0,
+      1e-06
+    ],
+    "first_strictly_positive_optimizer_call_index": 2,
+    "optimizer_then_scheduler": true,
+    "rows": [
+      {
+        "effective_learning_rate_hex": [
+          "0x0.0p+0"
+        ],
+        "effective_learning_rates": [
+          0.0
+        ],
+        "maximum_effective_learning_rate": 0.0,
+        "minimum_effective_learning_rate": 0.0,
+        "multiplier": 0.0,
+        "multiplier_hex": "0x0.0p+0",
+        "optimizer_call_index": 1,
+        "scheduler_last_epoch_after": 1,
+        "scheduler_last_epoch_before": 0,
+        "scheduler_step_index_before": 0
+      },
+      {
+        "effective_learning_rate_hex": [
+          "0x1.0c6f7a0b5ed8dp-20"
+        ],
+        "effective_learning_rates": [
+          1e-06
+        ],
+        "maximum_effective_learning_rate": 1e-06,
+        "minimum_effective_learning_rate": 1e-06,
+        "multiplier": 1.0,
+        "multiplier_hex": "0x1.0000000000000p+0",
+        "optimizer_call_index": 2,
+        "scheduler_last_epoch_after": 2,
+        "scheduler_last_epoch_before": 1,
+        "scheduler_step_index_before": 1
+      }
+    ],
+    "total_steps": 2,
+    "trajectory_sha256": "d66e63511c274e4853e2a938223138abd9eb6bc639c4fd71f2cd61e0827e4b73",
+    "warmup_ratio": 0.05,
+    "warmup_steps": 1
+  },
+  "counted_training": {
+    "base_learning_rate": 1e-06,
+    "effective_learning_rate_hex_trajectory": [
+      "0x0.0p+0",
+      "0x1.0c6f7a0b5ed8dp-21",
+      "0x1.0c6f7a0b5ed8dp-20",
+      "0x1.0bb3402061a51p-20",
+      "0x1.0980a24ec638cp-20",
+      "0x1.05ddca9be2003p-20",
+      "0x1.00d4ebd8ff73dp-20",
+      "0x1.f4e84a1125c11p-21",
+      "0x1.e59ab385c61edp-21",
+      "0x1.d3ec001279097p-21",
+      "0x1.c00dc828d497fp-21",
+      "0x1.aa37c58e9199ap-21",
+      "0x1.92a737110e454p-21",
+      "0x1.799e34bd90897p-21",
+      "0x1.5f62f68016b26p-21",
+      "0x1.443f0f30a9cfbp-21",
+      "0x1.287e9e3797a1bp-21",
+      "0x1.0c6f7a0b5ed8dp-21",
+      "0x1.e0c0abbe4c200p-22",
+      "0x1.a93fc9cc27c3dp-22",
+      "0x1.72f7fb2d4dfe8p-22",
+      "0x1.3e817eb25a509p-22",
+      "0x1.0c6f7a0b5ed8fp-22",
+      "0x1.ba9cba20b0601p-23",
+      "0x1.6344afb7a4671p-23",
+      "0x1.13cbd01112a08p-23",
+      "0x1.9a220487bc96cp-24",
+      "0x1.1fb5502cbf848p-24",
+      "0x1.7351c64bec9f3p-25",
+      "0x1.a46bdbdf36273p-26",
+      "0x1.776bde4c5004fp-27",
+      "0x1.7873d5fa6772dp-29"
+    ],
+    "effective_learning_rate_trajectory": [
+      0.0,
+      5e-07,
+      1e-06,
+      9.972609476841365e-07,
+      9.890738003669027e-07,
+      9.755282581475767e-07,
+      9.567727288213004e-07,
+      9.330127018922193e-07,
+      9.045084971874737e-07,
+      8.71572412738697e-07,
+      8.34565303179429e-07,
+      7.938926261462365e-07,
+      7.5e-07,
+      7.033683215379002e-07,
+      6.545084971874736e-07,
+      6.039558454088795e-07,
+      5.522642316338268e-07,
+      5e-07,
+      4.477357683661733e-07,
+      3.960441545911204e-07,
+      3.454915028125263e-07,
+      2.966316784620999e-07,
+      2.500000000000001e-07,
+      2.0610737385376348e-07,
+      1.6543469682057104e-07,
+      1.284275872613028e-07,
+      9.549150281252632e-08,
+      6.698729810778064e-08,
+      4.322727117869951e-08,
+      2.4471741852423233e-08,
+      1.0926199633097154e-08,
+      2.739052315863355e-09
+    ],
+    "first_strictly_positive_optimizer_call_index": 2,
+    "optimizer_then_scheduler": true,
+    "rows": [
+      {
+        "effective_learning_rate_hex": [
+          "0x0.0p+0"
+        ],
+        "effective_learning_rates": [
+          0.0
+        ],
+        "maximum_effective_learning_rate": 0.0,
+        "minimum_effective_learning_rate": 0.0,
+        "multiplier": 0.0,
+        "multiplier_hex": "0x0.0p+0",
+        "optimizer_call_index": 1,
+        "scheduler_last_epoch_after": 1,
+        "scheduler_last_epoch_before": 0,
+        "scheduler_step_index_before": 0
+      },
+      {
+        "effective_learning_rate_hex": [
+          "0x1.0c6f7a0b5ed8dp-21"
+        ],
+        "effective_learning_rates": [
+          5e-07
+        ],
+        "maximum_effective_learning_rate": 5e-07,
+        "minimum_effective_learning_rate": 5e-07,
+        "multiplier": 0.5,
+        "multiplier_hex": "0x1.0000000000000p-1",
+        "optimizer_call_index": 2,
+        "scheduler_last_epoch_after": 2,
+        "scheduler_last_epoch_before": 1,
+        "scheduler_step_index_before": 1
+      },
+      {
+        "effective_learning_rate_hex": [
+          "0x1.0c6f7a0b5ed8dp-20"
+        ],
+        "effective_learning_rates": [
+          1e-06
+        ],
+        "maximum_effective_learning_rate": 1e-06,
+        "minimum_effective_learning_rate": 1e-06,
+        "multiplier": 1.0,
+        "multiplier_hex": "0x1.0000000000000p+0",
+        "optimizer_call_index": 3,
+        "scheduler_last_epoch_after": 3,
+        "scheduler_last_epoch_before": 2,
+        "scheduler_step_index_before": 2
+      },
+      {
+        "effective_learning_rate_hex": [
+          "0x1.0bb3402061a51p-20"
+        ],
+        "effective_learning_rates": [
+          9.972609476841365e-07
+        ],
+        "maximum_effective_learning_rate": 9.972609476841365e-07,
+        "minimum_effective_learning_rate": 9.972609476841365e-07,
+        "multiplier": 0.9972609476841365,
+        "multiplier_hex": "0x1.fe98fca7c33e2p-1",
+        "optimizer_call_index": 4,
+        "scheduler_last_epoch_after": 4,
+        "scheduler_last_epoch_before": 3,
+        "scheduler_step_index_before": 3
+      },
+      {
+        "effective_learning_rate_hex": [
+          "0x1.0980a24ec638cp-20"
+        ],
+        "effective_learning_rates": [
+          9.890738003669027e-07
+        ],
+        "maximum_effective_learning_rate": 9.890738003669027e-07,
+        "minimum_effective_learning_rate": 9.890738003669027e-07,
+        "multiplier": 0.9890738003669027,
+        "multiplier_hex": "0x1.fa67e193d003fp-1",
+        "optimizer_call_index": 5,
+        "scheduler_last_epoch_after": 5,
+        "scheduler_last_epoch_before": 4,
+        "scheduler_step_index_before": 4
+      },
+      {
+        "effective_learning_rate_hex": [
+          "0x1.05ddca9be2003p-20"
+        ],
+        "effective_learning_rates": [
+          9.755282581475767e-07
+        ],
+        "maximum_effective_learning_rate": 9.755282581475767e-07,
+        "minimum_effective_learning_rate": 9.755282581475767e-07,
+        "multiplier": 0.9755282581475767,
+        "multiplier_hex": "0x1.f378709a22a7fp-1",
+        "optimizer_call_index": 6,
+        "scheduler_last_epoch_after": 6,
+        "scheduler_last_epoch_before": 5,
+        "scheduler_step_index_before": 5
+      },
+      {
+        "effective_learning_rate_hex": [
+          "0x1.00d4ebd8ff73dp-20"
+        ],
+        "effective_learning_rates": [
+          9.567727288213004e-07
+        ],
+        "maximum_effective_learning_rate": 9.567727288213004e-07,
+        "minimum_effective_learning_rate": 9.567727288213004e-07,
+        "multiplier": 0.9567727288213004,
+        "multiplier_hex": "0x1.e9de1d77fbfcap-1",
+        "optimizer_call_index": 7,
+        "scheduler_last_epoch_after": 7,
+        "scheduler_last_epoch_before": 6,
+        "scheduler_step_index_before": 6
+      },
+      {
+        "effective_learning_rate_hex": [
+          "0x1.f4e84a1125c11p-21"
+        ],
+        "effective_learning_rates": [
+          9.330127018922193e-07
+        ],
+        "maximum_effective_learning_rate": 9.330127018922193e-07,
+        "minimum_effective_learning_rate": 9.330127018922193e-07,
+        "multiplier": 0.9330127018922194,
+        "multiplier_hex": "0x1.ddb3d742c2656p-1",
+        "optimizer_call_index": 8,
+        "scheduler_last_epoch_after": 8,
+        "scheduler_last_epoch_before": 7,
+        "scheduler_step_index_before": 7
+      },
+      {
+        "effective_learning_rate_hex": [
+          "0x1.e59ab385c61edp-21"
+        ],
+        "effective_learning_rates": [
+          9.045084971874737e-07
+        ],
+        "maximum_effective_learning_rate": 9.045084971874737e-07,
+        "minimum_effective_learning_rate": 9.045084971874737e-07,
+        "multiplier": 0.9045084971874737,
+        "multiplier_hex": "0x1.cf1bbcdcbfa54p-1",
+        "optimizer_call_index": 9,
+        "scheduler_last_epoch_after": 9,
+        "scheduler_last_epoch_before": 8,
+        "scheduler_step_index_before": 8
+      },
+      {
+        "effective_learning_rate_hex": [
+          "0x1.d3ec001279097p-21"
+        ],
+        "effective_learning_rates": [
+          8.71572412738697e-07
+        ],
+        "maximum_effective_learning_rate": 8.71572412738697e-07,
+        "minimum_effective_learning_rate": 8.71572412738697e-07,
+        "multiplier": 0.8715724127386971,
+        "multiplier_hex": "0x1.be3ebd419df61p-1",
+        "optimizer_call_index": 10,
+        "scheduler_last_epoch_after": 10,
+        "scheduler_last_epoch_before": 9,
+        "scheduler_step_index_before": 9
+      },
+      {
+        "effective_learning_rate_hex": [
+          "0x1.c00dc828d497fp-21"
+        ],
+        "effective_learning_rates": [
+          8.34565303179429e-07
+        ],
+        "maximum_effective_learning_rate": 8.34565303179429e-07,
+        "minimum_effective_learning_rate": 8.34565303179429e-07,
+        "multiplier": 0.8345653031794291,
+        "multiplier_hex": "0x1.ab4c24b7105ecp-1",
+        "optimizer_call_index": 11,
+        "scheduler_last_epoch_after": 11,
+        "scheduler_last_epoch_before": 10,
+        "scheduler_step_index_before": 10
+      },
+      {
+        "effective_learning_rate_hex": [
+          "0x1.aa37c58e9199ap-21"
+        ],
+        "effective_learning_rates": [
+          7.938926261462365e-07
+        ],
+        "maximum_effective_learning_rate": 7.938926261462365e-07,
+        "minimum_effective_learning_rate": 7.938926261462365e-07,
+        "multiplier": 0.7938926261462366,
+        "multiplier_hex": "0x1.96791823aad2fp-1",
+        "optimizer_call_index": 12,
+        "scheduler_last_epoch_after": 12,
+        "scheduler_last_epoch_before": 11,
+        "scheduler_step_index_before": 11
+      },
+      {
+        "effective_learning_rate_hex": [
+          "0x1.92a737110e454p-21"
+        ],
+        "effective_learning_rates": [
+          7.5e-07
+        ],
+        "maximum_effective_learning_rate": 7.5e-07,
+        "minimum_effective_learning_rate": 7.5e-07,
+        "multiplier": 0.75,
+        "multiplier_hex": "0x1.8000000000000p-1",
+        "optimizer_call_index": 13,
+        "scheduler_last_epoch_after": 13,
+        "scheduler_last_epoch_before": 12,
+        "scheduler_step_index_before": 12
+      },
+      {
+        "effective_learning_rate_hex": [
+          "0x1.799e34bd90897p-21"
+        ],
+        "effective_learning_rates": [
+          7.033683215379002e-07
+        ],
+        "maximum_effective_learning_rate": 7.033683215379002e-07,
+        "minimum_effective_learning_rate": 7.033683215379002e-07,
+        "multiplier": 0.7033683215379002,
+        "multiplier_hex": "0x1.681fe484186b5p-1",
+        "optimizer_call_index": 14,
+        "scheduler_last_epoch_after": 14,
+        "scheduler_last_epoch_before": 13,
+        "scheduler_step_index_before": 13
+      },
+      {
+        "effective_learning_rate_hex": [
+          "0x1.5f62f68016b26p-21"
+        ],
+        "effective_learning_rates": [
+          6.545084971874736e-07
+        ],
+        "maximum_effective_learning_rate": 6.545084971874736e-07,
+        "minimum_effective_learning_rate": 6.545084971874736e-07,
+        "multiplier": 0.6545084971874737,
+        "multiplier_hex": "0x1.4f1bbcdcbfa54p-1",
+        "optimizer_call_index": 15,
+        "scheduler_last_epoch_after": 15,
+        "scheduler_last_epoch_before": 14,
+        "scheduler_step_index_before": 14
+      },
+      {
+        "effective_learning_rate_hex": [
+          "0x1.443f0f30a9cfbp-21"
+        ],
+        "effective_learning_rates": [
+          6.039558454088795e-07
+        ],
+        "maximum_effective_learning_rate": 6.039558454088795e-07,
+        "minimum_effective_learning_rate": 6.039558454088795e-07,
+        "multiplier": 0.6039558454088796,
+        "multiplier_hex": "0x1.3539b35884b1ep-1",
+        "optimizer_call_index": 16,
+        "scheduler_last_epoch_after": 16,
+        "scheduler_last_epoch_before": 15,
+        "scheduler_step_index_before": 15
+      },
+      {
+        "effective_learning_rate_hex": [
+          "0x1.287e9e3797a1bp-21"
+        ],
+        "effective_learning_rates": [
+          5.522642316338268e-07
+        ],
+        "maximum_effective_learning_rate": 5.522642316338268e-07,
+        "minimum_effective_learning_rate": 5.522642316338268e-07,
+        "multiplier": 0.5522642316338268,
+        "multiplier_hex": "0x1.1ac2609b3c577p-1",
+        "optimizer_call_index": 17,
+        "scheduler_last_epoch_after": 17,
+        "scheduler_last_epoch_before": 16,
+        "scheduler_step_index_before": 16
+      },
+      {
+        "effective_learning_rate_hex": [
+          "0x1.0c6f7a0b5ed8dp-21"
+        ],
+        "effective_learning_rates": [
+          5e-07
+        ],
+        "maximum_effective_learning_rate": 5e-07,
+        "minimum_effective_learning_rate": 5e-07,
+        "multiplier": 0.5,
+        "multiplier_hex": "0x1.0000000000000p-1",
+        "optimizer_call_index": 18,
+        "scheduler_last_epoch_after": 18,
+        "scheduler_last_epoch_before": 17,
+        "scheduler_step_index_before": 17
+      },
+      {
+        "effective_learning_rate_hex": [
+          "0x1.e0c0abbe4c200p-22"
+        ],
+        "effective_learning_rates": [
+          4.477357683661733e-07
+        ],
+        "maximum_effective_learning_rate": 4.477357683661733e-07,
+        "minimum_effective_learning_rate": 4.477357683661733e-07,
+        "multiplier": 0.44773576836617335,
+        "multiplier_hex": "0x1.ca7b3ec987514p-2",
+        "optimizer_call_index": 19,
+        "scheduler_last_epoch_after": 19,
+        "scheduler_last_epoch_before": 18,
+        "scheduler_step_index_before": 18
+      },
+      {
+        "effective_learning_rate_hex": [
+          "0x1.a93fc9cc27c3dp-22"
+        ],
+        "effective_learning_rates": [
+          3.960441545911204e-07
+        ],
+        "maximum_effective_learning_rate": 3.960441545911204e-07,
+        "minimum_effective_learning_rate": 3.960441545911204e-07,
+        "multiplier": 0.3960441545911204,
+        "multiplier_hex": "0x1.958c994ef69c4p-2",
+        "optimizer_call_index": 20,
+        "scheduler_last_epoch_after": 20,
+        "scheduler_last_epoch_before": 19,
+        "scheduler_step_index_before": 19
+      },
+      {
+        "effective_learning_rate_hex": [
+          "0x1.72f7fb2d4dfe8p-22"
+        ],
+        "effective_learning_rates": [
+          3.454915028125263e-07
+        ],
+        "maximum_effective_learning_rate": 3.454915028125263e-07,
+        "minimum_effective_learning_rate": 3.454915028125263e-07,
+        "multiplier": 0.34549150281252633,
+        "multiplier_hex": "0x1.61c8864680b59p-2",
+        "optimizer_call_index": 21,
+        "scheduler_last_epoch_after": 21,
+        "scheduler_last_epoch_before": 20,
+        "scheduler_step_index_before": 20
+      },
+      {
+        "effective_learning_rate_hex": [
+          "0x1.3e817eb25a509p-22"
+        ],
+        "effective_learning_rates": [
+          2.966316784620999e-07
+        ],
+        "maximum_effective_learning_rate": 2.966316784620999e-07,
+        "minimum_effective_learning_rate": 2.966316784620999e-07,
+        "multiplier": 0.2966316784620999,
+        "multiplier_hex": "0x1.2fc036f7cf298p-2",
+        "optimizer_call_index": 22,
+        "scheduler_last_epoch_after": 22,
+        "scheduler_last_epoch_before": 21,
+        "scheduler_step_index_before": 21
+      },
+      {
+        "effective_learning_rate_hex": [
+          "0x1.0c6f7a0b5ed8fp-22"
+        ],
+        "effective_learning_rates": [
+          2.500000000000001e-07
+        ],
+        "maximum_effective_learning_rate": 2.500000000000001e-07,
+        "minimum_effective_learning_rate": 2.500000000000001e-07,
+        "multiplier": 0.2500000000000001,
+        "multiplier_hex": "0x1.0000000000002p-2",
+        "optimizer_call_index": 23,
+        "scheduler_last_epoch_after": 23,
+        "scheduler_last_epoch_before": 22,
+        "scheduler_step_index_before": 22
+      },
+      {
+        "effective_learning_rate_hex": [
+          "0x1.ba9cba20b0601p-23"
+        ],
+        "effective_learning_rates": [
+          2.0610737385376348e-07
+        ],
+        "maximum_effective_learning_rate": 2.0610737385376348e-07,
+        "minimum_effective_learning_rate": 2.0610737385376348e-07,
+        "multiplier": 0.2061073738537635,
+        "multiplier_hex": "0x1.a61b9f7154b46p-3",
+        "optimizer_call_index": 24,
+        "scheduler_last_epoch_after": 24,
+        "scheduler_last_epoch_before": 23,
+        "scheduler_step_index_before": 23
+      },
+      {
+        "effective_learning_rate_hex": [
+          "0x1.6344afb7a4671p-23"
+        ],
+        "effective_learning_rates": [
+          1.6543469682057104e-07
+        ],
+        "maximum_effective_learning_rate": 1.6543469682057104e-07,
+        "minimum_effective_learning_rate": 1.6543469682057104e-07,
+        "multiplier": 0.16543469682057105,
+        "multiplier_hex": "0x1.52cf6d23be856p-3",
+        "optimizer_call_index": 25,
+        "scheduler_last_epoch_after": 25,
+        "scheduler_last_epoch_before": 24,
+        "scheduler_step_index_before": 24
+      },
+      {
+        "effective_learning_rate_hex": [
+          "0x1.13cbd01112a08p-23"
+        ],
+        "effective_learning_rates": [
+          1.284275872613028e-07
+        ],
+        "maximum_effective_learning_rate": 1.284275872613028e-07,
+        "minimum_effective_learning_rate": 1.284275872613028e-07,
+        "multiplier": 0.12842758726130282,
+        "multiplier_hex": "0x1.07050af98827ap-3",
+        "optimizer_call_index": 26,
+        "scheduler_last_epoch_after": 26,
+        "scheduler_last_epoch_before": 25,
+        "scheduler_step_index_before": 25
+      },
+      {
+        "effective_learning_rate_hex": [
+          "0x1.9a220487bc96cp-24"
+        ],
+        "effective_learning_rates": [
+          9.549150281252632e-08
+        ],
+        "maximum_effective_learning_rate": 9.549150281252632e-08,
+        "minimum_effective_learning_rate": 9.549150281252632e-08,
+        "multiplier": 0.09549150281252633,
+        "multiplier_hex": "0x1.8722191a02d64p-4",
+        "optimizer_call_index": 27,
+        "scheduler_last_epoch_after": 27,
+        "scheduler_last_epoch_before": 26,
+        "scheduler_step_index_before": 26
+      },
+      {
+        "effective_learning_rate_hex": [
+          "0x1.1fb5502cbf848p-24"
+        ],
+        "effective_learning_rates": [
+          6.698729810778064e-08
+        ],
+        "maximum_effective_learning_rate": 6.698729810778064e-08,
+        "minimum_effective_learning_rate": 6.698729810778064e-08,
+        "multiplier": 0.06698729810778065,
+        "multiplier_hex": "0x1.126145e9ecd54p-4",
+        "optimizer_call_index": 28,
+        "scheduler_last_epoch_after": 28,
+        "scheduler_last_epoch_before": 27,
+        "scheduler_step_index_before": 27
+      },
+      {
+        "effective_learning_rate_hex": [
+          "0x1.7351c64bec9f3p-25"
+        ],
+        "effective_learning_rates": [
+          4.322727117869951e-08
+        ],
+        "maximum_effective_learning_rate": 4.322727117869951e-08,
+        "minimum_effective_learning_rate": 4.322727117869951e-08,
+        "multiplier": 0.04322727117869951,
+        "multiplier_hex": "0x1.621e288040350p-5",
+        "optimizer_call_index": 29,
+        "scheduler_last_epoch_after": 29,
+        "scheduler_last_epoch_before": 28,
+        "scheduler_step_index_before": 28
+      },
+      {
+        "effective_learning_rate_hex": [
+          "0x1.a46bdbdf36273p-26"
+        ],
+        "effective_learning_rates": [
+          2.4471741852423233e-08
+        ],
+        "maximum_effective_learning_rate": 2.4471741852423233e-08,
+        "minimum_effective_learning_rate": 2.4471741852423233e-08,
+        "multiplier": 0.024471741852423234,
+        "multiplier_hex": "0x1.90f1ecbbab010p-6",
+        "optimizer_call_index": 30,
+        "scheduler_last_epoch_after": 30,
+        "scheduler_last_epoch_before": 29,
+        "scheduler_step_index_before": 29
+      },
+      {
+        "effective_learning_rate_hex": [
+          "0x1.776bde4c5004fp-27"
+        ],
+        "effective_learning_rates": [
+          1.0926199633097154e-08
+        ],
+        "maximum_effective_learning_rate": 1.0926199633097154e-08,
+        "minimum_effective_learning_rate": 1.0926199633097154e-08,
+        "multiplier": 0.010926199633097156,
+        "multiplier_hex": "0x1.66079b0bff000p-7",
+        "optimizer_call_index": 31,
+        "scheduler_last_epoch_after": 31,
+        "scheduler_last_epoch_before": 30,
+        "scheduler_step_index_before": 30
+      },
+      {
+        "effective_learning_rate_hex": [
+          "0x1.7873d5fa6772dp-29"
+        ],
+        "effective_learning_rates": [
+          2.739052315863355e-09
+        ],
+        "maximum_effective_learning_rate": 2.739052315863355e-09,
+        "minimum_effective_learning_rate": 2.739052315863355e-09,
+        "multiplier": 0.002739052315863355,
+        "multiplier_hex": "0x1.6703583cc1d00p-9",
+        "optimizer_call_index": 32,
+        "scheduler_last_epoch_after": 32,
+        "scheduler_last_epoch_before": 31,
+        "scheduler_step_index_before": 31
+      }
+    ],
+    "total_steps": 32,
+    "trajectory_sha256": "5274802d44d7f4a414641fe3c60dadc91e69a0d879add0d39894d6306af34964",
+    "warmup_ratio": 0.05,
+    "warmup_steps": 2
+  },
+  "optimizer_then_scheduler_order": [
+    "callback_on_pre_optimizer_step",
+    "optimizer_step",
+    "callback_on_optimizer_step",
+    "scheduler_step",
+    "trainer_global_step_increment",
+    "callback_on_step_end"
+  ],
+  "scheduler_contract_id": "foundry-l3-grpo-frozen-cosine-trajectory-v1",
+  "scheduler_contract_sha256": "bb5653da70a6af842cc06599b4bb15f87cc031e09c836527f79032c4910b020a",
+  "schema_version": 1,
+  "torch_source_files": {
+    "lr_scheduler.py": {
+      "bytes": 86868,
+      "path": "C:\\Users\\Admin\\Projects\\Foundry\\.venv-training\\Lib\\site-packages\\torch\\optim\\lr_scheduler.py",
+      "sha256": "11fd39e690f8a64c6ff55aeee5da66cb82b9e47aae5a300227df64a89b2c563a"
+    },
+    "optimizer.py": {
+      "bytes": 45827,
+      "path": "C:\\Users\\Admin\\Projects\\Foundry\\.venv-training\\Lib\\site-packages\\torch\\optim\\optimizer.py",
+      "sha256": "d2cb89319cfb3bef9ea9cf09e727653bf07108b2fc5d74c06441486f92f090fe"
+    }
+  },
+  "torch_version": "2.5.1+cu121",
+  "transformers_source_files": {
+    "optimization.py": {
+      "bytes": 36441,
+      "path": "C:\\Users\\Admin\\Projects\\Foundry\\.venv-training\\Lib\\site-packages\\transformers\\optimization.py",
+      "sha256": "9554c7839c5163896a4a93c0ef259ee001ea0b83647b2f8e2986d4b35213ec8a"
+    },
+    "trainer.py": {
+      "bytes": 259665,
+      "path": "C:\\Users\\Admin\\Projects\\Foundry\\.venv-training\\Lib\\site-packages\\transformers\\trainer.py",
+      "sha256": "e94c52cc433a73579653238a5e4409114d13209496157ef57038ebba422598bc"
+    },
+    "training_args.py": {
+      "bytes": 159218,
+      "path": "C:\\Users\\Admin\\Projects\\Foundry\\.venv-training\\Lib\\site-packages\\transformers\\training_args.py",
+      "sha256": "b220831249f2c79603e48056d8a26154af1070b0d5c5205914d2cd66ac7bc76e"
+    }
+  },
+  "transformers_version": "4.51.3"
+}

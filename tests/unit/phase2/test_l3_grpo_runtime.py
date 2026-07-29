@@ -199,3 +199,10 @@ def test_counted_gradient_gate_still_rejects_all_zero_policy_gradient() -> None:
     )
     with pytest.raises(RuntimeError, match="all zero"):
         l3_grpo_runtime._assert_gradient_ownership(model, torch)
+
+
+def test_runtime_cli_requires_warmup_contract_and_partial_evidence() -> None:
+    parser = l3_grpo_runtime._parser()
+    destinations = {action.dest for action in parser._actions}
+    assert "warmup_update_contract" in destinations
+    assert "partial_evidence" in destinations

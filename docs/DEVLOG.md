@@ -4594,3 +4594,43 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
 - **Next action:** Publish and synchronize the verified blocker using
   `analysis: stop L3 GRPO after corrected signal audit`, then stop for project-level GRPO
   interpretation. Do not retry without new authorization.
+
+### 2026-07-29 - Milestone 14B-R2 froze warmup-aware update validation
+
+- **General correction:** The update validator now records Trainer/global-step,
+  optimizer-call, scheduler-step, every effective policy learning rate, rewards,
+  advantages, gradients, policy deltas, optimizer-state deltas, and frozen
+  reference/base identities around every optimizer call. It classifies exactly six
+  outcomes and accepts a zero-parameter-delta informative step only when every
+  effective learning rate is exactly zero. Any informative positive-learning-rate
+  no-update remains terminal.
+- **Installed scheduler contract:** The pinned Transformers/PyTorch sources produce
+  one warmup step for the two-step compatibility run and two warmup steps for the
+  32-step counted run. The exact compatibility LR sequence is `[0.0, 1e-6]`; the
+  first strictly positive optimizer call is index 2 in both trajectories. Scheduler
+  contract SHA-256 is
+  `bb5653da70a6af842cc06599b4bb15f87cc031e09c836527f79032c4910b020a`;
+  the counted trajectory SHA-256 is
+  `5274802d44d7f4a414641fe3c60dadc91e69a0d879add0d39894d6306af34964`.
+- **Frozen implementation:** The 33-row implementation/dependency manifest hashes to
+  `28bfb146e2d8fe30f5125d80e2d3e8a792448560bc4c740538787b1c56429ab8`.
+  Fourteen model-free fixtures hash to
+  `23cd974ecff6e343efde2f997646de662bae8c0edae15a1ed8934b5133f9602c`;
+  the replay-then-task compatibility order hashes to
+  `7fc2d155ce78695967ccb6079e9558c8574bb51deadadfe57fea1b5ffd648a32`;
+  and the complete warmup-aware contract hashes to
+  `e929b7cb0ce0e1e1d03936e1f899d59f9ff2eca1fa01c72a36efd778de325a89`.
+- **Verification:** Ruff format-check covers 382 files, Ruff lint is clean, strict
+  Mypy passes all 213 source files, 125 focused GRPO tests pass, and all 1,114
+  repository tests pass in 114.97 seconds. Both authorized environments pass
+  `pip check`, and the complete freeze reconstructs byte-for-byte.
+- **Discarded model-free attempts:** Two initial freeze invocations stopped before
+  artifact creation because the source-boundary allowlist omitted one layered test
+  and the first Git porcelain row had lost its leading status-space in a trimming
+  helper. The guard was made explicit and regression-tested. Neither attempt loaded
+  a model, generated a completion, constructed an optimizer, or created scientific
+  evidence.
+- **Next action:** Publish and push
+  `fix: validate L3 GRPO update at positive learning rate`; only that synchronized,
+  clean commit may launch generic smoke, its exact duplicate, targeted smoke, and
+  its exact duplicate.
