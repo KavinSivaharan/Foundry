@@ -125,6 +125,14 @@ def test_exact_layer1_and_exact_layer2_roles_pass(tmp_path: Path) -> None:
         require_clean_synchronized=False,
     )
     assert result["current_execution_source_matches_fix_commit"] is True
+    first = layer2["files"][0]
+    assert set(first) == {
+        "path",
+        "execution_bytes",
+        "execution_sha256",
+        "git_blob_bytes",
+        "git_blob_sha256",
+    }
 
 
 def test_one_byte_layer1_evidence_mutation_fails() -> None:

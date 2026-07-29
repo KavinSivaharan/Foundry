@@ -4701,7 +4701,8 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
   Layer 2.
 - **Pre-model verification:** Ruff format-check covers 385 files, Ruff lint is clean, strict
   Mypy passes all 215 source files, 147 L3 GRPO tests pass, and all 1,136 repository tests pass
-  in 135.32 seconds. Both authorized environments pass `pip check`. Independent reconstruction
+  in 145.10 seconds on the final corrected source. Both authorized environments pass
+  `pip check`. Independent reconstruction
   confirms the seven-file 3,098,955,668-byte model snapshot, dataset and all six split/manifest
   hashes, both starting adapters, both 32-group schedules at exactly 2,638 prompt tokens,
   reward/reference/signal/scheduler identities, and the exact 37-field process environment.
@@ -4712,6 +4713,12 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
   another import-closure probe started from the repository root instead of `src` and stopped
   with `ModuleNotFoundError`. Neither imported project model code, loaded a model, generated
   completions, created an optimizer, or wrote scientific evidence.
+- **Discarded first freeze:** The first post-commit manifest freeze stopped before writing any
+  artifact because clean Windows working-tree CRLF bytes in `pyproject.toml` correctly differed
+  from Git's normalized LF blob bytes. The manifest now binds exact execution bytes and exact
+  Git-blob bytes independently while requiring Git clean-content equivalence. This preserves
+  both byte identities instead of normalizing, ignoring, or downgrading either check. No model
+  module, model, generation, optimizer, scheduler, or scientific output was created.
 - **Next action:** Complete repository-wide pre-model verification, publish
   `fix: version L3 GRPO source binding`, freeze that synchronized commit and tree in the two
   manifests, and only then run the four ordered no-retry compatibility processes.

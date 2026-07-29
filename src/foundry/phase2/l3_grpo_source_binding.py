@@ -327,6 +327,27 @@ def _row(root: Path, relative: str) -> dict[str, object]:
     }
 
 
+def _layer2_row(root: Path, commit: str, relative: str) -> dict[str, object]:
+    execution = _row(root, relative)
+    blob = _git_bytes(root, commit, relative)
+    diff = subprocess.run(
+        ["git", "diff", "--quiet", commit, "--", relative],
+        cwd=root,
+        shell=False,
+        check=False,
+        creationflags=subprocess.CREATE_NO_WINDOW,
+    )
+    if diff.returncode != 0:
+        raise ValueError(f"Layer-2 source differs logically from fix commit: {relative}")
+    return {
+        "path": relative,
+        "execution_bytes": execution["bytes"],
+        "execution_sha256": execution["sha256"],
+        "git_blob_bytes": len(blob),
+        "git_blob_sha256": canonical_file_sha256(blob),
+    }
+
+
 def _verify_historical_rows(
     root: Path,
     rows: Sequence[Mapping[str, Any]],
@@ -566,12 +587,7 @@ def build_layer2_manifest(root: Path, *, source_commit: str) -> dict[str, object
     """Build the current authorized compatibility-runtime layer."""
 
     source_tree = _git(root, "rev-parse", f"{source_commit}^{{tree}}")
-    rows = [_row(root, relative) for relative in LAYER2_PATHS]
-    for row in rows:
-        relative = cast(str, row["path"])
-        content = _git_bytes(root, source_commit, relative)
-        if len(content) != row["bytes"] or canonical_file_sha256(content) != row["sha256"]:
-            raise ValueError(f"Layer-2 source differs from fix commit: {relative}")
+    rows = [_layer2_row(root, source_commit, relative) for relative in LAYER2_PATHS]
     environment = _read(root / "results/phase2_vetted_corpus/windows_operational_environment.json")
     _verify(environment, "environment_evidence_sha256")
     if (
@@ -589,6 +605,28 @@ def build_layer2_manifest(root: Path, *, source_commit: str) -> dict[str, object
         "ordered_paths": list(LAYER2_PATHS),
         "files": rows,
         "combined_source_sha256": canonical_sha256(rows),
+        "combined_execution_source_sha256": canonical_sha256(
+            [
+                {
+                    "path": row["path"],
+                    "bytes": row["execution_bytes"],
+                    "sha256": row["execution_sha256"],
+                }
+                for row in rows
+            ]
+        ),
+        "combined_git_blob_source_sha256": canonical_sha256(
+            [
+                {
+                    "path": row["path"],
+                    "bytes": row["git_blob_bytes"],
+                    "sha256": row["git_blob_sha256"],
+                }
+                for row in rows
+            ]
+        ),
+        "windows_line_ending_binding": "execution_and_git_blob_bytes_bound_independently",
+        "git_clean_content_equivalence_required": True,
         "python_import_root": str((root / "src").resolve()),
         "python_import_root_sha256": canonical_sha256(str((root / "src").resolve())),
         "command_templates": {
@@ -640,6 +678,7 @@ def build_fixture_record() -> dict[str, object]:
         "source_checks_not_downgraded",
         "binding_mismatch_precedes_model_import",
         "published_environment_reconstructs",
+        "windows_execution_and_git_blob_bytes_bound_independently",
     ]
     record: dict[str, object] = {
         "schema_version": 1,
@@ -921,6 +960,9 @@ def verify_layer2_manifest(
         or value.get("environment_v2_contract_sha256") != ENVIRONMENT_V2_CONTRACT_SHA256
         or value.get("warmup_update_contract_sha256") != R2_WARMUP_CONTRACT_SHA256
         or value.get("command_templates") != expected_templates
+        or value.get("windows_line_ending_binding")
+        != "execution_and_git_blob_bytes_bound_independently"
+        or value.get("git_clean_content_equivalence_required") is not True
         or value.get("scientific_settings_changed") is not False
         or value.get("source_checks_warning_only") is not False
         or value.get("shell") is not False
@@ -946,15 +988,37 @@ def verify_layer2_manifest(
         if row.get("path") != relative:
             raise ValueError("Layer-2 source order differs")
         current = _row(root, relative)
-        if current != dict(row):
+        if current.get("bytes") != row.get("execution_bytes") or current.get("sha256") != row.get(
+            "execution_sha256"
+        ):
             raise ValueError("Layer-2 current source differs")
         historical = _git_bytes(root, expected_commit, relative)
-        if len(historical) != row.get("bytes") or canonical_file_sha256(historical) != row.get(
-            "sha256"
-        ):
+        if len(historical) != row.get("git_blob_bytes") or canonical_file_sha256(
+            historical
+        ) != row.get("git_blob_sha256"):
             raise ValueError("Layer-2 fix-commit source differs")
     if value.get("combined_source_sha256") != canonical_sha256(rows):
         raise ValueError("Layer-2 combined source hash differs")
+    execution_rows = [
+        {
+            "path": row["path"],
+            "bytes": row["execution_bytes"],
+            "sha256": row["execution_sha256"],
+        }
+        for row in rows
+    ]
+    blob_rows = [
+        {
+            "path": row["path"],
+            "bytes": row["git_blob_bytes"],
+            "sha256": row["git_blob_sha256"],
+        }
+        for row in rows
+    ]
+    if value.get("combined_execution_source_sha256") != canonical_sha256(
+        execution_rows
+    ) or value.get("combined_git_blob_source_sha256") != canonical_sha256(blob_rows):
+        raise ValueError("Layer-2 execution or Git-blob source hash differs")
     diff = subprocess.run(
         ["git", "diff", "--quiet", expected_commit, "HEAD", "--", *LAYER2_PATHS],
         cwd=root,
