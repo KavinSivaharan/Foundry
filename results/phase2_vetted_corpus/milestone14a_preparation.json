@@ -1,0 +1,22 @@
+{
+  "experiment_contract_sha256": "e6251e35cd0397c1bad890c318f50928bd106bca323c3c72490895eb4a58041e",
+  "generic_manifest_sha256": "ff1005a1d7381acd52dd28b3d054b2979986c47595ed09c944880ea5fc5f5ff3",
+  "implementation_sha256": "63631afa3abb5d0faf2a73decf9a96285d9cbfff789a47806b009c3d8b672eae",
+  "model_generation_calls": 0,
+  "paired_schedule_sha256": "ed99aa38f77961fa1f669ba110cd86b3af092e027a60b8e92096a9a68bdfc8e3",
+  "preimport_evidence_sha256": "931ed014d8dc4b260bb13be521380c19d183ceb289a6d341a7fa20d2297ec9e0",
+  "preparation_id": "foundry-milestone14a-pre-generation-freeze-v1",
+  "preparation_sha256": "85b352fdc7dfed9f13cb42a9fb401b89c9189c76790668653297160d394d44e3",
+  "prompt_packets": {
+    "generic": "16fd413df08ecafbc46e5a02d71c39d99de85795942e1b7dc0a4ca22018813c6",
+    "targeted": "9a6197aedf8cec20f5baa1dd8f7deda3bdaa680e8d3d10d9f8d3380d15e5daa2"
+  },
+  "recipe_sha256": "0c3280d81d60e76e3f58e9ae44a62b378540ae9d92d277606ba021e688403641",
+  "reference_mechanism_sha256": "674b368105f08b0e1eb00f54c6912f611da730ed070f60c63989de996ecb0316",
+  "reward_contract_sha256": "441933982c2b51b49195763440c318893cea22af947c9efc50b732d05fee7b61",
+  "schema_version": 1,
+  "scientific_settings_frozen": true,
+  "shared_replay_sha256": "19e27fecde5349b6a7a9a24d8a0a8211a3b0da877282a51ece6b616688904181",
+  "starting_state_sha256": "3abc9e856f7fc6904aa6621ab2e7cd44481afb18254223cc4cb1ee884da6bca4",
+  "targeted_manifest_sha256": "8326c1b91ba127c4734527abfed2f8bca41ecbb3a0bb7bc62a5bf940ac24f0c4"
+}

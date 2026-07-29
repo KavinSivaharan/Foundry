@@ -1,0 +1,94 @@
+{
+  "positions": [
+    4,
+    8,
+    12,
+    16,
+    20,
+    24,
+    28,
+    32
+  ],
+  "prompts_answers_or_outputs_present": false,
+  "record_count": 8,
+  "records": [
+    {
+      "position": 4,
+      "prompt_sha256": "0a9209d0c04326e6a405bc41b4f6c974009dca65f21891beebc2f77d4faa2044",
+      "prompt_tokens": 53,
+      "provenance_sha256": "8e99393a038b373195fe5c0130225f390f6ed5f4a017b4e8ae56889fe33db903",
+      "scorer_sha256": "00408c3512f2a3426a0194ca0be0a359f9df3901143d9f76d23ba3675e636e67",
+      "section": "format",
+      "source_id": "anchor-format-003"
+    },
+    {
+      "position": 8,
+      "prompt_sha256": "1f9af09c37f911bd5b0326b2282c188a1c42f7d5871f326c8178d0d209a4d07d",
+      "prompt_tokens": 73,
+      "provenance_sha256": "67f3b2b64ab228dfcbdc0d8c918edf882d388eced7ccfd0d6c1437b1e155997a",
+      "scorer_sha256": "a540fe2b0ed8fc60bf1ca6a2dff0d642ff742b876725ca89f6d19f29da7ae4b7",
+      "section": "arithmetic",
+      "source_id": "anchor-arithmetic-001"
+    },
+    {
+      "position": 12,
+      "prompt_sha256": "a67f60ded7256529a112999add1cecf5cc74bc58be88b208c965f80ea0597b0a",
+      "prompt_tokens": 67,
+      "provenance_sha256": "02b9419b31a7fde2acb6a9b58445b239ae29ba97318e35d44376659b6146e554",
+      "scorer_sha256": "497c923ebcd54b7077f77fe347b192c5f9055bc5e6aefc1c84bd1575cd2a04e0",
+      "section": "instruction",
+      "source_id": "anchor-instruction-037"
+    },
+    {
+      "position": 16,
+      "prompt_sha256": "f0eb366e797149c33934819ffe5f42752f9c64feedb240f556e95ff7b42691ea",
+      "prompt_tokens": 70,
+      "provenance_sha256": "aa5c05dbbc06097d768f5fb957bae2e381d4417d20a491e876bfb31ef39b8a39",
+      "scorer_sha256": "b45f7757bbb501f2d8ce8570f75403e091a32dfd1b08d0c3002e5176a2c006ff",
+      "section": "arithmetic",
+      "source_id": "anchor-arithmetic-024"
+    },
+    {
+      "position": 20,
+      "prompt_sha256": "36ebedf895f35471644d4cf0fe20758ffe8ada9956318e9b70a81d5262b4ff36",
+      "prompt_tokens": 58,
+      "provenance_sha256": "5c287db26de5115e70328ebb3fee4908be4228ed809198d9a8d514f0e389e029",
+      "scorer_sha256": "4d7e4fd27d68b9d90a0a64ff7393f32a96e35d6a9541cc78ef17929f52993e2d",
+      "section": "instruction",
+      "source_id": "anchor-instruction-008"
+    },
+    {
+      "position": 24,
+      "prompt_sha256": "ffe1c2fe79725d66c310d97a04cb73a75a25f8789ffc8842cc70be42fbdd0350",
+      "prompt_tokens": 69,
+      "provenance_sha256": "6896258d090b12cbc8da5621f664d4d9c1182b8b74bf1956d0f63658173ef436",
+      "scorer_sha256": "a3e249af4f1bac9929f7c46326da79bba428b9a3c5435c79062008cb54e417cb",
+      "section": "arithmetic",
+      "source_id": "anchor-arithmetic-020"
+    },
+    {
+      "position": 28,
+      "prompt_sha256": "f767cce8237eda3fe462198b9973fc99254743959de566e2888cd9343551784e",
+      "prompt_tokens": 68,
+      "provenance_sha256": "8a04ccde8bb7f530ef30299ffdf1515956241275c4b6128977eaf35a6e437537",
+      "scorer_sha256": "561659936a8f8ec856e78c5912f706f0a2fe525766b14242048f4eb033557327",
+      "section": "instruction",
+      "source_id": "anchor-instruction-026"
+    },
+    {
+      "position": 32,
+      "prompt_sha256": "f616bc55e3e8df24670668527b27992b4efa39396141af6446077066508dcb4a",
+      "prompt_tokens": 59,
+      "provenance_sha256": "2bb73dd33aa7b2db32ab0b3f1ca2999b55ed20691bf9391fd6ba3abea291c42e",
+      "scorer_sha256": "03ba48b2f3b6813447b635b8e7da305fb7cc0991a423f5718016dcd3852b15c6",
+      "section": "format",
+      "source_id": "anchor-format-014"
+    }
+  ],
+  "same_ids_positions_order_and_scorers": true,
+  "schedule_id": "foundry-l3-verifier-grpo-v1",
+  "schema_version": 1,
+  "selection": "deterministic_frozen_base_behavior_replay",
+  "shared_replay_sha256": "19e27fecde5349b6a7a9a24d8a0a8211a3b0da877282a51ece6b616688904181",
+  "source_corpus_file_sha256": "a9f25258d23f05a785dfea9f8ae0e05a246b52c9798a0d10e683fdc4e01a87f6"
+}

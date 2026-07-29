@@ -1,0 +1,86 @@
+{
+  "files": [
+    {
+      "bytes": 17165,
+      "path": "src/foundry/phase2/l3_grpo_contract.py",
+      "sha256": "b8a611d0ebd139dc195102d30c159266316eeb75d501f67548140ec7b94219b0"
+    },
+    {
+      "bytes": 11823,
+      "path": "src/foundry/phase2/l3_grpo_reference.py",
+      "sha256": "c3173035e5d77a859a313506bc2d32c6ba032195b23d234e8ce7c0c6e7694f71"
+    },
+    {
+      "bytes": 19110,
+      "path": "src/foundry/phase2/l3_grpo_reward.py",
+      "sha256": "448574e61ff74c40b026dd493b9773023c92eb7f4dbaccb5dfbf511be1e68e66"
+    },
+    {
+      "bytes": 91194,
+      "path": "src/foundry/phase2/l3_grpo_runtime.py",
+      "sha256": "05e9c4a9a0cedb976a1740b3349128b78ee62eeb592ec15d11cecf364936fe2d"
+    },
+    {
+      "bytes": 28901,
+      "path": "src/foundry/phase2/l3_grpo_schedule.py",
+      "sha256": "4475e29a30856e96a4a7cae6d9a92d0c04ac7505e33de11b5ae79e52a2a9f255"
+    },
+    {
+      "bytes": 5988,
+      "path": "src/foundry/phase2/l3_grpo_prepare.py",
+      "sha256": "aeffeb785d6baca9f7609861b20f0a273ccd1f70673198c86ad23c73ecde85bf"
+    },
+    {
+      "bytes": 29520,
+      "path": "src/foundry/phase2/l3_grpo_analysis.py",
+      "sha256": "f125cdd7eb29623c9aa88947fa9f04169c6a8027bbd78688dc9fb94542906c9b"
+    },
+    {
+      "bytes": 16289,
+      "path": "src/foundry/phase2/l3_grpo_campaign.py",
+      "sha256": "a09ce80870097d0c7e3dd511ffbc042af232222768dbb8e8d38afb1b1e8e8973"
+    },
+    {
+      "bytes": 2077,
+      "path": "tests/unit/phase2/test_l3_grpo_contract.py",
+      "sha256": "2e96911be315e637178de56f5772ce24b0bd60a16138ecca8f99bc5eecec5b5d"
+    },
+    {
+      "bytes": 1428,
+      "path": "tests/unit/phase2/test_l3_grpo_reference.py",
+      "sha256": "c53838d30885d8f10534802ecd1d08222e5b4122e6d070a441dda2042ff2f566"
+    },
+    {
+      "bytes": 2460,
+      "path": "tests/unit/phase2/test_l3_grpo_reward.py",
+      "sha256": "34f78499d18a241e43f243e91f0d6727c7908eccd0fd5568af51cc938f805166"
+    },
+    {
+      "bytes": 5380,
+      "path": "tests/unit/phase2/test_l3_grpo_runtime.py",
+      "sha256": "62e74aa864259c1eac58e1578bd3d6706a8d9dc964cab97c61779af5dc3329bf"
+    },
+    {
+      "bytes": 4752,
+      "path": "tests/unit/phase2/test_l3_grpo_schedule.py",
+      "sha256": "9d994858ded0f5de2d6654831a27bbbb95d48b07f55a709be905acc9f3572522"
+    },
+    {
+      "bytes": 1575,
+      "path": "tests/unit/phase2/test_l3_grpo_analysis.py",
+      "sha256": "e3267b518ced8e61e0132a50bd0e85444d4e6a6b9c3dab588832cbb300e65daf"
+    },
+    {
+      "bytes": 2019,
+      "path": "tests/unit/phase2/test_l3_grpo_campaign.py",
+      "sha256": "21b51701dd3995fa6b48be4011f1de6d253c1f39031be3a7df67b9f26ae7efa8"
+    }
+  ],
+  "implementation_id": "foundry-l3-verifier-grpo-implementation-v1",
+  "implementation_sha256": "63631afa3abb5d0faf2a73decf9a96285d9cbfff789a47806b009c3d8b672eae",
+  "official_smoke_retry_allowed": false,
+  "schema_version": 1,
+  "scientific_settings_frozen_before_generation": true,
+  "source_file_count": 8,
+  "test_file_count": 7
+}

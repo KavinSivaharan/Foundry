@@ -1,0 +1,48 @@
+{
+  "arms": [
+    "generic",
+    "targeted"
+  ],
+  "checkpoint_steps": [
+    8,
+    16,
+    32
+  ],
+  "completions_per_arm": 128,
+  "completions_per_group": 4,
+  "dataset_sha256": "ee18f7f9bd7625469d83e1c1df8dad4db0ecf8b3d8c870a07c60f2808e11dc31",
+  "exact_group_and_completion_parity": true,
+  "generic_manifest_sha256": "ff1005a1d7381acd52dd28b3d054b2979986c47595ed09c944880ea5fc5f5ff3",
+  "generic_prompt_tokens": 2638,
+  "generic_task_quotas": {
+    "constraint_distribution_or_discrete_reasoning": 8,
+    "multi_step_bookkeeping_or_omission": 8,
+    "rate_ratio_percentage_or_average": 8
+  },
+  "groups_per_arm": 32,
+  "gsm1k_prompt_use": 0,
+  "holdout_v2_prompt_use": 0,
+  "model_outputs_observed_during_scheduling": false,
+  "optimizer_steps_per_arm": 32,
+  "paired_schedule_sha256": "ed99aa38f77961fa1f669ba110cd86b3af092e027a60b8e92096a9a68bdfc8e3",
+  "prompt_token_absolute_difference": 0,
+  "prompt_token_parity_maximum": 0.01,
+  "prompt_token_parity_passed": true,
+  "prompt_token_parity_ratio": 0.0,
+  "prompts_answers_or_outputs_present": false,
+  "replay_groups_per_arm": 8,
+  "same_replay_ids_positions_order_and_scorers": true,
+  "schedule_id": "foundry-l3-verifier-grpo-v1",
+  "schema_version": 1,
+  "sealed_content_use": 0,
+  "seed": 20260720,
+  "shared_replay_sha256": "19e27fecde5349b6a7a9a24d8a0a8211a3b0da877282a51ece6b616688904181",
+  "targeted_manifest_sha256": "8326c1b91ba127c4734527abfed2f8bca41ecbb3a0bb7bc62a5bf940ac24f0c4",
+  "targeted_prompt_tokens": 2638,
+  "targeted_task_quotas": {
+    "constraint_distribution_or_discrete_reasoning": 5,
+    "multi_step_bookkeeping_or_omission": 13,
+    "rate_ratio_percentage_or_average": 6
+  },
+  "task_groups_per_arm": 24
+}

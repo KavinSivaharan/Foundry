@@ -1,0 +1,369 @@
+{
+  "arm": "generic",
+  "checkpoint_steps": [
+    8,
+    16,
+    32
+  ],
+  "completions_per_group": 4,
+  "groups": [
+    {
+      "category": "multi_step_bookkeeping_or_omission",
+      "completions_per_group": 4,
+      "group_id": "l3-grpo-generic-g001",
+      "position": 1,
+      "prompt_sha256": "005528e9b63d6910dc7df4ed6f21cdb0234ffc9ea44c396f77762743a6baea65",
+      "prompt_tokens": 88,
+      "source_id": "nluds-0026",
+      "source_kind": "task"
+    },
+    {
+      "category": "rate_ratio_percentage_or_average",
+      "completions_per_group": 4,
+      "group_id": "l3-grpo-generic-g002",
+      "position": 2,
+      "prompt_sha256": "81ce5ae30e4b078c1c1a8d3275cb3d15af18d85ecb32bf8f67ce838484835401",
+      "prompt_tokens": 98,
+      "source_id": "mathqa-train-06595",
+      "source_kind": "task"
+    },
+    {
+      "category": "constraint_distribution_or_discrete_reasoning",
+      "completions_per_group": 4,
+      "group_id": "l3-grpo-generic-g003",
+      "position": 3,
+      "prompt_sha256": "cabfba0ecc58dbf232a360c43f105e9a4f9b846aea2a32263af156dda6c8b707",
+      "prompt_tokens": 84,
+      "source_id": "mathqa-train-11331",
+      "source_kind": "task"
+    },
+    {
+      "category": "format",
+      "completions_per_group": 4,
+      "group_id": "l3-grpo-generic-g004",
+      "position": 4,
+      "prompt_sha256": "0a9209d0c04326e6a405bc41b4f6c974009dca65f21891beebc2f77d4faa2044",
+      "prompt_tokens": 53,
+      "source_id": "anchor-format-003",
+      "source_kind": "base_replay"
+    },
+    {
+      "category": "multi_step_bookkeeping_or_omission",
+      "completions_per_group": 4,
+      "group_id": "l3-grpo-generic-g005",
+      "position": 5,
+      "prompt_sha256": "45a695f6371a613f4ce616dcda0f5c0040eb1cba91e81720e38a5d5a865ec002",
+      "prompt_tokens": 87,
+      "source_id": "nluds-0537",
+      "source_kind": "task"
+    },
+    {
+      "category": "rate_ratio_percentage_or_average",
+      "completions_per_group": 4,
+      "group_id": "l3-grpo-generic-g006",
+      "position": 6,
+      "prompt_sha256": "5fd914c16816d3620a7abbd266ba3da4289f4e673efb8eb284636df93157a834",
+      "prompt_tokens": 95,
+      "source_id": "mathqa-train-21405",
+      "source_kind": "task"
+    },
+    {
+      "category": "constraint_distribution_or_discrete_reasoning",
+      "completions_per_group": 4,
+      "group_id": "l3-grpo-generic-g007",
+      "position": 7,
+      "prompt_sha256": "008ef9362f99114b7493f7e02e78c1904a8d6439866d5d8bde4316b066abfca2",
+      "prompt_tokens": 84,
+      "source_id": "nluds-1359",
+      "source_kind": "task"
+    },
+    {
+      "category": "arithmetic",
+      "completions_per_group": 4,
+      "group_id": "l3-grpo-generic-g008",
+      "position": 8,
+      "prompt_sha256": "1f9af09c37f911bd5b0326b2282c188a1c42f7d5871f326c8178d0d209a4d07d",
+      "prompt_tokens": 73,
+      "source_id": "anchor-arithmetic-001",
+      "source_kind": "base_replay"
+    },
+    {
+      "category": "multi_step_bookkeeping_or_omission",
+      "completions_per_group": 4,
+      "group_id": "l3-grpo-generic-g009",
+      "position": 9,
+      "prompt_sha256": "bcaf5050391f83f4727cdcf279646aab39ad50b03e7aa327a96247e8bc1bb16e",
+      "prompt_tokens": 83,
+      "source_id": "nluds-1937",
+      "source_kind": "task"
+    },
+    {
+      "category": "rate_ratio_percentage_or_average",
+      "completions_per_group": 4,
+      "group_id": "l3-grpo-generic-g010",
+      "position": 10,
+      "prompt_sha256": "c3041eb503d1d4b741abf22e9ed90aa893f61f514b3d04f269c89427b0ed9703",
+      "prompt_tokens": 97,
+      "source_id": "mathqa-train-09380",
+      "source_kind": "task"
+    },
+    {
+      "category": "constraint_distribution_or_discrete_reasoning",
+      "completions_per_group": 4,
+      "group_id": "l3-grpo-generic-g011",
+      "position": 11,
+      "prompt_sha256": "2ec92c607c33e47f585f5f9bcf6ab12cee2c430d6fe00fa947236c5899bbb246",
+      "prompt_tokens": 76,
+      "source_id": "mathqa-train-03341",
+      "source_kind": "task"
+    },
+    {
+      "category": "instruction",
+      "completions_per_group": 4,
+      "group_id": "l3-grpo-generic-g012",
+      "position": 12,
+      "prompt_sha256": "a67f60ded7256529a112999add1cecf5cc74bc58be88b208c965f80ea0597b0a",
+      "prompt_tokens": 67,
+      "source_id": "anchor-instruction-037",
+      "source_kind": "base_replay"
+    },
+    {
+      "category": "multi_step_bookkeeping_or_omission",
+      "completions_per_group": 4,
+      "group_id": "l3-grpo-generic-g013",
+      "position": 13,
+      "prompt_sha256": "b939355d895b028c6912059f2248db3b14686442135fb1e952eb052d5654e36a",
+      "prompt_tokens": 83,
+      "source_id": "nluds-0039",
+      "source_kind": "task"
+    },
+    {
+      "category": "rate_ratio_percentage_or_average",
+      "completions_per_group": 4,
+      "group_id": "l3-grpo-generic-g014",
+      "position": 14,
+      "prompt_sha256": "4378982ccb304f4bf0e25445da0ae47e84d2dcb3398fe313a8424919bceb53a0",
+      "prompt_tokens": 98,
+      "source_id": "mathqa-train-15303",
+      "source_kind": "task"
+    },
+    {
+      "category": "constraint_distribution_or_discrete_reasoning",
+      "completions_per_group": 4,
+      "group_id": "l3-grpo-generic-g015",
+      "position": 15,
+      "prompt_sha256": "e04f54041fc1d019dcfcd6e7cea5b8c906d54637e65d68ac1a78779df7eba04a",
+      "prompt_tokens": 81,
+      "source_id": "mathqa-train-23384",
+      "source_kind": "task"
+    },
+    {
+      "category": "arithmetic",
+      "completions_per_group": 4,
+      "group_id": "l3-grpo-generic-g016",
+      "position": 16,
+      "prompt_sha256": "f0eb366e797149c33934819ffe5f42752f9c64feedb240f556e95ff7b42691ea",
+      "prompt_tokens": 70,
+      "source_id": "anchor-arithmetic-024",
+      "source_kind": "base_replay"
+    },
+    {
+      "category": "multi_step_bookkeeping_or_omission",
+      "completions_per_group": 4,
+      "group_id": "l3-grpo-generic-g017",
+      "position": 17,
+      "prompt_sha256": "c6b4451fd27d853e387f4a48eb3e9c53876cb21aab77eaa1d7f76e51d099e2cb",
+      "prompt_tokens": 86,
+      "source_id": "nluds-0068",
+      "source_kind": "task"
+    },
+    {
+      "category": "rate_ratio_percentage_or_average",
+      "completions_per_group": 4,
+      "group_id": "l3-grpo-generic-g018",
+      "position": 18,
+      "prompt_sha256": "06db003eaf2aef7e29783b43e0c4012fd1e5329cc04ea302841e4901f3868f23",
+      "prompt_tokens": 97,
+      "source_id": "mathqa-train-05766",
+      "source_kind": "task"
+    },
+    {
+      "category": "constraint_distribution_or_discrete_reasoning",
+      "completions_per_group": 4,
+      "group_id": "l3-grpo-generic-g019",
+      "position": 19,
+      "prompt_sha256": "551c04855443d8d341af5f8e88c56d2a3ef5e9a09c6823137c368610542e78fd",
+      "prompt_tokens": 87,
+      "source_id": "nluds-1375",
+      "source_kind": "task"
+    },
+    {
+      "category": "instruction",
+      "completions_per_group": 4,
+      "group_id": "l3-grpo-generic-g020",
+      "position": 20,
+      "prompt_sha256": "36ebedf895f35471644d4cf0fe20758ffe8ada9956318e9b70a81d5262b4ff36",
+      "prompt_tokens": 58,
+      "source_id": "anchor-instruction-008",
+      "source_kind": "base_replay"
+    },
+    {
+      "category": "multi_step_bookkeeping_or_omission",
+      "completions_per_group": 4,
+      "group_id": "l3-grpo-generic-g021",
+      "position": 21,
+      "prompt_sha256": "953b2b59fe665095feae8e3fda5f27215d899ab5320020780d272fb928e0f583",
+      "prompt_tokens": 84,
+      "source_id": "nluds-0038",
+      "source_kind": "task"
+    },
+    {
+      "category": "rate_ratio_percentage_or_average",
+      "completions_per_group": 4,
+      "group_id": "l3-grpo-generic-g022",
+      "position": 22,
+      "prompt_sha256": "53489d69d6f8df751849fd19ffae230f174a36b5de470339ce90d45daa8cd5a3",
+      "prompt_tokens": 97,
+      "source_id": "nluds-2171",
+      "source_kind": "task"
+    },
+    {
+      "category": "constraint_distribution_or_discrete_reasoning",
+      "completions_per_group": 4,
+      "group_id": "l3-grpo-generic-g023",
+      "position": 23,
+      "prompt_sha256": "3cad17bfd007d399c0662f2ebf6dbb37f6ddca8d1e2c0a59c6507ef9375491ad",
+      "prompt_tokens": 79,
+      "source_id": "mathqa-train-21675",
+      "source_kind": "task"
+    },
+    {
+      "category": "arithmetic",
+      "completions_per_group": 4,
+      "group_id": "l3-grpo-generic-g024",
+      "position": 24,
+      "prompt_sha256": "ffe1c2fe79725d66c310d97a04cb73a75a25f8789ffc8842cc70be42fbdd0350",
+      "prompt_tokens": 69,
+      "source_id": "anchor-arithmetic-020",
+      "source_kind": "base_replay"
+    },
+    {
+      "category": "multi_step_bookkeeping_or_omission",
+      "completions_per_group": 4,
+      "group_id": "l3-grpo-generic-g025",
+      "position": 25,
+      "prompt_sha256": "e57b0e3065ed1ea85a27025f3ae9b7679ceeec1f40cbc4f45b2075e3f6094705",
+      "prompt_tokens": 87,
+      "source_id": "nluds-0736",
+      "source_kind": "task"
+    },
+    {
+      "category": "rate_ratio_percentage_or_average",
+      "completions_per_group": 4,
+      "group_id": "l3-grpo-generic-g026",
+      "position": 26,
+      "prompt_sha256": "7f7638172a476cc1562d8cf3f85bd04aa7e877f5a6f53038bdf3f26df4a2cbc7",
+      "prompt_tokens": 98,
+      "source_id": "mathqa-train-11085",
+      "source_kind": "task"
+    },
+    {
+      "category": "constraint_distribution_or_discrete_reasoning",
+      "completions_per_group": 4,
+      "group_id": "l3-grpo-generic-g027",
+      "position": 27,
+      "prompt_sha256": "b450801065367713b8a84da63c43485e0c966219df5e87896b4bae9c82f82ff4",
+      "prompt_tokens": 87,
+      "source_id": "mathqa-train-18725",
+      "source_kind": "task"
+    },
+    {
+      "category": "instruction",
+      "completions_per_group": 4,
+      "group_id": "l3-grpo-generic-g028",
+      "position": 28,
+      "prompt_sha256": "f767cce8237eda3fe462198b9973fc99254743959de566e2888cd9343551784e",
+      "prompt_tokens": 68,
+      "source_id": "anchor-instruction-026",
+      "source_kind": "base_replay"
+    },
+    {
+      "category": "multi_step_bookkeeping_or_omission",
+      "completions_per_group": 4,
+      "group_id": "l3-grpo-generic-g029",
+      "position": 29,
+      "prompt_sha256": "30f074a52e6eb49fdf498bad820416a2e420a8af33057698984f2cd388064ce2",
+      "prompt_tokens": 88,
+      "source_id": "nluds-0558",
+      "source_kind": "task"
+    },
+    {
+      "category": "rate_ratio_percentage_or_average",
+      "completions_per_group": 4,
+      "group_id": "l3-grpo-generic-g030",
+      "position": 30,
+      "prompt_sha256": "c0f18b101a0a032e41e666d6a5877c07b499643fa6bde254cfe241399cacc3c5",
+      "prompt_tokens": 93,
+      "source_id": "nluds-0725",
+      "source_kind": "task"
+    },
+    {
+      "category": "constraint_distribution_or_discrete_reasoning",
+      "completions_per_group": 4,
+      "group_id": "l3-grpo-generic-g031",
+      "position": 31,
+      "prompt_sha256": "f91eb029a47faa582ff5c4bd1d421709dacb5cb507eed8e376f5651731ace189",
+      "prompt_tokens": 84,
+      "source_id": "mathqa-train-18814",
+      "source_kind": "task"
+    },
+    {
+      "category": "format",
+      "completions_per_group": 4,
+      "group_id": "l3-grpo-generic-g032",
+      "position": 32,
+      "prompt_sha256": "f616bc55e3e8df24670668527b27992b4efa39396141af6446077066508dcb4a",
+      "prompt_tokens": 59,
+      "source_id": "anchor-format-014",
+      "source_kind": "base_replay"
+    }
+  ],
+  "groups_fixed_before_generation": true,
+  "groups_per_arm": 32,
+  "gsm1k_prompt_use": 0,
+  "holdout_v2_prompt_use": 0,
+  "human_written_task_source": true,
+  "manifest_sha256": "ff1005a1d7381acd52dd28b3d054b2979986c47595ed09c944880ea5fc5f5ff3",
+  "model_outputs_observed_during_scheduling": false,
+  "optimizer_steps": 32,
+  "prompt_packet_sha256": "9249512e4d632501ec3b2d0ba25ce1ab9ba7bddbc30e7ba3b138f4356b9e7d04",
+  "prompt_token_total": 2638,
+  "prompts_or_answers_in_manifest": false,
+  "replay_groups": 8,
+  "replay_positions": [
+    4,
+    8,
+    12,
+    16,
+    20,
+    24,
+    28,
+    32
+  ],
+  "replay_section_counts": {
+    "arithmetic": 3,
+    "format": 2,
+    "instruction": 3
+  },
+  "schedule_id": "foundry-l3-verifier-grpo-v1",
+  "schema_version": 1,
+  "sealed_content_use": 0,
+  "seed": 20260720,
+  "task_family_counts": {
+    "constraint_distribution_or_discrete_reasoning": 8,
+    "multi_step_bookkeeping_or_omission": 8,
+    "rate_ratio_percentage_or_average": 8
+  },
+  "task_groups": 24,
+  "total_completions": 128
+}

@@ -4205,3 +4205,26 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
   terminal packet at SHA-256 `ac718a88...c566`, and `git diff --check` is clean.
 - **Final decision:** Close Milestone 13E as a retention success and a GSM1K success-condition
   failure. Do not promote the targeted L3 adapter as outperforming the base model.
+
+### 2026-07-29 - Milestone 14A stopped at verifier-GRPO compatibility
+
+- **Frozen boundary:** Starting from clean synchronized commit
+  `97f8cdb8fb6bba4260365f514a8ecc83a8f069b5`, the generic and targeted schedules each
+  contain 24 task groups, eight shared replay groups, 32 optimizer-step positions, and 128
+  planned completions. Both schedules contain exactly 2,638 prompt tokens. Paired-schedule,
+  reward-contract, and reference-mechanism SHA-256 values are respectively
+  `ed99aa38...fc8e3`, `44193398...7b61`, and `674b3681...0316`; scheduling used no holdout-v2,
+  GSM1K, or sealed content.
+- **Official smoke:** The first fresh-process generic compatibility smoke loaded one NF4 base
+  with byte-identical policy/reference adapters, passed the controlled reference-KL calibration,
+  CUDA-only, dropout, finite-loss, and finite-KL checks, and generated four completions for its
+  first task group. On the first backward pass, every policy-gradient tensor was finite and
+  optimizer ownership remained policy-only, but all policy gradient norms were zero. The runtime
+  stopped at `RuntimeError: policy gradients are all zero` before any optimizer step, summary,
+  raw evidence packet, adapter, or checkpoint was written.
+- **Terminal decision:** The authorization prohibits retrying an official compatibility smoke.
+  The second smoke, counted training, retention selection, holdout-v2, and GSM1K therefore did
+  not start. No GRPO adapter reached retention selection and no sealed path was accessed. The
+  content-free blocker SHA-256 is `d4b23d89...e8752`.
+- **Next action:** Publish this exact compatibility blocker and perform project-level GRPO
+  compatibility interpretation before authorizing any new experiment.
