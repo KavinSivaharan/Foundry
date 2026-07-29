@@ -4283,3 +4283,35 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
   one MiB. Sealed example paths were not opened.
 - **Next action:** Publish and synchronize the required corrected-source commit, and only then
   run the two non-retryable fresh-process compatibility smokes.
+
+### 2026-07-29 - Milestone 14A-R1 stopped at the complete compatibility gate
+
+- **Published corrected source:** Case-1 validation semantics were verified, committed as
+  `626c20bf717874572c298c8e4e8d4a83f1b3fa0c`, pushed, and synchronized before model
+  execution. The individual-group gate now records a mathematically expected zero-advantage
+  no-op, while the complete two-group gate still requires nonzero reward variance, a nonzero
+  policy gradient, and a policy update. Counted-training validation remains unchanged.
+- **First official smoke:** The fresh generic process completed exactly the frozen task group
+  `l3-grpo-generic-g001` and replay group `l3-grpo-generic-g004`, with four completions each.
+  Their reward vectors were respectively four copies of `1.149999976158142` and
+  `1.2000000476837158`. Both variances and all eight advantages were exactly zero. Every
+  policy, KL, and combined projection remained connected and finite across all 112 LoRA tensors,
+  with global norm zero and no policy parameter delta. Both groups were therefore correctly
+  classified `expected_zero_advantage_noop`.
+- **Complete-gate result:** The process completed exactly two optimizer and two scheduler steps,
+  with zero reference or base mutation, but produced two zero-variance groups, zero
+  nonzero-variance groups, zero nonzero-gradient groups, and zero policy updates. The preserved
+  aggregate gate correctly raised `complete two-step smoke update gate failed`. The second
+  official smoke was not started, and no retry occurred.
+- **Evidence and scope:** The reconstructed partial-evidence self-hash is
+  `550b0a0d...b39387`; the tracked compatibility-blocker SHA-256 is
+  `2a5fadb4...9b25b`. The smoke generated 312 completion tokens, reported 10.5155 seconds of
+  trainer runtime, and wrote 5,742,150 bytes of ignored evidence/logs. It wrote no adapter or
+  checkpoint; a final resource summary was not reached, so peak VRAM and RAM were not published.
+  Counted training, retention, holdout v2, GSM1K, and sealed-final evaluation did not run.
+- **Terminal verification:** Ruff format-check covers 342 files, Ruff lint is clean, and strict
+  Mypy passes all 193 source files. All 35 focused zero-gradient/runtime/campaign tests pass, the
+  complete repository suite passes all 1,039 tests in 117.67 seconds, both environments pass
+  `pip check`, and `git diff --check` is clean.
+- **Next action:** Publish and synchronize the verified blocker, then stop for project-level
+  GRPO interpretation.

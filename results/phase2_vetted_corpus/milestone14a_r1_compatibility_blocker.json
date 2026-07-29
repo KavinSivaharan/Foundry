@@ -1,0 +1,373 @@
+{
+  "schema_version": 1,
+  "blocker_id": "foundry-milestone14a-r1-compatibility-blocker-v1",
+  "milestone_id": "foundry-fast-track-milestone14a-r1",
+  "status": "stopped",
+  "stage": "official_compatibility_smoke_1_complete_gate",
+  "starting_commit": "b0635a7c0f551dfb8efd846da5cfe83b28f7af18",
+  "corrected_source_commit": "626c20bf717874572c298c8e4e8d4a83f1b3fa0c",
+  "base_model_revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+  "dataset_sha256": "ee18f7f9bd7625469d83e1c1df8dad4db0ecf8b3d8c870a07c60f2808e11dc31",
+  "starting_adapter_sha256": {
+    "generic": "67c6f1dd34c0fa1ddebb354dfe14c43e61c48fdd90c687ba1a9290d2401479cd",
+    "targeted": "4e195ff2cb32c4faa6858915b95507862c911bb2eb853b060717416d825df91d"
+  },
+  "frozen_contracts": {
+    "classification_contract_sha256": "076997e24cf1e02cc1dfd0e281dd488e095b0c2c93994c7f2be9dfec93a6a8db",
+    "classification_fixture_sha256": "be85a67d50a2c2c5aae0b1fd6cf6d0323e5d021182cb5865b16a9c9beef6251e",
+    "zero_gradient_freeze_sha256": "b1f8d00c402e7a07e756c5f5acd81ac874326b06a68eb73e7efa34a1dd1bfba8",
+    "prediagnostic_source_sha256": "aa2a5fe0abf3caf9fc7732215de0adb1733a6eb78ac24afbc50a31bfba17eac1",
+    "old_implementation_sha256": "63631afa3abb5d0faf2a73decf9a96285d9cbfff789a47806b009c3d8b672eae",
+    "corrected_implementation_sha256": "754c267487925f5c75b733a449b3d07d13f2e1088d629ca6ec6721781ea0c2a9",
+    "corrected_runtime_source_sha256": "2bfc9c7cc61af779816c588d4ce1653e7f2b22cabe4468c6f1905c7ee20fe2c7",
+    "correction_contract_sha256": "d0cfc595076aca85e0467cfd8b3952eac19d388284067eb8407a3c004e0b0119",
+    "focused_test_sha256": "c3977570a5d8bd75e1b73d3ad40ac9dd9524a6038d240ea921c35e3e8071e8cf",
+    "experiment_contract_sha256": "e6251e35cd0397c1bad890c318f50928bd106bca323c3c72490895eb4a58041e",
+    "paired_schedule_sha256": "ed99aa38f77961fa1f669ba110cd86b3af092e027a60b8e92096a9a68bdfc8e3",
+    "generic_manifest_sha256": "ff1005a1d7381acd52dd28b3d054b2979986c47595ed09c944880ea5fc5f5ff3",
+    "targeted_manifest_sha256": "8326c1b91ba127c4734527abfed2f8bca41ecbb3a0bb7bc62a5bf940ac24f0c4",
+    "shared_replay_sha256": "19e27fecde5349b6a7a9a24d8a0a8211a3b0da877282a51ece6b616688904181",
+    "reward_implementation_sha256": "448574e61ff74c40b026dd493b9773023c92eb7f4dbaccb5dfbf511be1e68e66",
+    "reward_configuration_sha256": "701ac381bf01337f706dfaf46ebfa91839147bd600e23dc21a3f1d00eb0f5df5",
+    "reward_fixture_sha256": "ca7ea72ae288234eb769486f1a1dd0893f9c14b1c14487ae043336af30318199",
+    "reward_calibration_sha256": "e0952f0034424f7817998300207ec3eecf2ce4f8443a87405899decff3fb65e7",
+    "reward_contract_sha256": "441933982c2b51b49195763440c318893cea22af947c9efc50b732d05fee7b61",
+    "reference_mechanism_sha256": "674b368105f08b0e1eb00f54c6912f611da730ed070f60c63989de996ecb0316",
+    "recipe_sha256": "0c3280d81d60e76e3f58e9ae44a62b378540ae9d92d277606ba021e688403641",
+    "original_blocker_sha256": "d4b23d898ef3c53db46882a4a218c2a43cd85298ebdfa75139eaf3a7c08e8752"
+  },
+  "process_environment": {
+    "CUBLAS_WORKSPACE_CONFIG": ":4096:8",
+    "HF_HUB_OFFLINE": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONHASHSEED": "20260720",
+    "TOKENIZERS_PARALLELISM": "false",
+    "TRANSFORMERS_OFFLINE": "1"
+  },
+  "diagnostic_adjudication": {
+    "reproductions": 2,
+    "independently_reset": true,
+    "byte_identical_decisive_evidence": true,
+    "partial_evidence_sha256s": [
+      "2c9bc725e91e3924d400bfb29904e027a4fc47eeb286b91804d77fe8e0917f6a",
+      "2c9bc725e91e3924d400bfb29904e027a4fc47eeb286b91804d77fe8e0917f6a"
+    ],
+    "stderr_sha256s": [
+      "ba098a00f03f3f3d5cb1e2e787f7c878dc342adf15037737a5c4aa7ca7ba5212",
+      "ba098a00f03f3f3d5cb1e2e787f7c878dc342adf15037737a5c4aa7ca7ba5212"
+    ],
+    "reward_vector": [
+      1.149999976158142,
+      1.149999976158142,
+      1.149999976158142,
+      1.149999976158142
+    ],
+    "reward_variance": 0.0,
+    "advantages": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "valid_completion_token_counts": [
+      76,
+      80,
+      76,
+      68
+    ],
+    "policy_gradient_global_norm": 0.0,
+    "kl_gradient_global_norm": 0.0,
+    "combined_gradient_global_norm": 0.0,
+    "gradient_projection_sha256": "d061ffefc5deeee40bf636a9d731addc20f0f6eb27140c70f9eda382e926f3b6",
+    "policy_gradient_tensors_present": 112,
+    "base_gradient_count": 0,
+    "reference_gradient_count": 0,
+    "controlled_positive_kl": 0.07118940353393555,
+    "active_policy_before_and_after_generation": true,
+    "initial_policy_reference_identity_sha256": "77ec7fe30ddf0089bb65f927ac9a1ada0df9e27dbd44142c938bd2cd6f1f81f6",
+    "classification": "expected_zero_advantage_noop",
+    "original_exception_classification": "overstrict_per_group_update_gate",
+    "diagnostic_decision_sha256": "096b46c663670829d408847c8fa213fb142cca02def8f86d0a68625cbda60133",
+    "optimizer_steps": 0,
+    "scheduler_steps": 0,
+    "adapter_or_checkpoint_saved": false
+  },
+  "general_correction": {
+    "case": "expected_zero_advantage_noop",
+    "scope": "compatibility_validation_semantics_only",
+    "individual_expected_noop_may_have_zero_gradient": true,
+    "individual_expected_noop_may_have_zero_parameter_delta": true,
+    "noop_group_skipped_or_resampled": false,
+    "optimizer_scheduler_semantics_changed": false,
+    "counted_training_gradient_gate_changed": false,
+    "scientific_grpo_contract_changed": false,
+    "complete_smoke_update_gate_preserved": true,
+    "corrected_source_commit": "626c20bf717874572c298c8e4e8d4a83f1b3fa0c"
+  },
+  "official_compatibility_execution": {
+    "source_commit": "626c20bf717874572c298c8e4e8d4a83f1b3fa0c",
+    "runs_authorized": 2,
+    "runs_started": 1,
+    "runs_completed_through_two_frozen_groups": 1,
+    "runs_passed": 0,
+    "retries": 0,
+    "retry_permitted": false,
+    "second_official_smoke_started": false,
+    "smoke_1": {
+      "arm": "generic",
+      "fresh_process": true,
+      "failure_phase": "complete_two_step_smoke_update_gate",
+      "exception_type": "RuntimeError",
+      "exception_message": "complete two-step smoke update gate failed",
+      "runtime_exit_code": 1,
+      "groups": [
+        {
+          "step": 1,
+          "group_id": "l3-grpo-generic-g001",
+          "source_kind": "task",
+          "completion_count": 4,
+          "completion_lengths": [
+            76,
+            80,
+            76,
+            68
+          ],
+          "completion_sha256s": [
+            "7f6b1ae9d0b94b35f576650aa6ec664088763f6d7bea6827ae10cba7cf2a771a",
+            "9516fbb70c7fda0a0ff3678fdc46cc3c831fd0e1e5329a0161770f98f6ae9f80",
+            "bdc36c407235fa36c50d6cf998490a09aa0e938d65e91a986f2cd5c722852373",
+            "617df067f411e6e5891e1c48e1b934f30218aa431b65532b5cef0fc48d83defb"
+          ],
+          "reward_vector": [
+            1.149999976158142,
+            1.149999976158142,
+            1.149999976158142,
+            1.149999976158142
+          ],
+          "reward_variance": 0.0,
+          "advantages": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "valid_completion_token_counts": [
+            76,
+            80,
+            76,
+            68
+          ],
+          "classification": "expected_zero_advantage_noop",
+          "policy_objective": 0.0,
+          "kl_objective": 0.0,
+          "mean_token_kl": 0.0,
+          "combined_objective": 0.0,
+          "policy_gradient": {
+            "global_norm": 0.0,
+            "graph_connected": true,
+            "finite": true,
+            "projection_sha256": "d061ffefc5deeee40bf636a9d731addc20f0f6eb27140c70f9eda382e926f3b6"
+          },
+          "kl_gradient": {
+            "global_norm": 0.0,
+            "graph_connected": true,
+            "finite": true,
+            "projection_sha256": "d061ffefc5deeee40bf636a9d731addc20f0f6eb27140c70f9eda382e926f3b6"
+          },
+          "combined_gradient": {
+            "global_norm": 0.0,
+            "parameter_count": 112,
+            "present_gradient_count": 112,
+            "nonzero_gradient_count": 0,
+            "missing_gradient_count": 0,
+            "graph_connected": true,
+            "finite": true,
+            "projection_sha256": "d061ffefc5deeee40bf636a9d731addc20f0f6eb27140c70f9eda382e926f3b6"
+          },
+          "active_adapter_at_step_start": "default",
+          "active_adapter_after_policy_forward": "default",
+          "policy_logprobs_sha256": "3268d079dfdbdb79de6629a321ec351edfcade280430ff32dfbd69964872079b",
+          "reference_logprobs_sha256": "3268d079dfdbdb79de6629a321ec351edfcade280430ff32dfbd69964872079b",
+          "policy_parameter_delta": {
+            "changed": false,
+            "global_norm": 0.0,
+            "changed_parameter_count": 0,
+            "projection_sha256": "23a37cdd43298c704e78e1455d6fc81f488da5e85cb7d193a8fe16e78b7a71e0"
+          },
+          "optimizer_step_completed": true,
+          "scheduler_step_completed": true,
+          "policy_state_after_sha256": "77ec7fe30ddf0089bb65f927ac9a1ada0df9e27dbd44142c938bd2cd6f1f81f6",
+          "reference_parameter_changed": false,
+          "reference_state_after_sha256": "77ec7fe30ddf0089bb65f927ac9a1ada0df9e27dbd44142c938bd2cd6f1f81f6",
+          "base_parameter_changed": false,
+          "base_parameter_state_after_sha256": "d36a725d15716272ea0933a19887d49c2e8bf2b02d074d50b5d99560ea6e13e6",
+          "warning_count": 80,
+          "warnings_whitelisted": true,
+          "warning_class_ids": [
+            "pytorch-cuda-cumsum-determinism-warning-v1"
+          ],
+          "classification_evidence_sha256": "56b2b0b5379bf7ba0c5f67cffd64dcc57781aed55063d3576d524408a823cbc7",
+          "compatibility_evidence_sha256": "cc0288a5b04cc1f04b31caf175b6411c88322b0043d020ec1b58ec2f3605f782"
+        },
+        {
+          "step": 2,
+          "group_id": "l3-grpo-generic-g004",
+          "source_kind": "base_replay",
+          "completion_count": 4,
+          "completion_lengths": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "completion_sha256s": [
+            "0c274639936717793d7695ef0373039e397acdabc247d9953d3c9209a95044cd",
+            "0c274639936717793d7695ef0373039e397acdabc247d9953d3c9209a95044cd",
+            "0c274639936717793d7695ef0373039e397acdabc247d9953d3c9209a95044cd",
+            "0c274639936717793d7695ef0373039e397acdabc247d9953d3c9209a95044cd"
+          ],
+          "reward_vector": [
+            1.2000000476837158,
+            1.2000000476837158,
+            1.2000000476837158,
+            1.2000000476837158
+          ],
+          "reward_variance": 0.0,
+          "advantages": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "valid_completion_token_counts": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "classification": "expected_zero_advantage_noop",
+          "policy_objective": 0.0,
+          "kl_objective": 0.0,
+          "mean_token_kl": 0.0,
+          "combined_objective": 0.0,
+          "policy_gradient": {
+            "global_norm": 0.0,
+            "graph_connected": true,
+            "finite": true,
+            "projection_sha256": "d061ffefc5deeee40bf636a9d731addc20f0f6eb27140c70f9eda382e926f3b6"
+          },
+          "kl_gradient": {
+            "global_norm": 0.0,
+            "graph_connected": true,
+            "finite": true,
+            "projection_sha256": "d061ffefc5deeee40bf636a9d731addc20f0f6eb27140c70f9eda382e926f3b6"
+          },
+          "combined_gradient": {
+            "global_norm": 0.0,
+            "parameter_count": 112,
+            "present_gradient_count": 112,
+            "nonzero_gradient_count": 0,
+            "missing_gradient_count": 0,
+            "graph_connected": true,
+            "finite": true,
+            "projection_sha256": "d061ffefc5deeee40bf636a9d731addc20f0f6eb27140c70f9eda382e926f3b6"
+          },
+          "active_adapter_at_step_start": "default",
+          "active_adapter_after_policy_forward": "default",
+          "policy_logprobs_sha256": "cff91b275723376af01f76bcd0559794a2573318d9c8c91d685e9af572a57f87",
+          "reference_logprobs_sha256": "cff91b275723376af01f76bcd0559794a2573318d9c8c91d685e9af572a57f87",
+          "policy_parameter_delta": {
+            "changed": false,
+            "global_norm": 0.0,
+            "changed_parameter_count": 0,
+            "projection_sha256": "23a37cdd43298c704e78e1455d6fc81f488da5e85cb7d193a8fe16e78b7a71e0"
+          },
+          "optimizer_step_completed": true,
+          "scheduler_step_completed": true,
+          "policy_state_after_sha256": "77ec7fe30ddf0089bb65f927ac9a1ada0df9e27dbd44142c938bd2cd6f1f81f6",
+          "reference_parameter_changed": false,
+          "reference_state_after_sha256": "77ec7fe30ddf0089bb65f927ac9a1ada0df9e27dbd44142c938bd2cd6f1f81f6",
+          "base_parameter_changed": false,
+          "base_parameter_state_after_sha256": "d36a725d15716272ea0933a19887d49c2e8bf2b02d074d50b5d99560ea6e13e6",
+          "warning_count": 3,
+          "warnings_whitelisted": true,
+          "warning_class_ids": [
+            "pytorch-cuda-cumsum-determinism-warning-v1"
+          ],
+          "classification_evidence_sha256": "493c7bb61a3732a584d969cc15d3cb0d15118c50b5b78262562d1b2bd45d5ccb",
+          "compatibility_evidence_sha256": "2ef91bcd7245d8e900b7f7023e6fc58e1f69c6e6404cebde2b80dbe734448d94"
+        }
+      ],
+      "complete_smoke_gate": {
+        "base_update_count": 0,
+        "completion_count": 8,
+        "expected_noop_group_count": 2,
+        "nonzero_gradient_group_count": 0,
+        "nonzero_variance_group_count": 0,
+        "optimizer_step_count": 2,
+        "passed": false,
+        "policy_update_count": 0,
+        "reference_update_count": 0,
+        "scheduler_step_count": 2,
+        "step_count": 2,
+        "zero_variance_group_count": 2,
+        "complete_smoke_gate_sha256": "1dc5a5b466cf53e62e44e05eb7b4a9658cad233d7f5a214c71ff4ad6baa72629"
+      },
+      "final_policy_adapter_hash": null,
+      "adapter_save_completed": false,
+      "offline_reload_completed": false
+    }
+  },
+  "raw_evidence": {
+    "partial_evidence_path": "results/raw/phase2_vetted_corpus/milestone14a_r1/compatibility/run-1/partial_evidence.json",
+    "partial_evidence_bytes": 5738227,
+    "partial_evidence_file_sha256": "77e553ec7cf0415e7b6d1a4e0c262018f96c263110bc4aee665e507a8d852022",
+    "partial_evidence_embedded_sha256": "550b0a0d6d2298797a3ede89f4cb5b74d6d7ef75004e54fcdf38b77246b39387",
+    "partial_evidence_reconstructed": true,
+    "run_stdout_path": "results/raw/phase2_vetted_corpus/milestone14a_r1/compatibility/logs/run-1.stdout.txt",
+    "run_stdout_bytes": 1450,
+    "run_stdout_sha256": "92729aea00c64d42ceb0309c1aa914a5244ab05dd54e97769b0cdb6dc54854af",
+    "run_stderr_path": "results/raw/phase2_vetted_corpus/milestone14a_r1/compatibility/logs/run-1.stderr.txt",
+    "run_stderr_bytes": 1468,
+    "run_stderr_sha256": "11aff5828c1f9ed39f441133c536fbe1d7fb81be708bc8337dc4c21b94b509b4",
+    "campaign_stdout_path": "results/raw/phase2_vetted_corpus/milestone14a_r1/compatibility/campaign.stdout.txt",
+    "campaign_stdout_bytes": 0,
+    "campaign_stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "campaign_stderr_path": "results/raw/phase2_vetted_corpus/milestone14a_r1/compatibility/campaign.stderr.txt",
+    "campaign_stderr_bytes": 1005,
+    "campaign_stderr_sha256": "63cfef8e2cb4933f153970a528a19baa97edd649fb823ac32caed5c1d47d954a"
+  },
+  "resource_accounting": {
+    "trainer_runtime_seconds": 10.5155,
+    "completion_tokens": 312,
+    "trainer_cumulative_tokens": 876,
+    "peak_vram_bytes": null,
+    "peak_vram_published": false,
+    "peak_ram_bytes": null,
+    "peak_ram_published": false,
+    "raw_evidence_and_log_disk_bytes": 5742150,
+    "adapter_or_checkpoint_disk_bytes": 0,
+    "resource_summary_missing_reason": "the complete-smoke gate raised before final summary and adapter persistence"
+  },
+  "artifact_accounting": {
+    "artifact_file_count": 0,
+    "adapter_or_checkpoint_written": false,
+    "counted_grpo_adapter_or_checkpoint_written": false,
+    "second_smoke_artifact_directory_created": false
+  },
+  "terminal_scope": {
+    "scientific_settings_changed_after_freeze": false,
+    "official_smoke_retried": false,
+    "counted_generic_training_started": false,
+    "counted_targeted_training_started": false,
+    "retention_selection_started": false,
+    "holdout_v2_started": false,
+    "gsm1k_started": false,
+    "sealed_path_accessed": false,
+    "sealed_final_evaluation_started": false
+  },
+  "decision": "stop",
+  "reason": "Both frozen official-smoke groups were correctly classified as expected_zero_advantage_noop: each had zero reward variance, zero group-relative advantages, connected finite zero policy/KL/combined gradients, and zero policy delta. The complete smoke therefore had zero nonzero-variance groups, zero nonzero-gradient groups, and zero policy updates, violating the preserved aggregate update gate.",
+  "next_action": "project-level GRPO interpretation",
+  "blocker_sha256": "2a5fadb4071ac9f2be1371881744dcaacb1a696ed654befc220a29f59499b25b"
+}
