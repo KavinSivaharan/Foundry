@@ -1,0 +1,175 @@
+{
+  "current_compatibility_runtime_hash_required_to_equal_layer1": false,
+  "evidence_paths": [
+    "results/phase2_vetted_corpus/milestone14b_r1_signal_audit_contract.json",
+    "results/phase2_vetted_corpus/milestone14b_r1_advantage_equivalence_contract.json",
+    "results/phase2_vetted_corpus/milestone14b_r1_family_aggregation_contract.json",
+    "results/phase2_vetted_corpus/milestone14b_r1_prior_diagnostic_manifest.json",
+    "results/phase2_vetted_corpus/milestone14b_r1_qualification_implementation.json",
+    "results/phase2_vetted_corpus/milestone14b_r1_qualification_contract.json",
+    "results/phase2_vetted_corpus/milestone14b_r1_signal_summary.json",
+    "results/phase2_vetted_corpus/milestone14b_r1_selection_and_gradient_decision.json",
+    "results/phase2_vetted_corpus/milestone14a_generic_schedule.json",
+    "results/phase2_vetted_corpus/milestone14a_targeted_schedule.json",
+    "results/phase2_vetted_corpus/milestone14a_shared_replay.json",
+    "results/phase2_vetted_corpus/milestone14a_paired_schedule.json",
+    "results/phase2_vetted_corpus/milestone14a_experiment_contract.json",
+    "results/phase2_vetted_corpus/milestone14a_starting_state.json"
+  ],
+  "evidence_rows": [
+    {
+      "bytes": 8724,
+      "path": "results/phase2_vetted_corpus/milestone14b_r1_signal_audit_contract.json",
+      "self_hash": "21188671b298fb52974af62ab5dd0590d52eedc2f8bc4fc77dc3ca3b355ca103",
+      "self_hash_key": "signal_audit_contract_sha256",
+      "sha256": "d2c50e15bd9a1ef0d88e2571edcc501f8bb65fe4fc8a966c78da2fc9b3a70276"
+    },
+    {
+      "bytes": 2952,
+      "path": "results/phase2_vetted_corpus/milestone14b_r1_advantage_equivalence_contract.json",
+      "self_hash": "057af22d9784ef4a2bab1f8dc37687942a28b7d124cf95c287a3b2338867efbd",
+      "self_hash_key": "advantage_equivalence_contract_sha256",
+      "sha256": "2d1e1c9caa315f6bf38ee731af60cdd890381383b9660dc9ecb0da795e0a2a9e"
+    },
+    {
+      "bytes": 1181,
+      "path": "results/phase2_vetted_corpus/milestone14b_r1_family_aggregation_contract.json",
+      "self_hash": "806c5f437366adbbf353eeefb0fda126a8d00b6c4ea8e76c41af83dbf3de04ed",
+      "self_hash_key": "family_aggregation_contract_sha256",
+      "sha256": "af323389ed6be0c3f6d0caf5d11feb9771511772554b00d9fafb7c140b040089"
+    },
+    {
+      "bytes": 47976,
+      "path": "results/phase2_vetted_corpus/milestone14b_r1_prior_diagnostic_manifest.json",
+      "self_hash": "d7b5945e0df9206b84bb8e6ab355a13112822fdba6e68a1933798449f2ef5b95",
+      "self_hash_key": "prior_diagnostic_manifest_sha256",
+      "sha256": "ea8b37e9d1ba73e7b80b75b90eeb452246274651cd75a9bffa71594a54ed2e42"
+    },
+    {
+      "bytes": 6891,
+      "path": "results/phase2_vetted_corpus/milestone14b_r1_qualification_implementation.json",
+      "self_hash": "1485669c9df4053e5f47baf07ac981c902966ed490346a3081ed1778213cf002",
+      "self_hash_key": "implementation_sha256",
+      "sha256": "f63f8e612176db1507c849a889d3b065f432e54eb6e8114ea666d1edce7f6bcf"
+    },
+    {
+      "bytes": 5219,
+      "path": "results/phase2_vetted_corpus/milestone14b_r1_qualification_contract.json",
+      "self_hash": "0ad3c6fc584b1dcc0221e6c29179f1f53c26c754297b6534222bf750e51a23bc",
+      "self_hash_key": "qualification_contract_sha256",
+      "sha256": "db2a8308b55d1fb30a0dce1d38181621d29cac2bd338a0dddd03e71967622d39"
+    },
+    {
+      "bytes": 33883,
+      "path": "results/phase2_vetted_corpus/milestone14b_r1_signal_summary.json",
+      "self_hash": "fc7bad292f6c4b5acaa845df9b30cbc624de1ee524b57443ea09e634e2352ec4",
+      "self_hash_key": "signal_summary_sha256",
+      "sha256": "198fe96869b5fb836fd9c6b11cf8d0e98b22915e772db13d69b43ae20dbdd555"
+    },
+    {
+      "bytes": 4414,
+      "path": "results/phase2_vetted_corpus/milestone14b_r1_selection_and_gradient_decision.json",
+      "self_hash": "0e809d1870ddef275017a11c4db5ffd766d9624a34dbf87a7ab417f8bed6a3cf",
+      "self_hash_key": "selection_decision_sha256",
+      "sha256": "c6c09570badcfcad7e496e647576546449670eadc43c8bb152337be152bb6166"
+    },
+    {
+      "bytes": 12702,
+      "path": "results/phase2_vetted_corpus/milestone14a_generic_schedule.json",
+      "self_hash": "ff1005a1d7381acd52dd28b3d054b2979986c47595ed09c944880ea5fc5f5ff3",
+      "self_hash_key": "manifest_sha256",
+      "sha256": "dc3591f8330390746ca4b7482fd59d0ec86f3f1ce794977f03c2d47458386487"
+    },
+    {
+      "bytes": 12691,
+      "path": "results/phase2_vetted_corpus/milestone14a_targeted_schedule.json",
+      "self_hash": "8326c1b91ba127c4734527abfed2f8bca41ecbb3a0bb7bc62a5bf940ac24f0c4",
+      "self_hash_key": "manifest_sha256",
+      "sha256": "f577fae05c421674504419974673336c02c938ad77a50a2986c0ce63a5ac7902"
+    },
+    {
+      "bytes": 3931,
+      "path": "results/phase2_vetted_corpus/milestone14a_shared_replay.json",
+      "self_hash": "19e27fecde5349b6a7a9a24d8a0a8211a3b0da877282a51ece6b616688904181",
+      "self_hash_key": "shared_replay_sha256",
+      "sha256": "015b42acdc5abd6fb1cb9b1b6ef1d5737aaa7318b0ff83174e7da52081b111f5"
+    },
+    {
+      "bytes": 1744,
+      "path": "results/phase2_vetted_corpus/milestone14a_paired_schedule.json",
+      "self_hash": "ed99aa38f77961fa1f669ba110cd86b3af092e027a60b8e92096a9a68bdfc8e3",
+      "self_hash_key": "paired_schedule_sha256",
+      "sha256": "4a8cc8b1e4dcd0ad3ca9a6c1d0d60d89b264475add310d1b75ddceb4ec8b1e16"
+    },
+    {
+      "bytes": 4134,
+      "path": "results/phase2_vetted_corpus/milestone14a_experiment_contract.json",
+      "self_hash": "e6251e35cd0397c1bad890c318f50928bd106bca323c3c72490895eb4a58041e",
+      "self_hash_key": "experiment_contract_sha256",
+      "sha256": "dbb05bf028726981ca2b3093490b2dc41a25852bd537d5d863f5b0b0465ddd82"
+    },
+    {
+      "bytes": 19944,
+      "path": "results/phase2_vetted_corpus/milestone14a_starting_state.json",
+      "self_hash": "3abc9e856f7fc6904aa6621ab2e7cd44481afb18254223cc4cb1ee884da6bca4",
+      "self_hash_key": "starting_state_sha256",
+      "sha256": "bf0b7587d6bc1608891f20618eca29e97fe3f188eb4936d8151d0e9ae219f7e4"
+    }
+  ],
+  "historical_source_commit": "d87650aae77752ddd3e4b2c28b71a7889ae15dcc",
+  "historical_source_paths_sha256": "339f8f2a770260a2f598c4329d4f7a25caed7f8b510663b265c840db5c1e35ca",
+  "historical_source_row_count": 26,
+  "historical_source_rows_sha256": "e21b7fa6f464ac99782027e8e0cb36384214e1eaaedd0de3bb6f1c61f0e23843",
+  "historical_source_tree": "72cf48f09f2996d3c1a101520359616b1bec2d9b",
+  "layer1_manifest_sha256": "6076832b5312183504bd2c94c41135930c461e801b56aecc0a349129043f964c",
+  "manifest_id": "foundry-l3-grpo-layer1-scientific-qualification-v1",
+  "r1_implementation_sha256": "1485669c9df4053e5f47baf07ac981c902966ed490346a3081ed1778213cf002",
+  "role": "scientific_qualification",
+  "schema_version": 1,
+  "scientific_identities": {
+    "dataset_sha256": "ee18f7f9bd7625469d83e1c1df8dad4db0ecf8b3d8c870a07c60f2808e11dc31",
+    "model": {
+      "manifest_sha256": "02bff45c336c3650abe518a94accf4c321f0116678a99c2f56a131cf2eade34d",
+      "model_id": "Qwen/Qwen2.5-1.5B-Instruct",
+      "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306"
+    },
+    "qualification_contract_sha256": "0ad3c6fc584b1dcc0221e6c29179f1f53c26c754297b6534222bf750e51a23bc",
+    "reference_mechanism_sha256": "674b368105f08b0e1eb00f54c6912f611da730ed070f60c63989de996ecb0316",
+    "representatives": {
+      "generic": {
+        "gradient_projection_sha256": "2a854c5cdb5696a29e94cb26003993da6a9da4a30aaeff029101c99b50ec0e97",
+        "replay_group_id": "l3-grpo-generic-g004",
+        "task_group_id": "l3-grpo-generic-g005",
+        "task_group_record_sha256": "14cd697162b9ace4809d715901821afd7120bfc9f3fdf86483a8d9d9785cc3f3"
+      },
+      "targeted": {
+        "gradient_projection_sha256": "de787cbb1687e5c86ab0d29cab0862af0df1d76c195eb7b557a6b4f8c01245dd",
+        "replay_group_id": "l3-grpo-targeted-g004",
+        "task_group_id": "l3-grpo-targeted-g001",
+        "task_group_record_sha256": "7128ecc43cdd6128e24c948823e2d9e1da249356534f413decd8c73f63c01ce3"
+      }
+    },
+    "reward": {
+      "calibration_sha256": "e0952f0034424f7817998300207ec3eecf2ce4f8443a87405899decff3fb65e7",
+      "configuration_sha256": "701ac381bf01337f706dfaf46ebfa91839147bd600e23dc21a3f1d00eb0f5df5",
+      "contract_sha256": "441933982c2b51b49195763440c318893cea22af947c9efc50b732d05fee7b61",
+      "fixture_sha256": "ca7ea72ae288234eb769486f1a1dd0893f9c14b1c14487ae043336af30318199",
+      "implementation_sha256": "448574e61ff74c40b026dd493b9773023c92eb7f4dbaccb5dfbf511be1e68e66"
+    },
+    "schedules": {
+      "generic": "ff1005a1d7381acd52dd28b3d054b2979986c47595ed09c944880ea5fc5f5ff3",
+      "paired": "ed99aa38f77961fa1f669ba110cd86b3af092e027a60b8e92096a9a68bdfc8e3",
+      "shared_replay": "19e27fecde5349b6a7a9a24d8a0a8211a3b0da877282a51ece6b616688904181",
+      "targeted": "8326c1b91ba127c4734527abfed2f8bca41ecbb3a0bb7bc62a5bf940ac24f0c4"
+    },
+    "selection_decision_sha256": "0e809d1870ddef275017a11c4db5ffd766d9624a34dbf87a7ab417f8bed6a3cf",
+    "signal_decision": "schedule_viable",
+    "signal_summary_sha256": "fc7bad292f6c4b5acaa845df9b30cbc624de1ee524b57443ea09e634e2352ec4",
+    "starting_adapters": {
+      "generic": "67c6f1dd34c0fa1ddebb354dfe14c43e61c48fdd90c687ba1a9290d2401479cd",
+      "targeted": "4e195ff2cb32c4faa6858915b95507862c911bb2eb853b060717416d825df91d"
+    }
+  },
+  "scientific_qualification_changed": false,
+  "sealed_content_use": 0
+}

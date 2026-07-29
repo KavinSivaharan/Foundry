@@ -4719,6 +4719,19 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
   Git-blob bytes independently while requiring Git clean-content equivalence. This preserves
   both byte identities instead of normalizing, ignoring, or downgrading either check. No model
   module, model, generation, optimizer, scheduler, or scientific output was created.
+- **Frozen binding:** The final authorized Layer-2 source is synchronized commit
+  `1bac985cb55ad8c528783e69f15b82ab54449e46`, tree
+  `eaa94dc1119f47997aff0c67a06d8f1f178c4955`. The 14-row scientific-evidence /
+  26-row historical-source Layer-1 manifest hashes to
+  `6076832b5312183504bd2c94c41135930c461e801b56aecc0a349129043f964c`;
+  the 60-path Layer-2 manifest hashes to
+  `df72fba61cf6e3785ccd40a1bbb2fb0c2a2c08c980f319bf9cc7e131148e4c50`;
+  21 fixtures hash to
+  `85ff1532666c9d66452a55e7de8bb63ebadcdf5b3ef315964b599bf59e3e9c2a`;
+  and the combined contract hashes to
+  `b2e2819b58706c85848965fdcd87bbceaab0c5c783c2c314d5b8883e441c4549`.
+  Four clean Windows text paths have distinct execution/blob hashes, and both representations
+  are individually frozen.
 - **Next action:** Complete repository-wide pre-model verification, publish
   `fix: version L3 GRPO source binding`, freeze that synchronized commit and tree in the two
   manifests, and only then run the four ordered no-retry compatibility processes.

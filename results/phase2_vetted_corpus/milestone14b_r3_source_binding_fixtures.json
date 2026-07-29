@@ -1,0 +1,98 @@
+{
+  "all_passed": true,
+  "fixture_count": 21,
+  "fixture_id": "foundry-l3-grpo-layered-source-binding-fixtures-v1",
+  "fixture_sha256": "85ff1532666c9d66452a55e7de8bb63ebadcdf5b3ef315964b599bf59e3e9c2a",
+  "fixtures": [
+    {
+      "name": "old_unlayered_failure_reproduced",
+      "passed": true
+    },
+    {
+      "name": "exact_layer1_and_layer2_pass",
+      "passed": true
+    },
+    {
+      "name": "layer1_one_byte_mutation_fails",
+      "passed": true
+    },
+    {
+      "name": "layer2_one_byte_mutation_fails",
+      "passed": true
+    },
+    {
+      "name": "wrong_layer2_commit_fails",
+      "passed": true
+    },
+    {
+      "name": "wrong_git_tree_fails",
+      "passed": true
+    },
+    {
+      "name": "wrong_python_import_root_fails",
+      "passed": true
+    },
+    {
+      "name": "wrong_qualification_decision_fails",
+      "passed": true
+    },
+    {
+      "name": "wrong_reward_or_schedule_hash_fails",
+      "passed": true
+    },
+    {
+      "name": "swapped_layer_roles_fail",
+      "passed": true
+    },
+    {
+      "name": "missing_manifest_path_fails",
+      "passed": true
+    },
+    {
+      "name": "reordered_layer2_paths_change_hash",
+      "passed": true
+    },
+    {
+      "name": "unauthorized_extra_layer2_path_fails",
+      "passed": true
+    },
+    {
+      "name": "wrapper_child_argv_hashes_match",
+      "passed": true
+    },
+    {
+      "name": "shell_false_mandatory",
+      "passed": true
+    },
+    {
+      "name": "warmup_contract_unchanged",
+      "passed": true
+    },
+    {
+      "name": "scientific_recipe_unchanged",
+      "passed": true
+    },
+    {
+      "name": "source_checks_not_downgraded",
+      "passed": true
+    },
+    {
+      "name": "binding_mismatch_precedes_model_import",
+      "passed": true
+    },
+    {
+      "name": "published_environment_reconstructs",
+      "passed": true
+    },
+    {
+      "name": "windows_execution_and_git_blob_bytes_bound_independently",
+      "passed": true
+    }
+  ],
+  "model_generation_calls": 0,
+  "model_loaded": false,
+  "optimizer_calls": 0,
+  "schema_version": 1,
+  "scientific_settings_changed": false,
+  "sealed_content_use": 0
+}

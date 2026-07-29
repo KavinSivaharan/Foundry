@@ -1,0 +1,631 @@
+{
+  "combined_child_environment_sha256": "1d402ec0cb661adeb50a3d3bd9510895f3f9068cbb393fb381565a5670de995b",
+  "combined_execution_source_sha256": "a12a2a58e072b99baa94a66211d7d38eda421d4404b5b916bf0f61762ea97a58",
+  "combined_git_blob_source_sha256": "76173c9397636453cd327d48332c1e4db45e2b630e3305278316952aed804405",
+  "combined_source_sha256": "f9cf39ad04bd986e5fe218f9f92e2ae5b97e27b7ec580ab6f5694e0d0fcf5b21",
+  "command_templates": {
+    "compatibility": {
+      "argv_projection_sha256": "a3ead55f272024b50a0aa8ffd5658dfeb5f67db06fe63dda346744d9e7158aea",
+      "template": [
+        "{authorized_interpreter}",
+        "-m",
+        "foundry.phase2.l3_grpo_warmup_compatibility_runtime",
+        "--root",
+        "{root}",
+        "--arm",
+        "{arm}",
+        "--run-index",
+        "{run_index}",
+        "--packet",
+        "{packet}",
+        "--manifest",
+        "{manifest}",
+        "--experiment-contract",
+        "{experiment_contract}",
+        "--qualification-contract",
+        "{qualification_contract}",
+        "--selection",
+        "{selection}",
+        "--warmup-update-contract",
+        "{warmup_update_contract}",
+        "--compatibility-order",
+        "{compatibility_order}",
+        "--layer1-manifest",
+        "{layer1_manifest}",
+        "--layer1-sha256",
+        "{layer1_sha256}",
+        "--layer2-manifest",
+        "{layer2_manifest}",
+        "--layer2-sha256",
+        "{layer2_sha256}",
+        "--source-binding-contract",
+        "{source_binding_contract}",
+        "--source-binding-sha256",
+        "{source_binding_sha256}",
+        "--expected-source-commit",
+        "{expected_source_commit}",
+        "--expected-source-tree",
+        "{expected_source_tree}",
+        "--expected-package-sha256",
+        "{expected_package_sha256}",
+        "--expected-environment-sha256",
+        "{expected_environment_sha256}",
+        "--expected-qualification-decision-sha256",
+        "{expected_qualification_decision_sha256}",
+        "--expected-argv-sha256",
+        "{expected_argv_sha256}",
+        "--starting-adapter",
+        "{starting_adapter}",
+        "--output-dir",
+        "{output_dir}",
+        "--raw-evidence",
+        "{raw_evidence}",
+        "--summary",
+        "{summary}",
+        "--envelope",
+        "{envelope}"
+      ],
+      "template_sha256": "f3a483832aca8217453ba7c045929efb9f942169ff4e870004540da2f40131a1"
+    },
+    "counted": {
+      "argv_projection_sha256": "115394b144784aa802465fd29aaa4d8cbe9f7da35c8de6087a8a51e8378783ab",
+      "template": [
+        "{authorized_interpreter}",
+        "-m",
+        "foundry.phase2.l3_grpo_runtime",
+        "--root",
+        "{root}",
+        "--arm",
+        "{arm}",
+        "--mode",
+        "{mode}",
+        "--packet",
+        "{packet}",
+        "--manifest",
+        "{manifest}",
+        "--experiment-contract",
+        "{experiment_contract}",
+        "--warmup-update-contract",
+        "{warmup_update_contract}",
+        "--layer1-manifest",
+        "{layer1_manifest}",
+        "--layer1-sha256",
+        "{layer1_sha256}",
+        "--layer2-manifest",
+        "{layer2_manifest}",
+        "--layer2-sha256",
+        "{layer2_sha256}",
+        "--source-binding-contract",
+        "{source_binding_contract}",
+        "--source-binding-sha256",
+        "{source_binding_sha256}",
+        "--expected-source-commit",
+        "{expected_source_commit}",
+        "--expected-source-tree",
+        "{expected_source_tree}",
+        "--expected-package-sha256",
+        "{expected_package_sha256}",
+        "--expected-environment-sha256",
+        "{expected_environment_sha256}",
+        "--expected-qualification-decision-sha256",
+        "{expected_qualification_decision_sha256}",
+        "--expected-argv-sha256",
+        "{expected_argv_sha256}",
+        "--starting-adapter",
+        "{starting_adapter}",
+        "--output-dir",
+        "{output_dir}",
+        "--raw-evidence",
+        "{raw_evidence}",
+        "--partial-evidence",
+        "{partial_evidence}",
+        "--summary",
+        "{summary}"
+      ],
+      "template_sha256": "14912186c482251840b26d22a231e4ce02eb2ce702d5f3e41961fb18d043244a"
+    }
+  },
+  "environment_v2_contract_sha256": "c9faa8afafafb20b84fcd0cb5e7de1b57749e822adfa27c8b401bbaf8f0153dc",
+  "files": [
+    {
+      "execution_bytes": 1229,
+      "execution_sha256": "e7b36a341cf070472d4d75972138eca523a15b45da0fbfaa6bd0507ad23643a5",
+      "git_blob_bytes": 1177,
+      "git_blob_sha256": "8dc4a2b89dc4bd7bd4241bc0670e9dc89b35ab479f0bd18105bb1bd967ab3ce1",
+      "path": "pyproject.toml"
+    },
+    {
+      "execution_bytes": 1093,
+      "execution_sha256": "fc158cd278124af82406a110afb5efcde2346776dce79875fe3cf6aa5ccb4755",
+      "git_blob_bytes": 1093,
+      "git_blob_sha256": "fc158cd278124af82406a110afb5efcde2346776dce79875fe3cf6aa5ccb4755",
+      "path": "requirements-training.lock.txt"
+    },
+    {
+      "execution_bytes": 107,
+      "execution_sha256": "93037a9aae79b5282cc2f8e512dbb82b6fc2c1fdcb3356191ae3c01973b4f25b",
+      "git_blob_bytes": 102,
+      "git_blob_sha256": "512fc7ce4817dda1471bb233f65b2098861c59f2ba7a2a849e80d1a81d1bb951",
+      "path": "src/foundry/__init__.py"
+    },
+    {
+      "execution_bytes": 74,
+      "execution_sha256": "f78b17dae59031e05ff10bbc8cee03ec87158623d99addd2d89055d911b4ae34",
+      "git_blob_bytes": 73,
+      "git_blob_sha256": "3723d396475e8591159b25a4fb3738833d47fc8e039aeb2f989318f39f62ceda",
+      "path": "src/foundry/evaluation/__init__.py"
+    },
+    {
+      "execution_bytes": 13850,
+      "execution_sha256": "aca21fc5b94a4aea76da441cd8ea0f58d58da332461530c8dffbb9057248c8fd",
+      "git_blob_bytes": 13850,
+      "git_blob_sha256": "aca21fc5b94a4aea76da441cd8ea0f58d58da332461530c8dffbb9057248c8fd",
+      "path": "src/foundry/evaluation/answer_extraction.py"
+    },
+    {
+      "execution_bytes": 3405,
+      "execution_sha256": "038a0af97708a27b52376d42d31ba615d5f1f63534892eb2a8f15d9fa8fff7db",
+      "git_blob_bytes": 3313,
+      "git_blob_sha256": "be086e1a5054c763526334ef5697fd512c3ec33b93cc28970c2bec0c615c3016",
+      "path": "src/foundry/evaluation/scoring.py"
+    },
+    {
+      "execution_bytes": 77,
+      "execution_sha256": "511037d1ebd9f7c7f15670b779be2fea192fc27f095f7017949f0cc3feb33368",
+      "git_blob_bytes": 77,
+      "git_blob_sha256": "511037d1ebd9f7c7f15670b779be2fea192fc27f095f7017949f0cc3feb33368",
+      "path": "src/foundry/phase2/__init__.py"
+    },
+    {
+      "execution_bytes": 10671,
+      "execution_sha256": "c64715fbbb3aaf8b75f3cac18861755ef4b1622fb2e817d05528d0e8738df87e",
+      "git_blob_bytes": 10671,
+      "git_blob_sha256": "c64715fbbb3aaf8b75f3cac18861755ef4b1622fb2e817d05528d0e8738df87e",
+      "path": "src/foundry/phase2/argv_transport.py"
+    },
+    {
+      "execution_bytes": 1785,
+      "execution_sha256": "6c9059c43a5a0b4abd2106539e7db972ee60c6ffd74b3c8a3447773b383a4d73",
+      "git_blob_bytes": 1785,
+      "git_blob_sha256": "6c9059c43a5a0b4abd2106539e7db972ee60c6ffd74b3c8a3447773b383a4d73",
+      "path": "src/foundry/phase2/kl_objective.py"
+    },
+    {
+      "execution_bytes": 19762,
+      "execution_sha256": "75df6b6f5e6be6ac84484e40b8a7b4e89635776c928b19248c4b5dde166786ea",
+      "git_blob_bytes": 19762,
+      "git_blob_sha256": "75df6b6f5e6be6ac84484e40b8a7b4e89635776c928b19248c4b5dde166786ea",
+      "path": "src/foundry/phase2/kl_recipe.py"
+    },
+    {
+      "execution_bytes": 29520,
+      "execution_sha256": "f125cdd7eb29623c9aa88947fa9f04169c6a8027bbd78688dc9fb94542906c9b",
+      "git_blob_bytes": 29520,
+      "git_blob_sha256": "f125cdd7eb29623c9aa88947fa9f04169c6a8027bbd78688dc9fb94542906c9b",
+      "path": "src/foundry/phase2/l3_grpo_analysis.py"
+    },
+    {
+      "execution_bytes": 16289,
+      "execution_sha256": "a09ce80870097d0c7e3dd511ffbc042af232222768dbb8e8d38afb1b1e8e8973",
+      "git_blob_bytes": 16289,
+      "git_blob_sha256": "a09ce80870097d0c7e3dd511ffbc042af232222768dbb8e8d38afb1b1e8e8973",
+      "path": "src/foundry/phase2/l3_grpo_campaign.py"
+    },
+    {
+      "execution_bytes": 17165,
+      "execution_sha256": "b8a611d0ebd139dc195102d30c159266316eeb75d501f67548140ec7b94219b0",
+      "git_blob_bytes": 17165,
+      "git_blob_sha256": "b8a611d0ebd139dc195102d30c159266316eeb75d501f67548140ec7b94219b0",
+      "path": "src/foundry/phase2/l3_grpo_contract.py"
+    },
+    {
+      "execution_bytes": 11823,
+      "execution_sha256": "c3173035e5d77a859a313506bc2d32c6ba032195b23d234e8ce7c0c6e7694f71",
+      "git_blob_bytes": 11823,
+      "git_blob_sha256": "c3173035e5d77a859a313506bc2d32c6ba032195b23d234e8ce7c0c6e7694f71",
+      "path": "src/foundry/phase2/l3_grpo_reference.py"
+    },
+    {
+      "execution_bytes": 19110,
+      "execution_sha256": "448574e61ff74c40b026dd493b9773023c92eb7f4dbaccb5dfbf511be1e68e66",
+      "git_blob_bytes": 19110,
+      "git_blob_sha256": "448574e61ff74c40b026dd493b9773023c92eb7f4dbaccb5dfbf511be1e68e66",
+      "path": "src/foundry/phase2/l3_grpo_reward.py"
+    },
+    {
+      "execution_bytes": 156486,
+      "execution_sha256": "132eab47206d29d3bc9d1cf543c90873d1da5f47e35d59903f4a50ce77a2eb5d",
+      "git_blob_bytes": 156486,
+      "git_blob_sha256": "132eab47206d29d3bc9d1cf543c90873d1da5f47e35d59903f4a50ce77a2eb5d",
+      "path": "src/foundry/phase2/l3_grpo_runtime.py"
+    },
+    {
+      "execution_bytes": 28901,
+      "execution_sha256": "4475e29a30856e96a4a7cae6d9a92d0c04ac7505e33de11b5ae79e52a2a9f255",
+      "git_blob_bytes": 28901,
+      "git_blob_sha256": "4475e29a30856e96a4a7cae6d9a92d0c04ac7505e33de11b5ae79e52a2a9f255",
+      "path": "src/foundry/phase2/l3_grpo_schedule.py"
+    },
+    {
+      "execution_bytes": 27114,
+      "execution_sha256": "ab40c868dec8ffe64d63837d19be666652effcb83f4c6992ec20cc12beec2ba6",
+      "git_blob_bytes": 27114,
+      "git_blob_sha256": "ab40c868dec8ffe64d63837d19be666652effcb83f4c6992ec20cc12beec2ba6",
+      "path": "src/foundry/phase2/l3_grpo_signal_audit.py"
+    },
+    {
+      "execution_bytes": 23070,
+      "execution_sha256": "d8db1619c28f77e488cd5ff5c1f797444d2b6b989f6d5f4cd4aa17b4d937d0c4",
+      "git_blob_bytes": 23070,
+      "git_blob_sha256": "d8db1619c28f77e488cd5ff5c1f797444d2b6b989f6d5f4cd4aa17b4d937d0c4",
+      "path": "src/foundry/phase2/l3_grpo_signal_qualification.py"
+    },
+    {
+      "execution_bytes": 54169,
+      "execution_sha256": "667c608819cc9c3b7222988e35c6b393471f5aa70a135fca39381eca1fc98819",
+      "git_blob_bytes": 54169,
+      "git_blob_sha256": "667c608819cc9c3b7222988e35c6b393471f5aa70a135fca39381eca1fc98819",
+      "path": "src/foundry/phase2/l3_grpo_source_binding.py"
+    },
+    {
+      "execution_bytes": 3606,
+      "execution_sha256": "a97d45b69ef55cefe3295e617bfbfe820332f8d843e9debb296037c1f6555706",
+      "git_blob_bytes": 3606,
+      "git_blob_sha256": "a97d45b69ef55cefe3295e617bfbfe820332f8d843e9debb296037c1f6555706",
+      "path": "src/foundry/phase2/l3_grpo_source_binding_prepare.py"
+    },
+    {
+      "execution_bytes": 26104,
+      "execution_sha256": "2ae8ddec75894cfc5cb8810cf3ea225ee0356f9eee215d8d57a1b22e2d05bc0b",
+      "git_blob_bytes": 26104,
+      "git_blob_sha256": "2ae8ddec75894cfc5cb8810cf3ea225ee0356f9eee215d8d57a1b22e2d05bc0b",
+      "path": "src/foundry/phase2/l3_grpo_warmup_analysis.py"
+    },
+    {
+      "execution_bytes": 17323,
+      "execution_sha256": "7044fe4dc69e79a01b129632bf7fd44c51bf9553f85308ab210652752d5ffad2",
+      "git_blob_bytes": 17323,
+      "git_blob_sha256": "7044fe4dc69e79a01b129632bf7fd44c51bf9553f85308ab210652752d5ffad2",
+      "path": "src/foundry/phase2/l3_grpo_warmup_campaign.py"
+    },
+    {
+      "execution_bytes": 21820,
+      "execution_sha256": "26ed85563469085d15161370e4e89f885738a38c665926278c781556902abd09",
+      "git_blob_bytes": 21820,
+      "git_blob_sha256": "26ed85563469085d15161370e4e89f885738a38c665926278c781556902abd09",
+      "path": "src/foundry/phase2/l3_grpo_warmup_compatibility_campaign.py"
+    },
+    {
+      "execution_bytes": 16349,
+      "execution_sha256": "4cb6492f17f4e9dae67f86d61a605d78dbe37eb6ed9eeb25bc2d00711c9a2c50",
+      "git_blob_bytes": 16349,
+      "git_blob_sha256": "4cb6492f17f4e9dae67f86d61a605d78dbe37eb6ed9eeb25bc2d00711c9a2c50",
+      "path": "src/foundry/phase2/l3_grpo_warmup_compatibility_runtime.py"
+    },
+    {
+      "execution_bytes": 31089,
+      "execution_sha256": "56b1200f7b44913313bacd8fe25a6f1cb0b0ad035dff749ac571cec6fdcba09e",
+      "git_blob_bytes": 31089,
+      "git_blob_sha256": "56b1200f7b44913313bacd8fe25a6f1cb0b0ad035dff749ac571cec6fdcba09e",
+      "path": "src/foundry/phase2/l3_grpo_warmup_prepare.py"
+    },
+    {
+      "execution_bytes": 23892,
+      "execution_sha256": "612348b1f19d860fbd92a3ab085a1138b133c4860c521899dc421ce130e24169",
+      "git_blob_bytes": 23892,
+      "git_blob_sha256": "612348b1f19d860fbd92a3ab085a1138b133c4860c521899dc421ce130e24169",
+      "path": "src/foundry/phase2/l3_grpo_warmup_update.py"
+    },
+    {
+      "execution_bytes": 28790,
+      "execution_sha256": "24252d48f8c3cdb941a7a1301680e212075c9fe482622c39c33d3e65a3909608",
+      "git_blob_bytes": 28790,
+      "git_blob_sha256": "24252d48f8c3cdb941a7a1301680e212075c9fe482622c39c33d3e65a3909608",
+      "path": "src/foundry/phase2/l3_grpo_zero_gradient.py"
+    },
+    {
+      "execution_bytes": 4802,
+      "execution_sha256": "90c6d3e4ef3b718a671830a8d9b53235a8cfb600978b25fd7e0de962c06faed4",
+      "git_blob_bytes": 4802,
+      "git_blob_sha256": "90c6d3e4ef3b718a671830a8d9b53235a8cfb600978b25fd7e0de962c06faed4",
+      "path": "src/foundry/phase2/launch_contract.py"
+    },
+    {
+      "execution_bytes": 36329,
+      "execution_sha256": "797debdef3bf0ba145ca4af3fbf9634f91e2d7f173898f56f05ed797ff6f49c3",
+      "git_blob_bytes": 36329,
+      "git_blob_sha256": "797debdef3bf0ba145ca4af3fbf9634f91e2d7f173898f56f05ed797ff6f49c3",
+      "path": "src/foundry/phase2/vetted_qlora_kl.py"
+    },
+    {
+      "execution_bytes": 15863,
+      "execution_sha256": "9d64a60e0ddbeb9b95b0441283bfc5cf799cabb6629a691b145682a76b8e24ce",
+      "git_blob_bytes": 15863,
+      "git_blob_sha256": "9d64a60e0ddbeb9b95b0441283bfc5cf799cabb6629a691b145682a76b8e24ce",
+      "path": "src/foundry/phase2/windows_environment.py"
+    },
+    {
+      "execution_bytes": 192,
+      "execution_sha256": "658e053c5bd047370ba5f2de3e0f88af4151c6d06e8a1a75c6949832a6183cfc",
+      "git_blob_bytes": 192,
+      "git_blob_sha256": "658e053c5bd047370ba5f2de3e0f88af4151c6d06e8a1a75c6949832a6183cfc",
+      "path": "src/foundry/training/__init__.py"
+    },
+    {
+      "execution_bytes": 11234,
+      "execution_sha256": "432d47626639224d2e78680399eee81a129ef6a8348aa25e989f3130dc3d9324",
+      "git_blob_bytes": 11234,
+      "git_blob_sha256": "432d47626639224d2e78680399eee81a129ef6a8348aa25e989f3130dc3d9324",
+      "path": "src/foundry/training/adapter_evaluation.py"
+    },
+    {
+      "execution_bytes": 22003,
+      "execution_sha256": "4351d0fa7b29736c25f3db86ff65659ffdad68987f917343655681a997294346",
+      "git_blob_bytes": 22003,
+      "git_blob_sha256": "4351d0fa7b29736c25f3db86ff65659ffdad68987f917343655681a997294346",
+      "path": "src/foundry/training/base_conditioned_retention.py"
+    },
+    {
+      "execution_bytes": 28722,
+      "execution_sha256": "72177c0015804bfecea1e612fb269311542c337a3c0a44af22e3e598f02bbe49",
+      "git_blob_bytes": 28722,
+      "git_blob_sha256": "72177c0015804bfecea1e612fb269311542c337a3c0a44af22e3e598f02bbe49",
+      "path": "src/foundry/training/base_replay.py"
+    },
+    {
+      "execution_bytes": 11694,
+      "execution_sha256": "570fdab3d8913fc1e5b2c23a99b4f418f6392bac4ff40a83cd2e2310af276971",
+      "git_blob_bytes": 11694,
+      "git_blob_sha256": "570fdab3d8913fc1e5b2c23a99b4f418f6392bac4ff40a83cd2e2310af276971",
+      "path": "src/foundry/training/config.py"
+    },
+    {
+      "execution_bytes": 32759,
+      "execution_sha256": "58358c3960c0a26f28caad2694fcd86f721c5b89490463976cabc46607f9a939",
+      "git_blob_bytes": 32759,
+      "git_blob_sha256": "58358c3960c0a26f28caad2694fcd86f721c5b89490463976cabc46607f9a939",
+      "path": "src/foundry/training/grpo_compatibility.py"
+    },
+    {
+      "execution_bytes": 11104,
+      "execution_sha256": "08314d67e18867ca93a113c00007281cfde14939fbbd23649feaac39084e0f0f",
+      "git_blob_bytes": 11104,
+      "git_blob_sha256": "08314d67e18867ca93a113c00007281cfde14939fbbd23649feaac39084e0f0f",
+      "path": "src/foundry/training/grpo_config.py"
+    },
+    {
+      "execution_bytes": 18175,
+      "execution_sha256": "82cb333cf76682e49d6a02400df7ca84eac1f29de20a05c6154f291149ddf974",
+      "git_blob_bytes": 18175,
+      "git_blob_sha256": "82cb333cf76682e49d6a02400df7ca84eac1f29de20a05c6154f291149ddf974",
+      "path": "src/foundry/training/grpo_environment.py"
+    },
+    {
+      "execution_bytes": 28228,
+      "execution_sha256": "672e0ee90693222b089a740ce77b8e00e5b4f05b4d813f0c19995a4edd73df2c",
+      "git_blob_bytes": 28228,
+      "git_blob_sha256": "672e0ee90693222b089a740ce77b8e00e5b4f05b4d813f0c19995a4edd73df2c",
+      "path": "src/foundry/training/grpo_gpu.py"
+    },
+    {
+      "execution_bytes": 31539,
+      "execution_sha256": "dabcf548e4d4ea3e6d913cbb38b043585247615f5d2fc1818c8a73d0f4890efc",
+      "git_blob_bytes": 31539,
+      "git_blob_sha256": "dabcf548e4d4ea3e6d913cbb38b043585247615f5d2fc1818c8a73d0f4890efc",
+      "path": "src/foundry/training/grpo_paths.py"
+    },
+    {
+      "execution_bytes": 14832,
+      "execution_sha256": "6ca938e18f04c4d4bf563e0a677132306dc8a13cbfd173792ca0f3f035225020",
+      "git_blob_bytes": 14832,
+      "git_blob_sha256": "6ca938e18f04c4d4bf563e0a677132306dc8a13cbfd173792ca0f3f035225020",
+      "path": "src/foundry/training/grpo_reference.py"
+    },
+    {
+      "execution_bytes": 50831,
+      "execution_sha256": "7cc32841c050d7a00702fdb598e4c43e0073d0fd0819395f46b344dfd6cd77e1",
+      "git_blob_bytes": 50831,
+      "git_blob_sha256": "7cc32841c050d7a00702fdb598e4c43e0073d0fd0819395f46b344dfd6cd77e1",
+      "path": "src/foundry/training/grpo_replay_evidence.py"
+    },
+    {
+      "execution_bytes": 18608,
+      "execution_sha256": "089650105e29ead3c4ad62f1e0e41263e6c2af5fb8a12cb2851644aca3599616",
+      "git_blob_bytes": 18608,
+      "git_blob_sha256": "089650105e29ead3c4ad62f1e0e41263e6c2af5fb8a12cb2851644aca3599616",
+      "path": "src/foundry/training/grpo_reward.py"
+    },
+    {
+      "execution_bytes": 75828,
+      "execution_sha256": "6a2571733d0aad9b577a2211816558c84f8a2459d03bc414cad09bc42cee66ba",
+      "git_blob_bytes": 75828,
+      "git_blob_sha256": "6a2571733d0aad9b577a2211816558c84f8a2459d03bc414cad09bc42cee66ba",
+      "path": "src/foundry/training/grpo_runtime.py"
+    },
+    {
+      "execution_bytes": 36829,
+      "execution_sha256": "9f4bfcd7db95634c8f154a2371abfe5f9f31ad855e00d6f2abb0d93e599e6f67",
+      "git_blob_bytes": 36829,
+      "git_blob_sha256": "9f4bfcd7db95634c8f154a2371abfe5f9f31ad855e00d6f2abb0d93e599e6f67",
+      "path": "src/foundry/training/grpo_schedule.py"
+    },
+    {
+      "execution_bytes": 7498,
+      "execution_sha256": "601b49a58a79b12b424bea27b25991a48f40e14f22e6c3a38c03bacaca52172e",
+      "git_blob_bytes": 7498,
+      "git_blob_sha256": "601b49a58a79b12b424bea27b25991a48f40e14f22e6c3a38c03bacaca52172e",
+      "path": "src/foundry/training/grpo_trainer.py"
+    },
+    {
+      "execution_bytes": 7486,
+      "execution_sha256": "1e0506ce89a65ab2699f514730eec0437788fe35d55eeb31e299bdd60fa5ceff",
+      "git_blob_bytes": 7486,
+      "git_blob_sha256": "1e0506ce89a65ab2699f514730eec0437788fe35d55eeb31e299bdd60fa5ceff",
+      "path": "src/foundry/training/lora_scaling.py"
+    },
+    {
+      "execution_bytes": 15324,
+      "execution_sha256": "0619ce702461efefdfeb45d5740df14f5a0646dbb6e218c9e0a7ee906c20266a",
+      "git_blob_bytes": 15324,
+      "git_blob_sha256": "0619ce702461efefdfeb45d5740df14f5a0646dbb6e218c9e0a7ee906c20266a",
+      "path": "src/foundry/training/paired_analysis.py"
+    },
+    {
+      "execution_bytes": 19007,
+      "execution_sha256": "675d0e297f787853a04ee27e4d0b4bb7006cb848ed6c9cd457d43177f934c987",
+      "git_blob_bytes": 19007,
+      "git_blob_sha256": "675d0e297f787853a04ee27e4d0b4bb7006cb848ed6c9cd457d43177f934c987",
+      "path": "src/foundry/training/qlora.py"
+    },
+    {
+      "execution_bytes": 24630,
+      "execution_sha256": "0cc6f583caad049fe9ce25a4da70b84d8abcfd45360d8dbc1f9e25e86b530b91",
+      "git_blob_bytes": 24630,
+      "git_blob_sha256": "0cc6f583caad049fe9ce25a4da70b84d8abcfd45360d8dbc1f9e25e86b530b91",
+      "path": "src/foundry/training/retention.py"
+    },
+    {
+      "execution_bytes": 7397,
+      "execution_sha256": "4d0e36dd948bba10250024566a89595e5ed85806b1435f057434d9df7953270d",
+      "git_blob_bytes": 7397,
+      "git_blob_sha256": "4d0e36dd948bba10250024566a89595e5ed85806b1435f057434d9df7953270d",
+      "path": "tests/unit/phase2/test_l3_grpo_runtime.py"
+    },
+    {
+      "execution_bytes": 13283,
+      "execution_sha256": "07c7c7c41ed53cb32336282679d6fe9526d737dc7c172106813275ac33fabd2e",
+      "git_blob_bytes": 13283,
+      "git_blob_sha256": "07c7c7c41ed53cb32336282679d6fe9526d737dc7c172106813275ac33fabd2e",
+      "path": "tests/unit/phase2/test_l3_grpo_source_binding.py"
+    },
+    {
+      "execution_bytes": 2228,
+      "execution_sha256": "6fbdca0366fe2b4e17f68a5750de6a3898d12af45e3e1319e59fdb226deb4b87",
+      "git_blob_bytes": 2228,
+      "git_blob_sha256": "6fbdca0366fe2b4e17f68a5750de6a3898d12af45e3e1319e59fdb226deb4b87",
+      "path": "tests/unit/phase2/test_l3_grpo_warmup_analysis.py"
+    },
+    {
+      "execution_bytes": 3365,
+      "execution_sha256": "3347af99b77672b7c14fe532ebb5487a17e482cffe7c3dff177f6bb1d54ec837",
+      "git_blob_bytes": 3365,
+      "git_blob_sha256": "3347af99b77672b7c14fe532ebb5487a17e482cffe7c3dff177f6bb1d54ec837",
+      "path": "tests/unit/phase2/test_l3_grpo_warmup_campaign.py"
+    },
+    {
+      "execution_bytes": 4047,
+      "execution_sha256": "20335696cbc91f96d0f5ddfabaa4ce631283a2884cc1e19999e61236576c6913",
+      "git_blob_bytes": 4047,
+      "git_blob_sha256": "20335696cbc91f96d0f5ddfabaa4ce631283a2884cc1e19999e61236576c6913",
+      "path": "tests/unit/phase2/test_l3_grpo_warmup_compatibility_campaign.py"
+    },
+    {
+      "execution_bytes": 2137,
+      "execution_sha256": "a6b3695b5f50a1426760f7325a872d6d016e29c6287a133eb62183e7642fdc53",
+      "git_blob_bytes": 2137,
+      "git_blob_sha256": "a6b3695b5f50a1426760f7325a872d6d016e29c6287a133eb62183e7642fdc53",
+      "path": "tests/unit/phase2/test_l3_grpo_warmup_compatibility_runtime.py"
+    },
+    {
+      "execution_bytes": 3445,
+      "execution_sha256": "6426002c1398e0afec6a097e486a3fae03bc7939dac9884171f182c5d637e62c",
+      "git_blob_bytes": 3445,
+      "git_blob_sha256": "6426002c1398e0afec6a097e486a3fae03bc7939dac9884171f182c5d637e62c",
+      "path": "tests/unit/phase2/test_l3_grpo_warmup_prepare.py"
+    },
+    {
+      "execution_bytes": 5800,
+      "execution_sha256": "747036b576203ea84f1032f8c0ec02599d39fd7d3a5e40a87bdad0ee0d2376ff",
+      "git_blob_bytes": 5800,
+      "git_blob_sha256": "747036b576203ea84f1032f8c0ec02599d39fd7d3a5e40a87bdad0ee0d2376ff",
+      "path": "tests/unit/phase2/test_l3_grpo_warmup_update.py"
+    },
+    {
+      "execution_bytes": 2424,
+      "execution_sha256": "cdb3a5e04f3e053d65e3fac393da14ef0d069ff58963c2053f9d1c408f06ff48",
+      "git_blob_bytes": 2424,
+      "git_blob_sha256": "cdb3a5e04f3e053d65e3fac393da14ef0d069ff58963c2053f9d1c408f06ff48",
+      "path": "tests/unit/phase2/test_l3_grpo_zero_gradient_correction.py"
+    }
+  ],
+  "git_clean_content_equivalence_required": true,
+  "interpreter_sha256": "0b471133e110cfb53a061cad528ce8e517d7b9ac41a0a396c39ad795a487fc14",
+  "layer2_manifest_sha256": "df72fba61cf6e3785ccd40a1bbb2fb0c2a2c08c980f319bf9cc7e131148e4c50",
+  "manifest_id": "foundry-l3-grpo-layer2-compatibility-runtime-v1",
+  "operational_environment_sha256": "76afee8390e73ef9274d4bc4b91d8a99735f66efb9137c4909e8619d3f9d244a",
+  "ordered_paths": [
+    "pyproject.toml",
+    "requirements-training.lock.txt",
+    "src/foundry/__init__.py",
+    "src/foundry/evaluation/__init__.py",
+    "src/foundry/evaluation/answer_extraction.py",
+    "src/foundry/evaluation/scoring.py",
+    "src/foundry/phase2/__init__.py",
+    "src/foundry/phase2/argv_transport.py",
+    "src/foundry/phase2/kl_objective.py",
+    "src/foundry/phase2/kl_recipe.py",
+    "src/foundry/phase2/l3_grpo_analysis.py",
+    "src/foundry/phase2/l3_grpo_campaign.py",
+    "src/foundry/phase2/l3_grpo_contract.py",
+    "src/foundry/phase2/l3_grpo_reference.py",
+    "src/foundry/phase2/l3_grpo_reward.py",
+    "src/foundry/phase2/l3_grpo_runtime.py",
+    "src/foundry/phase2/l3_grpo_schedule.py",
+    "src/foundry/phase2/l3_grpo_signal_audit.py",
+    "src/foundry/phase2/l3_grpo_signal_qualification.py",
+    "src/foundry/phase2/l3_grpo_source_binding.py",
+    "src/foundry/phase2/l3_grpo_source_binding_prepare.py",
+    "src/foundry/phase2/l3_grpo_warmup_analysis.py",
+    "src/foundry/phase2/l3_grpo_warmup_campaign.py",
+    "src/foundry/phase2/l3_grpo_warmup_compatibility_campaign.py",
+    "src/foundry/phase2/l3_grpo_warmup_compatibility_runtime.py",
+    "src/foundry/phase2/l3_grpo_warmup_prepare.py",
+    "src/foundry/phase2/l3_grpo_warmup_update.py",
+    "src/foundry/phase2/l3_grpo_zero_gradient.py",
+    "src/foundry/phase2/launch_contract.py",
+    "src/foundry/phase2/vetted_qlora_kl.py",
+    "src/foundry/phase2/windows_environment.py",
+    "src/foundry/training/__init__.py",
+    "src/foundry/training/adapter_evaluation.py",
+    "src/foundry/training/base_conditioned_retention.py",
+    "src/foundry/training/base_replay.py",
+    "src/foundry/training/config.py",
+    "src/foundry/training/grpo_compatibility.py",
+    "src/foundry/training/grpo_config.py",
+    "src/foundry/training/grpo_environment.py",
+    "src/foundry/training/grpo_gpu.py",
+    "src/foundry/training/grpo_paths.py",
+    "src/foundry/training/grpo_reference.py",
+    "src/foundry/training/grpo_replay_evidence.py",
+    "src/foundry/training/grpo_reward.py",
+    "src/foundry/training/grpo_runtime.py",
+    "src/foundry/training/grpo_schedule.py",
+    "src/foundry/training/grpo_trainer.py",
+    "src/foundry/training/lora_scaling.py",
+    "src/foundry/training/paired_analysis.py",
+    "src/foundry/training/qlora.py",
+    "src/foundry/training/retention.py",
+    "tests/unit/phase2/test_l3_grpo_runtime.py",
+    "tests/unit/phase2/test_l3_grpo_source_binding.py",
+    "tests/unit/phase2/test_l3_grpo_warmup_analysis.py",
+    "tests/unit/phase2/test_l3_grpo_warmup_campaign.py",
+    "tests/unit/phase2/test_l3_grpo_warmup_compatibility_campaign.py",
+    "tests/unit/phase2/test_l3_grpo_warmup_compatibility_runtime.py",
+    "tests/unit/phase2/test_l3_grpo_warmup_prepare.py",
+    "tests/unit/phase2/test_l3_grpo_warmup_update.py",
+    "tests/unit/phase2/test_l3_grpo_zero_gradient_correction.py"
+  ],
+  "package_inventory_sha256": "2d4dbf699b73b53206d96687f1381ec22dac8a2d1575b0a43791627b9b43b2c8",
+  "python_import_root": "C:\\Users\\Admin\\Projects\\Foundry\\src",
+  "python_import_root_sha256": "cd5cb572c1fa318f96c6f7793a21cb68fd20aba6c1354e628f04027a737385ed",
+  "role": "compatibility_runtime",
+  "schema_version": 1,
+  "scientific_settings_changed": false,
+  "sealed_content_use": 0,
+  "shell": false,
+  "source_checks_warning_only": false,
+  "source_commit": "1bac985cb55ad8c528783e69f15b82ab54449e46",
+  "source_tree": "eaa94dc1119f47997aff0c67a06d8f1f178c4955",
+  "warmup_update_contract_sha256": "e929b7cb0ce0e1e1d03936e1f899d59f9ff2eca1fa01c72a36efd778de325a89",
+  "windows_line_ending_binding": "execution_and_git_blob_bytes_bound_independently"
+}
