@@ -1,0 +1,71 @@
+{
+  "absolute_tolerance": 2.384185791015625e-07,
+  "advantage_equivalence_contract_sha256": "057af22d9784ef4a2bab1f8dc37687942a28b7d124cf95c287a3b2338867efbd",
+  "canonical_advantage_source": "stock_trl_cuda_tensor_used_by_training_path",
+  "canonical_implementation_sha256": "fd81ae19c0b576b7399787bc717e179a81fa361cc684f94868ed6256cf7717a1",
+  "contract_id": "foundry-l3-grpo-advantage-equivalence-v1",
+  "cpu_diagnostic_implementation_sha256": "73ea98c678b3729fa0033ab6a44206065861bca13e62ab8aa5908ee1f1fcdd49",
+  "cpu_projection_role": "diagnostic_only",
+  "equivalence_implementation_sha256": "794fb42ba61ffce9ae5b91a3269f953c2b3f288bd49587695089e1fc23095f3c",
+  "exhaustive_fixture": {
+    "absolute_tolerance": 2.384185791015625e-07,
+    "all_values_within_tolerance": true,
+    "cpu_tensor_evidence": {
+      "device": "cpu",
+      "dtype": "torch.float32",
+      "numel": 262144,
+      "requires_grad": false,
+      "sha256": "2d397ec723f3755ec94d0db9b50a2bdc680d1decabcabf4b754b92ebc02d1c81",
+      "shape": [
+        65536,
+        4
+      ]
+    },
+    "duplicate_cuda_projection_exact": true,
+    "exact_mismatch_vector_count": 11915,
+    "first_cuda_tensor_evidence": {
+      "device": "cuda:0",
+      "dtype": "torch.float32",
+      "numel": 262144,
+      "requires_grad": false,
+      "sha256": "2c3ac48a1619663b13f1c389718d9dae11982bf26d105ca84cba8d5d4493b487",
+      "shape": [
+        65536,
+        4
+      ]
+    },
+    "fixture_id": "foundry-l3-grpo-cross-device-advantage-equivalence-fixture-v1",
+    "fixture_sha256": "56f46a28eac73a1f864888695165944c4ff40a10b57615e273f0af4c7b946ad3",
+    "fixture_vector_count": 65536,
+    "generation_calls": 0,
+    "group_zero_nonzero_classification_difference_count": 0,
+    "input_value_count": 16,
+    "material_sign_change_vector_count": 0,
+    "maximum_absolute_difference": 1.1920928955078125e-07,
+    "model_loaded": false,
+    "prior_fixture_sha256": "35bbe14e12659645035890450b64d74ec2da37eb4d03f73392f2d1885f8f555",
+    "relative_tolerance": 1e-06,
+    "schema_version": 1,
+    "second_cuda_tensor_evidence": {
+      "device": "cuda:0",
+      "dtype": "torch.float32",
+      "numel": 262144,
+      "requires_grad": false,
+      "sha256": "2c3ac48a1619663b13f1c389718d9dae11982bf26d105ca84cba8d5d4493b487",
+      "shape": [
+        65536,
+        4
+      ]
+    }
+  },
+  "exhaustive_fixture_sha256": "56f46a28eac73a1f864888695165944c4ff40a10b57615e273f0af4c7b946ad3",
+  "failure_classification": "advantage_projection_mismatch",
+  "float32_machine_epsilon": 1.1920928955078125e-07,
+  "observed_maximum_in_float32_epsilons": 1,
+  "relative_tolerance": 1e-06,
+  "schedule_viability_authority": "canonical_cuda_reward_variance_and_advantages",
+  "schema_version": 1,
+  "tolerance_in_float32_epsilons": 2,
+  "tolerance_may_not_change_after_model_output": true,
+  "zero_nonzero_gate_authority": "canonical_cuda_only"
+}

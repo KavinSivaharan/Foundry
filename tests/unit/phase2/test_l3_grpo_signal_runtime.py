@@ -72,6 +72,10 @@ def test_parser_requires_every_frozen_runtime_path() -> None:
             "manifest.json",
             "--audit-contract",
             "contract.json",
+            "--advantage-contract",
+            "advantage.json",
+            "--prior-diagnostic-manifest",
+            "prior.json",
             "--starting-adapter",
             "adapter",
             "--raw-evidence",
@@ -82,3 +86,5 @@ def test_parser_requires_every_frozen_runtime_path() -> None:
     )
     assert parsed.arm == "targeted"
     assert parsed.packet == Path("packet.json")
+    assert parsed.advantage_contract == Path("advantage.json")
+    assert parsed.prior_diagnostic_manifest == Path("prior.json")

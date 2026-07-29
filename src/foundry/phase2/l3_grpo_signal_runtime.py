@@ -15,6 +15,12 @@ from functools import partial
 from pathlib import Path
 from typing import Any, Literal, cast
 
+from foundry.phase2.l3_grpo_advantage_equivalence import (
+    cpu_diagnostic_projection,
+    evaluate_advantage_equivalence,
+    recompute_stock_cuda_projection,
+    verify_advantage_equivalence_contract,
+)
 from foundry.phase2.l3_grpo_contract import (
     INTERPRETER_SHA256,
     MODEL_REVISION,
@@ -46,6 +52,7 @@ from foundry.phase2.l3_grpo_signal_audit import (
     AUDIT_ID,
     COMPLETIONS_PER_ARM,
     COMPLETIONS_PER_GROUP,
+    FAMILY_PRESENTATION_ALIASES,
     GROUPS_PER_ARM,
     REPLAY_GROUPS_PER_ARM,
     REWARD_COMPONENT_FIELDS,
@@ -53,7 +60,10 @@ from foundry.phase2.l3_grpo_signal_audit import (
     classify_zero_variance_group,
     signal_audit_method_contract,
 )
-from foundry.phase2.l3_grpo_zero_gradient import reward_projection
+from foundry.phase2.l3_grpo_signal_continuity import (
+    compare_fresh_group_to_prior,
+    verify_prior_diagnostic_manifest,
+)
 from foundry.training.config import canonical_sha256
 from foundry.training.grpo_compatibility import (
     TopPWarningOnlyGenerationContract,
@@ -72,8 +82,8 @@ from foundry.training.grpo_trainer import make_truncation_aware_grpo_trainer
 from foundry.training.qlora import directory_sha256, file_sha256
 
 Arm = Literal["generic", "targeted"]
-RUNTIME_ID = "foundry-l3-grpo-signal-audit-runtime-v1"
-SOURCE_COMMIT = "d1c4edf15510128413735a19f937d5451137ae0b"
+RUNTIME_ID = "foundry-l3-grpo-signal-audit-runtime-v2"
+STARTING_COMMIT = "de4a02c5e98de9e7cf13bc07f1b6fe40aa348b9f"
 EXPECTED_SCHEDULE_SHA256 = {
     "generic": "ff1005a1d7381acd52dd28b3d054b2979986c47595ed09c944880ea5fc5f5ff3",
     "targeted": "8326c1b91ba127c4734527abfed2f8bca41ecbb3a0bb7bc62a5bf940ac24f0c4",
@@ -132,8 +142,8 @@ def _validate_contract(
     if not isinstance(supplied, str) or supplied != canonical_sha256(payload):
         raise ValueError("signal-audit contract does not reconstruct")
     if (
-        contract.get("contract_id") != "foundry-l3-grpo-signal-audit-v1"
-        or contract.get("starting_commit") != SOURCE_COMMIT
+        contract.get("contract_id") != "foundry-l3-grpo-signal-audit-r1-v1"
+        or contract.get("starting_commit") != STARTING_COMMIT
         or contract.get("method_contract") != signal_audit_method_contract()
         or cast(dict[str, str], contract["starting_adapters"])[arm] != STARTING_ADAPTER_SHA256[arm]
         or cast(dict[str, str], contract["schedules"])[arm] != EXPECTED_SCHEDULE_SHA256[arm]
@@ -144,7 +154,7 @@ def _validate_contract(
         or contract.get("adapter_save_authorized") is not False
     ):
         raise ValueError("signal-audit contract differs")
-    implementation = _read(path.with_name("milestone14b_signal_audit_implementation.json"))
+    implementation = _read(path.with_name("milestone14b_r1_signal_audit_implementation.json"))
     implementation_sha256 = implementation.get("implementation_sha256")
     implementation_payload = {
         name: value for name, value in implementation.items() if name != "implementation_sha256"
@@ -238,14 +248,33 @@ def _group_record(
     maximum_kl = float(valid_kl.max().item()) if int(valid_kl.numel()) else None
 
     reward_unprojected = [float(record.reward.total) for record in records]
-    projected = reward_projection(torch, reward_unprojected)
-    projected_advantages = torch.tensor(
-        cast(list[float], projected["advantages"]),
+    canonical_projection = recompute_stock_cuda_projection(torch, reward_unprojected)
+    duplicate_projection = recompute_stock_cuda_projection(torch, reward_unprojected)
+    diagnostic_projection = cpu_diagnostic_projection(torch, reward_unprojected)
+    canonical_advantages = [float(value) for value in advantages.detach().cpu().tolist()]
+    recomputed_advantages = torch.tensor(
+        cast(list[float], canonical_projection["advantages"]),
         dtype=advantages.dtype,
         device=advantages.device,
     )
-    if not bool(torch.equal(advantages, projected_advantages)):
-        raise RuntimeError("stock TRL advantages differ from frozen reward projection")
+    canonical_matches_stock = bool(torch.equal(advantages, recomputed_advantages))
+    canonical_reward_evidence = cast(
+        Mapping[str, object],
+        canonical_projection["reward_vector_evidence"],
+    )
+    duplicate_reward_evidence = cast(
+        Mapping[str, object],
+        duplicate_projection["reward_vector_evidence"],
+    )
+    equivalence = evaluate_advantage_equivalence(
+        reward_vector=cast(list[object], canonical_projection["reward_vector"]),
+        canonical_cuda_advantages=canonical_advantages,
+        duplicate_cuda_advantages=cast(list[object], duplicate_projection["advantages"]),
+        cpu_diagnostic_advantages=cast(list[object], diagnostic_projection["advantages"]),
+        canonical_reward_vector_sha256=cast(str, canonical_reward_evidence["sha256"]),
+        duplicate_reward_vector_sha256=cast(str, duplicate_reward_evidence["sha256"]),
+        canonical_projection_matches_stock=canonical_matches_stock,
+    )
     component_vectors = _component_vectors(records)
     breakdowns = [record.reward.as_dict() for record in records]
     reward_contract_consistent = all(
@@ -262,11 +291,11 @@ def _group_record(
     )
     completion_sha256s = [str(record.completion_sha256) for record in records]
     correctness = [bool(record.reward.answer_correct) for record in records]
-    variance = float(cast(float, projected["reward_variance"]))
+    variance = float(cast(float, canonical_projection["reward_variance"]))
     classification = classify_zero_variance_group(
         reward_variance=variance,
         completion_sha256s=completion_sha256s,
-        reward_vector=cast(list[float], projected["rewards"]),
+        reward_vector=cast(list[float], canonical_projection["reward_vector"]),
         reward_component_vectors=component_vectors,
         correctness=correctness,
         evidence_complete=(
@@ -282,6 +311,11 @@ def _group_record(
         "group_id": group.group_id,
         "source_kind": group.source_kind,
         "task_family": group.category if group.source_kind == "task" else None,
+        "task_family_alias": (
+            FAMILY_PRESENTATION_ALIASES[cast(Any, group.category)]
+            if group.source_kind == "task"
+            else None
+        ),
         "replay_section": group.category if group.source_kind == "base_replay" else None,
         "prompt_sha256": group.prompt_sha256,
         "completion_count": COMPLETIONS_PER_GROUP,
@@ -294,16 +328,24 @@ def _group_record(
         "valid_completion_token_counts": valid_counts,
         "valid_completion_token_count": sum(valid_counts),
         "reward_vector_unprojected": reward_unprojected,
-        "reward_vector": projected["rewards"],
+        "reward_vector": canonical_projection["reward_vector"],
+        "canonical_cuda_reward_vector_evidence": canonical_projection["reward_vector_evidence"],
+        "duplicate_cuda_reward_vector_evidence": duplicate_projection["reward_vector_evidence"],
         "reward_component_vectors": component_vectors,
         "reward_breakdowns": breakdowns,
-        "reward_mean": projected["reward_mean"],
+        "reward_mean": canonical_projection["reward_mean"],
         "reward_variance": variance,
-        "advantages": projected["advantages"],
-        "nonzero_advantage_count": sum(
-            float(value) != 0.0 for value in cast(list[float], projected["advantages"])
-        ),
-        "reward_rank_count": len(set(cast(list[float], projected["rewards"]))),
+        "advantages": canonical_advantages,
+        "canonical_cuda_advantages": canonical_advantages,
+        "canonical_cuda_advantage_evidence": tensor_evidence(advantages).as_dict(),
+        "duplicate_cuda_advantages": duplicate_projection["advantages"],
+        "duplicate_cuda_advantage_evidence": duplicate_projection["advantage_tensor_evidence"],
+        "cpu_diagnostic_advantages": diagnostic_projection["advantages"],
+        "cpu_diagnostic_projection": diagnostic_projection,
+        "maximum_cpu_cuda_advantage_difference": equivalence["maximum_absolute_difference"],
+        "advantage_equivalence": equivalence,
+        "nonzero_advantage_count": sum(float(value) != 0.0 for value in canonical_advantages),
+        "reward_rank_count": len(set(cast(list[float], canonical_projection["reward_vector"]))),
         "correctness_vector": correctness,
         "correctness_count": sum(correctness),
         "extraction_count": sum(bool(record.reward.extractable) for record in records),
@@ -333,7 +375,6 @@ def _group_record(
         "zero_variance_classification": classification,
         "warning_evidence": dict(warning),
     }
-    group_record["group_record_sha256"] = canonical_sha256(group_record)
     return group_record
 
 
@@ -373,6 +414,8 @@ def run(
     packet_path: Path,
     manifest_path: Path,
     contract_path: Path,
+    advantage_contract_path: Path,
+    prior_diagnostic_manifest_path: Path,
     starting_adapter: Path,
     raw_evidence_path: Path,
     summary_path: Path,
@@ -394,6 +437,18 @@ def run(
         raise ValueError("authorized model interpreter differs")
     schedule = load_schedule(packet_path, manifest_path, arm)
     contract, source_commit = _validate_contract(root, contract_path, schedule=schedule, arm=arm)
+    advantage_contract = _read(advantage_contract_path)
+    verify_advantage_equivalence_contract(advantage_contract)
+    if advantage_contract.get("advantage_equivalence_contract_sha256") != contract.get(
+        "advantage_equivalence_contract_sha256"
+    ):
+        raise ValueError("signal-audit advantage-equivalence contract differs")
+    prior_diagnostic_manifest = _read(prior_diagnostic_manifest_path)
+    verify_prior_diagnostic_manifest(prior_diagnostic_manifest)
+    if prior_diagnostic_manifest.get("prior_diagnostic_manifest_sha256") != contract.get(
+        "prior_diagnostic_manifest_sha256"
+    ):
+        raise ValueError("signal-audit prior diagnostic manifest differs")
     if directory_sha256(starting_adapter) != STARTING_ADAPTER_SHA256[arm]:
         raise ValueError("signal-audit starting adapter differs")
 
@@ -471,24 +526,32 @@ def run(
         )
         records = reward_callback.records[before_records:]
         warning = warning_contract.call_records()[-1].as_dict()
-        group_records.append(
-            _group_record(
-                torch=torch,
-                trainer=trainer,
-                group=group,
-                result=result,
-                records=records,
-                warning=warning,
-            )
+        group_record = _group_record(
+            torch=torch,
+            trainer=trainer,
+            group=group,
+            result=result,
+            records=records,
+            warning=warning,
         )
-        if any(parameter.grad is not None for parameter in trainer.model.parameters()):
-            raise RuntimeError("signal audit populated gradients without backward")
-        if (
-            trainer.optimizer is not None
-            or trainer.lr_scheduler is not None
-            or int(trainer.state.global_step) != 0
-        ):
-            raise RuntimeError("signal audit advanced optimization state")
+        if arm == "generic":
+            continuity = compare_fresh_group_to_prior(
+                prior_manifest=prior_diagnostic_manifest,
+                fresh_group=group_record,
+            )
+        else:
+            continuity = {
+                "schema_version": 1,
+                "comparison_id": "foundry-l3-grpo-pre-correction-continuity-v1",
+                "schedule_position": group.position,
+                "status": "not_applicable_to_targeted_arm",
+                "passed": True,
+                "failure_classification": None,
+            }
+            continuity["continuity_comparison_sha256"] = canonical_sha256(continuity)
+        group_record["prior_partial_continuity"] = continuity
+        group_record["group_record_sha256"] = canonical_sha256(group_record)
+        group_records.append(group_record)
         _write_json_replace(
             partial_path,
             _partial(
@@ -499,6 +562,19 @@ def run(
                 groups=group_records,
             ),
         )
+        equivalence = cast(Mapping[str, object], group_record["advantage_equivalence"])
+        if equivalence.get("passed") is not True:
+            raise RuntimeError("advantage_projection_mismatch")
+        if continuity.get("passed") is not True:
+            raise RuntimeError("scientific_replay_drift")
+        if any(parameter.grad is not None for parameter in trainer.model.parameters()):
+            raise RuntimeError("signal audit populated gradients without backward")
+        if (
+            trainer.optimizer is not None
+            or trainer.lr_scheduler is not None
+            or int(trainer.state.global_step) != 0
+        ):
+            raise RuntimeError("signal audit advanced optimization state")
     torch.cuda.synchronize(0)
     generation_seconds = time.perf_counter() - generation_started
     if len(group_records) != GROUPS_PER_ARM or len(reward_callback.records) != COMPLETIONS_PER_ARM:
@@ -533,6 +609,12 @@ def run(
         "arm": arm,
         "source_commit": source_commit,
         "signal_audit_contract_sha256": contract["signal_audit_contract_sha256"],
+        "advantage_equivalence_contract_sha256": advantage_contract[
+            "advantage_equivalence_contract_sha256"
+        ],
+        "prior_diagnostic_manifest_sha256": prior_diagnostic_manifest[
+            "prior_diagnostic_manifest_sha256"
+        ],
         "schedule_packet_sha256": schedule.packet_sha256,
         "schedule_manifest_sha256": schedule.manifest_sha256,
         "starting_adapter_sha256": STARTING_ADAPTER_SHA256[arm],
@@ -571,6 +653,12 @@ def run(
         "arm": arm,
         "source_commit": source_commit,
         "signal_audit_contract_sha256": contract["signal_audit_contract_sha256"],
+        "advantage_equivalence_contract_sha256": advantage_contract[
+            "advantage_equivalence_contract_sha256"
+        ],
+        "prior_diagnostic_manifest_sha256": prior_diagnostic_manifest[
+            "prior_diagnostic_manifest_sha256"
+        ],
         "schedule_packet_sha256": schedule.packet_sha256,
         "schedule_manifest_sha256": schedule.manifest_sha256,
         "starting_adapter_sha256": STARTING_ADAPTER_SHA256[arm],
@@ -590,6 +678,18 @@ def run(
             float(cast(float, row["reward_variance"])) > 0.0 for row in group_records
         ),
         "backend_failures": sum(cast(int, row["backend_failure_count"]) for row in group_records),
+        "maximum_cpu_cuda_advantage_difference": max(
+            float(cast(float, row["maximum_cpu_cuda_advantage_difference"]))
+            for row in group_records
+        ),
+        "advantage_equivalence_passed": all(
+            cast(Mapping[str, object], row["advantage_equivalence"]).get("passed") is True
+            for row in group_records
+        ),
+        "prior_partial_continuity_passed": all(
+            cast(Mapping[str, object], row["prior_partial_continuity"]).get("passed") is True
+            for row in group_records
+        ),
         "group_record_sha256s": [cast(str, row["group_record_sha256"]) for row in group_records],
         "initial_policy_sha256": initial_policy["normalized_tensor_state_sha256"],
         "final_policy_sha256": final_policy["normalized_tensor_state_sha256"],
@@ -643,6 +743,8 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--packet", type=Path, required=True)
     parser.add_argument("--manifest", type=Path, required=True)
     parser.add_argument("--audit-contract", type=Path, required=True)
+    parser.add_argument("--advantage-contract", type=Path, required=True)
+    parser.add_argument("--prior-diagnostic-manifest", type=Path, required=True)
     parser.add_argument("--starting-adapter", type=Path, required=True)
     parser.add_argument("--raw-evidence", type=Path, required=True)
     parser.add_argument("--summary", type=Path, required=True)
@@ -657,6 +759,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         packet_path=args.packet,
         manifest_path=args.manifest,
         contract_path=args.audit_contract,
+        advantage_contract_path=args.advantage_contract,
+        prior_diagnostic_manifest_path=args.prior_diagnostic_manifest,
         starting_adapter=args.starting_adapter,
         raw_evidence_path=args.raw_evidence,
         summary_path=args.summary,

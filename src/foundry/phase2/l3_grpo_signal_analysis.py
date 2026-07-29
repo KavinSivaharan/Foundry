@@ -1,4 +1,4 @@
-"""Publish the content-free Milestone 14B signal-density aggregate."""
+"""Publish the corrected content-free Milestone 14B-R1 signal-density aggregate."""
 
 from __future__ import annotations
 
@@ -12,7 +12,7 @@ from foundry.phase2.l3_grpo_signal_audit import ARMS, build_signal_summary
 from foundry.training.config import canonical_sha256
 from foundry.training.qlora import file_sha256
 
-OUTPUT_NAME = "milestone14b_signal_density_summary.json"
+OUTPUT_NAME = "milestone14b_r1_signal_density_summary.json"
 
 
 def _read(path: Path) -> dict[str, Any]:
@@ -51,6 +51,10 @@ def build_publication(
             or runtime.get("source_commit") != raw.get("source_commit")
             or runtime.get("signal_audit_contract_sha256")
             != raw.get("signal_audit_contract_sha256")
+            or runtime.get("advantage_equivalence_contract_sha256")
+            != raw.get("advantage_equivalence_contract_sha256")
+            or runtime.get("prior_diagnostic_manifest_sha256")
+            != raw.get("prior_diagnostic_manifest_sha256")
         ):
             raise ValueError(f"{arm} signal-audit runtime evidence differs")
 
@@ -60,14 +64,59 @@ def build_publication(
     )
     source_commits = {cast(str, raw_by_arm[arm]["source_commit"]) for arm in ARMS}
     contract_hashes = {cast(str, raw_by_arm[arm]["signal_audit_contract_sha256"]) for arm in ARMS}
-    if len(source_commits) != 1 or len(contract_hashes) != 1:
+    advantage_hashes = {
+        cast(str, raw_by_arm[arm]["advantage_equivalence_contract_sha256"]) for arm in ARMS
+    }
+    prior_hashes = {cast(str, raw_by_arm[arm]["prior_diagnostic_manifest_sha256"]) for arm in ARMS}
+    if (
+        len(source_commits) != 1
+        or len(contract_hashes) != 1
+        or len(advantage_hashes) != 1
+        or len(prior_hashes) != 1
+    ):
         raise ValueError("signal-audit arm provenance differs")
+    generic_groups = cast(list[dict[str, Any]], raw_by_arm["generic"]["groups"])
+    targeted_groups = cast(list[dict[str, Any]], raw_by_arm["targeted"]["groups"])
+    continuity = [cast(dict[str, Any], row["prior_partial_continuity"]) for row in generic_groups]
+    if (
+        any(row.get("passed") is not True for row in continuity)
+        or [row.get("status") for row in continuity[:12]] != ["exact"] * 12
+        or continuity[12].get("status") != "no_prior_persisted_group_record"
+        or any(
+            cast(dict[str, Any], row["prior_partial_continuity"]).get("status")
+            != "not_applicable_to_targeted_arm"
+            for row in targeted_groups
+        )
+    ):
+        raise ValueError("pre-correction continuity evidence differs")
     publication: dict[str, object] = {
         "schema_version": 1,
-        "publication_id": "foundry-l3-grpo-signal-density-publication-v1",
+        "publication_id": "foundry-l3-grpo-signal-density-publication-v2",
         "source_commit": next(iter(source_commits)),
         "signal_audit_contract_sha256": next(iter(contract_hashes)),
+        "advantage_equivalence_contract_sha256": next(iter(advantage_hashes)),
+        "prior_diagnostic_manifest_sha256": next(iter(prior_hashes)),
         "signal_density": density,
+        "prior_partial_continuity": {
+            "durable_generic_groups_compared": 12,
+            "durable_generic_groups_exact": 12,
+            "interrupted_group_position": 13,
+            "interrupted_group_fields_available": continuity[12]["prior_fields_available"],
+            "interrupted_group_fields_unavailable": continuity[12]["prior_fields_unavailable"],
+            "scientific_replay_drift": False,
+        },
+        "advantage_equivalence": {
+            "all_groups_passed": all(
+                cast(dict[str, Any], row["advantage_equivalence"]).get("passed") is True
+                for arm in ARMS
+                for row in cast(list[dict[str, Any]], raw_by_arm[arm]["groups"])
+            ),
+            "maximum_observed_cpu_cuda_difference": max(
+                float(cast(float, row["maximum_cpu_cuda_advantage_difference"]))
+                for arm in ARMS
+                for row in cast(list[dict[str, Any]], raw_by_arm[arm]["groups"])
+            ),
+        },
         "arm_evidence": {
             arm: {
                 "raw_audit_sha256": raw_by_arm[arm]["raw_audit_sha256"],
@@ -119,7 +168,7 @@ def aggregate_signal_audit(root: Path) -> dict[str, object]:
     """Read both ignored audits and build their tracked, content-free publication."""
 
     root = root.resolve()
-    raw_root = root / "results/raw/phase2_vetted_corpus/milestone14b/signal_audit"
+    raw_root = root / "results/raw/phase2_vetted_corpus/milestone14b_r1/signal_audit"
     raw_by_arm: dict[str, dict[str, Any]] = {}
     runtime_by_arm: dict[str, dict[str, Any]] = {}
     raw_file_sha256_by_arm: dict[str, str] = {}

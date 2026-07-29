@@ -4394,3 +4394,49 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
   authorize a corrected fresh signal audit with CUDA-native stock-advantage evidence and exact
   canonical family aliases, including how the 52 already generated completions are accounted
   for, or close verifier-GRPO and select a different Tier 3 objective.
+
+### 2026-07-29 - Milestone 14B-R1 froze the corrected signal-audit contracts
+
+- **Verified restart boundary:** Milestone 14B-R1 restarted from clean synchronized `main` at
+  `de4a02c5e98de9e7cf13bc07f1b6fe40aa348b9f`. The original audit contract,
+  implementation, blocker, partial packet, two starting adapters, four schedule artifacts,
+  reward contract, reference mechanism, operational environment, and authorized interpreters
+  reconstructed exactly. The existing ignored audit tree still contains exactly five files and
+  1,045,652 bytes. No new model was loaded and no completion was generated.
+- **Prior diagnostic freeze:** All 52 already generated completions are classified
+  `pre_correction_non_gate_diagnostic`. Positions 1 through 12 retain hashes for every persisted
+  continuity field and 48 persisted completion hashes. Position 13 records four generated
+  completions but explicitly has no persisted group or completion identifiers; no missing value
+  was fabricated. Prior-diagnostic-manifest SHA-256 is `d7b5945e...ef5b95`.
+- **Advantage correction:** `foundry-l3-grpo-advantage-equivalence-v1` keeps the stock TRL CUDA
+  advantage tensor canonical and treats the historical CPU float32 projection as diagnostic.
+  The full 65,536-vector fixture replayed identically twice: 11,915 vectors differ under exact
+  CPU/CUDA equality, the maximum difference is one float32 epsilon
+  (`1.1920928955078125e-07`), and the fixed tolerance is two epsilons
+  (`2.384185791015625e-07`, relative tolerance `1e-6`). Duplicate CUDA projection is exact;
+  material-sign and group zero/nonzero classification differences are both zero. Fixture and
+  equivalence-contract SHA-256 values are `56f46a28...46ad3` and `057af22d...7efbd`.
+- **Family correction:** All stored aggregate and gate keys now use the three exact long-form
+  schedule family identifiers. The short names are presentation-only aliases. Generic quotas
+  reconstruct as 8/8/8 and targeted quotas as 13/6/5; unknown or shorthand evidence keys fail
+  closed. Family-aggregation-contract SHA-256 is `806c5f43...de04ed`.
+- **Source freeze:** Corrected implementation and audit-contract SHA-256 values are
+  `0d080cb8...3d78b` and `21188671...ca103`. The runtime persists each group before checking
+  advantage equivalence, continuity, or no-optimization invariants. The first freeze command
+  stopped before fixture execution because the boundary helper stripped the leading porcelain
+  status character from the first dirty path; changing only that parser to preserve leading
+  status whitespace fixed the source-only preflight. This command loaded no model or adapter,
+  generated no completion, and created no output.
+- **Complete pre-generation verification:** Ruff format-check covers 360 files, Ruff lint is
+  clean, and strict Mypy passes all 202 source files. All 1,076 unit tests and seven integration
+  tests pass; both isolated environments pass `pip check`; and `git diff --check` has no
+  whitespace error. The dataset, seven-file base-model snapshot, both starting adapters, both
+  prompt packets and all four schedule hashes, five reward hashes, reference mechanism, both
+  interpreter hashes, and exact 37-field Windows child environment reconstruct. Across 20
+  candidate files, prohibited paths, sealed-path names, high-confidence secrets, content-bearing
+  result keys, newly tracked raw/model/environment files, and files at or above one MiB are all
+  zero. An initial read-only safety-scan command used a lone backslash as a PowerShell regular
+  expression and emitted normalization errors; the corrected scan used Git's forward-slash paths
+  directly and passed with the counts above. No sealed path was opened.
+- **Next action:** Commit exactly `fix: align L3 GRPO audit with CUDA advantages`, push and
+  synchronize it, and only then begin the fresh generic audit from schedule position 1.

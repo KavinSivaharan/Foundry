@@ -1,0 +1,210 @@
+{
+  "adapter_mutation_authorized": false,
+  "adapter_save_authorized": false,
+  "advantage_equivalence_contract_sha256": "057af22d9784ef4a2bab1f8dc37687942a28b7d124cf95c287a3b2338867efbd",
+  "authorized_general_interpreter": ".venv/Scripts/python.exe",
+  "authorized_model_interpreter": ".venv-training/Scripts/python.exe",
+  "backward_authorized": false,
+  "base_model_revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+  "complete_schedule_order_preserved": true,
+  "contract_id": "foundry-l3-grpo-signal-audit-r1-v1",
+  "counted_training_authorized": false,
+  "dataset_sha256": "ee18f7f9bd7625469d83e1c1df8dad4db0ecf8b3d8c870a07c60f2808e11dc31",
+  "family_aggregation_contract_sha256": "806c5f437366adbbf353eeefb0fda126a8d00b6c4ea8e76c41af83dbf3de04ed",
+  "gsm1k_authorized": false,
+  "holdout_v2_authorized": false,
+  "implementation_sha256": "0d080cb82b38fce37abd55d9206ab457213417ddfeb00cc69a043ea85503d78b",
+  "method_contract": {
+    "audit_id": "foundry-l3-grpo-signal-audit-v2",
+    "classification_precedence": [
+      "invalid_or_ambiguous_on_missing_nonfinite_or_inconsistent_evidence",
+      "output_identical",
+      "all_correct_saturated",
+      "all_incorrect_saturated",
+      "output_diverse_reward_indistinguishable"
+    ],
+    "contract_id": "foundry-l3-grpo-signal-audit-contract-v2",
+    "counted_training_schedule_changed": false,
+    "execution_prohibitions": {
+      "adapter_mutation": true,
+      "backward": true,
+      "optimizer_creation": true,
+      "schedule_reordering": true,
+      "scheduler_creation_or_advancement": true,
+      "trained_adapter_save": true
+    },
+    "family_aggregation_contract": {
+      "canonical_task_family_ids": [
+        "multi_step_bookkeeping_or_omission",
+        "rate_ratio_percentage_or_average",
+        "constraint_distribution_or_discrete_reasoning"
+      ],
+      "contract_id": "foundry-l3-grpo-canonical-family-aggregation-v1",
+      "each_task_group_counted_exactly_once": true,
+      "family_aggregation_contract_sha256": "806c5f437366adbbf353eeefb0fda126a8d00b6c4ea8e76c41af83dbf3de04ed",
+      "generic_task_quotas": {
+        "constraint_distribution_or_discrete_reasoning": 8,
+        "multi_step_bookkeeping_or_omission": 8,
+        "rate_ratio_percentage_or_average": 8
+      },
+      "presentation_aliases": {
+        "constraint_distribution_or_discrete_reasoning": "discrete",
+        "multi_step_bookkeeping_or_omission": "bookkeeping",
+        "rate_ratio_percentage_or_average": "rate/ratio"
+      },
+      "presentation_aliases_are_evidence_keys": false,
+      "raw_group_records_mutated": false,
+      "schema_version": 1,
+      "shorthand_family_ids_rejected": true,
+      "targeted_task_quotas": {
+        "constraint_distribution_or_discrete_reasoning": 5,
+        "multi_step_bookkeeping_or_omission": 13,
+        "rate_ratio_percentage_or_average": 6
+      },
+      "unknown_family_ids_rejected": true
+    },
+    "family_summary_fields": [
+      "total_groups",
+      "nonzero_variance_groups",
+      "zero_variance_groups",
+      "nonzero_variance_percentage",
+      "zero_variance_classifications",
+      "identical_output_groups",
+      "average_distinct_completions",
+      "average_reward_variance",
+      "average_nonzero_advantage_count",
+      "average_completion_correctness",
+      "average_extraction_rate",
+      "average_format_compliance_rate"
+    ],
+    "gsm1k_use": 0,
+    "holdout_v2_use": 0,
+    "method_contract_sha256": "3132c12791668d1535b06083bb12ecdb68477cd077aaf43a852bfcc73854230b",
+    "overlap_definitions": {
+      "completion_output_overlap": "set intersection over union at shared prompt positions",
+      "reward_pattern_overlap": "exact float32 reward-vector equality at shared prompt positions",
+      "shared_prompt_positions": "same schedule position and prompt SHA-256"
+    },
+    "per_group_fields": [
+      "arm",
+      "schedule_position",
+      "source_kind",
+      "task_family",
+      "task_family_alias",
+      "prompt_sha256",
+      "completion_sha256s",
+      "completion_token_counts",
+      "distinct_completion_count",
+      "reward_vector",
+      "reward_component_vectors",
+      "reward_mean",
+      "reward_variance",
+      "canonical_cuda_advantages",
+      "cpu_diagnostic_advantages",
+      "maximum_cpu_cuda_advantage_difference",
+      "advantage_equivalence",
+      "nonzero_advantage_count",
+      "reward_rank_count",
+      "correctness_vector",
+      "correctness_count",
+      "extraction_count",
+      "compliant_format_count",
+      "malformed_count",
+      "prompt_echo_count",
+      "question_generation_count",
+      "truncation_count",
+      "backend_failure_count",
+      "valid_completion_token_counts",
+      "policy_reference_kl",
+      "zero_variance_classification"
+    ],
+    "reward_component_fields": [
+      "task_answer_correctness",
+      "replay_scorer_correctness",
+      "extraction",
+      "canonical_or_required_format",
+      "instruction_compliance",
+      "truncation_penalty",
+      "prompt_echo_penalty",
+      "question_generation_penalty",
+      "malformed_output_penalty",
+      "backend_failure_penalty"
+    ],
+    "schema_version": 1,
+    "scientific_settings_changed": false,
+    "scope": {
+      "arms": [
+        "generic",
+        "targeted"
+      ],
+      "completions_per_arm": 128,
+      "completions_per_group": 4,
+      "groups_per_arm": 32,
+      "replay_groups_per_arm": 8,
+      "task_groups_per_arm": 24,
+      "total_completions": 256,
+      "total_groups": 64
+    },
+    "sealed_content_use": 0,
+    "viability_gate": {
+      "backend_failures": 0,
+      "deterministic_fresh_process_task_replays_per_arm_minimum": 1,
+      "invalid_or_ambiguous_groups": 0,
+      "minimum_informative_task_families_per_arm": 2,
+      "minimum_nonzero_variance_task_groups_per_arm": 4,
+      "replay_groups_may_be_zero_variance_noops": true,
+      "reward_contract_inconsistencies": 0,
+      "usable_task_group_requires": [
+        "nonzero_advantage",
+        "nonempty_valid_completion_token_mask",
+        "finite_policy_logprobs",
+        "finite_reference_logprobs"
+      ]
+    },
+    "zero_variance_classifications": [
+      "all_correct_saturated",
+      "all_incorrect_saturated",
+      "output_diverse_reward_indistinguishable",
+      "output_identical",
+      "invalid_or_ambiguous"
+    ]
+  },
+  "optimizer_creation_authorized": false,
+  "original_signal_audit_contract_sha256": "5af65428836a359f332fe6866f2b31c6d0433d6e4e5f0ab28868baefda0beec6",
+  "original_signal_audit_implementation_sha256": "fe68e0676f59ed56027ca935f9092eded69203987808c532fb056dacc28e1c6c",
+  "prior_diagnostic_manifest_sha256": "d7b5945e0df9206b84bb8e6ab355a13112822fdba6e68a1933798449f2ef5b95",
+  "process_environment": {
+    "CUBLAS_WORKSPACE_CONFIG": ":4096:8",
+    "HF_HUB_OFFLINE": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONHASHSEED": "20260720",
+    "TOKENIZERS_PARALLELISM": "false",
+    "TRANSFORMERS_OFFLINE": "1"
+  },
+  "published_blocker_sha256": "0597d2a628bf6acfa320cd0f567c4d3a6e296067bad1767974cb446b7c184ae4",
+  "reference_mechanism_sha256": "674b368105f08b0e1eb00f54c6912f611da730ed070f60c63989de996ecb0316",
+  "reward": {
+    "calibration_sha256": "e0952f0034424f7817998300207ec3eecf2ce4f8443a87405899decff3fb65e7",
+    "configuration_sha256": "701ac381bf01337f706dfaf46ebfa91839147bd600e23dc21a3f1d00eb0f5df5",
+    "contract_sha256": "441933982c2b51b49195763440c318893cea22af947c9efc50b732d05fee7b61",
+    "fixture_sha256": "ca7ea72ae288234eb769486f1a1dd0893f9c14b1c14487ae043336af30318199",
+    "implementation_sha256": "448574e61ff74c40b026dd493b9773023c92eb7f4dbaccb5dfbf511be1e68e66"
+  },
+  "scheduler_creation_or_advancement_authorized": false,
+  "schedules": {
+    "generic": "ff1005a1d7381acd52dd28b3d054b2979986c47595ed09c944880ea5fc5f5ff3",
+    "paired": "ed99aa38f77961fa1f669ba110cd86b3af092e027a60b8e92096a9a68bdfc8e3",
+    "shared_replay": "19e27fecde5349b6a7a9a24d8a0a8211a3b0da877282a51ece6b616688904181",
+    "targeted": "8326c1b91ba127c4734527abfed2f8bca41ecbb3a0bb7bc62a5bf940ac24f0c4"
+  },
+  "schema_version": 1,
+  "scientific_settings_changed": false,
+  "sealed_content_use": 0,
+  "signal_audit_contract_sha256": "21188671b298fb52974af62ab5dd0590d52eedc2f8bc4fc77dc3ca3b355ca103",
+  "source_frozen_before_generation": true,
+  "starting_adapters": {
+    "generic": "67c6f1dd34c0fa1ddebb354dfe14c43e61c48fdd90c687ba1a9290d2401479cd",
+    "targeted": "4e195ff2cb32c4faa6858915b95507862c911bb2eb853b060717416d825df91d"
+  },
+  "starting_commit": "de4a02c5e98de9e7cf13bc07f1b6fe40aa348b9f"
+}

@@ -8,12 +8,18 @@ from collections.abc import Mapping, Sequence
 from statistics import fmean
 from typing import Any, Literal, cast
 
+from foundry.phase2.l3_grpo_schedule import FAMILY_ORDER, TASK_QUOTAS, Arm, Family
 from foundry.training.config import canonical_sha256
 
-AUDIT_ID = "foundry-l3-grpo-signal-audit-v1"
-CONTRACT_ID = "foundry-l3-grpo-signal-audit-contract-v1"
+AUDIT_ID = "foundry-l3-grpo-signal-audit-v2"
+CONTRACT_ID = "foundry-l3-grpo-signal-audit-contract-v2"
 ARMS = ("generic", "targeted")
-TASK_FAMILIES = ("bookkeeping", "rate_ratio", "discrete")
+TASK_FAMILIES: tuple[Family, ...] = FAMILY_ORDER
+FAMILY_PRESENTATION_ALIASES: Mapping[Family, str] = {
+    "multi_step_bookkeeping_or_omission": "bookkeeping",
+    "rate_ratio_percentage_or_average": "rate/ratio",
+    "constraint_distribution_or_discrete_reasoning": "discrete",
+}
 GROUPS_PER_ARM = 32
 TASK_GROUPS_PER_ARM = 24
 REPLAY_GROUPS_PER_ARM = 8
@@ -51,6 +57,26 @@ REWARD_COMPONENT_FIELDS = (
     "malformed_output_penalty",
     "backend_failure_penalty",
 )
+
+
+def family_aggregation_contract() -> dict[str, object]:
+    """Freeze canonical schedule IDs as the only family evidence keys."""
+
+    contract: dict[str, object] = {
+        "schema_version": 1,
+        "contract_id": "foundry-l3-grpo-canonical-family-aggregation-v1",
+        "canonical_task_family_ids": list(TASK_FAMILIES),
+        "presentation_aliases": dict(FAMILY_PRESENTATION_ALIASES),
+        "presentation_aliases_are_evidence_keys": False,
+        "generic_task_quotas": dict(TASK_QUOTAS["generic"]),
+        "targeted_task_quotas": dict(TASK_QUOTAS["targeted"]),
+        "unknown_family_ids_rejected": True,
+        "shorthand_family_ids_rejected": True,
+        "each_task_group_counted_exactly_once": True,
+        "raw_group_records_mutated": False,
+    }
+    contract["family_aggregation_contract_sha256"] = canonical_sha256(contract)
+    return contract
 
 
 def _finite_numbers(values: Sequence[object]) -> bool:
@@ -142,6 +168,7 @@ def signal_audit_method_contract() -> dict[str, object]:
             "schedule_position",
             "source_kind",
             "task_family",
+            "task_family_alias",
             "prompt_sha256",
             "completion_sha256s",
             "completion_token_counts",
@@ -150,7 +177,10 @@ def signal_audit_method_contract() -> dict[str, object]:
             "reward_component_vectors",
             "reward_mean",
             "reward_variance",
-            "advantages",
+            "canonical_cuda_advantages",
+            "cpu_diagnostic_advantages",
+            "maximum_cpu_cuda_advantage_difference",
+            "advantage_equivalence",
             "nonzero_advantage_count",
             "reward_rank_count",
             "correctness_vector",
@@ -175,6 +205,7 @@ def signal_audit_method_contract() -> dict[str, object]:
             "output_diverse_reward_indistinguishable",
         ],
         "reward_component_fields": list(REWARD_COMPONENT_FIELDS),
+        "family_aggregation_contract": family_aggregation_contract(),
         "family_summary_fields": [
             "total_groups",
             "nonzero_variance_groups",
@@ -233,7 +264,9 @@ def _validate_group_evidence(row: Mapping[str, Any]) -> None:
     components = row.get("reward_component_vectors")
     completions = row.get("completion_sha256s")
     correctness = row.get("correctness_vector")
-    advantages = row.get("advantages")
+    advantages = row.get("canonical_cuda_advantages")
+    diagnostic_advantages = row.get("cpu_diagnostic_advantages")
+    equivalence = row.get("advantage_equivalence")
     valid_counts = row.get("valid_completion_token_counts")
     kl = row.get("policy_reference_kl")
     if (
@@ -245,6 +278,9 @@ def _validate_group_evidence(row: Mapping[str, Any]) -> None:
         or not all(isinstance(value, bool) for value in correctness)
         or not isinstance(advantages, list)
         or not _finite_numbers(cast(Sequence[object], advantages))
+        or not isinstance(diagnostic_advantages, list)
+        or not _finite_numbers(cast(Sequence[object], diagnostic_advantages))
+        or not isinstance(equivalence, dict)
         or not isinstance(valid_counts, list)
         or len(valid_counts) != COMPLETIONS_PER_GROUP
         or not all(
@@ -254,6 +290,7 @@ def _validate_group_evidence(row: Mapping[str, Any]) -> None:
         or not isinstance(kl, dict)
     ):
         raise ValueError("raw audit group evidence shape differs")
+    _verify_self_hash(equivalence, "equivalence_sha256")
     variance = row.get("reward_variance")
     if isinstance(variance, bool) or not isinstance(variance, int | float):
         raise ValueError("raw audit reward variance differs")
@@ -283,6 +320,10 @@ def _validate_group_evidence(row: Mapping[str, Any]) -> None:
     )
     if (
         row.get("zero_variance_classification") != expected_classification
+        or row.get("advantages") != advantages
+        or equivalence.get("passed") is not True
+        or row.get("maximum_cpu_cuda_advantage_difference")
+        != equivalence.get("maximum_absolute_difference")
         or row.get("distinct_completion_count") != len(set(completions))
         or row.get("reward_rank_count") != len(set(cast(list[float], rewards)))
         or row.get("nonzero_advantage_count") != sum(float(value) != 0.0 for value in advantages)
@@ -324,12 +365,31 @@ def _group_rows(raw: Mapping[str, Any], arm: str) -> list[dict[str, Any]]:
             or row.get("completion_count") != COMPLETIONS_PER_GROUP
         ):
             raise ValueError("raw audit group identity or cardinality differs")
+        source_kind = row.get("source_kind")
+        family = row.get("task_family")
+        if source_kind == "task":
+            if (
+                family not in TASK_FAMILIES
+                or row.get("task_family_alias") != FAMILY_PRESENTATION_ALIASES[cast(Family, family)]
+            ):
+                raise ValueError("raw audit task family is not canonical")
+        elif source_kind == "base_replay":
+            if family is not None or row.get("task_family_alias") is not None:
+                raise ValueError("raw replay group has task-family evidence")
+        else:
+            raise ValueError("raw audit source kind differs")
         _validate_group_evidence(row)
         groups.append(row)
     if sum(row.get("source_kind") == "task" for row in groups) != TASK_GROUPS_PER_ARM:
         raise ValueError("task-group count differs")
     if sum(row.get("source_kind") == "base_replay" for row in groups) != REPLAY_GROUPS_PER_ARM:
         raise ValueError("replay-group count differs")
+    observed_quotas = Counter(
+        cast(str, row["task_family"]) for row in groups if row.get("source_kind") == "task"
+    )
+    expected_quotas = TASK_QUOTAS[cast(Arm, arm)]
+    if {family: observed_quotas[family] for family in TASK_FAMILIES} != dict(expected_quotas):
+        raise ValueError(f"{arm} canonical task-family quotas differ")
     return groups
 
 
@@ -397,20 +457,12 @@ def _arm_summary(
     tasks = [row for row in groups if row.get("source_kind") == "task"]
     replay = [row for row in groups if row.get("source_kind") == "base_replay"]
     family = {
-        name: _metric_summary(
-            [row for row in tasks if str(row.get("task_family")).replace("/", "_") == name]
-        )
+        name: _metric_summary([row for row in tasks if row.get("task_family") == name])
         for name in TASK_FAMILIES
     }
     task_summary = _metric_summary(tasks)
     informative = [row for row in tasks if float(cast(float, row["reward_variance"])) > 0.0]
-    informative_families = sorted(
-        {
-            str(row["task_family"]).replace("/", "_")
-            for row in informative
-            if str(row["task_family"]).replace("/", "_") in TASK_FAMILIES
-        }
-    )
+    informative_families = sorted({cast(str, row["task_family"]) for row in informative})
     usable = [
         row
         for row in informative
@@ -465,6 +517,7 @@ def _arm_summary(
         "all_groups": _metric_summary(groups),
         "task_groups": task_summary,
         "task_families": family,
+        "task_family_presentation_aliases": dict(FAMILY_PRESENTATION_ALIASES),
         "shared_replay_groups": _metric_summary(replay),
         "informative_task_group_count": len(informative),
         "informative_task_families": informative_families,

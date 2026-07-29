@@ -18,6 +18,8 @@ def test_runtime_command_uses_only_the_authorized_model_interpreter(
     assert command[0] == str(root / ".venv-training/Scripts/python.exe")
     assert command[1:3] == ["-m", "foundry.phase2.l3_grpo_signal_runtime"]
     assert command[command.index("--arm") + 1] == "generic"
+    assert "--advantage-contract" in command
+    assert "--prior-diagnostic-manifest" in command
     joined = " ".join(command).lower()
     assert "holdout" not in joined
     assert "gsm1k" not in joined
@@ -65,7 +67,7 @@ def test_campaign_runs_generic_then_targeted_without_retry(
         summary["summary_sha256"] = canonical_sha256(summary)
         path = (
             tmp_path
-            / "results/raw/phase2_vetted_corpus/milestone14b/signal_audit"
+            / "results/raw/phase2_vetted_corpus/milestone14b_r1/signal_audit"
             / arm
             / "summary.json"
         )

@@ -1,4 +1,4 @@
-"""Run both Milestone 14B full-schedule signal audits sequentially."""
+"""Run both corrected Milestone 14B-R1 full-schedule signal audits sequentially."""
 
 from __future__ import annotations
 
@@ -57,7 +57,14 @@ def _runtime_command(root: Path, arm: str, run_root: Path) -> list[str]:
         "--manifest",
         str(root / f"results/phase2_vetted_corpus/milestone14a_{arm}_schedule.json"),
         "--audit-contract",
-        str(root / "results/phase2_vetted_corpus/milestone14b_signal_audit_contract.json"),
+        str(root / "results/phase2_vetted_corpus/milestone14b_r1_signal_audit_contract.json"),
+        "--advantage-contract",
+        str(
+            root / "results/phase2_vetted_corpus/"
+            "milestone14b_r1_advantage_equivalence_contract.json"
+        ),
+        "--prior-diagnostic-manifest",
+        str(root / "results/phase2_vetted_corpus/milestone14b_r1_prior_diagnostic_manifest.json"),
         "--starting-adapter",
         str(adapter_path(root, arm)),
         "--raw-evidence",
@@ -73,7 +80,7 @@ def run_campaign(root: Path) -> dict[str, object]:
     root = root.resolve()
     environment = _environment(root)
     source_commit = _require_clean_synchronized_main(root)
-    raw_root = root / "results/raw/phase2_vetted_corpus/milestone14b/signal_audit"
+    raw_root = root / "results/raw/phase2_vetted_corpus/milestone14b_r1/signal_audit"
     results: dict[str, dict[str, Any]] = {}
     for arm in ARMS:
         _require_clean_synchronized_main(root)
@@ -100,7 +107,7 @@ def run_campaign(root: Path) -> dict[str, object]:
         results[arm] = summary
     campaign: dict[str, object] = {
         "schema_version": 1,
-        "campaign_id": "foundry-l3-grpo-signal-audit-campaign-v1",
+        "campaign_id": "foundry-l3-grpo-signal-audit-campaign-v2",
         "source_commit": source_commit,
         "arm_order": list(ARMS),
         "processes": len(ARMS),

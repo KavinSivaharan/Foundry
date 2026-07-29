@@ -1,0 +1,30 @@
+{
+  "canonical_task_family_ids": [
+    "multi_step_bookkeeping_or_omission",
+    "rate_ratio_percentage_or_average",
+    "constraint_distribution_or_discrete_reasoning"
+  ],
+  "contract_id": "foundry-l3-grpo-canonical-family-aggregation-v1",
+  "each_task_group_counted_exactly_once": true,
+  "family_aggregation_contract_sha256": "806c5f437366adbbf353eeefb0fda126a8d00b6c4ea8e76c41af83dbf3de04ed",
+  "generic_task_quotas": {
+    "constraint_distribution_or_discrete_reasoning": 8,
+    "multi_step_bookkeeping_or_omission": 8,
+    "rate_ratio_percentage_or_average": 8
+  },
+  "presentation_aliases": {
+    "constraint_distribution_or_discrete_reasoning": "discrete",
+    "multi_step_bookkeeping_or_omission": "bookkeeping",
+    "rate_ratio_percentage_or_average": "rate/ratio"
+  },
+  "presentation_aliases_are_evidence_keys": false,
+  "raw_group_records_mutated": false,
+  "schema_version": 1,
+  "shorthand_family_ids_rejected": true,
+  "targeted_task_quotas": {
+    "constraint_distribution_or_discrete_reasoning": 5,
+    "multi_step_bookkeeping_or_omission": 13,
+    "rate_ratio_percentage_or_average": 6
+  },
+  "unknown_family_ids_rejected": true
+}

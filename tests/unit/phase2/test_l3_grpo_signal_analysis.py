@@ -21,6 +21,33 @@ def test_publication_binds_two_verified_arm_audits(monkeypatch: Any) -> None:
                 "arm": arm,
                 "source_commit": "c" * 40,
                 "signal_audit_contract_sha256": "d" * 64,
+                "advantage_equivalence_contract_sha256": "e" * 64,
+                "prior_diagnostic_manifest_sha256": "f" * 64,
+                "groups": [
+                    {
+                        "prior_partial_continuity": {
+                            "passed": True,
+                            "status": (
+                                "exact"
+                                if arm == "generic" and position <= 12
+                                else (
+                                    "no_prior_persisted_group_record"
+                                    if arm == "generic" and position == 13
+                                    else (
+                                        "not_part_of_prior_partial_audit"
+                                        if arm == "generic"
+                                        else "not_applicable_to_targeted_arm"
+                                    )
+                                )
+                            ),
+                            "prior_fields_available": [],
+                            "prior_fields_unavailable": [],
+                        },
+                        "advantage_equivalence": {"passed": True},
+                        "maximum_cpu_cuda_advantage_difference": 0.0,
+                    }
+                    for position in range(1, 33)
+                ],
             },
             "raw_audit_sha256",
         )
@@ -29,6 +56,8 @@ def test_publication_binds_two_verified_arm_audits(monkeypatch: Any) -> None:
                 "arm": arm,
                 "source_commit": "c" * 40,
                 "signal_audit_contract_sha256": "d" * 64,
+                "advantage_equivalence_contract_sha256": "e" * 64,
+                "prior_diagnostic_manifest_sha256": "f" * 64,
                 "raw_evidence_file_sha256": file_hashes[arm],
                 "runtime_seconds": 10.0,
                 "model_load_seconds": 2.0,
