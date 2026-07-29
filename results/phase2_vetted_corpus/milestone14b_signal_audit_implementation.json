@@ -1,0 +1,153 @@
+{
+  "files": [
+    {
+      "bytes": 24213,
+      "path": "src/foundry/phase2/l3_grpo_signal_audit.py",
+      "sha256": "2e3c32428384f600c3dbc6a5b1bb3e50064bdbe78bfd8972502bd1c5c11640b9"
+    },
+    {
+      "bytes": 6497,
+      "path": "src/foundry/phase2/l3_grpo_signal_analysis.py",
+      "sha256": "8128e90313d1973208dc49fbc0e34976abdd009a405b757a280c6d70ec04bdf2"
+    },
+    {
+      "bytes": 27832,
+      "path": "src/foundry/phase2/l3_grpo_signal_runtime.py",
+      "sha256": "40797b576ff82baca4567a8089d3f1f29280bb14201e45ac8dea649eb8f933cd"
+    },
+    {
+      "bytes": 4771,
+      "path": "src/foundry/phase2/l3_grpo_signal_campaign.py",
+      "sha256": "0ccf19ff2a6ebbddb2b056ff8d45fd2af13ceba27b90b55ab4bdc1f8596bda64"
+    },
+    {
+      "bytes": 11183,
+      "path": "src/foundry/phase2/l3_grpo_signal_prepare.py",
+      "sha256": "72d1f95b61f31e4dd4576eefe538319f80eb052c5ba7c505618779514910fec8"
+    },
+    {
+      "bytes": 7559,
+      "path": "tests/unit/phase2/test_l3_grpo_signal_audit.py",
+      "sha256": "d99a39e39ec23abbb78d29e6f827a180f28bd7c6fd6ba68615640d6146654b39"
+    },
+    {
+      "bytes": 2367,
+      "path": "tests/unit/phase2/test_l3_grpo_signal_analysis.py",
+      "sha256": "57c032eb4a8888bfd492e14feb9c53b83d37630a9175a9997c2461aa5a52870f"
+    },
+    {
+      "bytes": 2881,
+      "path": "tests/unit/phase2/test_l3_grpo_signal_runtime.py",
+      "sha256": "221f88ce8fe2c1b07d5a022ef4cac0e7bac63545b9d0af5ed3fbbc1e63c3273b"
+    },
+    {
+      "bytes": 2681,
+      "path": "tests/unit/phase2/test_l3_grpo_signal_campaign.py",
+      "sha256": "36ea874612ab10cd4cbd82c5a0e31338664fb84d0945ad57b4110df0db350d42"
+    },
+    {
+      "bytes": 2335,
+      "path": "tests/unit/phase2/test_l3_grpo_signal_prepare.py",
+      "sha256": "b6d2be1dd7f7d5014ca37f83779024b8f11cb453e7acac657653934d637ad44d"
+    },
+    {
+      "bytes": 17165,
+      "path": "src/foundry/phase2/l3_grpo_contract.py",
+      "sha256": "b8a611d0ebd139dc195102d30c159266316eeb75d501f67548140ec7b94219b0"
+    },
+    {
+      "bytes": 120066,
+      "path": "src/foundry/phase2/l3_grpo_runtime.py",
+      "sha256": "2bfc9c7cc61af779816c588d4ce1653e7f2b22cabe4468c6f1905c7ee20fe2c7"
+    },
+    {
+      "bytes": 28901,
+      "path": "src/foundry/phase2/l3_grpo_schedule.py",
+      "sha256": "4475e29a30856e96a4a7cae6d9a92d0c04ac7505e33de11b5ae79e52a2a9f255"
+    },
+    {
+      "bytes": 19110,
+      "path": "src/foundry/phase2/l3_grpo_reward.py",
+      "sha256": "448574e61ff74c40b026dd493b9773023c92eb7f4dbaccb5dfbf511be1e68e66"
+    },
+    {
+      "bytes": 11823,
+      "path": "src/foundry/phase2/l3_grpo_reference.py",
+      "sha256": "c3173035e5d77a859a313506bc2d32c6ba032195b23d234e8ce7c0c6e7694f71"
+    },
+    {
+      "bytes": 28790,
+      "path": "src/foundry/phase2/l3_grpo_zero_gradient.py",
+      "sha256": "24252d48f8c3cdb941a7a1301680e212075c9fe482622c39c33d3e65a3909608"
+    },
+    {
+      "bytes": 4802,
+      "path": "src/foundry/phase2/launch_contract.py",
+      "sha256": "90c6d3e4ef3b718a671830a8d9b53235a8cfb600978b25fd7e0de962c06faed4"
+    },
+    {
+      "bytes": 36329,
+      "path": "src/foundry/phase2/vetted_qlora_kl.py",
+      "sha256": "797debdef3bf0ba145ca4af3fbf9634f91e2d7f173898f56f05ed797ff6f49c3"
+    },
+    {
+      "bytes": 32759,
+      "path": "src/foundry/training/grpo_compatibility.py",
+      "sha256": "58358c3960c0a26f28caad2694fcd86f721c5b89490463976cabc46607f9a939"
+    },
+    {
+      "bytes": 50831,
+      "path": "src/foundry/training/grpo_replay_evidence.py",
+      "sha256": "7cc32841c050d7a00702fdb598e4c43e0073d0fd0819395f46b344dfd6cd77e1"
+    },
+    {
+      "bytes": 75828,
+      "path": "src/foundry/training/grpo_runtime.py",
+      "sha256": "6a2571733d0aad9b577a2211816558c84f8a2459d03bc414cad09bc42cee66ba"
+    },
+    {
+      "bytes": 7498,
+      "path": "src/foundry/training/grpo_trainer.py",
+      "sha256": "601b49a58a79b12b424bea27b25991a48f40e14f22e6c3a38c03bacaca52172e"
+    },
+    {
+      "bytes": 19007,
+      "path": "src/foundry/training/qlora.py",
+      "sha256": "675d0e297f787853a04ee27e4d0b4bb7006cb848ed6c9cd457d43177f934c987"
+    }
+  ],
+  "frozen_dependency_files": [
+    "src/foundry/phase2/l3_grpo_contract.py",
+    "src/foundry/phase2/l3_grpo_runtime.py",
+    "src/foundry/phase2/l3_grpo_schedule.py",
+    "src/foundry/phase2/l3_grpo_reward.py",
+    "src/foundry/phase2/l3_grpo_reference.py",
+    "src/foundry/phase2/l3_grpo_zero_gradient.py",
+    "src/foundry/phase2/launch_contract.py",
+    "src/foundry/phase2/vetted_qlora_kl.py",
+    "src/foundry/training/grpo_compatibility.py",
+    "src/foundry/training/grpo_replay_evidence.py",
+    "src/foundry/training/grpo_runtime.py",
+    "src/foundry/training/grpo_trainer.py",
+    "src/foundry/training/qlora.py"
+  ],
+  "implementation_files": [
+    "src/foundry/phase2/l3_grpo_signal_audit.py",
+    "src/foundry/phase2/l3_grpo_signal_analysis.py",
+    "src/foundry/phase2/l3_grpo_signal_runtime.py",
+    "src/foundry/phase2/l3_grpo_signal_campaign.py",
+    "src/foundry/phase2/l3_grpo_signal_prepare.py",
+    "tests/unit/phase2/test_l3_grpo_signal_audit.py",
+    "tests/unit/phase2/test_l3_grpo_signal_analysis.py",
+    "tests/unit/phase2/test_l3_grpo_signal_runtime.py",
+    "tests/unit/phase2/test_l3_grpo_signal_campaign.py",
+    "tests/unit/phase2/test_l3_grpo_signal_prepare.py"
+  ],
+  "implementation_id": "foundry-l3-grpo-signal-audit-implementation-v1",
+  "implementation_sha256": "fe68e0676f59ed56027ca935f9092eded69203987808c532fb056dacc28e1c6c",
+  "model_generation_calls": 0,
+  "optimizer_steps": 0,
+  "schema_version": 1,
+  "sealed_content_use": 0,
+  "starting_commit": "d1c4edf15510128413735a19f937d5451137ae0b"
+}

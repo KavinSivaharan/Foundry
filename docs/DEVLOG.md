@@ -4315,3 +4315,38 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
   `pip check`, and `git diff --check` is clean.
 - **Next action:** Publish and synchronize the verified blocker, then stop for project-level
   GRPO interpretation.
+
+### 2026-07-29 - Milestone 14B froze the complete-schedule signal audit
+
+- **Verified boundary:** Milestone 14B began from clean synchronized `main` at
+  `d1c4edf15510128413735a19f937d5451137ae0b`. Both L3 starting adapters, both 32-group
+  schedules, shared replay, paired schedule, reward implementation/configuration/fixtures/
+  calibration/contract, reference mechanism, and the Milestone 14A-R1 blocker reconstructed to
+  their authorized hashes. No active Python process, Milestone 14 counted adapter/checkpoint,
+  holdout-v2 GRPO output, GSM1K GRPO output, or sealed-path access was present.
+- **Frozen method:** `foundry-l3-grpo-signal-audit-v1` evaluates generic and targeted
+  sequentially, exactly 32 groups and 128 completions per arm, through the unchanged stock TRL
+  generation-and-scoring path. It records per-group hashes, token masks, reward/component
+  vectors, advantages, correctness and safety counts, policy/reference log probabilities, KL,
+  and a mutually exclusive zero-variance classification. It constructs no optimizer or
+  scheduler, calls no backward pass, saves no adapter, and verifies byte-identical policy,
+  reference, and base states after all 64 groups.
+- **Viability contract:** Each arm requires at least four informative task groups across at
+  least two task families, one usable finite-log-probability candidate, zero invalid evidence,
+  zero backend failures, zero reward inconsistencies, and one later deterministic
+  fresh-process task replay. Shared replay groups may remain saturated no-ops. The
+  implementation and audit-contract SHA-256 values are respectively
+  `fe68e067...e1c6c` and `5af65428...0beec6`.
+- **Pre-generation verification:** Ruff format and lint pass over 351 files, strict Mypy passes
+  all 198 source files, all 1,057 tests pass in 114.78 seconds, both authorized environments
+  pass `pip check`, and `git diff --check` is clean. Eighteen focused signal-audit tests pass
+  separately.
+- **Discarded tooling launch:** One read-only TRL signature check resolved the operational
+  environment manifest relative to `src` after clearing the inherited environment and failed
+  before importing TRL. It loaded no model or adapter, generated no completion, and created no
+  evidence. Its output was discarded; the corrected absolute-manifest invocation ran under the
+  exact frozen environment and confirmed the expected method signatures. This was not an audit
+  arm, replay, smoke, or scientific result.
+- **Next action:** Verify the generated source manifests and frozen inputs, publish and
+  synchronize this pre-generation source boundary, then audit the generic and targeted schedules
+  exactly once each without optimization.
