@@ -4228,3 +4228,58 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
   content-free blocker SHA-256 is `d4b23d89...e8752`.
 - **Next action:** Publish this exact compatibility blocker and perform project-level GRPO
   compatibility interpretation before authorizing any new experiment.
+
+### 2026-07-29 - Milestone 14A-R1 classified the zero gradient as an expected no-op
+
+- **Verified restart boundary:** Milestone 14A-R1 restarted from clean synchronized `main` at
+  `b0635a7c0f551dfb8efd846da5cfe83b28f7af18`. Dataset, complete L3 starting adapters,
+  schedules, reward components, reference mechanism, original blocker, process environment, and
+  both authorized interpreters reconstructed exactly. No Milestone 14 adapter/checkpoint or active
+  model process existed, and no retention, GSM1K, counted-training, or sealed-path action
+  occurred.
+- **Frozen classification:** The model-independent
+  `foundry-grpo-zero-gradient-classification-v1` contract defines exactly four outcomes:
+  expected zero-advantage no-op, unexpected zero gradient, nonzero-gradient update, and
+  invalid/ambiguous. All 15 predeclared fixtures pass. Classification-contract and fixture
+  SHA-256 values are `076997e2...a6a8db` and `be85a67d...ef6251e`.
+- **Two reset diagnostics:** Exactly two fresh reset-state reproductions generated the same four
+  completions from the frozen first generic task group and completed no optimizer or scheduler
+  step. Both persisted identical 144,869-byte partial evidence at SHA-256
+  `2c9bc725...17f6a`. Their stderr files are also identical at `ba098a00...6a5212`.
+  A post-projection diagnostic bookkeeping lookup used the label
+  `optimizer_owned_tensors` instead of the already-proven runtime field
+  `optimizer_parameter_tensors`; both processes therefore ended with the same `KeyError` only
+  after all decisive tensor projections were durably written. No model or adapter state changed.
+- **Scientific adjudication:** The float32 reward vector is
+  `[1.1499999762, 1.1499999762, 1.1499999762, 1.1499999762]`, reward variance is exactly zero,
+  advantages are `[0, 0, 0, 0]`, and valid completion-token counts are `[76, 80, 76, 68]`.
+  Policy, KL, and combined objectives remain connected to all 112 policy LoRA tensors, yet each
+  component has exact zero gradient norm; reference and base gradient counts are zero. The
+  controlled perturbation produces positive KL `0.0711894035`. This uniquely classifies the group
+  as `expected_zero_advantage_noop` and the original exception as
+  `overstrict_per_group_update_gate`; diagnostic-decision SHA-256 is
+  `096b46c6...60133`.
+- **Authorized correction:** Only the two-step compatibility recorder is being generalized.
+  It records reward projection, masks, component gradients, actual populated gradients,
+  optimizer/scheduler states, and exact policy/reference/base deltas before validation. An
+  expected no-op still consumes its original optimizer and scheduler step without resampling.
+  The complete smoke continues to require two groups/eight completions, at least one nonzero
+  variance group, nonzero policy gradient and policy update, and unchanged reference/base state.
+  The 32-step counted-training recorder retains its original strict per-group nonzero-gradient
+  assertion.
+- **Corrected source freeze:** Corrected-implementation SHA-256 is
+  `754c2674...0c2a9`, correction-contract SHA-256 is `d0cfc595...b0119`, and focused-test
+  SHA-256 is `c3977570...1e8cf`. The original implementation remains bound at
+  `63631afa...72eae`; the frozen classifier and fixtures remain byte-identical to their
+  pre-model hashes.
+- **Source verification:** Ruff format-check reports 342 files formatted; Ruff lint and strict
+  Mypy pass across 193 source files. All 1,039 unit/integration tests pass in 119.08 seconds;
+  the 35 focused zero-gradient/runtime/campaign tests pass separately. Both environments pass
+  `pip check`, and `git diff --check` passes. Dataset, both starting-adapter directories, both
+  32-group schedules, reward implementation/configuration/fixture/calibration/contract,
+  reference mechanism, and exact Windows child environment reconstruct to the frozen hashes.
+  Across 20 candidate files there are zero high-confidence secret hits, forbidden artifact
+  paths, sealed-path names, tracked raw/model/environment artifacts, or candidates at or above
+  one MiB. Sealed example paths were not opened.
+- **Next action:** Publish and synchronize the required corrected-source commit, and only then
+  run the two non-retryable fresh-process compatibility smokes.

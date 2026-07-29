@@ -1,0 +1,211 @@
+{
+  "classification_contract": {
+    "beta": 0.04,
+    "classification_contract_id": "foundry-grpo-zero-gradient-classification-v1",
+    "classification_contract_sha256": "076997e24cf1e02cc1dfd0e281dd488e095b0c2c93994c7f2be9dfec93a6a8db",
+    "classification_uses_total_norm_only": false,
+    "classifications": [
+      "expected_zero_advantage_noop",
+      "unexpected_zero_gradient",
+      "nonzero_gradient_update",
+      "invalid_or_ambiguous"
+    ],
+    "classify_group_source_sha256": "d8acbbb67065aa446bc712429375b8bf4d4ac35a1495df7aa04603ead0130fd0",
+    "epsilon": 0.2,
+    "expected_zero_advantage_noop_requires": [
+      "finite_rewards",
+      "exact_zero_reward_variance",
+      "all_advantages_exactly_zero",
+      "nonempty_completion_token_masks",
+      "finite_policy_and_reference_logprobs",
+      "finite_policy_reference_kl",
+      "identical_step_start_adapters",
+      "exact_zero_policy_component_gradient",
+      "exact_zero_kl_component_gradient",
+      "exact_zero_combined_gradient",
+      "zero_base_and_reference_gradients",
+      "policy_graph_connected"
+    ],
+    "loss_type": "dr_grpo",
+    "max_completion_length": 256,
+    "objective_components_source_sha256": "be0a66851250a7e5dd5c8e995c11bdd70490a88ab0cb9dfe310ef597f04b6245",
+    "reward_scaling": false,
+    "schema_version": 1,
+    "source_sha256": "24252d48f8c3cdb941a7a1301680e212075c9fe482622c39c33d3e65a3909608",
+    "unexpected_zero_gradient_requires": [
+      "nonzero_reward_variance_or_advantage",
+      "nonempty_completion_token_masks",
+      "connected_policy_objective",
+      "exact_zero_combined_policy_gradient"
+    ]
+  },
+  "fixture_contract": {
+    "classification_contract_id": "foundry-grpo-zero-gradient-classification-v1",
+    "fixture_contract_id": "foundry-grpo-zero-gradient-fixtures-v1",
+    "fixture_count": 15,
+    "fixture_sha256": "be85a67d50a2c2c5aae0b1fd6cf6d0323e5d021182cb5865b16a9c9beef6251e",
+    "fixtures": [
+      {
+        "detail_sha256": "56ef668f1114b34755aa28eb67c793111ced186debd1a7b34934eaa5a290f86c",
+        "fixture_id": "equal_rewards_zero_advantages",
+        "passed": true
+      },
+      {
+        "detail_sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+        "fixture_id": "zero_advantages_identical_logits_zero_gradients",
+        "passed": true
+      },
+      {
+        "detail_sha256": "0ec1cb0ed0ed59a613e3d7a92528073d47c9b96bc214f8cad84d825969ebe0f9",
+        "fixture_id": "nonzero_variance_nonzero_advantages",
+        "passed": true
+      },
+      {
+        "detail_sha256": "1f83f81fab20db32343ed14e225eb1bf39fafaabc58a1bd343acecf36f4e43eb",
+        "fixture_id": "live_policy_nonzero_advantages_nonzero_gradient",
+        "passed": true
+      },
+      {
+        "detail_sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+        "fixture_id": "detached_policy_logprobs_rejected",
+        "passed": true
+      },
+      {
+        "detail_sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+        "fixture_id": "empty_completion_mask_rejected",
+        "passed": true
+      },
+      {
+        "detail_sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+        "fixture_id": "nonfinite_advantages_rejected",
+        "passed": true
+      },
+      {
+        "detail_sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+        "fixture_id": "nonfinite_logprobs_rejected",
+        "passed": true
+      },
+      {
+        "detail_sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+        "fixture_id": "nonfinite_rewards_rejected",
+        "passed": true
+      },
+      {
+        "detail_sha256": "84dd6070673e3b75f73e7b487d4cc4fb7e741f1da907cc12ba54a031cbaa27f4",
+        "fixture_id": "controlled_perturbation_nonzero_kl_gradient",
+        "passed": true
+      },
+      {
+        "detail_sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+        "fixture_id": "reference_parameters_receive_zero_gradients",
+        "passed": true
+      },
+      {
+        "detail_sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+        "fixture_id": "base_parameters_receive_zero_gradients",
+        "passed": true
+      },
+      {
+        "detail_sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+        "fixture_id": "optimizer_owns_only_policy_parameters",
+        "passed": true
+      },
+      {
+        "detail_sha256": "f2b61b3edc31e7d3d0facffebbf5b1a105ebc326aa8fb4d2775857d3d76e3498",
+        "fixture_id": "single_noop_does_not_pass_complete_smoke",
+        "passed": true
+      },
+      {
+        "detail_sha256": "7722740dcd5977b3f04884c39d84cbb0b2a18bcc3739fecea47b55fec6f04fe1",
+        "fixture_id": "noop_plus_update_passes_complete_smoke",
+        "passed": true
+      }
+    ],
+    "schema_version": 1
+  },
+  "freeze_id": "foundry-milestone14a-r1-zero-gradient-freeze-v1",
+  "freeze_sha256": "b1f8d00c402e7a07e756c5f5acd81ac874326b06a68eb73e7efa34a1dd1bfba8",
+  "frozen_scientific_contracts": {
+    "generic_manifest_sha256": "ff1005a1d7381acd52dd28b3d054b2979986c47595ed09c944880ea5fc5f5ff3",
+    "generic_starting_adapter_sha256": "67c6f1dd34c0fa1ddebb354dfe14c43e61c48fdd90c687ba1a9290d2401479cd",
+    "paired_schedule_sha256": "ed99aa38f77961fa1f669ba110cd86b3af092e027a60b8e92096a9a68bdfc8e3",
+    "recipe_sha256": "0c3280d81d60e76e3f58e9ae44a62b378540ae9d92d277606ba021e688403641",
+    "reference_mechanism_sha256": "674b368105f08b0e1eb00f54c6912f611da730ed070f60c63989de996ecb0316",
+    "reward_contract_sha256": "441933982c2b51b49195763440c318893cea22af947c9efc50b732d05fee7b61",
+    "shared_replay_sha256": "19e27fecde5349b6a7a9a24d8a0a8211a3b0da877282a51ece6b616688904181",
+    "targeted_manifest_sha256": "8326c1b91ba127c4734527abfed2f8bca41ecbb3a0bb7bc62a5bf940ac24f0c4",
+    "targeted_starting_adapter_sha256": "4e195ff2cb32c4faa6858915b95507862c911bb2eb853b060717416d825df91d"
+  },
+  "model_generation_calls": 0,
+  "optimizer_steps": 0,
+  "original_blocker_sha256": "d4b23d898ef3c53db46882a4a218c2a43cd85298ebdfa75139eaf3a7c08e8752",
+  "original_implementation_sha256": "63631afa3abb5d0faf2a73decf9a96285d9cbfff789a47806b009c3d8b672eae",
+  "prediagnostic_source": {
+    "files": [
+      {
+        "bytes": 28790,
+        "path": "src/foundry/phase2/l3_grpo_zero_gradient.py",
+        "sha256": "24252d48f8c3cdb941a7a1301680e212075c9fe482622c39c33d3e65a3909608"
+      },
+      {
+        "bytes": 27546,
+        "path": "src/foundry/phase2/l3_grpo_zero_gradient_diagnostic.py",
+        "sha256": "6ee293011a7f6e9a3a63b0c86310cf7c9285bbd7022dcb80d5a0299267157c1d"
+      },
+      {
+        "bytes": 7167,
+        "path": "src/foundry/phase2/l3_grpo_zero_gradient_prepare.py",
+        "sha256": "06bc5a238ffdccc148c56c93ae1bd8fe804ecd830b64b3c366e7f60ad9b8c6aa"
+      },
+      {
+        "bytes": 5975,
+        "path": "tests/unit/phase2/test_l3_grpo_zero_gradient.py",
+        "sha256": "06743414a0fb0538886917db58a837a0bc48cb8f70919ffdd42c5a8f3e33f2f4"
+      },
+      {
+        "bytes": 1707,
+        "path": "tests/unit/phase2/test_l3_grpo_zero_gradient_diagnostic.py",
+        "sha256": "0d7b89f5ee7b8c15a715a9228a8ad385f64b82b802abe60abbcccaf1be1b14a8"
+      },
+      {
+        "bytes": 1076,
+        "path": "tests/unit/phase2/test_l3_grpo_zero_gradient_prepare.py",
+        "sha256": "98ad0b47b1f1e6a1474da02a622208045a8267a6f4daeb53d0d693ea72a8b4f7"
+      },
+      {
+        "bytes": 91194,
+        "path": "src/foundry/phase2/l3_grpo_runtime.py",
+        "sha256": "05e9c4a9a0cedb976a1740b3349128b78ee62eeb592ec15d11cecf364936fe2d"
+      },
+      {
+        "bytes": 11823,
+        "path": "src/foundry/phase2/l3_grpo_reference.py",
+        "sha256": "c3173035e5d77a859a313506bc2d32c6ba032195b23d234e8ce7c0c6e7694f71"
+      },
+      {
+        "bytes": 19110,
+        "path": "src/foundry/phase2/l3_grpo_reward.py",
+        "sha256": "448574e61ff74c40b026dd493b9773023c92eb7f4dbaccb5dfbf511be1e68e66"
+      }
+    ],
+    "frozen_dependency_files": [
+      "src/foundry/phase2/l3_grpo_runtime.py",
+      "src/foundry/phase2/l3_grpo_reference.py",
+      "src/foundry/phase2/l3_grpo_reward.py"
+    ],
+    "implementation_files": [
+      "src/foundry/phase2/l3_grpo_zero_gradient.py",
+      "src/foundry/phase2/l3_grpo_zero_gradient_diagnostic.py",
+      "src/foundry/phase2/l3_grpo_zero_gradient_prepare.py",
+      "tests/unit/phase2/test_l3_grpo_zero_gradient.py",
+      "tests/unit/phase2/test_l3_grpo_zero_gradient_diagnostic.py",
+      "tests/unit/phase2/test_l3_grpo_zero_gradient_prepare.py"
+    ],
+    "manifest_id": "foundry-milestone14a-r1-prediagnostic-source-v1",
+    "source_manifest_sha256": "aa2a5fe0abf3caf9fc7732215de0adb1733a6eb78ac24afbc50a31bfba17eac1"
+  },
+  "schema_version": 1,
+  "scientific_settings_changed": false,
+  "sealed_content_use": 0,
+  "starting_commit": "b0635a7c0f551dfb8efd846da5cfe83b28f7af18"
+}

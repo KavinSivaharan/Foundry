@@ -10,6 +10,11 @@ from foundry.phase2 import l3_grpo_runtime
 from foundry.phase2.l3_grpo_schedule import (
     PromptMessage,
 )
+from foundry.phase2.l3_grpo_zero_gradient import (
+    EXPECTED_ZERO_ADVANTAGE_NOOP,
+    NONZERO_GRADIENT_UPDATE,
+    UNEXPECTED_ZERO_GRADIENT,
+)
 from foundry.training.config import canonical_sha256
 
 
@@ -154,3 +159,43 @@ def test_optimizer_contract_rejects_non_policy_ownership() -> None:
     )
     with pytest.raises(RuntimeError, match="policy-only"):
         l3_grpo_runtime._optimizer_ownership(trainer)
+
+
+def test_compatibility_group_gate_allows_noop_and_update_only() -> None:
+    l3_grpo_runtime._require_smoke_group_classification(EXPECTED_ZERO_ADVANTAGE_NOOP)
+    l3_grpo_runtime._require_smoke_group_classification(NONZERO_GRADIENT_UPDATE)
+    with pytest.raises(RuntimeError, match="classification failed"):
+        l3_grpo_runtime._require_smoke_group_classification(UNEXPECTED_ZERO_GRADIENT)
+
+
+def test_policy_parameter_delta_distinguishes_noop_from_update() -> None:
+    torch = pytest.importorskip("torch")
+    before = (("policy", torch.tensor([1.0, 2.0])),)
+    noop = l3_grpo_runtime._parameter_delta_projection(
+        torch,
+        before=before,
+        after=(("policy", torch.tensor([1.0, 2.0])),),
+    )
+    update = l3_grpo_runtime._parameter_delta_projection(
+        torch,
+        before=before,
+        after=(("policy", torch.tensor([1.0, 2.5])),),
+    )
+    assert noop["exactly_zero"] is True
+    assert noop["changed_parameter_count"] == 0
+    assert update["exactly_zero"] is False
+    assert update["changed_parameter_count"] == 1
+    assert update["global_norm"] == 0.5
+
+
+def test_counted_gradient_gate_still_rejects_all_zero_policy_gradient() -> None:
+    torch = pytest.importorskip("torch")
+    parameter = torch.nn.Parameter(torch.ones(1))
+    parameter.grad = torch.zeros_like(parameter)
+    model = SimpleNamespace(
+        named_parameters=lambda: [
+            ("base_model.layer.lora_A.default.weight", parameter),
+        ]
+    )
+    with pytest.raises(RuntimeError, match="all zero"):
+        l3_grpo_runtime._assert_gradient_ownership(model, torch)

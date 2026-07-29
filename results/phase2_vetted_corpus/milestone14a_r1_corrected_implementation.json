@@ -1,0 +1,100 @@
+{
+  "compatibility_group_classification_added": true,
+  "complete_smoke_update_gate_preserved": true,
+  "corrected_implementation_sha256": "754c267487925f5c75b733a449b3d07d13f2e1088d629ca6ec6721781ea0c2a9",
+  "counted_training_gradient_gate_changed": false,
+  "files": [
+    {
+      "bytes": 120066,
+      "path": "src/foundry/phase2/l3_grpo_runtime.py",
+      "sha256": "2bfc9c7cc61af779816c588d4ce1653e7f2b22cabe4468c6f1905c7ee20fe2c7"
+    },
+    {
+      "bytes": 28790,
+      "path": "src/foundry/phase2/l3_grpo_zero_gradient.py",
+      "sha256": "24252d48f8c3cdb941a7a1301680e212075c9fe482622c39c33d3e65a3909608"
+    },
+    {
+      "bytes": 12079,
+      "path": "src/foundry/phase2/l3_grpo_zero_gradient_analysis.py",
+      "sha256": "e3da2055114f0caee091fd6a3f739cf5067ef2ea81f4728b2058ee6cb81b43e2"
+    },
+    {
+      "bytes": 1786,
+      "path": "src/foundry/phase2/l3_grpo_zero_gradient_campaign.py",
+      "sha256": "c2da74f9211ba51eeb7e31cb9d223890de761defd3debf3f189126cfb52d2067"
+    },
+    {
+      "bytes": 11452,
+      "path": "src/foundry/phase2/l3_grpo_zero_gradient_compatibility.py",
+      "sha256": "f956608b8c3cee0e62eae2ff2e2b2b640a65af63b83ed069b337af40baef6e9b"
+    },
+    {
+      "bytes": 9674,
+      "path": "src/foundry/phase2/l3_grpo_zero_gradient_correction.py",
+      "sha256": "7f0f496267f94d8ebe9d5bcf87a36f645d4ecc5828cdfb52519d85a07dac0c4f"
+    },
+    {
+      "bytes": 27550,
+      "path": "src/foundry/phase2/l3_grpo_zero_gradient_diagnostic.py",
+      "sha256": "807f6f072561ff9f71e1991f7d3f325d27d6d0b19534adcb481ce924cce5a448"
+    },
+    {
+      "bytes": 7167,
+      "path": "src/foundry/phase2/l3_grpo_zero_gradient_prepare.py",
+      "sha256": "06bc5a238ffdccc148c56c93ae1bd8fe804ecd830b64b3c366e7f60ad9b8c6aa"
+    },
+    {
+      "bytes": 7117,
+      "path": "tests/unit/phase2/test_l3_grpo_runtime.py",
+      "sha256": "9a143d8408078d327418b20babb6d7827495d8ba2ccb2ff45a803816e0a5c1af"
+    },
+    {
+      "bytes": 5975,
+      "path": "tests/unit/phase2/test_l3_grpo_zero_gradient.py",
+      "sha256": "06743414a0fb0538886917db58a837a0bc48cb8f70919ffdd42c5a8f3e33f2f4"
+    },
+    {
+      "bytes": 2446,
+      "path": "tests/unit/phase2/test_l3_grpo_zero_gradient_campaign.py",
+      "sha256": "9e8dcb08b74c65a630985afeb993e5f7b1a9709576a804ed055127e27a142380"
+    },
+    {
+      "bytes": 5915,
+      "path": "tests/unit/phase2/test_l3_grpo_zero_gradient_compatibility.py",
+      "sha256": "df52848908c805f9078f9518fe705cbdd7bd20ad07afdf445565d83549b94d42"
+    },
+    {
+      "bytes": 2045,
+      "path": "tests/unit/phase2/test_l3_grpo_zero_gradient_correction.py",
+      "sha256": "f50f4ae2791bd713c5b7cac7ec731c54839eb5ced4097e0f795df64950a8cab0"
+    },
+    {
+      "bytes": 1707,
+      "path": "tests/unit/phase2/test_l3_grpo_zero_gradient_diagnostic.py",
+      "sha256": "0d7b89f5ee7b8c15a715a9228a8ad385f64b82b802abe60abbcccaf1be1b14a8"
+    },
+    {
+      "bytes": 1076,
+      "path": "tests/unit/phase2/test_l3_grpo_zero_gradient_prepare.py",
+      "sha256": "98ad0b47b1f1e6a1474da02a622208045a8267a6f4daeb53d0d693ea72a8b4f7"
+    }
+  ],
+  "focused_test_files": [
+    "tests/unit/phase2/test_l3_grpo_runtime.py",
+    "tests/unit/phase2/test_l3_grpo_zero_gradient.py",
+    "tests/unit/phase2/test_l3_grpo_zero_gradient_campaign.py",
+    "tests/unit/phase2/test_l3_grpo_zero_gradient_compatibility.py",
+    "tests/unit/phase2/test_l3_grpo_zero_gradient_correction.py",
+    "tests/unit/phase2/test_l3_grpo_zero_gradient_diagnostic.py",
+    "tests/unit/phase2/test_l3_grpo_zero_gradient_prepare.py"
+  ],
+  "focused_test_sha256": "c3977570a5d8bd75e1b73d3ad40ac9dd9524a6038d240ea921c35e3e8071e8cf",
+  "implementation_id": "foundry-l3-verifier-grpo-implementation-r1-v1",
+  "official_smoke_retry_allowed": false,
+  "old_implementation_sha256": "63631afa3abb5d0faf2a73decf9a96285d9cbfff789a47806b009c3d8b672eae",
+  "schema_version": 1,
+  "scientific_settings_changed": false,
+  "source_file_count": 8,
+  "test_file_count": 7
+}

@@ -1,0 +1,101 @@
+{
+  "active_policy_before_and_after_generation": true,
+  "adapter_or_checkpoint_saved": false,
+  "advantages": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "base_gradient_count": 0,
+  "classification": "expected_zero_advantage_noop",
+  "classification_contract_sha256": "076997e24cf1e02cc1dfd0e281dd488e095b0c2c93994c7f2be9dfec93a6a8db",
+  "combined_gradient_global_norm": 0.0,
+  "combined_gradient_projection_sha256": "d061ffefc5deeee40bf636a9d731addc20f0f6eb27140c70f9eda382e926f3b6",
+  "controlled_positive_kl": 0.07118940353393555,
+  "counted_training_started": false,
+  "decision_id": "foundry-milestone14a-r1-zero-gradient-decision-v1",
+  "diagnostic_bookkeeping_error": {
+    "changed_scientific_classification": false,
+    "correct_frozen_runtime_key": "optimizer_parameter_tensors",
+    "missing_key": "optimizer_owned_tensors",
+    "occurred_after_all_three_decisive_gradient_projections": true,
+    "type": "KeyError"
+  },
+  "diagnostic_decision_sha256": "096b46c663670829d408847c8fa213fb142cca02def8f86d0a68625cbda60133",
+  "diagnostic_evidence_byte_identical": true,
+  "diagnostic_partial_sha256s": [
+    "2c9bc725e91e3924d400bfb29904e027a4fc47eeb286b91804d77fe8e0917f6a",
+    "2c9bc725e91e3924d400bfb29904e027a4fc47eeb286b91804d77fe8e0917f6a"
+  ],
+  "diagnostic_reproductions": 2,
+  "diagnostic_stderr_byte_identical": true,
+  "diagnostic_stderr_sha256s": [
+    "ba098a00f03f3f3d5cb1e2e787f7c878dc342adf15037737a5c4aa7ca7ba5212",
+    "ba098a00f03f3f3d5cb1e2e787f7c878dc342adf15037737a5c4aa7ca7ba5212"
+  ],
+  "fixture_sha256": "be85a67d50a2c2c5aae0b1fd6cf6d0323e5d021182cb5865b16a9c9beef6251e",
+  "general_validation_semantics_correction_authorized": true,
+  "gsm1k_started": false,
+  "initial_policy_reference_identity_sha256": "77ec7fe30ddf0089bb65f927ac9a1ada0df9e27dbd44142c938bd2cd6f1f81f6",
+  "kl_gradient_global_norm": 0.0,
+  "kl_gradient_projection_sha256": "d061ffefc5deeee40bf636a9d731addc20f0f6eb27140c70f9eda382e926f3b6",
+  "normalized_advantages": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "objective_graph": {
+    "combined_objective": {
+      "grad_fn": "AddBackward0",
+      "requires_grad": true
+    },
+    "kl_objective": {
+      "grad_fn": "DivBackward0",
+      "requires_grad": true
+    },
+    "policy_objective": {
+      "grad_fn": "DivBackward0",
+      "requires_grad": true
+    }
+  },
+  "objective_values": {
+    "combined_objective": 0.0,
+    "kl_objective": 0.0,
+    "policy_objective": 0.0,
+    "stock_loss": 0.0
+  },
+  "optimizer_owned_policy_tensors": 112,
+  "optimizer_steps": 0,
+  "original_blocker_sha256": "d4b23d898ef3c53db46882a4a218c2a43cd85298ebdfa75139eaf3a7c08e8752",
+  "original_exception_classification": "overstrict_per_group_update_gate",
+  "policy_gradient_global_norm": 0.0,
+  "policy_gradient_projection_sha256": "d061ffefc5deeee40bf636a9d731addc20f0f6eb27140c70f9eda382e926f3b6",
+  "policy_gradient_tensors_present": 112,
+  "policy_logprobs_sha256": "cad68388edab049a18e45365be97627065cd4ff41e178c9fbcded788acd6e6da",
+  "policy_reference_kl_sha256": "a58b8aa3e5a4dc8a488cf2f422ccf4078688b67a1d2145659aeb025e9f0965e1",
+  "reference_gradient_count": 0,
+  "reference_logprobs_sha256": "cad68388edab049a18e45365be97627065cd4ff41e178c9fbcded788acd6e6da",
+  "reference_proxy_fail_closed_switching": true,
+  "retention_started": false,
+  "reward_mean": 1.149999976158142,
+  "reward_variance": 0.0,
+  "reward_vector": [
+    1.149999976158142,
+    1.149999976158142,
+    1.149999976158142,
+    1.149999976158142
+  ],
+  "scheduler_advancements": 0,
+  "schema_version": 1,
+  "scientific_grpo_contract_changed": false,
+  "sealed_content_use": 0,
+  "starting_commit": "b0635a7c0f551dfb8efd846da5cfe83b28f7af18",
+  "valid_completion_token_counts": [
+    76,
+    80,
+    76,
+    68
+  ]
+}

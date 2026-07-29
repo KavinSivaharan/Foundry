@@ -21,7 +21,7 @@ from dataclasses import dataclass, replace
 from functools import partial
 from pathlib import Path
 from statistics import fmean, pstdev
-from typing import Any, Literal, cast
+from typing import Any, Literal, NoReturn, cast
 
 from foundry.phase2 import vetted_qlora_kl
 from foundry.phase2.l3_grpo_contract import (
@@ -70,6 +70,18 @@ from foundry.phase2.l3_grpo_schedule import (
     TASK_QUOTAS,
     Arm,
     PromptMessage,
+)
+from foundry.phase2.l3_grpo_zero_gradient import (
+    EXPECTED_ZERO_ADVANTAGE_NOOP,
+    NONZERO_GRADIENT_UPDATE,
+    classification_contract,
+    classify_group,
+    complete_smoke_gate,
+    gradient_projection,
+    objective_components,
+    populated_gradient_projection,
+    reward_projection,
+    tensor_graph_evidence,
 )
 from foundry.phase2.launch_contract import validate_postimport, validate_preimport
 from foundry.training.config import canonical_sha256
@@ -168,6 +180,14 @@ def _read(path: Path) -> dict[str, object]:
 def _write_json_new(path: Path, value: object) -> None:
     if path.exists():
         raise FileExistsError(f"refusing to overwrite runtime output: {path}")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        json.dumps(value, indent=2, sort_keys=True, ensure_ascii=True) + "\n",
+        encoding="utf-8",
+    )
+
+
+def _write_json_replace(path: Path, value: object) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(
         json.dumps(value, indent=2, sort_keys=True, ensure_ascii=True) + "\n",
@@ -1054,6 +1074,140 @@ def _assert_gradient_ownership(model: Any, torch: Any) -> dict[str, object]:
     }
 
 
+def _parameter_partitions(
+    model: Any,
+) -> tuple[
+    tuple[tuple[str, Any], ...],
+    tuple[tuple[str, Any], ...],
+    tuple[tuple[str, Any], ...],
+]:
+    policy: list[tuple[str, Any]] = []
+    reference: list[tuple[str, Any]] = []
+    base: list[tuple[str, Any]] = []
+    for raw_name, parameter in sorted(model.named_parameters(), key=lambda item: str(item[0])):
+        name = str(raw_name)
+        if f".{POLICY_ADAPTER_NAME}." in name and "lora_" in name:
+            policy.append((name, parameter))
+        elif f".{REFERENCE_ADAPTER_NAME}." in name and "lora_" in name:
+            reference.append((name, parameter))
+        elif "lora_" not in name:
+            base.append((name, parameter))
+    if (
+        len(policy) != EXPECTED_ADAPTER_TENSORS
+        or len(reference) != EXPECTED_ADAPTER_TENSORS
+        or any(not bool(parameter.requires_grad) for _, parameter in policy)
+        or any(bool(parameter.requires_grad) for _, parameter in (*reference, *base))
+    ):
+        raise RuntimeError("model parameter partitions differ from frozen policy-only L3 ownership")
+    return tuple(policy), tuple(reference), tuple(base)
+
+
+def _model_optimizer_ownership(model: Any, optimizer: Any) -> dict[str, object]:
+    policy, reference, _ = _parameter_partitions(model)
+    policy_ids = {id(parameter) for _, parameter in policy}
+    reference_ids = {id(parameter) for _, parameter in reference}
+    optimizer_parameters = {
+        id(parameter)
+        for group in optimizer.param_groups
+        for parameter in cast(list[Any], group["params"])
+    }
+    if optimizer_parameters != policy_ids or optimizer_parameters & reference_ids:
+        raise RuntimeError("optimizer ownership differs from policy-only L3 tensors")
+    return {
+        "optimizer_parameter_tensors": len(optimizer_parameters),
+        "optimizer_parameter_count": sum(
+            int(parameter.numel())
+            for _, parameter in policy
+            if id(parameter) in optimizer_parameters
+        ),
+        "policy_only": True,
+        "reference_owned": False,
+        "base_owned": False,
+    }
+
+
+def _clone_named_parameters(
+    values: Sequence[tuple[str, Any]],
+) -> tuple[tuple[str, Any], ...]:
+    return tuple((name, parameter.detach().clone()) for name, parameter in values)
+
+
+def _parameter_delta_projection(
+    torch: Any,
+    *,
+    before: Sequence[tuple[str, Any]],
+    after: Sequence[tuple[str, Any]],
+) -> dict[str, object]:
+    before_rows = tuple(before)
+    after_rows = tuple(after)
+    if [name for name, _ in before_rows] != [name for name, _ in after_rows]:
+        raise RuntimeError("policy parameter inventory changed across the optimizer step")
+    tensors: list[dict[str, object]] = []
+    squared_norms: list[float] = []
+    changed = 0
+    finite = True
+    for (name, prior), (_, current) in zip(before_rows, after_rows, strict=True):
+        delta = current.detach() - prior
+        item_finite = bool(torch.isfinite(delta).all().item())
+        item_changed = bool(torch.count_nonzero(delta).item())
+        norm = float(torch.linalg.vector_norm(delta.float()).item())
+        finite = finite and item_finite
+        changed += int(item_changed)
+        squared_norms.append(norm * norm)
+        tensors.append(
+            {
+                "name": name,
+                "finite": item_finite,
+                "changed": item_changed,
+                "norm": norm,
+                "delta": tensor_evidence(delta).as_dict(),
+            }
+        )
+    payload: dict[str, object] = {
+        "parameter_count": len(tensors),
+        "changed_parameter_count": changed,
+        "finite": finite,
+        "exactly_zero": changed == 0 and finite,
+        "global_norm": math.sqrt(math.fsum(squared_norms)),
+        "tensors": tensors,
+    }
+    payload["parameter_delta_sha256"] = canonical_sha256(payload)
+    return payload
+
+
+def _tensor_values(value: Any) -> object:
+    return value.detach().cpu().tolist()
+
+
+def _stock_dr_grpo_objective(
+    torch: Any,
+    *,
+    policy_logprobs: Any,
+    reference_logprobs: Any,
+    advantages: Any,
+    completion_mask: Any,
+) -> Any:
+    old_policy_logprobs = policy_logprobs.detach()
+    coefficient = torch.exp(policy_logprobs - old_policy_logprobs)
+    clipped = torch.clamp(coefficient, 0.8, 1.2)
+    policy_token_loss = -torch.min(
+        coefficient * advantages.unsqueeze(1),
+        clipped * advantages.unsqueeze(1),
+    )
+    delta = reference_logprobs - policy_logprobs
+    per_token_kl = torch.exp(delta) - delta - 1.0
+    per_token_loss = policy_token_loss + 0.04 * per_token_kl
+    return (per_token_loss * completion_mask).sum() / (per_token_loss.size(0) * 256)
+
+
+def _require_smoke_group_classification(classification: str) -> None:
+    if classification not in {
+        EXPECTED_ZERO_ADVANTAGE_NOOP,
+        NONZERO_GRADIENT_UPDATE,
+    }:
+        raise RuntimeError(f"compatibility group classification failed: {classification}")
+
+
 class SmokeRecorder:
     """Capture exact tensor-bound evidence for two stock Trainer updates."""
 
@@ -1067,6 +1221,9 @@ class SmokeRecorder:
         warning_contract: TopPWarningOnlyGenerationContract,
         groups: Sequence[RuntimeGroup],
         reference_initial_sha256: str,
+        base_initial_sha256: str,
+        controlled_live_policy_fixture_passed: bool,
+        partial_evidence_path: Path,
     ) -> None:
         if (
             len(groups) != COMPATIBILITY_STEPS
@@ -1081,7 +1238,13 @@ class SmokeRecorder:
         self.warning_contract = warning_contract
         self.groups = tuple(groups)
         self.reference_initial_sha256 = reference_initial_sha256
+        self.base_initial_sha256 = base_initial_sha256
+        self.controlled_live_policy_fixture_passed = controlled_live_policy_fixture_passed
+        self.partial_evidence_path = partial_evidence_path
         self.steps: list[CompatibilityStepEvidence] = []
+        self.classification_steps: list[dict[str, object]] = []
+        self.raw_steps: list[dict[str, object]] = []
+        self.complete_gate: dict[str, object] | None = None
         self.reference_states_after_steps: list[str] = []
         self._generation_calls = 0
         self._record_start = 0
@@ -1093,58 +1256,146 @@ class SmokeRecorder:
         self._policy_capture_active = False
         self._captured_policy: Any | None = None
 
+    def _persist(self, stage: str, *, error: str | None = None) -> None:
+        pending = self._pending_step
+        payload: dict[str, object] = {
+            "schema_version": 1,
+            "evidence_id": "foundry-l3-r1-compatibility-partial-v1",
+            "stage": stage,
+            "groups": [group.group_id for group in self.groups],
+            "completed_raw_steps": self.raw_steps,
+            "completed_classification_steps": self.classification_steps,
+            "completed_compatibility_steps": [step.as_dict() for step in self.steps],
+            "pending_step": None if pending is None else pending.get("audit"),
+            "complete_smoke_gate": self.complete_gate,
+            "error": error,
+        }
+        payload["partial_evidence_sha256"] = canonical_sha256(payload)
+        _write_json_replace(self.partial_evidence_path, payload)
+
+    def _raise(self, message: str) -> NoReturn:
+        self._persist("validation_failure", error=message)
+        raise RuntimeError(message)
+
     def step_begin(self, *, state: Any, model: Any, optimizer: Any, scheduler: Any) -> None:
         _strict(self.torch, "smoke step begin")
         expected = len(self.steps) + 1
         if expected not in {1, 2} or int(state.global_step) != expected - 1:
-            raise RuntimeError("smoke Trainer step ordering differs")
+            self._raise("smoke Trainer step ordering differs")
         if self._pending_step is not None:
-            raise RuntimeError("prior smoke step did not finalize")
+            self._raise("prior smoke step did not finalize")
+        policy_parameters, _, _ = _parameter_partitions(model)
+        policy_before = capture_adapter_state(model, POLICY_ADAPTER_NAME)
+        reference_before = capture_adapter_state(model, REFERENCE_ADAPTER_NAME)
+        optimizer_ownership = _model_optimizer_ownership(model, optimizer)
+        optimizer_before = capture_optimizer_state(optimizer)
+        scheduler_before = capture_scheduler_state(scheduler)
+        active = active_adapter_name(model)
         self._pending_step = {
             "step": expected,
             "rng_before": capture_rng_state(self.torch, numpy_random=self.numpy_random),
             "lora_before": capture_lora_state(model),
-            "optimizer_before": capture_optimizer_state(optimizer),
-            "scheduler_before": capture_scheduler_state(scheduler),
+            "optimizer_before": optimizer_before,
+            "scheduler_before": scheduler_before,
+            "policy_snapshot": _clone_named_parameters(policy_parameters),
             "strict_mode_evidence": {},
+            "audit": {
+                "step": expected,
+                "group_id": self.groups[expected - 1].group_id,
+                "source_kind": self.groups[expected - 1].source_kind,
+                "active_adapter_at_step_start": active,
+                "policy_state_before": policy_before,
+                "reference_state_before": reference_before,
+                "base_parameter_state_sha256_before": self.base_initial_sha256,
+                "adapters_identical_at_step_start": (
+                    policy_before["normalized_tensor_state_sha256"]
+                    == reference_before["normalized_tensor_state_sha256"]
+                ),
+                "optimizer_ownership": optimizer_ownership,
+                "optimizer_before": optimizer_before,
+                "scheduler_before": scheduler_before,
+            },
         }
+        self._persist("step_begin")
+        if active != POLICY_ADAPTER_NAME:
+            self._raise("policy adapter is not active at smoke step start")
 
     def start_generation(self) -> None:
         _strict(self.torch, "smoke generation entry")
-        if self._pending_step is None or self._pending_result is not None:
-            raise RuntimeError("smoke generation lifecycle differs")
+        if (
+            self._pending_step is None
+            or self._pending_result is not None
+            or self._generation_calls >= COMPATIBILITY_STEPS
+        ):
+            self._raise("smoke generation lifecycle differs")
         self._record_start = len(self.reward_callback.records)
         self._warning_start = len(self.warning_contract.call_records())
+        self._persist("generation_started")
 
     def finish_generation(self, result: Mapping[str, Any]) -> None:
         _strict(self.torch, "smoke generation exit")
         records = list(self.reward_callback.records[self._record_start :])
         warning_rows = list(self.warning_contract.call_records()[self._warning_start :])
+        pending = self._pending_step
+        if pending is None:
+            self._raise("smoke generation lacks a pending step")
+        audit = cast(dict[str, object], pending["audit"])
+        audit["generation_record_count"] = len(records)
+        audit["generation_warning_count"] = len(warning_rows)
+        self._persist("generation_counts_persisted")
         if len(records) != COMPLETIONS_PER_GROUP or len(warning_rows) != 1:
-            raise RuntimeError("smoke generation completion or warning count differs")
+            self._raise("smoke generation completion or warning count differs")
         expected = self.groups[self._generation_calls]
         if {record.group_id for record in records} != {expected.group_id}:
-            raise RuntimeError("smoke reward rows differ from the scheduled group")
+            self._raise("smoke reward rows differ from the scheduled group")
+        rewards = [float(record.reward.total) for record in records]
+        projected = reward_projection(self.torch, rewards)
+        advantages = _tensor_values(result["advantages"])
+        completion_mask = result["completion_mask"]
+        mask_values = _tensor_values(completion_mask)
+        valid_counts = [int(value) for value in completion_mask.sum(dim=1).detach().cpu().tolist()]
+        audit["generation"] = {
+            "generated_token_ids": _tensor_values(result["completion_ids"]),
+            "completion_sha256s": [record.completion_sha256 for record in records],
+            "completion_lengths": _token_lengths(
+                result["completion_ids"],
+                int(self.tokenizer.eos_token_id),
+            ),
+            "reward_vector_unprojected": rewards,
+            "reward_components": [record.reward.as_dict() for record in records],
+            "reward_projection": projected,
+            "stock_advantages": advantages,
+            "completion_mask": mask_values,
+            "completion_mask_evidence": tensor_evidence(completion_mask).as_dict(),
+            "valid_completion_token_counts": valid_counts,
+            "truncation_mask": [record.reward.generation_truncated for record in records],
+            "warning": warning_rows[0].as_dict(),
+        }
         self._pending_result = result
         self._pending_records = records
         self._pending_warning = warning_rows[0]
         self._generation_calls += 1
+        self._persist("generation_and_rewards_persisted")
+        if advantages != projected["advantages"]:
+            self._raise("stock TRL advantages differ from the frozen reward projection")
+        if len(valid_counts) != COMPLETIONS_PER_GROUP or any(value <= 0 for value in valid_counts):
+            self._raise("smoke completion mask contains an empty completion")
 
     def begin_policy_capture(self) -> None:
         if self._policy_capture_active or self._captured_policy is not None:
-            raise RuntimeError("nested policy-logprob capture is prohibited")
+            self._raise("nested policy-logprob capture is prohibited")
         self._policy_capture_active = True
 
     def capture_policy(self, value: Any) -> None:
         if self._policy_capture_active:
             if self._captured_policy is not None:
-                raise RuntimeError("stock loss requested policy log probabilities twice")
+                self._raise("stock loss requested policy log probabilities twice")
             self._captured_policy = value
 
     def end_policy_capture(self) -> Any:
         self._policy_capture_active = False
         if self._captured_policy is None:
-            raise RuntimeError("stock loss produced no policy log probabilities")
+            self._raise("stock loss produced no policy log probabilities")
         value = self._captured_policy
         self._captured_policy = None
         return value
@@ -1160,20 +1411,40 @@ class SmokeRecorder:
         reference: Any,
         policy: Any,
         completion_mask: Any,
+        model: Any,
     ) -> None:
         if (
             self._pending_step is None
             or self._pending_result is None
             or self._pending_warning is None
         ):
-            raise RuntimeError("smoke loss lacks matching generation evidence")
+            self._raise("smoke loss lacks matching generation evidence")
+        pending = self._pending_step
+        audit = cast(dict[str, object], pending["audit"])
+        advantages = self._pending_result["advantages"]
+        audit["loss_inputs"] = {
+            "policy_token_logprobs": _tensor_values(policy),
+            "policy_token_logprobs_evidence": tensor_evidence(policy).as_dict(),
+            "reference_token_logprobs": _tensor_values(reference),
+            "reference_token_logprobs_evidence": tensor_evidence(reference).as_dict(),
+            "advantages": _tensor_values(advantages),
+            "completion_mask": _tensor_values(completion_mask),
+            "policy_logprobs_requires_grad": bool(policy.requires_grad),
+            "policy_logprobs_finite": bool(self.torch.isfinite(policy).all().item()),
+            "reference_logprobs_finite": bool(self.torch.isfinite(reference).all().item()),
+            "active_adapter_after_policy_forward": active_adapter_name(model),
+        }
+        self._persist("loss_inputs_persisted")
+        components = objective_components(
+            self.torch,
+            policy_logprobs=policy,
+            reference_logprobs=reference,
+            advantages=advantages,
+            completion_mask=completion_mask,
+        )
         delta = reference - policy
         per_token_kl = self.torch.exp(delta) - delta - 1
         mean_kl = (per_token_kl * completion_mask).sum() / completion_mask.sum()
-        if not bool(self.torch.isfinite(loss).all().item()) or not bool(
-            self.torch.isfinite(per_token_kl).all().item()
-        ):
-            raise RuntimeError("smoke loss or KL is non-finite")
         group = self.groups[self._generation_calls - 1]
         warning = self._pending_warning
         generation = _capture_l3_generation_evidence(
@@ -1195,15 +1466,74 @@ class SmokeRecorder:
             policy_logprobs=policy,
             per_token_kl=per_token_kl,
         )
-        self._pending_step.update(
+        policy_parameters, _, _ = _parameter_partitions(model)
+        policy_gradient = gradient_projection(
+            self.torch,
+            objective=components.policy,
+            named_parameters=policy_parameters,
+            retain_graph=True,
+        )
+        kl_gradient = gradient_projection(
+            self.torch,
+            objective=components.kl,
+            named_parameters=policy_parameters,
+            retain_graph=True,
+        )
+        combined_gradient = gradient_projection(
+            self.torch,
+            objective=loss,
+            named_parameters=policy_parameters,
+            retain_graph=True,
+        )
+        stock_reconstruction = _stock_dr_grpo_objective(
+            self.torch,
+            policy_logprobs=policy,
+            reference_logprobs=reference,
+            advantages=advantages,
+            completion_mask=completion_mask,
+        )
+        objective_values = {
+            "policy_objective": float(components.policy.detach().float().item()),
+            "kl_objective": float(components.kl.detach().float().item()),
+            "combined_objective": float(components.combined.detach().float().item()),
+            "stock_reconstructed_objective": float(stock_reconstruction.detach().float().item()),
+            "stock_loss": float(loss.detach().float().item()),
+            "mean_token_kl": float(mean_kl.detach().float().item()),
+        }
+        audit["loss_and_gradients"] = {
+            "policy_reference_kl": _tensor_values(per_token_kl),
+            "policy_reference_kl_evidence": tensor_evidence(per_token_kl).as_dict(),
+            "policy_reference_kl_finite": bool(self.torch.isfinite(per_token_kl).all().item()),
+            "objective_values": objective_values,
+            "objective_graph": {
+                "policy_objective": tensor_graph_evidence(components.policy),
+                "kl_objective": tensor_graph_evidence(components.kl),
+                "combined_objective": tensor_graph_evidence(components.combined),
+                "stock_loss": tensor_graph_evidence(loss),
+            },
+            "policy_gradient": policy_gradient,
+            "kl_gradient": kl_gradient,
+            "combined_gradient": combined_gradient,
+        }
+        pending.update(
             {
                 "generation": generation,
                 "loss": float(loss.detach().float().item()),
                 "loss_tensor": loss.detach(),
                 "mean_kl": float(mean_kl.detach().float().item()),
                 "mean_kl_tensor": mean_kl.detach(),
+                "policy_gradient": policy_gradient,
+                "kl_gradient": kl_gradient,
+                "combined_gradient": combined_gradient,
             }
         )
+        self._persist("loss_and_component_gradients_persisted")
+        if not bool(self.torch.isfinite(loss).all().item()) or not bool(
+            self.torch.isfinite(per_token_kl).all().item()
+        ):
+            self._raise("smoke loss or KL is non-finite")
+        if not bool(self.torch.equal(loss.detach(), stock_reconstruction.detach())):
+            self._raise("stock GRPO loss differs from the frozen objective reconstruction")
         self._pending_result = None
         self._pending_records = []
         self._pending_warning = None
@@ -1211,77 +1541,281 @@ class SmokeRecorder:
     def after_backward(self, model: Any) -> None:
         _strict(self.torch, "smoke backward")
         if self._pending_step is None or "loss_tensor" not in self._pending_step:
-            raise RuntimeError("smoke backward lacks matching loss")
-        _assert_gradient_ownership(model, self.torch)
-        self._pending_step["gradients_after_backward"] = capture_gradient_state(model)
+            self._raise("smoke backward lacks matching loss")
+        pending = self._pending_step
+        audit = cast(dict[str, object], pending["audit"])
+        policy, reference, base = _parameter_partitions(model)
+        populated = populated_gradient_projection(
+            self.torch,
+            named_policy_parameters=policy,
+            named_reference_parameters=reference,
+            named_base_parameters=base,
+        )
+        generation = cast(dict[str, object], audit["generation"])
+        projected = cast(dict[str, object], generation["reward_projection"])
+        optimizer_ownership = cast(dict[str, object], audit["optimizer_ownership"])
+        loss_and_gradients = cast(dict[str, object], audit["loss_and_gradients"])
+        loss_inputs = cast(dict[str, object], audit["loss_inputs"])
+        classification_input: dict[str, object] = {
+            "rewards": projected["rewards"],
+            "reward_variance": projected["reward_variance"],
+            "advantages": projected["advantages"],
+            "valid_completion_token_counts": generation["valid_completion_token_counts"],
+            "policy_logprobs_finite": loss_inputs["policy_logprobs_finite"],
+            "reference_logprobs_finite": loss_inputs["reference_logprobs_finite"],
+            "kl_finite": loss_and_gradients["policy_reference_kl_finite"],
+            "adapters_identical_at_step_start": audit["adapters_identical_at_step_start"],
+            "controlled_live_policy_fixture_passed": (self.controlled_live_policy_fixture_passed),
+            "requires_grad_policy_tensor_count": len(policy),
+            "optimizer_owned_tensor_count": optimizer_ownership["optimizer_parameter_tensors"],
+            "base_gradient_count": populated["base_gradient_count"],
+            "reference_gradient_count": populated["reference_gradient_count"],
+            "policy_gradient": pending["policy_gradient"],
+            "kl_gradient": pending["kl_gradient"],
+            "combined_gradient": pending["combined_gradient"],
+        }
+        classification = classify_group(classification_input)
+        gradients_after_backward = capture_gradient_state(model)
+        audit["backward"] = {
+            "populated_combined_gradient": populated,
+            "classification_input": classification_input,
+            "classification": classification,
+            "gradients_after_backward": gradients_after_backward,
+        }
+        pending["classification"] = classification
+        pending["populated_gradient"] = populated
+        pending["gradients_after_backward"] = gradients_after_backward
+        self._persist("backward_and_classification_persisted")
+        if (
+            populated["finite"] is not True
+            or populated["present_gradient_count"] != EXPECTED_ADAPTER_TENSORS
+            or populated["reference_gradient_count"] != 0
+            or populated["base_gradient_count"] != 0
+        ):
+            self._raise("smoke populated gradients violate policy-only finite ownership")
+        _require_smoke_group_classification(classification)
+        if classification == EXPECTED_ZERO_ADVANTAGE_NOOP and populated["exactly_zero"] is not True:
+            self._raise("expected no-op populated a nonzero policy gradient")
+        if classification == NONZERO_GRADIENT_UPDATE and populated["nonzero_gradient_count"] in (
+            None,
+            0,
+        ):
+            self._raise("nonzero-gradient classification lacks a populated policy gradient")
 
     def pre_optimizer(self, model: Any) -> None:
         _strict(self.torch, "smoke pre-optimizer")
         if self._pending_step is None or "gradients_after_backward" not in self._pending_step:
-            raise RuntimeError("smoke clipping preceded backward")
-        _assert_gradient_ownership(model, self.torch)
-        self._pending_step["gradients_after_clipping"] = capture_gradient_state(model)
-        self._pending_step["strict_mode_evidence"]["after_backward"] = True
-        self._pending_step["strict_mode_evidence"]["before_optimizer"] = True
+            self._raise("smoke clipping preceded backward")
+        pending = self._pending_step
+        policy, reference, base = _parameter_partitions(model)
+        clipped = populated_gradient_projection(
+            self.torch,
+            named_policy_parameters=policy,
+            named_reference_parameters=reference,
+            named_base_parameters=base,
+        )
+        gradients_after_clipping = capture_gradient_state(model)
+        cast(dict[str, object], pending["audit"])["pre_optimizer"] = {
+            "populated_gradient_after_clipping": clipped,
+            "gradients_after_clipping": gradients_after_clipping,
+        }
+        pending["gradients_after_clipping"] = gradients_after_clipping
+        pending["strict_mode_evidence"]["after_backward"] = True
+        pending["strict_mode_evidence"]["before_optimizer"] = True
+        self._persist("pre_optimizer_persisted")
+        if (
+            clipped["finite"] is not True
+            or clipped["reference_gradient_count"] != 0
+            or clipped["base_gradient_count"] != 0
+        ):
+            self._raise("clipped smoke gradients violate policy-only finite ownership")
+        if (
+            pending["classification"] == EXPECTED_ZERO_ADVANTAGE_NOOP
+            and clipped["exactly_zero"] is not True
+        ):
+            self._raise("expected no-op clipping produced a nonzero policy gradient")
+        if pending["classification"] == NONZERO_GRADIENT_UPDATE and clipped[
+            "nonzero_gradient_count"
+        ] in (None, 0):
+            self._raise("update classification became zero before the optimizer")
 
     def post_optimizer(self, model: Any, optimizer: Any) -> None:
         _strict(self.torch, "smoke optimizer")
         if self._pending_step is None or "gradients_after_clipping" not in self._pending_step:
-            raise RuntimeError("smoke optimizer preceded clipping")
+            self._raise("smoke optimizer preceded clipping")
+        pending = self._pending_step
+        audit = cast(dict[str, object], pending["audit"])
+        policy_parameters, _, _ = _parameter_partitions(model)
+        policy = capture_adapter_state(model, POLICY_ADAPTER_NAME)
         reference = capture_adapter_state(model, REFERENCE_ADAPTER_NAME)
+        base = capture_base_parameter_state(model)
+        policy_delta = _parameter_delta_projection(
+            self.torch,
+            before=cast(tuple[tuple[str, Any], ...], pending["policy_snapshot"]),
+            after=policy_parameters,
+        )
         reference_hash = str(reference["normalized_tensor_state_sha256"])
-        if reference_hash != self.reference_initial_sha256:
-            raise RuntimeError("reference adapter changed during smoke optimizer update")
+        base_hash = str(base["base_parameter_state_sha256"])
+        optimizer_after = capture_optimizer_state(optimizer)
+        optimizer_before = cast(dict[str, object], pending["optimizer_before"])
+        policy_changed = policy_delta["exactly_zero"] is False
+        reference_changed = reference_hash != self.reference_initial_sha256
+        base_changed = base_hash != self.base_initial_sha256
+        optimizer_step_completed = (
+            optimizer_after["state_sha256"] != optimizer_before["state_sha256"]
+        )
+        audit["post_optimizer"] = {
+            "policy_state_after": policy,
+            "reference_state_after": reference,
+            "base_parameter_state_sha256_after": base_hash,
+            "policy_parameter_delta": policy_delta,
+            "policy_parameter_changed": policy_changed,
+            "reference_parameter_changed": reference_changed,
+            "base_parameter_changed": base_changed,
+            "optimizer_before": optimizer_before,
+            "optimizer_after": optimizer_after,
+            "optimizer_step_completed": optimizer_step_completed,
+        }
+        pending["policy_parameter_delta"] = policy_delta
+        pending["policy_parameter_changed"] = policy_changed
+        pending["reference_parameter_changed"] = reference_changed
+        pending["base_parameter_changed"] = base_changed
+        pending["optimizer_step_completed"] = optimizer_step_completed
+        pending["optimizer_after"] = optimizer_after
+        pending["lora_after"] = capture_lora_state(model)
+        pending["strict_mode_evidence"]["after_optimizer"] = True
+        self._persist("post_optimizer_persisted")
+        if reference_changed:
+            self._raise("reference adapter changed during smoke optimizer update")
+        if base_changed:
+            self._raise("base model changed during smoke optimizer update")
+        if not optimizer_step_completed:
+            self._raise("smoke optimizer state did not advance")
+        if pending["classification"] == EXPECTED_ZERO_ADVANTAGE_NOOP and policy_changed:
+            self._raise("expected no-op changed policy parameters")
+        if pending["classification"] == NONZERO_GRADIENT_UPDATE and not policy_changed:
+            self._raise("nonzero-gradient group did not change policy parameters")
         self.reference_states_after_steps.append(reference_hash)
-        self._pending_step["optimizer_after"] = capture_optimizer_state(optimizer)
-        self._pending_step["lora_after"] = capture_lora_state(model)
-        self._pending_step["strict_mode_evidence"]["after_optimizer"] = True
 
     def step_end(self, state: Any, scheduler: Any) -> None:
         _strict(self.torch, "smoke scheduler")
         pending = self._pending_step
         if pending is None or int(state.global_step) != int(pending["step"]):
-            raise RuntimeError("smoke scheduler ordering differs")
-        pending["scheduler_after"] = capture_scheduler_state(scheduler)
+            self._raise("smoke scheduler ordering differs")
+        scheduler_after = capture_scheduler_state(scheduler)
+        scheduler_before = cast(dict[str, object], pending["scheduler_before"])
+        scheduler_step_completed = (
+            scheduler_after["state_sha256"] != scheduler_before["state_sha256"]
+        )
+        pending["scheduler_after"] = scheduler_after
         pending["rng_after"] = capture_rng_state(self.torch, numpy_random=self.numpy_random)
         pending["strict_mode_evidence"]["after_scheduler"] = True
-        self.steps.append(
-            build_compatibility_step_evidence(
-                step=int(pending["step"]),
-                generation=cast(GenerationEvidence, pending["generation"]),
-                loss=float(pending["loss"]),
-                loss_tensor=pending["loss_tensor"],
-                mean_kl=float(pending["mean_kl"]),
-                mean_kl_tensor=pending["mean_kl_tensor"],
-                rng_before=cast(dict[str, object], pending["rng_before"]),
-                rng_after=cast(dict[str, object], pending["rng_after"]),
-                lora_before=cast(dict[str, object], pending["lora_before"]),
-                lora_after=cast(dict[str, object], pending["lora_after"]),
-                gradients_after_backward=cast(
-                    dict[str, object], pending["gradients_after_backward"]
-                ),
-                gradients_after_clipping=cast(
-                    dict[str, object], pending["gradients_after_clipping"]
-                ),
-                optimizer_before=cast(dict[str, object], pending["optimizer_before"]),
-                optimizer_after=cast(dict[str, object], pending["optimizer_after"]),
-                scheduler_before=cast(dict[str, object], pending["scheduler_before"]),
-                scheduler_after=cast(dict[str, object], pending["scheduler_after"]),
-                strict_mode_evidence=cast(dict[str, bool], pending["strict_mode_evidence"]),
-            )
+        audit = cast(dict[str, object], pending["audit"])
+        audit["step_end"] = {
+            "global_step": int(state.global_step),
+            "scheduler_before": scheduler_before,
+            "scheduler_after": scheduler_after,
+            "scheduler_step_completed": scheduler_step_completed,
+        }
+        self._persist("scheduler_persisted")
+        if not scheduler_step_completed:
+            self._raise("smoke scheduler state did not advance")
+        generation_audit = cast(dict[str, object], audit["generation"])
+        reward_evidence = cast(dict[str, object], generation_audit["reward_projection"])
+        loss_audit = cast(dict[str, object], audit["loss_and_gradients"])
+        post_optimizer = cast(dict[str, object], audit["post_optimizer"])
+        classification_step: dict[str, object] = {
+            "step": int(pending["step"]),
+            "group_id": audit["group_id"],
+            "source_kind": audit["source_kind"],
+            "completion_count": COMPLETIONS_PER_GROUP,
+            "generated_token_ids_sha256": canonical_sha256(generation_audit["generated_token_ids"]),
+            "completion_sha256s": generation_audit["completion_sha256s"],
+            "reward_vector": reward_evidence["rewards"],
+            "reward_variance": reward_evidence["reward_variance"],
+            "advantages": reward_evidence["advantages"],
+            "valid_completion_token_counts": generation_audit["valid_completion_token_counts"],
+            "completion_mask_evidence": generation_audit["completion_mask_evidence"],
+            "policy_logprobs_evidence": cast(dict[str, object], audit["loss_inputs"])[
+                "policy_token_logprobs_evidence"
+            ],
+            "reference_logprobs_evidence": cast(dict[str, object], audit["loss_inputs"])[
+                "reference_token_logprobs_evidence"
+            ],
+            "policy_reference_kl_evidence": loss_audit["policy_reference_kl_evidence"],
+            "objective_values": loss_audit["objective_values"],
+            "objective_graph": loss_audit["objective_graph"],
+            "classification": pending["classification"],
+            "policy_gradient": pending["policy_gradient"],
+            "kl_gradient": pending["kl_gradient"],
+            "combined_gradient": pending["combined_gradient"],
+            "populated_combined_gradient": pending["populated_gradient"],
+            "gradients_after_backward": pending["gradients_after_backward"],
+            "gradients_after_clipping": pending["gradients_after_clipping"],
+            "policy_parameter_delta": pending["policy_parameter_delta"],
+            "policy_parameter_changed": pending["policy_parameter_changed"],
+            "reference_parameter_changed": pending["reference_parameter_changed"],
+            "base_parameter_changed": pending["base_parameter_changed"],
+            "optimizer_before": pending["optimizer_before"],
+            "optimizer_after": pending["optimizer_after"],
+            "optimizer_step_completed": pending["optimizer_step_completed"],
+            "scheduler_before": pending["scheduler_before"],
+            "scheduler_after": pending["scheduler_after"],
+            "scheduler_step_completed": scheduler_step_completed,
+            "policy_state_after_sha256": cast(
+                dict[str, object], post_optimizer["policy_state_after"]
+            )["normalized_tensor_state_sha256"],
+            "reference_state_after_sha256": cast(
+                dict[str, object], post_optimizer["reference_state_after"]
+            )["normalized_tensor_state_sha256"],
+            "base_parameter_state_sha256_after": post_optimizer[
+                "base_parameter_state_sha256_after"
+            ],
+        }
+        classification_step["classification_evidence_sha256"] = canonical_sha256(
+            classification_step
         )
+        compatibility_step = build_compatibility_step_evidence(
+            step=int(pending["step"]),
+            generation=cast(GenerationEvidence, pending["generation"]),
+            loss=float(pending["loss"]),
+            loss_tensor=pending["loss_tensor"],
+            mean_kl=float(pending["mean_kl"]),
+            mean_kl_tensor=pending["mean_kl_tensor"],
+            rng_before=cast(dict[str, object], pending["rng_before"]),
+            rng_after=cast(dict[str, object], pending["rng_after"]),
+            lora_before=cast(dict[str, object], pending["lora_before"]),
+            lora_after=cast(dict[str, object], pending["lora_after"]),
+            gradients_after_backward=cast(dict[str, object], pending["gradients_after_backward"]),
+            gradients_after_clipping=cast(dict[str, object], pending["gradients_after_clipping"]),
+            optimizer_before=cast(dict[str, object], pending["optimizer_before"]),
+            optimizer_after=cast(dict[str, object], pending["optimizer_after"]),
+            scheduler_before=cast(dict[str, object], pending["scheduler_before"]),
+            scheduler_after=cast(dict[str, object], pending["scheduler_after"]),
+            strict_mode_evidence=cast(dict[str, bool], pending["strict_mode_evidence"]),
+        )
+        self.raw_steps.append(audit)
+        self.classification_steps.append(classification_step)
+        self.steps.append(compatibility_step)
         self._pending_step = None
+        self._persist("step_complete")
 
     def assert_complete(self) -> None:
         if (
             len(self.steps) != COMPATIBILITY_STEPS
+            or len(self.classification_steps) != COMPATIBILITY_STEPS
+            or len(self.raw_steps) != COMPATIBILITY_STEPS
             or self._generation_calls != COMPATIBILITY_STEPS
             or self._pending_step is not None
             or self._pending_result is not None
             or self.reference_states_after_steps
             != [self.reference_initial_sha256] * COMPATIBILITY_STEPS
         ):
-            raise RuntimeError("exact two-step smoke evidence is incomplete")
+            self._raise("exact two-step smoke evidence is incomplete")
+        self.complete_gate = complete_smoke_gate(self.classification_steps)
+        self._persist("complete_smoke_gate_persisted")
+        if self.complete_gate["passed"] is not True:
+            self._raise("complete two-step smoke update gate failed")
 
 
 def make_smoke_callback(base: type[Any], recorder: SmokeRecorder) -> object:
@@ -1358,6 +1892,7 @@ def make_smoke_trainer(base: type[Any], recorder: SmokeRecorder) -> type[Any]:
                 reference=reference,
                 policy=policy,
                 completion_mask=completion_mask,
+                model=model,
             )
             return loss
 
@@ -1651,39 +2186,7 @@ def make_checkpoint_callback(
 
 
 def _optimizer_ownership(trainer: Any) -> dict[str, object]:
-    model = trainer.model
-    policy_parameters = {
-        id(parameter)
-        for name, parameter in model.named_parameters()
-        if f".{POLICY_ADAPTER_NAME}." in name and "lora_" in name and parameter.requires_grad
-    }
-    reference_parameters = {
-        id(parameter)
-        for name, parameter in model.named_parameters()
-        if f".{REFERENCE_ADAPTER_NAME}." in name and "lora_" in name
-    }
-    optimizer_parameters = {
-        id(parameter)
-        for group in trainer.optimizer.param_groups
-        for parameter in cast(list[Any], group["params"])
-    }
-    if (
-        len(policy_parameters) != EXPECTED_ADAPTER_TENSORS
-        or optimizer_parameters != policy_parameters
-        or optimizer_parameters & reference_parameters
-    ):
-        raise RuntimeError("optimizer ownership differs from policy-only L3 tensors")
-    return {
-        "optimizer_parameter_tensors": len(optimizer_parameters),
-        "optimizer_parameter_count": sum(
-            int(parameter.numel())
-            for name, parameter in model.named_parameters()
-            if id(parameter) in optimizer_parameters
-        ),
-        "policy_only": True,
-        "reference_owned": False,
-        "base_owned": False,
-    }
+    return _model_optimizer_ownership(trainer.model, trainer.optimizer)
 
 
 def _finite_history(log_history: Sequence[Mapping[str, object]]) -> dict[str, list[float]]:
@@ -1737,12 +2240,49 @@ def _validate_experiment_contract(
         {key: value for key, value in implementation.items() if key != "implementation_sha256"}
     ) or implementation.get("implementation_sha256") != contract.get("implementation_sha256"):
         raise ValueError("frozen implementation manifest differs")
+    corrected = _read(path.with_name("milestone14a_r1_corrected_implementation.json"))
+    if corrected.get("corrected_implementation_sha256") != canonical_sha256(
+        {key: value for key, value in corrected.items() if key != "corrected_implementation_sha256"}
+    ):
+        raise ValueError("corrected implementation manifest differs")
+    corrected_paths: set[str] = set()
+    for row_value in _array(corrected.get("files"), "corrected.files"):
+        row = _object(row_value, "corrected.files[]")
+        relative = _require_text(row.get("path"), "corrected.path")
+        source = (root / relative).resolve()
+        if (
+            relative in corrected_paths
+            or not source.is_relative_to(root.resolve())
+            or file_sha256(source) != row.get("sha256")
+        ):
+            raise ValueError("corrected implementation source differs")
+        corrected_paths.add(relative)
     for row_value in _array(implementation.get("files"), "implementation.files"):
         row = _object(row_value, "implementation.files[]")
         relative = _require_text(row.get("path"), "implementation.path")
+        if relative in corrected_paths:
+            continue
         source = (root / relative).resolve()
         if not source.is_relative_to(root.resolve()) or file_sha256(source) != row.get("sha256"):
             raise ValueError("frozen implementation source differs")
+    correction = _read(path.with_name("milestone14a_r1_correction_contract.json"))
+    if (
+        correction.get("correction_contract_sha256")
+        != canonical_sha256(
+            {key: value for key, value in correction.items() if key != "correction_contract_sha256"}
+        )
+        or correction.get("old_implementation_sha256")
+        != implementation.get("implementation_sha256")
+        or correction.get("corrected_implementation_sha256")
+        != corrected.get("corrected_implementation_sha256")
+        or correction.get("experiment_contract_sha256")
+        != contract.get("experiment_contract_sha256")
+        or correction.get("classification_contract_sha256")
+        != classification_contract()["classification_contract_sha256"]
+        or correction.get("scientific_settings_changed") is not False
+        or correction.get("correction_case") != "expected_zero_advantage_noop"
+    ):
+        raise ValueError("zero-gradient correction contract differs")
     starting = _read(path.with_name("milestone14a_starting_state.json"))
     if starting.get("starting_state_sha256") != canonical_sha256(
         {key: value for key, value in starting.items() if key != "starting_state_sha256"}
@@ -1755,7 +2295,11 @@ def _validate_experiment_contract(
         or paired.get(f"{arm}_manifest_sha256") != schedule.manifest_sha256
     ):
         raise ValueError("runtime schedule differs from the paired experiment contract")
-    return contract
+    result = dict(contract)
+    result["corrected_implementation_sha256"] = corrected["corrected_implementation_sha256"]
+    result["correction_contract_sha256"] = correction["correction_contract_sha256"]
+    result["classification_contract_sha256"] = correction["classification_contract_sha256"]
+    return result
 
 
 def _run(
@@ -1771,7 +2315,11 @@ def _run(
     raw_evidence_path: Path,
     summary_path: Path,
 ) -> dict[str, object]:
-    if any(path.exists() for path in (output_dir, raw_evidence_path, summary_path)):
+    partial_evidence_path = raw_evidence_path.with_name("partial_evidence.json")
+    paths = [output_dir, raw_evidence_path, summary_path]
+    if mode == "compatibility":
+        paths.append(partial_evidence_path)
+    if any(path.exists() for path in paths):
         raise FileExistsError("Milestone 14A runtime outputs must start unused")
     if file_sha256(root / ".venv-training/Scripts/python.exe") != INTERPRETER_SHA256:
         raise ValueError("authorized training interpreter differs")
@@ -1845,6 +2393,11 @@ def _run(
             warning_contract=warning_contract,
             groups=groups,
             reference_initial_sha256=reference_initial_sha256,
+            base_initial_sha256=str(base_before["base_parameter_state_sha256"]),
+            controlled_live_policy_fixture_passed=(
+                cast(float, reference_calibration["controlled_positive_per_token_kl"]) > 0.0
+            ),
+            partial_evidence_path=partial_evidence_path,
         )
         trainer_type = make_smoke_trainer(audited_base, cast(SmokeRecorder, recorder))
         callbacks.append(
@@ -1898,7 +2451,13 @@ def _run(
         raise RuntimeError("GRPO optimizer-step accounting differs")
     if mode == "compatibility":
         cast(SmokeRecorder, recorder).assert_complete()
+        classification_steps = cast(SmokeRecorder, recorder).classification_steps
+        complete_gate = cast(SmokeRecorder, recorder).complete_gate
+        if complete_gate is None:
+            raise RuntimeError("compatibility complete-smoke gate evidence is absent")
     else:
+        classification_steps = []
+        complete_gate = None
         cast(FullAuditRecorder, recorder).assert_complete()
         if set(checkpoint_evidence) != {"8", "16", "32"}:
             raise RuntimeError("counted checkpoint set differs")
@@ -1951,6 +2510,8 @@ def _run(
         "mode": mode,
         "schedule_packet_sha256": schedule.packet_sha256,
         "records": [record.raw_record() for record in reward_callback.records],
+        "classification_steps": classification_steps,
+        "complete_smoke_gate": complete_gate,
     }
     raw_evidence["raw_evidence_sha256"] = canonical_sha256(raw_evidence)
     _write_json_new(raw_evidence_path, raw_evidence)
@@ -1971,6 +2532,9 @@ def _run(
             "arm": arm,
             "starting_adapter_sha256": expected_starting,
             "experiment_contract_sha256": contract["experiment_contract_sha256"],
+            "corrected_implementation_sha256": contract["corrected_implementation_sha256"],
+            "correction_contract_sha256": contract["correction_contract_sha256"],
+            "classification_contract_sha256": contract["classification_contract_sha256"],
             "schedule_packet_sha256": schedule.packet_sha256,
             "schedule_manifest_sha256": schedule.manifest_sha256,
             "group_ids": [group.group_id for group in groups],
@@ -1980,6 +2544,10 @@ def _run(
             "recipe_sha256": GRPO_RECIPE_SHA256,
             "reward_summary": reward_summary,
             "steps": [step.as_dict() for step in cast(SmokeRecorder, recorder).steps],
+            "classification_steps": classification_steps,
+            "complete_smoke_gate": complete_gate,
+            "partial_evidence_sha256": _read(partial_evidence_path)["partial_evidence_sha256"],
+            "partial_evidence_file_sha256": file_sha256(partial_evidence_path),
             "initial_identity": initial_identity,
             "initial_policy": initial_policy,
             "initial_reference": initial_reference,
@@ -2064,6 +2632,9 @@ def _run(
         "arm": arm,
         "starting_adapter_sha256": expected_starting,
         "experiment_contract_sha256": contract["experiment_contract_sha256"],
+        "corrected_implementation_sha256": contract["corrected_implementation_sha256"],
+        "correction_contract_sha256": contract["correction_contract_sha256"],
+        "classification_contract_sha256": contract["classification_contract_sha256"],
         "schedule_packet_sha256": schedule.packet_sha256,
         "schedule_manifest_sha256": schedule.manifest_sha256,
         "recipe_sha256": GRPO_RECIPE_SHA256,
@@ -2112,6 +2683,9 @@ def _run(
         "gate_passed": True,
     }
     if mode == "compatibility":
+        summary["classification_steps"] = classification_steps
+        summary["complete_smoke_gate"] = complete_gate
+        summary["partial_evidence_file_sha256"] = file_sha256(partial_evidence_path)
         summary["exact_packet_sha256"] = exact_packet["packet_sha256"]
         summary["exact_packet"] = exact_packet
     summary["summary_sha256"] = canonical_sha256(summary)
