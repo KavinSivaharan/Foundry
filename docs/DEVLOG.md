@@ -4553,3 +4553,44 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
 - **Next action:** Publish the content-free signal summary and selection decision, verify clean
   synchronization, then run generic smoke plus duplicate followed by targeted smoke plus
   duplicate without retries.
+
+### 2026-07-29 - Milestone 14B-R1 stopped at the first compatibility optimizer gate
+
+- **Published selection boundary:** Signal selection commit
+  `1c64007c61463f505a468735c6e648e8b51a7463` was pushed, clean, synchronized 0/0,
+  and matched every frozen source row before the first official smoke.
+- **First generic smoke:** The selected task `l3-grpo-generic-g005` generated four
+  completions / 266 completion tokens with reward variance `0.2629687190055847` and four
+  nonzero advantages. The stock objective classified the group `nonzero_gradient_update`;
+  policy and combined gradient norm was `0.05081393723690472`, all 112 LoRA tensors had
+  finite connected nonzero gradients, and reference/base gradient counts were zero. All 74
+  generation warnings were the authorized CUDA cumsum warning class.
+- **Compatibility failure:** The first optimizer call completed and changed optimizer state
+  from `883d5bb8...67335` to `af406b79...d294`, but the policy remained byte-identical at
+  `77ec7fe3...f81f6`: changed policy tensors `0`, parameter-delta norm `0.0`, delta SHA-256
+  `23a37cdd...a71e0`. Reference and base parameters were unchanged. The official callback
+  raised `nonzero-gradient group did not change policy parameters` before the scheduler step
+  or Trainer global-step increment.
+- **Frozen-source attribution:** The two-step smoke and frozen warmup ratio `0.05` imply
+  `ceil(2 * 0.05) = 1` warmup step. The pinned Transformers cosine schedule initializes that
+  step with multiplier `0.0`. This source reconstruction and the observed optimizer-state/
+  zero-policy-delta pair classify the blocker
+  `signal_qualified_first_warmup_step_no_policy_update`. No schedule, optimizer, learning
+  rate, ordering, callback, or scientific setting was changed after the failure.
+- **Immediate stop:** The first smoke produced no completed compatibility step, raw evidence,
+  runtime summary, qualification envelope, final adapter, or offline reload. The generic
+  duplicate and both targeted smokes did not run; retries were zero. Scheduler steps and
+  Trainer global steps were zero, while one compatibility optimizer call occurred. Counted
+  training, retention, holdout v2, GSM1K, and sealed-final evaluation did not run.
+- **Evidence and resources:** Partial-evidence SHA-256 is
+  `ab9d287d5efd7dcdeec23f2d8352b84eb335f5e5640ca10f619bf567b29ba5e5`;
+  its file SHA-256 is `8f13c19a...2792`. Compatibility output plus outer campaign logs
+  occupy 1,128,316 bytes. Runtime, peak VRAM, and peak RAM were not published before the
+  failure and are explicitly unavailable. Content-free blocker SHA-256 is
+  `d454ec93f02e6d0d981a46735b00ca02a6120784944ef00a4016bafa3d9f407f`.
+- **Terminal verification:** The complete repository suite passed `1,094` tests in
+  `118.60s`; Ruff format and lint checks, strict Mypy over `207` source files, and both
+  interpreter `pip check` runs also passed.
+- **Next action:** Publish and synchronize the verified blocker using
+  `analysis: stop L3 GRPO after corrected signal audit`, then stop for project-level GRPO
+  interpretation. Do not retry without new authorization.

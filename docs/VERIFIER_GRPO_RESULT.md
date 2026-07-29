@@ -438,3 +438,39 @@ tests, Ruff lint, Ruff formatting, and strict Mypy pass.
 
 The warning audit **failed closed**. Preserve V1-V4, do not create V5, and stop verifier-GRPO. The
 frozen base remains `521/814`; no GRPO GSM1K comparison or one-seed signal decision was reached.
+
+## Milestone 14B-R1 corrected signal audit and compatibility result
+
+Foundry corrected the cross-device advantage comparison while retaining stock TRL CUDA advantages
+as canonical. The 52 pre-correction completions remain non-gate diagnostic evidence. A new complete
+audit then evaluated all 64 frozen groups / 256 completions and reproduced every available prior
+generation and reward field. Generic contained 15 informative task groups and targeted contained
+21; each arm covered all three canonical task families and passed the unchanged quantitative gate.
+
+The selected generic task was schedule position 5, `l3-grpo-generic-g005`; targeted was position 1,
+`l3-grpo-targeted-g001`. Two independently reset processes per arm reproduced the selected
+scientific group records exactly. Generic gradient evidence matched at
+`2a854c5c...0e97` with policy norm `0.051465622055009694`; targeted matched at
+`de787cbb...45dd` with norm `0.040820725115058826`. All 112 policy LoRA tensors were nonzero in
+both arms, reference/base gradient counts were zero, and no optimizer was constructed in these
+qualification projections.
+
+The first official generic compatibility smoke failed after its first optimizer call. The selected
+task had reward variance `0.2629687190055847`, four nonzero advantages, and a finite connected
+policy gradient norm of `0.05081393723690472` across all 112 LoRA tensors. Optimizer state changed,
+but all policy tensors remained byte-identical: changed tensor count `0`, delta norm `0.0`.
+Reference and base tensors also remained unchanged. The official runtime therefore raised
+`nonzero-gradient group did not change policy parameters` before the scheduler step or global-step
+increment.
+
+This is a signal-qualified compatibility failure, not insufficient reward signal or a disconnected
+computation graph. Frozen source gives one warmup step for the two-step smoke
+(`ceil(2 * 0.05) = 1`) and initializes the cosine multiplier at `0.0`, matching the observed
+optimizer-state advance with zero policy delta. The generic duplicate and both targeted smokes
+were not run, no retry occurred, and no final adapter or offline reload was produced.
+
+Blocker SHA-256 is
+`d454ec93f02e6d0d981a46735b00ca02a6120784944ef00a4016bafa3d9f407f`.
+Counted training, retention, holdout v2, GSM1K, and sealed-final evaluation were not run. The exact
+next action is project-level GRPO interpretation; do not retry or alter the frozen recipe without
+new authorization.
