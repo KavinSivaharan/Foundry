@@ -4673,3 +4673,45 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
 - **Next action:** Publish and synchronize
   `analysis: stop warmup-aware L3 GRPO adaptation`, then stop for project-level
   GRPO interpretation. Do not retry without new authorization.
+
+### 2026-07-29 - Milestone 14B-R3 versioned the GRPO source binding
+
+- **Recovered boundary:** Synchronized clean `main` at
+  `42e4fc06d167e8e102ffdc14a2d0141e2ad620e5` reconstructed the R1 scientific
+  qualification, the R2 warmup-aware bundle, every frozen model/data/adapter/schedule/reward
+  identity, and terminal blocker
+  `55121632c80ad012cfc60172db0a28bc1f7e7bf51091a38f1e492b7c37b14dbb`.
+  No R2 downstream checkpoint, retention, or GSM1K output existed.
+- **Model-free reproduction:** All 26 R1 implementation rows reconstructed from historical
+  commit `d87650aae77752ddd3e4b2c28b71a7889ae15dcc`; the complete R2 implementation reconstructed
+  from `3c98a690c7eb5e12db5fab1f488ef6690d42bf14`. The old verifier reproduced
+  `ValueError: qualification implementation source differs` before any model-stack import.
+  Its only current-versus-R1 implementation mismatch was the intentionally revised
+  `l3_grpo_runtime.py`, so the classification remains `wrapper_source_binding_defect`.
+- **Layered correction:** `foundry-l3-grpo-layered-source-binding-v1` independently verifies
+  immutable R1 scientific evidence and historical source, then the authorized current
+  warmup-aware execution source. Layer 2 uses an explicit ordered path allowlist, byte hashes,
+  combined hash, fix commit/tree, import root, interpreter/package/environment identities,
+  shell-free command templates, and wrapper/child argv projections. All mismatches remain
+  terminal and precede model import.
+- **Import-boundary audit:** Fresh `.venv-training` processes launched from the exact source
+  root under the frozen 37-field environment imported no `torch`, `transformers`, `peft`,
+  `trl`, `accelerate`, or `bitsandbytes` module. The resulting local import closure, including
+  package initializers and transitive GRPO/configuration modules, is explicitly bound in
+  Layer 2.
+- **Pre-model verification:** Ruff format-check covers 385 files, Ruff lint is clean, strict
+  Mypy passes all 215 source files, 147 L3 GRPO tests pass, and all 1,136 repository tests pass
+  in 135.32 seconds. Both authorized environments pass `pip check`. Independent reconstruction
+  confirms the seven-file 3,098,955,668-byte model snapshot, dataset and all six split/manifest
+  hashes, both starting adapters, both 32-group schedules at exactly 2,638 prompt tokens,
+  reward/reference/signal/scheduler identities, and the exact 37-field process environment.
+  Candidate-only credential/prohibited-artifact checks, sealed-path status, raw/model/environment
+  tracking checks, size review, and `git diff --check` all pass.
+- **Discarded model-free launch attempts:** One Windows PowerShell launcher used an unsupported
+  `ProcessStartInfo.ArgumentList` property and opened an empty exact-environment Python REPL;
+  another import-closure probe started from the repository root instead of `src` and stopped
+  with `ModuleNotFoundError`. Neither imported project model code, loaded a model, generated
+  completions, created an optimizer, or wrote scientific evidence.
+- **Next action:** Complete repository-wide pre-model verification, publish
+  `fix: version L3 GRPO source binding`, freeze that synchronized commit and tree in the two
+  manifests, and only then run the four ordered no-retry compatibility processes.

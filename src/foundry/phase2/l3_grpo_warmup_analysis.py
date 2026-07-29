@@ -24,6 +24,9 @@ from foundry.phase2.l3_grpo_schedule import (
     GROUPS_PER_ARM,
     PROMPT_TOKEN_PARITY_MAXIMUM,
 )
+from foundry.phase2.l3_grpo_source_binding import (
+    CONTRACT_OUTPUT as SOURCE_BINDING_OUTPUT,
+)
 from foundry.phase2.l3_grpo_warmup_compatibility_campaign import (
     OUTPUT_NAME as COMPATIBILITY_OUTPUT,
 )
@@ -45,12 +48,12 @@ from foundry.training.qlora import directory_sha256, file_sha256
 CHECKPOINTS = (8, 16, 32)
 ARMS = ("generic", "targeted")
 DEVELOPMENT_SUITES = ("adjudication", "anchor")
-RAW_ROOT = "results/raw/phase2_vetted_corpus/milestone14b_r2"
+RAW_ROOT = "results/raw/phase2_vetted_corpus/milestone14b_r3"
 TRACKED_ROOT = "results/phase2_vetted_corpus"
-TRAINING_OUTPUT = "milestone14b_r2_counted_training.json"
-DEVELOPMENT_OUTPUT = "milestone14b_r2_development_selection.json"
-HOLDOUT_OUTPUT = "milestone14b_r2_holdout_v2_decision.json"
-GSM1K_ANALYSIS_OUTPUT = "milestone14b_r2_gsm1k_analysis.json"
+TRAINING_OUTPUT = "milestone14b_r3_counted_training.json"
+DEVELOPMENT_OUTPUT = "milestone14b_r3_development_selection.json"
+HOLDOUT_OUTPUT = "milestone14b_r3_holdout_v2_decision.json"
+GSM1K_ANALYSIS_OUTPUT = "milestone14b_r3_gsm1k_analysis.json"
 
 
 def _read(path: Path) -> dict[str, Any]:
@@ -84,14 +87,18 @@ def build_counted_training_result(root: Path) -> dict[str, object]:
     paired = _read(tracked / "milestone14a_paired_schedule.json")
     compatibility = _read(tracked / COMPATIBILITY_OUTPUT)
     warmup = _read(tracked / WARMUP_CONTRACT_OUTPUT)
+    source_binding = _read(tracked / SOURCE_BINDING_OUTPUT)
     _verify(paired, "paired_schedule_sha256")
     _verify(compatibility, "compatibility_sha256")
     _verify(warmup, "warmup_update_contract_sha256")
+    _verify(source_binding, "source_binding_contract_sha256")
     if (
         compatibility.get("gate_passed") is not True
         or compatibility.get("decision") != "pass"
         or compatibility.get("warmup_update_contract_sha256")
         != warmup.get("warmup_update_contract_sha256")
+        or compatibility.get("source_binding_contract_sha256")
+        != source_binding.get("source_binding_contract_sha256")
     ):
         raise ValueError("counted training is not compatibility-authorized")
 
@@ -126,6 +133,8 @@ def build_counted_training_result(root: Path) -> dict[str, object]:
             or summary.get("cpu_offload") is not False
             or summary.get("warmup_update_contract_sha256")
             != warmup.get("warmup_update_contract_sha256")
+            or summary.get("source_binding_contract_sha256")
+            != source_binding.get("source_binding_contract_sha256")
             or summary.get("partial_evidence_file_sha256") != file_sha256(partial_path)
             or set(cast(dict[str, object], summary["checkpoint_evidence"])) != {"8", "16", "32"}
             or gate != trajectory_gate
@@ -217,8 +226,9 @@ def build_counted_training_result(root: Path) -> dict[str, object]:
     )
     result: dict[str, object] = {
         "schema_version": 1,
-        "training_id": "foundry-milestone14b-r2-counted-training-v1",
+        "training_id": "foundry-milestone14b-r3-source-bound-counted-training-v1",
         "compatibility_sha256": compatibility["compatibility_sha256"],
+        "source_binding_contract_sha256": source_binding["source_binding_contract_sha256"],
         "warmup_update_contract_sha256": warmup["warmup_update_contract_sha256"],
         "arms": arms,
         "parity": parity,
@@ -306,7 +316,7 @@ def build_development_selection(root: Path) -> dict[str, object]:
             )
     result: dict[str, object] = {
         "schema_version": 1,
-        "selection_id": ("foundry-milestone14b-r2-development-retention-selection-v1"),
+        "selection_id": ("foundry-milestone14b-r3-source-bound-development-retention-selection-v1"),
         "training_result_sha256": training["training_result_sha256"],
         "evaluated_checkpoints": list(CHECKPOINTS),
         "evaluation_count": (len(CHECKPOINTS) * len(ARMS) * len(DEVELOPMENT_SUITES)),
@@ -373,7 +383,7 @@ def build_holdout_decision(root: Path) -> dict[str, object]:
     both = all(passes)
     result: dict[str, object] = {
         "schema_version": 1,
-        "decision_id": "foundry-milestone14b-r2-holdout-v2-decision-v1",
+        "decision_id": "foundry-milestone14b-r3-source-bound-holdout-v2-decision-v1",
         "selected_checkpoint": checkpoint,
         "development_selection_sha256": selection["development_selection_sha256"],
         "frozen_subset_sha256": (
@@ -410,7 +420,7 @@ def build_gsm1k_analysis(root: Path) -> dict[str, object]:
     _verify(paired_schedule, "paired_schedule_sha256")
     if holdout.get("gsm1k_authorized") is not True:
         raise ValueError("GSM1K analysis is unauthorized")
-    summaries = {arm: _read(tracked / f"milestone14b_r2_gsm1k_{arm}.json") for arm in ARMS}
+    summaries = {arm: _read(tracked / f"milestone14b_r3_gsm1k_{arm}.json") for arm in ARMS}
     prediction_paths = {
         "base": (root / "results/raw/development_baseline/qwen2_5_1_5b/raw/predictions.jsonl"),
         "starting_generic": (
@@ -487,7 +497,7 @@ def build_gsm1k_analysis(root: Path) -> dict[str, object]:
     }
     result: dict[str, object] = {
         "schema_version": 1,
-        "analysis_id": "foundry-milestone14b-r2-paired-signal-analysis-v1",
+        "analysis_id": "foundry-milestone14b-r3-source-bound-paired-signal-analysis-v1",
         "examples": GSM1K_EXAMPLES,
         "frozen_comparisons": {
             "base_correct": BASE_CORRECT,
@@ -547,7 +557,7 @@ def build_gsm1k_analysis(root: Path) -> dict[str, object]:
             **{name: file_sha256(path) for name, path in prediction_paths.items()},
             "taxonomy": file_sha256(taxonomy_path),
             **{
-                f"{arm}_summary": file_sha256(tracked / f"milestone14b_r2_gsm1k_{arm}.json")
+                f"{arm}_summary": file_sha256(tracked / f"milestone14b_r3_gsm1k_{arm}.json")
                 for arm in ARMS
             },
         },

@@ -5,6 +5,8 @@ from pathlib import Path
 import pytest
 
 from foundry.phase2 import l3_grpo_warmup_campaign as campaign
+from foundry.phase2.l3_grpo_source_binding import argv_projection_sha256
+from foundry.training.config import canonical_sha256
 
 
 def test_counted_runtime_command_freezes_contract_and_partial_path(
@@ -15,6 +17,25 @@ def test_counted_runtime_command_freezes_contract_and_partial_path(
         campaign,
         "_training_python",
         lambda root: root / ".venv-training/Scripts/python.exe",
+    )
+    layer1: dict[str, object] = {}
+    layer1["layer1_manifest_sha256"] = canonical_sha256(layer1)
+    layer2: dict[str, object] = {"source_commit": "a" * 40, "source_tree": "b" * 40}
+    layer2["layer2_manifest_sha256"] = canonical_sha256(layer2)
+    binding: dict[str, object] = {"qualification_decision_sha256": "c" * 64}
+    binding["source_binding_contract_sha256"] = canonical_sha256(binding)
+    monkeypatch.setattr(
+        campaign,
+        "_read",
+        lambda path: (
+            layer1
+            if path.name.endswith("layer1_scientific_qualification_manifest.json")
+            else (
+                layer2
+                if path.name.endswith("layer2_compatibility_runtime_manifest.json")
+                else binding
+            )
+        ),
     )
     command = campaign._runtime_command(
         root,
@@ -31,6 +52,7 @@ def test_counted_runtime_command_freezes_contract_and_partial_path(
     assert command[command.index("--warmup-update-contract") + 1].endswith(
         "milestone14b_r2_warmup_update_contract.json"
     )
+    assert command[command.index("--expected-argv-sha256") + 1] == argv_projection_sha256(command)
 
 
 def test_development_paths_exclude_holdout_v2() -> None:

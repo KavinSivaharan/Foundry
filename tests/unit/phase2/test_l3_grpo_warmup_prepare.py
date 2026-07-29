@@ -8,12 +8,12 @@ from typing import Any, cast
 
 import pytest
 
+from foundry.phase2.l3_grpo_source_binding import verify_published_warmup_bundle
 from foundry.phase2.l3_grpo_warmup_prepare import (
     CONTRACT_OUTPUT,
     _porcelain_paths,
     _trajectory,
     compatibility_order,
-    verify_warmup_update_contract,
 )
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -101,8 +101,7 @@ def test_published_warmup_contract_reconstructs_when_frozen() -> None:
     if not path.exists():
         pytest.skip("warmup-aware source freeze has not been published yet")
     value = cast(dict[str, Any], json.loads(path.read_text(encoding="utf-8")))
-    verify_warmup_update_contract(
-        ROOT,
-        value,
-        require_clean_synchronized=False,
+    assert (
+        value["warmup_update_contract_sha256"]
+        == (verify_published_warmup_bundle(ROOT)["warmup_update_contract_sha256"])
     )

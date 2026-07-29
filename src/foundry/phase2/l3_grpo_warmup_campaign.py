@@ -14,8 +14,18 @@ from foundry.phase2.l3_grpo_campaign import (
     _run,
 )
 from foundry.phase2.l3_grpo_contract import (
+    COMBINED_CHILD_ENVIRONMENT_SHA256,
     INTERPRETER_SHA256,
+    PACKAGE_INVENTORY_SHA256,
     adapter_path,
+)
+from foundry.phase2.l3_grpo_source_binding import (
+    CONTRACT_OUTPUT as SOURCE_BINDING_OUTPUT,
+)
+from foundry.phase2.l3_grpo_source_binding import (
+    LAYER1_OUTPUT,
+    LAYER2_OUTPUT,
+    argv_projection_sha256,
 )
 from foundry.phase2.l3_grpo_warmup_analysis import (
     ARMS,
@@ -85,7 +95,17 @@ def _runtime_command(
     partial_evidence: Path,
     summary: Path,
 ) -> list[str]:
-    return [
+    tracked = root / TRACKED_ROOT
+    layer1 = _read(tracked / LAYER1_OUTPUT)
+    layer2 = _read(tracked / LAYER2_OUTPUT)
+    binding = _read(tracked / SOURCE_BINDING_OUTPUT)
+    for value, key in (
+        (layer1, "layer1_manifest_sha256"),
+        (layer2, "layer2_manifest_sha256"),
+        (binding, "source_binding_contract_sha256"),
+    ):
+        _verify(value, key)
+    command = [
         str(_training_python(root)),
         "-m",
         "foundry.phase2.l3_grpo_runtime",
@@ -106,6 +126,30 @@ def _runtime_command(
         str(root / TRACKED_ROOT / "milestone14a_experiment_contract.json"),
         "--warmup-update-contract",
         str(root / TRACKED_ROOT / WARMUP_CONTRACT_OUTPUT),
+        "--layer1-manifest",
+        str(tracked / LAYER1_OUTPUT),
+        "--layer1-sha256",
+        str(layer1["layer1_manifest_sha256"]),
+        "--layer2-manifest",
+        str(tracked / LAYER2_OUTPUT),
+        "--layer2-sha256",
+        str(layer2["layer2_manifest_sha256"]),
+        "--source-binding-contract",
+        str(tracked / SOURCE_BINDING_OUTPUT),
+        "--source-binding-sha256",
+        str(binding["source_binding_contract_sha256"]),
+        "--expected-source-commit",
+        str(layer2["source_commit"]),
+        "--expected-source-tree",
+        str(layer2["source_tree"]),
+        "--expected-package-sha256",
+        PACKAGE_INVENTORY_SHA256,
+        "--expected-environment-sha256",
+        COMBINED_CHILD_ENVIRONMENT_SHA256,
+        "--expected-qualification-decision-sha256",
+        str(binding["qualification_decision_sha256"]),
+        "--expected-argv-sha256",
+        "PENDING",
         "--starting-adapter",
         str(adapter_path(root, arm)),
         "--output-dir",
@@ -117,6 +161,9 @@ def _runtime_command(
         "--summary",
         str(summary),
     ]
+    expected_index = command.index("--expected-argv-sha256") + 1
+    command[expected_index] = argv_projection_sha256(command)
+    return command
 
 
 def _model_path(root: Path) -> Path:
@@ -282,8 +329,15 @@ def _gsm1k_command(
 
 def _require_compatibility(root: Path) -> dict[str, Any]:
     value = _read(root / TRACKED_ROOT / COMPATIBILITY_OUTPUT)
+    binding = _read(root / TRACKED_ROOT / SOURCE_BINDING_OUTPUT)
     _verify(value, "compatibility_sha256")
-    if value.get("gate_passed") is not True or value.get("decision") != "pass":
+    _verify(binding, "source_binding_contract_sha256")
+    if (
+        value.get("gate_passed") is not True
+        or value.get("decision") != "pass"
+        or value.get("source_binding_contract_sha256")
+        != binding.get("source_binding_contract_sha256")
+    ):
         raise ValueError("counted training is not compatibility-authorized")
     return value
 
@@ -325,6 +379,8 @@ def _run_training(
         or value.get("optimizer_steps") != 32
         or value.get("warmup_update_contract_sha256")
         != compatibility.get("warmup_update_contract_sha256")
+        or value.get("source_binding_contract_sha256")
+        != compatibility.get("source_binding_contract_sha256")
         or value.get("partial_evidence_file_sha256") != file_sha256(partial_path)
         or gate.get("passed") is not True
         or gate.get("step_count") != 32
@@ -432,7 +488,7 @@ def _run_gsm1k(
                 adapter=(raw / f"training/{arm}/checkpoint-{checkpoint}/adapter"),
                 adapter_sha256=adapter_sha256,
                 output_dir=raw / f"gsm1k/{arm}/output",
-                summary=(root / TRACKED_ROOT / f"milestone14b_r2_gsm1k_{arm}.json"),
+                summary=(root / TRACKED_ROOT / f"milestone14b_r3_gsm1k_{arm}.json"),
             ),
             root=root,
             environment=environment,

@@ -13,6 +13,7 @@ import importlib
 import json
 import math
 import random
+import sys
 import time
 import weakref
 from collections import Counter, defaultdict
@@ -71,7 +72,11 @@ from foundry.phase2.l3_grpo_schedule import (
     Arm,
     PromptMessage,
 )
-from foundry.phase2.l3_grpo_warmup_prepare import verify_warmup_update_contract
+from foundry.phase2.l3_grpo_source_binding import (
+    child_command_from_sys_argv,
+    verify_layered_source_binding,
+    verify_published_warmup_bundle,
+)
 from foundry.phase2.l3_grpo_warmup_update import (
     EXPECTED_ZERO_ADVANTAGE_NOOP as UPDATE_EXPECTED_ZERO_ADVANTAGE_NOOP,
 )
@@ -2772,12 +2777,13 @@ def _validate_experiment_contract(
     ):
         raise ValueError("experiment recipe or reward contract differs")
     root = path.parents[2]
+    expected_warmup_path = (
+        root / "results/phase2_vetted_corpus/milestone14b_r2_warmup_update_contract.json"
+    ).resolve()
+    if warmup_update_contract_path.resolve() != expected_warmup_path:
+        raise ValueError("published warmup-aware contract path differs")
     warmup_contract = _read(warmup_update_contract_path)
-    verify_warmup_update_contract(
-        root,
-        warmup_contract,
-        require_clean_synchronized=True,
-    )
+    warmup_binding = verify_published_warmup_bundle(root)
     warmup_implementation = _read(
         warmup_update_contract_path.with_name("milestone14b_r2_warmup_update_implementation.json")
     )
@@ -2867,6 +2873,8 @@ def _validate_experiment_contract(
         "compatibility_effective_learning_rates"
     ]
     result["counted_effective_learning_rates"] = warmup_contract["counted_effective_learning_rates"]
+    result["historical_warmup_source_commit"] = warmup_binding["historical_source_commit"]
+    result["historical_warmup_source_tree"] = warmup_binding["historical_source_tree"]
     return result
 
 
@@ -2884,10 +2892,26 @@ def _run(
     raw_evidence_path: Path,
     partial_evidence_path: Path,
     summary_path: Path,
+    source_binding_evidence: Mapping[str, Any],
 ) -> dict[str, object]:
     paths = [output_dir, raw_evidence_path, summary_path, partial_evidence_path]
     if any(path.exists() for path in paths):
         raise FileExistsError("Milestone 14B-R2 runtime outputs must start unused")
+    supplied_binding_sha256 = source_binding_evidence.get("binding_evidence_sha256")
+    if supplied_binding_sha256 != canonical_sha256(
+        {
+            key: value
+            for key, value in source_binding_evidence.items()
+            if key != "binding_evidence_sha256"
+        }
+    ):
+        raise ValueError("layered source-binding evidence does not reconstruct")
+    if (
+        source_binding_evidence.get("gate_passed") is not True
+        or source_binding_evidence.get("all_hash_checks_terminal") is not True
+        or source_binding_evidence.get("model_stack_imported_before_or_during_binding") is not False
+    ):
+        raise ValueError("layered source binding did not pass before runtime")
     if file_sha256(root / ".venv-training/Scripts/python.exe") != INTERPRETER_SHA256:
         raise ValueError("authorized training interpreter differs")
     schedule = load_schedule(packet_path, manifest_path, arm)
@@ -3253,6 +3277,9 @@ def _run(
         "scheduler_contract_sha256": contract["scheduler_contract_sha256"],
         "warmup_fixture_sha256": contract["warmup_fixture_sha256"],
         "compatibility_order_sha256": contract["compatibility_order_sha256"],
+        "source_binding_contract_sha256": source_binding_evidence["source_binding_contract_sha256"],
+        "binding_evidence_sha256": source_binding_evidence["binding_evidence_sha256"],
+        "source_binding_evidence": dict(source_binding_evidence),
         "expected_effective_learning_rates": expected_learning_rates,
         "schedule_packet_sha256": schedule.packet_sha256,
         "schedule_manifest_sha256": schedule.manifest_sha256,
@@ -3334,6 +3361,7 @@ def run(
     raw_evidence_path: Path,
     partial_evidence_path: Path | None = None,
     summary_path: Path,
+    source_binding_evidence: Mapping[str, Any] | None = None,
 ) -> dict[str, object]:
     """Run one fresh compatibility or counted process."""
 
@@ -3350,6 +3378,8 @@ def run(
             if partial_evidence_path is None
             else partial_evidence_path.resolve()
         )
+        if source_binding_evidence is None:
+            raise ValueError("layered source-binding evidence is required")
         return _run(
             root=root.resolve(),
             arm=arm,
@@ -3363,6 +3393,7 @@ def run(
             raw_evidence_path=raw_evidence_path.resolve(),
             partial_evidence_path=resolved_partial_evidence,
             summary_path=summary_path.resolve(),
+            source_binding_evidence=source_binding_evidence,
         )
     finally:
         gc.collect()
@@ -3377,6 +3408,18 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--manifest", type=Path, required=True)
     parser.add_argument("--experiment-contract", type=Path, required=True)
     parser.add_argument("--warmup-update-contract", type=Path, required=True)
+    parser.add_argument("--layer1-manifest", type=Path, required=True)
+    parser.add_argument("--layer1-sha256", required=True)
+    parser.add_argument("--layer2-manifest", type=Path, required=True)
+    parser.add_argument("--layer2-sha256", required=True)
+    parser.add_argument("--source-binding-contract", type=Path, required=True)
+    parser.add_argument("--source-binding-sha256", required=True)
+    parser.add_argument("--expected-source-commit", required=True)
+    parser.add_argument("--expected-source-tree", required=True)
+    parser.add_argument("--expected-package-sha256", required=True)
+    parser.add_argument("--expected-environment-sha256", required=True)
+    parser.add_argument("--expected-qualification-decision-sha256", required=True)
+    parser.add_argument("--expected-argv-sha256", required=True)
     parser.add_argument("--starting-adapter", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--raw-evidence", type=Path, required=True)
@@ -3386,7 +3429,29 @@ def _parser() -> argparse.ArgumentParser:
 
 
 def main(argv: Sequence[str] | None = None) -> int:
-    args = _parser().parse_args(argv)
+    received_argv = list(sys.argv[1:] if argv is None else argv)
+    args = _parser().parse_args(received_argv)
+    binding = verify_layered_source_binding(
+        root=args.root,
+        layer1_path=args.layer1_manifest,
+        expected_layer1_sha256=args.layer1_sha256,
+        layer2_path=args.layer2_manifest,
+        expected_layer2_sha256=args.layer2_sha256,
+        contract_path=args.source_binding_contract,
+        expected_contract_sha256=args.source_binding_sha256,
+        expected_source_commit=args.expected_source_commit,
+        expected_source_tree=args.expected_source_tree,
+        expected_package_sha256=args.expected_package_sha256,
+        expected_environment_sha256=args.expected_environment_sha256,
+        expected_qualification_decision_sha256=args.expected_qualification_decision_sha256,
+        child_kind="counted",
+        received_command=child_command_from_sys_argv(
+            "foundry.phase2.l3_grpo_runtime",
+            received_argv,
+        ),
+        expected_argv_sha256=args.expected_argv_sha256,
+        require_clean_synchronized=True,
+    )
     summary = run(
         root=args.root,
         arm=cast(Arm, args.arm),
@@ -3400,6 +3465,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         raw_evidence_path=args.raw_evidence,
         partial_evidence_path=args.partial_evidence,
         summary_path=args.summary,
+        source_binding_evidence=binding,
     )
     print(json.dumps(summary, sort_keys=True))
     return 0

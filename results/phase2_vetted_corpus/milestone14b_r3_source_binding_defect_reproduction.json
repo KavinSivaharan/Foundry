@@ -1,0 +1,40 @@
+{
+  "failure_classification": "wrapper_source_binding_defect",
+  "failure_stage": "before_model_stack_import",
+  "forbidden_model_modules_after": [],
+  "forbidden_model_modules_before": [],
+  "generated_completions": 0,
+  "generated_groups": 0,
+  "model_loaded": false,
+  "observed_exception_message": "qualification implementation source differs",
+  "observed_exception_type": "ValueError",
+  "optimizer_calls": 0,
+  "policy_updates": 0,
+  "r1_historical_row_count": 26,
+  "r1_historical_rows_reconstructed": true,
+  "r1_historical_source_commit": "d87650aae77752ddd3e4b2c28b71a7889ae15dcc",
+  "r1_implementation_sha256": "1485669c9df4053e5f47baf07ac981c902966ed490346a3081ed1778213cf002",
+  "r1_qualification_bundle_reconstructed": true,
+  "r1_qualification_contract_sha256": "0ad3c6fc584b1dcc0221e6c29179f1f53c26c754297b6534222bf750e51a23bc",
+  "r2_current_bundle_reconstructed": true,
+  "r2_implementation_sha256": "28bfb146e2d8fe30f5125d80e2d3e8a792448560bc4c740538787b1c56429ab8",
+  "r2_warmup_update_contract_sha256": "e929b7cb0ce0e1e1d03936e1f899d59f9ff2eca1fa01c72a36efd778de325a89",
+  "reproduction_id": "foundry-l3-grpo-r3-source-binding-defect-reproduction-v1",
+  "reproduction_sha256": "6db2fed8649696c2da9ae51437450a1b0c1c87d4ab1e5c9d9217f534b233b551",
+  "scheduler_advances": 0,
+  "schema_version": 1,
+  "scientific_qualification_changed": false,
+  "sealed_content_use": 0,
+  "source_commit": "42e4fc06d167e8e102ffdc14a2d0141e2ad620e5",
+  "source_tree": "f7d7fc9bd6901b12e256c1de2564d26f665c775d",
+  "unlayered_current_mismatch_rows": [
+    {
+      "path": "src/foundry/phase2/l3_grpo_runtime.py",
+      "r1_bytes": 120066,
+      "r1_sha256": "2bfc9c7cc61af779816c588d4ce1653e7f2b22cabe4468c6f1905c7ee20fe2c7",
+      "r2_current_bytes": 152826,
+      "r2_current_sha256": "22c1f4bd3aad61f57e0c33ae930cd18759c1312e49cb42da1529ae846f68c4e1"
+    }
+  ],
+  "unrelated_r1_rows_changed": false
+}

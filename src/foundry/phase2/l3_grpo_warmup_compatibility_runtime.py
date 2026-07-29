@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import json
 import subprocess
+import sys
 from collections.abc import Mapping, Sequence
 from pathlib import Path
 from typing import Any, Literal, cast
@@ -12,8 +13,10 @@ from typing import Any, Literal, cast
 from foundry.phase2 import l3_grpo_runtime as official
 from foundry.phase2.l3_grpo_runtime import RuntimeSchedule
 from foundry.phase2.l3_grpo_signal_audit import ARMS
-from foundry.phase2.l3_grpo_signal_qualification import verify_qualification_contract
-from foundry.phase2.l3_grpo_warmup_prepare import verify_warmup_update_contract
+from foundry.phase2.l3_grpo_source_binding import (
+    child_command_from_sys_argv,
+    verify_layered_source_binding,
+)
 from foundry.phase2.l3_grpo_warmup_update import (
     EXPECTED_ZERO_ADVANTAGE_NOOP,
     EXPECTED_ZERO_LR_WARMUP_NOOP,
@@ -23,7 +26,7 @@ from foundry.training.config import canonical_sha256
 from foundry.training.qlora import file_sha256
 
 Arm = Literal["generic", "targeted"]
-RUNTIME_ID = "foundry-l3-grpo-warmup-compatibility-wrapper-v1"
+RUNTIME_ID = "foundry-l3-grpo-source-bound-warmup-compatibility-wrapper-v2"
 
 
 def _read(path: Path) -> dict[str, Any]:
@@ -105,6 +108,19 @@ def run(
     selection_path: Path,
     warmup_update_contract_path: Path,
     compatibility_order_path: Path,
+    layer1_manifest_path: Path,
+    expected_layer1_sha256: str,
+    layer2_manifest_path: Path,
+    expected_layer2_sha256: str,
+    source_binding_contract_path: Path,
+    expected_source_binding_sha256: str,
+    expected_source_commit: str,
+    expected_source_tree: str,
+    expected_package_sha256: str,
+    expected_environment_sha256: str,
+    expected_qualification_decision_sha256: str,
+    expected_argv_sha256: str,
+    received_command: Sequence[str],
     starting_adapter: Path,
     output_dir: Path,
     raw_evidence_path: Path,
@@ -121,12 +137,30 @@ def run(
     if envelope_path.exists():
         raise FileExistsError("compatibility envelope must start unused")
 
+    binding = verify_layered_source_binding(
+        root=root,
+        layer1_path=layer1_manifest_path,
+        expected_layer1_sha256=expected_layer1_sha256,
+        layer2_path=layer2_manifest_path,
+        expected_layer2_sha256=expected_layer2_sha256,
+        contract_path=source_binding_contract_path,
+        expected_contract_sha256=expected_source_binding_sha256,
+        expected_source_commit=expected_source_commit,
+        expected_source_tree=expected_source_tree,
+        expected_package_sha256=expected_package_sha256,
+        expected_environment_sha256=expected_environment_sha256,
+        expected_qualification_decision_sha256=expected_qualification_decision_sha256,
+        child_kind="compatibility",
+        received_command=received_command,
+        expected_argv_sha256=expected_argv_sha256,
+        require_clean_synchronized=True,
+    )
     qualification = _read(qualification_contract_path)
-    verify_qualification_contract(root, qualification, require_clean_synchronized=True)
+    _verify(qualification, "qualification_contract_sha256")
     selection = _read(selection_path)
     _verify(selection, "selection_decision_sha256")
     warmup = _read(warmup_update_contract_path)
-    verify_warmup_update_contract(root, warmup, require_clean_synchronized=True)
+    _verify(warmup, "warmup_update_contract_sha256")
     order = _read(compatibility_order_path)
     _verify(order, "compatibility_order_sha256")
     if (
@@ -189,6 +223,7 @@ def run(
             raw_evidence_path=raw_evidence_path,
             partial_evidence_path=raw_evidence_path.with_name("partial_evidence.json"),
             summary_path=summary_path,
+            source_binding_evidence=binding,
         )
     finally:
         official.load_schedule = original_loader
@@ -246,6 +281,9 @@ def run(
         "selection_decision_sha256": selection["selection_decision_sha256"],
         "warmup_update_contract_sha256": warmup["warmup_update_contract_sha256"],
         "compatibility_order_sha256": order["compatibility_order_sha256"],
+        "source_binding_contract_sha256": binding["source_binding_contract_sha256"],
+        "binding_evidence_sha256": binding["binding_evidence_sha256"],
+        "binding_evidence": binding,
         "official_runtime_id": summary["runtime_id"],
         "official_summary_sha256": summary["summary_sha256"],
         "official_summary_file_sha256": file_sha256(summary_path),
@@ -276,6 +314,18 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--selection", type=Path, required=True)
     parser.add_argument("--warmup-update-contract", type=Path, required=True)
     parser.add_argument("--compatibility-order", type=Path, required=True)
+    parser.add_argument("--layer1-manifest", type=Path, required=True)
+    parser.add_argument("--layer1-sha256", required=True)
+    parser.add_argument("--layer2-manifest", type=Path, required=True)
+    parser.add_argument("--layer2-sha256", required=True)
+    parser.add_argument("--source-binding-contract", type=Path, required=True)
+    parser.add_argument("--source-binding-sha256", required=True)
+    parser.add_argument("--expected-source-commit", required=True)
+    parser.add_argument("--expected-source-tree", required=True)
+    parser.add_argument("--expected-package-sha256", required=True)
+    parser.add_argument("--expected-environment-sha256", required=True)
+    parser.add_argument("--expected-qualification-decision-sha256", required=True)
+    parser.add_argument("--expected-argv-sha256", required=True)
     parser.add_argument("--starting-adapter", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--raw-evidence", type=Path, required=True)
@@ -285,7 +335,8 @@ def _parser() -> argparse.ArgumentParser:
 
 
 def main(argv: Sequence[str] | None = None) -> int:
-    args = _parser().parse_args(argv)
+    received_argv = list(sys.argv[1:] if argv is None else argv)
+    args = _parser().parse_args(received_argv)
     result = run(
         root=args.root,
         arm=cast(Arm, args.arm),
@@ -297,6 +348,22 @@ def main(argv: Sequence[str] | None = None) -> int:
         selection_path=args.selection,
         warmup_update_contract_path=args.warmup_update_contract,
         compatibility_order_path=args.compatibility_order,
+        layer1_manifest_path=args.layer1_manifest,
+        expected_layer1_sha256=args.layer1_sha256,
+        layer2_manifest_path=args.layer2_manifest,
+        expected_layer2_sha256=args.layer2_sha256,
+        source_binding_contract_path=args.source_binding_contract,
+        expected_source_binding_sha256=args.source_binding_sha256,
+        expected_source_commit=args.expected_source_commit,
+        expected_source_tree=args.expected_source_tree,
+        expected_package_sha256=args.expected_package_sha256,
+        expected_environment_sha256=args.expected_environment_sha256,
+        expected_qualification_decision_sha256=args.expected_qualification_decision_sha256,
+        expected_argv_sha256=args.expected_argv_sha256,
+        received_command=child_command_from_sys_argv(
+            "foundry.phase2.l3_grpo_warmup_compatibility_runtime",
+            received_argv,
+        ),
         starting_adapter=args.starting_adapter,
         output_dir=args.output_dir,
         raw_evidence_path=args.raw_evidence,

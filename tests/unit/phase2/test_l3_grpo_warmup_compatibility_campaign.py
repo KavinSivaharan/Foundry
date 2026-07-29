@@ -5,12 +5,53 @@ from pathlib import Path
 import pytest
 
 from foundry.phase2 import l3_grpo_warmup_compatibility_campaign as campaign
+from foundry.phase2.l3_grpo_source_binding import argv_projection_sha256
 from foundry.training.config import canonical_sha256
 
 
 def _hashed(value: dict[str, object], key: str) -> dict[str, object]:
     value[key] = canonical_sha256(value)
     return value
+
+
+def test_compatibility_runtime_command_freezes_wrapper_child_argv(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    root = Path("C:/Foundry")
+    layer1 = _hashed({}, "layer1_manifest_sha256")
+    layer2 = _hashed(
+        {"source_commit": "a" * 40, "source_tree": "b" * 40},
+        "layer2_manifest_sha256",
+    )
+    binding = _hashed(
+        {"qualification_decision_sha256": "c" * 64},
+        "source_binding_contract_sha256",
+    )
+    monkeypatch.setattr(campaign, "file_sha256", lambda path: campaign.INTERPRETER_SHA256)
+    monkeypatch.setattr(
+        campaign,
+        "_read",
+        lambda path: (
+            layer1
+            if path.name.endswith("layer1_scientific_qualification_manifest.json")
+            else (
+                layer2
+                if path.name.endswith("layer2_compatibility_runtime_manifest.json")
+                else binding
+            )
+        ),
+    )
+    command = campaign._runtime_command(
+        root,
+        arm="generic",
+        run_index=1,
+        run_root=root / "raw/compatibility/generic/run-1",
+    )
+    assert command[1:3] == [
+        "-m",
+        "foundry.phase2.l3_grpo_warmup_compatibility_runtime",
+    ]
+    assert command[command.index("--expected-argv-sha256") + 1] == argv_projection_sha256(command)
 
 
 def test_campaign_runs_generic_pair_before_targeted_pair(
@@ -31,6 +72,7 @@ def test_campaign_runs_generic_pair_before_targeted_pair(
         "selection_decision_sha256",
     )
     warmup = _hashed({}, "warmup_update_contract_sha256")
+    binding = _hashed({}, "source_binding_contract_sha256")
     monkeypatch.setattr(campaign, "_environment", lambda root: {"FROZEN": "1"})
     monkeypatch.setattr(
         campaign,
@@ -41,7 +83,9 @@ def test_campaign_runs_generic_pair_before_targeted_pair(
         campaign,
         "_read",
         lambda path: (
-            selection if path.name.endswith("selection_and_gradient_decision.json") else warmup
+            selection
+            if path.name.endswith("selection_and_gradient_decision.json")
+            else (binding if path.name.endswith("layered_source_binding_contract.json") else warmup)
         ),
     )
     monkeypatch.setattr(
