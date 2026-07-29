@@ -4515,3 +4515,41 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
   exact frozen environment; neither created scientific evidence or model output.
 - **Next action:** Commit, push, and verify this clean source boundary. Only then run generic
   projection 1 and 2 followed by targeted projection 1 and 2, with no retry path.
+
+### 2026-07-29 - Milestone 14B-R1 passed deterministic replay and gradients
+
+- **Published execution boundary:** Qualification source commit
+  `d87650aae77752ddd3e4b2c28b71a7889ae15dcc` was pushed, synchronized 0/0, clean,
+  and revalidated against all 26 frozen implementation/dependency rows before execution.
+- **Launcher preflight:** The first background wrapper used `cmd.exe`, whose process startup
+  added an unauthorized environment variable. The campaign parent failed at the exact
+  environment validator before model-stack import, model loading, generation, replay, or
+  backward. The preserved failed wrapper is non-scientific evidence and consumed no projection.
+  A direct hidden Python launch from an ephemeral process environment cleared and reconstructed
+  from the 31-field operational base plus the six frozen overrides passed.
+- **Generic projections:** Both independently reset processes replayed positions 1 through 5
+  exactly, including selected group `l3-grpo-generic-g005`. Both produced exact projection
+  SHA-256 `2a854c5cdb5696a29e94cb26003993da6a9da4a30aaeff029101c99b50ec0e97`,
+  policy and combined gradient norm `0.051465622055009694`, and nonzero gradients for all 112
+  policy LoRA tensors. Reference/base gradient counts were zero and every policy, reference, and
+  base tensor remained unchanged.
+- **Targeted projections:** Both independently reset processes replayed
+  `l3-grpo-targeted-g001` exactly. Both produced projection SHA-256
+  `de787cbb1687e5c86ab0d29cab0862af0df1d76c195eb7b557a6b4f8c01245dd`,
+  policy and combined norm `0.040820725115058826`, all 112 policy LoRA tensors nonzero, and
+  zero reference/base gradients with unchanged parameter states.
+- **Final signal gate:** Signal-summary SHA-256 is
+  `fc7bad292f6c4b5acaa845df9b30cbc624de1ee524b57443ea09e634e2352ec4`;
+  the unchanged decision is `schedule_viable`. Selection/gradient-decision SHA-256 is
+  `0e809d1870ddef275017a11c4db5ffd766d9624a34dbf87a7ab417f8bed6a3cf`.
+  Compatibility is authorized; counted training remains unauthorized.
+- **Resources and scope:** The four processes replayed 12 prefix groups, generated 48
+  completions / 6,366 completion tokens, and took 127.983221300001 total seconds
+  (100.327071600001 generation seconds). Maximum allocated/reserved VRAM was
+  8,785,818,112 / 9,307,160,576 bytes, maximum process RSS was 5,427,302,400 bytes, and
+  per-run ignored outputs totaled 4,999,710 bytes. Optimizer/scheduler creations and steps,
+  adapter saves, counted training, retention, holdout v2, GSM1K, and sealed-final access were
+  zero.
+- **Next action:** Publish the content-free signal summary and selection decision, verify clean
+  synchronization, then run generic smoke plus duplicate followed by targeted smoke plus
+  duplicate without retries.

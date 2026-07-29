@@ -1,0 +1,749 @@
+{
+  "arms": {
+    "generic": {
+      "all_groups": {
+        "average_completion_correctness": 0.4609375,
+        "average_distinct_completions": 3.375,
+        "average_extraction_rate": 0.6640625,
+        "average_format_compliance_rate": 0.3515625,
+        "average_nonzero_advantage_count": 2.125,
+        "average_reward_variance": 0.179624024950499,
+        "backend_failures": 0,
+        "completion_tokens": 16049,
+        "identical_output_groups": 6,
+        "invalid_or_ambiguous_groups": 0,
+        "nonzero_variance_groups": 17,
+        "nonzero_variance_percentage": 53.125,
+        "reward_contract_inconsistencies": 0,
+        "reward_indistinguishable_diversity_groups": 0,
+        "total_groups": 32,
+        "zero_variance_classifications": {
+          "all_correct_saturated": 2,
+          "all_incorrect_saturated": 7,
+          "invalid_or_ambiguous": 0,
+          "output_diverse_reward_indistinguishable": 0,
+          "output_identical": 6
+        },
+        "zero_variance_groups": 15
+      },
+      "deterministic_replay_status": {
+        "exact_projection_sha256": "2a854c5cdb5696a29e94cb26003993da6a9da4a30aaeff029101c99b50ec0e97",
+        "group_id": "l3-grpo-generic-g005",
+        "independently_reset_processes": 2,
+        "passed": true
+      },
+      "informative_task_families": [
+        "constraint_distribution_or_discrete_reasoning",
+        "multi_step_bookkeeping_or_omission",
+        "rate_ratio_percentage_or_average"
+      ],
+      "informative_task_group_count": 15,
+      "quantitative_viability_passed": true,
+      "shared_replay_groups": {
+        "average_completion_correctness": 0.8125,
+        "average_distinct_completions": 1.875,
+        "average_extraction_rate": 0.9375,
+        "average_format_compliance_rate": 0.5625,
+        "average_nonzero_advantage_count": 1.0,
+        "average_reward_variance": 0.08546874893363565,
+        "backend_failures": 0,
+        "completion_tokens": 291,
+        "identical_output_groups": 5,
+        "invalid_or_ambiguous_groups": 0,
+        "nonzero_variance_groups": 2,
+        "nonzero_variance_percentage": 25.0,
+        "reward_contract_inconsistencies": 0,
+        "reward_indistinguishable_diversity_groups": 0,
+        "total_groups": 8,
+        "zero_variance_classifications": {
+          "all_correct_saturated": 1,
+          "all_incorrect_saturated": 0,
+          "invalid_or_ambiguous": 0,
+          "output_diverse_reward_indistinguishable": 0,
+          "output_identical": 5
+        },
+        "zero_variance_groups": 6
+      },
+      "task_families": {
+        "constraint_distribution_or_discrete_reasoning": {
+          "average_completion_correctness": 0.28125,
+          "average_distinct_completions": 4.0,
+          "average_extraction_rate": 0.5,
+          "average_format_compliance_rate": 0.1875,
+          "average_nonzero_advantage_count": 2.5,
+          "average_reward_variance": 0.2517578103033884,
+          "backend_failures": 0,
+          "completion_tokens": 6290,
+          "identical_output_groups": 0,
+          "invalid_or_ambiguous_groups": 0,
+          "nonzero_variance_groups": 5,
+          "nonzero_variance_percentage": 62.5,
+          "reward_contract_inconsistencies": 0,
+          "reward_indistinguishable_diversity_groups": 0,
+          "total_groups": 8,
+          "zero_variance_classifications": {
+            "all_correct_saturated": 0,
+            "all_incorrect_saturated": 3,
+            "invalid_or_ambiguous": 0,
+            "output_diverse_reward_indistinguishable": 0,
+            "output_identical": 0
+          },
+          "zero_variance_groups": 3
+        },
+        "multi_step_bookkeeping_or_omission": {
+          "average_completion_correctness": 0.5625,
+          "average_distinct_completions": 3.625,
+          "average_extraction_rate": 0.875,
+          "average_format_compliance_rate": 0.5,
+          "average_nonzero_advantage_count": 2.5,
+          "average_reward_variance": 0.26941406913101673,
+          "backend_failures": 0,
+          "completion_tokens": 2525,
+          "identical_output_groups": 1,
+          "invalid_or_ambiguous_groups": 0,
+          "nonzero_variance_groups": 5,
+          "nonzero_variance_percentage": 62.5,
+          "reward_contract_inconsistencies": 0,
+          "reward_indistinguishable_diversity_groups": 0,
+          "total_groups": 8,
+          "zero_variance_classifications": {
+            "all_correct_saturated": 1,
+            "all_incorrect_saturated": 1,
+            "invalid_or_ambiguous": 0,
+            "output_diverse_reward_indistinguishable": 0,
+            "output_identical": 1
+          },
+          "zero_variance_groups": 3
+        },
+        "rate_ratio_percentage_or_average": {
+          "average_completion_correctness": 0.1875,
+          "average_distinct_completions": 4.0,
+          "average_extraction_rate": 0.34375,
+          "average_format_compliance_rate": 0.15625,
+          "average_nonzero_advantage_count": 2.5,
+          "average_reward_variance": 0.11185547143395524,
+          "backend_failures": 0,
+          "completion_tokens": 6943,
+          "identical_output_groups": 0,
+          "invalid_or_ambiguous_groups": 0,
+          "nonzero_variance_groups": 5,
+          "nonzero_variance_percentage": 62.5,
+          "reward_contract_inconsistencies": 0,
+          "reward_indistinguishable_diversity_groups": 0,
+          "total_groups": 8,
+          "zero_variance_classifications": {
+            "all_correct_saturated": 0,
+            "all_incorrect_saturated": 3,
+            "invalid_or_ambiguous": 0,
+            "output_diverse_reward_indistinguishable": 0,
+            "output_identical": 0
+          },
+          "zero_variance_groups": 3
+        }
+      },
+      "task_family_presentation_aliases": {
+        "constraint_distribution_or_discrete_reasoning": "discrete",
+        "multi_step_bookkeeping_or_omission": "bookkeeping",
+        "rate_ratio_percentage_or_average": "rate/ratio"
+      },
+      "task_groups": {
+        "average_completion_correctness": 0.34375,
+        "average_distinct_completions": 3.875,
+        "average_extraction_rate": 0.5729166666666666,
+        "average_format_compliance_rate": 0.28125,
+        "average_nonzero_advantage_count": 2.5,
+        "average_reward_variance": 0.21100911695612012,
+        "backend_failures": 0,
+        "completion_tokens": 15758,
+        "identical_output_groups": 1,
+        "invalid_or_ambiguous_groups": 0,
+        "nonzero_variance_groups": 15,
+        "nonzero_variance_percentage": 62.5,
+        "reward_contract_inconsistencies": 0,
+        "reward_indistinguishable_diversity_groups": 0,
+        "total_groups": 24,
+        "zero_variance_classifications": {
+          "all_correct_saturated": 1,
+          "all_incorrect_saturated": 7,
+          "invalid_or_ambiguous": 0,
+          "output_diverse_reward_indistinguishable": 0,
+          "output_identical": 1
+        },
+        "zero_variance_groups": 9
+      },
+      "usable_informative_candidates": [
+        {
+          "group_id": "l3-grpo-generic-g005",
+          "group_record_sha256": "14cd697162b9ace4809d715901821afd7120bfc9f3fdf86483a8d9d9785cc3f3",
+          "nonzero_advantage_count": 4,
+          "prompt_sha256": "45a695f6371a613f4ce616dcda0f5c0040eb1cba91e81720e38a5d5a865ec002",
+          "reward_variance": 0.4592187702655792,
+          "schedule_position": 5,
+          "task_family": "multi_step_bookkeeping_or_omission",
+          "valid_completion_token_count": 211
+        },
+        {
+          "group_id": "l3-grpo-generic-g007",
+          "group_record_sha256": "75fbdd0614e2b209c17af617451a24177a15876aeb22abca03fc06df03090da5",
+          "nonzero_advantage_count": 4,
+          "prompt_sha256": "008ef9362f99114b7493f7e02e78c1904a8d6439866d5d8bde4316b066abfca2",
+          "reward_variance": 0.6806249618530273,
+          "schedule_position": 7,
+          "task_family": "constraint_distribution_or_discrete_reasoning",
+          "valid_completion_token_count": 388
+        },
+        {
+          "group_id": "l3-grpo-generic-g010",
+          "group_record_sha256": "e375efa4661ead67045e7154cf013b7d1b912f492d33c34329261da64325ac6b",
+          "nonzero_advantage_count": 4,
+          "prompt_sha256": "c3041eb503d1d4b741abf22e9ed90aa893f61f514b3d04f269c89427b0ed9703",
+          "reward_variance": 0.57421875,
+          "schedule_position": 10,
+          "task_family": "rate_ratio_percentage_or_average",
+          "valid_completion_token_count": 243
+        },
+        {
+          "group_id": "l3-grpo-generic-g013",
+          "group_record_sha256": "d9f0f03dfdf1a00502f028e4bd006fe93b2770f7a77a7b336d5e7b8ad1b3b770",
+          "nonzero_advantage_count": 4,
+          "prompt_sha256": "b939355d895b028c6912059f2248db3b14686442135fb1e952eb052d5654e36a",
+          "reward_variance": 0.1942187398672104,
+          "schedule_position": 13,
+          "task_family": "multi_step_bookkeeping_or_omission",
+          "valid_completion_token_count": 791
+        },
+        {
+          "group_id": "l3-grpo-generic-g015",
+          "group_record_sha256": "16f57383bd1fe185da65bb53c0305509bff9f2bc4b47776729cd0313bd142df3",
+          "nonzero_advantage_count": 4,
+          "prompt_sha256": "e04f54041fc1d019dcfcd6e7cea5b8c906d54637e65d68ac1a78779df7eba04a",
+          "reward_variance": 0.4879687428474426,
+          "schedule_position": 15,
+          "task_family": "constraint_distribution_or_discrete_reasoning",
+          "valid_completion_token_count": 447
+        },
+        {
+          "group_id": "l3-grpo-generic-g017",
+          "group_record_sha256": "51f08040b385533d133548f15bc7131367c30d25528e8d7a0b02585ddc29b648",
+          "nonzero_advantage_count": 4,
+          "prompt_sha256": "c6b4451fd27d853e387f4a48eb3e9c53876cb21aab77eaa1d7f76e51d099e2cb",
+          "reward_variance": 0.5006250143051147,
+          "schedule_position": 17,
+          "task_family": "multi_step_bookkeeping_or_omission",
+          "valid_completion_token_count": 166
+        },
+        {
+          "group_id": "l3-grpo-generic-g018",
+          "group_record_sha256": "7c15929baa585e2834ae8515a546589a2671e5a15c6fe30ce5a809a3ac616142",
+          "nonzero_advantage_count": 4,
+          "prompt_sha256": "06db003eaf2aef7e29783b43e0c4012fd1e5329cc04ea302841e4901f3868f23",
+          "reward_variance": 0.0768750011920929,
+          "schedule_position": 18,
+          "task_family": "rate_ratio_percentage_or_average",
+          "valid_completion_token_count": 581
+        },
+        {
+          "group_id": "l3-grpo-generic-g019",
+          "group_record_sha256": "ebc701998df007d4b13111866da94cd889ec3373a3ba4681a254b36c3c619aee",
+          "nonzero_advantage_count": 4,
+          "prompt_sha256": "551c04855443d8d341af5f8e88c56d2a3ef5e9a09c6823137c368610542e78fd",
+          "reward_variance": 0.00046874911640770733,
+          "schedule_position": 19,
+          "task_family": "constraint_distribution_or_discrete_reasoning",
+          "valid_completion_token_count": 491
+        },
+        {
+          "group_id": "l3-grpo-generic-g021",
+          "group_record_sha256": "868a08458fc52975dfe268948afd00defe1ddd76cf211bcc930f7ac541942d46",
+          "nonzero_advantage_count": 4,
+          "prompt_sha256": "953b2b59fe665095feae8e3fda5f27215d899ab5320020780d272fb928e0f583",
+          "reward_variance": 0.5006250143051147,
+          "schedule_position": 21,
+          "task_family": "multi_step_bookkeeping_or_omission",
+          "valid_completion_token_count": 486
+        },
+        {
+          "group_id": "l3-grpo-generic-g022",
+          "group_record_sha256": "6be309c55b20ed55df7ba13048a3e39d4cfc7e09d4448f6c0ebe477d3c572dcf",
+          "nonzero_advantage_count": 4,
+          "prompt_sha256": "53489d69d6f8df751849fd19ffae230f174a36b5de470339ce90d45daa8cd5a3",
+          "reward_variance": 0.1756250113248825,
+          "schedule_position": 22,
+          "task_family": "rate_ratio_percentage_or_average",
+          "valid_completion_token_count": 508
+        },
+        {
+          "group_id": "l3-grpo-generic-g023",
+          "group_record_sha256": "a12e14f485d6cf97aa7077edee332791bae589333c0d096080de18b19a483dd4",
+          "nonzero_advantage_count": 4,
+          "prompt_sha256": "3cad17bfd007d399c0662f2ebf6dbb37f6ddca8d1e2c0a59c6507ef9375491ad",
+          "reward_variance": 0.7225000262260437,
+          "schedule_position": 23,
+          "task_family": "constraint_distribution_or_discrete_reasoning",
+          "valid_completion_token_count": 466
+        },
+        {
+          "group_id": "l3-grpo-generic-g025",
+          "group_record_sha256": "2dd5634fc35648dcb2ea9bd436c440050e9c5b41f989fcd291afe0b74e7add18",
+          "nonzero_advantage_count": 4,
+          "prompt_sha256": "e57b0e3065ed1ea85a27025f3ae9b7679ceeec1f40cbc4f45b2075e3f6094705",
+          "reward_variance": 0.5006250143051147,
+          "schedule_position": 25,
+          "task_family": "multi_step_bookkeeping_or_omission",
+          "valid_completion_token_count": 256
+        },
+        {
+          "group_id": "l3-grpo-generic-g027",
+          "group_record_sha256": "21922c45a1ee78513e56575fd268732700c2af4f9ca48ce87d31785b1d82c1dd",
+          "nonzero_advantage_count": 4,
+          "prompt_sha256": "b450801065367713b8a84da63c43485e0c966219df5e87896b4bae9c82f82ff4",
+          "reward_variance": 0.12250000238418579,
+          "schedule_position": 27,
+          "task_family": "constraint_distribution_or_discrete_reasoning",
+          "valid_completion_token_count": 342
+        },
+        {
+          "group_id": "l3-grpo-generic-g030",
+          "group_record_sha256": "f947d4d81b7e74d75805026c616525a53b23d631811bd79249ba8c4a53b74387",
+          "nonzero_advantage_count": 4,
+          "prompt_sha256": "c0f18b101a0a032e41e666d6a5877c07b499643fa6bde254cfe241399cacc3c5",
+          "reward_variance": 0.0006249988218769431,
+          "schedule_position": 30,
+          "task_family": "rate_ratio_percentage_or_average",
+          "valid_completion_token_count": 491
+        }
+      ],
+      "viability_conditions": {
+        "deterministic_fresh_process_replay": true,
+        "minimum_informative_task_families": true,
+        "minimum_nonzero_variance_task_groups": true,
+        "usable_informative_task_group": true,
+        "zero_backend_failures": true,
+        "zero_invalid_or_ambiguous_groups": true,
+        "zero_reward_contract_inconsistencies": true
+      },
+      "viability_passed": true
+    },
+    "targeted": {
+      "all_groups": {
+        "average_completion_correctness": 0.5859375,
+        "average_distinct_completions": 3.40625,
+        "average_extraction_rate": 0.7421875,
+        "average_format_compliance_rate": 0.515625,
+        "average_nonzero_advantage_count": 2.875,
+        "average_reward_variance": 0.21564452992970473,
+        "backend_failures": 0,
+        "completion_tokens": 14846,
+        "identical_output_groups": 5,
+        "invalid_or_ambiguous_groups": 0,
+        "nonzero_variance_groups": 23,
+        "nonzero_variance_percentage": 71.875,
+        "reward_contract_inconsistencies": 0,
+        "reward_indistinguishable_diversity_groups": 0,
+        "total_groups": 32,
+        "zero_variance_classifications": {
+          "all_correct_saturated": 1,
+          "all_incorrect_saturated": 3,
+          "invalid_or_ambiguous": 0,
+          "output_diverse_reward_indistinguishable": 0,
+          "output_identical": 5
+        },
+        "zero_variance_groups": 9
+      },
+      "deterministic_replay_status": {
+        "exact_projection_sha256": "de787cbb1687e5c86ab0d29cab0862af0df1d76c195eb7b557a6b4f8c01245dd",
+        "group_id": "l3-grpo-targeted-g001",
+        "independently_reset_processes": 2,
+        "passed": true
+      },
+      "informative_task_families": [
+        "constraint_distribution_or_discrete_reasoning",
+        "multi_step_bookkeeping_or_omission",
+        "rate_ratio_percentage_or_average"
+      ],
+      "informative_task_group_count": 21,
+      "quantitative_viability_passed": true,
+      "shared_replay_groups": {
+        "average_completion_correctness": 0.8125,
+        "average_distinct_completions": 1.625,
+        "average_extraction_rate": 0.9375,
+        "average_format_compliance_rate": 0.6875,
+        "average_nonzero_advantage_count": 1.0,
+        "average_reward_variance": 0.1354687660932541,
+        "backend_failures": 0,
+        "completion_tokens": 275,
+        "identical_output_groups": 5,
+        "invalid_or_ambiguous_groups": 0,
+        "nonzero_variance_groups": 2,
+        "nonzero_variance_percentage": 25.0,
+        "reward_contract_inconsistencies": 0,
+        "reward_indistinguishable_diversity_groups": 0,
+        "total_groups": 8,
+        "zero_variance_classifications": {
+          "all_correct_saturated": 1,
+          "all_incorrect_saturated": 0,
+          "invalid_or_ambiguous": 0,
+          "output_diverse_reward_indistinguishable": 0,
+          "output_identical": 5
+        },
+        "zero_variance_groups": 6
+      },
+      "task_families": {
+        "constraint_distribution_or_discrete_reasoning": {
+          "average_completion_correctness": 0.45,
+          "average_distinct_completions": 4.0,
+          "average_extraction_rate": 0.55,
+          "average_format_compliance_rate": 0.55,
+          "average_nonzero_advantage_count": 3.2,
+          "average_reward_variance": 0.42678123712539673,
+          "backend_failures": 0,
+          "completion_tokens": 3225,
+          "identical_output_groups": 0,
+          "invalid_or_ambiguous_groups": 0,
+          "nonzero_variance_groups": 4,
+          "nonzero_variance_percentage": 80.0,
+          "reward_contract_inconsistencies": 0,
+          "reward_indistinguishable_diversity_groups": 0,
+          "total_groups": 5,
+          "zero_variance_classifications": {
+            "all_correct_saturated": 0,
+            "all_incorrect_saturated": 1,
+            "invalid_or_ambiguous": 0,
+            "output_diverse_reward_indistinguishable": 0,
+            "output_identical": 0
+          },
+          "zero_variance_groups": 1
+        },
+        "multi_step_bookkeeping_or_omission": {
+          "average_completion_correctness": 0.5961538461538461,
+          "average_distinct_completions": 4.0,
+          "average_extraction_rate": 0.8269230769230769,
+          "average_format_compliance_rate": 0.5384615384615384,
+          "average_nonzero_advantage_count": 4.0,
+          "average_reward_variance": 0.23975960782263428,
+          "backend_failures": 0,
+          "completion_tokens": 6572,
+          "identical_output_groups": 0,
+          "invalid_or_ambiguous_groups": 0,
+          "nonzero_variance_groups": 13,
+          "nonzero_variance_percentage": 100.0,
+          "reward_contract_inconsistencies": 0,
+          "reward_indistinguishable_diversity_groups": 0,
+          "total_groups": 13,
+          "zero_variance_classifications": {
+            "all_correct_saturated": 0,
+            "all_incorrect_saturated": 0,
+            "invalid_or_ambiguous": 0,
+            "output_diverse_reward_indistinguishable": 0,
+            "output_identical": 0
+          },
+          "zero_variance_groups": 0
+        },
+        "rate_ratio_percentage_or_average": {
+          "average_completion_correctness": 0.375,
+          "average_distinct_completions": 4.0,
+          "average_extraction_rate": 0.4583333333333333,
+          "average_format_compliance_rate": 0.20833333333333334,
+          "average_nonzero_advantage_count": 2.6666666666666665,
+          "average_reward_variance": 0.0943489569472149,
+          "backend_failures": 0,
+          "completion_tokens": 4774,
+          "identical_output_groups": 0,
+          "invalid_or_ambiguous_groups": 0,
+          "nonzero_variance_groups": 4,
+          "nonzero_variance_percentage": 66.66666666666667,
+          "reward_contract_inconsistencies": 0,
+          "reward_indistinguishable_diversity_groups": 0,
+          "total_groups": 6,
+          "zero_variance_classifications": {
+            "all_correct_saturated": 0,
+            "all_incorrect_saturated": 2,
+            "invalid_or_ambiguous": 0,
+            "output_diverse_reward_indistinguishable": 0,
+            "output_identical": 0
+          },
+          "zero_variance_groups": 2
+        }
+      },
+      "task_family_presentation_aliases": {
+        "constraint_distribution_or_discrete_reasoning": "discrete",
+        "multi_step_bookkeeping_or_omission": "bookkeeping",
+        "rate_ratio_percentage_or_average": "rate/ratio"
+      },
+      "task_groups": {
+        "average_completion_correctness": 0.5104166666666666,
+        "average_distinct_completions": 4.0,
+        "average_extraction_rate": 0.6770833333333334,
+        "average_format_compliance_rate": 0.4583333333333333,
+        "average_nonzero_advantage_count": 3.5,
+        "average_reward_variance": 0.24236978454185495,
+        "backend_failures": 0,
+        "completion_tokens": 14571,
+        "identical_output_groups": 0,
+        "invalid_or_ambiguous_groups": 0,
+        "nonzero_variance_groups": 21,
+        "nonzero_variance_percentage": 87.5,
+        "reward_contract_inconsistencies": 0,
+        "reward_indistinguishable_diversity_groups": 0,
+        "total_groups": 24,
+        "zero_variance_classifications": {
+          "all_correct_saturated": 0,
+          "all_incorrect_saturated": 3,
+          "invalid_or_ambiguous": 0,
+          "output_diverse_reward_indistinguishable": 0,
+          "output_identical": 0
+        },
+        "zero_variance_groups": 3
+      },
+      "usable_informative_candidates": [
+        {
+          "group_id": "l3-grpo-targeted-g001",
+          "group_record_sha256": "7128ecc43cdd6128e24c948823e2d9e1da249356534f413decd8c73f63c01ce3",
+          "nonzero_advantage_count": 4,
+          "prompt_sha256": "18b524f0cf8d79fb38e5631a516db4884ecdbeefbae00e23aafed8367fd50029",
+          "reward_variance": 0.2006250023841858,
+          "schedule_position": 1,
+          "task_family": "multi_step_bookkeeping_or_omission",
+          "valid_completion_token_count": 612
+        },
+        {
+          "group_id": "l3-grpo-targeted-g003",
+          "group_record_sha256": "3c774936e9a51bf3a760e218592281e3651354e98bf2904c7234b8e505bc0ac7",
+          "nonzero_advantage_count": 4,
+          "prompt_sha256": "e7c0064a6a6eb35f86db3a2af877dce2df0fe8a7e771c5240a872766da08a9b5",
+          "reward_variance": 0.38875001668930054,
+          "schedule_position": 3,
+          "task_family": "constraint_distribution_or_discrete_reasoning",
+          "valid_completion_token_count": 350
+        },
+        {
+          "group_id": "l3-grpo-targeted-g005",
+          "group_record_sha256": "a3ab17831a45ca985c32d5975583895067a813110925d58ef958c412e8d74293",
+          "nonzero_advantage_count": 4,
+          "prompt_sha256": "dbeb9b641ace919c074493a8012fd2b286fd9727c1eb3b18cb69a9c0ac05f172",
+          "reward_variance": 0.0006249988218769431,
+          "schedule_position": 5,
+          "task_family": "multi_step_bookkeeping_or_omission",
+          "valid_completion_token_count": 345
+        },
+        {
+          "group_id": "l3-grpo-targeted-g006",
+          "group_record_sha256": "35cfe64255feaaa9035fe1f5c0dd3153b725e24e5c340653304c8ecfe2b77431",
+          "nonzero_advantage_count": 4,
+          "prompt_sha256": "0d1a181528de8223d70c77a585c9f1f521cc845e18e019f9182465af962f4b8c",
+          "reward_variance": 0.18171872198581696,
+          "schedule_position": 6,
+          "task_family": "multi_step_bookkeeping_or_omission",
+          "valid_completion_token_count": 476
+        },
+        {
+          "group_id": "l3-grpo-targeted-g007",
+          "group_record_sha256": "a2611082eafbc3a690ccb23e65969b9b2084ce1dc5d4e3061220dea0822b1d96",
+          "nonzero_advantage_count": 4,
+          "prompt_sha256": "b4df5d2e0f1e31121f463bf8f719ab7cb6906c83d6624f4cc132fd713c6f0092",
+          "reward_variance": 0.0006249988218769431,
+          "schedule_position": 7,
+          "task_family": "rate_ratio_percentage_or_average",
+          "valid_completion_token_count": 550
+        },
+        {
+          "group_id": "l3-grpo-targeted-g010",
+          "group_record_sha256": "8f58cc32d5b6df7c327008bc663d1fee8e0a1de1b4192e18b7ebd3a7ef1e0efe",
+          "nonzero_advantage_count": 4,
+          "prompt_sha256": "fbb1e01ea3ac9983e6218176714a12e65a82dd4ff3bd53972fce57461219eb8c",
+          "reward_variance": 0.765625,
+          "schedule_position": 10,
+          "task_family": "multi_step_bookkeeping_or_omission",
+          "valid_completion_token_count": 292
+        },
+        {
+          "group_id": "l3-grpo-targeted-g011",
+          "group_record_sha256": "41fff2908c84b64a16271f58ceee9420a18247537dbc797e3fcc5bb93f9b318c",
+          "nonzero_advantage_count": 4,
+          "prompt_sha256": "09aceca492660e4a222998acc17b433a6d43ddc3230a6219dd56edceaf34fc7c",
+          "reward_variance": 0.20671872794628143,
+          "schedule_position": 11,
+          "task_family": "multi_step_bookkeeping_or_omission",
+          "valid_completion_token_count": 210
+        },
+        {
+          "group_id": "l3-grpo-targeted-g015",
+          "group_record_sha256": "6fe89114d50d9a841e6cf3319e2996e910de87790045d8496f50a8d16fee15ef",
+          "nonzero_advantage_count": 4,
+          "prompt_sha256": "2485fbfc6cfe5bb91b49de74067ac4d080137d23ff32f884d30d80058de88825",
+          "reward_variance": 0.57421875,
+          "schedule_position": 15,
+          "task_family": "constraint_distribution_or_discrete_reasoning",
+          "valid_completion_token_count": 257
+        },
+        {
+          "group_id": "l3-grpo-targeted-g017",
+          "group_record_sha256": "1ae20099a41352cf8505c1fd716afa291e53daf36262de795ccd316721626223",
+          "nonzero_advantage_count": 4,
+          "prompt_sha256": "2244d1c0e8712061af10351e372029b2adf1df5cd2c861dde43d4368c1aaf8e9",
+          "reward_variance": 0.5104687213897705,
+          "schedule_position": 17,
+          "task_family": "multi_step_bookkeeping_or_omission",
+          "valid_completion_token_count": 567
+        },
+        {
+          "group_id": "l3-grpo-targeted-g018",
+          "group_record_sha256": "a8297de2f834e897f1b629a20ef48da7451f532b14d9ac71451943d5b9ccadc9",
+          "nonzero_advantage_count": 4,
+          "prompt_sha256": "0dee8e077c0b214e998e9a8925157dd3173f112e0098ba1ffeda7cc477e8d945",
+          "reward_variance": 0.4879687428474426,
+          "schedule_position": 18,
+          "task_family": "rate_ratio_percentage_or_average",
+          "valid_completion_token_count": 474
+        },
+        {
+          "group_id": "l3-grpo-targeted-g019",
+          "group_record_sha256": "f36490917162b8ff1f6101b39077d38a6a17ac683b94a7e0b122332321f350b3",
+          "nonzero_advantage_count": 4,
+          "prompt_sha256": "3e7fd402dd43fd9cf2640bbc9f3ebf85e8f04878559eab13bebf319c8bf4e038",
+          "reward_variance": 0.3956249952316284,
+          "schedule_position": 19,
+          "task_family": "multi_step_bookkeeping_or_omission",
+          "valid_completion_token_count": 393
+        },
+        {
+          "group_id": "l3-grpo-targeted-g021",
+          "group_record_sha256": "b54afa76ad45f30a289eacbd7d2b67095ab81e1f917f5a199737e6acbb71fd91",
+          "nonzero_advantage_count": 4,
+          "prompt_sha256": "8f9e92c5e3f3b95e548cc48df7f053fbe5d571b88a3cbcb7bda48c36d13fb417",
+          "reward_variance": 0.5104687213897705,
+          "schedule_position": 21,
+          "task_family": "constraint_distribution_or_discrete_reasoning",
+          "valid_completion_token_count": 359
+        },
+        {
+          "group_id": "l3-grpo-targeted-g022",
+          "group_record_sha256": "33cfec805647b6bf8b0faa1b49e22814af930dd9f6d054f46e82295b21533005",
+          "nonzero_advantage_count": 4,
+          "prompt_sha256": "dc076dd9b5b1e1fc52beb8557555ec53636bdbdc073da75a016a9d839f9dac5a",
+          "reward_variance": 0.07562500238418579,
+          "schedule_position": 22,
+          "task_family": "multi_step_bookkeeping_or_omission",
+          "valid_completion_token_count": 463
+        },
+        {
+          "group_id": "l3-grpo-targeted-g023",
+          "group_record_sha256": "25f63230587c6c6eb66f25faa18a8d9a8992646fbabd05e244d6242458b56c1b",
+          "nonzero_advantage_count": 4,
+          "prompt_sha256": "c1956bb71d4520f1ac543320da87da87d5d42d5f2fb593b47f4ce65c1c0d93f4",
+          "reward_variance": 0.0768750011920929,
+          "schedule_position": 23,
+          "task_family": "rate_ratio_percentage_or_average",
+          "valid_completion_token_count": 501
+        },
+        {
+          "group_id": "l3-grpo-targeted-g025",
+          "group_record_sha256": "60b392ad6f738ef00f7083c12a3433140b75c05c53be44ac3036999f376414d7",
+          "nonzero_advantage_count": 4,
+          "prompt_sha256": "110c88cea0f021f08c590a0928cce52f7e5e1ff46a44d33f75c3053fea4f958f",
+          "reward_variance": 0.0006249988218769431,
+          "schedule_position": 25,
+          "task_family": "multi_step_bookkeeping_or_omission",
+          "valid_completion_token_count": 407
+        },
+        {
+          "group_id": "l3-grpo-targeted-g026",
+          "group_record_sha256": "6cfe9d0148d4d755305e0aed0e3be2e154c626d48d20c430e46c683defd550ef",
+          "nonzero_advantage_count": 4,
+          "prompt_sha256": "cf3a9baf90b6b13f5e833eba8f2ce78876035c5e89e491db9e6679e9b5405a6b",
+          "reward_variance": 0.2006250023841858,
+          "schedule_position": 26,
+          "task_family": "multi_step_bookkeeping_or_omission",
+          "valid_completion_token_count": 277
+        },
+        {
+          "group_id": "l3-grpo-targeted-g027",
+          "group_record_sha256": "1a3a152758865cdf486a2ed264016a2f395523eabfb271370d301cffa50dc5ff",
+          "nonzero_advantage_count": 4,
+          "prompt_sha256": "c9d938d5e479338b54f6621f83e55e8d254a9955b295df5550e76cea4f8ab3bb",
+          "reward_variance": 0.6604686975479126,
+          "schedule_position": 27,
+          "task_family": "constraint_distribution_or_discrete_reasoning",
+          "valid_completion_token_count": 723
+        },
+        {
+          "group_id": "l3-grpo-targeted-g029",
+          "group_record_sha256": "52b08af64b183a88f76404f14739b46bfae2945cd1937671a2abcb09c1e9d1a9",
+          "nonzero_advantage_count": 4,
+          "prompt_sha256": "6ddef1008659cc62dc6f3aefcd6519637687e5b0cf70179ff6d2dce733cf5f60",
+          "reward_variance": 0.0006249988218769431,
+          "schedule_position": 29,
+          "task_family": "rate_ratio_percentage_or_average",
+          "valid_completion_token_count": 433
+        },
+        {
+          "group_id": "l3-grpo-targeted-g030",
+          "group_record_sha256": "5c3acdeb80b078581be69d25db6679795711791f1371d6bb259da83e37ca9caa",
+          "nonzero_advantage_count": 4,
+          "prompt_sha256": "1c5cbb7b5d7d4f2c48672c64d06e240408e670b599256a780766376ee19a35a2",
+          "reward_variance": 0.0006249988218769431,
+          "schedule_position": 30,
+          "task_family": "multi_step_bookkeeping_or_omission",
+          "valid_completion_token_count": 329
+        },
+        {
+          "group_id": "l3-grpo-targeted-g031",
+          "group_record_sha256": "0ab9481223d06fa0e75cc5aaff0e3bd8d7cf75d17950176c60f044deef1a4d24",
+          "nonzero_advantage_count": 4,
+          "prompt_sha256": "297d2306274acd03b040e0f1d1bea14c9e517088eaba35fbdec871c09990da86",
+          "reward_variance": 0.5104687213897705,
+          "schedule_position": 31,
+          "task_family": "multi_step_bookkeeping_or_omission",
+          "valid_completion_token_count": 153
+        }
+      ],
+      "viability_conditions": {
+        "deterministic_fresh_process_replay": true,
+        "minimum_informative_task_families": true,
+        "minimum_nonzero_variance_task_groups": true,
+        "usable_informative_task_group": true,
+        "zero_backend_failures": true,
+        "zero_invalid_or_ambiguous_groups": true,
+        "zero_reward_contract_inconsistencies": true
+      },
+      "viability_passed": true
+    }
+  },
+  "audit_id": "foundry-l3-grpo-signal-audit-v2",
+  "counted_training_authorized": false,
+  "counted_training_started": false,
+  "decision": "schedule_viable",
+  "failure_attribution": null,
+  "generic_targeted_overlap": {
+    "completion_output_overlap_count": 9,
+    "completion_output_overlap_ratio": 0.47368421052631576,
+    "completion_output_union_count": 19,
+    "groups_informative_in_both": 2,
+    "groups_informative_only_generic": 0,
+    "groups_informative_only_targeted": 0,
+    "groups_saturated_in_both": 6,
+    "reward_pattern_overlap_count": 6,
+    "reward_pattern_overlap_ratio": 0.75,
+    "shared_prompt_position_count": 8,
+    "shared_prompt_positions": [
+      4,
+      8,
+      12,
+      16,
+      20,
+      24,
+      28,
+      32
+    ]
+  },
+  "gsm1k_started": false,
+  "holdout_v2_started": false,
+  "method_contract_sha256": "3132c12791668d1535b06083bb12ecdb68477cd077aaf43a852bfcc73854230b",
+  "quantitative_viability_passed": true,
+  "schema_version": 1,
+  "sealed_content_use": 0,
+  "signal_summary_sha256": "fc7bad292f6c4b5acaa845df9b30cbc624de1ee524b57443ea09e634e2352ec4",
+  "summary_id": "foundry-l3-grpo-signal-density-summary-v1",
+  "viability_passed": true,
+  "viability_ready": true
+}

@@ -1,0 +1,84 @@
+{
+  "arms": {
+    "generic": {
+      "base_gradient_count": 0,
+      "combined_gradient_global_norm": 0.051465622055009694,
+      "exact_duplicate_evidence": true,
+      "exact_projection_sha256": "2a854c5cdb5696a29e94cb26003993da6a9da4a30aaeff029101c99b50ec0e97",
+      "fresh_process_replay_status": "passed",
+      "gradient_projection_status": "passed",
+      "independently_reset_processes": 2,
+      "policy_gradient_global_norm": 0.051465622055009694,
+      "policy_nonzero_gradient_tensor_count": 112,
+      "raw_projection_file_sha256s": [
+        "8a789f1810851c1afa6b9064d5c80613155bc36091051769635af3524354da66",
+        "c5420a6beafa414a97f044f71e47aa7b1fed807e27b215cfd1e6d33e19ed4a31"
+      ],
+      "reference_gradient_count": 0,
+      "replay_group_id": "l3-grpo-generic-g004",
+      "replay_group_record_sha256": "592f3e8cf97da79a251874295549af1bcee20c2675c9a1449e43841ded4365b3",
+      "replay_prompt_sha256": "0a9209d0c04326e6a405bc41b4f6c974009dca65f21891beebc2f77d4faa2044",
+      "replay_schedule_position": 4,
+      "runtime_summary_sha256s": [
+        "409339479c8bc5c3fd45cbcd97f95c8ea77e290b856b53908f9f4b43aa5b2d79",
+        "8db1c0170f0e986bca034d15b468b36ef8b9ac9a6e44b25b12529a68d4af62ff"
+      ],
+      "selection_rule": "earliest_schedule_position_with_nonzero_reward_variance_then_lowest_prompt_hash",
+      "task_family": "multi_step_bookkeeping_or_omission",
+      "task_group_id": "l3-grpo-generic-g005",
+      "task_group_record_sha256": "14cd697162b9ace4809d715901821afd7120bfc9f3fdf86483a8d9d9785cc3f3",
+      "task_nonzero_advantage_count": 4,
+      "task_prompt_sha256": "45a695f6371a613f4ce616dcda0f5c0040eb1cba91e81720e38a5d5a865ec002",
+      "task_reward_variance": 0.4592187702655792,
+      "task_schedule_position": 5,
+      "task_valid_completion_token_count": 211
+    },
+    "targeted": {
+      "base_gradient_count": 0,
+      "combined_gradient_global_norm": 0.040820725115058826,
+      "exact_duplicate_evidence": true,
+      "exact_projection_sha256": "de787cbb1687e5c86ab0d29cab0862af0df1d76c195eb7b557a6b4f8c01245dd",
+      "fresh_process_replay_status": "passed",
+      "gradient_projection_status": "passed",
+      "independently_reset_processes": 2,
+      "policy_gradient_global_norm": 0.040820725115058826,
+      "policy_nonzero_gradient_tensor_count": 112,
+      "raw_projection_file_sha256s": [
+        "72cc09e0e18cf11c47987a096eee0be1a1146bd1570d3f06499f54b91a77ef8a",
+        "b372bd52beea0b9e07be5bcee78090269f551afc4ae9d1c747c71d9afd1a9f40"
+      ],
+      "reference_gradient_count": 0,
+      "replay_group_id": "l3-grpo-targeted-g004",
+      "replay_group_record_sha256": "3a99bfd2603fa061abf59b9d842e044e2cfb4d502dc5435bed413899889363a4",
+      "replay_prompt_sha256": "0a9209d0c04326e6a405bc41b4f6c974009dca65f21891beebc2f77d4faa2044",
+      "replay_schedule_position": 4,
+      "runtime_summary_sha256s": [
+        "2e5aa83c9ad102e9322ee1a84b707933fe7d630bc8fb194c6e4ce88d29188787",
+        "799151b0081dd7bb75792d10f0a61244dfe45126fb0141cdc995fee8399da569"
+      ],
+      "selection_rule": "earliest_schedule_position_with_nonzero_reward_variance_then_lowest_prompt_hash",
+      "task_family": "multi_step_bookkeeping_or_omission",
+      "task_group_id": "l3-grpo-targeted-g001",
+      "task_group_record_sha256": "7128ecc43cdd6128e24c948823e2d9e1da249356534f413decd8c73f63c01ce3",
+      "task_nonzero_advantage_count": 4,
+      "task_prompt_sha256": "18b524f0cf8d79fb38e5631a516db4884ecdbeefbae00e23aafed8367fd50029",
+      "task_reward_variance": 0.2006250023841858,
+      "task_schedule_position": 1,
+      "task_valid_completion_token_count": 612
+    }
+  },
+  "both_arms_pass": true,
+  "compatibility_authorized": true,
+  "counted_training_authorized": false,
+  "decision_id": "foundry-l3-grpo-signal-selection-and-gradient-v1",
+  "gsm1k_status": "not_run",
+  "holdout_v2_status": "not_run",
+  "optimizer_steps": 0,
+  "qualification_contract_sha256": "0ad3c6fc584b1dcc0221e6c29179f1f53c26c754297b6534222bf750e51a23bc",
+  "schema_version": 1,
+  "sealed_content_use": 0,
+  "selection_decision_sha256": "0e809d1870ddef275017a11c4db5ffd766d9624a34dbf87a7ab417f8bed6a3cf",
+  "selection_frozen": true,
+  "signal_summary_sha256": "fc7bad292f6c4b5acaa845df9b30cbc624de1ee524b57443ea09e634e2352ec4",
+  "source_commit": "d87650aae77752ddd3e4b2c28b71a7889ae15dcc"
+}
