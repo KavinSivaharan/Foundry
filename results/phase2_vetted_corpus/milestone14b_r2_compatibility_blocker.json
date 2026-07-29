@@ -1,0 +1,93 @@
+{
+  "arm": "generic",
+  "blocker_id": "foundry-l3-grpo-warmup-aware-compatibility-blocker-v1",
+  "campaign_accounting": {
+    "compatibility_processes_completed": 0,
+    "compatibility_processes_started": 1,
+    "compatibility_retries": 0,
+    "generic_duplicate_status": "not_run",
+    "generic_smoke_status": "failed_pre_model",
+    "targeted_duplicate_status": "not_run",
+    "targeted_smoke_status": "not_run"
+  },
+  "compatibility_blocker_sha256": "55121632c80ad012cfc60172db0a28bc1f7e7bf51091a38f1e492b7c37b14dbb",
+  "compatibility_order_sha256": "7fc2d155ce78695967ccb6079e9558c8574bb51deadadfe57fea1b5ffd648a32",
+  "compatibility_result": "not_reached",
+  "correction_commit": "3c98a690c7eb5e12db5fab1f488ef6690d42bf14",
+  "counted_training_started": false,
+  "decision": "stop",
+  "downstream_accounting": {
+    "development_retention_started": false,
+    "gsm1k_started": false,
+    "holdout_v2_started": false,
+    "sealed_content_use": 0
+  },
+  "failure": {
+    "error_message": "qualification implementation source differs",
+    "error_type": "ValueError",
+    "failed_contract": "foundry-l3-grpo-signal-qualification-v1",
+    "failed_verifier": "verify_qualification_contract",
+    "failure_classification": "r2_wrapper_failed_to_layer_r1_qualification_source_manifest",
+    "failure_stage": "pre_model_qualification_source_verification",
+    "implementation_source_drift": false,
+    "r1_manifest_expected_pre_r2_runtime": true,
+    "scientific_compatibility_gate_reached": false,
+    "source_binding_defect": true,
+    "source_edited_after_failure": false
+  },
+  "frozen_inputs": {
+    "dataset_sha256": "ee18f7f9bd7625469d83e1c1df8dad4db0ecf8b3d8c870a07c60f2808e11dc31",
+    "generic_starting_adapter_sha256": "67c6f1dd34c0fa1ddebb354dfe14c43e61c48fdd90c687ba1a9290d2401479cd",
+    "qualification_contract_sha256": "0ad3c6fc584b1dcc0221e6c29179f1f53c26c754297b6534222bf750e51a23bc",
+    "r1_selection_decision_sha256": "0e809d1870ddef275017a11c4db5ffd766d9624a34dbf87a7ab417f8bed6a3cf",
+    "r1_signal_summary_sha256": "fc7bad292f6c4b5acaa845df9b30cbc624de1ee524b57443ea09e634e2352ec4",
+    "scheduler_contract_sha256": "bb5653da70a6af842cc06599b4bb15f87cc031e09c836527f79032c4910b020a",
+    "targeted_starting_adapter_sha256": "4e195ff2cb32c4faa6858915b95507862c911bb2eb853b060717416d825df91d",
+    "warmup_update_contract_sha256": "e929b7cb0ce0e1e1d03936e1f899d59f9ff2eca1fa01c72a36efd778de325a89"
+  },
+  "model_execution_accounting": {
+    "adapter_or_checkpoint_writes": 0,
+    "generated_completion_tokens": 0,
+    "generated_completions": 0,
+    "generated_groups": 0,
+    "model_loads": 0,
+    "optimizer_calls": 0,
+    "scheduler_advances": 0,
+    "trainer_global_steps": 0
+  },
+  "next_action": "project-level GRPO interpretation; do not retry without new authorization",
+  "publication_evidence": {
+    "artifacts_directory_written": false,
+    "compatibility_tree_disk_bytes": 955,
+    "compatibility_tree_files": 2,
+    "generic_stderr_bytes": 955,
+    "generic_stderr_file_sha256": "5b1e369e824faaacbe72306a1b7285b2b50249042bf6e5473fa5627ec7a5a921",
+    "generic_stdout_bytes": 0,
+    "generic_stdout_file_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "partial_evidence_written": false,
+    "peak_allocated_vram_bytes": null,
+    "peak_process_rss_bytes": null,
+    "peak_reserved_vram_bytes": null,
+    "qualification_envelope_written": false,
+    "raw_evidence_written": false,
+    "resource_metrics_status": "not_published_before_pre_model_failure",
+    "reward_and_kl_status": "not_computed",
+    "runtime_seconds": null,
+    "summary_written": false
+  },
+  "run_index": 1,
+  "schema_version": 1,
+  "source_commit": "3c98a690c7eb5e12db5fab1f488ef6690d42bf14",
+  "source_parent_commit": "0c0bf9cbdb0cdd7376fd02d4ddb79afe5f3479a4",
+  "warmup_contract": {
+    "compatibility_effective_learning_rates": [
+      0.0,
+      1e-06
+    ],
+    "compatibility_first_positive_optimizer_call_index": 2,
+    "counted_trajectory_sha256": "5274802d44d7f4a414641fe3c60dadc91e69a0d879add0d39894d6306af34964",
+    "fixture_sha256": "23cd974ecff6e343efde2f997646de662bae8c0edae15a1ed8934b5133f9602c",
+    "implementation_sha256": "28bfb146e2d8fe30f5125d80e2d3e8a792448560bc4c740538787b1c56429ab8",
+    "update_contract_sha256": "8cea0cb141653317ccde72b6440b57a4d5ea23e9554ae25406af81f63c125b5c"
+  }
+}

@@ -4634,3 +4634,42 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
   `fix: validate L3 GRPO update at positive learning rate`; only that synchronized,
   clean commit may launch generic smoke, its exact duplicate, targeted smoke, and
   its exact duplicate.
+
+### 2026-07-29 - Milestone 14B-R2 stopped before the first model smoke
+
+- **Published correction boundary:** Warmup-aware source commit
+  `3c98a690c7eb5e12db5fab1f488ef6690d42bf14` was pushed, synchronized 0/0,
+  clean, and reconstructed against the frozen 33-row implementation manifest
+  before the compatibility campaign.
+- **Pre-model blocker:** The first generic compatibility child invoked the
+  published R1 qualification verifier before the new layered warmup verifier.
+  That R1 manifest still binds the pre-R2 `l3_grpo_runtime.py`, so it raised
+  `ValueError: qualification implementation source differs` after the intentional
+  R2 runtime correction. This is an R2 wrapper/source-binding defect, not repository
+  source drift and not a scientific compatibility result.
+- **Immediate no-retry stop:** The process failed before model import or loading,
+  generation, reward or KL computation, optimizer construction, scheduler
+  advancement, Trainer global-step advancement, adapter/checkpoint creation, or
+  compatibility classification. The generic duplicate and both targeted processes
+  did not run. Counted training, development retention, holdout v2, GSM1K, and
+  sealed-final evaluation did not run.
+- **Evidence:** The two compatibility logs occupy 955 bytes. Generic stderr SHA-256
+  is `5b1e369e824faaacbe72306a1b7285b2b50249042bf6e5473fa5627ec7a5a921`;
+  empty stdout SHA-256 is
+  `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`.
+  No partial, raw, summary, qualification-envelope, or adapter artifact was
+  produced. Runtime, VRAM, and RAM metrics are unavailable because the failure
+  preceded evidence initialization.
+- **Final verification:** Ruff format-check covers 382 files, Ruff lint is clean,
+  strict Mypy passes all 213 source files, all 1,114 repository tests pass in
+  114.57 seconds, and both authorized environments pass `pip check`. The
+  post-failure diff contains no source or test changes, `git diff --check` is
+  clean, raw compatibility logs remain untracked, and the scoped credential and
+  prohibited-artifact scans pass.
+- **Terminal decision:** Content-free blocker SHA-256 is
+  `55121632c80ad012cfc60172db0a28bc1f7e7bf51091a38f1e492b7c37b14dbb`.
+  Per the explicit generic-smoke no-retry rule, source was not edited and the
+  campaign was not retried.
+- **Next action:** Publish and synchronize
+  `analysis: stop warmup-aware L3 GRPO adaptation`, then stop for project-level
+  GRPO interpretation. Do not retry without new authorization.

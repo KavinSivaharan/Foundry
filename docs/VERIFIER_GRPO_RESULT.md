@@ -474,3 +474,35 @@ Blocker SHA-256 is
 Counted training, retention, holdout v2, GSM1K, and sealed-final evaluation were not run. The exact
 next action is project-level GRPO interpretation; do not retry or alter the frozen recipe without
 new authorization.
+
+## Milestone 14B-R2 warmup-aware compatibility stop
+
+Foundry corrected its GRPO update validator to distinguish an accepted zero-learning-rate warmup
+no-op from a genuine positive-learning-rate update failure. The frozen two-step compatibility
+trajectory is exactly `[0.0, 1e-6]`; scheduler-contract SHA-256 is
+`bb5653da70a6af842cc06599b4bb15f87cc031e09c836527f79032c4910b020a`,
+counted-trajectory SHA-256 is
+`5274802d44d7f4a414641fe3c60dadc91e69a0d879add0d39894d6306af34964`, and
+warmup-aware contract SHA-256 is
+`e929b7cb0ce0e1e1d03936e1f899d59f9ff2eca1fa01c72a36efd778de325a89`.
+
+The synchronized source boundary was
+`3c98a690c7eb5e12db5fab1f488ef6690d42bf14`. The first generic compatibility
+process then stopped at its pre-model source check. Its wrapper independently invoked the
+published R1 qualification verifier, whose implementation manifest intentionally describes the
+pre-R2 runtime. Because R2 changed that runtime, the unlayered verifier raised
+`ValueError: qualification implementation source differs` before the new warmup-aware verifier
+could run.
+
+This is an implementation source-binding defect in the R2 compatibility wrapper. It is not
+repository source drift, a scheduler mismatch, a gradient failure, or a scientific GRPO result.
+The process loaded no model and produced zero groups, completions, tokens, reward/KL calls,
+optimizer calls, scheduler advances, global steps, adapters, or checkpoints. The generic
+duplicate and both targeted smokes did not run; there was no retry. Counted training, development
+retention, holdout v2, GSM1K, and sealed-final evaluation were not reached.
+
+The two preserved logs total 955 bytes; runtime, peak VRAM, and peak RAM were not published before
+the failure. Content-free blocker SHA-256 is
+`55121632c80ad012cfc60172db0a28bc1f7e7bf51091a38f1e492b7c37b14dbb`.
+Per the authorized fail-closed rule, Foundry stopped without changing source. The exact next
+action is project-level GRPO interpretation; do not retry without new authorization.
