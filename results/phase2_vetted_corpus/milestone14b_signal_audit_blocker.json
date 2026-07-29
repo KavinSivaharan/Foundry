@@ -1,0 +1,165 @@
+{
+  "adapter_saved": false,
+  "backward_calls": 0,
+  "blocker_id": "foundry-l3-grpo-signal-audit-blocker-v1",
+  "blocker_sha256": "0597d2a628bf6acfa320cd0f567c4d3a6e296067bad1767974cb446b7c184ae4",
+  "campaign_stderr_file_sha256": "1e83b599ba733c2e2065916321c3d80fabdc95b57b0c2f9997d851fd6dcc0305",
+  "counted_training_status": "not_run",
+  "cross_device_projection_fixture": {
+    "exact_mismatch_vector_count": 11915,
+    "first_cpu_advantages": [
+      -0.7000000476837158,
+      -0.7000000476837158,
+      0.6999999284744263,
+      0.6999999284744263
+    ],
+    "first_cuda_advantages": [
+      -0.699999988079071,
+      -0.699999988079071,
+      0.699999988079071,
+      0.699999988079071
+    ],
+    "first_mismatch_input": [
+      -1.5,
+      -1.5,
+      -0.10000000149011612,
+      -0.10000000149011612
+    ],
+    "fixture_id": "foundry-float32-cpu-cuda-advantage-projection-v1",
+    "fixture_sha256": "35bbe14ed74449cc952d425b01b3880e3af2d18ec991d7d7d5ba7ccc4f88f555",
+    "fixture_vector_count": 65536,
+    "generation_calls": 0,
+    "input_value_count": 16,
+    "maximum_absolute_difference": 1.1920928955078125e-07,
+    "model_loaded": false,
+    "strict_determinism": true
+  },
+  "decision": "signal_audit_implementation_blocker",
+  "duplicate_smoke_status": "not_reached",
+  "failed_group_evidence_published": false,
+  "failed_schedule_position": 13,
+  "failure_arm": "generic",
+  "failure_classification": "cross_device_exact_advantage_projection_assertion",
+  "failure_exception": "stock TRL advantages differ from frozen reward projection",
+  "failure_location": "post_generation_and_reward_scoring_before_group_record_publication",
+  "final_policy_reference_base_integrity": "not_published_due_prepublication_failure",
+  "fixed_library_notice_counts": {
+    "transformers-dynamic-cache-torch-export-version-uncertainty-v1": 0,
+    "transformers-peft-empty-label-names-informational-v1": 1,
+    "transformers-qwen2-sliding-window-sdpa-unimplemented-v1": 1
+  },
+  "generated_completion_count": 52,
+  "generated_group_count": 13,
+  "generic_complete_audit_status": "failed_at_group_13",
+  "generic_stderr_file_sha256": "4e5a96e0dd725a1b13bf2b10def0ec12ec825ea6d41e5da312489b4c2a15f47e",
+  "gradient_projection_status": "not_reached",
+  "gsm1k_status": "not_run",
+  "holdout_v2_status": "not_run",
+  "next_action": "authorize_a_corrected_fresh_signal_audit_or_close_grpo",
+  "official_smoke_status": "not_reached",
+  "optimizer_created": false,
+  "partial_audit_sha256": "37313f3f9f378ff994006f2ed185ca50ee5160ef9c34926f7a468342d83be8b5",
+  "partial_backend_failure_count": 0,
+  "partial_completion_tokens": 5682,
+  "partial_evidence_file_sha256": "35748e1f6448286f7f17b6f7951e4637259fa598e0e942ed3758e9e9643fe9d8",
+  "partial_family_signal_density": {
+    "constraint_distribution_or_discrete_reasoning": {
+      "audited_groups": 3,
+      "nonzero_variance_groups": 1,
+      "zero_variance_groups": 2
+    },
+    "multi_step_bookkeeping_or_omission": {
+      "audited_groups": 3,
+      "nonzero_variance_groups": 1,
+      "zero_variance_groups": 2
+    },
+    "rate_ratio_percentage_or_average": {
+      "audited_groups": 3,
+      "nonzero_variance_groups": 1,
+      "zero_variance_groups": 2
+    }
+  },
+  "partial_nonzero_variance_group_count": 4,
+  "partial_nonzero_variance_replay_group_count": 1,
+  "partial_nonzero_variance_task_group_count": 3,
+  "partial_replay_group_count": 3,
+  "partial_reward_contract_inconsistency_count": 0,
+  "partial_task_group_count": 9,
+  "partial_zero_variance_classifications": {
+    "all_correct_saturated": 1,
+    "all_incorrect_saturated": 4,
+    "output_identical": 3
+  },
+  "partial_zero_variance_group_count": 8,
+  "published_completion_count": 48,
+  "published_group_count": 12,
+  "representative_selection_status": "not_reached",
+  "resource_usage": {
+    "disk_bytes": 1045652,
+    "files": [
+      {
+        "bytes": 984,
+        "path": "campaign.stderr.txt",
+        "sha256": "1e83b599ba733c2e2065916321c3d80fabdc95b57b0c2f9997d851fd6dcc0305"
+      },
+      {
+        "bytes": 0,
+        "path": "campaign.stdout.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 1043445,
+        "path": "generic/partial_evidence.json",
+        "sha256": "35748e1f6448286f7f17b6f7951e4637259fa598e0e942ed3758e9e9643fe9d8"
+      },
+      {
+        "bytes": 1223,
+        "path": "logs/generic.stderr.txt",
+        "sha256": "4e5a96e0dd725a1b13bf2b10def0ec12ec825ea6d41e5da312489b4c2a15f47e"
+      },
+      {
+        "bytes": 0,
+        "path": "logs/generic.stdout.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "observed_end_utc": "2026-07-29T17:38:21.024673+00:00",
+    "observed_start_utc": "2026-07-29T17:36:36.861781+00:00",
+    "observed_wall_clock_seconds": 104.16289210319519,
+    "peak_allocated_vram_bytes": null,
+    "peak_process_rss_bytes": null,
+    "peak_reserved_vram_bytes": null,
+    "resource_metrics_status": "final_runtime_summary_not_reached"
+  },
+  "retry_performed": false,
+  "root_cause": {
+    "comparison": "torch.equal_after_cpu_projection_copy_to_cuda",
+    "exact_cross_device_equality_valid": false,
+    "frozen_helper_advantage_device": "cpu",
+    "scientific_setting_changed": false,
+    "stock_trl_advantage_device": "cuda"
+  },
+  "schedule_manifest_sha256": "ff1005a1d7381acd52dd28b3d054b2979986c47595ed09c944880ea5fc5f5ff3",
+  "scheduler_created": false,
+  "schema_version": 1,
+  "sealed_content_use": 0,
+  "secondary_analysis_defect": {
+    "aggregation_ready": false,
+    "classification": "task_family_identifier_alias_mismatch",
+    "frozen_helper_family_ids": [
+      "bookkeeping",
+      "rate_ratio",
+      "discrete"
+    ],
+    "observed_schedule_family_ids": [
+      "constraint_distribution_or_discrete_reasoning",
+      "multi_step_bookkeeping_or_omission",
+      "rate_ratio_percentage_or_average"
+    ],
+    "raw_group_family_evidence_affected": false
+  },
+  "signal_audit_contract_sha256": "5af65428836a359f332fe6866f2b31c6d0433d6e4e5f0ab28868baefda0beec6",
+  "source_commit": "128d3fe294b30dd2667c46b961bf98fe145b8335",
+  "targeted_audit_status": "not_started",
+  "viability_gate_status": "not_reached"
+}

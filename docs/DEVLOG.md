@@ -4350,3 +4350,47 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
 - **Next action:** Verify the generated source manifests and frozen inputs, publish and
   synchronize this pre-generation source boundary, then audit the generic and targeted schedules
   exactly once each without optimization.
+
+### 2026-07-29 - Milestone 14B stopped during the generic signal audit
+
+- **Published source boundary:** The complete-schedule audit source was committed as
+  `128d3fe294b30dd2667c46b961bf98fe145b8335`, pushed, and verified clean and synchronized
+  before model loading. A final clean-tree preflight reconstructed both 32-group schedules,
+  every implementation file, and audit contract `5af65428...0beec6`.
+- **Incomplete generic audit:** Generic durably recorded 12 schedule groups and 48 completions,
+  then generated and reward-scored the four completions for position 13. The runtime stopped
+  before publishing that group because stock CUDA advantages were not byte-equal to the helper's
+  CPU float32 projection. Partial evidence SHA-256 is `37313f3f...3be8b5`; its file SHA-256 is
+  `35748e1f...3fe9d8`. Generic therefore generated 13 groups/52 completions, while only 12/48
+  have complete published group records. Targeted never started and no retry occurred.
+- **Exact implementation blocker:** The failing assertion compared stock TRL's CUDA reduction
+  with `reward_projection` computed on CPU and then copied to CUDA using `torch.equal`. A
+  model-free controlled fixture enumerated 65,536 four-reward vectors and found 11,915 exact
+  CPU/CUDA mismatches, with a maximum absolute difference of
+  `1.1920928955078125e-07`. Fixture SHA-256 is `35bbe14e...8f555`. This establishes
+  `cross_device_exact_advantage_projection_assertion`; it does not establish a reward-signal or
+  computation-graph failure.
+- **Partial signal only:** Among the 12 complete group records, four have nonzero reward
+  variance: three task groups and one replay group. Each observed task family contributes one
+  informative and two zero-variance groups. The eight zero-variance groups classify as one
+  all-correct saturation, four all-incorrect saturations, and three identical-output groups.
+  Backend failures and reward-contract inconsistencies are zero. These incomplete counts are not
+  a viability decision.
+- **Secondary source defect:** Monitoring also exposed that the summary helper expected the
+  shorthand family IDs `bookkeeping`, `rate_ratio`, and `discrete`, while the frozen schedules
+  carry the canonical long-form IDs. Raw group evidence is unaffected, but the frozen aggregate
+  would not have been viable for publication. Neither defect was corrected after model
+  generation.
+- **No optimization or downstream access:** The partial evidence records no optimizer,
+  backward call, scheduler, or adapter save. Final whole-model policy/reference/base comparison
+  and peak VRAM/RAM publication were not reached. Counted training, representative selection,
+  gradient projection, official or duplicate smokes, holdout v2, GSM1K, and sealed-final access
+  did not occur.
+- **Resources and terminal packet:** The 12 published groups contain 5,682 completion tokens.
+  The failed campaign occupied 104.162892 observed wall-clock seconds and 1,045,652 bytes of
+  ignored evidence/logs. Final VRAM and RAM metrics are unavailable because the runtime summary
+  was not reached. The content-free blocker SHA-256 is `0597d2a6...184ae4`.
+- **Next action:** Do not infer schedule viability from the partial result. Either explicitly
+  authorize a corrected fresh signal audit with CUDA-native stock-advantage evidence and exact
+  canonical family aliases, including how the 52 already generated completions are accounted
+  for, or close verifier-GRPO and select a different Tier 3 objective.
