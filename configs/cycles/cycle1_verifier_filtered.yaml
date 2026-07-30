@@ -1,0 +1,298 @@
+schema_version: 1
+controller_id: foundry-cycle-controller-v1
+cycle_id: foundry-cycle1-vfbon-sft-v1
+optimization_method: verifier-filtered-best-of-n-sft-v1
+stages:
+  - verify_baseline
+  - diagnose
+  - load_safe_warm_start
+  - generate_candidates
+  - verify_and_select_traces
+  - freeze_training_corpus
+  - compatibility_smoke
+  - train_candidate
+  - select_checkpoint
+  - development_retention
+  - holdout_retention
+  - benchmark
+  - decide
+  - promote_or_reject
+  - publish_trace
+
+roots:
+  artifact_root: C:\Users\Admin\Projects\Foundry
+  frozen_source_root: C:\Users\Admin\Projects\Foundry-cycle1-frozen
+  runtime_root: C:\Users\Admin\Projects\Foundry-cycle1-runtime
+  model_registry_root: C:\Users\Admin\Projects\Foundry-cycle1-runtime\model_registry
+
+starting_state:
+  repository_commit: 865143558e581a8561bb96848682f43b3385c0bd
+  repository_tree: 88f8e92173207e09585ebcb2d31994a86b051563
+  branch: main
+  active_model:
+    logical_id: untouched-base
+    gsm1k_correct: 521
+    gsm1k_total: 814
+    gsm1k_accuracy: 0.64004914004914
+    gsm1k_extractable: 752
+
+model:
+  model_id: Qwen/Qwen2.5-1.5B-Instruct
+  revision: 989aa7980e4cf806f80c7fef2b1adb7bc71aa306
+  snapshot_relative_path: data/huggingface/hub/models--Qwen--Qwen2.5-1.5B-Instruct/snapshots/989aa7980e4cf806f80c7fef2b1adb7bc71aa306
+  snapshot_manifest_sha256: 02bff45c336c3650abe518a94accf4c321f0116678a99c2f56a131cf2eade34d
+
+dataset:
+  identity_sha256: ee18f7f9bd7625469d83e1c1df8dad4db0ecf8b3d8c870a07c60f2808e11dc31
+  targeted_training_relative_path: results/raw/phase2_vetted_corpus/dataset/targeted_training.jsonl
+  targeted_training_sha256: 3322a9de2e56d24e170129112a8973dd45e5c6575969da52e5cac44f23cea215
+  targeted_validation_relative_path: results/raw/phase2_vetted_corpus/dataset/targeted_validation.jsonl
+  targeted_validation_sha256: 4329bc2e4a09f0001c128f24ba99f32f60c3031ceae1fbbd639ac9c83309c74a
+  training_records: 180
+  validation_records: 20
+  selected_failure_families:
+    - constraint_distribution_or_discrete_reasoning
+    - multi_step_bookkeeping_or_omission
+    - rate_ratio_percentage_or_average
+
+warm_start:
+  arm: targeted
+  scope: L3
+  checkpoint: 64
+  adapter_relative_path: results/raw/phase2_vetted_corpus/milestone13e/full/targeted/training/checkpoint-64/adapter
+  adapter_sha256: 4e195ff2cb32c4faa6858915b95507862c911bb2eb853b060717416d825df91d
+  adapter_weights_sha256: f86e3b82d06abc2d800331a9d35732e1d42f2fc29cbf3a2314eafa53fddb2d02
+  generic_adapter_sha256: 67c6f1dd34c0fa1ddebb354dfe14c43e61c48fdd90c687ba1a9290d2401479cd
+  generic_validation_ce: 1.938297227537007
+  targeted_validation_ce: 2.1338993519544602
+  generic_gsm1k_correct: 517
+  targeted_gsm1k_correct: 519
+  generic_holdout_preserved: 315
+  targeted_holdout_preserved: 315
+  holdout_total: 317
+
+generation:
+  prompts: every_targeted_training_prompt
+  completions_per_prompt: 8
+  max_new_tokens: 256
+  temperature: 0.8
+  top_p: 0.95
+  top_k: 50
+  seed: 20260720
+  do_sample: true
+  vllm: false
+  cpu_offload: false
+  adapter: frozen_l3_targeted
+  sub_seed:
+    input_encoding: utf-8
+    concatenation: cycle_id_then_source_id_then_zero_based_decimal_completion_index
+    digest: sha256
+    projection: first_8_digest_bytes_big_endian_masked_to_63_bits
+
+selection:
+  maximum_selected_per_prompt: 1
+  hierarchy:
+    - eligible
+    - shortest_completion_token_count
+    - lowest_normalized_completion_sha256
+    - lowest_raw_completion_sha256
+  normalized_completion:
+    unicode: NFKC
+    newline: LF
+    whitespace: collapse_all_runs_to_one_ascii_space
+    trim: true
+  required_final_answer_prefix: "Final answer:"
+  token_count_minimum: 1
+  token_count_maximum: 256
+  prohibit_prompt_echo: true
+  prohibit_question_generation: true
+  prohibit_malformed_output: true
+  prohibit_truncation: true
+  prohibit_backend_error: true
+
+coverage_gate:
+  all_prompts_processed_once: true
+  attempts_per_prompt: 8
+  backend_failures: 0
+  verifier_disagreements: 0
+  minimum_overall_fraction: 0.5
+  minimum_each_family_fraction: 0.5
+  minimum_changed_selected_traces: 60
+  selected_prompt_echo: 0
+  selected_question_generation: 0
+  selected_malformed: 0
+  selected_answer_disagreements: 0
+  gsm1k_exact_overlap: 0
+  gsm1k_normalized_exact_overlap: 0
+  gsm1k_contiguous_token_overlap:
+    window_tokens: 12
+    maximum: 0
+  failure_classification: verifier_filtered_optimizer_signal_insufficient
+
+corpus:
+  total_assistant_tokens: 32000
+  task_assistant_tokens: 24000
+  replay_assistant_tokens: 8000
+  task_fraction: 0.75
+  replay_fraction: 0.25
+  selected_prompt_original_fraction: 0.5
+  selected_prompt_trace_fraction: 0.5
+  fallback_prompt_original_fraction: 1.0
+  replay_relative_source_path: results/raw/training/base_replay_kl/replay_corpus.json
+  replay_file_sha256: a9f25258d23f05a785dfea9f8ae0e05a246b52c9798a0d10e683fdc4e01a87f6
+  source_schedule_relative_path: results/raw/phase2_vetted_corpus/v1_replay25_schedules/targeted_schedule.json
+  source_schedule_file_sha256: ab38a287e34022d153ab989770d2db292881337693c97fd5fcbd78f4f1573620
+  source_schedule_sha256: 88c5378cac7efe927b29d3f421d97777cd6d917187c71c8388b60bbe7b57e259
+  source_schedule_32_step_prefix_sha256: 40214539356fb1f219e6d7bce57dc4a7db064dca030515eb4aab7008f12b07a7
+  replay_projection: byte_identical_occurrences_at_same_positions_in_first_32_steps
+
+training:
+  objective: assistant_only_cross_entropy
+  rank: 8
+  alpha: 16
+  dropout: 0.05
+  bias: none
+  target_modules:
+    - q_proj
+    - k_proj
+    - v_proj
+    - o_proj
+  adapted_layers:
+    - 14
+    - 15
+    - 16
+    - 17
+    - 18
+    - 19
+    - 20
+    - 21
+    - 22
+    - 23
+    - 24
+    - 25
+    - 26
+    - 27
+  optimizer: PagedAdamW8bit
+  learning_rate: 0.000005
+  weight_decay: 0.0
+  optimizer_steps: 32
+  checkpoints:
+    - 8
+    - 16
+    - 32
+  scheduler: cosine
+  scheduler_horizon_steps: 32
+  warmup_ratio: 0.05
+  warmup_steps: 2
+  seed: 20260720
+  gradient_checkpointing: false
+  cpu_offload: false
+  max_sequence_length: 512
+  gradient_clip_norm: 1.0
+  offline_required: true
+
+retention:
+  checkpoints_descending:
+    - 32
+    - 16
+    - 8
+  development:
+    adjudication:
+      suite_relative_path: results/raw/training/retention_powered_adjudication/retention_adjudication_v2.json
+      suite_file_sha256: 710e6030594eff5e0847f0f032bb8f1f71cd496030f72a9b371bb5919f5b6174
+      subset_relative_path: results/training/retention_adjudication_v2_base_correct_subset.json
+      subset_file_sha256: a67e1556fd8a8fcd0c4071e4f331a9893780bbca2187465d4fb33b76098219eb
+    anchor:
+      suite_relative_path: results/raw/training/retention_powered_adjudication/retention_anchor_holdout_v1.json
+      suite_file_sha256: 16e9e56cda2d806a1196b60cc4e087e28e356139319b80141c9b89a2e6859cf6
+      subset_relative_path: results/training/retention_anchor_holdout_v1_base_correct_subset.json
+      subset_file_sha256: ee0d5f59513bf25d59be1cc1b667c87c40ab35519476750e3eba22bce7ffc347
+  holdout_v2:
+    suite_relative_path: results/raw/phase2_vetted_corpus/milestone13c_r2/combined_holdout/candidate_suite.json
+    suite_file_sha256: b94c9247e7aa3f88d0b051e42403108682b2d7cfb138aec798e4c72dd55c4a7a
+    suite_sha256: b8b978ba69b501187b984d4631e8d7f5a41f39efeb292cb391a845c3e61e1b18
+    subset_relative_path: results/phase2_vetted_corpus/milestone13c_r2_combined_retention_subset.json
+    subset_file_sha256: 9661036771a986e60ddbb62a6883b8b3b8b6e04c91306647e435a07a958a06be
+    subset_sha256: a23b1014d92e9f98b74da3b29913a430bdaebf8e07a16b31b4c3dcc831f1f420
+    starting_preserved: 315
+    total: 317
+  gates:
+    minimum_overall_preservation: 0.9
+    minimum_arithmetic_preservation: 0.9
+    minimum_format_preservation: 0.9
+    minimum_instruction_preservation: 0.9
+    minimum_wilson_lower_bound: 0.85
+    maximum_prompt_echo_rate: 0.02
+    maximum_question_generation: 0
+    maximum_backend_failures: 0
+    maximum_failure_family_count: 3
+
+benchmark:
+  evaluator_config_relative_path: configs/eval/gsm1k_qwen2_5_1_5b_final_evaluator.yaml
+  evaluator_config_file_sha256: fa069dcc5d11e8b52da6fd3d6bc8cd77f46e3251c5d03ccadbe9e61db853d82d
+  development_manifest_relative_path: configs/eval/manifests/gsm1k_development.json
+  development_manifest_file_sha256: 09ef0accb4c75a735ea74a5a29633dc6375b9b24305f0387720ab1f6d7307d37
+  frozen_manifest_sha256: 5e810d3ab644bef1d43c598a14a6164ba6464b27fde50e92a2f241816ce87897
+  base_predictions_relative_path: results/raw/development_baseline/qwen2_5_1_5b/raw/predictions.jsonl
+  base_predictions_sha256: 73d52dace0f27577b1177bdfa81dfbb4c88252107c9b04e2ff49dbbd93da6cc0
+  taxonomy_relative_path: results/development_baseline/qwen2_5_1_5b/complete_failure_taxonomy.json
+  taxonomy_file_sha256: 3ae9f4686ec8e7658a5fc33b2f4d911d168afd797143bffef598cdbe27320d51
+  untouched_base_correct: 521
+  generic_l3_correct: 517
+  targeted_l3_correct: 519
+  total: 814
+  minimum_candidate_correct: 522
+  minimum_extractability: 0.9138
+  maximum_backend_failures: 0
+  untargeted_population: all_manifest_ids_excluding_published_base_failure_ids_in_selected_reasoning_categories
+  maximum_untargeted_aggregate_decline_percentage_points: 2.0
+
+promotion:
+  logical_model_id: foundry-cycle1-vfbon-sft-v1
+  previous_active_model: untouched-base
+  sanity_fixture: registry-nonbenchmark-arithmetic-v1
+
+smoke:
+  prompt_count: 4
+  prompt_selection: lowest_sha256_of_cycle_id_colon_source_id
+  completions_per_prompt: 8
+  training_records: 4
+  optimizer_steps: 2
+  scheduler_horizon_steps: 32
+  warmup_steps: 2
+  trials: 2
+  require_exact_duplicate: true
+
+environment:
+  general_interpreter: C:\Users\Admin\Projects\Foundry\.venv\Scripts\python.exe
+  training_interpreter: C:\Users\Admin\Projects\Foundry\.venv-training\Scripts\python.exe
+  interpreter_sha256: 0b471133e110cfb53a061cad528ce8e517d7b9ac41a0a396c39ad795a487fc14
+  contract_id: foundry-vetted-qlora-windows-operational-env-v2
+  operational_environment_relative_path: results/raw/phase2_vetted_corpus/milestone13c_r1/windows_operational_environment_v2_raw.json
+  operational_environment_file_sha256: 7d5094347c4446a8ce925c01adfe45813a451105aa229ae4acde1399a4ab6089
+  tracked_environment_relative_path: results/phase2_vetted_corpus/windows_operational_environment.json
+  tracked_environment_file_sha256: 9366db7c33448a3d82a84fb1bde5c83d354b629520a8ca7bef1690d64a749012
+  environment_evidence_sha256: 9244dd7aa9d4d5138ef01f1b4fb20b911fc390e034e5704ded4ba8fcd967244b
+  combined_child_environment_sha256: 1d402ec0cb661adeb50a3d3bd9510895f3f9068cbb393fb381565a5670de995b
+  deterministic_projection_sha256: 241e3e69f58d48a36c9411528aa129796319d23e61188b56cbcb4695e7fdf189
+  required:
+    CUBLAS_WORKSPACE_CONFIG: ":4096:8"
+    HF_HUB_OFFLINE: "1"
+    PYTHONDONTWRITEBYTECODE: "1"
+    PYTHONHASHSEED: "20260720"
+    TOKENIZERS_PARALLELISM: "false"
+    TRANSFORMERS_OFFLINE: "1"
+
+scientific_dependencies:
+  retention_scorer:
+    relative_path: src/foundry/training/retention.py
+    sha256: 0cc6f583caad049fe9ce25a4da70b84d8abcfd45360d8dbc1f9e25e86b530b91
+  retention_gate:
+    relative_path: src/foundry/training/retention_gate.py
+    sha256: f696dd0af1ae3b108d215527980d378d9b356b1bcc2f35a4bf1b25c6018c2dc6
+  base_conditioned_retention:
+    relative_path: src/foundry/training/base_conditioned_retention.py
+    sha256: 4351d0fa7b29736c25f3db86ff65659ffdad68987f917343655681a997294346
+  gsm1k_adapter_evaluator:
+    relative_path: src/foundry/training/adapter_evaluation.py
+    sha256: 432d47626639224d2e78680399eee81a129ef6a8348aa25e989f3130dc3d9324

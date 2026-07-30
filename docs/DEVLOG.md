@@ -4815,3 +4815,36 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
 - **Next action:** Publish and synchronize
   `analysis: stop source-bound L3 GRPO adaptation`, then stop for project-level GRPO
   interpretation. No further source-binding retry or scientific-setting patch is authorized.
+
+### 2026-07-30 - Milestone 15A autonomous Cycle 1 source freeze
+
+- **Starting boundary:** Clean synchronized `main` began at
+  `865143558e581a8561bb96848682f43b3385c0bd`, tree
+  `88f8e92173207e09585ebcb2d31994a86b051563`, with `0/0` divergence, no
+  active Python process, no Cycle 1 runtime or frozen worktree, no candidate or
+  promotion record, and no sealed-content access.
+- **Frozen intervention:** Added `foundry-cycle-controller-v1` and the single
+  `foundry-cycle1-vfbon-sft-v1` configuration. The 15-stage fail-closed state
+  machine binds the retention-safe L3 targeted adapter, deterministic
+  best-of-eight generation, exact verifier hierarchy and coverage gate, 24k
+  task plus byte-identical 8k replay schedule, 32-step L3 continuation,
+  development-only checkpoint selection, one-shot holdout, conditional GSM1K,
+  and atomic accept/reject registry update. Configuration SHA-256 is
+  `7fc85c4cbb957cd425fded14eba5507d706a7eeb76fa1107c3a50c4b335bd064`.
+- **Environment boundary:** Fresh training-interpreter validation reconstructed
+  the exact 37-field Windows operational-environment v2 child, reported
+  `PYTHONHASHSEED=20260720`, and confirmed hash randomization is enabled. Both
+  authorized environments report no broken requirements; no package or
+  environment was changed.
+- **Pre-model verification:** Ruff formatting and linting are clean, strict
+  Mypy passes all 229 source files, all 29 Cycle 1 controller/selection/corpus/
+  promotion tests pass, and all 1,171 repository tests pass in 163.86 seconds.
+  The full corpus test reconstructs exactly 24,000 task plus 8,000 replay
+  assistant tokens across 32 steps using the frozen L3 replay projection.
+  Every runtime-stage handoff is independently re-hashed, and the promotion
+  gate reconstructs the complete generation-through-benchmark identity chain.
+- **Execution boundary:** No model, tokenizer, generation, optimizer,
+  checkpoint, retention evaluation, or benchmark process has run. The next
+  authorized action is final source scanning, then publication of
+  `feat: add autonomous Foundry Cycle 1 controller` before creating the single
+  detached frozen worktree and external runtime root.

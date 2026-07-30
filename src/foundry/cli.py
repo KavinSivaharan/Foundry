@@ -10,6 +10,12 @@ from dataclasses import asdict
 from pathlib import Path
 
 from foundry.config import ConfigError, load_config
+from foundry.cycle.controller import (
+    active_model,
+    cycle_status,
+    run_compatibility_smoke,
+    run_cycle,
+)
 from foundry.evaluation.backends import (
     BackendError,
     FakeModelBackend,
@@ -184,6 +190,25 @@ def _parser() -> argparse.ArgumentParser:
     baseline.add_argument("--source-baseline-manifest", required=True, type=_path)
     baseline.add_argument("--baseline-manifest", required=True, type=_path)
     baseline.add_argument("--output-dir", required=True, type=_path)
+
+    cycle = subparsers.add_parser("cycle", help="run or inspect an autonomous Foundry cycle")
+    cycle_commands = cycle.add_subparsers(dest="cycle_command", required=True)
+    cycle_run = cycle_commands.add_parser("run", help="run the frozen Cycle 1 state machine")
+    cycle_run.add_argument("--config", required=True, type=_path)
+    cycle_run.add_argument("--resume", action="store_true")
+    cycle_status_parser = cycle_commands.add_parser(
+        "status", help="show content-free Cycle 1 status"
+    )
+    cycle_status_parser.add_argument("--cycle-id", required=True)
+    cycle_smoke = cycle_commands.add_parser(
+        "smoke", help="run one frozen compatibility-smoke trial"
+    )
+    cycle_smoke.add_argument("--config", required=True, type=_path)
+    cycle_smoke.add_argument("--trial", required=True, type=int, choices=(1, 2))
+
+    model = subparsers.add_parser("model", help="inspect the ignored model registry")
+    model_commands = model.add_subparsers(dest="model_command", required=True)
+    model_commands.add_parser("active", help="show the active Foundry model")
     return parser
 
 
@@ -563,6 +588,34 @@ def main(argv: Sequence[str] | None = None) -> int:
             return _run_final_evaluator_validate(args)
         if args.command == "development-baseline":
             return _run_development_baseline(args)
+        if args.command == "cycle":
+            if args.cycle_command == "run":
+                state = run_cycle(args.config, resume=args.resume)
+                print(
+                    json.dumps(
+                        {
+                            "cycle_id": state["cycle_id"],
+                            "decision": state["decision"],
+                            "state_sha256": state["state_sha256"],
+                        },
+                        sort_keys=True,
+                    )
+                )
+                return 0
+            if args.cycle_command == "status":
+                print(json.dumps(cycle_status(args.cycle_id), indent=2, sort_keys=True))
+                return 0
+            if args.cycle_command == "smoke":
+                print(
+                    json.dumps(
+                        run_compatibility_smoke(args.config, args.trial),
+                        sort_keys=True,
+                    )
+                )
+                return 0
+        if args.command == "model" and args.model_command == "active":
+            print(json.dumps(active_model(), indent=2, sort_keys=True))
+            return 0
         parser.error(f"unsupported command {args.command}")
     except (
         BackendError,
