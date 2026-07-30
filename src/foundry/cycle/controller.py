@@ -15,15 +15,25 @@ from typing import Any, Protocol, cast
 from foundry.cycle.contract import (
     CONTROLLER_ID,
     CYCLE_ID,
+    RECOVERY_EXECUTION_ID,
+    RECOVERY_PARENT_REJECTION_SHA256,
+    RECOVERY_PARENT_RUNTIME_SHA256,
+    RECOVERY_RUNTIME_ROOT,
     CycleConfig,
     CycleContractError,
+    bind_cycle_execution,
     content_free_projection,
+    cycle_execution_metadata,
     git_output,
     load_cycle_config,
     read_json_object,
     validate_file_identity,
     validate_frozen_source,
     validate_process_environment,
+)
+from foundry.cycle.generation_observability import (
+    ensure_recovery_runtime,
+    recovery_identity,
 )
 from foundry.cycle.state import StateStore
 from foundry.phase2.l3_grpo_contract import _starting_adapter, model_manifest
@@ -127,6 +137,7 @@ def _identity_payload(
     value: dict[str, Any] = {
         "schema_version": 1,
         "experiment_id": CYCLE_ID,
+        "execution": cycle_execution_metadata(config),
         "controller_id": CONTROLLER_ID,
         "config_sha256": config.sha256,
         "source": source,
@@ -159,7 +170,20 @@ def ensure_runtime_identity(
     identity_path = root / "experiment_identity.json"
     if root.exists():
         if not identity_path.is_file():
-            raise CycleContractError("existing Cycle 1 runtime root has no exact identity")
+            if config.execution_id != RECOVERY_EXECUTION_ID:
+                raise CycleContractError("existing Cycle 1 runtime root has no exact identity")
+            ensure_recovery_runtime(
+                root,
+                recovery_identity(
+                    config_sha256=config.sha256,
+                    model_revision=str(config.section("model")["revision"]),
+                    dataset_sha256=str(config.section("dataset")["identity_sha256"]),
+                    starting_adapter_sha256=str(config.section("warm_start")["adapter_sha256"]),
+                    prior_runtime_tree_sha256=RECOVERY_PARENT_RUNTIME_SHA256,
+                    prior_rejection_sha256=RECOVERY_PARENT_REJECTION_SHA256,
+                ),
+            )
+            _write_json(identity_path, identity, exclusive=True)
         existing = read_json_object(identity_path)
         if existing != identity:
             raise CycleContractError("existing Cycle 1 runtime root belongs to another experiment")
@@ -241,6 +265,19 @@ def _runtime_command(
         command.extend(["--expected-adapter-sha256", expected_adapter_sha256])
     if smoke:
         command.append("--smoke")
+    source = validate_frozen_source(config)
+    command.extend(
+        [
+            "--execution-id",
+            config.execution_id,
+            "--source-root",
+            str(config.source_root),
+            "--source-commit",
+            source["commit"],
+            "--source-tree",
+            source["tree"],
+        ]
+    )
     _run_process(
         config=config,
         command=command,
@@ -251,22 +288,52 @@ def _runtime_command(
 
 def _smoke_exact_projection(
     *,
+    config: CycleConfig,
+    trial: int,
     generation: dict[str, Any],
     selection: dict[str, Any],
     corpus: dict[str, Any],
     training: dict[str, Any],
 ) -> dict[str, Any]:
     metrics = cast(list[dict[str, Any]], training["step_metrics"])
+    log_root = config.runtime_root / "logs"
+    stderr_sha256s = {
+        operation: file_sha256(log_root / f"compatibility-trial-{trial}-{operation}.stderr.txt")
+        for operation in ("generation", "selection", "corpus", "training")
+    }
+    fallback_records = [
+        item
+        for item in cast(list[dict[str, Any]], corpus["records"])
+        if item["variant"] == "original"
+    ]
+    warning_contract = cast(dict[str, Any], generation["warning_contract_evidence"])
     return {
         "generated_token_ids_sha256": generation["generated_token_ids_sha256"],
+        "decoded_completion_hashes_sha256": generation["decoded_completion_hashes_sha256"],
+        "completion_token_counts_sha256": generation["completion_token_counts_sha256"],
+        "warning_identity_sha256": generation["warning_identity_sha256"],
+        "generation_rng_transitions_sha256": generation["cycle_rng_transitions_sha256"],
+        "warning_contract_call_evidence_sha256": warning_contract["call_evidence_sha256"],
+        "warning_contract_rng_transitions_sha256": warning_contract["rng_transitions_sha256"],
+        "generation_launch_evidence_sha256": canonical_sha256(generation["launch_evidence"]),
+        "component_decisions_sha256": selection["component_decisions_sha256"],
         "selected_trace_manifest_sha256": selection["selected_trace_manifest_sha256"],
+        "fallback_identities_sha256": canonical_sha256(fallback_records),
         "corpus_sha256": corpus["corpus_sha256"],
+        "training_schedule_sha256": corpus["schedule_sha256"],
         "losses": [item["loss"] for item in metrics],
         "gradient_hashes": [item["gradient_sha256"] for item in metrics],
         "optimizer_state_hashes": [item["optimizer_state_sha256"] for item in metrics],
         "scheduler_state_hashes": [item["scheduler_state_sha256"] for item in metrics],
+        "training_rng_transition_sha256": training["rng_transition_sha256"],
+        "training_launch_evidence_sha256": canonical_sha256(training["launch_evidence"]),
         "final_adapter_tensor_sha256": training["final_lora_tensor_sha256"],
         "final_adapter_directory_sha256": training["final_adapter_sha256"],
+        "stderr_sha256s": stderr_sha256s,
+        "source": generation["source"],
+        "interpreter_sha256": file_sha256(Path(sys.executable)),
+        "environment_sha256": config.section("environment")["combined_child_environment_sha256"],
+        "execution": cycle_execution_metadata(config),
     }
 
 
@@ -345,12 +412,17 @@ def _finalize_compatibility_rejection(
     return CycleController(config=config, store=store, backend=backend).run()
 
 
-def run_compatibility_smoke(config_path: Path, trial: int) -> dict[str, Any]:
+def run_compatibility_smoke(
+    config_path: Path,
+    trial: int,
+    *,
+    execution_id: str | None = None,
+) -> dict[str, Any]:
     """Run one of the two predeclared fresh compatibility trials."""
 
     if trial not in {1, 2}:
         raise ValueError("compatibility smoke trial must be 1 or 2")
-    config = load_cycle_config(config_path)
+    config = bind_cycle_execution(load_cycle_config(config_path), execution_id)
     source, interpreter_sha256, initial_active_sha256 = ensure_runtime_identity(config)
     if (config.runtime_root / "state.json").exists():
         raise CycleContractError("compatibility execution is closed after a cycle decision")
@@ -374,6 +446,7 @@ def run_compatibility_smoke(config_path: Path, trial: int) -> dict[str, Any]:
         failure: dict[str, Any] = {
             "schema_version": 1,
             "smoke_id": "foundry-cycle1-compatibility-smoke-v1",
+            "execution": cycle_execution_metadata(config),
             "trial": trial,
             "passed": False,
             "classification": "compatibility_smoke_exception",
@@ -399,9 +472,33 @@ def run_compatibility_smoke(config_path: Path, trial: int) -> dict[str, Any]:
         )
         return failure
     selection_checks = cast(dict[str, bool], selection["checks_before_overlap_audit"])
+    warning_contract = cast(dict[str, Any], generation["warning_contract_evidence"])
     gates = {
+        "four_generation_prompts": generation["prompts"] == 4,
+        "eight_completions_per_prompt": generation["completions_per_prompt"] == 8,
+        "thirty_two_generation_attempts": generation["attempted_completions"] == 32,
         "zero_generation_backend_failures": generation["backend_failures"] == 0,
+        "thirty_two_output_bearing_completions": (generation["output_bearing_completions"] == 32),
+        "thirty_two_successful_token_id_packets": (generation["successful_token_id_packets"] == 32),
+        "empty_exception_evidence": generation["exception_evidence_failures"] == 0,
+        "all_generation_warnings_whitelisted": (
+            warning_contract["all_warnings_whitelisted"] is True
+        ),
+        "expected_top_p_warning_per_attempt": (
+            warning_contract["all_expected_warnings_present"] is True
+            and warning_contract["generation_calls"] == 32
+        ),
+        "strict_determinism_restored": (warning_contract["all_strict_restorations"] is True),
+        "every_completion_scored": selection["attempted_completions"] == 32,
+        "every_prompt_has_exact_attempts": (
+            selection_checks["all_prompts_processed_once"]
+            and selection_checks["exactly_eight_attempts_per_prompt"]
+        ),
         "zero_verifier_disagreements": selection_checks["zero_verifier_disagreements"],
+        "selected_or_fallback_decision_per_prompt": (
+            selection["selected_prompts"] + selection["fallback_prompts"] == 4
+            and len(cast(list[dict[str, Any]], corpus["records"])) == 4
+        ),
         "four_unique_training_records": corpus["unique_records"] == 4,
         "two_optimizer_steps": training["optimizer_steps"] == 2,
         "finite_losses": all(
@@ -416,10 +513,17 @@ def run_compatibility_smoke(config_path: Path, trial: int) -> dict[str, Any]:
         "lora_tensors_changed": training["changed_lora_tensor_count"] > 0,
         "base_parameters_unchanged": training["base_parameters_unchanged"],
         "offline_reload": training["offline_reload"],
+        "adapter_saved": bool(
+            cast(dict[str, dict[str, Any]], training["checkpoints"])
+            .get("2", {})
+            .get("adapter_sha256")
+        ),
         "base_restoration": training["base_restoration"],
         "no_cpu_offload": training["cpu_offload"] is False,
     }
     exact = _smoke_exact_projection(
+        config=config,
+        trial=trial,
         generation=generation,
         selection=selection,
         corpus=corpus,
@@ -428,6 +532,7 @@ def run_compatibility_smoke(config_path: Path, trial: int) -> dict[str, Any]:
     summary: dict[str, Any] = {
         "schema_version": 1,
         "smoke_id": "foundry-cycle1-compatibility-smoke-v1",
+        "execution": cycle_execution_metadata(config),
         "trial": trial,
         "config_sha256": config.sha256,
         "source": source,
@@ -464,10 +569,12 @@ def run_compatibility_smoke(config_path: Path, trial: int) -> dict[str, Any]:
             "same_baseline_evidence": (
                 first["baseline_evidence_sha256"] == baseline_evidence_sha256
             ),
+            "same_execution": first["execution"] == cycle_execution_metadata(config),
         }
         duplicate: dict[str, Any] = {
             "schema_version": 1,
             "compatibility_id": "foundry-cycle1-duplicate-compatibility-v1",
+            "execution": cycle_execution_metadata(config),
             "checks": duplicate_checks,
             "passed": all(duplicate_checks.values()),
             "trial_1_smoke_sha256": first["smoke_sha256"],
@@ -573,6 +680,7 @@ def reconstruct_baseline_evidence(
         raise CycleContractError("frozen baseline results or adapters differ")
     return {
         "schema_version": 1,
+        "execution": cycle_execution_metadata(config),
         "source": source,
         "model": model,
         "dataset_sha256": dataset["identity_sha256"],
@@ -614,6 +722,11 @@ class ProductionBackend:
         self.evidence_root = config.runtime_root / "evidence"
 
     def _persist(self, stage: str, value: dict[str, Any]) -> dict[str, Any]:
+        execution = cycle_execution_metadata(self.config)
+        supplied_execution = value.get("execution")
+        if supplied_execution is not None and supplied_execution != execution:
+            raise CycleContractError(f"stage {stage} execution identity differs")
+        value["execution"] = execution
         projected = content_free_projection(value)
         if projected != value:
             raise CycleContractError(f"stage {stage} attempted to persist content")
@@ -1019,6 +1132,7 @@ class ProductionBackend:
         chain: dict[str, Any] = {
             "schema_version": 1,
             "cycle_id": CYCLE_ID,
+            "execution": cycle_execution_metadata(self.config),
             "config_sha256": self.config.sha256,
             "source": self.source,
             "state_sha256": state["state_sha256"],
@@ -1129,6 +1243,7 @@ class ProductionBackend:
             record: dict[str, Any] = {
                 "schema_version": 1,
                 "cycle_id": CYCLE_ID,
+                "execution": cycle_execution_metadata(self.config),
                 "cycle_state_sha256": state["state_sha256"],
                 "decision": "rejected",
                 "reason": state.get("stop_reason"),
@@ -1160,6 +1275,7 @@ class ProductionBackend:
             "adapter_sha256": candidate_hash,
             "checkpoint": checkpoint,
             "cycle_id": CYCLE_ID,
+            "execution_id": self.config.execution_id,
         }
         try:
             temporary_active = active_path.with_suffix(".tmp")
@@ -1213,6 +1329,7 @@ class ProductionBackend:
             "schema_version": 1,
             "promotion_id": "foundry-cycle1-automatic-promotion-v1",
             "cycle_id": CYCLE_ID,
+            "execution": cycle_execution_metadata(self.config),
             "cycle_state_sha256": state["state_sha256"],
             "previous_active_model": "untouched-base",
             "promoted_model": logical_id,
@@ -1287,11 +1404,18 @@ class ProductionBackend:
         result: dict[str, Any] = {
             "schema_version": 1,
             "cycle_id": CYCLE_ID,
+            "execution": cycle_execution_metadata(self.config),
             "controller_id": CONTROLLER_ID,
             "decision": state["decision"],
             "stop_reason": state.get("stop_reason"),
             "project_status": (
-                "COMPLETE" if state["decision"] == "promoted" else "CYCLE_1_REJECTED"
+                "COMPLETE"
+                if state["decision"] == "promoted"
+                else (
+                    "CYCLE_1_REJECTED_FINAL"
+                    if self.config.execution_id == RECOVERY_EXECUTION_ID
+                    else "CYCLE_1_REJECTED"
+                )
             ),
             "starting_commit": self.config.section("starting_state")["repository_commit"],
             "controller_source": self.source,
@@ -1397,12 +1521,17 @@ class CycleController:
         return state
 
 
-def run_cycle(config_path: Path, *, resume: bool) -> dict[str, Any]:
+def run_cycle(
+    config_path: Path,
+    *,
+    resume: bool,
+    execution_id: str | None = None,
+) -> dict[str, Any]:
     """Run the one autonomous production cycle."""
 
     if not resume:
         raise CycleContractError("Cycle 1 requires the explicit --resume contract")
-    config = load_cycle_config(config_path)
+    config = bind_cycle_execution(load_cycle_config(config_path), execution_id)
     source, interpreter_sha256, initial_active_sha256 = ensure_runtime_identity(config)
     compatibility = config.runtime_root / "compatibility" / "summary.json"
     if not compatibility.is_file():
@@ -1420,10 +1549,17 @@ def run_cycle(config_path: Path, *, resume: bool) -> dict[str, Any]:
     return CycleController(config=config, store=store, backend=backend).run()
 
 
-def cycle_status(cycle_id: str) -> dict[str, Any]:
+def cycle_status(cycle_id: str, *, execution_id: str | None = None) -> dict[str, Any]:
     if cycle_id != CYCLE_ID:
         raise CycleContractError("unknown cycle ID")
-    root = Path(r"C:\Users\Admin\Projects\Foundry-cycle1-runtime")
+    resolved_execution = CYCLE_ID if execution_id is None else execution_id
+    if resolved_execution not in {CYCLE_ID, RECOVERY_EXECUTION_ID}:
+        raise CycleContractError("unknown Cycle 1 execution ID")
+    root = (
+        RECOVERY_RUNTIME_ROOT
+        if resolved_execution == RECOVERY_EXECUTION_ID
+        else Path(r"C:\Users\Admin\Projects\Foundry-cycle1-runtime")
+    )
     state_path = root / "state.json"
     result_path = root / "publication" / "cycle_result.json"
     if result_path.is_file():
@@ -1434,6 +1570,7 @@ def cycle_status(cycle_id: str) -> dict[str, Any]:
         benchmark = result.get("benchmark") or {}
         return {
             "cycle_id": CYCLE_ID,
+            "execution_id": resolved_execution,
             "baseline": "521/814",
             "diagnosed_weakness": (
                 cast(dict[str, Any], result.get("diagnosis") or {}).get(
@@ -1460,6 +1597,7 @@ def cycle_status(cycle_id: str) -> dict[str, Any]:
         state = read_json_object(state_path)
         return {
             "cycle_id": CYCLE_ID,
+            "execution_id": resolved_execution,
             "current_stage": state.get("current_stage"),
             "decision": state.get("decision"),
             "state_sha256": state.get("state_sha256"),
@@ -1467,12 +1605,21 @@ def cycle_status(cycle_id: str) -> dict[str, Any]:
     compatibility = root / "compatibility" / "summary.json"
     return {
         "cycle_id": CYCLE_ID,
+        "execution_id": resolved_execution,
         "status": "compatibility_complete" if compatibility.is_file() else "not_started",
     }
 
 
-def active_model() -> dict[str, Any]:
-    path = Path(r"C:\Users\Admin\Projects\Foundry-cycle1-runtime\model_registry\active_model.json")
+def active_model(*, execution_id: str | None = None) -> dict[str, Any]:
+    resolved_execution = CYCLE_ID if execution_id is None else execution_id
+    if resolved_execution not in {CYCLE_ID, RECOVERY_EXECUTION_ID}:
+        raise CycleContractError("unknown Cycle 1 execution ID")
+    root = (
+        RECOVERY_RUNTIME_ROOT
+        if resolved_execution == RECOVERY_EXECUTION_ID
+        else Path(r"C:\Users\Admin\Projects\Foundry-cycle1-runtime")
+    )
+    path = root / "model_registry" / "active_model.json"
     if not path.is_file():
         return {
             "logical_model_id": "untouched-base",

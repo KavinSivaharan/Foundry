@@ -8,6 +8,7 @@ from typing import Any
 
 import pytest
 
+from foundry.cycle.generation import DirectKwargsTopPWarningOnlyGenerationContract
 from foundry.training import grpo_compatibility as compatibility
 from foundry.training import grpo_trainer
 
@@ -185,6 +186,70 @@ def test_warning_only_is_limited_to_generate_and_preserves_sampling_and_result()
     assert record.warning_filters_restored is True
     assert record.warning_filters_before_sha256 == record.warning_filters_after_sha256
     assert isinstance(contract.call_records(), tuple)
+
+
+def test_direct_cycle_generation_fails_strictly_then_passes_under_same_arguments() -> None:
+    torch = _FakeTorch()
+    contract = DirectKwargsTopPWarningOnlyGenerationContract(
+        torch_module=torch,
+        generation_owner=_GenerationOwner,
+        top_p_call=_TopP.__call__,
+        state_probe=_state,
+        numpy_random=_FakeNumpyRandom(),
+        expected_generation_sha256=_hash(_GenerationOwner.generate),
+        expected_top_p_sha256=_hash(_TopP.__call__),
+        generation_fragments=("generation_config", "logits_processor"),
+        top_p_fragments=("softmax(dim=-1).cumsum(dim=-1)", "1 - self.top_p"),
+    )
+    original = _GenerationOwner.generate
+    calls: list[dict[str, object]] = []
+    token_ids = [17, 23, 41]
+
+    def direct_generate(
+        self: _GenerationOwner,
+        inputs: object,
+        **kwargs: object,
+    ) -> list[int]:
+        del self, inputs
+        calls.append(dict(kwargs))
+        if not torch.is_deterministic_algorithms_warn_only_enabled():
+            raise RuntimeError(
+                "cumsum_cuda_kernel does not have a deterministic implementation, "
+                "but torch.use_deterministic_algorithms(True) is active"
+            )
+        warnings.warn(_CUMSUM_WARNING, UserWarning, stacklevel=2)
+        return token_ids
+
+    frozen_arguments: dict[str, object] = {
+        "do_sample": True,
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 50,
+        "max_new_tokens": 256,
+        "use_cache": True,
+    }
+    type.__setattr__(_GenerationOwner, "generate", direct_generate)
+    contract.expected_generation_sha256 = _hash(direct_generate)
+    contract.generation_fragments = ("kwargs",)
+    try:
+        with pytest.raises(RuntimeError, match="cumsum_cuda_kernel.*deterministic"):
+            _GenerationOwner().generate(object(), **frozen_arguments)
+        arguments_before = dict(frozen_arguments)
+        with contract.install():
+            result = _GenerationOwner().generate(object(), **frozen_arguments)
+    finally:
+        type.__setattr__(_GenerationOwner, "generate", original)
+
+    assert result is token_ids
+    assert frozen_arguments == arguments_before
+    assert calls == [arguments_before, arguments_before]
+    assert len(contract.call_records()) == 1
+    record = contract.call_records()[0]
+    assert record.generation_completed is True
+    assert record.error_type is None
+    assert record.active_adapters_before == ("default",)
+    assert record.adapter_enabled_before is True
+    assert torch.warn_only is False
 
 
 def test_state_probe_release_is_explicit_and_generation_bound() -> None:

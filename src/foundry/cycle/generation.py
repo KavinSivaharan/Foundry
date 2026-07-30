@@ -9,7 +9,9 @@ import sys
 import time
 import warnings
 from collections.abc import Mapping
+from functools import partial
 from pathlib import Path
+from types import SimpleNamespace
 from typing import Any, cast
 
 from foundry.cycle.contract import (
@@ -35,6 +37,11 @@ from foundry.cycle.generation_observability import (
 )
 from foundry.phase2 import vetted_qlora_kl as qlora
 from foundry.training.config import assistant_only_v3_messages, canonical_sha256
+from foundry.training.grpo_compatibility import (
+    FROZEN_SAMPLING,
+    TopPWarningOnlyGenerationContract,
+    model_adapter_state,
+)
 from foundry.training.qlora import directory_sha256, file_sha256
 
 
@@ -48,6 +55,75 @@ def _write_jsonl(path: Path, rows: list[dict[str, Any]]) -> None:
     with path.open("x", encoding="utf-8", newline="\n") as handle:
         for row in rows:
             handle.write(json.dumps(row, sort_keys=True) + "\n")
+
+
+class DirectKwargsTopPWarningOnlyGenerationContract(TopPWarningOnlyGenerationContract):
+    """Audit Cycle's direct generation kwargs without changing the model call."""
+
+    def _run_generate(
+        self,
+        original_generate: Any,
+        model: Any,
+        args: tuple[Any, ...],
+        kwargs: dict[str, Any],
+    ) -> Any:
+        if "generation_config" in kwargs:
+            raise ValueError("Cycle generation requires the frozen direct-kwargs call")
+        direct_kwargs = dict(kwargs)
+        audit_config = SimpleNamespace(
+            **{name: direct_kwargs.get(name) for name in FROZEN_SAMPLING}
+        )
+        audit_kwargs = dict(direct_kwargs)
+        audit_kwargs["generation_config"] = audit_config
+
+        def call_with_unchanged_kwargs(
+            bound_model: Any,
+            *bound_args: Any,
+            **bound_kwargs: Any,
+        ) -> Any:
+            supplied_config = bound_kwargs.pop("generation_config", None)
+            if supplied_config is not audit_config:
+                raise RuntimeError("Cycle generation audit configuration differs")
+            if bound_kwargs.keys() != direct_kwargs.keys():
+                raise RuntimeError("Cycle generation argument keys changed")
+            for name, expected in direct_kwargs.items():
+                actual = bound_kwargs[name]
+                if actual is not expected and actual != expected:
+                    raise RuntimeError(f"Cycle generation argument changed: {name}")
+            return original_generate(bound_model, *bound_args, **bound_kwargs)
+
+        return super()._run_generate(
+            call_with_unchanged_kwargs,
+            model,
+            args,
+            audit_kwargs,
+        )
+
+
+def _attempt_warning_evidence(
+    contract: TopPWarningOnlyGenerationContract,
+    outer_warnings: list[warnings.WarningMessage],
+    *,
+    source_root: Path,
+) -> dict[str, Any]:
+    """Combine raw outer warnings with one content-free audited top-p call."""
+
+    outer = warning_evidence(outer_warnings, source_root=source_root)
+    records = contract.call_records()
+    call = records[-1].as_dict() if records else None
+    contract_warning_count = cast(int, call["warning_count"]) if call else 0
+    value: dict[str, Any] = {
+        "count": cast(int, outer["count"]) + contract_warning_count,
+        "outer": outer,
+        "top_p_contract_call": call,
+    }
+    value["warning_projection_sha256"] = canonical_sha256(
+        {
+            "outer_projection_sha256": outer["warning_projection_sha256"],
+            "top_p_contract_call": call,
+        }
+    )
+    return value
 
 
 def select_smoke_records(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -78,7 +154,7 @@ def generate_candidates(
         raise FileExistsError("generation output must be fresh")
     if diagnostic and (not smoke or execution_id != RECOVERY_EXECUTION_ID):
         raise ValueError("diagnostic generation requires the frozen R1 smoke identity")
-    if not diagnostic and execution_id != CYCLE_ID:
+    if not diagnostic and execution_id != config.execution_id:
         raise ValueError("non-diagnostic generation execution identity differs")
     generation = config.section("generation")
     dataset = config.section("dataset")
@@ -216,8 +292,16 @@ def generate_candidates(
     assert torch is not None
     assert model is not None
     assert tokenizer is not None
+    warning_contract = DirectKwargsTopPWarningOnlyGenerationContract(
+        torch_module=torch,
+        generation_owner=modules["transformers"].GenerationMixin,
+        top_p_call=modules["transformers"].generation.logits_process.TopPLogitsWarper.__call__,
+    )
+    state_probe = partial(model_adapter_state, model)
+    warning_contract.bind_state_probe(state_probe)
     parameter_state_before = parameter_state_hashes(model, torch)
     rows: list[dict[str, Any]] = []
+    cycle_rng_transitions: list[dict[str, str | None]] = []
     backend_failures = 0
     total_input_tokens = 0
     total_output_tokens = 0
@@ -289,19 +373,20 @@ def generate_candidates(
             try:
                 with warnings.catch_warnings(record=True) as captured:
                     warnings.simplefilter("always")
-                    with torch.inference_mode():
-                        outputs = model.generate(
-                            input_ids=input_ids,
-                            attention_mask=attention_mask,
-                            do_sample=generation_arguments["do_sample"],
-                            temperature=generation_arguments["temperature"],
-                            top_p=generation_arguments["top_p"],
-                            top_k=generation_arguments["top_k"],
-                            max_new_tokens=generation_arguments["max_new_tokens"],
-                            pad_token_id=tokenizer.pad_token_id,
-                            eos_token_id=tokenizer.eos_token_id,
-                            use_cache=generation_arguments["use_cache"],
-                        )
+                    with warning_contract.install():
+                        with torch.inference_mode():
+                            outputs = model.generate(
+                                input_ids=input_ids,
+                                attention_mask=attention_mask,
+                                do_sample=generation_arguments["do_sample"],
+                                temperature=generation_arguments["temperature"],
+                                top_p=generation_arguments["top_p"],
+                                top_k=generation_arguments["top_k"],
+                                max_new_tokens=generation_arguments["max_new_tokens"],
+                                pad_token_id=tokenizer.pad_token_id,
+                                eos_token_id=tokenizer.eos_token_id,
+                                use_cache=generation_arguments["use_cache"],
+                            )
                     attempt_warnings.extend(captured)
                 active_phase = "decode"
                 generated = outputs[0, prompt_tokens:]
@@ -338,7 +423,8 @@ def generate_candidates(
                     parameter_state_after=parameter_state_after,
                     rng_before_sha256=rng_before,
                     rng_after_sha256=rng_state_sha256(torch),
-                    warnings_payload=warning_evidence(
+                    warnings_payload=_attempt_warning_evidence(
+                        warning_contract,
                         attempt_warnings,
                         source_root=Path(resolved_source["import_root"]),
                     ),
@@ -347,6 +433,8 @@ def generate_candidates(
                     source_root=Path(resolved_source["import_root"]),
                 )
                 raise
+            rng_after = rng_state_sha256(torch)
+            cycle_rng_transitions.append({"before": rng_before, "after": rng_after})
             state = generation_state(
                 torch=torch,
                 psutil=modules["psutil"],
@@ -365,8 +453,9 @@ def generate_candidates(
                 identity=identity,
                 state=state,
                 rng_before_sha256=rng_before,
-                rng_after_sha256=rng_state_sha256(torch),
-                warnings_payload=warning_evidence(
+                rng_after_sha256=rng_after,
+                warnings_payload=_attempt_warning_evidence(
+                    warning_contract,
                     attempt_warnings,
                     source_root=Path(resolved_source["import_root"]),
                 ),
@@ -413,6 +502,10 @@ def generate_candidates(
             flush=True,
         )
     torch.cuda.synchronize()
+    warning_contract_evidence = warning_contract.evidence()
+    warning_call_evidence = [record.as_dict() for record in warning_contract.call_records()]
+    warning_contract.release_state_probe()
+    del state_probe
     parameter_state_after = parameter_state_hashes(model, torch)
     if parameter_state_after != parameter_state_before:
         raise RuntimeError("generation changed base or adapter parameter state")
@@ -471,7 +564,31 @@ def generate_candidates(
         "completions_per_prompt": attempts_per_prompt,
         "attempted_completions": len(rows),
         "backend_failures": backend_failures,
+        "output_bearing_completions": sum(
+            bool(row["token_ids"]) and bool(str(row["completion"]).strip()) for row in rows
+        ),
+        "successful_token_id_packets": evidence_manifest["attempt_count"]
+        - evidence_manifest["failures"],
+        "exception_evidence_failures": evidence_manifest["failures"],
         "generated_token_ids_sha256": canonical_sha256([row["token_ids"] for row in rows]),
+        "decoded_completion_hashes_sha256": canonical_sha256(
+            [row["raw_completion_sha256"] for row in rows]
+        ),
+        "completion_token_counts_sha256": canonical_sha256(
+            [row["completion_tokens"] for row in rows]
+        ),
+        "warning_identity_sha256": canonical_sha256(
+            [
+                {
+                    "warning_count": item["warning_count"],
+                    "warning_sha256s": item["warning_sha256s"],
+                    "warning_class_ids": item["warning_class_ids"],
+                }
+                for item in warning_call_evidence
+            ]
+        ),
+        "warning_contract_evidence": warning_contract_evidence,
+        "cycle_rng_transitions_sha256": canonical_sha256(cycle_rng_transitions),
         "deterministic_rows_sha256": canonical_sha256(deterministic_rows),
         "raw_file_sha256": file_sha256(raw_path),
         "total_input_tokens": total_input_tokens,

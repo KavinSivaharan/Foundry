@@ -7,9 +7,14 @@ import pytest
 
 from foundry.cycle.contract import (
     CYCLE_ID,
+    RECOVERY_EXECUTION_ID,
+    RECOVERY_RUNTIME_ROOT,
+    RECOVERY_SOURCE_ROOT,
     STAGES,
     CycleContractError,
+    bind_cycle_execution,
     content_free_projection,
+    cycle_execution_metadata,
     load_cycle_config,
     normalized_completion,
     prompt_subseed,
@@ -28,6 +33,28 @@ def test_cycle_configuration_freezes_the_authorized_contract() -> None:
     assert config.section("generation")["completions_per_prompt"] == 8
     assert config.section("corpus")["total_assistant_tokens"] == 32_000
     assert config.section("training")["adapted_layers"] == list(range(14, 28))
+
+
+def test_recovery_execution_binding_is_metadata_only_and_parent_linked() -> None:
+    original = load_cycle_config(CONFIG)
+    recovery = bind_cycle_execution(original, RECOVERY_EXECUTION_ID)
+    metadata = cycle_execution_metadata(recovery)
+
+    assert recovery.sha256 == original.sha256
+    assert recovery.payload is original.payload
+    assert recovery.source_root == RECOVERY_SOURCE_ROOT
+    assert recovery.runtime_root == RECOVERY_RUNTIME_ROOT
+    assert recovery.registry_root == RECOVERY_RUNTIME_ROOT / "model_registry"
+    assert metadata["scientific_cycle_id"] == CYCLE_ID
+    assert metadata["execution_id"] == RECOVERY_EXECUTION_ID
+    assert metadata["logical_model_id"] == CYCLE_ID
+    assert metadata["parent_execution_id"] == CYCLE_ID
+    assert metadata["config_hash_changed_by_execution_binding"] is False
+
+
+def test_unknown_recovery_execution_is_rejected() -> None:
+    with pytest.raises(CycleContractError, match="execution ID is not authorized"):
+        bind_cycle_execution(load_cycle_config(CONFIG), "foundry-cycle1-unapproved-retry")
 
 
 def test_prompt_subseed_uses_the_frozen_sha256_projection() -> None:

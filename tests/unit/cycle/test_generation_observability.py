@@ -470,6 +470,38 @@ def test_observability_freeze_self_hash_and_class_only_inspection() -> None:
     ]
 
 
+def test_backend_adjudication_reconstructs_and_selects_only_case_one() -> None:
+    path = REPO / "results/phase2_vetted_corpus/milestone15a_r1_backend_adjudication.json"
+    value = json.loads(path.read_text(encoding="utf-8"))
+    supplied = value.pop("adjudication_sha256")
+    decision = dict(value["decision"])
+    decision_sha256 = decision.pop("decision_sha256")
+
+    assert canonical_sha256(value) == supplied
+    assert canonical_sha256(decision) == decision_sha256
+    assert value["classification"] == "general_generation_integration_defect"
+    assert value["decision"]["defect_subtype"] == "stochastic_generation_context_defect"
+    assert value["case_requirements"]["case_2_required"] is False
+    assert value["case_requirements"]["case_3_required"] is False
+    assert value["diagnostic"]["attempt_count"] == 1
+
+
+def test_generation_correction_freeze_reconstructs_without_scientific_drift() -> None:
+    path = REPO / "results/phase2_vetted_corpus/milestone15a_r1_generation_correction.json"
+    value = json.loads(path.read_text(encoding="utf-8"))
+    supplied = value.pop("correction_sha256")
+
+    assert canonical_sha256(value) == supplied
+    assert canonical_sha256(value["correction_contract"]) == value["correction_contract_sha256"]
+    assert canonical_sha256(value["regression_fixture"]) == value["regression_fixture_sha256"]
+    assert value["frozen_scientific_identity"]["generation_settings_changed"] is False
+    assert value["execution_binding"]["config_hash_changed"] is False
+    assert (
+        value["old_implementation"]["cycle_generation_source_sha256"]
+        != value["corrected_implementation"]["cycle_generation_source_sha256"]
+    )
+
+
 def test_scientific_configuration_hash_is_unchanged_by_instrumentation() -> None:
     path = REPO / "configs/cycles/cycle1_verifier_filtered.yaml"
     payload = yaml.safe_load(path.read_text(encoding="utf-8"))

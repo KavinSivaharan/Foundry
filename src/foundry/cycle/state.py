@@ -16,6 +16,7 @@ from foundry.cycle.contract import (
     CycleConfig,
     CycleContractError,
     content_free_projection,
+    cycle_execution_metadata,
 )
 from foundry.training.config import canonical_sha256
 
@@ -38,6 +39,7 @@ def initial_state(
         "schema_version": 1,
         "controller_id": CONTROLLER_ID,
         "cycle_id": CYCLE_ID,
+        "execution": cycle_execution_metadata(config),
         "config_sha256": config.sha256,
         "source": source,
         "interpreter_sha256": interpreter_sha256,
@@ -90,6 +92,7 @@ class StateStore:
         if (
             state.get("controller_id") != CONTROLLER_ID
             or state.get("cycle_id") != CYCLE_ID
+            or state.get("execution") != cycle_execution_metadata(self.config)
             or state.get("config_sha256") != self.config.sha256
             or state.get("source") != self.source
             or state.get("interpreter_sha256") != self.interpreter_sha256

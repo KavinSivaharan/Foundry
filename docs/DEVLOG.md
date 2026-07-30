@@ -4961,3 +4961,96 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
   manifest, observability contract, fixture, and tracked freeze hashes
   reconstruct. Candidate-only secret, prohibited-artifact, sealed-path,
   tracked-size, and `git diff --check` reviews pass.
+
+### 2026-07-30 - Milestone 15A-R1 diagnostic adjudication
+
+- **Single diagnostic consumed:** Exactly one diagnostic child loaded the
+  frozen L3 targeted adapter and attempted completion index 0 for the first
+  compatibility prompt from detached observability commit
+  `7fecfec750a2037bbcddb3357dc27674b18d6f42`, tree
+  `6e4e4f793533644d9e68bfd3deb4ce9722509f78`. It exited 1, produced zero
+  output tokens, did not call the verifier, did not create a training record,
+  and was not retried. Attempt-evidence SHA-256 is
+  `a7449f8af5f419fc35658c9d92be6ddc49945121b333892115525ba24275ff24`.
+- **Exact reproduced failure:** The packet preserves `RuntimeError`, sampling
+  phase, exception-message SHA-256
+  `e634d40f312bf99d08b19afb3255998325128ceec65dce60619f5e3e333e3b86`,
+  traceback SHA-256
+  `dc900a3c80cf183a3cb0b48ed3e37896d229c23b7a2f1e089393ee2f173c1438`,
+  and the decisive CUDA cumulative-probability operation at
+  `transformers/generation/logits_process.py:455`. The Foundry call originated
+  at `foundry/cycle/generation.py:293`. Base, adapter, and combined model-state
+  hashes remained unchanged.
+- **Case 1 adjudication:** The defect is classified
+  `general_generation_integration_defect`, subtype
+  `stochastic_generation_context_defect`. Cycle generation entered frozen
+  top-p sampling with strict deterministic-algorithm enforcement instead of
+  the repository's existing audited generation-only warning contract. The
+  pinned contract reconstructs, its installed Transformers source hashes
+  match, and its frozen CUDA fixture proves both strict failure and
+  warning-only execution. No package, CUDA, driver, interpreter, model,
+  precision, quantization, sampling, prompt, verifier, or training change is
+  required.
+- **Authorized next boundary:** No additional diagnostic or model process is
+  permitted. The next action is the single minimal general correction,
+  model-free regression verification, publication, and corrected detached
+  source freeze.
+
+### 2026-07-30 - Milestone 15A-R1 corrected generation source
+
+- **Minimal correction:** Cycle generation now enters the existing
+  `foundry-warning-only-top-p-replay-v1` boundary for each unchanged direct
+  `GenerationMixin.generate` call. A Cycle-local bridge supplies the audited
+  sampling view only to the contract and removes it before invoking the
+  original method, so the model receives the original direct keyword
+  arguments byte-semantically unchanged. Strict deterministic mode is required
+  before every call, warning-only mode is limited to generation, and strict
+  mode is restored afterward. Runtime errors still propagate through the
+  complete fail-closed attempt-evidence path; there is no retry, empty
+  completion, base fallback, prompt skip, or lowered backend gate.
+- **Frozen scientific identity:** Model revision, targeted warm-start adapter,
+  dataset, prompts, source IDs, sub-seeds, best-of-eight count, temperature,
+  top-p, top-k, completion length, verifier, selector, corpus, optimizer,
+  learning rate, training steps, retention gates, and benchmark gate are
+  unchanged. Generation-arguments SHA-256 remains
+  `ba32329c36afceac9b6d0e6548c5287c95f024a32888f59730b1c4f6cb08fae3`;
+  configuration SHA-256 remains
+  `7fc85c4cbb957cd425fded14eba5507d706a7eeb76fa1107c3a50c4b335bd064`.
+- **Recovery execution binding:** Added metadata-only support for execution ID
+  `foundry-cycle1-vfbon-sft-v1-r1`, corrected detached source root
+  `C:\Users\Admin\Projects\Foundry-cycle1-r1-frozen`, and external runtime root
+  `C:\Users\Admin\Projects\Foundry-cycle1-r1-runtime`. The scientific cycle
+  and logical model ID remain `foundry-cycle1-vfbon-sft-v1`; the recovery
+  identity links to the immutable parent rejection and does not change the
+  configuration hash. Every child validates the detached commit, tree, import
+  root, output boundary, interpreter, and exact 37-field process environment.
+- **Duplicate-compatibility evidence:** The two predeclared trials must each
+  produce 32 output-bearing token packets with zero backend errors, complete
+  verifier decisions, four corpus records, two finite positive-gradient
+  optimizer steps, an unchanged base, adapter save/reload, and base
+  restoration. Exact equality now binds token IDs, decoded hashes, token
+  counts, verifier components, selections/fallbacks, corpus and schedule,
+  losses, gradients, optimizer and scheduler states, final tensors and
+  directory, stderr warnings, complete warning-call evidence, Python/NumPy/
+  torch RNG transitions, launch evidence, source/import identity, interpreter,
+  environment, and execution-parent metadata.
+- **Historical preservation:** The previously published GRPO warning-contract
+  source and zero-gradient diagnostic Python source remain byte-identical. A
+  type-only `.pyi` interface, SHA-256
+  `bb126f23a7ae756c9b45e3377af95d2656b15ceb261a92fc3e6f0316984966c7`,
+  preserves strict Mypy coverage for consumers without editing the immutable
+  legacy Python file. Corrected Cycle generation source SHA-256 is
+  `41a9fe8d3b007cf403051f72a8b110b81fe3d25a0f009932747b72e41ec37c7b`;
+  correction-record SHA-256 is
+  `307265ea52245b2c3824f8e7e1ea6a57c7ca3221acfa66b965bef139d0255740`.
+- **Model-free verification:** Ruff format-check covers all 408 files and lint
+  is clean; strict Mypy reports no issues across all 230 discovered source
+  modules; the focused historical-reconstruction, correction, warning, path,
+  and observability set passes 84/84; and the complete repository suite passes
+  1,211/1,211 in 172.10 seconds when launched from a fresh interpreter with the
+  exact audited environment. Both authorized interpreters report no broken
+  requirements. No model, tokenizer, generation, verifier, optimizer,
+  checkpoint, retention, or benchmark process ran after the single consumed
+  diagnostic. The next authorized action is publication of
+  `fix: restore verifier-filtered Cycle 1 generation`, followed by the corrected
+  detached source freeze and exactly two fresh compatibility trials.

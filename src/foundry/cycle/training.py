@@ -19,6 +19,7 @@ from foundry.cycle.contract import (
     verified_payload,
 )
 from foundry.cycle.corpus import load_cycle_records
+from foundry.cycle.generation_observability import rng_state_sha256
 from foundry.phase2 import vetted_qlora_kl as qlora
 from foundry.phase2.layer_restricted import scope_for_label
 from foundry.phase2.vetted_qlora_layer_restricted import (
@@ -195,6 +196,7 @@ def train_candidate(
 
     modules, launch = qlora._modules()
     torch = modules["torch"]
+    rng_before_sha256 = rng_state_sha256(torch)
     started = time.perf_counter()
     model_path = config.resolve_artifact(str(model_contract["snapshot_relative_path"]))
     warm_start_path = config.resolve_artifact(str(warm_start["adapter_relative_path"]))
@@ -406,6 +408,7 @@ def train_candidate(
     del reloaded, fresh_base
     gc.collect()
     torch.cuda.empty_cache()
+    rng_after_sha256 = rng_state_sha256(torch)
     result: dict[str, Any] = {
         "schema_version": 1,
         "training_id": (
@@ -437,6 +440,14 @@ def train_candidate(
         "offline_reload": offline_reload,
         "trainable_inventory": inventory,
         "reload_inventory": reload_inventory,
+        "rng_before_sha256": rng_before_sha256,
+        "rng_after_sha256": rng_after_sha256,
+        "rng_transition_sha256": canonical_sha256(
+            {
+                "before": rng_before_sha256,
+                "after": rng_after_sha256,
+            }
+        ),
         "final_adapter_sha256": directory_sha256(final_path),
         "runtime_seconds": time.perf_counter() - started,
         "peak_allocated_vram_bytes": peak_allocated,

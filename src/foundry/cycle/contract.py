@@ -24,6 +24,14 @@ from foundry.training.qlora import file_sha256
 
 CONTROLLER_ID = "foundry-cycle-controller-v1"
 CYCLE_ID = "foundry-cycle1-vfbon-sft-v1"
+RECOVERY_EXECUTION_ID = "foundry-cycle1-vfbon-sft-v1-r1"
+RECOVERY_SOURCE_ROOT = Path(r"C:\Users\Admin\Projects\Foundry-cycle1-r1-frozen")
+RECOVERY_RUNTIME_ROOT = Path(r"C:\Users\Admin\Projects\Foundry-cycle1-r1-runtime")
+RECOVERY_PARENT_CLASSIFICATION = "pre_recovery_fail_closed_generation_rejection"
+RECOVERY_PARENT_REJECTION_SHA256 = (
+    "8ceefd73523aac59a95d6ccac30f2f2fb19d3272328cda51c253dbe55114a000"
+)
+RECOVERY_PARENT_RUNTIME_SHA256 = "5086deab27d522e939874e65c5d8d74b7d5c43a082c73e6b51398ff04b317d05"
 OPTIMIZATION_METHOD = "verifier-filtered-best-of-n-sft-v1"
 STAGES = (
     "verify_baseline",
@@ -85,6 +93,10 @@ class CycleConfig:
     path: Path
     payload: dict[str, Any]
     sha256: str
+    execution_id: str = CYCLE_ID
+    source_root_override: Path | None = None
+    runtime_root_override: Path | None = None
+    registry_root_override: Path | None = None
 
     @property
     def artifact_root(self) -> Path:
@@ -92,14 +104,20 @@ class CycleConfig:
 
     @property
     def source_root(self) -> Path:
+        if self.source_root_override is not None:
+            return self.source_root_override
         return Path(str(_mapping(self.payload["roots"], "roots")["frozen_source_root"]))
 
     @property
     def runtime_root(self) -> Path:
+        if self.runtime_root_override is not None:
+            return self.runtime_root_override
         return Path(str(_mapping(self.payload["roots"], "roots")["runtime_root"]))
 
     @property
     def registry_root(self) -> Path:
+        if self.registry_root_override is not None:
+            return self.registry_root_override
         return Path(str(_mapping(self.payload["roots"], "roots")["model_registry_root"]))
 
     def section(self, name: str) -> dict[str, Any]:
@@ -121,6 +139,57 @@ def load_cycle_config(path: Path) -> CycleConfig:
     payload = _mapping(raw, "cycle configuration")
     _validate_config(payload)
     return CycleConfig(path.resolve(), payload, canonical_sha256(payload))
+
+
+def bind_cycle_execution(config: CycleConfig, execution_id: str | None) -> CycleConfig:
+    """Bind metadata-only execution roots without changing the frozen config hash."""
+
+    resolved = CYCLE_ID if execution_id is None else execution_id
+    if resolved == CYCLE_ID:
+        return config
+    if resolved != RECOVERY_EXECUTION_ID:
+        raise CycleContractError("Cycle 1 execution ID is not authorized")
+    return CycleConfig(
+        path=config.path,
+        payload=config.payload,
+        sha256=config.sha256,
+        execution_id=RECOVERY_EXECUTION_ID,
+        source_root_override=RECOVERY_SOURCE_ROOT,
+        runtime_root_override=RECOVERY_RUNTIME_ROOT,
+        registry_root_override=RECOVERY_RUNTIME_ROOT / "model_registry",
+    )
+
+
+def cycle_execution_metadata(config: CycleConfig) -> dict[str, Any]:
+    """Return the content-free scientific/execution identity and parent link."""
+
+    value: dict[str, Any] = {
+        "scientific_cycle_id": CYCLE_ID,
+        "execution_id": config.execution_id,
+        "logical_model_id": CYCLE_ID,
+        "config_sha256": config.sha256,
+        "config_hash_changed_by_execution_binding": False,
+    }
+    if config.execution_id == RECOVERY_EXECUTION_ID:
+        value.update(
+            {
+                "parent_execution_id": CYCLE_ID,
+                "parent_classification": RECOVERY_PARENT_CLASSIFICATION,
+                "parent_rejection_record_sha256": RECOVERY_PARENT_REJECTION_SHA256,
+                "parent_runtime_tree_sha256": RECOVERY_PARENT_RUNTIME_SHA256,
+            }
+        )
+    else:
+        value.update(
+            {
+                "parent_execution_id": None,
+                "parent_classification": None,
+                "parent_rejection_record_sha256": None,
+                "parent_runtime_tree_sha256": None,
+            }
+        )
+    value["execution_metadata_sha256"] = canonical_sha256(value)
+    return value
 
 
 def _validate_config(payload: dict[str, Any]) -> None:
@@ -491,7 +560,12 @@ def validate_frozen_source(config: CycleConfig) -> dict[str, str]:
     """Validate detached, clean, synchronized controller source."""
 
     root = config.source_root.resolve()
-    if root != Path(r"C:\Users\Admin\Projects\Foundry-cycle1-frozen").resolve():
+    expected_root = (
+        RECOVERY_SOURCE_ROOT
+        if config.execution_id == RECOVERY_EXECUTION_ID
+        else Path(r"C:\Users\Admin\Projects\Foundry-cycle1-frozen")
+    )
+    if root != expected_root.resolve():
         raise CycleContractError("controller source root differs")
     if git_output(root, "branch", "--show-current"):
         raise CycleContractError("controller source worktree is not detached")

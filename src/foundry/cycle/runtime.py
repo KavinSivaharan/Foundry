@@ -9,7 +9,10 @@ from pathlib import Path
 from types import ModuleType
 
 from foundry.cycle.contract import (
+    CYCLE_ID,
+    RECOVERY_EXECUTION_ID,
     CycleContractError,
+    bind_cycle_execution,
     load_cycle_config,
     validate_process_environment,
 )
@@ -25,7 +28,6 @@ from foundry.cycle.evaluation import (
 from foundry.cycle.filtering import filter_candidates
 from foundry.cycle.generation import generate_candidates, run_registry_sanity
 from foundry.cycle.generation_observability import (
-    RECOVERY_EXECUTION_ID,
     ensure_recovery_runtime,
     recovery_identity,
     verify_source_identity,
@@ -66,7 +68,11 @@ def _parser() -> argparse.ArgumentParser:
 
 def main() -> int:
     args = _parser().parse_args()
-    config = load_cycle_config(args.config)
+    base_config = load_cycle_config(args.config)
+    execution_id = args.execution_id or CYCLE_ID
+    if args.diagnostic and args.operation != "generate":
+        raise CycleContractError("diagnostic mode is authorized only for generation")
+    config = base_config if args.diagnostic else bind_cycle_execution(base_config, execution_id)
     validate_process_environment(config=config)
     if (
         Path(sys.executable).resolve()
@@ -74,9 +80,25 @@ def main() -> int:
         or file_sha256(Path(sys.executable)) != config.section("environment")["interpreter_sha256"]
     ):
         raise CycleContractError("Cycle runtime is not using the authorized training interpreter")
+    source_identity = None
+    if not args.diagnostic:
+        required_source = (args.source_root, args.source_commit, args.source_tree)
+        if any(value is None for value in required_source):
+            raise CycleContractError("cycle runtime requires frozen source identity")
+        if args.source_root.resolve() != config.source_root.resolve():
+            raise CycleContractError("cycle runtime source root differs from execution binding")
+        module_file = Path(__file__)
+        source_identity = verify_source_identity(
+            source_root=args.source_root,
+            expected_commit=str(args.source_commit),
+            expected_tree=str(args.source_tree),
+            imported_file=module_file,
+        )
+        try:
+            args.output_directory.resolve().relative_to(config.runtime_root.resolve())
+        except ValueError as error:
+            raise CycleContractError("cycle runtime output escapes the execution root") from error
     if args.operation == "generate":
-        source_identity = None
-        execution_id = args.execution_id or str(config.payload["cycle_id"])
         if args.diagnostic:
             required = (
                 args.execution_id,

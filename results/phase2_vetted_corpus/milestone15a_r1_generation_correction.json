@@ -1,0 +1,80 @@
+{
+  "adjudication_sha256": "99db53595c76f9e0dbf4da76ae4dbbf246e7f020570a44a3876097094c429eb9",
+  "classification": "general_generation_integration_defect",
+  "corrected_implementation": {
+    "cycle_contract_source_sha256": "1e2ae32e5b379cdcb9cd7ee59db4fb08557b25bbb429182a52fbb1aebb04ce9f",
+    "cycle_controller_source_sha256": "56560349eec12a56ed30792960236624ccd108f0483069bdea7f41a6cd2d8596",
+    "cycle_generation_source_sha256": "41a9fe8d3b007cf403051f72a8b110b81fe3d25a0f009932747b72e41ec37c7b",
+    "cycle_runtime_source_sha256": "06b92f015eef4c286c68897211a621fca484203ff3e9763b8bf53e37af78ac08",
+    "cycle_state_source_sha256": "013cbc0d43c405f4d8caafc36423996176c481654878331baed2bbc830c0f855",
+    "cycle_training_source_sha256": "72f72a082193cb131787ceb3a17e11a5878c7996dc2f5a5488d8ecb0ad3b1a83",
+    "warning_contract_source_sha256": "58358c3960c0a26f28caad2694fcd86f721c5b89490463976cabc46607f9a939"
+  },
+  "correction_contract": {
+    "adapter_activation_must_remain_enabled": true,
+    "automatic_retry": false,
+    "base_model_fallback": false,
+    "contract_id": "foundry-cycle1-direct-top-p-generation-recovery-v1",
+    "direct_generation_arguments_preserved": true,
+    "expected_warning_class_id": "pytorch-cuda-cumsum-determinism-warning-v1",
+    "fail_on_missing_expected_warning": true,
+    "fail_on_unclassified_warning": true,
+    "generation_only_warning_scope": true,
+    "model_and_adapter_state_must_remain_unchanged": true,
+    "output_token_ids_preserved": true,
+    "sampling_contract_sha256": "8f7e1acbd364cb1c59ec455c9256796eea0b81b42ea04ba76b5fe1adb207fcd5",
+    "source_contract_sha256": "9feb272a07276b2e7e99cec795b079b9ea333751be01c5e88b49613c4a53d0e2",
+    "strict_determinism_required_at_entry": true,
+    "strict_determinism_restored_after_call": true,
+    "warning_only_top_p_contract_id": "foundry-warning-only-top-p-replay-v1"
+  },
+  "correction_contract_sha256": "14df5efcc1ce784bd8c95b3d07173dc1da3f4db633a6cb929a8183581bc41b85",
+  "correction_id": "foundry-cycle1-generation-correction-v1",
+  "correction_sha256": "307265ea52245b2c3824f8e7e1ea6a57c7ca3221acfa66b965bef139d0255740",
+  "defect_reproduction_sha256": "e1f9298cedb22b46374096a58b39018f170cae7e8c270c546175ee90798e4e5a",
+  "defect_subtype": "stochastic_generation_context_defect",
+  "execution_binding": {
+    "config_hash_changed": false,
+    "logical_model_id": "foundry-cycle1-vfbon-sft-v1",
+    "parent_classification": "pre_recovery_fail_closed_generation_rejection",
+    "parent_rejection_record_sha256": "8ceefd73523aac59a95d6ccac30f2f2fb19d3272328cda51c253dbe55114a000",
+    "recovery_execution_id": "foundry-cycle1-vfbon-sft-v1-r1",
+    "runtime_root": "C:\\Users\\Admin\\Projects\\Foundry-cycle1-r1-runtime",
+    "scientific_cycle_id": "foundry-cycle1-vfbon-sft-v1",
+    "source_root": "C:\\Users\\Admin\\Projects\\Foundry-cycle1-r1-frozen"
+  },
+  "frozen_scientific_identity": {
+    "config_sha256": "7fc85c4cbb957cd425fded14eba5507d706a7eeb76fa1107c3a50c4b335bd064",
+    "generation_arguments_sha256": "ba32329c36afceac9b6d0e6548c5287c95f024a32888f59730b1c4f6cb08fae3",
+    "generation_config_sha256": "27bdce5cc2f49856b6657d7f2eac0b2b7b6c63da77472f35f8dddfd7a32a3844",
+    "generation_settings_changed": false,
+    "model_revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+    "sampling_contract_sha256": "8f7e1acbd364cb1c59ec455c9256796eea0b81b42ea04ba76b5fe1adb207fcd5",
+    "starting_adapter_sha256": "4e195ff2cb32c4faa6858915b95507862c911bb2eb853b060717416d825df91d"
+  },
+  "historical_source_preservation": {
+    "grpo_warning_contract_source_unchanged": true,
+    "legacy_diagnostic_python_source_unchanged": true,
+    "legacy_diagnostic_type_stub_sha256": "bb126f23a7ae756c9b45e3377af95d2656b15ceb261a92fc3e6f0316984966c7"
+  },
+  "old_implementation": {
+    "cycle_generation_source_sha256": "42e55f30cb52b17ed018cb45dd1d1f805c2a54247190ab360ef91055db884907",
+    "observability_source_commit": "7fecfec750a2037bbcddb3357dc27674b18d6f42",
+    "warning_contract_source_sha256": "58358c3960c0a26f28caad2694fcd86f721c5b89490463976cabc46607f9a939"
+  },
+  "regression_fixture": {
+    "active_adapter_preserved": true,
+    "automatic_retry": false,
+    "base_model_fallback": false,
+    "corrected_warning_only_call_passes": true,
+    "direct_generation_arguments_preserved": true,
+    "old_strict_call_fails": true,
+    "output_token_ids_preserved": true,
+    "strict_mode_restored": true,
+    "test_function": "test_direct_cycle_generation_fails_strictly_then_passes_under_same_arguments"
+  },
+  "regression_fixture_sha256": "a7e54d201a09821a3afdefd6b063242dd22c387d9f8f6f82bb4db7b97cdd0db3",
+  "regression_test_source_sha256": "1ad1fd3c9c98c300337b2f2edb8077d4f415223b7cd3cefca56a3bcec873641e",
+  "schema_version": 1,
+  "warning_contract_fixture_sha256": "e409bb2624a83c70bed203a9415dcc11654ce552a3691fd3e5a192d12d484ce0"
+}

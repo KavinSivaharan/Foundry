@@ -1,0 +1,100 @@
+{
+  "adjudication_id": "foundry-generation-backend-adjudication-v1",
+  "adjudication_sha256": "99db53595c76f9e0dbf4da76ae4dbbf246e7f020570a44a3876097094c429eb9",
+  "case_requirements": {
+    "case_1": {
+      "correction_changes_scientific_settings": false,
+      "correction_is_base_model_fallback": false,
+      "correction_is_completion_index_specific": false,
+      "correction_is_prompt_specific": false,
+      "failure_originates_in_foundry_integration": true,
+      "frozen_runtime_can_execute_under_correct_general_contract": true,
+      "minimal_general_correction_exists": true,
+      "precise_exception_and_location_known": true,
+      "reproduced": true,
+      "suppresses_legitimate_backend_failure": false
+    },
+    "case_2_required": false,
+    "case_3_required": false,
+    "exactly_one_case_selected": true
+  },
+  "classification": "general_generation_integration_defect",
+  "decision": {
+    "authorized_next_stage": "implement_one_minimal_general_fix",
+    "classification": "general_generation_integration_defect",
+    "defect_subtype": "stochastic_generation_context_defect",
+    "decision_sha256": "77bbd8a295b4bd581f664de9f8b05ab0fa3b861989cb0727c5ee6baafb9026c8",
+    "no_additional_diagnostic_attempt": true
+  },
+  "defect": {
+    "correct_general_contract": "foundry-warning-only-top-p-replay-v1",
+    "corrective_boundary": "generation_only",
+    "description": "Cycle 1 invoked frozen CUDA top-p sampling while strict deterministic-algorithm enforcement was active instead of entering the existing audited warning-only generation boundary.",
+    "existing_contract_source_commit": "8f67e46262b7edafc57861aaf185efa345228179",
+    "generation_settings_changed": false,
+    "old_foundry_source_location": "foundry/cycle/generation.py:293",
+    "retry_or_fallback_permitted": false
+  },
+  "diagnostic": {
+    "attempt_count": 1,
+    "attempt_evidence_file_sha256": "9d87f049b3517f203a2d99e00ac16f8cf5acf380388994d3e0b79db44701a865",
+    "attempt_evidence_sha256": "a7449f8af5f419fc35658c9d92be6ddc49945121b333892115525ba24275ff24",
+    "attempt_id": "d3bca020b39c0a1f3cb3e0c0a6a207f6189f82a8051a7a0135ad2bebba64b16b",
+    "attempt_manifest_sha256": "b2450e8726acb0fe982c3daa852e9429b0d3fe006b03353979a5d9491024220c",
+    "child_process_exit_code": 1,
+    "completion_index": 0,
+    "model_attempts_after_diagnostic": 0,
+    "output_tokens": 0,
+    "prompt_position_index": 0,
+    "stderr_sha256": "a12703bea582cacc5689023074728e80c97d88a1785388e091f06d646c73d8fe",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "failure": {
+    "adapter_state_unchanged": true,
+    "base_state_unchanged": true,
+    "cache_implementation": null,
+    "cache_type": null,
+    "cuda_device_name": "NVIDIA GeForce RTX 3080",
+    "decisive_library_location": "transformers/generation/logits_process.py:455",
+    "deterministic_algorithms": true,
+    "exception_class": "RuntimeError",
+    "exception_message_sha256": "e634d40f312bf99d08b19afb3255998325128ceec65dce60619f5e3e333e3b86",
+    "failure_phase": "sampling",
+    "input_device": "cuda:0",
+    "input_dtype": "torch.int64",
+    "model_device": "cuda:0",
+    "model_dtype": "torch.float16",
+    "model_eval": true,
+    "model_state_unchanged": true,
+    "normalized_exception_message_sha256": "e634d40f312bf99d08b19afb3255998325128ceec65dce60619f5e3e333e3b86",
+    "normalized_traceback_sha256": "f6bdc0c2c76b58b2da4b03af38f77d29496da8d6c2a3af6faff22a03a002ee27",
+    "retry_count": 0,
+    "starting_adapter_active": true,
+    "traceback_sha256": "dc900a3c80cf183a3cb0b48ed3e37896d229c23b7a2f1e089393ee2f173c1438",
+    "use_cache": true,
+    "verifier_called": false
+  },
+  "frozen_identity": {
+    "config_sha256": "7fc85c4cbb957cd425fded14eba5507d706a7eeb76fa1107c3a50c4b335bd064",
+    "dataset_sha256": "ee18f7f9bd7625469d83e1c1df8dad4db0ecf8b3d8c870a07c60f2808e11dc31",
+    "diagnostic_source_commit": "7fecfec750a2037bbcddb3357dc27674b18d6f42",
+    "diagnostic_source_tree": "6e4e4f793533644d9e68bfd3deb4ce9722509f78",
+    "model_revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+    "parent_classification": "pre_recovery_fail_closed_generation_rejection",
+    "parent_rejection_record_sha256": "8ceefd73523aac59a95d6ccac30f2f2fb19d3272328cda51c253dbe55114a000",
+    "recovery_execution_id": "foundry-cycle1-vfbon-sft-v1-r1",
+    "scientific_cycle_id": "foundry-cycle1-vfbon-sft-v1",
+    "starting_adapter_sha256": "4e195ff2cb32c4faa6858915b95507862c911bb2eb853b060717416d825df91d"
+  },
+  "general_contract_evidence": {
+    "installed_generation_source_sha256": "40c8e7d6adef288cd86f567b40e91ec8e95e1e916cc774e14fa4c91ad9f1105f",
+    "installed_top_p_source_sha256": "ac1f86dbf01f392e3fd068c434fa30b785d55ad2f8943209185319f081445698",
+    "sampling_contract_sha256": "8f7e1acbd364cb1c59ec455c9256796eea0b81b42ea04ba76b5fe1adb207fcd5",
+    "source_contract_sha256": "9feb272a07276b2e7e99cec795b079b9ea333751be01c5e88b49613c4a53d0e2",
+    "strict_cuda_cumsum_failure_reproduced": true,
+    "tracked_record_reconstructs": true,
+    "tracked_record_sha256": "eff84b9ec92715eeb74a6c74bcad5980dded9c4b5482012fd8e2438857f24598",
+    "warning_only_cuda_cumsum_execution_passed": true
+  },
+  "schema_version": 1
+}
