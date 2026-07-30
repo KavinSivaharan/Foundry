@@ -6,6 +6,7 @@ import argparse
 import json
 import sys
 from pathlib import Path
+from types import ModuleType
 
 from foundry.cycle.contract import (
     CycleContractError,
@@ -23,6 +24,12 @@ from foundry.cycle.evaluation import (
 )
 from foundry.cycle.filtering import filter_candidates
 from foundry.cycle.generation import generate_candidates, run_registry_sanity
+from foundry.cycle.generation_observability import (
+    RECOVERY_EXECUTION_ID,
+    ensure_recovery_runtime,
+    recovery_identity,
+    verify_source_identity,
+)
 from foundry.cycle.training import train_candidate
 from foundry.training.qlora import file_sha256
 
@@ -49,6 +56,11 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--adapter-path", type=Path)
     parser.add_argument("--expected-adapter-sha256")
     parser.add_argument("--smoke", action="store_true")
+    parser.add_argument("--diagnostic", action="store_true")
+    parser.add_argument("--execution-id")
+    parser.add_argument("--source-root", type=Path)
+    parser.add_argument("--source-commit")
+    parser.add_argument("--source-tree")
     return parser
 
 
@@ -63,10 +75,59 @@ def main() -> int:
     ):
         raise CycleContractError("Cycle runtime is not using the authorized training interpreter")
     if args.operation == "generate":
+        source_identity = None
+        execution_id = args.execution_id or str(config.payload["cycle_id"])
+        if args.diagnostic:
+            required = (
+                args.execution_id,
+                args.source_root,
+                args.source_commit,
+                args.source_tree,
+            )
+            if any(value is None for value in required):
+                raise ValueError(
+                    "diagnostic generation requires execution ID and frozen source identity"
+                )
+            expected_runtime = Path(r"C:\Users\Admin\Projects\Foundry-cycle1-r1-runtime").resolve()
+            expected_output = expected_runtime / "diagnostic" / "generation"
+            if (
+                execution_id != RECOVERY_EXECUTION_ID
+                or args.source_root.resolve()
+                != Path(r"C:\Users\Admin\Projects\Foundry-cycle1-r1-observe-frozen").resolve()
+                or args.output_directory.resolve() != expected_output
+            ):
+                raise CycleContractError("diagnostic recovery path or identity differs")
+            module = sys.modules[generate_candidates.__module__]
+            if not isinstance(module, ModuleType) or module.__file__ is None:
+                raise CycleContractError("generation module source path is unavailable")
+            source_identity = verify_source_identity(
+                source_root=args.source_root,
+                expected_commit=str(args.source_commit),
+                expected_tree=str(args.source_tree),
+                imported_file=Path(module.__file__),
+            )
+            ensure_recovery_runtime(
+                expected_runtime,
+                recovery_identity(
+                    config_sha256=config.sha256,
+                    model_revision=str(config.section("model")["revision"]),
+                    dataset_sha256=str(config.section("dataset")["identity_sha256"]),
+                    starting_adapter_sha256=str(config.section("warm_start")["adapter_sha256"]),
+                    prior_runtime_tree_sha256=(
+                        "5086deab27d522e939874e65c5d8d74b7d5c43a082c73e6b51398ff04b317d05"
+                    ),
+                    prior_rejection_sha256=(
+                        "8ceefd73523aac59a95d6ccac30f2f2fb19d3272328cda51c253dbe55114a000"
+                    ),
+                ),
+            )
         result = generate_candidates(
             config=config,
             output_directory=args.output_directory,
             smoke=args.smoke,
+            diagnostic=args.diagnostic,
+            execution_id=execution_id,
+            source_identity=source_identity,
         )
     elif args.operation == "filter":
         if args.input_path is None:

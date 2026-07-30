@@ -5,7 +5,10 @@ from __future__ import annotations
 import gc
 import hashlib
 import json
+import sys
 import time
+import warnings
+from collections.abc import Mapping
 from pathlib import Path
 from typing import Any, cast
 
@@ -16,7 +19,19 @@ from foundry.cycle.contract import (
     prompt_subseed,
     text_sha256,
     validate_file_identity,
+    validate_frozen_source,
     validate_process_environment,
+)
+from foundry.cycle.generation_observability import (
+    RECOVERY_EXECUTION_ID,
+    AttemptIdentity,
+    attempt_manifest,
+    generation_state,
+    parameter_state_hashes,
+    persist_attempt_failure,
+    persist_attempt_success,
+    rng_state_sha256,
+    warning_evidence,
 )
 from foundry.phase2 import vetted_qlora_kl as qlora
 from foundry.training.config import assistant_only_v3_messages, canonical_sha256
@@ -52,12 +67,19 @@ def generate_candidates(
     config: CycleConfig,
     output_directory: Path,
     smoke: bool,
+    diagnostic: bool = False,
+    execution_id: str = CYCLE_ID,
+    source_identity: Mapping[str, str] | None = None,
 ) -> dict[str, Any]:
     """Generate exactly eight candidates for every authorized prompt."""
 
     validate_process_environment(config=config)
     if output_directory.exists():
         raise FileExistsError("generation output must be fresh")
+    if diagnostic and (not smoke or execution_id != RECOVERY_EXECUTION_ID):
+        raise ValueError("diagnostic generation requires the frozen R1 smoke identity")
+    if not diagnostic and execution_id != CYCLE_ID:
+        raise ValueError("non-diagnostic generation execution identity differs")
     generation = config.section("generation")
     dataset = config.section("dataset")
     warm_start = config.section("warm_start")
@@ -76,76 +98,280 @@ def generate_candidates(
         if smoke
         else sorted(records, key=lambda item: str(item["source_id"]))
     )
-    expected_prompts = 4 if smoke else 180
+    if diagnostic:
+        selected_records = selected_records[:1]
+    expected_prompts = 1 if diagnostic else (4 if smoke else 180)
     if len(selected_records) != expected_prompts:
         raise ValueError("generation prompt count differs")
+    attempts_per_prompt = 1 if diagnostic else int(generation["completions_per_prompt"])
+    resolved_source = (
+        dict(source_identity) if source_identity is not None else validate_frozen_source(config)
+    )
+    required_source_fields = {"commit", "tree", "import_root", "status"}
+    if set(resolved_source) != required_source_fields or resolved_source["status"] != "clean":
+        raise ValueError("generation source identity differs")
+    output_directory.mkdir(parents=True, exist_ok=False)
+    evidence_root = output_directory / "attempt_evidence"
 
-    modules, launch = qlora._modules()
-    torch = modules["torch"]
+    def identity_for(
+        prompt_position_index: int,
+        record: Mapping[str, Any],
+        completion_index: int,
+    ) -> AttemptIdentity:
+        source_id = str(record["source_id"])
+        return AttemptIdentity(
+            recovery_execution_id=execution_id,
+            scientific_cycle_id=CYCLE_ID,
+            process_role=(
+                "diagnostic_generation"
+                if diagnostic
+                else ("compatibility_generation" if smoke else "production_generation")
+            ),
+            prompt_position_index=prompt_position_index,
+            source_id_sha256=hashlib.sha256(source_id.encode("utf-8")).hexdigest(),
+            prompt_sha256=str(record["question_sha256"]),
+            completion_index=completion_index,
+            prompt_subseed=prompt_subseed(CYCLE_ID, source_id, completion_index),
+            model_revision=str(model_contract["revision"]),
+            starting_adapter_sha256=str(warm_start["adapter_sha256"]),
+            controller_source_commit=resolved_source["commit"],
+            controller_source_tree=resolved_source["tree"],
+            python_import_root=resolved_source["import_root"],
+            interpreter_sha256=file_sha256(Path(sys.executable)),
+            environment_sha256=str(
+                config.section("environment")["combined_child_environment_sha256"]
+            ),
+        )
+
+    generation_arguments = {
+        "do_sample": True,
+        "temperature": float(generation["temperature"]),
+        "top_p": float(generation["top_p"]),
+        "top_k": int(generation["top_k"]),
+        "max_new_tokens": int(generation["max_new_tokens"]),
+        "use_cache": True,
+    }
+    generation_config_sha256 = canonical_sha256(generation)
+    first_identity = identity_for(0, selected_records[0], 0)
+    modules: dict[str, Any] | None = None
+    torch: Any | None = None
+    model: Any | None = None
+    tokenizer: Any | None = None
+    bootstrap_warnings: list[warnings.WarningMessage] = []
     started = time.perf_counter()
     model_path = config.resolve_artifact(str(model_contract["snapshot_relative_path"]))
     adapter_path = config.resolve_artifact(str(warm_start["adapter_relative_path"]))
     if directory_sha256(adapter_path) != warm_start["adapter_sha256"]:
         raise ValueError("generation warm-start adapter identity differs")
-    model, tokenizer = qlora._load_base(model_path, modules)
-    model = modules["peft"].PeftModel.from_pretrained(
-        model,
-        str(adapter_path),
-        local_files_only=True,
-        is_trainable=False,
-    )
-    if any(parameter.device.type != "cuda" for parameter in model.parameters()):
-        raise RuntimeError("generation detected CPU or disk offload")
-    model.eval()
+    active_phase = "model_load"
+    try:
+        with warnings.catch_warnings(record=True) as captured:
+            warnings.simplefilter("always")
+            modules, launch = qlora._modules()
+            torch = modules["torch"]
+            model, tokenizer = qlora._load_base(model_path, modules)
+            bootstrap_warnings.extend(captured)
+        active_phase = "adapter_load"
+        with warnings.catch_warnings(record=True) as captured:
+            warnings.simplefilter("always")
+            model = modules["peft"].PeftModel.from_pretrained(
+                model,
+                str(adapter_path),
+                local_files_only=True,
+                is_trainable=False,
+            )
+            bootstrap_warnings.extend(captured)
+        if any(parameter.device.type != "cuda" for parameter in model.parameters()):
+            raise RuntimeError("generation detected CPU or disk offload")
+        model.eval()
+    except Exception as error:
+        warnings_payload = warning_evidence(
+            bootstrap_warnings,
+            source_root=Path(resolved_source["import_root"]),
+        )
+        state = generation_state(
+            torch=torch,
+            psutil=modules.get("psutil") if modules is not None else None,
+            model=model,
+            input_ids=None,
+            attention_mask=None,
+            generation_arguments=generation_arguments,
+            generation_config_sha256=generation_config_sha256,
+        )
+        persist_attempt_failure(
+            evidence_root=evidence_root,
+            identity=first_identity,
+            state=state,
+            parameter_state_before=None,
+            parameter_state_after=None,
+            rng_before_sha256=rng_state_sha256(torch),
+            rng_after_sha256=rng_state_sha256(torch),
+            warnings_payload=warnings_payload,
+            error=error,
+            active_phase=active_phase,
+            source_root=Path(resolved_source["import_root"]),
+        )
+        raise
+    assert modules is not None
+    assert torch is not None
+    assert model is not None
+    assert tokenizer is not None
+    parameter_state_before = parameter_state_hashes(model, torch)
     rows: list[dict[str, Any]] = []
     backend_failures = 0
     total_input_tokens = 0
     total_output_tokens = 0
-    for prompt_number, record in enumerate(selected_records, start=1):
+    for prompt_position_index, record in enumerate(selected_records):
+        prompt_number = prompt_position_index + 1
         source_id = str(record["source_id"])
         messages = assistant_only_v3_messages(
             str(record["question"]),
             str(record["assistant_completion"]),
         )
-        input_ids = tokenizer.apply_chat_template(
-            messages[:-1],
-            tokenize=True,
-            add_generation_prompt=True,
-            return_tensors="pt",
-        ).to("cuda:0")
-        attention_mask = torch.ones_like(input_ids)
+        prompt_identity = identity_for(prompt_position_index, record, 0)
+        active_phase = "tokenizer_encode"
+        prompt_warnings: list[warnings.WarningMessage] = []
+        input_ids: Any | None = None
+        attention_mask: Any | None = None
+        try:
+            with warnings.catch_warnings(record=True) as captured:
+                warnings.simplefilter("always")
+                input_ids = tokenizer.apply_chat_template(
+                    messages[:-1],
+                    tokenize=True,
+                    add_generation_prompt=True,
+                    return_tensors="pt",
+                ).to("cuda:0")
+                prompt_warnings.extend(captured)
+            active_phase = "generation_prepare"
+            attention_mask = torch.ones_like(input_ids)
+        except Exception as error:
+            parameter_state_after = parameter_state_hashes(model, torch)
+            state = generation_state(
+                torch=torch,
+                psutil=modules["psutil"],
+                model=model,
+                input_ids=input_ids,
+                attention_mask=attention_mask,
+                generation_arguments=generation_arguments,
+                generation_config_sha256=generation_config_sha256,
+            )
+            persist_attempt_failure(
+                evidence_root=evidence_root,
+                identity=prompt_identity,
+                state=state,
+                parameter_state_before=parameter_state_before,
+                parameter_state_after=parameter_state_after,
+                rng_before_sha256=rng_state_sha256(torch),
+                rng_after_sha256=rng_state_sha256(torch),
+                warnings_payload=warning_evidence(
+                    prompt_warnings,
+                    source_root=Path(resolved_source["import_root"]),
+                ),
+                error=error,
+                active_phase=active_phase,
+                source_root=Path(resolved_source["import_root"]),
+            )
+            raise
         prompt_tokens = int(input_ids.shape[-1])
-        total_input_tokens += prompt_tokens * int(generation["completions_per_prompt"])
-        for completion_index in range(int(generation["completions_per_prompt"])):
+        total_input_tokens += prompt_tokens * attempts_per_prompt
+        for completion_index in range(attempts_per_prompt):
+            identity = identity_for(prompt_position_index, record, completion_index)
             subseed = prompt_subseed(CYCLE_ID, source_id, completion_index)
             torch.manual_seed(subseed)
             torch.cuda.manual_seed_all(subseed)
+            rng_before = rng_state_sha256(torch)
             backend_error_type: str | None = None
             token_ids: list[int] = []
             completion = ""
+            attempt_warnings: list[warnings.WarningMessage] = []
+            active_phase = "generation_forward"
             try:
-                with torch.inference_mode():
-                    outputs = model.generate(
-                        input_ids=input_ids,
-                        attention_mask=attention_mask,
-                        do_sample=True,
-                        temperature=float(generation["temperature"]),
-                        top_p=float(generation["top_p"]),
-                        top_k=int(generation["top_k"]),
-                        max_new_tokens=int(generation["max_new_tokens"]),
-                        pad_token_id=tokenizer.pad_token_id,
-                        eos_token_id=tokenizer.eos_token_id,
-                        use_cache=True,
-                    )
+                with warnings.catch_warnings(record=True) as captured:
+                    warnings.simplefilter("always")
+                    with torch.inference_mode():
+                        outputs = model.generate(
+                            input_ids=input_ids,
+                            attention_mask=attention_mask,
+                            do_sample=generation_arguments["do_sample"],
+                            temperature=generation_arguments["temperature"],
+                            top_p=generation_arguments["top_p"],
+                            top_k=generation_arguments["top_k"],
+                            max_new_tokens=generation_arguments["max_new_tokens"],
+                            pad_token_id=tokenizer.pad_token_id,
+                            eos_token_id=tokenizer.eos_token_id,
+                            use_cache=generation_arguments["use_cache"],
+                        )
+                    attempt_warnings.extend(captured)
+                active_phase = "decode"
                 generated = outputs[0, prompt_tokens:]
                 token_ids = [int(value) for value in generated.detach().cpu().tolist()]
                 completion = cast(
                     str,
                     tokenizer.decode(token_ids, skip_special_tokens=True),
                 )
-            except Exception as error:  # fail-closed evidence, never a retry
+                active_phase = "output_validation"
+                if len(token_ids) > int(generation["max_new_tokens"]):
+                    raise RuntimeError("generation returned more than the frozen token limit")
+            except Exception as error:
                 backend_error_type = type(error).__name__
                 backend_failures += 1
+                parameter_state_after = parameter_state_hashes(model, torch)
+                state = generation_state(
+                    torch=torch,
+                    psutil=modules["psutil"],
+                    model=model,
+                    input_ids=input_ids,
+                    attention_mask=attention_mask,
+                    generation_arguments={
+                        **generation_arguments,
+                        "pad_token_id": tokenizer.pad_token_id,
+                        "eos_token_id": tokenizer.eos_token_id,
+                    },
+                    generation_config_sha256=generation_config_sha256,
+                )
+                persist_attempt_failure(
+                    evidence_root=evidence_root,
+                    identity=identity,
+                    state=state,
+                    parameter_state_before=parameter_state_before,
+                    parameter_state_after=parameter_state_after,
+                    rng_before_sha256=rng_before,
+                    rng_after_sha256=rng_state_sha256(torch),
+                    warnings_payload=warning_evidence(
+                        attempt_warnings,
+                        source_root=Path(resolved_source["import_root"]),
+                    ),
+                    error=error,
+                    active_phase=active_phase,
+                    source_root=Path(resolved_source["import_root"]),
+                )
+                raise
+            state = generation_state(
+                torch=torch,
+                psutil=modules["psutil"],
+                model=model,
+                input_ids=input_ids,
+                attention_mask=attention_mask,
+                generation_arguments={
+                    **generation_arguments,
+                    "pad_token_id": tokenizer.pad_token_id,
+                    "eos_token_id": tokenizer.eos_token_id,
+                },
+                generation_config_sha256=generation_config_sha256,
+            )
+            persist_attempt_success(
+                evidence_root=evidence_root,
+                identity=identity,
+                state=state,
+                rng_before_sha256=rng_before,
+                rng_after_sha256=rng_state_sha256(torch),
+                warnings_payload=warning_evidence(
+                    attempt_warnings,
+                    source_root=Path(resolved_source["import_root"]),
+                ),
+                token_ids=token_ids,
+            )
             completion_tokens = len(token_ids)
             total_output_tokens += completion_tokens
             ended_with_eos = bool(token_ids and token_ids[-1] == int(tokenizer.eos_token_id))
@@ -187,6 +413,9 @@ def generate_candidates(
             flush=True,
         )
     torch.cuda.synchronize()
+    parameter_state_after = parameter_state_hashes(model, torch)
+    if parameter_state_after != parameter_state_before:
+        raise RuntimeError("generation changed base or adapter parameter state")
     peak_allocated = int(torch.cuda.max_memory_allocated())
     peak_reserved = int(torch.cuda.max_memory_reserved())
     memory = modules["psutil"].Process().memory_info()
@@ -195,9 +424,13 @@ def generate_candidates(
     gc.collect()
     torch.cuda.empty_cache()
 
-    output_directory.mkdir(parents=True, exist_ok=False)
     raw_path = output_directory / "candidates.jsonl"
     _write_jsonl(raw_path, rows)
+    evidence_manifest = attempt_manifest(evidence_root)
+    (output_directory / "attempt_evidence_manifest.json").write_text(
+        json.dumps(evidence_manifest, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
     deterministic_rows = [
         {
             key: value
@@ -209,14 +442,33 @@ def generate_candidates(
     summary: dict[str, Any] = {
         "schema_version": 1,
         "generation_id": (
-            "foundry-cycle1-compatibility-generation-v1"
-            if smoke
-            else "foundry-cycle1-production-generation-v1"
+            "foundry-cycle1-diagnostic-generation-v1"
+            if diagnostic
+            else (
+                "foundry-cycle1-compatibility-generation-v1"
+                if smoke
+                else "foundry-cycle1-production-generation-v1"
+            )
         ),
         "cycle_id": CYCLE_ID,
+        "recovery_execution_id": execution_id,
+        "diagnostic": diagnostic,
+        "attempt_evidence_manifest_sha256": evidence_manifest["attempt_manifest_sha256"],
+        "parameter_state_before": parameter_state_before,
+        "parameter_state_after": parameter_state_after,
+        "parameter_state_unchanged": parameter_state_after == parameter_state_before,
+        "source": resolved_source,
+        "generation_config_sha256": generation_config_sha256,
+        "generation_arguments_sha256": canonical_sha256(
+            {
+                **generation_arguments,
+                "pad_token_id": tokenizer.pad_token_id,
+                "eos_token_id": tokenizer.eos_token_id,
+            }
+        ),
         "smoke": smoke,
         "prompts": expected_prompts,
-        "completions_per_prompt": int(generation["completions_per_prompt"]),
+        "completions_per_prompt": attempts_per_prompt,
         "attempted_completions": len(rows),
         "backend_failures": backend_failures,
         "generated_token_ids_sha256": canonical_sha256([row["token_ids"] for row in rows]),

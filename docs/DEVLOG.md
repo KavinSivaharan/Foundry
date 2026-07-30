@@ -4918,3 +4918,46 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
   reconstruct. Content-free, secret, prohibited-artifact, sealed-path,
   tracked-size, and `git diff --check` reviews pass; the two tracked files at or
   above 1 MiB predate and are unchanged by this milestone.
+
+### 2026-07-30 - Milestone 15A-R1 generation observability freeze
+
+- **Preserved parent result:** Recovery began from clean synchronized commit
+  `f5694be773fd76e2fcbdb1d88142c95746eb4d28`. The detached 15A controller
+  remains at `2adda28ebc21a01f19c7a1136cf6990898cb1aef`, tree
+  `3bafc052d101dd79af7330ebef4c6c0203e9d181`; its 37-file runtime remains
+  byte-identical at
+  `5086deab27d522e939874e65c5d8d74b7d5c43a082c73e6b51398ff04b317d05`.
+  The prior result is permanently classified
+  `pre_recovery_fail_closed_generation_rejection`.
+- **Allowlisted evidence inspection:** Every file beneath the prior runtime was
+  frozen by relative path, byte size, and SHA-256. Only
+  `compatibility/trial-1/generation/candidates.jsonl` contains structured
+  exception-class evidence. No inspected file contains an exception message,
+  traceback, decisive source location, failing phase, or child exit code.
+  Inspection-manifest SHA-256 is
+  `5270788041574d24ca4ad927cb4f8ba0afa8ae05f6def751a5d73b74da394874`;
+  a complete prior traceback does not exist.
+- **Fail-closed contract:** Added
+  `foundry-generation-backend-failure-evidence-v1`. It records deterministic
+  attempt identity, phase, device/dtype/cache/adapter state, generation-call
+  hashes, CUDA and RSS measurements, RNG transitions, warnings, exact exception
+  message, full traceback, normalized hashes, stack frames, chained errors,
+  and parameter-state integrity beneath ignored storage. Failures are persisted
+  before rethrow and cannot become empty completions, reach a verifier or
+  corpus, retry, or fall back to the base model. Contract SHA-256 is
+  `39ec6f5f590d87ff7ed839761e0ad9f85be3f6e8d576db2a58ff16019e13c44c`;
+  fixture SHA-256 is
+  `59dd8cf7d712369e50ec4f572eea18c6abd662becc8aa8c93b8bb435294263c5`.
+- **Model boundary:** No R1 model process, diagnostic attempt, verifier,
+  optimizer, training, retention evaluation, or benchmark has run. Because the
+  prior evidence contains only the exception class, exactly one diagnostic
+  attempt remains required after this observability source is verified,
+  published, and frozen.
+- **Pre-diagnostic verification:** Ruff format-check covers all 407 files,
+  Ruff lint is clean, strict Mypy passes all 230 source files, all 64 Cycle
+  controller/observability tests pass, and all 1,206 repository tests pass in
+  167.39 seconds. Both authorized environments pass dependency integrity.
+  Dataset, controller state, prior rejection, prior runtime tree, inspection
+  manifest, observability contract, fixture, and tracked freeze hashes
+  reconstruct. Candidate-only secret, prohibited-artifact, sealed-path,
+  tracked-size, and `git diff --check` reviews pass.
