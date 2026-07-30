@@ -5054,3 +5054,64 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
   diagnostic. The next authorized action is publication of
   `fix: restore verifier-filtered Cycle 1 generation`, followed by the corrected
   detached source freeze and exactly two fresh compatibility trials.
+
+### 2026-07-30 - Milestone 15A-R1 terminal compatibility rejection
+
+- **Published corrected source:** The minimal Case 1 correction was committed
+  and pushed as `6540de4a35ade2fe4e6fef183d7fcdc78e8e0e48`, tree
+  `03367102cc389dbf5a48e47e018c09ca805dc252`, then checked out detached and
+  clean at `C:\Users\Admin\Projects\Foundry-cycle1-r1-frozen`. The original
+  Cycle 1 frozen worktree/runtime and the R1 observability worktree remain
+  unchanged. All compatibility model work used the authorized training
+  interpreter, corrected frozen import root, offline settings,
+  `PYTHONHASHSEED=20260720`, and the exact frozen process environment.
+- **Compatibility Trial 1:** All 32 attempts produced output-bearing token-ID
+  packets with zero backend failures. The trial decoded and scored every
+  completion, wrote four deterministic fallback records, completed two finite
+  positive-gradient optimizer steps, changed 112 LoRA tensors, left the base
+  unchanged, saved/reloaded offline, and restored base behavior with the
+  adapter disabled. Smoke SHA-256 is
+  `66247b36853146a00590848e0d052f461512de0bb8a06569cc06e1c81b1f3b4b`.
+- **Compatibility Trial 2:** The second predeclared fresh trial independently
+  passed the same gates. It exactly reproduced generated token IDs, decoded
+  hashes, completion-token counts, verifier decisions, fallback identities,
+  corpus and schedule, losses, gradient hashes, optimizer/scheduler states,
+  final adapter tensors and directory, warnings, Cycle RNG transitions,
+  interpreter, environment, source, and execution-parent metadata. Smoke
+  SHA-256 is
+  `54d416d4e8e9b955fde3e5ee9f0978722a05d5161fe96778758bbf8a2fbc743f`.
+- **Terminal duplicate mismatch:** The warning contract hashes Python, NumPy,
+  CPU Torch, and CUDA RNG state. The frozen generation launch seeds Python and
+  Torch, and each completion reseeds Torch, but does not seed NumPy. Trial 1
+  warning-contract call/RNG SHA-256 values were
+  `f8ca50cc69b5ce0409595a356b3da25c336878ddcdfe311f34dc95befa4bf3b3`
+  and `f2528fe94c7c71af60402390984ede5c4daa1448c5b88f481d69910885616bb7`;
+  Trial 2 produced
+  `3e46f11a02ca10df602b6d3c0082073fa00251034dc3911387b582e8efa15fa9`
+  and `f4528942b53f98a691b2d6f45829039ae225bbc6b66902a63d2059c8eda961c1`.
+  The frozen gate requires exact RNG-transition equality, so compatibility
+  failed. No correction, retry, or third trial is authorized.
+- **Automatic fail-closed result:** The controller recorded
+  `compatibility_smoke_mismatch`, rejected the recovery, and set project status
+  `CYCLE_1_REJECTED_FINAL`. Production generation/training, development
+  retention, checkpoint selection, holdout v2, GSM1K, and promotion did not
+  run. `untouched-base` remained active. Recovery state, cycle-result, and
+  rejection-record SHA-256 values are respectively
+  `bb20314424ab7536371cb1bfbe84a17180bffc8bc2a638ad7ec52a28c07b7ee4`,
+  `1eee5acadd8fcfa98a3dcad8c8da342a2bab0ffb13c0af793d60400fd3f71d54`,
+  and `b2315076d3f5bba0c7e15ee90db658eb31061fb9b072ac9a2260c3318ba9e1b9`.
+- **Resources:** The two trials consumed 8,496 generation input tokens, 15,796
+  output tokens, and 452 loss-bearing smoke-training tokens over 64 generation
+  attempts and four optimizer steps. Observed compatibility model runtime was
+  579.0380 seconds. Peak allocated/reserved VRAM was 4,195,947,520 /
+  4,729,077,760 bytes, and peak process RSS was 4,322,578,432 bytes. The final
+  ignored R1 runtime contains 147 files / 43,329,947 bytes and hashes to
+  `7f952df3060e6d09d595db9cddf17e552576dd8aef4c6770b90b97a1c73abc70`.
+- **Final model-free verification:** Ruff format-check covers all 408 files and
+  lint is clean; strict Mypy passes all 230 source files; all 89 focused
+  Cycle/compatibility tests pass in 2.64 seconds; and all 1,211 repository tests
+  pass in 167.67 seconds. Both authorized environments report no broken
+  requirements. Runtime self-hashes, frozen worktrees, prior runtime identity,
+  whitespace, content-free publication, secret/prohibited-artifact,
+  sealed-path, and active-process checks pass. No source was edited after the
+  corrected source freeze.

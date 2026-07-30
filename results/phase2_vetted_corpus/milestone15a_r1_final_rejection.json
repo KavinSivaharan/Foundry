@@ -1,0 +1,298 @@
+{
+  "active_model": {
+    "adapter_sha256": null,
+    "after": "untouched-base",
+    "before": "untouched-base",
+    "base_model_id": "Qwen/Qwen2.5-1.5B-Instruct",
+    "base_revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+    "canonical_record_sha256": "387d7cae136efc1e387cd35cf99780ac557365bb3cfca9236219ec93f7fddc4b",
+    "checkpoint": null,
+    "raw_file_sha256": "d7c2a3b8358d0b0603001a9191b3b079de0c5e929c39c9043ade4760b3450c05"
+  },
+  "compatibility": {
+    "comparison": {
+      "compatibility_sha256": "4d7f62113335dba5afec7082a3f19bd03a245cfc8ecae2999ac8c21d94ed23b2",
+      "exact_duplicate_passed": false,
+      "exact_evidence_sha256": "dc077680fb1ac2181bd7442d2464d34676c6fb323b99f90604f3008e3cbd0438",
+      "matching_exact_fields": [
+        "completion_token_counts_sha256",
+        "component_decisions_sha256",
+        "corpus_sha256",
+        "decoded_completion_hashes_sha256",
+        "environment_sha256",
+        "execution",
+        "fallback_identities_sha256",
+        "final_adapter_directory_sha256",
+        "final_adapter_tensor_sha256",
+        "generated_token_ids_sha256",
+        "generation_launch_evidence_sha256",
+        "generation_rng_transitions_sha256",
+        "gradient_hashes",
+        "interpreter_sha256",
+        "losses",
+        "optimizer_state_hashes",
+        "scheduler_state_hashes",
+        "selected_trace_manifest_sha256",
+        "source",
+        "stderr_sha256s",
+        "training_launch_evidence_sha256",
+        "training_rng_transition_sha256",
+        "training_schedule_sha256",
+        "warning_identity_sha256"
+      ],
+      "mismatches": {
+        "warning_contract_call_evidence_sha256": {
+          "trial_1": "f8ca50cc69b5ce0409595a356b3da25c336878ddcdfe311f34dc95befa4bf3b3",
+          "trial_2": "3e46f11a02ca10df602b6d3c0082073fa00251034dc3911387b582e8efa15fa9"
+        },
+        "warning_contract_rng_transitions_sha256": {
+          "trial_1": "f2528fe94c7c71af60402390984ede5c4daa1448c5b88f481d69910885616bb7",
+          "trial_2": "f4528942b53f98a691b2d6f45829039ae225bbc6b66902a63d2059c8eda961c1"
+        }
+      },
+      "reason": "The frozen exact-equality gate includes warning-contract RNG evidence over Python, NumPy, CPU Torch, and CUDA RNG state. The launch path seeds Python and Torch, and each completion reseeds Torch, but it does not seed NumPy. The NumPy-inclusive warning-contract hashes therefore differed even though generated tokens and every downstream scientific artifact matched.",
+      "retry_permitted": false,
+      "same_baseline_evidence": true,
+      "same_config": true,
+      "same_execution": true,
+      "same_interpreter": true,
+      "same_source": true,
+      "trial_1_passed_own_gates": true,
+      "trial_2_passed_own_gates": true
+    },
+    "frozen_common_evidence": {
+      "completion_token_counts_sha256": "beed8ecf6070ed84146e5f0d938837695af7c44f59e4064b9d10c3dc22027550",
+      "component_decisions_sha256": "0a676763b0f91e59cf9c3947221f89dd9c0c5028844ced4012ce01d8001136a8",
+      "corpus_sha256": "08f37e4007030c38dbd750c1d8a386a7fe5580fedcf88ad017f6c681f9c42efe",
+      "decoded_completion_hashes_sha256": "e19bffe95af0d088bc880aa92534192467faf7238b6a30fbda3f1520351c4cca",
+      "fallback_identities_sha256": "6676697a1f6c79261c2f46be01b569acd6301ce2d5699c61f6c1282868d7dfdd",
+      "final_adapter_directory_sha256": "a677f15e74656cfcd714bcd49dfb8306b5e4b4c969de5c42be6cba5056ba7650",
+      "final_adapter_tensor_sha256": "3f7953a4656277652c45eb0c2a7e20f022dda6a910100c3b3614dea188d3c03b",
+      "generated_token_ids_sha256": "10762cf1f33653e8595112b46bfaeb9ca976d5e906beeab810794539c375fca2",
+      "generation_rng_transitions_sha256": "223db55f9f361b49f6e52150e41ecea38741a900fd65b498218b39fbef90fc6a",
+      "gradient_hashes": [
+        "27690f3252338c86e912a41c4fc71eac49c0e68c0de240f3f4808ef67362dccf",
+        "b91cbe0c6c5dc50b9fdd88f8e83f1bb1405d2939fb1987729036b7a79f1f85ee"
+      ],
+      "losses": [
+        2.841398998699357,
+        2.8426482782954663
+      ],
+      "optimizer_state_hashes": [
+        "d9a50e461d1e602cea904e2d90554eeea401babe33caa289907852c65d727902",
+        "54b50daee6aa759b29a362a74c62a1048449daaeb1f0afef60bf6524e23d222b"
+      ],
+      "scheduler_state_hashes": [
+        "fea7ec72e619d2fc7eaee2f4ef17c7f028b42ca8786e3fddb9e549471cd275fc",
+        "dff32d4693d40a075e5f711dc889d2682613b0c2ddeea9ab11bf6203861c3553"
+      ],
+      "selected_trace_manifest_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "training_rng_transition_sha256": "197f686d777862870d46929431f065ac05bdccc1b1250d96ea4e4029896b5f53",
+      "training_schedule_sha256": "79a6fb1c84e07595b136a7fe3e278c97fd1520d243a43ac29ac688593a8d6b75",
+      "warning_identity_sha256": "820b73b65ea342817c9e03121bcedc6dcf6025c0c7f63075b68df585d0aa6ed3"
+    },
+    "trial_1": {
+      "backend_failures": 0,
+      "fallback_records": 4,
+      "generation_attempts": 32,
+      "generation_runtime_seconds": 283.9987653999997,
+      "gradient_norms": [
+        2.1264127345112893,
+        2.115717917203431
+      ],
+      "input_tokens": 4248,
+      "optimizer_steps": 2,
+      "output_bearing_completions": 32,
+      "output_tokens": 7898,
+      "passed": true,
+      "peak_allocated_vram_bytes": 4195947520,
+      "peak_process_rss_bytes": 4322263040,
+      "peak_reserved_vram_bytes": 4729077760,
+      "prompts": 4,
+      "selected_traces": 0,
+      "smoke_sha256": "66247b36853146a00590848e0d052f461512de0bb8a06569cc06e1c81b1f3b4b",
+      "successful_token_id_packets": 32,
+      "training_records": 4,
+      "training_runtime_seconds": 9.668946800000413,
+      "warning_count": 7898
+    },
+    "trial_2": {
+      "backend_failures": 0,
+      "fallback_records": 4,
+      "generation_attempts": 32,
+      "generation_runtime_seconds": 276.0018246999971,
+      "gradient_norms": [
+        2.1264127345112893,
+        2.115717917203431
+      ],
+      "input_tokens": 4248,
+      "optimizer_steps": 2,
+      "output_bearing_completions": 32,
+      "output_tokens": 7898,
+      "passed": true,
+      "peak_allocated_vram_bytes": 4195947520,
+      "peak_process_rss_bytes": 4322578432,
+      "peak_reserved_vram_bytes": 4729077760,
+      "prompts": 4,
+      "selected_traces": 0,
+      "smoke_sha256": "54d416d4e8e9b955fde3e5ee9f0978722a05d5161fe96778758bbf8a2fbc743f",
+      "successful_token_id_packets": 32,
+      "training_records": 4,
+      "training_runtime_seconds": 9.368438500001503,
+      "warning_count": 7898
+    }
+  },
+  "decision": {
+    "classification": "compatibility_smoke_mismatch",
+    "decision": "rejected",
+    "no_additional_optimizer": true,
+    "no_additional_recovery": true,
+    "no_retry": true,
+    "production_authorized": false,
+    "project_status": "CYCLE_1_REJECTED_FINAL",
+    "reason": "Both compatibility trials passed their own gates, but the frozen exact duplicate RNG-evidence equality gate failed.",
+    "stop_stage": "compatibility_smoke"
+  },
+  "diagnostic": {
+    "adjudication_case": "general_generation_integration_defect",
+    "adjudication_sha256": "99db53595c76f9e0dbf4da76ae4dbbf246e7f020570a44a3876097094c429eb9",
+    "attempt_count": 1,
+    "attempt_evidence_sha256": "a7449f8af5f419fc35658c9d92be6ddc49945121b333892115525ba24275ff24",
+    "attempt_file_sha256": "9d87f049b3517f203a2d99e00ac16f8cf5acf380388994d3e0b79db44701a865",
+    "defect_subtype": "stochastic_generation_context_defect",
+    "exception_class": "RuntimeError",
+    "exception_message_sha256": "e634d40f312bf99d08b19afb3255998325128ceec65dce60619f5e3e333e3b86",
+    "failure_phase": "sampling",
+    "foundry_location": "foundry/cycle/generation.py:293",
+    "library_location": "transformers/generation/logits_process.py:455",
+    "normalized_traceback_sha256": "f6bdc0c2c76b58b2da4b03af38f77d29496da8d6c2a3af6faff22a03a002ee27",
+    "output_tokens": 0,
+    "retry_count": 0,
+    "traceback_sha256": "dc900a3c80cf183a3cb0b48ed3e37896d229c23b7a2f1e089393ee2f173c1438"
+  },
+  "execution": {
+    "config_hash_changed_by_execution_binding": false,
+    "config_sha256": "7fc85c4cbb957cd425fded14eba5507d706a7eeb76fa1107c3a50c4b335bd064",
+    "execution_id": "foundry-cycle1-vfbon-sft-v1-r1",
+    "execution_metadata_sha256": "ed77e2000943d82971d51bbe8b19bb073dacf336e7c64e74ca5b086f8b1b11b1",
+    "logical_model_id": "foundry-cycle1-vfbon-sft-v1",
+    "parent_classification": "pre_recovery_fail_closed_generation_rejection",
+    "parent_execution_id": "foundry-cycle1-vfbon-sft-v1",
+    "parent_rejection_record_sha256": "8ceefd73523aac59a95d6ccac30f2f2fb19d3272328cda51c253dbe55114a000",
+    "parent_runtime_tree_sha256": "5086deab27d522e939874e65c5d8d74b7d5c43a082c73e6b51398ff04b317d05",
+    "scientific_cycle_id": "foundry-cycle1-vfbon-sft-v1"
+  },
+  "execution_accounting": {
+    "compatibility_generation_attempts": 64,
+    "compatibility_optimizer_steps": 4,
+    "compatibility_trials_completed": 2,
+    "compatibility_trials_started": 2,
+    "diagnostic_attempts": 1,
+    "production_backend_failures": null,
+    "production_generation_attempts": 0,
+    "production_generation_campaigns": 0,
+    "production_optimizer_steps": 0,
+    "production_prompts": 0,
+    "retries": 0,
+    "second_cycle_run": false,
+    "second_seed_run": false,
+    "sealed_final_accessed": false
+  },
+  "final_rejection_sha256": "52f5ac44bca5cf3db8afa42ec8928f3bb424bb74af8e166b2282eb2b975e49b7",
+  "frozen_inputs": {
+    "dataset_sha256": "ee18f7f9bd7625469d83e1c1df8dad4db0ecf8b3d8c870a07c60f2808e11dc31",
+    "generic_starting_adapter_sha256": "67c6f1dd34c0fa1ddebb354dfe14c43e61c48fdd90c687ba1a9290d2401479cd",
+    "generic_starting_gsm1k": "517/814",
+    "holdout_v2_sha256": "a23b1014d92e9f98b74da3b29913a430bdaebf8e07a16b31b4c3dcc831f1f420",
+    "model_id": "Qwen/Qwen2.5-1.5B-Instruct",
+    "model_revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+    "targeted_starting_adapter_sha256": "4e195ff2cb32c4faa6858915b95507862c911bb2eb853b060717416d825df91d",
+    "targeted_starting_gsm1k": "519/814",
+    "targeted_training_sha256": "3322a9de2e56d24e170129112a8973dd45e5c6575969da52e5cac44f23cea215",
+    "targeted_validation_sha256": "4329bc2e4a09f0001c128f24ba99f32f60c3031ceae1fbbd639ac9c83309c74a",
+    "untouched_base_gsm1k": "521/814"
+  },
+  "observability": {
+    "commit": "7fecfec750a2037bbcddb3357dc27674b18d6f42",
+    "contract_id": "foundry-generation-backend-failure-evidence-v1",
+    "contract_sha256": "39ec6f5f590d87ff7ed839761e0ad9f85be3f6e8d576db2a58ff16019e13c44c",
+    "fixture_sha256": "59dd8cf7d712369e50ec4f572eea18c6abd662becc8aa8c93b8bb435294263c5",
+    "freeze_sha256": "78628dcf8b13c6a01e52afdd6aee56d302dab40054fabf670f38d95368964783",
+    "tree": "6e4e4f793533644d9e68bfd3deb4ce9722509f78"
+  },
+  "production": {
+    "candidate_adapter_sha256": null,
+    "checkpoint_hashes": {},
+    "corpus_sha256": null,
+    "development_retention": "not_run_after_compatibility_mismatch",
+    "family_coverage": null,
+    "fallback_count": null,
+    "gsm1k": "not_run_after_compatibility_mismatch",
+    "holdout_v2": "not_run_after_compatibility_mismatch",
+    "selected_checkpoint": null,
+    "selected_trace_count": null,
+    "token_schedule_sha256": null,
+    "training": "not_run_after_compatibility_mismatch",
+    "verifier_approved_prompt_coverage": null
+  },
+  "publication_id": "foundry-cycle1-r1-terminal-rejection-v1",
+  "resource_evidence": {
+    "compatibility_input_tokens": 8496,
+    "compatibility_loss_bearing_tokens": 452,
+    "compatibility_model_runtime_seconds": 579.037975399999,
+    "compatibility_output_tokens": 15796,
+    "compatibility_warning_count": 15796,
+    "external_runtime_bytes": 43329947,
+    "external_runtime_files": 147,
+    "external_runtime_span_seconds": 3603.2188636,
+    "external_runtime_tree_sha256": "7f952df3060e6d09d595db9cddf17e552576dd8aef4c6770b90b97a1c73abc70",
+    "peak_allocated_vram_bytes": 4195947520,
+    "peak_process_rss_bytes": 4322578432,
+    "peak_reserved_vram_bytes": 4729077760,
+    "production_input_tokens": 0,
+    "production_output_tokens": 0
+  },
+  "runtime_publication": {
+    "active_model_canonical_sha256": "387d7cae136efc1e387cd35cf99780ac557365bb3cfca9236219ec93f7fddc4b",
+    "active_model_file_sha256": "d7c2a3b8358d0b0603001a9191b3b079de0c5e929c39c9043ade4760b3450c05",
+    "compatibility_file_sha256": "f7f56d31ec80714949225cc2845ad1bb8adb248957923dd37863f657fa8e193f",
+    "compatibility_sha256": "4d7f62113335dba5afec7082a3f19bd03a245cfc8ecae2999ac8c21d94ed23b2",
+    "cycle_result_file_sha256": "9d8a1e84a6dc47e405ab9a9cab293b75eb466b76432a78ec05212bdb651c1e82",
+    "cycle_result_sha256": "1eee5acadd8fcfa98a3dcad8c8da342a2bab0ffb13c0af793d60400fd3f71d54",
+    "cycle_state_file_sha256": "f3e6f4cd73a2155b177dc63c5a09625d5d9124ac3cedcd28a460483187fedd72",
+    "cycle_state_sha256": "bb20314424ab7536371cb1bfbe84a17180bffc8bc2a638ad7ec52a28c07b7ee4",
+    "rejection_record_file_sha256": "87ac0718563f6fe023a244202e0013495a4a42ca8e2925e179d059cf5171da9a",
+    "rejection_record_sha256": "b2315076d3f5bba0c7e15ee90db658eb31061fb9b072ac9a2260c3318ba9e1b9"
+  },
+  "schema_version": 1,
+  "source_publication": {
+    "corrected_commit": "6540de4a35ade2fe4e6fef183d7fcdc78e8e0e48",
+    "corrected_generation_source_sha256": "41a9fe8d3b007cf403051f72a8b110b81fe3d25a0f009932747b72e41ec37c7b",
+    "corrected_tree": "03367102cc389dbf5a48e47e018c09ca805dc252",
+    "correction_contract_sha256": "14df5efcc1ce784bd8c95b3d07173dc1da3f4db633a6cb929a8183581bc41b85",
+    "correction_sha256": "307265ea52245b2c3824f8e7e1ea6a57c7ca3221acfa66b965bef139d0255740",
+    "old_generation_source_sha256": "42e55f30cb52b17ed018cb45dd1d1f805c2a54247190ab360ef91055db884907",
+    "source_edited_after_freeze": false
+  },
+  "starting_commit": "f5694be773fd76e2fcbdb1d88142c95746eb4d28",
+  "verification": {
+    "corrected_worktree_clean": true,
+    "dependency_checks": {
+      "general_environment": "no broken requirements",
+      "training_environment": "no broken requirements"
+    },
+    "focused_tests": "89 passed in 2.64s",
+    "format_check": "408 files already formatted",
+    "full_repository_tests": "1211 passed in 167.67s",
+    "git_diff_check": "passed",
+    "lint": "passed",
+    "no_active_python_process": true,
+    "observability_worktree_clean": true,
+    "prior_frozen_worktree_clean": true,
+    "prior_runtime_unchanged": true,
+    "prohibited_artifact_scan": "passed",
+    "sealed_path_changes": 0,
+    "secret_scan": "passed",
+    "type_check": "230 source files passed"
+  }
+}
