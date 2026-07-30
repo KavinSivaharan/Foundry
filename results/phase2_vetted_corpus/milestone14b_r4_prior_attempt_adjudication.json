@@ -1,0 +1,76 @@
+{
+  "adjudication_id": "foundry-l3-grpo-prior-attempt-adjudication-v1",
+  "adjudication_sha256": "1d0d22355e3fcb73f583a459e6eb1d8a8ffbd25cb360b1158447b717ce2898c9",
+  "basis": {
+    "prior_attempt_freeze_sha256": "248f95ee57fa99ccfee4d5cf452332b6d36d69b47fb381123a90038e1574d91d",
+    "prior_terminal_blocker_sha256": "bd59d40e0cb775bb4c3f0b751e6ec0f7c25a2a91b0a4fa87a74163691d57e797",
+    "starting_commit": "8a5df768e5c376b2326db828e43df342de549a5e",
+    "starting_tree": "602a02a7bee9c501ff2145fd3c2df72db5607187"
+  },
+  "contract": {
+    "case_1": "invalidated_by_superseded_source_binding",
+    "case_2": "scientifically_counted_compatibility_failure",
+    "case_3": "prior_attempt_status_ambiguous",
+    "case_requirements_sha256": "2ee3e174ccf21cb1729d527de5f29187b28df985b1ec52a6e3aa0ef6cee4c426",
+    "exactly_one_case_required": true,
+    "non_counted_diagnostic_label": "pre_reconciliation_non_counted_compatibility_diagnostic"
+  },
+  "counted_training_authorized": false,
+  "decision": {
+    "classification": "scientifically_counted_compatibility_failure",
+    "l3_verifier_grpo_compatibility_line": "closed",
+    "new_compatibility_campaign_authorized": false,
+    "next_action": "project-level GRPO interpretation",
+    "no_retry_applied_preserved": true,
+    "non_counted_diagnostic_classification": false,
+    "reason": "The prior child imported and hash-certified the intended unchanged runtime; the exact stock-TRL versus frozen-projection comparison consumed no manifest state, so its one-ULP model-side failure remains scientifically valid.",
+    "scientifically_counted": true,
+    "source_binding_correction_authorized": false
+  },
+  "decision_sha256": "69de512414ea2a9676965046d7e43e8d3c3a67556455f1e1844fddbc5b425798",
+  "development_retention_authorized": false,
+  "evidence": {
+    "all_60_runtime_paths_unchanged": true,
+    "case_inputs": {
+      "active_import_root_not_detached": true,
+      "active_source_binding_structurally_invalid": true,
+      "execution_source_independently_certified": true,
+      "execution_source_not_independently_certified": false,
+      "intended_runtime_imported": true,
+      "manifest_structure_did_not_affect_numeric_result": true,
+      "prohibited_manifest_self_reference_present": true,
+      "scientific_identities_exact": true,
+      "terminal_result_depended_on_invalid_binding_state": false,
+      "terminal_result_not_scientifically_separable": false,
+      "terminal_result_scientifically_separable": true,
+      "terminal_result_valid_under_unchanged_contract": true
+    },
+    "historical_manifest_structural_invalidity_proven": true,
+    "primary_import_root_was_not_detached": true,
+    "scientific_identity_projection_sha256": "3b4d6134cbbc8a131147176f6b6a9448225af1132d4ed801a0f7eb0262a9a579",
+    "source_analysis": {
+      "advantage_validation_ast_sha256": "4d112d07adc9acb45933be878105caa747531373546d00dc1349aba63dd7c1c6",
+      "advantage_validation_function": "SmokeRecorder.finish_generation",
+      "advantage_validation_manifest_name_intersection": [],
+      "advantage_validation_source_sha256": "2829c5aabb7c41d4ab9edfbbc2353624739f10c2fc93e3541f31a5f4aa2a6de0",
+      "advantage_validation_uses_manifest_state": false,
+      "binding_call_line": 140,
+      "binding_call_precedes_official_run": true,
+      "exact_advantage_equality_gate_present": true,
+      "official_run_call_line": 213,
+      "runtime_file_sha256": "132eab47206d29d3bc9d1cf543c90873d1da5f47e35d59903f4a50ce77a2eb5d",
+      "wrapper_file_sha256": "4cb6492f17f4e9dae67f86d61a605d78dbe37eb6ed9eeb25bc2d00711c9a2c50"
+    },
+    "source_binding_gate_passed_before_model_execution": true,
+    "terminal_advantage_validation_sha256": "404f401f6b1bdc9287ba54e83b1c9dfbd5720716ba97d5f09d25d7b52e453cd8"
+  },
+  "evidence_sha256": "1e5e41371f4ce9cfe83dd4df8091d852b19597e957bf2b61510a63a1f848a34d",
+  "gsm1k_authorized": false,
+  "holdout_v2_authorized": false,
+  "implementation": {
+    "normalized_source_sha256": "64ec772561e0d8a04f527985a0058702c444ef964c0206df47051cc61883f6ba",
+    "path": "src/foundry/phase2/l3_grpo_prior_attempt_adjudication.py"
+  },
+  "schema_version": 1,
+  "sealed_content_use": 0
+}

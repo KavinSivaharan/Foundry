@@ -4769,6 +4769,49 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
   self-hash, partial-evidence self-hash/file hash, ignored raw boundary, candidate-only secret
   and prohibited-artifact scans, sealed-path status, `git diff --check`, and source-versus-fix
   binding all pass.
+
+### 2026-07-30 - Milestone 14B-R4 prior-attempt adjudication
+
+- **Forward-only start:** Clean synchronized `main` began at
+  `8a5df768e5c376b2326db828e43df342de549a5e`, tree
+  `602a02a7bee9c501ff2145fd3c2df72db5607187`, with no active Python process
+  and neither proposed R4 external path present.
+- **Historical contract conflict:** The tracked R3 Layer-1 and Layer-2 manifests both contain
+  prohibited canonical self-hash fields. Layer 2 additionally contains command-template and
+  argv hashes, is tracked in the publication source, and records the primary repository as its
+  import root. These facts reproduce the revised non-circular-contract violation exactly.
+- **Model-free reconstruction:** The ignored prior evidence remains intact at three files /
+  2,736,664 bytes. It records one model load, two groups, eight completions, 355 valid
+  completion tokens, one zero-LR optimizer/scheduler advance with zero policy delta, and the
+  exact positive-LR stock-versus-frozen advantage mismatch before backward.
+- **Case-2 adjudication:** All 60 allowlisted runtime paths match across source-fix commit
+  `1bac985cb55ad8c528783e69f15b82ab54449e46`, execution commit
+  `2c0ab0daa5ecc2003b69db091328460f099bd852`, and the R4 starting commit. The child passed
+  source binding before model execution, imported the intended runtime, and preserved every
+  frozen scientific/environment identity. Static AST evidence confirms the exact stock-TRL
+  versus frozen-projection comparison consumes no manifest state. The one-float32-ULP mismatch
+  is therefore scientifically separable from the superseded manifest structure and remains a
+  counted compatibility failure.
+- **Terminal decision:** Classification is
+  `scientifically_counted_compatibility_failure`; it is not
+  `pre_reconciliation_non_counted_compatibility_diagnostic`. Prior-attempt freeze SHA-256 is
+  `248f95ee57fa99ccfee4d5cf452332b6d36d69b47fb381123a90038e1574d91d`;
+  adjudication SHA-256 is
+  `1d0d22355e3fcb73f583a459e6eb1d8a8ffbd25cb360b1158447b717ce2898c9`;
+  decision SHA-256 is
+  `69de512414ea2a9676965046d7e43e8d3c3a67556455f1e1844fddbc5b425798`.
+  R4 consequently authorizes no source-binding correction, detached worktree, external
+  manifests, model launch, or final four-process campaign. The L3 verifier-GRPO compatibility
+  line is closed for project-level GRPO interpretation.
+- **Final verification:** Ruff format-check passes all 387 files, Ruff lint is clean, strict
+  Mypy passes all 216 source files, all 153 focused L3 GRPO tests pass, and all 1,142
+  repository tests pass on the final source in 163.66 seconds. Both authorized environments
+  pass dependency integrity. The two R4 records rebuild exactly; all 14 Layer-1 evidence
+  files, 26 historical qualification-source blobs, and 60 Layer-2 runtime paths reconstruct.
+  Candidate-only secret/prohibited-artifact scans, ignored-raw checks, `git diff --check`,
+  published-history continuity, downstream non-execution, R4-path absence, and zero-active-
+  Python checks pass. No source correction, model process, detached worktree, external
+  runtime directory, counted training, retention, GSM1K, or sealed access occurred in R4.
 - **Next action:** Publish and synchronize
   `analysis: stop source-bound L3 GRPO adaptation`, then stop for project-level GRPO
   interpretation. No further source-binding retry or scientific-setting patch is authorized.
