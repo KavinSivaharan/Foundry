@@ -1,0 +1,253 @@
+{
+  "active_model": {
+    "after": "untouched-base",
+    "before": "untouched-base",
+    "record_sha256": "387d7cae136efc1e387cd35cf99780ac557365bb3cfca9236219ec93f7fddc4b",
+    "registry_file_sha256": "d7c2a3b8358d0b0603001a9191b3b079de0c5e929c39c9043ade4760b3450c05"
+  },
+  "compatibility_trial": {
+    "corpus": {
+      "corpus_file_sha256": "c09434f42db9977ed924d88166ecfc33308bf4c4de725cba48d81f576bc1fcf6",
+      "corpus_sha256": "08f37e4007030c38dbd750c1d8a386a7fe5580fedcf88ad017f6c681f9c42efe",
+      "fallback_original_targets": 4,
+      "optimizer_steps": 2,
+      "records": 4,
+      "schedule_file_sha256": "8dfd5bb0027abc8ec9f9b12d569ff6e649211e29f9974a94261f595e394d20b2",
+      "schedule_sha256": "79a6fb1c84e07595b136a7fe3e278c97fd1520d243a43ac29ac688593a8d6b75"
+    },
+    "exact_evidence": {
+      "baseline_evidence_sha256": "39b64a3ebe5761a5c26801e81aa410fcec8fbde4aa30566e8c59c9331bb60e22",
+      "compatibility_stage_evidence_sha256": "054a46e15c0b556f5230bad8b463b31fd5f10a399d68d31b2f68e922ea696d00",
+      "smoke_sha256": "da61ab1415c9b98edf96864361b4aaaa082864df45dc259f2724caaa19381f2f"
+    },
+    "gates": {
+      "base_parameters_unchanged": true,
+      "base_restoration": true,
+      "finite_gradients": true,
+      "finite_losses": true,
+      "four_unique_training_records": true,
+      "lora_tensors_changed": true,
+      "no_cpu_offload": true,
+      "offline_reload": true,
+      "positive_lr_positive_gradient": true,
+      "two_optimizer_steps": true,
+      "zero_generation_backend_failures": false,
+      "zero_verifier_disagreements": true
+    },
+    "generation": {
+      "attempted_completions": 32,
+      "backend_error_message_recorded": false,
+      "backend_error_type": "RuntimeError",
+      "backend_failures": 32,
+      "completions_per_prompt": 8,
+      "generated_token_ids_sha256": "dbd098af6556ed79650d149b1691be336a46f8bad6f327e942508dd11342575e",
+      "generation_sha256": "811ba53a2cc34584e2a24e753961ac0c26182354543d34ad467f9c2ed5582cd5",
+      "peak_allocated_vram_bytes": 1777088000,
+      "peak_process_rss_bytes": 4320497664,
+      "peak_reserved_vram_bytes": 1828716544,
+      "prompts": 4,
+      "raw_file_sha256": "d6c7776b2cd89105b03aea9f6b39e52bead87394735cb0db8f3c79e8bf712187",
+      "runtime_seconds": 4.489897900000869,
+      "total_input_tokens": 4248,
+      "total_output_tokens": 0
+    },
+    "passed": false,
+    "selection": {
+      "changed_selected_traces": 0,
+      "family_coverage": {
+        "multi_step_bookkeeping_or_omission": {
+          "accepted": 0,
+          "fraction": 0.0,
+          "total": 2
+        },
+        "rate_ratio_percentage_or_average": {
+          "accepted": 0,
+          "fraction": 0.0,
+          "total": 2
+        }
+      },
+      "selected_prompts": 0,
+      "selected_trace_file_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "selected_trace_manifest_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "selection_sha256": "e92eda456eb54ad754007ab53c7f47baa32c948e50f1a6312eb5e8b4cda552bf"
+    },
+    "training": {
+      "base_parameter_fingerprint_after": "73d4978c54dba35593580be8d4a0ece0768f149d5777dc96de389fb55b0a5615",
+      "base_parameter_fingerprint_before": "73d4978c54dba35593580be8d4a0ece0768f149d5777dc96de389fb55b0a5615",
+      "changed_lora_tensor_count": 112,
+      "final_adapter_directory_sha256": "a677f15e74656cfcd714bcd49dfb8306b5e4b4c969de5c42be6cba5056ba7650",
+      "final_adapter_tensor_sha256": "3f7953a4656277652c45eb0c2a7e20f022dda6a910100c3b3614dea188d3c03b",
+      "gradient_hashes": [
+        "27690f3252338c86e912a41c4fc71eac49c0e68c0de240f3f4808ef67362dccf",
+        "b91cbe0c6c5dc50b9fdd88f8e83f1bb1405d2939fb1987729036b7a79f1f85ee"
+      ],
+      "gradient_norms": [
+        2.1264127345112893,
+        2.115717917203431
+      ],
+      "loss_bearing_tokens": 226,
+      "losses": [
+        2.841398998699357,
+        2.8426482782954663
+      ],
+      "optimizer_state_hashes": [
+        "d9a50e461d1e602cea904e2d90554eeea401babe33caa289907852c65d727902",
+        "54b50daee6aa759b29a362a74c62a1048449daaeb1f0afef60bf6524e23d222b"
+      ],
+      "optimizer_steps": 2,
+      "peak_allocated_vram_bytes": 4195947520,
+      "peak_process_rss_bytes": 4321472512,
+      "peak_reserved_vram_bytes": 4729077760,
+      "runtime_seconds": 9.241550600001574,
+      "scheduler_state_hashes": [
+        "fea7ec72e619d2fc7eaee2f4ef17c7f028b42ca8786e3fddb9e549471cd275fc",
+        "dff32d4693d40a075e5f711dc889d2682613b0c2ddeea9ab11bf6203861c3553"
+      ],
+      "training_sha256": "0d10e7804c65df54e2e9d07a0648e953a7377d55a18282fe74efd67758e56d59"
+    },
+    "trial_1": "failed",
+    "trial_2": "not_run_after_terminal_trial_1_gate_failure"
+  },
+  "controller_source": {
+    "commit": "2adda28ebc21a01f19c7a1136cf6990898cb1aef",
+    "detached_worktree": "C:\\Users\\Admin\\Projects\\Foundry-cycle1-frozen",
+    "import_root": "C:\\Users\\Admin\\Projects\\Foundry-cycle1-frozen\\src",
+    "status": "clean",
+    "tree": "3bafc052d101dd79af7330ebef4c6c0203e9d181"
+  },
+  "decision": {
+    "candidate_adapter_sha256": null,
+    "classification": "compatibility_smoke_gate_failed",
+    "decision": "rejected",
+    "failure_stage": "generation",
+    "promotion_record_sha256": null,
+    "reason": "All 32 compatibility-generation attempts ended in RuntimeError and produced zero output tokens, violating the frozen zero-backend-failures gate.",
+    "rejection_record_sha256": "8ceefd73523aac59a95d6ccac30f2f2fb19d3272328cda51c253dbe55114a000"
+  },
+  "downstream_accounting": {
+    "candidate_checkpoint_selection": "not_run",
+    "development_retention": "not_run",
+    "gsm1k": "not_run",
+    "holdout_v2": "not_run",
+    "production_generation": "not_run",
+    "production_training": "not_run",
+    "sealed_final_accessed": false
+  },
+  "execution_accounting": {
+    "alternate_optimizer_started": false,
+    "compatibility_generation_trials": 1,
+    "compatibility_trials_completed": 1,
+    "compatibility_trials_started": 1,
+    "model_processes": 2,
+    "production_generation_campaigns": 0,
+    "production_optimizer_steps": 0,
+    "retries": 0,
+    "second_cycle_run": false,
+    "second_seed_run": false,
+    "smoke_generation_attempts": 32,
+    "smoke_optimizer_steps": 2
+  },
+  "frozen_inputs": {
+    "dataset_sha256": "ee18f7f9bd7625469d83e1c1df8dad4db0ecf8b3d8c870a07c60f2808e11dc31",
+    "generic_starting_adapter_sha256": "67c6f1dd34c0fa1ddebb354dfe14c43e61c48fdd90c687ba1a9290d2401479cd",
+    "generic_starting_gsm1k": "517/814",
+    "holdout_v2_sha256": "a23b1014d92e9f98b74da3b29913a430bdaebf8e07a16b31b4c3dcc831f1f420",
+    "model_id": "Qwen/Qwen2.5-1.5B-Instruct",
+    "model_revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+    "targeted_starting_adapter_sha256": "4e195ff2cb32c4faa6858915b95507862c911bb2eb853b060717416d825df91d",
+    "targeted_starting_gsm1k": "519/814",
+    "targeted_training_sha256": "3322a9de2e56d24e170129112a8973dd45e5c6575969da52e5cac44f23cea215",
+    "targeted_validation_sha256": "4329bc2e4a09f0001c128f24ba99f32f60c3031ceae1fbbd639ac9c83309c74a",
+    "untouched_base_gsm1k": "521/814"
+  },
+  "generation_configuration": {
+    "completions_per_prompt": 8,
+    "cpu_offload": false,
+    "maximum_completion_tokens": 256,
+    "seed": 20260720,
+    "temperature": 0.8,
+    "top_k": 50,
+    "top_p": 0.95,
+    "vllm": false
+  },
+  "identity": {
+    "combined_child_environment_sha256": "1d402ec0cb661adeb50a3d3bd9510895f3f9068cbb393fb381565a5670de995b",
+    "config_sha256": "7fc85c4cbb957cd425fded14eba5507d706a7eeb76fa1107c3a50c4b335bd064",
+    "controller_id": "foundry-cycle-controller-v1",
+    "cycle_id": "foundry-cycle1-vfbon-sft-v1",
+    "environment_evidence_sha256": "9244dd7aa9d4d5138ef01f1b4fb20b911fc390e034e5704ded4ba8fcd967244b",
+    "interpreter_sha256": "0b471133e110cfb53a061cad528ce8e517d7b9ac41a0a396c39ad795a487fc14",
+    "optimization_method": "verifier-filtered-best-of-n-sft-v1"
+  },
+  "pre_model_launcher_diagnostic": {
+    "classification": "non_counted_environment_transport_diagnostic",
+    "model_stack_imported": false,
+    "reason": "cmd.exe injected the PROMPT environment field, so the exact 37-field environment gate stopped before runtime initialization.",
+    "scientific_evidence_written": false
+  },
+  "project_status": "CYCLE_1_REJECTED",
+  "publication_cross_link": {
+    "cycle_result_file_sha256": "44eb86a951e127f5a81df973383a18b207122b285fa0bd38604d6de0c5734b5f",
+    "cycle_result_self_sha256": "8d817ffccb4940c0c3a287ab713360fff62aec5f6071be4f412e6eb1de60ad55",
+    "final_cycle_result_self_hash_reconstructs": true,
+    "publish_trace_cycle_result_sha256": "2361c9d61dd150a0107229dd68e2719dcb54d5ef9043a4085b916135f3e8fd10",
+    "publish_trace_cross_link_matches_final_cycle_result": false,
+    "reconciliation": "publish_trace captured the pre-finalization controller state; finalization then changed controller_state_sha256 and rebuilt the cycle-result self-hash. Frozen runtime evidence was not edited."
+  },
+  "publication_id": "foundry-cycle1-terminal-rejection-v1",
+  "publication_sha256": "dd6cc9fe50e6f463805cf9dc1306be78cd336ce5f8bed81b2f5982567099e79f",
+  "resource_evidence": {
+    "campaign_filesystem_span_seconds": 32.6007894,
+    "external_runtime_bytes": 20362509,
+    "external_runtime_files": 37,
+    "external_runtime_tree_sha256": "5086deab27d522e939874e65c5d8d74b7d5c43a082c73e6b51398ff04b317d05",
+    "model_stage_runtime_seconds": 13.731448500002443,
+    "peak_allocated_vram_bytes": 4195947520,
+    "peak_process_rss_bytes": 4321472512,
+    "peak_reserved_vram_bytes": 4729077760,
+    "total_generation_input_tokens": 4248,
+    "total_generation_output_tokens": 0,
+    "total_smoke_loss_bearing_tokens": 226
+  },
+  "runtime_publication": {
+    "active_model_record_sha256": "387d7cae136efc1e387cd35cf99780ac557365bb3cfca9236219ec93f7fddc4b",
+    "cycle_result_sha256": "8d817ffccb4940c0c3a287ab713360fff62aec5f6071be4f412e6eb1de60ad55",
+    "cycle_state_sha256": "04997355a79eb0a2acb5b6c08ce4d4f4538282faa92109239844e67a1ecdc17a",
+    "promotion_or_rejection_stage_sha256": "14930a48f7aef2762822d7a181dbc40340599625246944c05c8464376eddc34c"
+  },
+  "schema_version": 1,
+  "starting_state": {
+    "branch": "main",
+    "commit": "865143558e581a8561bb96848682f43b3385c0bd",
+    "tree": "88f8e92173207e09585ebcb2d31994a86b051563",
+    "worktree": "clean"
+  },
+  "verification": {
+    "adapter_hash_verification": "passed",
+    "content_free_publication_scan": "passed",
+    "controller_tests": "29 passed in 1.39s",
+    "dataset_and_evaluator_file_contracts_reconstructed": 9,
+    "dependency_checks": {
+      "general_environment": "no broken requirements",
+      "training_environment": "no broken requirements"
+    },
+    "development_retention_replay": "not_applicable_not_reached",
+    "format_check": "405 files already formatted",
+    "full_repository_tests": "1171 passed in 166.90s",
+    "gsm1k_decision_replay": "not_applicable_not_reached",
+    "holdout_decision_replay": "not_applicable_not_reached",
+    "lint": "passed",
+    "prohibited_changed_artifacts": 0,
+    "promotion_decision_replay": "rejected_and_active_base_preserved",
+    "runtime_self_hashes": "passed",
+    "sealed_path_changes": 0,
+    "secret_matches": 0,
+    "selected_trace_manifest_reconstruction": "passed",
+    "smoke_token_schedule_reconstruction": "passed",
+    "tracked_files_at_or_above_1_mib": {
+      "preexisting_unchanged": 2,
+      "publication_changes": 0
+    },
+    "type_check": "229 source files passed"
+  }
+}

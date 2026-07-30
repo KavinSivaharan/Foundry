@@ -4848,3 +4848,73 @@ Stop after the local Milestone 1 commit. The recommended next decision is to ope
   authorized action is final source scanning, then publication of
   `feat: add autonomous Foundry Cycle 1 controller` before creating the single
   detached frozen worktree and external runtime root.
+
+### 2026-07-30 - Milestone 15A terminal Cycle 1 rejection
+
+- **Published and frozen source:** The controller was committed and pushed as
+  `2adda28ebc21a01f19c7a1136cf6990898cb1aef`, tree
+  `3bafc052d101dd79af7330ebef4c6c0203e9d181`, then checked out detached and
+  clean at `C:\Users\Admin\Projects\Foundry-cycle1-frozen`. Every scientific
+  child used the authorized training interpreter, frozen source import root,
+  `PYTHONHASHSEED=20260720`, offline model/cache settings, and the exact
+  37-field Windows operational environment.
+- **Non-counted launcher diagnostic:** A first shell transport was rejected
+  before runtime or model initialization because `cmd.exe` injected the
+  `PROMPT` field into the exact environment. It imported no model stack,
+  produced no completions, wrote no scientific evidence, and consumed no
+  authorized compatibility trial. The counted launch used a direct,
+  shell-free exact-environment process.
+- **Compatibility generation blocker:** Counted Trial 1 processed four prompts
+  and attempted all 32 frozen best-of-eight completions. Every attempt recorded
+  backend error type `RuntimeError`; zero output tokens were produced, zero
+  traces were eligible, and both represented smoke families had 0/2 coverage.
+  Generated-token-ID SHA-256 is
+  `dbd098af6556ed79650d149b1691be336a46f8bad6f327e942508dd11342575e`;
+  selection-manifest SHA-256 is
+  `4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945`.
+  The frozen `zero_generation_backend_failures` gate therefore failed.
+- **Bounded mechanical training evidence:** The same smoke deterministically
+  constructed four original-target fallbacks and completed its authorized
+  two-step mechanical training check. Losses were `2.841398998699357` and
+  `2.8426482782954663`; both positive-LR gradient checks passed; 112 LoRA
+  tensors changed; base parameters remained unchanged; and save, offline
+  reload, adapter-disable restoration, and no-CPU-offload gates passed. The
+  diagnostic adapter-directory SHA-256 is
+  `a677f15e74656cfcd714bcd49dfb8306b5e4b4c969de5c42be6cba5056ba7650`.
+  It is not a production candidate.
+- **Automatic fail-closed decision:** Compatibility smoke SHA-256 is
+  `da61ab1415c9b98edf96864361b4aaaa082864df45dc259f2724caaa19381f2f`.
+  The controller rejected Cycle 1 with
+  `compatibility_smoke_gate_failed`, preserved `untouched-base` as active, and
+  wrote rejection-record SHA-256
+  `8ceefd73523aac59a95d6ccac30f2f2fb19d3272328cda51c253dbe55114a000`.
+  Trial 2, production generation/training, development retention, checkpoint
+  selection, holdout v2, GSM1K, promotion, a retry, and an alternate optimizer
+  did not run.
+- **Evidence and resources:** Controller state SHA-256 is
+  `04997355a79eb0a2acb5b6c08ce4d4f4538282faa92109239844e67a1ecdc17a`;
+  final cycle-result SHA-256 is
+  `8d817ffccb4940c0c3a287ab713360fff62aec5f6071be4f412e6eb1de60ad55`.
+  The ignored runtime contains 37 files / 20,362,509 bytes and hashes to
+  `5086deab27d522e939874e65c5d8d74b7d5c43a082c73e6b51398ff04b317d05`.
+  Observed model-stage runtime was 13.7314 seconds; peak allocated/reserved VRAM was
+  4,195,947,520 / 4,729,077,760 bytes; peak process RSS was 4,321,472,512
+  bytes; generation consumed 4,248 input and zero output tokens.
+- **Publication cross-link disclosure:** The final `cycle_result.json`
+  reconstructs its own canonical hash. The earlier `publish_trace` captured
+  pre-finalization state and therefore names pre-finalization cycle-result hash
+  `2361c9d61dd150a0107229dd68e2719dcb54d5ef9043a4085b916135f3e8fd10`
+  rather than final hash
+  `8d817ffccb4940c0c3a287ab713360fff62aec5f6071be4f412e6eb1de60ad55`.
+  This post-decision publication cross-link does not alter the failed gate,
+  rejection record, controller state, or active registry. Frozen source and
+  runtime evidence were not edited.
+- **Final verification:** Ruff format-check covers all 405 files, Ruff lint is
+  clean, strict Mypy passes all 229 source files, all 29 focused Cycle 1 tests
+  pass, and all 1,171 repository tests pass in 166.90 seconds. Both authorized
+  environments pass dependency integrity. Configuration, dataset/evaluator
+  file contracts, runtime self-hashes, selected-trace manifest, smoke token
+  schedule, diagnostic adapter, rejection decision, and active-base registry
+  reconstruct. Content-free, secret, prohibited-artifact, sealed-path,
+  tracked-size, and `git diff --check` reviews pass; the two tracked files at or
+  above 1 MiB predate and are unchanged by this milestone.
